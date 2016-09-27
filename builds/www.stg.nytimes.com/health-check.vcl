@@ -1,8 +1,8 @@
 sub vcl_recv {
-    // server health check pattern
-    // this intentionally matches end of URI due to nonstandard Nagios requests
-    // example: <http://www-varnish01.prd.sea1.nytimes.comhttp://www.nytimes.com/.status>
-    // thus: req.url = |http://www.nytimes.com/.status|
+    
+    # changing this so it just returns 200 all the time on Fastly
+    # this is still needed for monitoring not to cry
+    # TODO: make a real healthcheck to return backend health status dynamically?
     if (req.url ~ "/.status$") {
         set req.http.X-PageType = "healthcheck";
         error 800;
@@ -12,19 +12,9 @@ sub vcl_recv {
 sub vcl_error {
     if (obj.status == 800) {
         set obj.http.X-API-Version = "0";
-        # XXX -- What does utils.exists do? Temporarily commented it out -- stephen
-        
-        #if (utils.exists("/opt/nyt/www/.rotate-out")) {
-        if (req.url) {
-            set obj.status = 503;
-            set obj.response = "Service Unavailable";
-            synthetic {"503 - STATUS ROTATED OUT"};
-        } else {
-            set obj.status = 200;
-            set obj.response = "OK";
-            synthetic {"200 - STATUS OK"};
-        } 
-
+        set obj.status = 200;
+        set obj.response = "OK";
+        synthetic {"200 - STATUS OK"};
         return(deliver);
     }
 }
