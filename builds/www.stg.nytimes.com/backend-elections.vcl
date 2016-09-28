@@ -60,7 +60,7 @@ sub vcl_deliver {
 }
 
 sub vcl_error {
-    if (obj.status >= 500 && obj.status < 600) {
+    if (req.http.X-PageType == "elections" && obj.status >= 500 && obj.status < 600) {
         set req.http.magicmarker-elections = "fake";
         restart;
     }

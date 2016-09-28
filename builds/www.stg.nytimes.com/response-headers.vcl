@@ -11,5 +11,5 @@ sub vcl_deliver {
     remove resp.http.X-VarnishCacheDuration;
     set resp.http.X-API-Version = "F-" + resp.http.X-API-Version;
     set resp.http.Connection = "close";
-    set resp.http.X-NYT-Backend = req.http.X-NYT-Backend;
+    set resp.http.X-NYT-Backend = req.backend;
 }
