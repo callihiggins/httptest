@@ -93,6 +93,12 @@ sub vcl_deliver {
                 set req.http.x-do-mobile-redirect = "0";
             }
 
+            # don't redirect to mobile if data source is oak
+            # STORY-173: Serve OAK Articles to mobile devices through www
+            if (resp.http.X-Cms-Format == "oak") {
+                set req.http.x-do-mobile-redirect = "0";
+            }
+
             if (req.http.x-do-mobile-redirect == "1") {
                 if (   req.url ~ "^/$"
                     || req.url ~ "^/index.html"

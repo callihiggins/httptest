@@ -18,7 +18,6 @@ director newsdev_elections round-robin {
 }
 
 sub vcl_recv {
-    # Condensed this down to one pcre. Let me know if it's not correct --stephen
     if (req.url ~ "^/elections?(?:/|\?|$)") {
         set req.http.X-PageType = "elections";
         set req.backend = newsdev_elections;

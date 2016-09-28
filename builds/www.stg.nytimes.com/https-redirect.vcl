@@ -14,6 +14,7 @@ sub vcl_recv {
             || req.url ~ "^/content/help/rights/privacy/policy/privacy-policy.html"
             || req.url ~ "^/apple-app-site-association"
             || req.url ~ "^/google34e0037c9fda7c66.html"
+            || req.url ~ "^/adx/"
         ) {
             // remove X-Forwarded-Proto from whitelisted URIs
         } elsif ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {

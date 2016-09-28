@@ -230,9 +230,10 @@ sub vcl_recv {
         set req.backend = www_fe;
     }
 
-    // NYT5 services
+    // NYT5 services EXCEPT userinfo
     if (   req.url ~ "/.status$"
         || req.url ~ "^/svc/web-products/"
+        || req.url !~ "^/svc/web-products/userinfo"
     ) {
         set req.http.X-PageType = "service";
         set req.backend = www_fe;
