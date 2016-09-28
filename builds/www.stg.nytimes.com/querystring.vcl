@@ -120,5 +120,9 @@ sub vcl_recv {
                 "url" + querystring.filtersep() + 
                 "version");
         }
+
+        # now sort them
+        set req.url = querystring.sort(req.url);
+
     }
 }
