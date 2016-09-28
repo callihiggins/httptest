@@ -353,12 +353,6 @@ sub vcl_recv {
         }
     }
 
-    // Top Stories more top stories API URL
-//        if (req.url == "/svc/web-products/more-top-stories.json") {
-//        set req.backend = www_fe_node;
-//        set req.http.X-PageType = "topstories";
-//    }
-
     // AB Test Config
     if ( req.url == "/appconfig/abtests/nyt-abconfig.json" ) {
         set req.http.X-PageType = "service";
