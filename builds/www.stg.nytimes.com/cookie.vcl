@@ -27,7 +27,7 @@ sub vcl_recv {
      * Do not do this for (NYT4) www backend
      * and only do this remap if this is not a restarted request.
      */
-    if (req.backend != www && req.restarts == 0 && req.url !~ "^/svc/web-products/userinfo") {
+    if (req.backend != www && req.restarts == 0) {
         set req.http.X-Cookie = req.http.Cookie;
         unset req.http.Cookie;
     }

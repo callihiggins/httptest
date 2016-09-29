@@ -1,5 +1,5 @@
 backend blogs_fe {
-    .host = "www.stg.nytimes.com";
+    .host = "www.stg.gtm.nytimes.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
@@ -15,7 +15,7 @@ backend blogs_fe {
 }
 
 backend www_fe {
-    .host = "www.stg.nytimes.com";
+    .host = "www.stg.gtm.nytimes.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
@@ -69,7 +69,7 @@ backend www_fe_vert {
 */
 
 backend www {
-    .host = "www.stg.nytimes.com";
+    .host = "www.stg.gtm.nytimes.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
@@ -232,8 +232,8 @@ sub vcl_recv {
 
     // NYT5 services EXCEPT userinfo
     if (   req.url ~ "/.status$"
-        || req.url ~ "^/svc/web-products/"
-        || req.url !~ "^/svc/web-products/userinfo"
+        || (req.url ~ "^/svc/web-products/"
+            && req.url !~ "^/svc/web-products/userinfo")
     ) {
         set req.http.X-PageType = "service";
         set req.backend = www_fe;
