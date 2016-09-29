@@ -1,55 +1,7 @@
-backend beta_instance_prd_use1_1 {
-    .host = "well-proxy-0.prd.np.newsdev.net";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/api/health";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
-    }
-}
-
-backend beta_instance_prd_use1_2 {
-    .host = "well-proxy-1.prd.np.newsdev.net";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/api/health";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
-    }
-}
-
-director beta_well round-robin {
-    { .backend = beta_instance_prd_use1_1; }
-    { .backend = beta_instance_prd_use1_2; }
-}
-
-backend beta_deadend {
-    .host = "localhost";
-    .port = "8080";
-    .dynamic = true;
-    .probe = {
-        .url = "/.status";
-        .initial = 0;
-        .interval = 1d;
-    }
-}
-
 sub vcl_recv {
     if (req.url ~ "^/well/") {
         set req.http.X-PageType = "well";
-        set req.backend = beta_well;
+        call set_beta_well_backend;
         set req.grace = 24h;
         # XXX -- Consider unsetting this header at the top of recv so the client can't set it and bypass your auth -- stephen
         set req.http.x-skip-glogin = "1";
@@ -92,5 +44,15 @@ sub vcl_error {
     if (req.http.X-PageType == "well" && obj.status >= 500 && obj.status < 600) {
         set req.http.magicmarker-well = "fake";
         restart;
+    }
+}
+
+sub set_beta_well_backend {
+    if (req.http.host ~ "\.dev\.") {
+        set req.backend = beta_well_dev;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = beta_well_stg;
+    } else {
+        set req.backend = beta_well_prd;
     }
 }

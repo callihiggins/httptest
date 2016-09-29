@@ -1,115 +1,7 @@
-backend blogs_fe {
-    .host = "www.stg.gtm.nytimes.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-        .url = "/status.txt";
-        .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
-    }
-}
-
-backend www_fe {
-    .host = "www.stg.gtm.nytimes.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-        .url = "/.status";
-        .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
-    }
-}
-
-# Not using this backend yet
-/* 
-backend aballoc {
-   .host = "www.stg.gtm.nytimes.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-     .url = "/.status";
-     .timeout = 10s;
-     .interval = 30s;
-     .window = 10;
-     .threshold = 8;
-    }
-}*/
-
-# Using backend www for now as we need a return (pass)
-# Some real estate URLS require USERID and we DON'T HAVE IT YET
-/*
-backend www_fe_vert {
-    .host = "www.stg.nytimes.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-        .url = "/.status";
-        .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
-    }
-}
-*/
-
-backend www {
-    .host = "www.stg.gtm.nytimes.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-        .url = "/.status";
-        .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
-    }
-}
-
-backend www_static {
-    .host = "static.nytimes.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-        .url = "/.status";
-        .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
-    }
-}
-
-backend deadend {
-    .host = "localhost";
-    .port = "8080";
-    .dynamic = true;
-    .probe = {
-        .url = "/.status";
-        .initial = 0;
-        .interval = 1d;
-    }
-}
+include "backends-dev";
+include "backends-stg";
+include "backends-prd";
+include "backends-deadend";
 
 sub vcl_recv {
     // use X-Host header, if present
@@ -118,13 +10,14 @@ sub vcl_recv {
     }
 
     // default is NYT4
-    set req.backend = www;
+    call set_www_backend;
+    
     set req.http.X-PageType = "legacy";
 
     // entire paidpost hostname is NYT5
     if (req.http.host == "paidpost.nytimes.com") {
         set req.http.X-PageType = "paidpost";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
     }
 
     // homepages, domestic and international, are NYT5
@@ -133,7 +26,7 @@ sub vcl_recv {
         || req.url ~ "^/index.html"
     ) {
         set req.http.X-PageType = "homepage";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -159,7 +52,7 @@ sub vcl_recv {
         || req.url ~ "^/upshot"
     ) {
         set req.http.X-PageType = "collection";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -169,7 +62,7 @@ sub vcl_recv {
         || req.url ~ "^/newsletters$"
     ) {
         set req.http.X-PageType = "newsletter";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -177,7 +70,7 @@ sub vcl_recv {
         || req.url ~ "^/newsletters/timesvideo$"
     ) {
         set req.http.X-PageType = "newsletter-legacy";
-        set req.backend = www;
+        call set_www_backend;
     }
 
     // slideshow application
@@ -185,13 +78,13 @@ sub vcl_recv {
         || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
     ) {
         set req.http.X-PageType = "slideshow";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
     }
 
     // slideshow JSON files
     if (req.url ~ "\.slideshow\.json$") {
         set req.http.X-PageType = "slideshow-legacy";
-        set req.backend = www;
+        call set_www_backend;
     }
 
     // realestate application
@@ -201,7 +94,7 @@ sub vcl_recv {
     ) {
         set req.http.X-PageType = "real-estate";
         # set this to www instead of www_fe_vert so that it will PASS for now
-        set req.backend = www;
+        call set_www_backend;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -211,7 +104,7 @@ sub vcl_recv {
         || req.url ~ "^/trending$"
     ) {
         set req.http.X-PageType = "trending";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -221,13 +114,13 @@ sub vcl_recv {
         || req.url ~ "^/books/best-sellers$"
     ) {
         set req.http.X-PageType = "bestseller";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
     }
 
 
     if (req.url ~ "^/404\.html") {
         set req.http.X-PageType = "miscellany";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
     }
 
     // NYT5 services EXCEPT userinfo
@@ -236,7 +129,7 @@ sub vcl_recv {
             && req.url !~ "^/svc/web-products/userinfo")
     ) {
         set req.http.X-PageType = "service";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -256,7 +149,7 @@ sub vcl_recv {
         && req.http.host !~ "^www-cdn"
     ) {
         set req.http.X-PageType = "legacy-override";
-        set req.backend = www;
+        call set_www_backend;
     }
 
     // article
@@ -274,13 +167,13 @@ sub vcl_recv {
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
     ) {
         set req.http.X-PageType = "article";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
     }
 
     // interactive years 2014-forever are NYT5
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
         set req.http.X-PageType = "interactive";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
     }
 
     // blogs
@@ -291,7 +184,7 @@ sub vcl_recv {
         || req.http.host ~  "(www\.)?nytco\.com$"
     ) {
         set req.http.X-PageType = "blog";
-        set req.backend = blogs_fe;
+        call set_blogs_fe_backend;
     }
     // vanity hostnames for blogs
     // skip glogin check
@@ -308,7 +201,7 @@ sub vcl_recv {
         || req.http.host ~  "jobs\.nytco\.com$"
     ) {
         set req.http.X-PageType = "blog2";
-        set req.backend = blogs_fe;
+        call set_blogs_fe_backend;
     }
     // blogs under WWW hostname
     if ( req.http.host == "www.nytimes.com" ) {
@@ -322,7 +215,7 @@ sub vcl_recv {
             || req.url ~  "^/live$"
         ) {
             set req.http.X-PageType = "blog";
-            set req.backend = blogs_fe;
+            call set_www_backend;
         }
     }
     // blog URLs that do not get glogin redirection
@@ -356,20 +249,60 @@ sub vcl_recv {
     // AB Test Config
     if ( req.url == "/appconfig/abtests/nyt-abconfig.json" ) {
         set req.http.X-PageType = "service";
-        set req.backend = www_fe;
+        call set_www_fe_backend;
     }
 
     if ( req.url == "/js/nyt5/ab/abconfig.json" ) {
         set req.http.X-PageType = "static";
-        set req.backend = www_static;
+        call set_www_static_backend;
     }
 
     if (req.http.X-Is-NYT4 == "1") {
         set req.url = req.http.X-OriginalUri;
         set req.http.cookie = req.http.X-Cookie;
         set req.http.X-PageType = "legacy";
-        set req.backend = www;
+        call set_www_backend;
     }
 }
 
-include "backend-well";
+# set a www backend based on host
+sub set_www_backend {
+    if(req.http.host ~ "\.dev\.") {
+        set req.backend = www_dev;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = www_stg;
+    } else {
+        set req.backend = www_prd;
+    }
+}
+
+# set a www_fe backend based on host
+sub set_www_fe_backend {
+    if(req.http.host ~ "\.dev\.") {
+        set req.backend = www_fe_dev;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = www_fe_stg;
+    } else {
+        set req.backend = www_fe_prd;
+    }
+}
+
+sub set_www_static_backend {
+    if(req.http.host ~ "\.dev\.") {
+        set req.backend = www_static_dev;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = www_static_stg;
+    } else {
+        set req.backend = www_static_prd;
+    }
+}
+
+sub set_blogs_fe_backend {
+    if(req.http.host ~ "\.dev\.") {
+        set req.backend = blogs_fe_dev;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = blogs_fe_stg;
+    } else {
+        set req.backend = blogs_fe_prd;
+    }
+}

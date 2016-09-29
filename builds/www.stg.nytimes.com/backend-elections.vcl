@@ -1,26 +1,7 @@
-backend newsdev_instance_prd_use1_1 {
-    .host = "23.21.133.252";
-    .port = "80";
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
-    }
-}
-
-director newsdev_elections round-robin {
-    { .backend = newsdev_instance_prd_use1_1; }
-}
-
 sub vcl_recv {
     if (req.url ~ "^/elections?(?:/|\?|$)") {
         set req.http.X-PageType = "elections";
-        set req.backend = newsdev_elections;
+        call set_newsdev_elections_backend;
         set req.grace = 24h;
         # XXX -- Consider unsetting this header at the top of recv so the client can't set it and bypass your auth -- stephen
         set req.http.x-skip-glogin = "1";
@@ -63,5 +44,15 @@ sub vcl_error {
     if (req.http.X-PageType == "elections" && obj.status >= 500 && obj.status < 600) {
         set req.http.magicmarker-elections = "fake";
         restart;
+    }
+}
+
+sub set_newsdev_elections_backend {
+    if (req.http.host ~ "\.dev\.") {
+        set req.backend = newsdev_elections_dev;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = newsdev_elections_stg;
+    } else {
+        set req.backend = newsdev_elections_prd;
     }
 }

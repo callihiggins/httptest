@@ -12,7 +12,10 @@ sub vcl_recv {
         && req.http.X-PageType != "real-estate" // except from real estate requests
         && req.http.X-PageType != "newsletter" // except from newsletter requests
         && req.http.X-PageType != "slideshow" // except from slideshow requests
-        && req.backend         != www // except from NYT4 requests
+        // except from NYT4 requests
+        && req.backend != www_dev 
+        && req.backend != www_stg 
+        && req.backend != www_prd
     ) {
         set req.url = querystring.remove(req.url);
     } else {

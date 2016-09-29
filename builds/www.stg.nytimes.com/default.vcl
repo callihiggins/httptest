@@ -6,7 +6,8 @@ include "frame-buster";
 include "health-check";
 #include "ipauth";
 include "www-redirect";
-include "backends";
+include "backends-main";
+include "backend-well";
 include "backend-elections";
 include "https-redirect";
 include "device-detect";
@@ -40,7 +41,7 @@ sub vcl_recv {
       error 405 "Method not allowed";
   }
 
-  if (req.backend == www) {
+  if (req.backend != www_dev && req.backend != www_stg && req.backend != www_prd) {
     return(pass);
   }
 
