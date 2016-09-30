@@ -36,7 +36,7 @@ sub vcl_fetch {
 
 sub vcl_deliver {
     if (req.http.X-PageType == "elections") {
-        set resp.http.X-API-Version = "5-I";
+        set resp.http.X-API-Version = "F-I";
     }
 }
 

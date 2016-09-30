@@ -41,10 +41,10 @@ sub vcl_recv {
       error 405 "Method not allowed";
   }
 
-  if (req.backend != www_dev && req.backend != www_stg && req.backend != www_prd) {
+  if (req.backend == www_dev || req.backend == www_stg || req.backend == www_prd) {
     return(pass);
   }
-
+ 
   // URIs not accessible via Varnish VIPs
   if (   req.url ~ "^/svc/web-shell/"
       || req.url ~ "^/svc/web-products/shell/"

@@ -133,20 +133,9 @@ sub vcl_recv {
         set req.http.x-skip-glogin = "1";
     }
 
-    // non-canonical hostnames override to NYT4
-    if (   req.http.host != "www.nytimes.com"
-        && req.http.host != "www.stg.nytimes.com"
-        && req.http.host != "international.nytimes.com"
-        && req.http.host != "paidpost.nytimes.com"
-        && req.http.host != "nytlive.nytimes.com"
-        && req.http.host != "www2.sea1.nytimes.com"
-        && req.http.host != "www.prd.ewr1.nytimes.com"
-        && req.http.host != "www.prd.nytimes.com"
-        && req.http.host != "www.ewr1.nytimes.com"
-        && req.http.host != "www.sea1.nytimes.com"
-        && req.http.host !~ "^www-varnish"
-        && req.http.host !~ "^www-fastly"
-        && req.http.host !~ "^www-cdn"
+    // hostnames fastly doesn't serve go to www backend for a pass
+    if (   req.http.host !~ "^(www\.)?(dev\.|stg\.|)?nytimes.com$"
+        && req.http.host !~ "^(www-cdn\.)?(dev\.|stg\.|)?nytimes.com$"
     ) {
         set req.http.X-PageType = "legacy-override";
         call set_www_backend;
@@ -269,10 +258,13 @@ sub vcl_recv {
 sub set_www_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = www_dev;
+        set req.http.host = "www.dev.nytimes.com";
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = www_stg;
+        set req.http.host = "www.stg.nytimes.com";
     } else {
         set req.backend = www_prd;
+        set req.http.host = "www.nytimes.com";
     }
 }
 
@@ -280,10 +272,13 @@ sub set_www_backend {
 sub set_www_fe_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = www_fe_dev;
+        set req.http.host = "www.dev.nytimes.com";
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = www_fe_stg;
+        set req.http.host = "www.stg.nytimes.com";
     } else {
         set req.backend = www_fe_prd;
+        set req.http.host = "www.nytimes.com";
     }
 }
 
