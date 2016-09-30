@@ -9,7 +9,11 @@ sub vcl_deliver {
     remove resp.http.X-Powered-By;
     remove resp.http.X-Varnish;
     remove resp.http.X-VarnishCacheDuration;
-    set resp.http.X-API-Version = "F-" + resp.http.X-API-Version;
     set resp.http.Connection = "close";
     set resp.http.X-NYT-Backend = req.backend;
+    if (resp.http.X-API-Version) {
+        set resp.http.X-API-Version = "F-" + resp.http.X-API-Version;
+    } else {
+        set resp.http.X-API-Version = "F-X";
+    }
 }
