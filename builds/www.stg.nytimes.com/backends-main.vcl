@@ -235,6 +235,15 @@ sub vcl_recv {
         }
     }
 
+    // Lets cache some video library in fastly
+    // The netscaler will send this to video at origin
+    // TODO: new backend someday for it's own origin
+    if ( req.url ~ "^/video" ){
+        set req.http.X-PageType = "video-library";
+        set req.http.x-skip-glogin = "1";
+        call set_www_fe_backend;
+    }
+
     // AB Test Config
     if ( req.url == "/appconfig/abtests/nyt-abconfig.json" ) {
         set req.http.X-PageType = "service";
