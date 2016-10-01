@@ -19,6 +19,7 @@ include "mobile-redirect";
 include "homepage-redirect";
 #include "realestate-config";
 #include "glogin-redirect";
+include "uuid";
 #include "rmid";
 #include "abtest-config";
 #include "interim-config";
@@ -79,6 +80,12 @@ sub vcl_fetch {
   
   # setting this for debugging
   set req.http.X-NYT-Backend = beresp.backend.name;
+
+  # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
+  # any other cookie being set will just cause this to not be cacheable
+  if(setcookie.get_value_by_name(beresp,"nyt-a") != ""){
+    remove beresp.http.Set-Cookie;
+  }
 
   if ((beresp.status == 500 || beresp.status == 503) && req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
     restart;

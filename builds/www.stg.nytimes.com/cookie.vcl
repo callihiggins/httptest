@@ -18,13 +18,17 @@ sub vcl_recv {
         set req.http.x-nyt-s = urldecode(req.http.Cookie:NYT-wpAB);
     }
 
+    if (req.http.Cookie:nyt-a) {
+        set req.http.x-nyt-a = req.http.Cookie:nyt-a;
+    }
+
     # This is not necessary but it's not hurting anything. -- stephen
     /*
      * If we have restarted the transaction, req.http.Cookie will be empty
      * and we will lose the NYT-S cookie value.
      * Copy cookie header to custom header then unset cookie header
      * to facilitate caching.
-     * Do not do this for (NYT4) www backend
+     * Do not do this for (NYT4) www backend (this means pass right now)
      * and only do this remap if this is not a restarted request.
      */
     if (req.backend != www_dev && req.backend != www_stg && req.backend != www_prd && req.restarts == 0) {
