@@ -12,6 +12,7 @@ sub vcl_recv {
         && req.http.X-PageType != "real-estate" // except from real estate requests
         && req.http.X-PageType != "newsletter" // except from newsletter requests
         && req.http.X-PageType != "slideshow" // except from slideshow requests
+        && req.http.X-PageType != "video-library" // except from video libarary
         // except from NYT4 requests
         && (req.backend != www_dev && req.backend != www_stg && req.backend != www_prd)
     ) {
@@ -120,6 +121,8 @@ sub vcl_recv {
                 "slideshowTitle" + querystring.filtersep() + 
                 "url" + querystring.filtersep() + 
                 "version");
+        } else if (req.http.X-PageType == "video-library"){
+            set req.url = querystring.filter_except(req.url, "playlistId");
         }
 
         # now sort them
