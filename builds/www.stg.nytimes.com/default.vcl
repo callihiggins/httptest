@@ -9,7 +9,7 @@ include "www-redirect";
 include "backends-main";
 include "backend-well";
 include "backend-elections";
-include "backend-watching";
+#include "backend-watching";
 include "https-redirect";
 include "device-detect";
 #include "nyt-a-aballoc";
@@ -141,6 +141,13 @@ sub vcl_hit {
 sub vcl_miss {
 #FASTLY miss
   return(fetch);
+}
+
+sub vcl_hash {
+#FASTLY hash
+  set req.hash += req.url;
+  set req.hash += req.http.host;
+  return(hash);
 }
 
 sub vcl_deliver {
