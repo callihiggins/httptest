@@ -6,14 +6,16 @@ sub vcl_recv {
         set req.http.X-QueryString = "";
     }
 
-    // remove query string parameters
-    if (   req.url             !~ "/svc/web-products/" // except from API requests
-        && req.http.X-PageType !~ "^blog" // except from blogs requests
-        && req.http.X-PageType != "real-estate" // except from real estate requests
-        && req.http.X-PageType != "newsletter" // except from newsletter requests
-        && req.http.X-PageType != "slideshow" // except from slideshow requests
-        && req.http.X-PageType != "video-library" // except from video libarary
-        // except from NYT4 requests
+    # remove query string parameters
+    if (   req.url             !~ "/svc/web-products/" # except from API requests
+        && req.http.X-PageType !~ "^blog" # except from blogs requests
+        && req.http.X-PageType != "real-estate" # except from real estate requests
+        && req.http.X-PageType != "newsletter" # except from newsletter requests
+        && req.http.X-PageType != "slideshow" # except from slideshow requests
+        && req.http.X-PageType != "video-library" # except from video libarary
+        && req.http.X-PageType != "article" # except from article requests
+        && req.http.X-PageType != "bestsellers" # except from bestseller requests
+        # except from NYT4 requests
         && (req.backend != www_dev && req.backend != www_stg && req.backend != www_prd)
     ) {
         set req.url = querystring.remove(req.url);
@@ -123,6 +125,19 @@ sub vcl_recv {
                 "version");
         } else if (req.http.X-PageType == "video-library"){
             set req.url = querystring.filter_except(req.url, "playlistId");
+        } else if (req.http.X-PageType == "watching") {
+            set req.url = querystring.filter_except(req.url, 
+                "genre" + querystring.filtersep() + 
+                "mood" + querystring.filtersep() + 
+                "q" + querystring.filtersep() + 
+                "sub_genre" + querystring.filtersep() + 
+                "type");
+        } else if (req.http.X-PageType == "bestsellers") {
+        set req.url = querystring.filter_except(req.url, "nytapp");
+        } else if (req.http.X-PageType == "collection") {
+            set req.url = querystring.filter_except(req.url, "nytapp");
+        } else if (req.http.X-PageType == "article") {
+            set req.url = querystring.filter_except(req.url, "nytapp");
         }
 
         # now sort them

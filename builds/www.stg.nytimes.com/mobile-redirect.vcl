@@ -102,15 +102,14 @@ sub vcl_deliver {
             if (req.http.x-do-mobile-redirect == "1") {
                 if (   req.url ~ "^/$"
                     || req.url ~ "^/index.html"
-                    || req.url ~ "^/2(00[7-9]|(0[1-9][0-9])|([1-9][0-9][0-9]))/"
-                    || req.url ~ "^/200[4-5]/"
+                    || req.url ~ "^/19((5|7)[0-9]|9[6-9])/"
+                    || req.url ~ "^/2[0-9][0-9][0-9]/"
                     || req.url ~ "^/(aponline|reuters)/20([0-9][7-9]|[1-9][0-9])/"
                     || req.url ~ "^/(pages|roomfordebate)/"
                     || req.url ~ "^/(recommendations|timeswire)"
                     || req.url ~ "^/best-sellers-books/overview.html"
                     || req.url ~ "^/interactive/blogs/directory.html"
                     || req.url ~ "^/most-popular-emailed"
-                    || req.url ~ "^/upshot/"
                     || req.url ~ "^/slideshow/20(1[5-9]|[2-9][0-9])/"
                 ) {
                     call do_redirect;

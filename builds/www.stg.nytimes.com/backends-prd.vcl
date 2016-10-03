@@ -31,26 +31,6 @@ backend www_fe_prd {
     }
 }
 
-# Using backend www for now as we need a return (pass)
-# Some real estate URLS require USERID and we DON'T HAVE IT YET
-/*
-backend www_fe_vert_stg {
-    .host = "www.stg.gtm.nytimes.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-        .url = "/.status";
-        .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
-    }
-}
-*/
-
 backend www_prd {
     .host = "www.gtm.nytimes.com";
     .port = "80";
@@ -186,4 +166,42 @@ backend beta_instance_prd_use1_2 {
 director beta_well_prd round-robin {
     { .backend = beta_instance_prd_use1_1; }
     { .backend = beta_instance_prd_use1_2; }
+}
+
+
+backend beta_watching_prd_instance_1 {
+    .host = "beta-proxy-0.prd.np.newsdev.net";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/watching/api/health";
+        .timeout = 1s;
+        .interval = 30s;
+        .window = 5;
+        .threshold = 5;
+    }
+}
+
+backend beta_watching_prd_instance_2 {
+    .host = "beta-proxy-1.prd.np.newsdev.net";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/watching/api/health";
+        .timeout = 1s;
+        .interval = 30s;
+        .window = 5;
+        .threshold = 5;
+    }
+}
+
+director beta_watching_prd round-robin {
+    { .backend = beta_watching_prd_instance_1; }
+    { .backend = beta_watching_prd_instance_2; }
 }

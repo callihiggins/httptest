@@ -9,6 +9,7 @@ include "www-redirect";
 include "backends-main";
 include "backend-well";
 include "backend-elections";
+include "backend-watching";
 include "https-redirect";
 include "device-detect";
 #include "nyt-a-aballoc";
