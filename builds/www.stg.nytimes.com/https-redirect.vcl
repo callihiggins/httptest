@@ -15,18 +15,34 @@ sub vcl_recv {
             || req.url ~ "^/apple-app-site-association"
             || req.url ~ "^/google34e0037c9fda7c66.html"
             || req.url ~ "^/adx/"
+            || req.url ~ "^/store"
+            || req.url ~ "^/auth/hdlogin"
+            || req.url ~ "^/membercenter/emailus.html"
+            || req.url ~ "^/gst/emailus.html"
         ) {
-            // remove X-Forwarded-Proto from whitelisted URIs
+
         } elsif ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
             // WP-17776: temporary cookie for HTTPS Everywhere testing
-            set req.http.x-is-https = "-HTTPS";
+            #set req.http.x-is-https = "-HTTPS";
         } else {
-            set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
-            error 443 req.http.x-Redir-Url;
+            #set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
+            #error 443 req.http.x-Redir-Url;
         }
     } else {
         // WP-18256: HTTPS Everywhere redirect to HTTPS when cookie enable + internal IP
-        if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
+        #if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
+        #    set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
+        #    error 443 req.http.x-Redir-Url;
+        #}
+    }
+
+    if (!req.http.Fastly-SSL) {
+        if (   
+            req.url ~ "^/store"
+            || req.url ~ "^/auth/hdlogin"
+            || req.url ~ "^/membercenter/emailus.html"
+            || req.url ~ "^/gst/emailus.html"
+        ) { 
             set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
             error 443 req.http.x-Redir-Url;
         }

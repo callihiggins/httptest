@@ -37,13 +37,21 @@ sub vcl_recv {
     return(pass);
   }
 
+  /*
   if (!client.ip ~ internal && !req.http.X-NYT-PST) {
       # XXX -- we should change this to Fastly syslog -- stephen
       # log "Unauthorized request from " + client.ip + " for " + req.url;
       error 405 "Method not allowed";
   }
+  */
 
-  if (req.backend == www_dev || req.backend == www_stg || req.backend == www_prd) {
+  if ( req.backend == www_dev 
+    || req.backend == www_stg 
+    || req.backend == www_prd
+    || req.backend == www_https_dev
+    || req.backend == www_https_stg
+    || req.backend == www_https_prd
+    ) {
     return(pass);
   }
  
@@ -80,6 +88,8 @@ sub vcl_fetch {
   
   # setting this for debugging
   set req.http.X-NYT-Backend = beresp.backend.name;
+
+  set beresp.http.X-Origin-Time = strftime({"%F %T"}, now);
 
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
   # any other cookie being set will just cause this to not be cacheable

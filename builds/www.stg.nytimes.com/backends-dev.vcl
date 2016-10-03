@@ -47,6 +47,24 @@ backend www_dev {
     }
 }
 
+backend www_https_dev {
+    .host = "www.stg.gtm.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "www.stg.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 10s;
+        .interval = 30s;
+        .window = 10;
+        .threshold = 8;
+    }
+}
+
+
 backend www_static_dev {
     .host = "static.stg.gtm.nytimes.com";
     .port = "80";

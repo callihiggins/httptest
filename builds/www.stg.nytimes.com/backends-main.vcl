@@ -30,6 +30,22 @@ sub vcl_recv {
         set req.http.x-skip-glogin = "1";
     }
 
+    // set the https backend for routes that require it
+    if (   req.url ~ "^/svc/"
+        || req.url ~ "^/content/help/itunes/privacy-policy.html"
+        || req.url ~ "^/content/help/rights/privacy/policy/privacy-policy.html"
+        || req.url ~ "^/apple-app-site-association"
+        || req.url ~ "^/google34e0037c9fda7c66.html"
+        || req.url ~ "^/adx/"
+        || req.url ~ "^/store"
+        || req.url ~ "^/auth/hdlogin"
+        || req.url ~ "^/membercenter/emailus.html"
+        || req.url ~ "^/gst/emailus.html"
+    ) {
+        set req.http.x-PageType = "legacy";
+        call set_www_https_backend;
+        set req.http.x-skip-glogin = "1";
+    }
     // collection application
     if (   req.url ~ "^/by/"
         || req.url ~ "^/column/"
@@ -273,6 +289,20 @@ sub set_www_backend {
         set req.http.host = "www.stg.nytimes.com";
     } else {
         set req.backend = www_prd;
+        set req.http.host = "www.nytimes.com";
+    }
+}
+
+# set a www backend based on host
+sub set_www_https_backend {
+    if(req.http.host ~ "\.dev\.") {
+        set req.backend = www_https_dev;
+        set req.http.host = "www.dev.nytimes.com";
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = www_https_stg;
+        set req.http.host = "www.stg.nytimes.com";
+    } else {
+        set req.backend = www_https_prd;
         set req.http.host = "www.nytimes.com";
     }
 }
