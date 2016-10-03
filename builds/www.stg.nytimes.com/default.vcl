@@ -72,7 +72,6 @@ sub vcl_recv {
       remove req.http.X-Original-Url;
   }
 
-
   return(lookup);
 }
 
@@ -121,8 +120,7 @@ sub vcl_fetch {
   set beresp.grace = 24h;
 
   if (beresp.http.X-VarnishCacheDuration) {
-    #set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
-    set beresp.ttl = 60s;
+    set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
   } else {
     # apply the default ttl
     set beresp.ttl = 60s;
