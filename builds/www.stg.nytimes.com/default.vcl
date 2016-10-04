@@ -37,13 +37,10 @@ sub vcl_recv {
     return(pass);
   }
 
-  /*
-  if (!client.ip ~ internal && !req.http.X-NYT-PST) {
-      # XXX -- we should change this to Fastly syslog -- stephen
-      # log "Unauthorized request from " + client.ip + " for " + req.url;
-      error 405 "Method not allowed";
+  // only IPs in the internal acl can use dev and staging Fastly services
+  if ( !client.ip ~ internal && (req.http.host ~ "\.dev\." || req.http.host ~ "\.stg\.") ) {
+      error 403 "Forbidden";
   }
-  */
 
   if ( req.backend == www_dev 
     || req.backend == www_stg 

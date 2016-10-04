@@ -17,6 +17,7 @@ sub vcl_deliver {
 
     # set NYT specific headers
     set resp.http.X-NYT-Backend = req.http.X-NYT-Backend;
+    
     if (resp.http.X-API-Version) {
         set resp.http.X-API-Version = "F-" + resp.http.X-API-Version;
     } else {
