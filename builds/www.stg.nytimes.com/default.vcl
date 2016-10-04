@@ -136,10 +136,12 @@ sub vcl_fetch {
     set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
   } else {
     # apply the default ttl
-    # TODO: remove this condition when the video API 
-    # implements setting X-VarnishCacheDuration
+    # TODO: remove this condition when the services
+    # implement setting X-VarnishCacheDuration
     if(req.http.X-PageType == "video-api"){
       set beresp.ttl = 30s;
+    } else if (req.http.X-PageType == "messaging-api") {
+      set beresp.ttl = 1s;
     } else {
       set beresp.ttl = 60s;
     }

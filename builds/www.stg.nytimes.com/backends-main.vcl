@@ -264,7 +264,14 @@ sub vcl_recv {
         set req.http.X-PageType = "video-api";
         set req.http.x-skip-glogin = "1";
         call set_www_fe_backend;
-    }  
+    }
+
+    // send global messaging API to the backend that caches
+    if (req.url ~ "^/svc/message/v1/list/global.json") {
+        set req.http.X-PageType = "messaging-api";
+        set req.http.x-skip-glogin = "1";
+        call set_www_fe_backend;
+    }
 
     // AB Test Config
     if ( req.url == "/appconfig/abtests/nyt-abconfig.json" ) {
