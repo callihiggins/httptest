@@ -185,7 +185,8 @@ director beta_well_prd round-robin {
     { .backend = beta_instance_prd_use1_2; }
 }
 
-
+# commenting these until watching is fixed
+/*
 backend beta_watching_prd_instance_1 {
     .host = "beta-proxy-0.prd.np.newsdev.net";
     .port = "80";
@@ -222,3 +223,4 @@ director beta_watching_prd round-robin {
     { .backend = beta_watching_prd_instance_1; }
     { .backend = beta_watching_prd_instance_2; }
 }
+*/

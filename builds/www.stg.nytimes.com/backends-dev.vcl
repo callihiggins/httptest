@@ -138,6 +138,8 @@ director beta_well_dev round-robin {
     { .backend = beta_instance_dev_use1_1; }
 }
 
+# commenting these until watching is fixed 
+/*
 backend beta_watching_dev_instance_1 {
     .host = "beta-proxy-0.dev.np.newsdev.net";
     .port = "80";
@@ -174,3 +176,4 @@ director beta_watching_dev round-robin {
     { .backend = beta_watching_dev_instance_1; }
     { .backend = beta_watching_dev_instance_2; }
 }
+*/

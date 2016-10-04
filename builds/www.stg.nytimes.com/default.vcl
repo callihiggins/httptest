@@ -89,7 +89,7 @@ sub vcl_fetch {
   # setting this for debugging
   set req.http.X-NYT-Backend = beresp.backend.name;
 
-  set beresp.http.X-Origin-Time = strftime({"%F %T"}, now);
+  set beresp.http.X-Origin-Time = strftime({"%F %T EDT"}, time.sub(now,4h));
 
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
   # any other cookie being set will just cause this to not be cacheable

@@ -137,6 +137,8 @@ director beta_well_stg round-robin {
     { .backend = beta_instance_stg_use1_1; }
 }
 
+# commenting these until watching is fixed 
+/*
 backend beta_watching_stg_instance_1 {
     .host = "beta-proxy-0.stg.np.newsdev.net";
     .port = "80";
@@ -173,3 +175,4 @@ director beta_watching_stg round-robin {
     { .backend = beta_watching_stg_instance_1; }
     { .backend = beta_watching_stg_instance_2; }
 }
+*/

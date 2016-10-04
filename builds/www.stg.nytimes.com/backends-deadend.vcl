@@ -20,6 +20,8 @@ backend beta_deadend {
     }
 }
 
+# commenting these until watching is fixed 
+/*
 backend beta_watching_deadend {
     .host = "localhost";
     .port = "8080";
@@ -30,3 +32,4 @@ backend beta_watching_deadend {
         .interval = 1d;
     }
 }
+*/
