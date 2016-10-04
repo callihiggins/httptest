@@ -20,8 +20,9 @@ sub vcl_recv {
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
         ) {
+            // removed this logic for now just let it fall through...
 
-        } elsif ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
+        } else if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
             // WP-17776: temporary cookie for HTTPS Everywhere testing
             #set req.http.x-is-https = "-HTTPS";
         } else {
@@ -57,11 +58,13 @@ sub vcl_hash {
 
 sub vcl_deliver {
     // restart CREAM API request to also reset HTTPS cache key
+    /*
     if (req.http.x-cache-reset == "varnish") {
         set req.http.Fastly-SSL = "https";
         set req.http.x-nyt-np-https-everywhere = "1";
         restart;
     }
+    */
 }
 
 sub vcl_error {
