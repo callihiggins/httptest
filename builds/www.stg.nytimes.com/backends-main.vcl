@@ -260,6 +260,12 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
+    if ( req.url ~ "^/svc/video" ){
+        set req.http.X-PageType = "video-api";
+        set req.http.x-skip-glogin = "1";
+        call set_www_fe_backend;
+    }  
+
     // AB Test Config
     if ( req.url == "/appconfig/abtests/nyt-abconfig.json" ) {
         set req.http.X-PageType = "service";

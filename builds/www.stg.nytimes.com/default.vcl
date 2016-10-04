@@ -70,6 +70,12 @@ sub vcl_recv {
       set req.grace = 24h;
   }
 
+  // remove the Authorization header for video-api calls
+  // it is diabled and we will implement it in Fastly soon
+  if(req.http.X-PageType == "video-api"){
+    unset req.http.Authorization;
+  }
+
   if (req.http.Authorization || req.http.Cookie) {
     /* Not cacheable by default */
     return(pass);
@@ -133,7 +139,14 @@ sub vcl_fetch {
     set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
   } else {
     # apply the default ttl
-    set beresp.ttl = 60s;
+    # TODO: remove this condition when the video API 
+    # implements setting X-VarnishCacheDuration
+    if(req.http.X-PageType == "video-api"){
+      set beresp.ttl = 30s;
+    } else {
+      set beresp.ttl = 60s;
+    }
+    
   }
 
   return(deliver);

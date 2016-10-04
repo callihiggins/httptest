@@ -13,6 +13,7 @@ sub vcl_recv {
         && req.http.X-PageType != "newsletter" # except from newsletter requests
         && req.http.X-PageType != "slideshow" # except from slideshow requests
         && req.http.X-PageType != "video-library" # except from video libarary
+        && req.http.X-PageType != "video-api" # except from video libarary
         && req.http.X-PageType != "article" # except from article requests
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
         # except from NYT4 requests
