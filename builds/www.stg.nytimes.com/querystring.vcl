@@ -57,9 +57,9 @@ sub vcl_recv {
                 "tag");
         } else if (req.http.X-PageType == "real-estate") {
             set req.url = querystring.filter_except(req.url, 
-                    "location" + querystring.filtersep() + 
+                "location" + querystring.filtersep() + 
                 "locations[]" + querystring.filtersep() + 
-                "locations%5B%5D" + querystring.filtersep() + 
+                "locations%255B%255D" + querystring.filtersep() + 
                 "priceMin" + querystring.filtersep() + 
                 "priceMax" + querystring.filtersep() + 
                 "pricemin" + querystring.filtersep() + 
@@ -68,19 +68,19 @@ sub vcl_recv {
                 "bedrooms" + querystring.filtersep() + 
                 "bathrooms" + querystring.filtersep() + 
                 "show[]" + querystring.filtersep() + 
-                "show%5B%5D" + querystring.filtersep() + 
+                "show%255B%255D" + querystring.filtersep() + 
                 "channel" + querystring.filtersep() + 
                 "neighborhood" + querystring.filtersep() + 
                 "p" + querystring.filtersep() + 
                 "sort" + querystring.filtersep() + 
                 "filters[]" + querystring.filtersep() + 
-                "filters%5B%5D" + querystring.filtersep() + 
+                "filters%255B%255D" + querystring.filtersep() + 
                 "alerts[]" + querystring.filtersep() + 
-                "alerts%5B%5D" + querystring.filtersep() + 
+                "alerts%255B%255D" + querystring.filtersep() + 
                 "alertType[]" + querystring.filtersep() + 
-                "alertType%5B%5D" + querystring.filtersep() + 
+                "alertType%255B%255D" + querystring.filtersep() + 
                 "alertFrequency[]" + querystring.filtersep() + 
-                "alertFrequency%5B%5D" + querystring.filtersep() + 
+                "alertFrequency%255B%255D" + querystring.filtersep() + 
                 "searchName" + querystring.filtersep() + 
                 "searchQuery" + querystring.filtersep() + 
                 "idSearch" + querystring.filtersep() + 
@@ -99,18 +99,18 @@ sub vcl_recv {
                 "datePosted" + querystring.filtersep() + 
                 "priceReduced" + querystring.filtersep() + 
                 "propertyType[]" + querystring.filtersep() + 
-                "propertyType%5B%5D" + querystring.filtersep() + 
+                "propertyType%255B%255D" + querystring.filtersep() + 
                 "popularFeatures[]" + querystring.filtersep() + 
-                "popularFeatures%5B%5D" + querystring.filtersep() + 
+                "popularFeatures%255B%255D" + querystring.filtersep() + 
                 "parking" + querystring.filtersep() + 
                 "locationAmenities[]" + querystring.filtersep() + 
-                "locationAmenities%5B%5D" + querystring.filtersep() + 
+                "locationAmenities%255B%255D" + querystring.filtersep() + 
                 "petPolicy" + querystring.filtersep() + 
                 "petPolicy[]" + querystring.filtersep() + 
-                "petPolicy%5B%5D" + querystring.filtersep() + 
+                "petPolicy%255B%255D" + querystring.filtersep() + 
                 "listingType" + querystring.filtersep() + 
                 "listingType[]" + querystring.filtersep() + 
-                "listingType%5B%5D" + querystring.filtersep() + 
+                "listingType%255B%255D" + querystring.filtersep() + 
                 "sortBy");
         } else if (req.http.X-PageType == "newsletter") {
             set req.url = querystring.filter_except(req.url, 
