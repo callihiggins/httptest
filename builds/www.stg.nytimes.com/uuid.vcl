@@ -6,7 +6,7 @@ sub vcl_deliver {
             now.sec+
             randomstr(64)+
             req.http.host+
-            req.topurl+
+            req.url+
             client.ip+
             client.port+
             server.identity);
