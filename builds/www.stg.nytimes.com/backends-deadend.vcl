@@ -9,6 +9,8 @@ backend deadend {
     }
 }
 
+# commenting out until well is fixed
+/*
 backend beta_deadend {
     .host = "localhost";
     .port = "8080";
@@ -19,6 +21,7 @@ backend beta_deadend {
         .interval = 1d;
     }
 }
+*/
 
 # commenting these until watching is fixed 
 /*

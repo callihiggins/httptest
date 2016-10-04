@@ -148,6 +148,8 @@ director newsdev_elections_prd round-robin {
     { .backend = newsdev_instance_prd_usw1_2; }
 }
 
+# commenting out well backends until they are done
+/*
 backend beta_instance_prd_use1_1 {
     .host = "well-proxy-0.prd.np.newsdev.net";
     .port = "80";
@@ -184,6 +186,8 @@ director beta_well_prd round-robin {
     { .backend = beta_instance_prd_use1_1; }
     { .backend = beta_instance_prd_use1_2; }
 }
+*/
+
 
 # commenting these until watching is fixed
 /*

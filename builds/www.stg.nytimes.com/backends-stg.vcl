@@ -117,6 +117,8 @@ director newsdev_elections_stg round-robin {
     { .backend = newsdev_instance_stg_usw1_1; }
 }
 
+# commenting out well backends until they are fixed
+/*
 backend beta_instance_stg_use1_1 {
     .host = "well-proxy-0.stg.np.newsdev.net";
     .port = "80";
@@ -136,6 +138,8 @@ backend beta_instance_stg_use1_1 {
 director beta_well_stg round-robin {
     { .backend = beta_instance_stg_use1_1; }
 }
+*/
+
 
 # commenting these until watching is fixed 
 /*
