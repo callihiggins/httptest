@@ -120,13 +120,23 @@ sub vcl_deliver {
 }
 
 sub do_redirect {
+
+    // pick mobile host based on the Fastly service we're in
+    if (req.http.host ~ "\.dev\.") {
+        set req.http.mobile-host = "mobile.dev.nytimes.com";
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.http.mobile-host = "mobile.stg.nytimes.com";
+    } else {
+        set req.http.mobile-host = "mobile.nytimes.com";
+    }
+
     if (req.http.X-OriginalUri ~ "\?") {
         set resp.http.Location =
-              "http://mobile.nytimes.com/redirect?to-mobile="
+              "http://" + req.http.mobile-host + "/redirect?to-mobile="
             + urlencode("http://" + req.http.host + req.http.X-OriginalUri + "&referer=" + req.http.referer);
     } else {
         set resp.http.Location =
-              "http://mobile.nytimes.com/redirect?to-mobile="
+              "http://" + req.http.mobile-host + "/redirect?to-mobile="
             + urlencode("http://" + req.http.host + req.http.X-OriginalUri + "?referer=" + req.http.referer);
     }
     set resp.status = 303;
