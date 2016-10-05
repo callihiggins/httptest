@@ -296,13 +296,10 @@ sub vcl_recv {
 sub set_www_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = www_dev;
-        set req.http.host = "www.dev.nytimes.com";
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = www_stg;
-        set req.http.host = "www.stg.nytimes.com";
     } else {
         set req.backend = www_prd;
-        set req.http.host = "www.nytimes.com";
     }
 }
 
@@ -310,13 +307,10 @@ sub set_www_backend {
 sub set_www_https_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = www_https_dev;
-        set req.http.host = "www.dev.nytimes.com";
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = www_https_stg;
-        set req.http.host = "www.stg.nytimes.com";
     } else {
         set req.backend = www_https_prd;
-        set req.http.host = "www.nytimes.com";
     }
 }
 
@@ -324,13 +318,10 @@ sub set_www_https_backend {
 sub set_www_fe_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = www_fe_dev;
-        set req.http.host = "www.dev.nytimes.com";
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = www_fe_stg;
-        set req.http.host = "www.stg.nytimes.com";
     } else {
         set req.backend = www_fe_prd;
-        set req.http.host = "www.nytimes.com";
     }
 }
 
