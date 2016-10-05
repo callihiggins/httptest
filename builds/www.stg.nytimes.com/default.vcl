@@ -1,4 +1,5 @@
 include "acl-internal";
+include "acl-external-staging-access"
 include "sanitize-url";
 include "normalize-url";
 include "response-headers";
@@ -37,10 +38,16 @@ sub vcl_recv {
     return(pass);
   }
 
-  // only IPs in the internal acl can use dev and staging Fastly services
-  if ( !client.ip ~ internal && (req.http.host ~ "\.dev\." || req.http.host ~ "\.stg\.") ) {
+  // block everyone but the internal ACL to dev service
+  if ( client.ip !~ internal && req.http.host ~ "\.dev\.") {
       error 403 "Forbidden";
   }
+
+  // block everyone but internal acl and staging access acl to staging service
+  if ( client.ip !~ internal && client.ip !~ external_staging_access && req.http.host ~ "\.stg\.") {
+      error 403 "Forbidden";
+  }
+
 
   if ( req.backend == www_dev 
     || req.backend == www_stg 
