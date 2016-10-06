@@ -19,6 +19,7 @@ sub vcl_recv {
             || req.url ~ "^/auth/hdlogin"
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
+            || req.url ~ "^/subscriptions"
         ) {
             // removed this logic for now just let it fall through...
 

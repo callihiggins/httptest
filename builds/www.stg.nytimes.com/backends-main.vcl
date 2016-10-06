@@ -41,6 +41,7 @@ sub vcl_recv {
         || req.url ~ "^/auth/hdlogin"
         || req.url ~ "^/membercenter/emailus.html"
         || req.url ~ "^/gst/emailus.html"
+        || req.url ~ "^/subscriptions"
     ) {
         set req.http.x-PageType = "legacy";
         call set_www_https_backend;
