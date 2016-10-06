@@ -26,8 +26,8 @@ sub vcl_recv {
             // WP-17776: temporary cookie for HTTPS Everywhere testing
             #set req.http.x-is-https = "-HTTPS";
         } else {
-            #set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
-            #error 443 req.http.x-Redir-Url;
+            set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
+            error 443 req.http.x-Redir-Url;
         }
     } else {
         // WP-18256: HTTPS Everywhere redirect to HTTPS when cookie enable + internal IP
