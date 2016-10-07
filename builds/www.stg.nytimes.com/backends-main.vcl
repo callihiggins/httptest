@@ -153,6 +153,8 @@ sub vcl_recv {
     // hostnames fastly doesn't serve go to www backend for a pass
     if (   req.http.host !~ "^(www\.)?(dev\.|stg\.|)?nytimes.com$"
         && req.http.host !~ "^(www-cdn\.)?(dev\.|stg\.|)?nytimes.com$"
+        && req.http.host !~ "^international\.(dev\.|stg\.|)?nytimes.com$"
+        && req.http.host !~ "^feeds1?\.(dev\.|stg\.|)?nytimes.com$"
     ) {
         set req.http.X-PageType = "legacy-override";
         call set_www_backend;
