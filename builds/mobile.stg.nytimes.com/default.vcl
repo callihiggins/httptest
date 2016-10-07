@@ -1,11 +1,12 @@
 include "acl-internal.vcl";
-include "backends.vcl";
-include "cache-reset.vcl";
+include "acl-external-staging-access.vcl"
+include "backends-main.vcl";
 include "frame-buster.vcl";
 include "www-redirect.vcl";
 include "mw-redirect.vcl";
 include "https-redirect.vcl";
-include "csp.vcl";
+include "cookie.vcl";
+include "uuid.vcl";
 
 sub vcl_recv {
 #FASTLY recv
@@ -14,7 +15,7 @@ sub vcl_recv {
     set req.http.X-NYT-Edge-CDN = "Fastly";
 
     # From mobileweb config
-    set req.backend = default;
+    call set_mobileweb_fe_backend;
 
     # From mobileweb config, combined with Fastly boilerplate
     if (req.request != "GET" && req.request != "HEAD" && req.request != "FASTLYPURGE") {
@@ -29,11 +30,14 @@ sub vcl_recv {
         }
     }
 
-    # Copied from www config
-    if (!client.ip ~ internal) {
-        # XXX -- we should change this to Fastly syslog -- stephen
-        # log "Unauthorized request from " + client.ip + " for " + req.url;
-        error 405 "Method not allowed";
+    // block everyone but the internal ACL to dev service
+    if ( client.ip !~ internal && req.http.host ~ "\.dev\.") {
+        error 403 "Forbidden";
+    }
+
+    // block everyone but internal acl and staging access acl to staging service
+    if ( client.ip !~ internal && client.ip !~ external_staging_access && req.http.host ~ "\.stg\.") {
+        error 403 "Forbidden";
     }
 
     # Let's save the cookie header so we can inspect it later.
@@ -80,15 +84,7 @@ sub vcl_recv {
         set req.http.X-GeoIP-Country = geoip.country_code;
     }
 
-    # Handle redirects based on geoip lookup
-    if (req.url == "/" && !req.http.Cookie ~ "(?:^|;)\s*NYT-Edition=") {
-        if (req.http.X-GeoIP-Country && req.http.X-GeoIP-Country != "Unknown" && req.http.X-GeoIP-Country != "US" && req.http.X-GeoIP-Country != "CA"){
-            error 750 "Moved Temporarily";
-        }
-    }
-    if (req.url == "/" && req.http.Cookie ~ "(?:^|;)\s*NYT-Edition=edition.GLOBAL") {
-        error 750 "Moved Temporarily";
-    }
+    # Handle spanish edition redirect
     if (req.url == "/" && req.http.Cookie ~ "(?:^|;)\s*NYT-Edition=edition.SPANISH") {
         error 754 "Moved Temporarily";
     }
@@ -212,12 +208,15 @@ sub vcl_fetch {
         return (deliver);
     }
 
+    # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
+    # any other cookie being set will just cause this to not be cacheable
+    if (setcookie.get_value_by_name(beresp,"nyt-a")){
+        remove beresp.http.Set-Cookie;
+    }
+
     # Copied from www config and adapted
     if (beresp.http.X-VarnishCacheDuration) {
-        #set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
-        set beresp.ttl = 60s;
-        set beresp.grace = 6h;
-        return (deliver);
+        set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
     } else {
         # If we haven't set a server cache value, don't.
         return(pass);
@@ -311,11 +310,6 @@ sub vcl_error {
     }
 
     # edition redirects
-    if (obj.status == 750) {
-        set obj.http.Location = "/international";
-        set obj.status = 302;
-        return(deliver);
-    }
     if (obj.status == 754) {
         set obj.http.Location = "http://www.nytimes.com/es/";
         set obj.status = 302;
@@ -325,7 +319,7 @@ sub vcl_error {
     # CNAME redirects
     if (obj.status == 751 || obj.status == 752) {
         if (obj.status == 752 && req.url == "/") {
-            set obj.http.Location = "http://mobile.nytimes.com/international";
+            set obj.http.Location = "http://mobile.nytimes.com";
         } elsif (obj.status == 752 && req.url == "/favicon.ico") {
             set obj.http.Location = "https://static01.nyt.com/images/icons/nyt.ico";
         } else {

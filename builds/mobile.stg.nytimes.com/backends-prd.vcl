@@ -1,5 +1,5 @@
-backend default {
-    .host = "mobile.stg.nytimes.com";
+backend mobileweb_fe_prd {
+    .host = "mwr.gtm.nytimes.com";
     .port = "80";
     .dynamic = true;
     .probe = {
