@@ -1,5 +1,9 @@
 acl external_staging_access {
 
+	# this is the acl that is used to determine what
+	# ip ranges that are not part of the acl-internal.vcl
+	# are allowed to access www.stg.nytimes.com and it's CNAMES
+	
 	# Dyn
 	"103.11.200.133"/32;
 	"103.11.201.133"/32;
