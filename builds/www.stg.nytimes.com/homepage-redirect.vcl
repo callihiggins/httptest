@@ -9,10 +9,10 @@ sub vcl_deliver {
         set resp.response = "Found";
         return(deliver);
     } else if (   req.http.X-PageType == "homepage"
-        && req.http.host == "www.nytimes.com"
+        && req.http.host ~ "^www\.(dev\.|stg\.)?nytimes.com$"
         && req.http.x-nyt-edition == "edition|SPANISH"
     ) {
-        set resp.http.Location = "http://www.nytimes.com/es" + req.http.X-OriginalUri;
+        set resp.http.Location =  "http://" + req.http.host + "/es" + req.http.X-OriginalUri;
         set resp.status = 302;
         set resp.response = "Found";
         return(deliver);
