@@ -169,6 +169,19 @@ sub vcl_hit {
 
 sub vcl_miss {
 #FASTLY miss
+  
+  // remove headers we set for processing cookie stuff
+  // backend definitely doesn't need these
+  remove bereq.http.x-nyt-edition;
+  remove bereq.http.x-nyt-a;
+  remove bereq.http.x-nyt-wpab;
+  remove bereq.http.x-nyt-s;
+  remove bereq.http.x-nyt-d;
+
+  // this should be removed already, but lets be sure
+  // since this was a lookup we weren't pass
+  remove bereq.http.Cookie;
+
   return(fetch);
 }
 
