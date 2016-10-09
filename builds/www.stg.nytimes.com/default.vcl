@@ -15,7 +15,7 @@ include "https-redirect";
 include "device-detect";
 #include "nyt-a-aballoc";
 include "cookie";
-#include "userinfo.vcl";
+include "userinfo";
 include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";

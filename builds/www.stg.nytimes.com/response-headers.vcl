@@ -1,5 +1,6 @@
 sub vcl_deliver {
-    # remove BS headers
+
+    # remove extraneous response headers
     remove resp.http.nnCoection;
     remove resp.http.Via;
     remove resp.http.X-Backend;
