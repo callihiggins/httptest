@@ -1,6 +1,6 @@
-include "backends-dev.vcl";
-include "backends-stg.vcl";
-include "backends-prd.vcl";
+include "backends-dev";
+include "backends-stg";
+include "backends-prd";
 
 # set a www_fe backend based on host
 sub set_mobileweb_fe_backend {

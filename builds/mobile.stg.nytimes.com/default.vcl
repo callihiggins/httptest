@@ -1,12 +1,12 @@
-include "acl-internal.vcl";
-include "acl-external-staging-access.vcl"
-include "backends-main.vcl";
-include "frame-buster.vcl";
-include "www-redirect.vcl";
-include "mw-redirect.vcl";
-include "https-redirect.vcl";
-include "cookie.vcl";
-include "uuid.vcl";
+include "acl-internal";
+include "acl-external-staging-access"
+include "backends-main";
+include "frame-buster";
+include "www-redirect";
+include "mw-redirect";
+include "https-redirect";
+include "cookie";
+include "uuid";
 
 sub vcl_recv {
 #FASTLY recv
@@ -181,8 +181,14 @@ sub vcl_recv {
 }
 
 sub vcl_hash {
+#FASTLY hash
+    set req.hash += req.url;
+    set req.hash += req.http.host;
+
     set req.hash += req.http.NYT-chromeless;   
     set req.hash += req.http.NYT-disable-for-perf-key;
+
+    return(hash);
 }
 
 sub vcl_fetch {
