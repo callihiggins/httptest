@@ -189,6 +189,12 @@ sub vcl_hash {
 #FASTLY hash
   set req.hash += req.url;
   set req.hash += req.http.host;
+
+  // video library needs to pivot on device type
+  if(req.http.X-PageType == "video-library"){
+    set req.hash += req.http.device_type;
+  }
+
   return(hash);
 }
 
