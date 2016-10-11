@@ -9,7 +9,7 @@ sub vcl_recv {
 
     // redirect international to www
     // dev/stg only for now
-    if (req.http.host ~ "^international\.(dev\.|stg\.)nytimes.com$") {
+    if (req.http.host ~ "^international\.(dev\.|stg\.)?nytimes.com$") {
         set req.http.x-Redir-Url = 
         "http://" + 
         regsub(req.http.host, "^international.","www.") +

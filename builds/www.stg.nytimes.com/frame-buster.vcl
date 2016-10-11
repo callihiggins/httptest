@@ -5,6 +5,7 @@ sub vcl_deliver {
     	&& 	req.url !~ "\.embedded\.html$"
     	&& 	req.url !~ "\.app\.html$"
     	&& 	req.url !~ "\.mobile\.html$"
+    	&& 	req.url !~ "^/ads/"
     	){
     	
     	# not in the whitelist, check the Referer
