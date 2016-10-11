@@ -30,4 +30,8 @@ sub vcl_deliver {
     } else {
         set resp.http.X-API-Version = "F-X";
     }
+
+    if(!resp.http.X-PageType){
+        set resp.http.X-PageType = req.http.X-PageType;
+    }
 }

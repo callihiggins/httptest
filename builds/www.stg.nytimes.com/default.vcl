@@ -2,6 +2,7 @@ include "acl-internal";
 include "acl-external-staging-access"
 include "sanitize-url";
 include "normalize-url";
+include "initialize-vars";
 include "response-headers";
 include "frame-buster";
 include "health-check";
@@ -11,6 +12,7 @@ include "backends-main";
 #include "backend-well";
 include "backend-elections";
 #include "backend-watching";
+include "community-esi";
 include "https-redirect";
 include "device-detect";
 #include "nyt-a-aballoc";
@@ -99,6 +101,13 @@ sub vcl_fetch {
   # setting this for debugging
   set req.http.X-NYT-Backend = beresp.backend.name;
 
+  # unset headers for cacheable community requests
+  if (req.http.X-PageType == "community-svc-cacheable") {
+    esi;
+    unset beresp.http.Cache-Control;
+    unset beresp.http.Pragma;
+  }
+
   set beresp.http.X-Origin-Time = strftime({"%F %T EDT"}, time.sub(now,4h));
 
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
@@ -181,6 +190,11 @@ sub vcl_miss {
   // this should be removed already, but lets be sure
   // since this was a lookup we weren't pass
   remove bereq.http.Cookie;
+
+  if(req.http.X-PageType == "community-svc-cacheable"){
+    unset bereq.http.Accept-Encoding;
+    unset req.http.Accept-Encoding;
+  }
 
   return(fetch);
 }

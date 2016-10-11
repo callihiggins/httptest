@@ -183,7 +183,7 @@ sub deliver_v3_json_string {
     "name": "",
     "subscription": [],
     "demographics": {},
-    "geo": {"country": "United States" }
+    "geo": {"country": ""} + geoip.country_name.ascii + {"" }
   }
 }"};
 
@@ -206,7 +206,7 @@ sub deliver_v3_jsonp_string {
     "name": "",
     "subscription": [],
     "demographics": {},
-    "geo": {"country": "United States" }
+    "geo": {"country": ""} + geoip.country_name.ascii + {"" }
   }
 });"};
 
