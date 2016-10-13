@@ -21,4 +21,18 @@ sub vcl_recv {
     if (req.http.Cookie:nyt-a) {
       set req.http.x-nyt-a = req.http.Cookie:nyt-a;
     }
+
+    if (req.http.Cookie:nyt-bcet){
+      set req.http.x-nyt-bcet = req.http.Cookie:nyt-bcet;
+    }
+
+    if(req.http.host ~ "\.dev\."){
+      set req.http.x-environment = "dev";
+    } else if (req.http.host ~ "\.stg\."){
+      set req.http.x-environment = "stg";
+    } else {
+      set req.http.x-environment = "prd";
+    }
+
+    set req.http.x-bcet-secret-key = "75b798658d2f43bc1caadb0260d175524ad3c874ab76a15c9aeef3cec11096597f068faca3133285a004fa2106799246dc050ec66c3e75c134d26b8d163b6086";
 }

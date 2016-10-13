@@ -22,7 +22,7 @@ include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
 #include "realestate-config";
-#include "glogin-redirect";
+include "glogin-redirect";
 include "uuid";
 #include "rmid";
 #include "abtest-config";
