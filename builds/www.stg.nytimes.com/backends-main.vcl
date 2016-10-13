@@ -42,6 +42,7 @@ sub vcl_recv {
         || req.url ~ "^/membercenter/emailus.html"
         || req.url ~ "^/gst/emailus.html"
         || req.url ~ "^/subscriptions"
+        || req.url ~ "^/services/xml/rss"
     ) {
         set req.http.x-PageType = "legacy";
         call set_www_https_backend;

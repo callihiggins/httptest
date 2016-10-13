@@ -20,6 +20,7 @@ sub vcl_recv {
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
             || req.url ~ "^/subscriptions"
+            || req.url ~ "^/services/xml/rss"
         ) {
             // removed this logic for now just let it fall through...
 
