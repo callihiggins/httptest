@@ -1,23 +1,7 @@
-// NYT Unix Environment - Puppet Managed File.  SERVER: puppet.prd.nytimes.com ENVIRONMENT: production
-
 sub vcl_recv {
-    // glogin check: if default capability is expired, redirect to glogin
-    // unless this is a request to www (NYT4)
-    // or is a request by crawler
-    // or is a request to reset cache
-    // or skip flag (header) is set
-    // or is a request for homepage
-    // or is a request for trending
-    // or is a request for a collection
-    // or is a request for a newsletter
-    // or is a request for a service
-    // or is a request for static
-    // or is a request for top stories
-    // or is a request for paidpost
-    // or is a request for elections
+    // glogin check: if nyt-bcet cookie timestamp is expired, redirect to glogin
 
     // for now, wrapping this entire thing in a check for dev/stg, it'll be removed
-
     if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
 
         if (
