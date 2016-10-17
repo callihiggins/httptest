@@ -8,7 +8,7 @@ sub vcl_recv {
 
     // detect if there are at least two NYT-S cookies
     if (req.http.x-nyt-s){
-      set req.http.x-nyt-s2 = regsub(req.http.Cookie, ".*?NYT-S=.*NYT-S=([^;]*).*", "\1"));
+      set req.http.x-nyt-s2 = regsub(req.http.Cookie, ".*?NYT-S=.*NYT-S=([^;]*).*", "\1");
       if(req.http.x-nyt-s2 == req.http.Cookie) {
         // unset this req var if we didn't find one
         unset req.http.x-nyt-s2;
