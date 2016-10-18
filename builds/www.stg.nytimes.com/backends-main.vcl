@@ -153,7 +153,7 @@ sub vcl_recv {
 
     // hostnames fastly doesn't serve go to www backend for a pass
     if (   req.http.host !~ "^(www\.)?(dev\.|stg\.|)?nytimes.com$"
-        && req.http.host !~ "^(www-cdn\.)?(dev\.|stg\.|)?nytimes.com$"
+        && req.http.host !~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$"
         && req.http.host !~ "^international\.(dev\.|stg\.|)?nytimes.com$"
         && req.http.host !~ "^feeds1?\.(dev\.|stg\.|)?nytimes.com$"
     ) {
@@ -213,7 +213,7 @@ sub vcl_recv {
         call set_blogs_fe_backend;
     }
     // blogs under WWW hostname
-    if ( req.http.host == "www.nytimes.com" ) {
+    if ( req.http.host ~ "^(www\.)?(dev\.|stg\.|)?nytimes.com$" ) {
         if (   req.url ~  "^/news/"
             || req.url ~  "^/news$"
             || req.url ~  "^/politics/first-draft"
