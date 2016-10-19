@@ -186,11 +186,14 @@ sub vcl_miss {
   remove bereq.http.x-nyt-wpab;
   remove bereq.http.x-nyt-s;
   remove bereq.http.x-nyt-d;
+  remove bereq.http.x-bcet-secret-key;
 
   // this should be removed already, but lets be sure
   // since this was a lookup we weren't pass
   remove bereq.http.Cookie;
 
+  // cacheable community svc requests are ESI jsonp
+  // we can't compress these... yet...
   if(req.http.X-PageType == "community-svc-cacheable"){
     unset bereq.http.Accept-Encoding;
     unset req.http.Accept-Encoding;
