@@ -224,8 +224,8 @@ sub vcl_fetch {
     if (beresp.http.X-VarnishCacheDuration) {
         set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
     } else {
-        # If we haven't set a server cache value, don't.
-        return(pass);
+        # If we haven't set a server cache value, use default for now
+        set beresp.ttl = 180s;
     }
 
   if ((beresp.status == 500 || beresp.status == 503) && req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
@@ -241,10 +241,10 @@ sub vcl_fetch {
     return(pass);
   }
 
-  if (beresp.http.Cache-Control ~ "private") {
-    set req.http.Fastly-Cachetype = "PRIVATE";
-    return(pass);
-  }
+  #if (beresp.http.Cache-Control ~ "private") {
+  #  set req.http.Fastly-Cachetype = "PRIVATE";
+  #  return(pass);
+  #}
 
   if (beresp.status == 500 || beresp.status == 503) {
     set req.http.Fastly-Cachetype = "ERROR";
