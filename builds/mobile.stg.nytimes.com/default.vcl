@@ -1,5 +1,6 @@
 include "acl-internal";
 include "acl-external-staging-access"
+include "acl-crawlers";
 include "backends-main";
 include "frame-buster";
 include "www-redirect";
@@ -133,7 +134,7 @@ sub vcl_recv {
 
     # AMP
     if (req.url ~ "\.amp\.html" && !(req.url ~ "^\/redirect")) {
-        if (req.http.User-Agent ~ "googlebot" || client.ip ~ internal) {
+        if (client.ip ~ googlebot || client.ip ~ internal) {
             # avoid serving cached 403s to googlebot
             # always serve from backend and don't cache
             return (pass);
