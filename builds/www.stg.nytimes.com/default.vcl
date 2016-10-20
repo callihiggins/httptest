@@ -157,7 +157,7 @@ sub vcl_fetch {
     if(req.http.X-PageType == "video-api"){
       set beresp.ttl = 30s;
     } else if (req.http.X-PageType == "messaging-api") {
-      set beresp.ttl = 1s;
+      set beresp.ttl = 5s;
     } else {
       set beresp.ttl = 60s;
     }
