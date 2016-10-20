@@ -1,6 +1,8 @@
 sub vcl_recv {
     // glogin check: if nyt-bcet cookie timestamp is expired, redirect to glogin
-    // for now, wrapping this entire thing in a check for dev/stg, it'll be removed
+
+    # EMERGENCY KILLSWITCH UNCOMMENT THE BELOW LINE TO DISABLE glogin
+    # set req.http.x-skip-glogin = "1";
 
     if (
         (req.backend != www_dev 
