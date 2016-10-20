@@ -3,6 +3,7 @@ sub vcl_recv {
         if (   req.url ~ "^/watching$"
             || req.url ~ "^/watching\?"
             || req.url ~ "^/watching/"
+            || req.url ~ "^\/\d{4}\/\d{2}\/\d{2}\/watching\/"
         ) {
             if (req.url ~ "^/watching/api/users/") {
                 set req.http.X-PageType = "watching-nocache";
