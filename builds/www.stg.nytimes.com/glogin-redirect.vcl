@@ -1,56 +1,52 @@
 sub vcl_recv {
     // glogin check: if nyt-bcet cookie timestamp is expired, redirect to glogin
-
     // for now, wrapping this entire thing in a check for dev/stg, it'll be removed
-    if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
 
-        if (
-            (req.backend != www_dev 
-            && req.backend != www_stg 
-            && req.backend != www_prd
-            && req.backend != www_https_dev
-            && req.backend != www_https_stg
-            && req.backend != www_https_prd) 
-            // && req.http.X-CRWL != "true"
-            // && !req.http.X-Cache-Reset
-            && !req.http.x-skip-glogin
-            && req.http.X-PageType != "homepage"
-            && req.http.X-PageType != "trending"
-            && req.http.X-PageType != "collection"
-            && req.http.X-PageType != "newsletter"
-            && req.http.X-PageType != "blog2"
-            && req.http.X-PageType != "service"
-            && req.http.X-PageType != "static"
-            && req.http.X-PageType != "paidpost"
-            && req.http.X-PageType != "elections"
-            && req.http.X-PageType != "community-svc-cacheable"
-            && req.http.X-PageType != "video-library"
-            && req.http.X-PageType != "video-api"
-            && req.http.X-PageType != "messaging-api"
-        ) {
-            if (!req.http.x-nyt-s) {
-                error 990;
-            }
-
-            if (!req.http.x-nyt-bcet) {
-                error 990;
-            }
-
-            set req.http.x-nyt-bcet = urldecode(req.http.x-nyt-bcet);
-
-            set req.http.x-bcet-timestamp = if(req.http.x-nyt-bcet ~ "^([0-9]+)\|.*\|.*$", re.group.1, "");
-            set req.http.x-bcet-uidhash = if(req.http.x-nyt-bcet ~ "^[0-9]+\|(.*)\|.*$", re.group.1, "");
-            set req.http.x-bcet-sig = if(req.http.x-nyt-bcet ~ "^[0-9]+\|.*\|(.*)$", re.group.1, "");
-
-
-            if ( digest.hmac_sha256_base64(req.http.x-bcet-secret-key, req.http.x-bcet-timestamp + "|" + req.http.x-bcet-uidhash )
-                != req.http.x-bcet-sig){
-                error 990;
-            } else if (time.is_after(now, std.integer2time(std.atoi(req.http.x-bcet-timestamp)))) {
-                error 990;
-            }
+    if (
+        (req.backend != www_dev 
+        && req.backend != www_stg 
+        && req.backend != www_prd
+        && req.backend != www_https_dev
+        && req.backend != www_https_stg
+        && req.backend != www_https_prd) 
+        && req.http.X-CRWL != "true"
+        // && !req.http.X-Cache-Reset
+        && !req.http.x-skip-glogin
+        && req.http.X-PageType != "homepage"
+        && req.http.X-PageType != "trending"
+        && req.http.X-PageType != "collection"
+        && req.http.X-PageType != "newsletter"
+        && req.http.X-PageType != "blog2"
+        && req.http.X-PageType != "service"
+        && req.http.X-PageType != "static"
+        && req.http.X-PageType != "paidpost"
+        && req.http.X-PageType != "elections"
+        && req.http.X-PageType != "community-svc-cacheable"
+        && req.http.X-PageType != "video-library"
+        && req.http.X-PageType != "video-api"
+        && req.http.X-PageType != "messaging-api"
+    ) {
+        if (!req.http.x-nyt-s) {
+            error 990;
         }
 
+        if (!req.http.x-nyt-bcet) {
+            error 990;
+        }
+
+        set req.http.x-nyt-bcet = urldecode(req.http.x-nyt-bcet);
+
+        set req.http.x-bcet-timestamp = if(req.http.x-nyt-bcet ~ "^([0-9]+)\|.*\|.*$", re.group.1, "");
+        set req.http.x-bcet-uidhash = if(req.http.x-nyt-bcet ~ "^[0-9]+\|(.*)\|.*$", re.group.1, "");
+        set req.http.x-bcet-sig = if(req.http.x-nyt-bcet ~ "^[0-9]+\|.*\|(.*)$", re.group.1, "");
+
+
+        if ( digest.hmac_sha256_base64(req.http.x-bcet-secret-key, req.http.x-bcet-timestamp + "|" + req.http.x-bcet-uidhash )
+            != req.http.x-bcet-sig){
+            error 990;
+        } else if (time.is_after(now, std.integer2time(std.atoi(req.http.x-bcet-timestamp)))) {
+            error 990;
+        }
     }
 }
 

@@ -6,7 +6,7 @@ include "initialize-vars";
 include "response-headers";
 include "frame-buster";
 include "health-check";
-#include "ipauth";
+include "ipauth";
 include "www-redirect";
 include "backends-main";
 #include "backend-well";
