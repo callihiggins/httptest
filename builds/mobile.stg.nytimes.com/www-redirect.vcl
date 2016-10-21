@@ -54,9 +54,17 @@ sub vcl_recv {
 
     if (req.http.X-url ~ "^/nytapps") {
         if (req.http.user-agent ~ "iPhone") {
-            error 770 "https://82650.measurementapi.com/serve?action=click&publisher_id=82650&site_id=50290&my_campaign=Applenews_Sep15";
+            error 770 "https://229811.measurementapi.com/serve?action=click&publisher_id=229811&site_id=50290&invoke_id=283321&my_campaign=AppleNews_iPhone_Header";
         } else {
-            error 770 "https://82650.measurementapi.com/serve?action=click&publisher_id=82650&site_id=50288&my_campaign=Applenews_Sep15";
+            error 770 "https://229811.measurementapi.com/serve?action=click&publisher_id=229811&site_id=50288&invoke_id=283320&my_campaign=AppleNews_iPad_Header";
+        }
+    }
+
+    if (req.http.X-url ~ "^/nytapps_2") {
+        if (req.http.user-agent ~ "iPhone") {
+            error 770 "https://229811.measurementapi.com/serve?action=click&publisher_id=229811&site_id=50290&invoke_id=283321&my_campaign=AppleNews_iPhone_Footer";
+        } else {
+            error 770 "https://229811.measurementapi.com/serve?action=click&publisher_id=229811&site_id=50288&invoke_id=283320&my_campaign=AppleNews_iPad_Footer";
         }
     }
 }
