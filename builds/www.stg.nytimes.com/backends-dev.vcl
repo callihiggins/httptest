@@ -23,7 +23,7 @@ backend www_fe_dev {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/.status";
+        .url = "/.status-for-fastly";
         .timeout = 10s;
         .interval = 30s;
         .window = 10;
@@ -39,7 +39,7 @@ backend www_dev {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/.status";
+        .url = "/.status-for-fastly";
         .timeout = 10s;
         .interval = 30s;
         .window = 10;
@@ -56,7 +56,7 @@ backend www_https_dev {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/.status";
+        .url = "/.status-for-fastly";
         .timeout = 10s;
         .interval = 30s;
         .window = 10;
@@ -141,7 +141,7 @@ director beta_well_dev round-robin {
 }
 */
 
-# commenting these until watching is fixed 
+# commenting these until watching is fixed
 /*
 backend beta_watching_dev_instance_1 {
     .host = "beta-proxy-0.dev.np.newsdev.net";

@@ -23,7 +23,7 @@ backend www_fe_prd {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/.status";
+        .url = "/.status-for-fastly";
         .timeout = 10s;
         .interval = 30s;
         .window = 10;
@@ -39,7 +39,7 @@ backend www_prd {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/.status";
+        .url = "/.status-for-fastly";
         .timeout = 10s;
         .interval = 30s;
         .window = 10;
@@ -56,7 +56,7 @@ backend www_https_prd {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/.status";
+        .url = "/.status-for-fastly";
         .timeout = 10s;
         .interval = 30s;
         .window = 10;
