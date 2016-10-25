@@ -111,8 +111,9 @@ sub vcl_fetch {
   set beresp.http.X-Origin-Time = strftime({"%F %T EDT"}, time.sub(now,4h));
 
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
-  # any other cookie being set will just cause this to not be cacheable
-  if(setcookie.get_value_by_name(beresp,"nyt-a")){
+  # we're also going to remove set-cookie if RMID is there, no one is using it anymore
+  # unfortunately this is greedy, we shouldn't be setting cookies in a cacheable request
+  if(setcookie.get_value_by_name(beresp,"nyt-a") || setcookie.get_value_by_name(beresp,"RMID")){
     remove beresp.http.Set-Cookie;
   }
 
