@@ -310,6 +310,13 @@ sub vcl_recv {
         call set_www_static_backend;
     }
 
+    # various paths we CAN cache from legacy systems
+    # relying on the netscaler to send it to the correct place for now
+    if ( req.url ~ "^/newsgraphics/"){
+        set req.http.X-PageType = "legacy-cacheable";
+        call set_www_fe_backend;
+    }
+
     if (req.http.X-Is-NYT4 == "1") {
         set req.url = req.http.X-OriginalUri;
         set req.http.cookie = req.http.X-Cookie;
