@@ -92,8 +92,8 @@ backend newsdev_instance_stg_use1_1 {
         .url = "/healthchecke";
         .timeout = 1s;
         .interval = 4s;
-        .window = 10;
-        .threshold = 9;
+        .window = 5;
+        .threshold = 4;
     }
 }
 
@@ -107,8 +107,8 @@ backend newsdev_instance_stg_usw1_1 {
         .url = "/healthchecke";
         .timeout = 1s;
         .interval = 4s;
-        .window = 10;
-        .threshold = 9;
+        .window = 5;
+        .threshold = 4;
     }
 }
 
