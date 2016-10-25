@@ -11,7 +11,7 @@ include "www-redirect";
 include "backends-main";
 #include "backend-well";
 include "backend-elections";
-#include "backend-watching";
+include "backend-watching";
 include "community-esi";
 include "https-redirect";
 include "device-detect";
