@@ -5,7 +5,7 @@ sub vcl_recv {
 }
 
 sub vcl_deliver {
-    if (resp.status != 301) {
+    if (resp.status != 301 && resp.status != 303) {
         set req.http.x-do-mobile-redirect = "0";
 
         // mobile device detection
