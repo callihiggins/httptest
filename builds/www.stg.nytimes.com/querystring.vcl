@@ -139,7 +139,8 @@ sub vcl_recv {
                 "mood" + querystring.filtersep() + 
                 "q" + querystring.filtersep() + 
                 "sub_genre" + querystring.filtersep() + 
-                "type");
+                "type" + querystring.filtersep() + 
+                "services[]");
         } else if (req.http.X-PageType == "bestsellers") {
         set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.X-PageType == "collection") {
