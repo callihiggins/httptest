@@ -315,6 +315,7 @@ sub vcl_recv {
     if ( req.url ~ "^/newsgraphics/"){
         set req.http.X-PageType = "legacy-cacheable";
         call set_www_fe_backend;
+        set req.http.x-skip-glogin = "1";
     }
 
     if (req.http.X-Is-NYT4 == "1") {
