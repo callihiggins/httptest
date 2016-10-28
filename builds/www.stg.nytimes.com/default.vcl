@@ -113,10 +113,12 @@ sub vcl_fetch {
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
   # we're also going to remove set-cookie if RMID is there, no one is using it anymore
   # unfortunately this is greedy, we shouldn't be setting cookies in a cacheable request
-  if(setcookie.get_value_by_name(beresp,"nyt-a") || setcookie.get_value_by_name(beresp,"RMID")){
-    remove beresp.http.Set-Cookie;
+  if(req.url !~ "^/adx") {
+    if(setcookie.get_value_by_name(beresp,"nyt-a") || setcookie.get_value_by_name(beresp,"RMID")){
+      remove beresp.http.Set-Cookie;
+    }
   }
-
+  
   if ((beresp.status == 500 || beresp.status == 503) && req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
     restart;
   }
