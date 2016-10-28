@@ -291,6 +291,15 @@ sub vcl_deliver {
             else if (req.http.X-GeoIP-Country ~ "(GB)") {
                 set resp.http.X-Currency = "GBP";
             }
+            else if (req.http.X-GeoIP-Country ~ "(CA)") {
+                set resp.http.X-Currency = "CAD";
+            }
+            else if (req.http.X-GeoIP-Country ~ "(AU)") {
+                set resp.http.X-Currency = "AUD";
+            }
+            else if (req.http.X-GeoIP-Country ~ "(IN)") {
+                set resp.http.X-Currency = "INR";
+            }
 
             add resp.http.Set-Cookie = "NYT-Loc=i|" + resp.http.X-Currency + "|" + req.http.X-GeoIP-Country + ";path=/;domain=.nytimes.com;expires=" + strftime({"%a, %d-%b-%Y %T GMT"}, time.add(now, 7d));
             unset resp.http.X-Currency;
