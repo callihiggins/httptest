@@ -17,6 +17,7 @@ sub vcl_recv {
         && req.http.X-PageType != "article" # except from article requests
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
         && req.http.X-PageType != "community-svc-cacheable"
+        && req.http.X-PageType != "legacy-cacheable"
         # except from NYT4 requests
         && (req.backend != www_dev 
             && req.backend != www_stg 
