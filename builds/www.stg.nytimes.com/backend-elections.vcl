@@ -36,7 +36,7 @@ sub vcl_fetch {
         
         # set beresp.grace = 86400s; # equivalent to next line
         set beresp.stale_if_error = 86400s;
-        set beresp.stale_while_revalidate = 300s;
+        set beresp.stale_while_revalidate = 60s;
     }
 }
 
