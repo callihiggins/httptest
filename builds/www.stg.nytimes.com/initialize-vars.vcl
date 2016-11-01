@@ -1,4 +1,8 @@
 sub vcl_recv {    
+    
+    # unset anything that we shouldn't trust from the user request
+    unset req.http.x-skip-glogin;
+
     /*
      * capture specific cookie values into custom headers
      */

@@ -1,8 +1,7 @@
+include "glogin-killswitch";
+
 sub vcl_recv {
     // glogin check: if nyt-bcet cookie timestamp is expired, redirect to glogin
-
-    # EMERGENCY KILLSWITCH UNCOMMENT THE BELOW LINE TO DISABLE glogin
-    # set req.http.x-skip-glogin = "1";
 
     if (
         (req.backend != www_dev 
