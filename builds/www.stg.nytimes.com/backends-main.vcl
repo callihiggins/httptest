@@ -314,7 +314,8 @@ sub vcl_recv {
     # various paths we CAN cache from legacy systems
     # relying on the netscaler to send it to the correct place for now
     if ( req.url ~ "^/newsgraphics/"
-         || req.url ~ "^/regilite"){
+         || req.url ~ "^/regilite"
+         || req.url ~ "^/svc/comscore/"){
         set req.http.X-PageType = "legacy-cacheable";
         call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
