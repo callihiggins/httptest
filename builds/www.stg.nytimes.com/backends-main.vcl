@@ -225,9 +225,6 @@ sub vcl_recv {
             || req.url ~  "^/live/"
             || req.url ~  "^/live$"
         ) {
-            if (req.http.x-environment == "stg"){
-                set req.http.host = "www.stg.nytimes.com";
-            }
             set req.http.X-PageType = "blog";
             call set_www_fe_backend;
         }
