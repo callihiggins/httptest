@@ -225,7 +225,7 @@ sub vcl_recv {
             || req.url ~  "^/live$"
         ) {
             set req.http.X-PageType = "blog";
-            call set_www_backend;
+            call set_www_fe_backend;
         }
     }
     // blog URLs that do not get glogin redirection
