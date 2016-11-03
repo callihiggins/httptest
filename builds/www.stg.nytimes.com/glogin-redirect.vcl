@@ -37,17 +37,37 @@ sub vcl_recv {
 
         set req.http.x-nyt-bcet = urldecode(req.http.x-nyt-bcet);
 
-        set req.http.x-bcet-timestamp = if(req.http.x-nyt-bcet ~ "^([0-9]+)\|.*\|.*$", re.group.1, "");
-        set req.http.x-bcet-uidhash = if(req.http.x-nyt-bcet ~ "^[0-9]+\|(.*)\|.*$", re.group.1, "");
-        set req.http.x-bcet-sig = if(req.http.x-nyt-bcet ~ "^[0-9]+\|.*\|(.*)$", re.group.1, "");
+        # we switched from 3 to 4 fields pipe-delimited to add data to the cookie
+        # if there aren't 4 fields, use the 3 field method
+        if (req.http.x-nyt-bcet ~ "^[0-9]+\|.+\|.+\|.+$"){
+            # 4 fields
+            set req.http.x-bcet-timestamp = if(req.http.x-nyt-bcet ~ "^([0-9]+)\|.+\|.+\|.+$", re.group.1, "");
+            set req.http.x-bcet-uidhash =   if(req.http.x-nyt-bcet ~ "^[0-9]+\|(.+)\|.+\|.+$", re.group.1, "");
+            set req.http.x-bcet-reginfo =   if(req.http.x-nyt-bcet ~ "^[0-9]+\|.+\|(.+)\|.+$", re.group.1, "");
+            set req.http.x-bcet-sig =       if(req.http.x-nyt-bcet ~ "^[0-9]+\|.+\|.+\|(.+)$", re.group.1, "");
 
+            if ( digest.hmac_sha256_base64(req.http.x-bcet-secret-key, req.http.x-bcet-timestamp + "|" + req.http.x-bcet-uidhash + "|" + req.http.x-bcet-reginfo)
+                != req.http.x-bcet-sig){
+                error 990;
+            } else if (time.is_after(now, std.integer2time(std.atoi(req.http.x-bcet-timestamp)))) {
+                error 990;
+            }
 
-        if ( digest.hmac_sha256_base64(req.http.x-bcet-secret-key, req.http.x-bcet-timestamp + "|" + req.http.x-bcet-uidhash )
-            != req.http.x-bcet-sig){
-            error 990;
-        } else if (time.is_after(now, std.integer2time(std.atoi(req.http.x-bcet-timestamp)))) {
-            error 990;
+        } else {
+            # 3 fields
+            set req.http.x-bcet-timestamp = if(req.http.x-nyt-bcet ~ "^([0-9]+)\|.+\|.+$", re.group.1, "");
+            set req.http.x-bcet-uidhash =   if(req.http.x-nyt-bcet ~ "^[0-9]+\|(.+)\|.+$", re.group.1, "");
+            set req.http.x-bcet-sig =       if(req.http.x-nyt-bcet ~ "^[0-9]+\|.+\|(.+)$", re.group.1, "");
+
+            if ( digest.hmac_sha256_base64(req.http.x-bcet-secret-key, req.http.x-bcet-timestamp + "|" + req.http.x-bcet-uidhash )
+                != req.http.x-bcet-sig){
+                error 990;
+            } else if (time.is_after(now, std.integer2time(std.atoi(req.http.x-bcet-timestamp)))) {
+                error 990;
+            }
+
         }
+
     }
 }
 
