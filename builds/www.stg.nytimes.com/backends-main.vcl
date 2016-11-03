@@ -315,7 +315,8 @@ sub vcl_recv {
     # relying on the netscaler to send it to the correct place for now
     if ( req.url ~ "^/newsgraphics/"
          || req.url ~ "^/regilite"
-         || req.url ~ "^/svc/comscore/"){
+         || req.url ~ "^/svc/comscore/"
+         || req.url ~ "^/services/xml/"){
         set req.http.X-PageType = "legacy-cacheable";
         call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
