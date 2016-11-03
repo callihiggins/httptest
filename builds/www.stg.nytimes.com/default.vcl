@@ -108,6 +108,11 @@ sub vcl_fetch {
     unset beresp.http.Pragma;
   }
 
+  # legacy cacheable content should not be private
+  if(req.http.X-PageType == "legacy-cacheable"){
+    unset beresp.http.Cache-Control;
+  }
+
   set beresp.http.X-Origin-Time = strftime({"%F %T EDT"}, time.sub(now,4h));
 
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
