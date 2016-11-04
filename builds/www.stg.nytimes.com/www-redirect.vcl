@@ -11,9 +11,9 @@ sub vcl_recv {
     // dev/stg only for now
     if (req.http.host ~ "^international\.(dev\.|stg\.)?nytimes.com$") {
         set req.http.x-Redir-Url = 
-        "http://" + 
-        regsub(req.http.host, "^international.","www.") +
-        req.url;
+            "http://" + 
+            regsub(req.http.host, "^international.","www.") +
+            req.url;
         error 750 req.http.x-Redir-Url;
     }
 
