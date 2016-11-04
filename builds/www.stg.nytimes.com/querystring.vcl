@@ -18,6 +18,7 @@ sub vcl_recv {
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "legacy-cacheable"
+        && req.http.X-PageType != "collections-svc"
         # except from NYT4 requests
         && (req.backend != www_dev 
             && req.backend != www_stg 
@@ -150,8 +151,16 @@ sub vcl_recv {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.X-PageType == "community-svc-cacheable"){
             set req.url = querystring.filter(req.url, "_");
+        } else if (req.http.X-PageType == "collections-svc"){
+            set req.url = querystring.filter_except(req.url, 
+                "dom" + querystring.filtersep() + 
+                "limit" + querystring.filtersep() + 
+                "page" + querystring.filtersep() + 
+                "q" + querystring.filtersep() +         
+                "sort" + querystring.filtersep() + 
+                "type" + querystring.filtersep() + 
+                "dedupe_hl"); 
         }
-
         # now sort them
         set req.url = querystring.sort(req.url);
 

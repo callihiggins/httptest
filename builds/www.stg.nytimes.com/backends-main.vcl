@@ -322,6 +322,12 @@ sub vcl_recv {
         set req.http.x-skip-glogin = "1";
     }
 
+    if( req.url ~ "^/svc/collections"){
+        set req.http.X-PageType = "collections-svc";
+        call set_www_fe_backend;
+        set req.http.x-skip-glogin = "1";
+    }
+
     if (req.http.X-Is-NYT4 == "1") {
         set req.url = req.http.X-OriginalUri;
         set req.http.cookie = req.http.X-Cookie;
