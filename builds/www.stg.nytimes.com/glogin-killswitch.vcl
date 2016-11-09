@@ -4,5 +4,5 @@ sub vcl_recv {
 	# uncomment set set req header line below to disable glogin
     # comment it out to re-enable glogin
 
-    set req.http.x-skip-glogin = "1";
+    # set req.http.x-skip-glogin = "1";
 }
