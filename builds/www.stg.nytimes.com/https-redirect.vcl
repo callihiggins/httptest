@@ -61,7 +61,7 @@ sub vcl_hash {
 
 sub vcl_deliver {
     if (req.request == "FASTLYPURGE" && req.http.Fastly-SSL != "https") {
-        #set req.http.Fastly-SSL = "https";
+        set req.http.Fastly-SSL = "https";
         set req.http.x-nyt-np-https-everywhere = "1";
         set req.url = "https://" + req.http.host + req.url;
         restart;
