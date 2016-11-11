@@ -27,7 +27,7 @@ sub vcl_recv {
 
         } else if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
             // WP-17776: temporary cookie for HTTPS Everywhere testing
-            set req.http.x-is-https = "-HTTPS";
+            #set req.http.x-is-https = "-HTTPS";
         } else {
             set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
             error 443 req.http.x-Redir-Url;
@@ -50,12 +50,6 @@ sub vcl_recv {
             set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
             error 443 req.http.x-Redir-Url;
         }
-    }
-}
-
-sub vcl_hash {
-    if (req.http.x-is-https) {
-        set req.hash += req.http.x-is-https;
     }
 }
 

@@ -101,6 +101,13 @@ sub vcl_fetch {
   # setting this for debugging
   set req.http.X-NYT-Backend = beresp.backend.name;
 
+  # Vary on this header for HTTPS version, so we can purge both versions at the same time
+  if (beresp.http.Vary) {
+    set beresp.http.Vary = beresp.http.Vary ", req.http.Fastly-SSL";
+  } else {
+    set beresp.http.Vary = "req.http.Fastly-SSL";
+  }
+
   # unset headers for cacheable community requests
   if (req.http.X-PageType == "community-svc-cacheable") {
     esi;
