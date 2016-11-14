@@ -1,6 +1,7 @@
 include "acl-internal";
 include "acl-external-staging-access";
 include "acl-crawlers";
+include "initialize-vars";
 include "backends-main";
 include "frame-buster";
 include "www-redirect";
@@ -195,6 +196,13 @@ sub vcl_hash {
 sub vcl_fetch {
 #FASTLY fetch
 
+    # Vary on this header for HTTPS version, so we can purge both versions at the same time
+    if (beresp.http.Vary) {
+        set beresp.http.Vary = beresp.http.Vary ", req.http.Fastly-SSL";
+    } else {
+        set beresp.http.Vary = "req.http.Fastly-SSL";
+    }
+
     if (beresp.http.content-type ~ "text"
         || beresp.http.content-type ~ "application/json"
         || beresp.http.content-type ~ "application/x-javascript"
@@ -313,6 +321,15 @@ sub vcl_deliver {
     if (req.http.NYT-disable-for-perf-key) {
       set resp.http.NYT-disable-for-perf-key = req.http.NYT-disable-for-perf-key;
     }
+
+    if (resp.http.Content-Type ~ "^text/html" && req.http.Fastly-SSL && client.ip ~ internal) {
+        if (req.http.x-environment == "prd") {
+            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content; report-uri https://nytimes.report-uri.io/r/default/csp/enforce;";
+        } else {
+            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
+        }
+    }
+  }
 
   return(deliver);
 }

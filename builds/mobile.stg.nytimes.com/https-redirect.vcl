@@ -20,6 +20,8 @@ sub vcl_recv {
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
             || req.url ~ "^/subscriptions"
+            || req.url ~ "^/services/xml/rss"
+            || req.url ~ "^/regilite"
         ) {
             // removed this logic for now just let it fall through...
 
@@ -32,10 +34,10 @@ sub vcl_recv {
         }
     } else {
         // WP-18256: HTTPS Everywhere redirect to HTTPS when cookie enable + internal IP
-        #if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
-        #    set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
-        #    error 443 req.http.x-Redir-Url;
-        #}
+        if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
+            set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
+            error 443 req.http.x-Redir-Url;
+        }
     }
 
     if (!req.http.Fastly-SSL) {
@@ -49,23 +51,6 @@ sub vcl_recv {
             error 443 req.http.x-Redir-Url;
         }
     }
-}
-
-sub vcl_hash {
-    if (req.http.x-is-https) {
-        set req.hash += req.http.x-is-https;
-    }
-}
-
-sub vcl_deliver {
-    // restart CREAM API request to also reset HTTPS cache key
-    /*
-    if (req.http.x-cache-reset == "varnish") {
-        set req.http.Fastly-SSL = "https";
-        set req.http.x-nyt-np-https-everywhere = "1";
-        restart;
-    }
-    */
 }
 
 sub vcl_error {
