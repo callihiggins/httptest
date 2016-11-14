@@ -329,7 +329,6 @@ sub vcl_deliver {
             set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
         }
     }
-  }
 
   return(deliver);
 }
