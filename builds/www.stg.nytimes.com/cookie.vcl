@@ -15,6 +15,9 @@ sub vcl_recv {
         && req.backend != www_https_dev
         && req.backend != www_https_stg
         && req.backend != www_https_prd
+        && req.backend != games_dev
+        && req.backend != games_stg
+        && req.backend != games_prd
         && req.restarts == 0) {
         set req.http.X-Cookie = req.http.Cookie;
         unset req.http.Cookie;
