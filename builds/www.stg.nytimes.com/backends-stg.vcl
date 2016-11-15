@@ -129,9 +129,9 @@ backend games_stg {
     .probe = {
         .url = "/svc/crosswords/v2/puzzle/1.json";
         .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
     }
 }
 
