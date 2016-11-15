@@ -117,6 +117,24 @@ director newsdev_elections_stg round-robin {
     { .backend = newsdev_instance_stg_usw1_1; }
 }
 
+backend games_stg {
+    .host = "nyt-games-dev.appspot.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "nyt-games-dev.appspot.com";
+    .host_header = "nyt-games-dev.appspot.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/svc/crosswords/v2/puzzle/1.json";
+        .timeout = 10s;
+        .interval = 30s;
+        .window = 10;
+        .threshold = 8;
+    }
+}
+
 # commenting out well backends until they are fixed
 /*
 backend beta_instance_stg_use1_1 {
