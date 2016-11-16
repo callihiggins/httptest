@@ -9,7 +9,7 @@ include "health-check";
 include "ipauth";
 include "www-redirect";
 include "backends-main";
-#include "backend-well";
+include "backend-well";
 include "backend-elections";
 include "backend-watching";
 include "backend-games";
