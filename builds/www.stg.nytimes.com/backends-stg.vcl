@@ -135,10 +135,9 @@ backend games_stg {
     }
 }
 
-# commenting out well backends until they are fixed
-/*
-backend beta_instance_stg_use1_1 {
-    .host = "well-proxy-0.stg.np.newsdev.net";
+
+backend beta_well_stg {
+    .host = "np-well-stg-public-1893072346.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
@@ -146,55 +145,25 @@ backend beta_instance_stg_use1_1 {
     .between_bytes_timeout = 5s;
     .probe = {
         .url = "/api/health";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
     }
 }
 
-director beta_well_stg round-robin {
-    { .backend = beta_instance_stg_use1_1; }
-}
-*/
-
-
-# commenting these until watching is fixed
-/*
-backend beta_watching_stg_instance_1 {
-    .host = "beta-proxy-0.stg.np.newsdev.net";
+backend beta_watching_stg {
+    .host = "np-watching-stg-public-668029006.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
     .probe = {
-        .url = "/watching/api/health";
-        .timeout = 1s;
-        .interval = 30s;
+        .url = "/api/health";
+        .timeout = 3s;
+        .interval = 5s;
         .window = 5;
-        .threshold = 5;
+        .threshold = 4;
     }
 }
-
-backend beta_watching_stg_instance_2 {
-    .host = "beta-proxy-1.stg.np.newsdev.net";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/watching/api/health";
-        .timeout = 1s;
-        .interval = 30s;
-        .window = 5;
-        .threshold = 5;
-    }
-}
-
-director beta_watching_stg round-robin {
-    { .backend = beta_watching_stg_instance_1; }
-    { .backend = beta_watching_stg_instance_2; }
-}
-*/

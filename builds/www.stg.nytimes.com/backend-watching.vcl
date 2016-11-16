@@ -1,35 +1,40 @@
 sub vcl_recv {
-    if (req.http.host ~ "^www.(dev\.|stg\.)?nytimes.com$") {
-        if (   req.url ~ "^/watching$"
-            || req.url ~ "^/watching\?"
-            || req.url ~ "^/watching/"
-            || req.url ~ "^\/\d{4}\/\d{2}\/\d{2}\/watching\/"
-        ) {
-            if (req.url ~ "^/watching/api/users/") {
-                set req.http.X-PageType = "watching-nocache";
-            } else {
-                set req.http.X-PageType = "watching";
-                unset req.http.Cookie;
-                unset req.http.X-Cookie;
-            }
-            call set_beta_watching_backend;
-            set req.grace = 24h;
-            set req.http.x-skip-glogin = "1";
-            unset req.http.x-nyt-edition;
-            unset req.http.x-nyt-s; 
-            unset req.http.x-nyt-wpab;
 
-            if (req.http.X-PageType == "watching-nocache") {
-                return(pass);
+    if (req.http.x-environment == "stg"){
+
+        if (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$") {
+            if (   req.url ~ "^/watching$"
+                || req.url ~ "^/watching\?"
+                || req.url ~ "^/watching/"
+                || req.url ~ "^\/\d{4}\/\d{2}\/\d{2}\/watching\/"
+            ) {
+                if (req.url ~ "^/watching/api/users/") {
+                    set req.http.X-PageType = "watching-nocache";
+                } else {
+                    set req.http.X-PageType = "watching";
+                    unset req.http.Cookie;
+                    unset req.http.X-Cookie;
+                }
+                call set_beta_watching_backend;
+                set req.grace = 24h;
+                set req.http.x-skip-glogin = "1";
+                unset req.http.x-nyt-edition;
+                unset req.http.x-nyt-s; 
+                unset req.http.x-nyt-wpab;
+
+                if (req.http.X-PageType == "watching-nocache") {
+                    return(pass);
+                }
             }
         }
-    }
 
-    if (req.http.magicmarker-watching == "fake") {
-        unset req.http.magicmarker-watching;
-        set req.backend = beta_watching_deadend;
-        return(lookup);
-    }
+        if (req.http.magicmarker-watching == "fake") {
+            unset req.http.magicmarker-watching;
+            set req.backend = beta_deadend;
+            return(lookup);
+        }
+
+    }  
 }
 
 sub vcl_hash {
@@ -71,10 +76,10 @@ sub vcl_error {
 
 sub set_beta_watching_backend {
     if (req.http.host ~ "\.dev\.") {
-        set req.backend = beta_watching_dev;
+        //set req.backend = beta_watching_dev;
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = beta_watching_stg;
     } else {
-        set req.backend = beta_watching_prd;
+        //set req.backend = beta_watching_prd;
     }
 }
