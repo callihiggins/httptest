@@ -2,7 +2,7 @@ sub vcl_recv {
 
     if (req.http.x-environment == "stg"){
 
-        if (req.http.host ~ "^www.(dev\.|stg\.)?nytimes.com$") {
+        if (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$") {
             if (   req.url ~ "^/watching$"
                 || req.url ~ "^/watching\?"
                 || req.url ~ "^/watching/"
