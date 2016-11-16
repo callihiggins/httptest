@@ -127,11 +127,11 @@ backend games_stg {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/svc/crosswords/v2/puzzle/1.json";
+        .url = "/status.txt";
         .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
     }
 }
 
