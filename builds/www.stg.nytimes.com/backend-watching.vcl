@@ -30,7 +30,7 @@ sub vcl_recv {
 
         if (req.http.magicmarker-watching == "fake") {
             unset req.http.magicmarker-watching;
-            set req.backend = beta_watching_deadend;
+            set req.backend = beta_deadend;
             return(lookup);
         }
 
