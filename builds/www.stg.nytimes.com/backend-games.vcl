@@ -1,7 +1,8 @@
 sub vcl_recv {
 
     if (req.http.x-environment == "stg") {
-        if (req.http.host ~ "^www([\-a-z0-9^\.]+)?.(dev\.|stg\.)?nytimes.com$") {
+        
+        if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
             if (req.url ~ "^/svc/crosswords/") {
                 set req.http.X-PageType = "games-service";
                 call set_games_backend;
