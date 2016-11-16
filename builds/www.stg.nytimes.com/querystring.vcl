@@ -19,6 +19,7 @@ sub vcl_recv {
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "legacy-cacheable"
         && req.http.X-PageType != "collections-svc"
+        && req.http.X-PageType != "watching"
         # except from NYT4 requests
         && (req.backend != www_dev 
             && req.backend != www_stg 
