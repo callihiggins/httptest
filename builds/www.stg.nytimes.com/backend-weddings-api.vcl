@@ -14,9 +14,11 @@ sub vcl_recv {
 }
 
 sub vcl_deliver {
+/*
     if (req.http.X-PageType == "weddings-api") {
         set resp.http.X-API-Version = "DUW";
     }
+*/
 }
 
 sub set_du_weddings_api_backend {

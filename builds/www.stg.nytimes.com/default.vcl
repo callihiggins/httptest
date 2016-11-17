@@ -3,7 +3,6 @@ include "acl-external-staging-access"
 include "sanitize-url";
 include "normalize-url";
 include "initialize-vars";
-include "response-headers";
 include "frame-buster";
 include "health-check";
 include "ipauth";
@@ -17,20 +16,14 @@ include "backend-weddings-api";
 include "community-esi";
 include "https-redirect";
 include "device-detect";
-#include "nyt-a-aballoc";
 include "cookie";
 include "userinfo";
 include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
-#include "realestate-config";
 include "glogin-redirect";
 include "uuid";
-#include "rmid";
-#include "abtest-config";
-#include "interim-config";
-#include "homepage-abtest";
-#include "internal-https";
+include "response-headers";
 
 sub vcl_recv {
 #FASTLY recv
