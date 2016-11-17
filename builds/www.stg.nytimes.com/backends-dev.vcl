@@ -1,4 +1,3 @@
-
 backend blogs_fe_dev {
     .host = "www.stg.gtm.nytimes.com";
     .port = "80";
@@ -64,7 +63,6 @@ backend www_https_dev {
     }
 }
 
-
 backend www_static_dev {
     .host = "static.stg.gtm.nytimes.com";
     .port = "80";
@@ -81,8 +79,6 @@ backend www_static_dev {
     }
 }
 
-
-#ELECTIONS BACKENDS
 backend newsdev_instance_dev_use1_1 {
     .host = "23.21.133.252";
     .port = "80";
@@ -180,3 +176,19 @@ director beta_watching_dev round-robin {
     { .backend = beta_watching_dev_instance_2; }
 }
 */
+
+backend du_weddings_api_dev {
+    .host = "content.api.dev.nytimes.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/version.json";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
