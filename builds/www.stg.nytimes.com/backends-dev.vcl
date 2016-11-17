@@ -177,6 +177,7 @@ director beta_watching_dev round-robin {
 }
 */
 
+/*
 backend du_weddings_api_dev {
     .host = "content.api.dev.nytimes.com";
     .port = "80";
@@ -192,3 +193,4 @@ backend du_weddings_api_dev {
         .threshold = 4;
     }
 }
+*/

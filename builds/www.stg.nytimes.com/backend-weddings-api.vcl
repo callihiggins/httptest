@@ -21,10 +21,10 @@ sub vcl_deliver {
 
 sub set_du_weddings_api_backend {
     if (req.http.x-environment == "dev") {
-        set req.backend = du_weddings_api_dev;
+//        set req.backend = du_weddings_api_dev;
     } else if (req.http.x-environment == "stg") {
         set req.backend = du_weddings_api_stg;
     } else {
-        set req.backend = du_weddings_api_prd;
+//        set req.backend = du_weddings_api_prd;
     }
 }
