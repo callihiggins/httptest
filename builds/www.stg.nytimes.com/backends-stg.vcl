@@ -165,7 +165,7 @@ backend beta_watching_stg {
 }
 
 backend du_weddings_api_stg {
-    .host = "du-cacheint-stg-iad2-38459-2-188394158.us-east-1.elb.amazonaws.com";
+    .host = "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
