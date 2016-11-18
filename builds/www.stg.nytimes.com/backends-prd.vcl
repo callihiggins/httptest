@@ -1,4 +1,3 @@
-
 backend blogs_fe_prd {
     .host = "www.gtm.nytimes.com";
     .port = "80";
@@ -80,7 +79,6 @@ backend www_static_prd {
     }
 }
 
-#ELECTIONS BACKENDS
 backend newsdev_instance_prd_use1_1 {
     .host = "54.221.244.128";
     .port = "80";
@@ -188,7 +186,6 @@ director beta_well_prd round-robin {
 }
 */
 
-
 # commenting these until watching is fixed
 /*
 backend beta_watching_prd_instance_1 {
@@ -226,5 +223,23 @@ backend beta_watching_prd_instance_2 {
 director beta_watching_prd round-robin {
     { .backend = beta_watching_prd_instance_1; }
     { .backend = beta_watching_prd_instance_2; }
+}
+*/
+
+/*
+backend du_weddings_api_prd {
+    .host = "content.api.prd.nytimes.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/version.json";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
 }
 */

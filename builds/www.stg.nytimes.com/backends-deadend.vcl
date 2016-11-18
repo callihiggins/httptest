@@ -9,7 +9,6 @@ backend deadend {
     }
 }
 
-# commenting out until well is fixed
 backend beta_deadend {
     .host = "localhost";
     .port = "8080";

@@ -3,7 +3,6 @@ include "acl-external-staging-access"
 include "sanitize-url";
 include "normalize-url";
 include "initialize-vars";
-include "response-headers";
 include "frame-buster";
 include "health-check";
 include "ipauth";
@@ -13,23 +12,18 @@ include "backend-well";
 include "backend-elections";
 include "backend-watching";
 include "backend-games";
+include "backend-weddings-api";
 include "community-esi";
 include "https-redirect";
 include "device-detect";
-#include "nyt-a-aballoc";
 include "cookie";
 include "userinfo";
 include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
-#include "realestate-config";
 include "glogin-redirect";
 include "uuid";
-#include "rmid";
-#include "abtest-config";
-#include "interim-config";
-#include "homepage-abtest";
-#include "internal-https";
+include "response-headers";
 
 sub vcl_recv {
 #FASTLY recv
@@ -52,8 +46,8 @@ sub vcl_recv {
   }
 
 
-  if ( req.backend == www_dev 
-    || req.backend == www_stg 
+  if ( req.backend == www_dev
+    || req.backend == www_stg
     || req.backend == www_prd
     || req.backend == www_https_dev
     || req.backend == www_https_stg
@@ -61,7 +55,7 @@ sub vcl_recv {
     ) {
     return(pass);
   }
- 
+
   // URIs not accessible via Varnish VIPs
   if (   req.url ~ "^/svc/web-shell/"
       || req.url ~ "^/svc/web-products/shell/"
@@ -98,7 +92,7 @@ sub vcl_recv {
 
 sub vcl_fetch {
 #FASTLY fetch
-  
+
   # setting this for debugging
   set req.http.X-NYT-Backend = beresp.backend.name;
 
@@ -131,7 +125,7 @@ sub vcl_fetch {
       remove beresp.http.Set-Cookie;
     }
   }
-  
+
   if ((beresp.status == 500 || beresp.status == 503) && req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
     restart;
   }
@@ -179,7 +173,7 @@ sub vcl_fetch {
     } else {
       set beresp.ttl = 60s;
     }
-    
+
   }
 
   return(deliver);
@@ -196,7 +190,7 @@ sub vcl_hit {
 
 sub vcl_miss {
 #FASTLY miss
-  
+
   // remove headers we set for processing cookie stuff
   // backend definitely doesn't need these
   remove bereq.http.x-nyt-edition;

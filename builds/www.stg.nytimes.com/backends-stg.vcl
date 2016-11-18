@@ -1,4 +1,3 @@
-
 backend blogs_fe_stg {
     .host = "www.stg.gtm.nytimes.com";
     .port = "80";
@@ -80,8 +79,6 @@ backend www_static_stg {
     }
 }
 
-
-#ELECTIONS BACKENDS
 backend newsdev_instance_stg_use1_1 {
     .host = "23.21.133.252";
     .port = "80";
@@ -135,7 +132,6 @@ backend games_stg {
     }
 }
 
-
 backend beta_well_stg {
     .host = "np-well-stg-public-1893072346.us-east-1.elb.amazonaws.com";
     .port = "80";
@@ -161,6 +157,22 @@ backend beta_watching_stg {
     .between_bytes_timeout = 5s;
     .probe = {
         .url = "/api/health";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
+backend du_weddings_api_stg {
+    .host = "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/version.json";
         .timeout = 3s;
         .interval = 5s;
         .window = 5;
