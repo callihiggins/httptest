@@ -1,5 +1,6 @@
 include "acl-internal";
-include "acl-external-staging-access"
+include "acl-external-staging-access";
+include "acl-crawlers";
 include "sanitize-url";
 include "normalize-url";
 include "initialize-vars";
@@ -34,17 +35,6 @@ sub vcl_recv {
   if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
     return(pass);
   }
-
-  // block everyone but the internal ACL to dev service
-  if ( client.ip !~ internal && req.http.host ~ "\.dev\.") {
-      error 403 "Forbidden";
-  }
-
-  // block everyone but internal acl and staging access acl to staging service
-  if ( client.ip !~ internal && client.ip !~ external_staging_access && req.http.host ~ "\.stg\.") {
-      error 403 "Forbidden";
-  }
-
 
   if ( req.backend == www_dev
     || req.backend == www_stg
