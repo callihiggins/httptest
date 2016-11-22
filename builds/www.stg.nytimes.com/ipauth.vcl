@@ -1,6 +1,16 @@
-include "acl-crawlers";
-
 sub vcl_recv {
+
+
+    // block everyone but the internal ACL to dev service
+    if ( client.ip !~ internal && req.http.x-environment == "dev") {
+      error 403 "Forbidden";
+    }
+
+    // block everyone but internal acl and staging access acl to staging service
+    if ( client.ip !~ internal && client.ip !~ external_staging_access && req.http.x-environment == "stg") {
+      error 403 "Forbidden";
+    }
+
 
     if (req.http.user-agent ~ "(?i)googlebot|mediapartners-google|adsbot-google|amphtml|developers\.google\.com/\+/web/snippet/") {
         # Googlebot user-agents: https://support.google.com/webmasters/answer/1061943
