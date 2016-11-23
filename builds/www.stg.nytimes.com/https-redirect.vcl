@@ -22,6 +22,8 @@ sub vcl_recv {
             || req.url ~ "^/subscriptions"
             || req.url ~ "^/services/xml/rss"
             || req.url ~ "^/regilite"
+            || req.url ~ "^/newsletters/regilite/button"
+            || req.url ~ "^/wrapper.html"
         ) {
             // removed this logic for now just let it fall through...
 
