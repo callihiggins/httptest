@@ -26,7 +26,7 @@ sub vcl_recv {
             || req.url ~ "^/wrapper.html"
             || req.url == "/interactive/2016/world/news-tips.html"
             || req.url ~ "^/tips(/)?$"
-            || req.url ~ "^/securedrop$"
+            || req.url == "/securedrop"
         ) {
             // removed this logic for now just let it fall through...
 
@@ -54,7 +54,7 @@ sub vcl_recv {
             || req.url ~ "^/gst/emailus.html"
             || req.url == "/interactive/2016/world/news-tips.html"
             || req.url ~ "^/tips(/)?$"
-            || req.url ~ "^/securedrop$"
+            || req.url == "/securedrop"
         ) { 
             set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
             error 443 req.http.x-Redir-Url;
