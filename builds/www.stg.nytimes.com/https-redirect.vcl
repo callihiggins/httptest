@@ -24,6 +24,9 @@ sub vcl_recv {
             || req.url ~ "^/regilite"
             || req.url ~ "^/newsletters/regilite"
             || req.url ~ "^/wrapper.html"
+            || req.url == "/interactive/2016/world/news-tips.html"
+            || req.url ~ "^/tips(/)?$"
+            || req.url ~ "^/securedrop$"
         ) {
             // removed this logic for now just let it fall through...
 
@@ -42,12 +45,16 @@ sub vcl_recv {
         }
     }
 
+    # urls that MUST be served securely
     if (!req.http.Fastly-SSL) {
         if (   
             req.url ~ "^/store"
             || req.url ~ "^/auth/hdlogin"
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
+            || req.url == "/interactive/2016/world/news-tips.html"
+            || req.url ~ "^/tips(/)?$"
+            || req.url ~ "^/securedrop$"
         ) { 
             set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
             error 443 req.http.x-Redir-Url;
