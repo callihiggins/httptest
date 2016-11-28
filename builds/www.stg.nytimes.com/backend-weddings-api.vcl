@@ -6,10 +6,9 @@ sub vcl_recv {
                 call set_du_weddings_api_backend;
                 set req.http.X-PageType = "weddings-api";
                 set req.http.x-skip-glogin = "1";
+                return(pass);
             }
         }
-
-        return(pass);
     }
 }
 
