@@ -45,6 +45,7 @@ sub vcl_recv {
         || req.url ~ "^/services/xml/rss"
         || req.url ~ "^/tips(/)?$"
         || req.url == "/securedrop"
+        || req.url == "/interactive/2016/world/news-tips.html"
     ) {
         set req.http.x-PageType = "legacy";
         call set_www_https_backend;
