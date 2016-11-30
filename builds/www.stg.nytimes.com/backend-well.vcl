@@ -1,7 +1,10 @@
 sub vcl_recv {
 
     if(req.http.x-environment == "stg") {
-        if (req.url ~ "^/well/") {
+        if (   req.url ~ "^/well/"
+            || req.url ~ "^/guides/"
+            || req.url.path == "/guides"
+        ) {
             set req.http.X-PageType = "well";
             call set_beta_well_backend;
             set req.grace = 24h;
