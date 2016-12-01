@@ -17,9 +17,9 @@ a review
 
 #### Guidelines:
 
-* **Don't push directly to master!**
-* Approvals are required before merging. The number of approvals required should
-be determined by the reviewer
+* Master is protected to block pushes directly to master, and merges without
+approvals.
+* The number of approvals required should be determined by the reviewer
 * This is basically [GitHub Flow][ghf].
 * Follow [Tim Pope's advice][tpa] on commit messages.
 * Push early and often, so your colleagues can see what you're working on.
