@@ -248,7 +248,7 @@ backend games_prd {
     .host = "nyt-games-prd.appspot.com";
     .port = "443";
     .dynamic = true;
-    .ssl_cert_hostname = "*.appspot.com";
+    .ssl_cert_hostname = "nyt-games-prd.appspot.com";
     .host_header = "nyt-games-prd.appspot.com";
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
