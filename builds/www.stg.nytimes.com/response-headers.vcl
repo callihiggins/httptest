@@ -66,6 +66,15 @@ sub vcl_deliver {
         }
     }
 
+    // remove deprecated internal https cookie
+    if (client.ip ~ internal && req.http.Cookie:nyt.np.https-everywhere) {
+        add resp.http.Set-Cookie =
+            "nyt.np.https-everywhere=; " +
+            "Expires=" + time.sub(now, 365d) + "; "+
+            "Path=/ ;" +
+            "Domain=.nytimes.com";
+    }
+
     // for HTTPS
     if (req.http.Fastly-SSL && client.ip ~ internal) {
         if (req.http.x-environment == "prd") {

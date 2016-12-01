@@ -322,6 +322,15 @@ sub vcl_deliver {
       set resp.http.NYT-disable-for-perf-key = req.http.NYT-disable-for-perf-key;
     }
 
+    // remove deprecated internal https cookie
+    if (client.ip ~ internal && req.http.Cookie:nyt.np.https-everywhere) {
+        add resp.http.Set-Cookie =
+            "nyt.np.https-everywhere=; " +
+            "Expires=" + time.sub(now, 365d) + "; "+
+            "Path=/ ;" +
+            "Domain=.nytimes.com";
+    }
+
     if (resp.http.Content-Type ~ "^text/html" && req.http.Fastly-SSL && client.ip ~ internal) {
         if (req.http.x-environment == "prd") {
             set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content; report-uri https://nytimes.report-uri.io/r/default/csp/enforce;";
