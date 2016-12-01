@@ -19,7 +19,8 @@ sub vcl_recv {
     if (   req.http.X-PageType == "homepage"
         || ( req.http.X-PageType == "article" && req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || req.http.X-PageType == "collection"
-        || req.http.X-PageType == "video-library"
+        # temporarily comment out video libarary
+        # || req.http.X-PageType == "video-library"
     ) {
         set req.http.x-https-phase = "1";
     }
