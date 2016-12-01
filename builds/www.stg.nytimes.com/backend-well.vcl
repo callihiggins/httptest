@@ -7,11 +7,6 @@ sub vcl_recv {
             set req.grace = 24h;
             # XXX -- Consider unsetting this header at the top of recv so the client can't set it and bypass your auth -- stephen
             set req.http.x-skip-glogin = "1";
-            unset req.http.Cookie;
-            unset req.http.X-Cookie;
-            unset req.http.x-nyt-edition;
-            unset req.http.x-nyt-s;
-            unset req.http.x-nyt-wpab;
         }
 
         if (req.http.magicmarker-well == "fake") {
