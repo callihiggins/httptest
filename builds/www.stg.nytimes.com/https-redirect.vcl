@@ -84,6 +84,7 @@ sub vcl_recv {
         // WSRE-214: Phase 1 urls are https by default internally
         } else if (
             client.ip ~ internal
+            && req.request != "FASTLYPURGE"
             && req.http.x-https-phase == "1"
             && !req.http.x-internal-https-opt-out
         ) {
