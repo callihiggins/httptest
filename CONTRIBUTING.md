@@ -17,8 +17,9 @@ a review
 
 #### Guidelines:
 
-* Master is protected to block pushes directly to master, and merges without
-approvals.
+* Master is protected:
+  * no pushes directly to master
+  * require approvals for merges
 * The number of approvals required should be determined by the reviewer
 * This is basically [GitHub Flow][ghf].
 * Follow [Tim Pope's advice][tpa] on commit messages.
