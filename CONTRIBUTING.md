@@ -7,19 +7,24 @@
 1. Push the branch, and open a PR
 1. Keep adding commits until you're ready
 1. Assign someone from [delivery engineering][dv] to indicate that you'd like
-1 review
+a review
 1. Be patient, or ping the reviewer on Slack if it's urgent
 1. Respond to comments by pushing more commits or simply explaining
-1. After the required approval, let the reviewer (or the submitter if from
-delivery engineering) click the merge button
+1. Once the reviewer has approved the PR:
+  * merge it yourself if you have access
+  * have the reviewer merge
+1. Delete the branch
 
 #### Guidelines:
 
+* **Don't push directly to master!**
+* Approvals are required before merging. The number of approvals required should
+be determined by the reviewer
 * This is basically [GitHub Flow][ghf].
 * Follow [Tim Pope's advice][tpa] on commit messages.
-* Don't merge a PR unless you're assigned, but feel free to comment.
 * Push early and often, so your colleagues can see what you're working on.
 * Rebase and force push as often as you like. It's your branch.
+* Avoid long running branches
 
 
 
