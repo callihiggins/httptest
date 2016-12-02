@@ -50,6 +50,7 @@ sub vcl_recv {
             || req.url ~ "^/mem/email-this.html"
             || req.url ~ "^/packages/html/mobile/"
             || req.url ~ "^/interactive/.*([0-9]+).embedded.html"
+            || req.url ~ "^/export_html/common/new_login_iframe.html"
         ) {
 
         /*

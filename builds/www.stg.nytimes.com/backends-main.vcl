@@ -182,6 +182,11 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
+    // embedded interactives on mobile should not go to glogin
+    if (req.url ~ "^/interactive/.*([0-9]+).embedded.html") {
+        set req.http.x-skip-glogin = "1";
+    }
+
     // blogs
     if (   req.http.host == "dealbook.nytimes.com"
         || req.http.host == "developers.nytimes.com"
