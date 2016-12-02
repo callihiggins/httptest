@@ -87,13 +87,6 @@ sub vcl_recv {
         set req.http.x-skip-glogin = "1";
     }
 
-    if (   req.url ~ "^/newsletters/timesvideo"
-        || req.url ~ "^/newsletters/timesvideo$"
-    ) {
-        set req.http.X-PageType = "newsletter-legacy";
-        call set_www_backend;
-    }
-
     // slideshow application
     if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
         || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
