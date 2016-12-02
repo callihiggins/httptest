@@ -46,6 +46,10 @@ sub vcl_recv {
             || req.url == "/interactive/2016/world/news-tips.html"
             || req.url ~ "^/tips(/)?$"
             || req.url == "/securedrop"
+            || req.url ~ "^/es/wp-json/nyt/"
+            || req.url ~ "^/mem/email-this.html"
+            || req.url ~ "^/packages/html/mobile/"
+            || req.url ~ "^/interactive/.*([0-9]+).embedded.html"
         ) {
 
         /*
