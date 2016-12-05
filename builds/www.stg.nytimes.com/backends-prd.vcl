@@ -243,3 +243,21 @@ backend du_weddings_api_prd {
     }
 }
 */
+
+backend games_prd {
+    .host = "nyt-games-prd.appspot.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "nyt-games-prd.appspot.com";
+    .host_header = "nyt-games-prd.appspot.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/status.txt";
+        .timeout = 10s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
+    }
+}
