@@ -88,9 +88,9 @@ sub vcl_fetch {
 
   # Vary on this header for HTTPS version, so we can purge both versions at the same time
   if (beresp.http.Vary) {
-    set beresp.http.Vary = beresp.http.Vary ", req.http.Fastly-SSL";
+    set beresp.http.Vary = beresp.http.Vary ", Fastly-SSL";
   } else {
-    set beresp.http.Vary = "req.http.Fastly-SSL";
+    set beresp.http.Vary = "Fastly-SSL";
   }
 
   # unset headers for cacheable community requests
