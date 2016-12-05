@@ -181,14 +181,7 @@ sub vcl_hit {
 sub vcl_miss {
 #FASTLY miss
 
-  // remove headers we set for processing cookie stuff
-  // backend definitely doesn't need these
-  remove bereq.http.x-nyt-edition;
-  remove bereq.http.x-nyt-a;
-  remove bereq.http.x-nyt-wpab;
-  remove bereq.http.x-nyt-s;
-  remove bereq.http.x-nyt-d;
-  remove bereq.http.x-bcet-secret-key;
+  call unset_extraneos_bereq_headers;
 
   // this should be removed already, but lets be sure
   // since this was a lookup we weren't pass
@@ -228,4 +221,19 @@ sub vcl_error {
 
 sub vcl_pass {
 #FASTLY pass
+
+  call unset_extraneos_bereq_headers;
+
+}
+
+sub unset_extraneos_bereq_headers {
+  // remove headers used as variables for logic
+  // backend definitely doesn't need these
+  unset bereq.http.x-nyt-edition;
+  unset bereq.http.x-nyt-a;
+  unset bereq.http.x-nyt-wpab;
+  unset bereq.http.x-nyt-s;
+  unset bereq.http.x-nyt-d;
+  unset bereq.http.x-bcet-secret-key;
+
 }
