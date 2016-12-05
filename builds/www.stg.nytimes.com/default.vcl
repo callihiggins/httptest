@@ -181,7 +181,7 @@ sub vcl_hit {
 sub vcl_miss {
 #FASTLY miss
 
-  call unset_extraneos_bereq_headers;
+  call unset_extraneous_bereq_headers;
 
   // this should be removed already, but lets be sure
   // since this was a lookup we weren't pass
@@ -221,12 +221,10 @@ sub vcl_error {
 
 sub vcl_pass {
 #FASTLY pass
-
-  call unset_extraneos_bereq_headers;
-
+  call unset_extraneous_bereq_headers;
 }
 
-sub unset_extraneos_bereq_headers {
+sub unset_extraneous_bereq_headers {
   // remove headers used as variables for logic
   // backend definitely doesn't need these
   unset bereq.http.x-nyt-edition;
@@ -235,5 +233,4 @@ sub unset_extraneos_bereq_headers {
   unset bereq.http.x-nyt-s;
   unset bereq.http.x-nyt-d;
   unset bereq.http.x-bcet-secret-key;
-
 }
