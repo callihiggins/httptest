@@ -51,6 +51,11 @@ sub vcl_recv {
             || req.url ~ "^/packages/html/mobile/"
             || req.url ~ "^/interactive/.*([0-9]+).embedded.html"
             || req.url ~ "^/export_html/common/new_login_iframe.html"
+            || req.url ~ "^/ads/AdCade/adcadebuster.html"
+            || req.url ~ "^/ads/Flite/fif.html"
+            || req.url ~ "^/ads/Jivox/Jivoxibuster.html"
+            || req.url ~ "^/ads/pickle/eval_banner_v3.html"
+            || req.url ~ "^/ads/eyeblaster/addineyeV2.html"
         ) {
 
         /*
