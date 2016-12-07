@@ -58,10 +58,11 @@ sub vcl_recv {
             || req.url ~ "^/ads/eyeblaster/addineyeV2.html"
         ) {
 
-        /*
-        // video section is public over https
-        } else if ( req.http.X-PageType == "video-library" ) {
-        */
+        // video section and 2014 articles are public over https (seo test)
+        } else if (
+               req.http.X-PageType == "video-library"
+            || ( req.http.X-PageType == "article" && req.url ~ "^/2014/" ) // 2014
+        ) {
 
         // WSRE-214: Phase 1 urls are https by default internally
         } else if ( 
@@ -104,11 +105,12 @@ sub vcl_recv {
         } else if ( req.http.x-nyt-np-enable-https == "1" && client.ip ~ internal) {
             call redirect_to_https;
 
-        /*
-        // video section is public over https
-        } else if ( req.http.X-PageType == "video-library" ) {
+        // video section and 2014 articles are public over https (seo test)
+        } else if (
+               req.http.X-PageType == "video-library"
+            || ( req.http.X-PageType == "article" && req.url ~ "^/2014/" ) // 2014
+        ) {
             call redirect_to_https;
-        */
 
         }
     }
