@@ -19,7 +19,8 @@ sub vcl_recv {
     # remove query strings like login-email, login-password etc.
     if (req.url ~ "[?&]login-[^=&]+") {
         set req.url = querystring.regfilter(req.url, "^login-*");
-        error 750 "http://" + req.http.host + req.url;
+        set req.http.X-Redir-Url = "http://" + req.http.host + req.url;
+        error 750 req.http.X-Redir-Url;
     }
 
 }
