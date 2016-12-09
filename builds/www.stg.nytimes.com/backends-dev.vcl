@@ -182,9 +182,9 @@ backend du_weddings_api_dev {
     .host = "content.api.dev.nytimes.com";
     .port = "80";
     .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
+    .connect_timeout = 120s;
+    .first_byte_timeout = 120s;
+    .between_bytes_timeout = 120s;
     .probe = {
         .url = "/version.json";
         .timeout = 3s;
