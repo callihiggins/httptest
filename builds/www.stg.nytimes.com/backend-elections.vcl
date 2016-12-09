@@ -33,7 +33,7 @@ sub vcl_fetch {
             }
             return(restart);
         }
-        
+
         # set beresp.grace = 86400s; # equivalent to next line
         set beresp.stale_if_error = 86400s;
         set beresp.stale_while_revalidate = 30s;
@@ -42,7 +42,7 @@ sub vcl_fetch {
 
 sub vcl_deliver {
     if (req.http.X-PageType == "elections") {
-        set resp.http.X-API-Version = "F-I";
+        set resp.http.X-API-Version = "I";
     }
 }
 

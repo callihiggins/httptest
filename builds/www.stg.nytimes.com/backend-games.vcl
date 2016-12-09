@@ -1,14 +1,11 @@
 sub vcl_recv {
 
-    if (req.http.x-environment == "stg") {
-        
-        if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
-            if (req.url ~ "^/svc/crosswords/") {
-                set req.http.X-PageType = "games-service";
-                call set_games_backend;
-                set req.http.x-skip-glogin = "1";
-                return(pass);
-            }
+    if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
+        if (req.url ~ "^/svc/crosswords/") {
+            set req.http.X-PageType = "games-service";
+            call set_games_backend;
+            set req.http.x-skip-glogin = "1";
+            return(pass);
         }
     }
 }
@@ -26,6 +23,7 @@ sub set_games_backend {
         set req.backend = games_stg;
         set req.http.host = "nyt-games-dev.appspot.com";
     } else {
-        //set req.backend = beta_watching_prd;
+        set req.backend = games_prd;
+        set req.http.host = "nyt-games-prd.appspot.com";
     }
 }

@@ -12,8 +12,6 @@ sub vcl_recv {
                     set req.http.X-PageType = "watching-nocache";
                 } else {
                     set req.http.X-PageType = "watching";
-                    unset req.http.Cookie;
-                    unset req.http.X-Cookie;
                 }
                 call set_beta_watching_backend;
                 set req.grace = 24h;

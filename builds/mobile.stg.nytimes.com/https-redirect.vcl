@@ -1,12 +1,12 @@
 sub vcl_recv {
     /*
-     * capture test cookie value, if present
+     * capture the internal https opt out cookie, if present
      */
-    if (req.http.Cookie:nyt.np.https-everywhere) {
-        set req.http.x-nyt-np-https-everywhere = urldecode(req.http.Cookie:nyt.np.https-everywhere);
+    if (req.http.Cookie:nyt.np.internal-https-opt-out) {
+        set req.http.x-internal-https-opt-out = urldecode(req.http.Cookie:nyt.np.internal-https-opt-out);
     }
 
-    // detect that Fastly terminated a TLS connection
+    // IS a HTTPS connection
     if (req.http.Fastly-SSL) {
         // whitelist of URIs that must be supported via both HTTP and HTTPS
         if (   req.url ~ "^/svc/"
@@ -23,34 +23,31 @@ sub vcl_recv {
             || req.url ~ "^/services/xml/rss"
             || req.url ~ "^/regilite"
         ) {
-            // removed this logic for now just let it fall through...
 
-        } else if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
-            // WP-17776: temporary cookie for HTTPS Everywhere testing
-            #set req.http.x-is-https = "-HTTPS";
+        // WSRE-214: All MW urls are https by default internally
+        } else if ( client.ip ~ internal && !req.http.x-internal-https-opt-out ) {
+
+        // if not in the above categories, redirect to http
         } else {
-            set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
-            error 443 req.http.x-Redir-Url;
+            call redirect_to_http;
         }
-    } else {
-        // WP-18256: HTTPS Everywhere redirect to HTTPS when cookie enable + internal IP
-        if ( req.http.x-nyt-np-https-everywhere == "1" && client.ip ~ internal) {
-            set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
-            error 443 req.http.x-Redir-Url;
-        }
-    }
 
-    if (!req.http.Fastly-SSL) {
-        if (   
-            req.url ~ "^/store"
+    // NOT a HTTPS connection
+    } else {
+        // MUST be over HTTPS
+        if (   req.url ~ "^/store"
             || req.url ~ "^/auth/hdlogin"
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
         ) { 
-            set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
-            error 443 req.http.x-Redir-Url;
+            call redirect_to_https;
+
+        // WSRE-214: All MW urls are https by default internally
+        } else if (client.ip ~ internal && !req.http.x-internal-https-opt-out ) {
+            call redirect_to_https;
         }
     }
+
 }
 
 sub vcl_error {
@@ -61,4 +58,14 @@ sub vcl_error {
         set obj.http.X-API-Version = "0";
         return(deliver);
     }
+}
+
+sub redirect_to_http {
+    set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
+    error 443 req.http.x-Redir-Url;
+}
+
+sub redirect_to_https {
+    set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
+    error 443 req.http.x-Redir-Url;
 }

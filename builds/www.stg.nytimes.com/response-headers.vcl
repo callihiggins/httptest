@@ -10,6 +10,12 @@ sub vcl_deliver {
     remove resp.http.X-Powered-By;
     remove resp.http.X-Varnish;
 
+<<<<<<< HEAD
+=======
+    // Well is setting Strict-Transport-Security! This leaks out so we need to remove it.
+    // NO ONE can set this themselves for our entire domain.
+    unset resp.http.strict-transport-security;
+>>>>>>> master
 
     # set some headers
     set resp.http.Connection = "close";
@@ -63,12 +69,21 @@ sub vcl_deliver {
         }
     }
 
+    // remove deprecated internal https cookie
+    if (client.ip ~ internal && req.http.Cookie:nyt.np.https-everywhere) {
+        add resp.http.Set-Cookie =
+            "nyt.np.https-everywhere=; " +
+            "Expires=" + time.sub(now, 365d) + "; "+
+            "Path=/ ;" +
+            "Domain=.nytimes.com";
+    }
+
     // for HTTPS
     if (req.http.Fastly-SSL && client.ip ~ internal) {
         if (req.http.x-environment == "prd") {
-            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content; report-uri https://nytimes.report-uri.io/r/default/csp/enforce;";
+            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content; report-uri https://nytimes.report-uri.io/r/default/csp/enforce;";
         } else {
-            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
+            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
         }
     }
 }

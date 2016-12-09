@@ -43,6 +43,9 @@ sub vcl_recv {
         || req.url ~ "^/gst/emailus.html"
         || req.url ~ "^/subscriptions"
         || req.url ~ "^/services/xml/rss"
+        || req.url ~ "^/tips(/)?$"
+        || req.url == "/securedrop"
+        || req.url == "/interactive/2016/world/news-tips.html"
     ) {
         set req.http.x-PageType = "legacy";
         call set_www_https_backend;
@@ -82,13 +85,6 @@ sub vcl_recv {
         set req.http.X-PageType = "newsletter";
         call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
-    }
-
-    if (   req.url ~ "^/newsletters/timesvideo"
-        || req.url ~ "^/newsletters/timesvideo$"
-    ) {
-        set req.http.X-PageType = "newsletter-legacy";
-        call set_www_backend;
     }
 
     // slideshow application
@@ -184,6 +180,11 @@ sub vcl_recv {
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
         set req.http.X-PageType = "interactive";
         call set_www_fe_backend;
+    }
+
+    // embedded interactives on mobile should not go to glogin
+    if (req.url ~ "^/interactive/.*([0-9]+).embedded.html") {
+        set req.http.x-skip-glogin = "1";
     }
 
     // blogs

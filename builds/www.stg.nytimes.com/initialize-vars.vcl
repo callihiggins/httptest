@@ -42,12 +42,17 @@ sub vcl_recv {
       set req.http.x-nyt-bcet = req.http.Cookie:nyt-bcet;
     }
 
-    if(req.http.host ~ "\.dev\."){
+    if (req.http.host ~ "\.dev\."){
       set req.http.x-environment = "dev";
     } else if (req.http.host ~ "\.stg\."){
       set req.http.x-environment = "stg";
     } else {
       set req.http.x-environment = "prd";
+    }
+
+    // set the original protocol to let downstream systems know what it was
+    if (req.http.Fastly-SSL) {
+      set req.http.X-Forwarded-Proto = "https";
     }
 
 
