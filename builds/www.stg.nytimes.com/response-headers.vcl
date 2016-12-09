@@ -10,12 +10,10 @@ sub vcl_deliver {
     remove resp.http.X-Powered-By;
     remove resp.http.X-Varnish;
 
-<<<<<<< HEAD
-=======
+
     // Well is setting Strict-Transport-Security! This leaks out so we need to remove it.
     // NO ONE can set this themselves for our entire domain.
     unset resp.http.strict-transport-security;
->>>>>>> master
 
     # set some headers
     set resp.http.Connection = "close";
