@@ -11,7 +11,7 @@ sub vcl_recv {
         && req.backend != www_https_stg
         && req.backend != www_https_prd) 
         && req.http.X-CRWL != "true"
-        // && !req.http.X-Cache-Reset
+        && req.request != "FASTLYPURGE"
         && !req.http.x-skip-glogin
         && req.http.X-PageType != "homepage"
         && req.http.X-PageType != "trending"
