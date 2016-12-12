@@ -190,8 +190,8 @@ sub vcl_recv {
     // blogs
     if (   req.http.host == "dealbook.nytimes.com"
         || req.http.host == "developers.nytimes.com"
-        || req.http.host ~  "blogs\.nytimes\.com$"
-        || req.http.host ~  "blogs\.ewr1.nytimes\.com$"
+        || req.http.host ~  "(blogs|blogs5)\.(dev\.|stg\.|)?nytimes\.com$"
+        || req.http.host ~  "(blogs|blogs5)\.ewr1.nytimes\.com$"
         || req.http.host ~  "(www\.)?nytco\.com$"
     ) {
         set req.http.X-PageType = "blog";
@@ -215,8 +215,9 @@ sub vcl_recv {
         call set_blogs_fe_backend;
     }
     // blogs under WWW hostname
-    if (   req.http.host ~ "^(www\.)?(dev\.|stg\.|)?nytimes.com$"
-        || req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" ) {
+    if (   req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"
+        || req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$"
+    ) {
         if (   req.url ~  "^/news/"
             || req.url ~  "^/news$"
             || req.url ~  "^/politics/first-draft"

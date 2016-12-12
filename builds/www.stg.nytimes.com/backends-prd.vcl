@@ -1,12 +1,12 @@
 backend blogs_fe_prd {
-    .host = "www.gtm.nytimes.com";
+    .host = "blogs.gtm.nytimes.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/status.txt";
+        .url = "/.status-for-fastly";
         .timeout = 10s;
         .interval = 30s;
         .window = 10;
