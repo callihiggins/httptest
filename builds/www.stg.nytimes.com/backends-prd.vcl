@@ -52,7 +52,7 @@ backend www_https_prd {
     .dynamic = true;
     .ssl_cert_hostname = "www.nytimes.com";
     .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
+    .first_byte_timeout = 30s;
     .between_bytes_timeout = 10s;
     .probe = {
         .url = "/.status-for-fastly";
