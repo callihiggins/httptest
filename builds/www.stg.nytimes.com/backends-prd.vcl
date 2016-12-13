@@ -227,7 +227,7 @@ director beta_watching_prd round-robin {
 */
 
 backend du_weddings_api_prd {
-    .host = "content.api.prd.nytimes.com";
+    .host = "content.api.nytimes.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 120s;
