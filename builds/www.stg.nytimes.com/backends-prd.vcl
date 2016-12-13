@@ -226,7 +226,6 @@ director beta_watching_prd round-robin {
 }
 */
 
-/*
 backend du_weddings_api_prd {
     .host = "content.api.prd.nytimes.com";
     .port = "80";
@@ -242,7 +241,6 @@ backend du_weddings_api_prd {
         .threshold = 4;
     }
 }
-*/
 
 backend games_prd {
     .host = "nyt-games-prd.appspot.com";
