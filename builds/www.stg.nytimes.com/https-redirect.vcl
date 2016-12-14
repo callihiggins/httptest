@@ -29,7 +29,7 @@ sub vcl_recv {
             || req.url ~ "^/regilite"
             || req.url ~ "^/newsletters/regilite"
             || req.url ~ "^/wrapper.html"
-            || req.url == "/interactive/2016/world/news-tips.html"
+            || req.url ~ "^/newsgraphics/2016/news-tips"
             || req.url ~ "^/tips(/)?$"
             || req.url == "/securedrop"
             || req.url ~ "^/es/wp-json/nyt/"
@@ -76,7 +76,7 @@ sub vcl_recv {
             || req.url ~ "^/auth/hdlogin"
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
-            || req.url == "/interactive/2016/world/news-tips.html"
+            || req.url ~ "^/newsgraphics/2016/news-tips"
             || req.url ~ "^/tips(/)?$"
             || req.url == "/securedrop"
         ) { 
