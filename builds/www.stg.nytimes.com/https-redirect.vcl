@@ -1,19 +1,5 @@
 sub vcl_recv {
     /*
-     * capture https enable cookie value, if present
-     */
-    if (req.http.Cookie:nyt.np.enable-https) {
-        set req.http.x-nyt-np-enable-https = urldecode(req.http.Cookie:nyt.np.enable-https);
-    }
-
-    /*
-     * capture the internal https opt out cookie, if present
-     */
-    if (req.http.Cookie:nyt.np.internal-https-opt-out) {
-        set req.http.x-internal-https-opt-out = urldecode(req.http.Cookie:nyt.np.internal-https-opt-out);
-    }
-
-    /*
      * Phase 1 candidates
      */
     if (   req.http.X-PageType == "homepage"
@@ -72,7 +58,11 @@ sub vcl_recv {
         ) {
 
         // internal https cookie-based test
-        } else if ( req.http.x-nyt-np-enable-https == "1" && client.ip ~ internal) {
+        } else if (
+               client.ip ~ internal
+            && req.http.x-nyt-np-enable-https == "1"
+            && !req.http.x-internal-https-opt-out
+        ) {
 
         // if not in the above categories, redirect to http
         } else {
@@ -102,7 +92,11 @@ sub vcl_recv {
             call redirect_to_https;
 
         // internal https cookie-based test
-        } else if ( req.http.x-nyt-np-enable-https == "1" && client.ip ~ internal) {
+        } else if (
+               client.ip ~ internal
+            && req.http.x-nyt-np-enable-https == "1"
+            && !req.http.x-internal-https-opt-out
+        ) {
             call redirect_to_https;
 
         // video section and 2014 articles are public over https (seo test)

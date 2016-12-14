@@ -55,6 +55,20 @@ sub vcl_recv {
       set req.http.X-Forwarded-Proto = "https";
     }
 
+    /*
+     * capture https enable cookie value, if present
+     */
+    if (req.http.Cookie:nyt.np.enable-https) {
+        set req.http.x-nyt-np-enable-https = urldecode(req.http.Cookie:nyt.np.enable-https);
+    }
+
+    /*
+     * capture the internal https opt out cookie, if present
+     */
+    if (req.http.Cookie:nyt.np.internal-https-opt-out) {
+        set req.http.x-internal-https-opt-out = urldecode(req.http.Cookie:nyt.np.internal-https-opt-out);
+    }
+
 
 
     set req.http.x-bcet-secret-key = "75b798658d2f43bc1caadb0260d175524ad3c874ab76a15c9aeef3cec11096597f068faca3133285a004fa2106799246dc050ec66c3e75c134d26b8d163b6086";
