@@ -16,6 +16,7 @@ sub vcl_recv {
         && req.http.X-PageType != "video-api" # except from video libarary
         && req.http.X-PageType != "article" # except from article requests
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
+        && req.http.X-PageType != "interactive" # except from interactive requests
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "legacy-cacheable"
         && req.http.X-PageType != "collections-svc"
@@ -158,11 +159,13 @@ sub vcl_recv {
                 "type" + querystring.filtersep() +
                 "services[]");
         } else if (req.http.X-PageType == "bestsellers") {
-        set req.url = querystring.filter_except(req.url, "nytapp");
+            set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.X-PageType == "collection") {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.X-PageType == "article") {
             set req.url = querystring.filter_except(req.url, "nytapp");
+        } else if (req.http.X-PageType == "interactive") {
+            set req.url = querystring.filter_except(req.url, "isHybrid");
         } else if (req.http.X-PageType == "community-svc-cacheable"){
             set req.url = querystring.filter(req.url, "_");
         } else if (req.http.X-PageType == "collections-svc"){
