@@ -181,7 +181,7 @@ backend du_weddings_api_stg {
 }
 
 backend subscription_stg {
-    .host = "mwcm-app-est-public.stg.iad2.nyt.net";
+    .host = "internal-mwcm-app-est-public-stg-i-111544-978285238.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
