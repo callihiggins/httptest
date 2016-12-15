@@ -146,10 +146,8 @@ director newsdev_elections_prd round-robin {
     { .backend = newsdev_instance_prd_usw1_2; }
 }
 
-# commenting out well backends until they are done
-/*
-backend beta_instance_prd_use1_1 {
-    .host = "well-proxy-0.prd.np.newsdev.net";
+backend beta_well_prd {
+    .host = "np-well-prd-public-1445398189.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
@@ -157,34 +155,12 @@ backend beta_instance_prd_use1_1 {
     .between_bytes_timeout = 5s;
     .probe = {
         .url = "/api/health";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
     }
 }
-
-backend beta_instance_prd_use1_2 {
-    .host = "well-proxy-1.prd.np.newsdev.net";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/api/health";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
-    }
-}
-
-director beta_well_prd round-robin {
-    { .backend = beta_instance_prd_use1_1; }
-    { .backend = beta_instance_prd_use1_2; }
-}
-*/
 
 # commenting these until watching is fixed
 /*
