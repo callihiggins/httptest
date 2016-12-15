@@ -179,3 +179,19 @@ backend du_weddings_api_stg {
         .threshold = 4;
     }
 }
+
+backend subscription_stg {
+    .host = "mwcm-app-est-public.stg.iad2.nyt.net";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}

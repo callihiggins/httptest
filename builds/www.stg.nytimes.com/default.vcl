@@ -14,6 +14,7 @@ include "backend-elections";
 include "backend-watching";
 include "backend-games";
 include "backend-weddings-api";
+include "backend-subscription";
 include "community-esi";
 include "https-redirect";
 include "device-detect";
