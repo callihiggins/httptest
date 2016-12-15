@@ -1,22 +1,20 @@
 sub vcl_recv {
 
-    if(req.http.x-environment == "stg") {
-        if (   req.url ~ "^/well/"
-            || req.url ~ "^/guides/"
-            || req.url.path == "/guides"
-        ) {
-            set req.http.X-PageType = "well";
-            call set_beta_well_backend;
-            set req.grace = 24h;
-            # XXX -- Consider unsetting this header at the top of recv so the client can't set it and bypass your auth -- stephen
-            set req.http.x-skip-glogin = "1";
-        }
+    if (   req.url ~ "^/well/"
+        || req.url ~ "^/guides/"
+        || req.url.path == "/guides"
+    ) {
+        set req.http.X-PageType = "well";
+        call set_beta_well_backend;
+        set req.grace = 24h;
+        # XXX -- Consider unsetting this header at the top of recv so the client can't set it and bypass your auth -- stephen
+        set req.http.x-skip-glogin = "1";
+    }
 
-        if (req.http.magicmarker-well == "fake") {
-            unset req.http.magicmarker-well;
-            set req.backend = beta_deadend;
-            return(lookup);
-        }
+    if (req.http.magicmarker-well == "fake") {
+        unset req.http.magicmarker-well;
+        set req.backend = beta_deadend;
+        return(lookup);
     }
 }
 
@@ -54,6 +52,6 @@ sub set_beta_well_backend {
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = beta_well_stg;
     } else {
-        //set req.backend = beta_well_prd;
+        set req.backend = beta_well_prd;
     }
 }
