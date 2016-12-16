@@ -560,4 +560,10 @@ acl external_staging_access {
 	"98.175.222.137"/32;
 	"98.175.222.139"/32;
 
+	#Comcast link in the washington DC bureau
+	"50.232.13.178"/30;
+
+	# XO Link in the washington DC bureau
+	"206.205.234.166"/30;
+
 }
