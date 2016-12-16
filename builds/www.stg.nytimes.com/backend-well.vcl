@@ -35,7 +35,7 @@ sub vcl_fetch {
 
 sub vcl_deliver {
     if (req.http.X-PageType == "well") {
-        set resp.http.X-API-Version = "F-W";
+        set resp.http.X-API-Version = "W";
     }
 }
 
