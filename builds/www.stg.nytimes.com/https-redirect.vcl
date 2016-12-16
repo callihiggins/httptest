@@ -24,7 +24,7 @@ sub vcl_recv {
             || req.url ~ "^/auth/hdlogin"
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
-            || req.url ~ "^/subscriptions"
+            || req.url ~ "^/subscription"
             || req.url ~ "^/services/xml/rss"
             || req.url ~ "^/regilite"
             || req.url ~ "^/newsletters/regilite"

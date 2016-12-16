@@ -179,3 +179,19 @@ backend du_weddings_api_stg {
         .threshold = 4;
     }
 }
+
+backend subscription_stg {
+    .host = "mwcm-app-est-public-stg-i-111544-1617096150.us-east-1.elb.amazonaws.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
