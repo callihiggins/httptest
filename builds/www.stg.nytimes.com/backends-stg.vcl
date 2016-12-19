@@ -86,6 +86,18 @@ backend newsdev_k8s_elb_stg {
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
+    .probe = {
+        # .url = "/status";
+        .request = 
+            "GET /status HTTP/1.1"
+            "Host: fastly-k8s-stg-pub-elb-1179075004.us-east-1.elb.amazonaws.com:30183"
+            "Connection: close"
+            "Accept: */*";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
 }
 
 backend newsdev_instance_stg_use1_1 {
