@@ -176,6 +176,12 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
+    if (req.url ~ "^/interactive/projects/") {
+        set req.http.X-PageType = "newsdev-static";
+        set req.http.x-skip-glogin = "1";
+        call set_www_newsdev_static_backend;
+    }
+
     // interactive years 2014-forever are NYT5
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
         set req.http.X-PageType = "interactive";
@@ -388,5 +394,15 @@ sub set_blogs_fe_backend {
         set req.backend = blogs_fe_stg;
     } else {
         set req.backend = blogs_fe_prd;
+    }
+}
+
+sub set_www_newsdev_static_backend {
+    if(req.http.host ~ "\.dev\.") {
+        set req.backend = newsdev_k8s_elb_stg;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = newsdev_k8s_elb_stg;
+    } else {
+        set req.backend = newsdev_k8s_elb_prd;
     }
 }

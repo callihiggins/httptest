@@ -79,6 +79,15 @@ backend www_static_stg {
     }
 }
 
+backend newsdev_k8s_elb_stg {
+    .host = "fastly-k8s-stg-pub-elb-1179075004.us-east-1.elb.amazonaws.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+}
+
 backend newsdev_instance_stg_use1_1 {
     .host = "23.21.133.252";
     .port = "80";

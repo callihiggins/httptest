@@ -79,6 +79,15 @@ backend www_static_prd {
     }
 }
 
+backend newsdev_k8s_elb_prd {
+    .host = "fastly-k8s-prd-pub-elb-636293017.us-east-1.elb.amazonaws.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+}
+
 backend newsdev_instance_prd_use1_1 {
     .host = "54.221.244.128";
     .port = "80";
