@@ -3,7 +3,10 @@ sub vcl_recv {
      * Phase 1 candidates
      */
     if (   req.http.X-PageType == "homepage"
-        || ( req.http.X-PageType == "article" && req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
+        || ( req.http.X-PageType == "article" 
+                && req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
+        || ( req.http.X-PageType == "blog"
+                && req.http.host !~ "^(lens|iht-retrospective|dotearth|krugman|news|well|kristof|douthat)\.blogs" )
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
     ) {
@@ -38,10 +41,22 @@ sub vcl_recv {
             || req.url ~ "^/interactive/.*([0-9]+).embedded.html"
             || req.url ~ "^/export_html/common/new_login_iframe.html"
             || req.url ~ "^/ads/AdCade/adcadebuster.html"
-            || req.url ~ "^/ads/Flite/fif.html"
-            || req.url ~ "^/ads/Jivox/Jivoxibuster.html"
-            || req.url ~ "^/ads/pickle/eval_banner_v3.html"
+            || req.url ~ "^/ads/AdGear/iframe_placement.html"
+            || req.url ~ "^/ads/adtech/iframeproxy.html"
+            || req.url ~ "^/ads/checkm8/CM8IframeBuster_v2.html"
             || req.url ~ "^/ads/eyeblaster/addineyeV2.html"
+            || req.url ~ "^/ads/flashtalking/ftlocal.html"
+            || req.url ~ "^/ads/Flite/fif.html"
+            || req.url ~ "^/ads/flite/flight.html"
+            || req.url ~ "^/ads/interpolls/cachebuster.html"
+            || req.url ~ "^/ads/Interpolls/pub_interpolls.html"
+            || req.url ~ "^/ads/Jivox/Jivoxibuster.html"
+            || req.url ~ "^/ads/linkstorm/linkstorm_nyt_bridge.html"
+            || req.url ~ "^/ads/mediaplex/mojofb_v9.html"
+            || req.url ~ "^/ads/mediaplex/mojofb_v9-4.html"
+            || req.url ~ "^/ads/pickle/eval_banner_v3.html"
+            || req.url ~ "^/ads/Spongecell/spongecell_iframe_buster.html"
+            || req.url ~ "^/ads/Weborama/adrime_burst_2_0_0.htm"
         ) {
 
         // video section and 2014 articles are public over https (seo test)
