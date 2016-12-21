@@ -176,10 +176,13 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    if (req.url ~ "^/interactive/projects/") {
-        set req.http.X-PageType = "newsdev-static";
-        set req.http.x-skip-glogin = "1";
-        call set_www_newsdev_static_backend;
+    if((req.http.x-environment == "dev") ||
+        (req.http.x-environment == "stg")) {
+        if (req.url ~ "^/interactive/projects/") {
+            set req.http.X-PageType = "newsdev-static";
+            set req.http.x-skip-glogin = "1";
+            call set_www_newsdev_static_backend;
+        }        
     }
 
     // interactive years 2014-forever are NYT5
