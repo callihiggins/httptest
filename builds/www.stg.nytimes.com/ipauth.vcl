@@ -1,6 +1,11 @@
 sub vcl_recv {
 
 
+    // block methbot
+    if ( client.ip ~ methbot) {
+        error 403 "Forbidden";
+    }
+
     // block everyone but the internal ACL to dev service
     if ( client.ip !~ internal && req.http.x-environment == "dev") {
       error 403 "Forbidden";
