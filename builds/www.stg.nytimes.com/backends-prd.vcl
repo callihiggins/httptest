@@ -88,8 +88,8 @@ backend newsdev_k8s_elb_prd {
     .between_bytes_timeout = 5s;
     .probe = {
         .request = 
-            "GET /status HTTP/1.1"
-            "Host: fastly-k8s-stg-pub-elb-1179075004.us-east-1.elb.amazonaws.com:30183"
+            "GET /interactive/projects/.healthcheck HTTP/1.1"
+            "Host: www.nytimes.com"
             "Connection: close"
             "Accept: */*";
         .timeout = 3s;
