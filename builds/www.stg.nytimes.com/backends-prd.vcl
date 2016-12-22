@@ -79,6 +79,26 @@ backend www_static_prd {
     }
 }
 
+backend newsdev_k8s_elb_prd {
+    .host = "fastly-k8s-prd-pub-elb-636293017.us-east-1.elb.amazonaws.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .request = 
+            "GET /interactive/projects/.healthcheck HTTP/1.1"
+            "Host: www.nytimes.com"
+            "Connection: close"
+            "Accept: */*";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
 backend newsdev_instance_prd_use1_1 {
     .host = "54.221.244.128";
     .port = "80";

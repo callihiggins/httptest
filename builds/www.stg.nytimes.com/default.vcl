@@ -12,6 +12,7 @@ include "www-redirect";
 include "backends-main";
 include "backend-well";
 include "backend-elections";
+include "backend-newsdev-static";
 include "backend-watching";
 include "backend-games";
 include "backend-weddings-api";
