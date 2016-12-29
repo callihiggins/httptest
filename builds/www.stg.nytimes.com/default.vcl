@@ -30,7 +30,6 @@ include "uuid";
 include "response-headers";
 
 sub vcl_recv {
-#FASTLY recv
 
   # Set the edge req header
   set req.http.X-NYT-Edge-CDN = "Fastly";

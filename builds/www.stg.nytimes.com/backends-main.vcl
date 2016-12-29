@@ -4,6 +4,8 @@ include "backends-prd";
 include "backends-deadend";
 
 sub vcl_recv {
+#FASTLY recv
+
     // use X-Host header, if present
     if ( req.http.X-Host ) {
         set req.http.host = req.http.X-Host;
