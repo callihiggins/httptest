@@ -178,7 +178,10 @@ sub vcl_recv {
 
     if((req.http.x-environment == "dev") ||
         (req.http.x-environment == "stg")) {
-        if (req.url ~ "^/interactive/projects/") {
+        if (
+                req.url ~ "^/interactive/projects/"
+            || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway/")
+        ) {
             set req.http.X-PageType = "newsdev-static";
             set req.http.x-skip-glogin = "1";
             call set_www_newsdev_static_backend;
