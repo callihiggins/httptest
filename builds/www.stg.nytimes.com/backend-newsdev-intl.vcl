@@ -1,5 +1,15 @@
 sub vcl_recv {
-  if (req.http.X-PageType == "newsdev-static") {
+  if (req.http.X-PageType == "newsdev-intl") {
+    if (req.request != "GET" &&
+      req.request != "HEAD") {
+      error 405 "Not allowed.";
+    }
+
+    # Bypass cache for logged-in WordPress users, etc.
+    if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {
+      return (pass);
+    }
+
     set req.grace = 24h;
 
     unset req.http.Cookie;
@@ -11,7 +21,7 @@ sub vcl_recv {
 }
 
 sub vcl_fetch {
-  if (req.http.X-PageType == "newsdev-static") {
+  if (req.http.X-PageType == "newsdev-intl") {
     unset beresp.http.X-Amz-Id-2;
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;
@@ -24,8 +34,8 @@ sub vcl_fetch {
     if (beresp.status >= 400 && beresp.status < 500) {
       set beresp.ttl = 3s;
     } else {
-      // default 5 minutes
-      set beresp.ttl = 300s;
+      // default 2 minutes
+      set beresp.ttl = 120s;
     }
 
     if (beresp.status >= 500) {

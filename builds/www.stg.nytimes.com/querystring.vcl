@@ -17,7 +17,8 @@ sub vcl_recv {
         && req.http.X-PageType != "article" # except from article requests
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
         && req.http.X-PageType != "interactive" # except from interactive requests
-        && req.http.X-PageType != "newsdev-static"
+        && req.http.X-PageType != "newsdev-static" #except from newsdev
+        && req.http.X-PageType != "newsdev-intl"
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "legacy-cacheable"
         && req.http.X-PageType != "collections-svc"
@@ -178,6 +179,73 @@ sub vcl_recv {
                 "sort" + querystring.filtersep() +
                 "type" + querystring.filtersep() +
                 "dedupe_hl");
+        } else if (req.http.X-PageType == "newsdev-intl"){
+            set req.url = querystring.filter_except(req.url,
+                "sort" + querystring.filtersep() +
+                "q" + querystring.filtersep() +
+                "dom" + querystring.filtersep() +
+                "dedupe_hl" + querystring.filtersep() +
+                "filter" + querystring.filtersep() +
+                "attachment" + querystring.filtersep() +
+                "attachment_id" + querystring.filtersep() +
+                "author" + querystring.filtersep() +
+                "author_name" + querystring.filtersep() +
+                "cat" + querystring.filtersep() +
+                "calendar" + querystring.filtersep() +
+                "category_name" + querystring.filtersep() +
+                "comments_popup" + querystring.filtersep() +
+                "cpage" + querystring.filtersep() +
+                "day" + querystring.filtersep() +
+                "dedupe_hl" + querystring.filtersep() +
+                "dom" + querystring.filtersep() +
+                "error" + querystring.filtersep() +
+                "exact" + querystring.filtersep() +
+                "exclude" + querystring.filtersep() +
+                "feed" + querystring.filtersep() +
+                "hour" + querystring.filtersep() +
+                "m" + querystring.filtersep() +
+                "minute" + querystring.filtersep() +
+                "monthnum" + querystring.filtersep() +
+                "more" + querystring.filtersep() +
+                "name" + querystring.filtersep() +
+                "nyt_interactive" + querystring.filtersep() +
+                "nyt_kicker" + querystring.filtersep() +
+                "nyt_slideshow" + querystring.filtersep() +
+                "order" + querystring.filtersep() +
+                "orderby" + querystring.filtersep() +
+                "p" + querystring.filtersep() +
+                "page_id" + querystring.filtersep() +
+                "page" + querystring.filtersep() +
+                "paged" + querystring.filtersep() +
+                "pagename" + querystring.filtersep() +
+                "pb" + querystring.filtersep() +
+                "post_type" + querystring.filtersep() +
+                "posts" + querystring.filtersep() +
+                "preview" + querystring.filtersep() +
+                "q" + querystring.filtersep() +
+                "robots" + querystring.filtersep() +
+                "s" + querystring.filtersep() +
+                "search" + querystring.filtersep() +
+                "second" + querystring.filtersep() +
+                "sentence" + querystring.filtersep() +
+                "smid" + querystring.filtersep() +
+                "smtyp" + querystring.filtersep() +
+                "smvar" + querystring.filtersep() +
+                "sort" + querystring.filtersep() +
+                "static" + querystring.filtersep() +
+                "subpost" + querystring.filtersep() +
+                "subpost_id" + querystring.filtersep() +
+                "taxonomy" + querystring.filtersep() +
+                "tag" + querystring.filtersep() +
+                "tb" + querystring.filtersep() +
+                "tag_id" + querystring.filtersep() +
+                "term" + querystring.filtersep() +
+                "tb" + querystring.filtersep() +
+                "url" + querystring.filtersep() +
+                "w" + querystring.filtersep() +
+                "withcomments" + querystring.filtersep() +
+                "withoutcomments" + querystring.filtersep() +
+                "year");
         }
         # now sort them
         set req.url = querystring.sort(req.url);
