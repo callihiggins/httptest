@@ -12,6 +12,10 @@ sub vcl_recv {
 
 sub vcl_fetch {
   if (req.http.X-PageType == "newsdev-static") {
+    if ( req.url ~ "^/interactive/projects/cp" ) {
+      esi;
+    }
+
     unset beresp.http.X-Amz-Id-2;
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;
