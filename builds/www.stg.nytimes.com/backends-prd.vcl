@@ -3,7 +3,7 @@ backend blogs_fe_prd {
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
+    .first_byte_timeout = 60s;
     .between_bytes_timeout = 10s;
     .probe = {
         .url = "/.status-for-fastly";
