@@ -5,7 +5,7 @@ sub vcl_recv {
     if (   req.http.X-PageType == "homepage"
         || ( req.http.X-PageType == "article" 
                 && req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
-        || ( req.http.X-PageType == "blog"
+        || ( req.http.X-PageType ~ "^blog(2)?$"
                 && req.http.host !~ "^(lens|iht-retrospective|dotearth|krugman|news|well|kristof|douthat)\.blogs" )
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
