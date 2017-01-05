@@ -1,7 +1,7 @@
 include "acl-internal";
 include "acl-external-staging-access";
 include "acl-crawlers";
-include "acl-methbot";
+include "acl-blacklist";
 include "sanitize-url";
 include "normalize-url";
 include "initialize-vars";
