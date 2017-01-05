@@ -1,8 +1,8 @@
 sub vcl_recv {
 
 
-    // block methbot
-    if ( client.ip ~ methbot) {
+    // IPs that are blocked from all environments
+    if ( client.ip ~ blacklist) {
         error 403 "Forbidden";
     }
 
