@@ -46,10 +46,10 @@ sub vcl_deliver {
 
 sub set_subscription_backend {
     if (req.http.host ~ "\.dev\.") {
-        //set req.backend = beta_watching_dev;
+        //set req.backend = ???;
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = subscription_stg;
     } else {
-        //set req.backend = beta_watching_prd;
+        //set req.backend = ???;
     }
 }

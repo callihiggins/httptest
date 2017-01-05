@@ -182,45 +182,21 @@ backend beta_well_prd {
     }
 }
 
-# commenting these until watching is fixed
-/*
-backend beta_watching_prd_instance_1 {
-    .host = "beta-proxy-0.prd.np.newsdev.net";
+backend beta_watching_prd {
+    .host = "np-watching-prd-public-1330526356.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
     .probe = {
-        .url = "/watching/api/health";
-        .timeout = 1s;
-        .interval = 30s;
+        .url = "/api/health";
+        .timeout = 3s;
+        .interval = 5s;
         .window = 5;
-        .threshold = 5;
+        .threshold = 4;
     }
 }
-
-backend beta_watching_prd_instance_2 {
-    .host = "beta-proxy-1.prd.np.newsdev.net";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/watching/api/health";
-        .timeout = 1s;
-        .interval = 30s;
-        .window = 5;
-        .threshold = 5;
-    }
-}
-
-director beta_watching_prd round-robin {
-    { .backend = beta_watching_prd_instance_1; }
-    { .backend = beta_watching_prd_instance_2; }
-}
-*/
 
 backend du_weddings_api_prd {
     .host = "content.api.nytimes.com";
