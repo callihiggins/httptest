@@ -10,6 +10,16 @@ sub vcl_recv {
   }
 }
 
+
+sub vcl_miss {
+  if ((req.http.X-PageType == "newsdev-static") &&
+      (req.url ~ "^/interactive/projects/cp")) {
+    unset bereq.http.Accept-Encoding;
+    unset req.http.Accept-Encoding;
+  }
+}
+
+
 sub vcl_fetch {
   if (req.http.X-PageType == "newsdev-static") {
     if ( req.url ~ "^/interactive/projects/cp" ) {
