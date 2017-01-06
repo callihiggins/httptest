@@ -34,8 +34,8 @@ sub vcl_fetch {
     if (beresp.status >= 400 && beresp.status < 500) {
       set beresp.ttl = 3s;
     } else {
-      // default 2 minutes
-      set beresp.ttl = 120s;
+      // default 5 minutes
+      set beresp.ttl = 300s;
     }
 
     if (beresp.status >= 500) {
@@ -47,6 +47,6 @@ sub vcl_fetch {
     }
 
     set beresp.stale_if_error = 86400s;
-    set beresp.stale_while_revalidate = 30s;
+    set beresp.stale_while_revalidate = 60s;
   }
 }

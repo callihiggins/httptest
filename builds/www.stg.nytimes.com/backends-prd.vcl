@@ -83,17 +83,17 @@ backend newsdev_k8s_elb_prd {
     .host = "fastly-k8s-prd-pub-elb-636293017.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
     .probe = {
         .request = 
             "GET /interactive/projects/.healthcheck HTTP/1.1"
             "Host: www.nytimes.com"
             "Connection: close"
             "Accept: */*";
-        .timeout = 3s;
-        .interval = 5s;
+        .timeout = 10s;
+        .interval = 30s;
         .window = 5;
         .threshold = 4;
     }
