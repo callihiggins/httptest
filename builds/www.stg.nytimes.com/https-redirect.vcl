@@ -45,6 +45,7 @@ sub vcl_recv {
             || req.url ~ "^/ads/AdGear/iframe_placement.html"
             || req.url ~ "^/ads/adtech/iframeproxy.html"
             || req.url ~ "^/ads/checkm8/CM8IframeBuster_v2.html"
+            || req.url ~ "^/ads/doubleclick/DARTIframe.html"
             || req.url ~ "^/ads/eyeblaster/addineyeV2.html"
             || req.url ~ "^/ads/flashtalking/ftlocal.html"
             || req.url ~ "^/ads/Flite/fif.html"
