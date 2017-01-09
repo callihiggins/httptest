@@ -1,8 +1,28 @@
 sub vcl_recv {
   if (req.http.X-PageType == "newsdev-dynamic") {
+    // TODO: What methods to we allow?
     if (req.request != "GET" &&
       req.request != "HEAD") {
       error 405 "Not allowed.";
+    }
+
+    // Bypass cache for certain /svc/int routes
+    if (
+         req.url ~ "^(/svc/int/balloteer/ballot/[a-z0-9\-]*/current_user|/svc/int/balloteer/ballot/[a-z0-9\-]*/user_ballot(/\w+)?|/svc/int/balloteer/ballot/[a-z0-9\-]*/user_ballot/\w+/update|/svc/int/balloteer/ballot/[a-z0-9\-]*/update_picks)"
+      || req.url ~ "^/svc/int/qa/questions/[a-z0-9\-]*/votes"
+      || req.url ~ "^/svc/int/godzown/u"
+    ) {
+      return (pass);
+    }
+
+    // Querystring parameter filters
+    if ( req.url ~ "^/svc/int/balloteer" ) {
+      set req.url = querystring.regfilter(req.url, "^(?!callback)");
+    } else if ( req.url ~ "^/svc/int/qa/questions" ) {
+      set req.url = querystring.regfilter(req.url, "^(?!limit|offset|sort)");
+      set req.url = querystring.sort(req.url);
+    } else if ( req.url ~ "^/svc/int/dialects" ) {
+      set req.url = querystring.regfilter(req.url, "^(?!a)");
     }
 
     set req.grace = 24h;
