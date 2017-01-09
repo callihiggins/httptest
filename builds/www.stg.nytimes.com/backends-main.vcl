@@ -184,10 +184,14 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    # if((req.http.x-environment == "dev") ||
-    #     (req.http.x-environment == "stg")) {
-        
-    # }
+    if((req.http.x-environment == "dev") ||
+        (req.http.x-environment == "stg")) {
+      if (req.url ~ "^/svc/int/") {
+        set req.http.X-PageType = "newsdev-dynamic";
+        set req.http.x-skip-glogin = "1";
+        call set_www_newsdev_dynamic_backend;
+      }
+    }
     
     if (
             req.url ~ "^/interactive/projects/"
@@ -430,6 +434,16 @@ sub set_www_newsdev_static_backend {
 }
 
 sub set_www_newsdev_intl_backend {
+    if(req.http.host ~ "\.dev\.") {
+        set req.backend = newsdev_k8s_elb_stg;
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = newsdev_k8s_elb_stg;
+    } else {
+        set req.backend = newsdev_k8s_elb_prd;
+    }
+}
+
+sub set_www_newsdev_dynamic_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = newsdev_k8s_elb_stg;
     } else if (req.http.host ~ "\.stg\.") {
