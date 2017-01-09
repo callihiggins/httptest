@@ -124,6 +124,12 @@ sub vcl_recv {
         set req.http.x-skip-glogin = "1";
     }
 
+    // podcasts application
+    if (req.url ~ "^/podcasts") {
+        set req.http.X-PageType = "podcasts";
+        call set_www_fe_backend;
+    }
+
     // bestseller application
     if (   req.url ~ "^/books/best-sellers/"
         || req.url ~ "^/books/best-sellers?"

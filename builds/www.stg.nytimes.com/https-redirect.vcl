@@ -10,6 +10,7 @@ sub vcl_recv {
         || ( req.http.X-PageType == "blog2" && req.url ~ "^/wp-content/" )
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
+        || req.http.X-PageType == "podcasts"
     ) {
         set req.http.x-https-phase = "1";
     }
