@@ -11,6 +11,7 @@ sub vcl_recv {
          req.url ~ "^(/svc/int/balloteer/ballot/[a-z0-9\-]*/current_user|/svc/int/balloteer/ballot/[a-z0-9\-]*/user_ballot(/\w+)?|/svc/int/balloteer/ballot/[a-z0-9\-]*/user_ballot/\w+/update|/svc/int/balloteer/ballot/[a-z0-9\-]*/update_picks)"
       || req.url ~ "^/svc/int/qa/questions/[a-z0-9\-]*/votes"
       || req.url ~ "^/svc/int/godzown/u"
+      || req.url ~ "^/svc/int/dialects"
     ) {
       return (pass);
     }
