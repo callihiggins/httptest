@@ -18,6 +18,7 @@ sub vcl_recv {
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
         && req.http.X-PageType != "interactive" # except from interactive requests
         && req.http.X-PageType != "newsdev-static" #except from newsdev
+        && req.http.X-PageType != "newsdev-dynamic" #except from newsdev
         && req.http.X-PageType != "newsdev-intl"
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "legacy-cacheable"
