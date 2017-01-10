@@ -62,18 +62,8 @@ sub vcl_recv {
             || req.url ~ "^/ads/Weborama/adrime_burst_2_0_0.htm"
         ) {
 
-        // video section and 2014 articles are public over https (seo test)
-        } else if (
-               req.http.X-PageType == "video-library"
-            || ( req.http.X-PageType == "article" && req.url ~ "^/2014/" ) // 2014
-        ) {
-
-        // WSRE-214: Phase 1 urls are https by default internally
-        } else if ( 
-               client.ip ~ internal
-            && req.http.x-https-phase == "1"
-            && !req.http.x-internal-https-opt-out
-        ) {
+        // Phase 1 urls are live over HTTPS
+        } else if (req.http.x-https-phase == "1") {
 
         // internal https cookie-based test
         } else if (
@@ -100,13 +90,8 @@ sub vcl_recv {
         ) { 
             call redirect_to_https;
 
-        // WSRE-214: Phase 1 urls are https by default internally
-        } else if (
-            client.ip ~ internal
-            && req.request != "FASTLYPURGE"
-            && req.http.x-https-phase == "1"
-            && !req.http.x-internal-https-opt-out
-        ) {
+        // Phase 1 urls redirect to HTTPS
+        } else if ( req.http.x-https-phase == "1" && req.request != "FASTLYPURGE" ) {
             call redirect_to_https;
 
         // internal https cookie-based test
@@ -114,13 +99,6 @@ sub vcl_recv {
                client.ip ~ internal
             && req.http.x-nyt-np-enable-https == "1"
             && !req.http.x-internal-https-opt-out
-        ) {
-            call redirect_to_https;
-
-        // video section and 2014 articles are public over https (seo test)
-        } else if (
-               req.http.X-PageType == "video-library"
-            || ( req.http.X-PageType == "article" && req.url ~ "^/2014/" ) // 2014
         ) {
             call redirect_to_https;
 
