@@ -12,6 +12,7 @@ sub vcl_recv {
       || req.url ~ "^/svc/int/qa/questions/[a-z0-9\-]*/votes"
       || req.url ~ "^/svc/int/godzown/u"
       || req.url ~ "^/svc/int/dialects"
+      || req.url ~ "^/svc/int/grandmominator"
     ) {
       return (pass);
     }
