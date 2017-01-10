@@ -126,10 +126,10 @@ sub redirect_to_glogin {
             set req.http.X-OriginalUri = req.http.X-OriginalUri + "?_r=" + req.http.x-r;
         }
         set obj.http.Location = 
-            "http://www." + 
+            "https://www." + 
             if(req.http.x-environment == "dev","dev.","") + 
             if(req.http.x-environment == "stg","stg.","") +            
-            "nytimes.com/glogin?URI=" + urlencode("http://" + req.http.host + req.http.X-OriginalUri);
+            "nytimes.com/glogin?URI=" + urlencode("https://" + req.http.host + req.http.X-OriginalUri);
     }
 
     set obj.status = 303;
