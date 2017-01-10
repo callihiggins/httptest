@@ -3,7 +3,7 @@ sub vcl_recv {
     // redirect nytimes.com to www.nytimes.com
     if (req.http.host == "nytimes.com") {
         set req.http.host = "www.nytimes.com";
-        set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
+        set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
         error 750 req.http.x-Redir-Url;
     }
 
