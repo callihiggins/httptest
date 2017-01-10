@@ -186,7 +186,12 @@ sub vcl_recv {
 
     if((req.http.x-environment == "dev") ||
         (req.http.x-environment == "stg")) {
-      if (req.url ~ "^/svc/int/") {
+      // Only apply to /svc/int on www.nytimes.com
+      if ((   req.http.host == "www.nytimes.com"
+           || req.http.host == "www.stg.nytimes.com"
+          )
+          && req.url ~ "^/svc/int/"
+      ) {
         set req.http.X-PageType = "newsdev-dynamic";
         set req.http.x-skip-glogin = "1";
         call set_www_newsdev_dynamic_backend;
