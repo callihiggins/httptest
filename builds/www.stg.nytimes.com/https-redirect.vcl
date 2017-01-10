@@ -1,6 +1,6 @@
 sub vcl_recv {
     /*
-     * Phase 1 candidates
+     * HTTPS phase 1 candidates
      */
     if (   req.http.X-PageType == "homepage"
         || ( req.http.X-PageType == "article" 
@@ -13,6 +13,17 @@ sub vcl_recv {
         || req.http.X-PageType == "podcasts"
     ) {
         set req.http.x-https-phase = "1";
+    }
+
+    /*
+     * HTTPS phase 2 candidates
+     * BETA but not crosswords: "^(/ref)?/crosswords"
+     */
+    if (   req.http.X-PageType ~ "^watching"
+        || req.http.X-PageType == "well"   
+        || req.http.X-PageType == "real-estate"
+    ) {
+        set req.http.x-https-phase = "2";
     }
 
     // IS a HTTPS connection
@@ -66,6 +77,13 @@ sub vcl_recv {
         // Phase 1 urls are live over HTTPS
         } else if (req.http.x-https-phase == "1") {
 
+        // WSRE-214: Phase 2 urls are https by default internally
+        } else if ( 
+               client.ip ~ internal
+            && req.http.x-https-phase == "2"
+            && !req.http.x-internal-https-opt-out
+        ) {
+
         // internal https cookie-based test
         } else if (
                client.ip ~ internal
@@ -89,6 +107,15 @@ sub vcl_recv {
             || req.url ~ "^/tips(/)?$"
             || req.url == "/securedrop"
         ) { 
+            call redirect_to_https;
+
+        // WSRE-214: Phase 2 urls are https by default internally
+        } else if (
+            client.ip ~ internal
+            && req.request != "FASTLYPURGE"
+            && req.http.x-https-phase == "2"
+            && !req.http.x-internal-https-opt-out
+        ) {
             call redirect_to_https;
 
         // Phase 1 urls redirect to HTTPS
