@@ -331,11 +331,23 @@ sub vcl_deliver {
             "Domain=.nytimes.com";
     }
 
-    if (resp.http.Content-Type ~ "^text/html" && req.http.Fastly-SSL && client.ip ~ internal) {
+    // Content Security Policy for HTTPS
+    if (req.http.Fastly-SSL && resp.http.Content-Type ~ "^text/html") {
+        declare local var.csp STRING;
+        declare local var.report-uri STRING;
+
+        set var.csp = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
+        set var.report-uri = "report-uri https://nytimes.report-uri.io/r/default/csp/enforce;";
+
         if (req.http.x-environment == "prd") {
-            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content; report-uri https://nytimes.report-uri.io/r/default/csp/enforce;";
+            // all internal traffic, and 1% of external traffic should report CSP violations
+            if (client.ip ~ internal || randombool(1, 100)) {
+                set resp.http.Content-Security-Policy = var.csp + " " + var.report-uri;
+            } else {
+                set resp.http.Content-Security-Policy = var.csp;
+            }
         } else {
-            set resp.http.Content-Security-Policy = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https:; font-src data: https:; connect-src https: wss:; media-src https:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
+            set resp.http.Content-Security-Policy = var.csp;
         }
     }
 
