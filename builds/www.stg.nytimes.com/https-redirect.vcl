@@ -60,6 +60,7 @@ sub vcl_recv {
             || req.url ~ "^/ads/pickle/eval_banner_v3.html"
             || req.url ~ "^/ads/Spongecell/spongecell_iframe_buster.html"
             || req.url ~ "^/ads/Weborama/adrime_burst_2_0_0.htm"
+            || req.url ~ "^/glogin"
         ) {
 
         // Phase 1 urls are live over HTTPS
