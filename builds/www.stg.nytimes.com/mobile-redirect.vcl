@@ -137,12 +137,12 @@ sub do_redirect {
 
     if (req.http.X-OriginalUri ~ "\?") {
         set resp.http.Location =
-              "http://" + req.http.mobile-host + "/redirect?to-mobile="
-            + urlencode("http://" + req.http.host + req.http.X-OriginalUri + "&referer=" + req.http.referer);
+              "https://" + req.http.mobile-host + "/redirect?to-mobile="
+            + urlencode("https://" + req.http.host + req.http.X-OriginalUri + "&referer=" + req.http.referer);
     } else {
         set resp.http.Location =
-              "http://" + req.http.mobile-host + "/redirect?to-mobile="
-            + urlencode("http://" + req.http.host + req.http.X-OriginalUri + "?referer=" + req.http.referer);
+              "https://" + req.http.mobile-host + "/redirect?to-mobile="
+            + urlencode("https://" + req.http.host + req.http.X-OriginalUri + "?referer=" + req.http.referer);
     }
     set resp.status = 303;
     set resp.response = "See Other";
