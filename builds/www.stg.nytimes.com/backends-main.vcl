@@ -183,11 +183,6 @@ sub vcl_recv {
         set req.http.X-PageType = "article";
         call set_www_fe_backend;
     }
-
-    # if((req.http.x-environment == "dev") ||
-    #     (req.http.x-environment == "stg")) {
-        
-    # }
     
     if (
             req.url ~ "^/interactive/projects/"
@@ -284,6 +279,16 @@ sub vcl_recv {
         ) {
             set req.http.X-PageType = "blog2";
             set req.http.x-skip-glogin = "1";
+        }
+
+        // Pass those path to blogs FE origin without caching
+        // (There are CS rules on the netscaler that would switch thsoe exact paths to INT's
+        // ELBs)
+         if (   req.url ~ "^/ask/well/"
+             || req.url ~ "^/svc/int/"
+             || req.url ~ "^/projects"
+         ) {
+           return(pass);
         }
     }
 
