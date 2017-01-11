@@ -329,6 +329,7 @@ sub vcl_recv {
                 "\1callback=%3Cesi%3Ainclude%2520src%3D%22%2Fesi%2Fjsonp-callback%22%2F%3E");
         } else {
             call set_www_https_backend;
+            set req.http.x-PageType = "legacy";
             set req.http.x-skip-glogin = "1";
         }
     }
