@@ -147,4 +147,5 @@ sub do_redirect {
     set resp.status = 303;
     set resp.response = "See Other";
     set resp.http.x-device-type = req.http.device_type;
+    set req.http.x-redirect-reason = "mobile";
 }

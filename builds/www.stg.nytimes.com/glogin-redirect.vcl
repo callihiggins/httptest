@@ -116,6 +116,7 @@ sub redirect_to_glogin {
             if(req.http.x-environment == "dev","dev.","") + 
             if(req.http.x-environment == "stg","stg.","") +
             "nytimes.com/auth/login?URI=" + urlencode("http://" + req.http.host + req.http.X-OriginalUri) + "&REFUSE_COOKIE_ERROR=SHOW_ERROR";
+        set req.http.x-redirect-reason = "login";
     } else {
         if (req.http.X-OriginalUri ~ "_r=") { 
             set req.http.x-rq = "_r=" + req.http.x-r;
@@ -130,6 +131,7 @@ sub redirect_to_glogin {
             if(req.http.x-environment == "dev","dev.","") + 
             if(req.http.x-environment == "stg","stg.","") +            
             "nytimes.com/glogin?URI=" + urlencode("https://" + req.http.host + req.http.X-OriginalUri);
+        set req.http.x-redirect-reason = "glogin";
     }
 
     set obj.status = 303;
