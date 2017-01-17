@@ -11,10 +11,9 @@ sub vcl_recv {
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "podcasts"
-        || ( req.http.X-PageType == "interactive" && 
-                (   req.url ~ "^/interactive/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" // 2014 - future
-                 || req.url ~ "^/interactive/projects/" )
-           )
+        || ( req.http.X-PageType == "interactive" 
+                && req.url ~ "^/interactive/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2014 - future
+        || req.url ~ "^/interactive/projects/"
         || req.url ~ "^/projects/2020-report/"
     ) {
         set req.http.x-https-phase = "live";
