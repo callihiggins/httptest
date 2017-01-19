@@ -48,6 +48,13 @@ sub vcl_recv {
         } else {
             set var.original-cookie-allocation-string = "";
         }
+
+    # Any other page, we should ignore
+    # BUT, if there is a cookie, we need to make sure requests route to the correct
+    #  backend below.
+    } else if (req.http.X-NYT-Vi-Cookie-Value == "") {
+        # value to prevent allocation 
+        set var.cookie-value = 999;
     }
 
     set req.http.X-Debug-ViAlloc-cookiestring = "*" + var.original-cookie-allocation-string + "*";
@@ -64,7 +71,10 @@ sub vcl_recv {
     # temporarily set to project vi backend so we can do a health check on it
     set req.backend = projectvi_fe_prd;
 
-    if (req.backend.healthy && client.ip ~ internal && req.http.x-environment == "stg") {
+    # only allocate if vi backend is up and the no-allocate cookie val isn't set
+    #  for now, Canada IP addresses are also excluded
+    if (   req.backend.healthy && var.cookie-value != 999 && geoip.country_code != "CA"
+        && client.ip ~ internal && req.http.x-environment == "stg") {
 
         # If cookie is set to "1", they should go to Vi - disabled for now
         # if (var.cookie-value == 1) { 
@@ -133,20 +143,20 @@ sub vcl_recv {
             if (var.allocation-id == "mh") {
                 set req.http.X-NYT-Vi-Cookie-Value = regsub(
                     req.http.X-NYT-Vi-Cookie-Value,
-                    "([^\|]+)\|([^\|]+)\|mh",
-                    req.http.X-NYT-Allocation-String 
+                    "([^\|,]+)\|([^\|]+)\|mh",
+                    req.http.X-NYT-Allocation-String
                 );
             } else if (var.allocation-id == "ms") {
                 set req.http.X-NYT-Vi-Cookie-Value = regsub(
                     req.http.X-NYT-Vi-Cookie-Value,
-                    "([^\|]+)\|([^\|]+)\|ms",
-                    req.http.X-NYT-Allocation-String 
+                    "([^\|,]+)\|([^\|]+)\|ms",
+                    req.http.X-NYT-Allocation-String
                 );
             }
         }
 
+    # Default to mobileweb with no allocation
     } else {
-        # if vi is unhealthy, always mobileweb
         call set_mobileweb_fe_backend;
     }
 

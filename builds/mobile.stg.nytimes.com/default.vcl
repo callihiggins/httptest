@@ -17,9 +17,17 @@ sub vcl_recv {
     # Set the edge req header
     set req.http.X-NYT-Edge-CDN = "Fastly";
 
-
     # From mobileweb config, combined with Fastly boilerplate
     if (req.request != "GET" && req.request != "HEAD" && req.request != "FASTLYPURGE") {
+
+        # For Project Vi graphql requests.
+        #  TODO: requests from Relay will need cookies to go to Vi backend properly
+        if (req.url ~ "^/graphql") {
+            set req.backend = projectvi_fe_prd;
+            return(pass);
+        }
+
+
         # We only deal with GET and HEAD but there is one path that we forward to realestate that needs POST
         #  and another path for subscription reminder emails
 
@@ -195,52 +203,88 @@ sub vcl_hash {
 sub vcl_fetch {
 #FASTLY fetch
 
-    # if we hit Project Vi backend, set this header to Vary in cache
-    if (req.http.X-NYT-Project-Vi == "1") {
-        set beresp.http.X-NYT-Project-Vi = "1";
-    }
+    # Set backend name for debugging
+    set beresp.http.X-NYT-Backend = beresp.backend.name;
 
-    # Vary on this header for HTTPS version, so we can purge both versions at the same time
+    # Vary on:
+    #  Fastly-SSL: https version, for mobileweb. Probably defunct now
+    #  X-NYT-Project-Vi: variant holding Project Vi html
     if (beresp.http.Vary) {
         set beresp.http.Vary = beresp.http.Vary ", Fastly-SSL, X-NYT-Project-Vi";
     } else {
         set beresp.http.Vary = "Fastly-SSL, X-NYT-Project-Vi";
     }
 
-    if (beresp.http.content-type ~ "text"
-        || beresp.http.content-type ~ "application/json"
-        || beresp.http.content-type ~ "application/x-javascript"
-        || beresp.http.content-type ~ "application/javascript") {
-        set beresp.gzip = true;
-    }
 
-    # From mobileweb config
-    if (req.url ~ "^/html/trending\.html") {
-        if (beresp.status != 200 && beresp.status != 304) {
+    # Vi fetch behavior
+    if (req.http.X-NYT-Project-Vi == "1") {
+        # if we hit Project Vi backend, set this header to Vary in cache
+        set beresp.http.X-NYT-Project-Vi = "1";
+
+        // if a server error code
+        if (beresp.status >= 500 && beresp.status < 600) {
+
+            // serve stale if present
+            if (stale.exists) {
+              return(deliver_stale);
+            }
+
+            // if no stale exists, we should try again
+            if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
+                restart;
+            }
+
+            // if error after retry, serve a synthetic page b/c we're out of options
+            error 503;
+        }
+
+        // equivalent to setting grace mode
+        set beresp.stale_if_error = 86400s; // 1 day
+        // allow serving stale while latest content is being generated
+        set beresp.stale_while_revalidate = 30s;
+
+    # mobileweb fetch behavior
+    } else {
+
+        if (beresp.http.content-type ~ "text"
+            || beresp.http.content-type ~ "application/json"
+            || beresp.http.content-type ~ "application/x-javascript"
+            || beresp.http.content-type ~ "application/javascript") {
+            set beresp.gzip = true;
+        }
+
+        # From mobileweb config
+        if (req.url ~ "^/html/trending\.html") {
+            if (beresp.status != 200 && beresp.status != 304) {
+                set beresp.ttl = 1m;
+                error 990;
+            }
+        }
+
+        # Cache 404's and 500's for 1 minute to prevent a stampede on our node boxes
+        if (beresp.status == 404 || beresp.status == 500) {
             set beresp.ttl = 1m;
-            error 990;
+            return (deliver);
+        }
+
+        # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
+        # any other cookie being set will just cause this to not be cacheable
+        if (setcookie.get_value_by_name(beresp,"nyt-a")){
+            remove beresp.http.Set-Cookie;
+        }
+
+        # Copied from www config and adapted
+        if (beresp.http.X-VarnishCacheDuration) {
+            set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
+        } else {
+            # If we haven't set a server cache value, use default for now
+            set beresp.ttl = 180s;
         }
     }
-    # Cache 404's and 500's for 1 minute to prevent a stampede on our node boxes
-    if (beresp.status == 404 || beresp.status == 500) {
-        set beresp.ttl = 1m;
-        return (deliver);
-    }
 
-    # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
-    # any other cookie being set will just cause this to not be cacheable
-    if (setcookie.get_value_by_name(beresp,"nyt-a")){
-        remove beresp.http.Set-Cookie;
-    }
 
-    # Copied from www config and adapted
-    if (beresp.http.X-VarnishCacheDuration) {
-        set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
-    } else {
-        # If we haven't set a server cache value, use default for now
-        set beresp.ttl = 180s;
-    }
 
+  # Adapted Fastly boilerplate
   if ((beresp.status == 500 || beresp.status == 503) && req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
     restart;
   }
@@ -254,16 +298,20 @@ sub vcl_fetch {
     return(pass);
   }
 
+  # Ignore "cache-control: private" from backend
   #if (beresp.http.Cache-Control ~ "private") {
   #  set req.http.Fastly-Cachetype = "PRIVATE";
   #  return(pass);
   #}
 
-  if (beresp.status == 500 || beresp.status == 503) {
-    set req.http.Fastly-Cachetype = "ERROR";
-    set beresp.ttl = 1s;
-    set beresp.grace = 5s;
-    return(deliver);
+  # Vi has saint mode, so only apply this for mobileweb
+  if (req.http.X-NYT-Project-Vi != "1") {
+    if (beresp.status == 500 || beresp.status == 503) {
+      set req.http.Fastly-Cachetype = "ERROR";
+      set beresp.ttl = 1s;
+      set beresp.grace = 5s;
+      return(deliver);
+    }
   }
 
   if (beresp.http.Expires || beresp.http.Surrogate-Control ~ "max-age" || beresp.http.Cache-Control ~ "(s-maxage|max-age)") {
@@ -300,19 +348,36 @@ sub vcl_deliver {
         set resp.http.X-Debug-ViAlloc-cookieid = req.http.X-Debug-ViAlloc-cookieid;
         set resp.http.X-Debug-ViAlloc-allocation = req.http.X-NYT-Project-Vi;
         set resp.http.X-Debug-ViAlloc-path = req.http.X-Debug-ViAlloc-path;
+
+    # Don't pass these headers to external client IPs
+    } else {
+        unset resp.http.X-NYT-Backend;
     }
+
 
     if (req.http.X-NYT-Project-Vi) { 
         add resp.http.Set-Cookie =
             "nyt.np.vi=" + req.http.X-NYT-Vi-Cookie-Value + "; " +
-            "Expires=" + time.add(now, 7d) + "; "+
+            "Expires=" + time.add(now, 90d) + "; "+
             "Path=/ ;" +
             "Domain=.nytimes.com";
     }
 
-    # MW specific response logic
-    #  Don't run when allocated to Vi 
+    # Project Vi saint mode
     if (req.http.X-NYT-Project-Vi != "1" ) {
+        if (resp.status >= 500 && resp.status < 600) {
+            // restart if the stale object is available
+            if (stale.exists) {
+                restart;
+            }
+        }
+
+        if (fastly_info.state ~ "HIT-STALE" && client.ip ~ internal) {
+            set resp.http.X-NYT-Served = "stale";
+        }
+
+    # MW specific response logic
+    } else {
         # create NYT-Loc cookie if it doesn't already exist
         if (!req.http.X-Cookie ~ "(?:^|;)\s*NYT-Loc=") {
             if (req.http.X-GeoIP-Country && req.http.X-GeoIP-Country != "Unknown" && req.http.X-GeoIP-Country != "US"){
@@ -411,6 +476,19 @@ sub vcl_error {
     if (obj.status == 753) {
         set obj.http.Location = "/redirect?to-www=" + req.url;
         set obj.status = 302;
+        return(deliver);
+    }
+
+    # Project Vi saint mode
+    if (obj.status == 503) {
+
+        /* deliver stale object if it is available */
+        if (stale.exists) {
+            return(deliver_stale);
+        }
+
+        /* otherwise, return a synthetic */
+        synthetic {"<!DOCTYPE html><html>Backend is unhealthy and no stale content to serve.</html>"};
         return(deliver);
     }
 
