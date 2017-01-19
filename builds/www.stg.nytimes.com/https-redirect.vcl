@@ -1,6 +1,6 @@
 sub vcl_recv {
     /*
-     * Phase 1 candidates
+     * Items permanently on HTTPS
      */
     if (   req.http.X-PageType == "homepage"
         || ( req.http.X-PageType == "article" 
@@ -11,8 +11,35 @@ sub vcl_recv {
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "podcasts"
+        || ( req.http.X-PageType == "interactive" 
+                && req.url ~ "^/interactive/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2014 - future
+        || req.url ~ "^/interactive/projects/"
+        || req.url ~ "^/projects/2020-report/"
     ) {
-        set req.http.x-https-phase = "1";
+        set req.http.x-https-phase = "live";
+    }
+
+    /*
+     * Items that are HTTPS internally only but not assigned to a phase
+     * Not crosswords yet: "^(/ref)?/crosswords"
+     */
+    if (   req.http.X-PageType == "well"          // beta - well guides
+        || req.http.X-PageType == "newsdev-intl"  // espanol/international
+    ) {
+        set req.http.x-https-phase = "internal";
+    }
+
+    /*
+     * HTTPS phase 2 candidates (1/25)
+     */
+    if (   req.http.X-PageType ~ "^watching"
+        || req.http.X-PageType == "real-estate"
+        || ( req.http.X-PageType == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources
+        || ( req.http.X-PageType == "blog"
+                && req.http.host ~ "^(lens|iht-retrospective|dotearth|krugman|news|well|kristof|douthat)\.blogs" )
+        || ( req.http.X-PageType == "blog2" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )
+    ) {
+        set req.http.x-https-phase = "2";
     }
 
     // IS a HTTPS connection
@@ -63,8 +90,22 @@ sub vcl_recv {
             || req.url ~ "^/glogin"
         ) {
 
-        // Phase 1 urls are live over HTTPS
-        } else if (req.http.x-https-phase == "1") {
+        // Urls already live over HTTPS
+        } else if (req.http.x-https-phase == "live") {
+
+        // Urls live over HTTPS internally
+        } else if ( 
+               client.ip ~ internal
+            && req.http.x-https-phase == "internal"
+            && !req.http.x-internal-https-opt-out
+        ) {
+
+        // WSRE-453: Phase 2 urls are internal only for now
+        } else if ( 
+               client.ip ~ internal
+            && req.http.x-https-phase == "2"
+            && !req.http.x-internal-https-opt-out
+        ) {
 
         // internal https cookie-based test
         } else if (
@@ -91,8 +132,26 @@ sub vcl_recv {
         ) { 
             call redirect_to_https;
 
-        // Phase 1 urls redirect to HTTPS
-        } else if ( req.http.x-https-phase == "1" && req.request != "FASTLYPURGE" ) {
+        // WSRE-453: Phase 2 urls are https by default internally
+        } else if (
+            client.ip ~ internal
+            && req.request != "FASTLYPURGE"
+            && req.http.x-https-phase == "2"
+            && !req.http.x-internal-https-opt-out
+        ) {
+            call redirect_to_https;
+
+        // Urls that are on HTTPS internally
+        } else if (
+            client.ip ~ internal
+            && req.request != "FASTLYPURGE"
+            && req.http.x-https-phase == "internal"
+            && !req.http.x-internal-https-opt-out
+        ) {
+            call redirect_to_https;
+
+        // URLs that are launched on HTTPS should redirect to HTTPS
+        } else if ( req.http.x-https-phase == "live" && req.request != "FASTLYPURGE" ) {
             call redirect_to_https;
 
         // internal https cookie-based test

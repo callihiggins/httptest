@@ -294,6 +294,16 @@ sub vcl_recv {
             set req.http.X-PageType = "blog2";
             set req.http.x-skip-glogin = "1";
         }
+
+        // Pass those path to blogs FE origin without caching
+        // (There are CS rules on the netscaler that would switch thsoe exact paths to INT's
+        // ELBs)
+         if (   req.url ~ "^/ask/well/"
+             || req.url ~ "^/svc/int/"
+             || req.url ~ "^/projects"
+         ) {
+           return(pass);
+        }
     }
 
     // Lets cache some video library in fastly
@@ -321,22 +331,26 @@ sub vcl_recv {
     # if the cmd ~= GetCommentsAll, GetCommentSummary, GetUserCommentSummary, GetCommentsReadersPicks, GetCommentsNYTPicks, GetCommentsNYTReplies
     # but NOT GetBasicInfo
     # and if the user is anon / guest cookie
-    if (req.url ~ "cmd=Get((?!BasicInfo)[^&]+)"
-        && req.url ~ "^/svc/community"
-        && (!req.http.x-nyt-s || req.http.x-nyt-s ~ "^0")) {
+    if ( req.url ~ "^/svc/community" ) {
 
-        unset req.http.x-community-callback;
+        if (req.url ~ "cmd=Get((?!BasicInfo)[^&]+)"
+            && (!req.http.x-nyt-s || req.http.x-nyt-s ~ "^0")) {
 
-        set req.http.X-PageType = "community-svc-cacheable";
-        set req.http.x-skip-glogin = "1";
-        call set_www_fe_backend;
-        
-        # sub in "/esi/jsonp-callback" as the callback parameter
-        set req.url = regsub(req.url,
-            "([\?&])callback=[a-zA-Z0-9_][^&]+",
-            "\1callback=%3Cesi%3Ainclude%2520src%3D%22%2Fesi%2Fjsonp-callback%22%2F%3E");
+            unset req.http.x-community-callback;
 
-
+            set req.http.X-PageType = "community-svc-cacheable";
+            set req.http.x-skip-glogin = "1";
+            call set_www_fe_backend;
+            
+            # sub in "/esi/jsonp-callback" as the callback parameter
+            set req.url = regsub(req.url,
+                "([\?&])callback=[a-zA-Z0-9_][^&]+",
+                "\1callback=%3Cesi%3Ainclude%2520src%3D%22%2Fesi%2Fjsonp-callback%22%2F%3E");
+        } else {
+            call set_www_https_backend;
+            set req.http.x-PageType = "legacy";
+            set req.http.x-skip-glogin = "1";
+        }
     }
 
     // AB Test Config
