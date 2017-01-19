@@ -187,8 +187,8 @@ sub vcl_recv {
     if((req.http.x-environment == "dev") ||
         (req.http.x-environment == "stg")) {
       // Only apply to /svc/int on www.nytimes.com
-      if ((   req.http.host == "www.nytimes.com"
-           || req.http.host == "www.stg.nytimes.com"
+      if ((  req.http.host ~ "^(www\.)?(dev\.|stg\.)?nytimes.com$"
+          || req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.)?nytimes.com$"
           )
           && req.url ~ "^/svc/int/"
       ) {
