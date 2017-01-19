@@ -9,6 +9,7 @@ include "mw-redirect";
 include "https-redirect";
 include "cookie";
 include "uuid";
+include "vi-allocation";
 
 sub vcl_recv {
 #FASTLY recv
@@ -16,8 +17,6 @@ sub vcl_recv {
     # Set the edge req header
     set req.http.X-NYT-Edge-CDN = "Fastly";
 
-    # From mobileweb config
-    call set_mobileweb_fe_backend;
 
     # From mobileweb config, combined with Fastly boilerplate
     if (req.request != "GET" && req.request != "HEAD" && req.request != "FASTLYPURGE") {
@@ -196,11 +195,16 @@ sub vcl_hash {
 sub vcl_fetch {
 #FASTLY fetch
 
+    # if we hit Project Vi backend, set this header to Vary in cache
+    if (req.http.X-NYT-Project-Vi == "1") {
+        set beresp.http.X-NYT-Project-Vi = "1";
+    }
+
     # Vary on this header for HTTPS version, so we can purge both versions at the same time
     if (beresp.http.Vary) {
-        set beresp.http.Vary = beresp.http.Vary ", req.http.Fastly-SSL";
+        set beresp.http.Vary = beresp.http.Vary ", Fastly-SSL, X-NYT-Project-Vi";
     } else {
-        set beresp.http.Vary = "req.http.Fastly-SSL";
+        set beresp.http.Vary = "Fastly-SSL, X-NYT-Project-Vi";
     }
 
     if (beresp.http.content-type ~ "text"
@@ -289,46 +293,67 @@ sub vcl_miss {
 sub vcl_deliver {
 #FASTLY deliver
 
-    # create NYT-Loc cookie if it doesn't already exist
-    if (!req.http.X-Cookie ~ "(?:^|;)\s*NYT-Loc=") {
-        if (req.http.X-GeoIP-Country && req.http.X-GeoIP-Country != "Unknown" && req.http.X-GeoIP-Country != "US"){
-            set resp.http.X-Currency = "";
-            if (req.http.X-GeoIP-Country ~ "(AT|BE|BG|CH|CY|CZ|DE|DK|EE|ES|FI|FR|GR|HR|HU|IE|IT|LT|LU|LV|MT|NL|PL|PT|RO|SE|SI|SK)") {
-                set resp.http.X-Currency = "EUR";
-            }
-            else if (req.http.X-GeoIP-Country ~ "(GB)") {
-                set resp.http.X-Currency = "GBP";
-            }
-            else if (req.http.X-GeoIP-Country ~ "(CA)") {
-                set resp.http.X-Currency = "CAD";
-            }
-            else if (req.http.X-GeoIP-Country ~ "(AU)") {
-                set resp.http.X-Currency = "AUD";
-            }
-            else if (req.http.X-GeoIP-Country ~ "(IN)") {
-                set resp.http.X-Currency = "INR";
-            }
-
-            add resp.http.Set-Cookie = "NYT-Loc=i|" + resp.http.X-Currency + "|" + req.http.X-GeoIP-Country + ";path=/;domain=.nytimes.com;expires=" + strftime({"%a, %d-%b-%Y %T GMT"}, time.add(now, 7d));
-            unset resp.http.X-Currency;
-        } else {
-            add resp.http.Set-Cookie = "NYT-Loc=d;path=/;domain=.nytimes.com;expires=" + 
-            strftime({"%a, %d-%b-%Y %T GMT"}, time.add(now, 7d));
-        }
+    if (client.ip ~ internal) { 
+        set resp.http.X-Debug-ViAlloc-cookiestring = req.http.X-Debug-ViAlloc-cookiestring;
+        set resp.http.X-Debug-ViAlloc-cookievalue = req.http.X-Debug-ViAlloc-cookievalue;
+        set resp.http.X-Debug-ViAlloc-cookieversion = req.http.X-Debug-ViAlloc-cookieversion;
+        set resp.http.X-Debug-ViAlloc-cookieid = req.http.X-Debug-ViAlloc-cookieid;
+        set resp.http.X-Debug-ViAlloc-allocation = req.http.X-NYT-Project-Vi;
+        set resp.http.X-Debug-ViAlloc-path = req.http.X-Debug-ViAlloc-path;
     }
 
-    # echo the perf-key along to the frontend if set
-    if (req.http.NYT-disable-for-perf-key) {
-      set resp.http.NYT-disable-for-perf-key = req.http.NYT-disable-for-perf-key;
-    }
-
-    // remove deprecated internal https cookie
-    if (client.ip ~ internal && req.http.Cookie:nyt.np.https-everywhere) {
+    if (req.http.X-NYT-Project-Vi) { 
         add resp.http.Set-Cookie =
-            "nyt.np.https-everywhere=; " +
-            "Expires=" + time.sub(now, 365d) + "; "+
+            "nyt.np.vi=" + req.http.X-NYT-Vi-Cookie-Value + "; " +
+            "Expires=" + time.add(now, 7d) + "; "+
             "Path=/ ;" +
             "Domain=.nytimes.com";
+    }
+
+    # MW specific response logic
+    #  Don't run when allocated to Vi 
+    if (req.http.X-NYT-Project-Vi != "1" ) {
+        # create NYT-Loc cookie if it doesn't already exist
+        if (!req.http.X-Cookie ~ "(?:^|;)\s*NYT-Loc=") {
+            if (req.http.X-GeoIP-Country && req.http.X-GeoIP-Country != "Unknown" && req.http.X-GeoIP-Country != "US"){
+                set resp.http.X-Currency = "";
+                if (req.http.X-GeoIP-Country ~ "(AT|BE|BG|CH|CY|CZ|DE|DK|EE|ES|FI|FR|GR|HR|HU|IE|IT|LT|LU|LV|MT|NL|PL|PT|RO|SE|SI|SK)") {
+                    set resp.http.X-Currency = "EUR";
+                }
+                else if (req.http.X-GeoIP-Country ~ "(GB)") {
+                    set resp.http.X-Currency = "GBP";
+                }
+                else if (req.http.X-GeoIP-Country ~ "(CA)") {
+                    set resp.http.X-Currency = "CAD";
+                }
+                else if (req.http.X-GeoIP-Country ~ "(AU)") {
+                    set resp.http.X-Currency = "AUD";
+                }
+                else if (req.http.X-GeoIP-Country ~ "(IN)") {
+                    set resp.http.X-Currency = "INR";
+                }
+
+                add resp.http.Set-Cookie = "NYT-Loc=i|" + resp.http.X-Currency + "|" + req.http.X-GeoIP-Country + ";path=/;domain=.nytimes.com;expires=" + strftime({"%a, %d-%b-%Y %T GMT"}, time.add(now, 7d));
+                unset resp.http.X-Currency;
+            } else {
+                add resp.http.Set-Cookie = "NYT-Loc=d;path=/;domain=.nytimes.com;expires=" + 
+                strftime({"%a, %d-%b-%Y %T GMT"}, time.add(now, 7d));
+            }
+        }
+
+        # echo the perf-key along to the frontend if set
+        if (req.http.NYT-disable-for-perf-key) {
+          set resp.http.NYT-disable-for-perf-key = req.http.NYT-disable-for-perf-key;
+        }
+
+        // remove deprecated internal https cookie
+        if (client.ip ~ internal && req.http.Cookie:nyt.np.https-everywhere) {
+            add resp.http.Set-Cookie =
+                "nyt.np.https-everywhere=; " +
+                "Expires=" + time.sub(now, 365d) + "; "+
+                "Path=/ ;" +
+                "Domain=.nytimes.com";
+        }
     }
 
     // Content Security Policy for HTTPS
