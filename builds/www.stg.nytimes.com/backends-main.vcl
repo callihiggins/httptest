@@ -184,9 +184,15 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
+    if (    req.url ~ "^/svc/int/"
+    ) {
+        set req.http.X-PageType = "newsdev-dynamic";
+        set req.http.x-skip-glogin = "1";
+        call set_www_newsdev_dynamic_backend;
+    }
+
     if (
             req.url ~ "^/interactive/projects/"
-        ||  req.url ~ "^/svc/int/"
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway/")
     ) {
         set req.http.X-PageType = "newsdev-static";
