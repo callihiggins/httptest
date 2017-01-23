@@ -12,7 +12,7 @@ backend mobileweb_fe_prd {
 }
 
 backend projectvi_fe_prd {
-    .host = "130.211.32.153"; // GCP Ingress IP address
+    .host = "130.211.7.66";
     .port = "80";
     .probe = {
         .url = "/.healthcheck";
