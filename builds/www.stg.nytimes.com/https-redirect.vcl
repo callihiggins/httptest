@@ -7,7 +7,7 @@ sub vcl_recv {
                 && req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || ( req.http.X-PageType == "blog"
                 && req.http.host !~ "^(lens|iht-retrospective|dotearth|krugman|news|well|kristof|douthat)\.blogs" )
-        || ( req.http.X-PageType == "blog2" && req.url ~ "^/wp-content/" )
+        || ( req.http.X-PageType == "blog2" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "podcasts"
@@ -23,23 +23,25 @@ sub vcl_recv {
      * Items that are HTTPS internally only but not assigned to a phase
      * Not crosswords yet: "^(/ref)?/crosswords"
      */
-    if (   req.http.X-PageType == "well"          // beta - well guides
-        || req.http.X-PageType == "newsdev-intl"  // espanol/international
+    if (   ( req.http.X-PageType == "blog"
+                && req.http.host ~ "^(lens|iht-retrospective|dotearth|krugman|news|well|kristof|douthat)\.blogs" )
     ) {
         set req.http.x-https-phase = "internal";
     }
 
     /*
-     * HTTPS phase 2 candidates (1/25)
+     * HTTPS phase 3 candidates (1/31)
      */
     if (   req.http.X-PageType ~ "^watching"
-        || req.http.X-PageType == "real-estate"
+        || req.http.X-PageType == "well"          // beta - well guides
         || ( req.http.X-PageType == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources
-        || ( req.http.X-PageType == "blog"
-                && req.http.host ~ "^(lens|iht-retrospective|dotearth|krugman|news|well|kristof|douthat)\.blogs" )
-        || ( req.http.X-PageType == "blog2" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )
+        || req.http.X-PageType == "newsdev-intl"  // espanol/international
+        || req.http.X-PageType == "real-estate"
+        || req.http.X-PageType == "bestseller"
+        || req.http.X-PageType == "trending"
+        || req.url ~ "^/content/help"             // help pages
     ) {
-        set req.http.x-https-phase = "2";
+        set req.http.x-https-phase = "3";
     }
 
     // IS a HTTPS connection
@@ -100,10 +102,10 @@ sub vcl_recv {
             && !req.http.x-internal-https-opt-out
         ) {
 
-        // WSRE-453: Phase 2 urls are internal only for now
+        // WSRE-484: Phase 3 urls are internal only for now
         } else if ( 
                client.ip ~ internal
-            && req.http.x-https-phase == "2"
+            && req.http.x-https-phase == "3"
             && !req.http.x-internal-https-opt-out
         ) {
 
@@ -132,11 +134,11 @@ sub vcl_recv {
         ) { 
             call redirect_to_https;
 
-        // WSRE-453: Phase 2 urls are https by default internally
+        // WSRE-484: Phase 3 urls are https by default internally
         } else if (
             client.ip ~ internal
             && req.request != "FASTLYPURGE"
-            && req.http.x-https-phase == "2"
+            && req.http.x-https-phase == "3"
             && !req.http.x-internal-https-opt-out
         ) {
             call redirect_to_https;
