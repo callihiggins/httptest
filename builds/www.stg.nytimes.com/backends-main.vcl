@@ -213,6 +213,18 @@ sub vcl_recv {
         call set_www_newsdev_intl_backend;
     }
 
+    if (  req.http.host == "www.nytimes.com"
+       || req.http.host == "www.stg.nytimes.com"
+       || req.http.host == "www-newsdev.stg.nytimes.com"
+        ) {
+        if (req.url ~ "^/roomfordebate"){
+            set req.http.X-PageType = "newsdev-static";
+            set req.http.x-skip-glogin = "1";
+            call set_www_newsdev_static_backend;
+        }
+    }
+
+
     // interactive years 2014-forever are NYT5
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
         set req.http.X-PageType = "interactive";
