@@ -39,10 +39,10 @@ sub vcl_fetch {
 
 sub vcl_deliver {
     if (req.http.X-PageType == "subscription") {
-        
+
         set resp.http.X-API-Version = "WCM";
 
-        if(resp.status == 301 || resp.status = 302) {
+        if(resp.status == 301 || resp.status == 302) {
             set resp.http.Location = resp.http.Location + req.http.X-QueryString;
         }
     }
