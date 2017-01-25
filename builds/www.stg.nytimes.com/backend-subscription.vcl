@@ -6,7 +6,7 @@ sub vcl_recv {
             if (    req.url == "/subscription"
                 ||  req.url ~ "^/subscription/"
                 ) {
-                
+
                 set req.http.X-PageType = "subscription";
                 call set_subscription_backend;
                 set req.grace = 24h;
@@ -43,7 +43,7 @@ sub vcl_deliver {
         set resp.http.X-API-Version = "WCM";
 
         if(resp.status == 301 || resp.status == 302) {
-            set resp.http.Location = resp.http.Location + req.http.X-QueryString;
+            set resp.http.Location = resp.http.Location + req.http.x-orig-querystring;
         }
     }
 }
