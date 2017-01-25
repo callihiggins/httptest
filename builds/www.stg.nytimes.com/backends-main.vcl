@@ -307,7 +307,9 @@ sub vcl_recv {
              || req.url ~ "^/svc/int/"
              || req.url ~ "^/projects"
          ) {
-           return(pass);
+           set req.http.X-PageType = "newsdev-dynamic";
+           set req.http.x-skip-glogin = "1";
+           call set_www_newsdev_dynamic_backend;
         }
     }
 
