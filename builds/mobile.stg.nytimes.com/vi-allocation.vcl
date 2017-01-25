@@ -73,8 +73,7 @@ sub vcl_recv {
 
     # only allocate if vi backend is up and the no-allocate cookie val isn't set
     #  for now, Canada IP addresses are also excluded
-    if (   req.backend.healthy && var.cookie-value != 999 && geoip.country_code != "CA"
-        && client.ip ~ internal && req.http.x-environment == "stg") {
+    if ( req.backend.healthy && var.cookie-value != 999 && geoip.country_code != "CA" ) {
 
         # If cookie is set to "1", they should go to Vi - disabled for now
         # if (var.cookie-value == 1) { 
