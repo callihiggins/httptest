@@ -33,7 +33,7 @@ sub vcl_recv {
         }
 
     # Mobile Story
-    } else if (req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))") {
+    } else if (req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" && req.url !~ ".amp.html") {
         set var.allocation-id = "ms";
         set var.allocation-version = 1;
         set var.allocation-numerator = 20;
