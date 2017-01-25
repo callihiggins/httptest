@@ -69,7 +69,17 @@ sub vcl_recv {
         set req.http.x-internal-https-opt-out = urldecode(req.http.Cookie:nyt.np.internal-https-opt-out);
     }
 
-
-
+    /*
+     * Set a var with the original querystring if it exists, some logic needs to use it in vcl_deliver
+     */
+    if (req.url ~ "\?") {
+        set req.http.x-orig-querystring = regsub(req.url, ".*(\?.*)", "\1");
+    } else {
+        set req.http.x-orig-querystring = "";
+    }
+  
+    /*
+     * salt for BCET, we'll put this in drone secrets when we refactor
+     */
     set req.http.x-bcet-secret-key = "75b798658d2f43bc1caadb0260d175524ad3c874ab76a15c9aeef3cec11096597f068faca3133285a004fa2106799246dc050ec66c3e75c134d26b8d163b6086";
 }
