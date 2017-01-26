@@ -1,10 +1,5 @@
 sub vcl_recv {
   if (req.http.X-PageType == "newsdev-dynamic") {
-    // TODO: What methods to we allow?
-    if (req.request != "GET" &&
-      req.request != "HEAD") {
-      error 405 "Not allowed.";
-    }
 
     // Bypass cache for certain /svc/int routes
     if (
