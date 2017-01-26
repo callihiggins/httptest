@@ -17,7 +17,7 @@ sub vcl_recv {
     # Allocation configuration
 
     # Mobile Home Screen
-    if (req.url ~ "^/$") {
+    if (req.url.path ~ "^/$") {
         set var.allocation-id = "mh";
         set var.allocation-version = 1;
         set var.allocation-numerator = 20;
@@ -33,7 +33,7 @@ sub vcl_recv {
         }
 
     # Mobile Story
-    } else if (req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))") {
+    } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" && req.url.path !~ ".amp.html") {
         set var.allocation-id = "ms";
         set var.allocation-version = 1;
         set var.allocation-numerator = 20;
@@ -49,10 +49,13 @@ sub vcl_recv {
             set var.original-cookie-allocation-string = "";
         }
 
-    # Any other page, we should ignore
-    # BUT, if there is a cookie, we need to make sure requests route to the correct
-    #  backend below.
-    } else if (req.http.X-NYT-Vi-Cookie-Value == "") {
+    # Not a URL we allocate on, but could be a resource url that needs to go to vi
+    } else if (req.url.path ~ "^/((0_vendor-|main-|[0-9]+-).+|fonts).js$") {
+        # value to send to vi
+        set var.cookie-value = 1;
+
+    # Any other request, we should ignore and send to MW
+    } else {
         # value to prevent allocation 
         set var.cookie-value = 999;
     }
@@ -75,11 +78,8 @@ sub vcl_recv {
     #  for now, Canada IP addresses are also excluded
     if ( req.backend.healthy && var.cookie-value != 999 && geoip.country_code != "CA" ) {
 
-        # If cookie is set to "1", they should go to Vi - disabled for now
-        # if (var.cookie-value == 1) { 
-
-        # first phase is that if you allocate to either test, you always go to Vi
-        if ( req.http.X-NYT-Vi-Cookie-Value ~ "(^|,)1\|" ) {
+        # First phase is that if you allocate to either test, you always go to Vi
+        if ( var.cookie-value == 1 || req.http.X-NYT-Vi-Cookie-Value ~ "(^|,)1\|" ) {
             set req.http.X-NYT-Project-Vi = "1";
             set req.backend = projectvi_fe_prd;
 
