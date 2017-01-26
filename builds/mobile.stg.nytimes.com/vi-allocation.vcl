@@ -17,7 +17,7 @@ sub vcl_recv {
     # Allocation configuration
 
     # Mobile Home Screen
-    if (req.url ~ "^/$") {
+    if (req.url.path ~ "^/$") {
         set var.allocation-id = "mh";
         set var.allocation-version = 1;
         set var.allocation-numerator = 20;
@@ -33,7 +33,7 @@ sub vcl_recv {
         }
 
     # Mobile Story
-    } else if (req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" && req.url !~ ".amp.html") {
+    } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" && req.url.path !~ ".amp.html") {
         set var.allocation-id = "ms";
         set var.allocation-version = 1;
         set var.allocation-numerator = 20;
@@ -50,7 +50,7 @@ sub vcl_recv {
         }
 
     # Not a URL we allocate on, but could be a resource url that needs to go to vi
-    } else if (req.url ~ "^/((0_vendor-|main-|[0-9]+-).+|fonts).js$") {
+    } else if (req.url.path ~ "^/((0_vendor-|main-|[0-9]+-).+|fonts).js$") {
         # value to send to vi
         set var.cookie-value = 1;
 
