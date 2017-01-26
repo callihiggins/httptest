@@ -1,6 +1,6 @@
 sub vcl_recv {
 
-    if (req.http.x-environment == "stg") {
+    if (client.ip ~ internal || (client.ip ~ external_staging_access && req.http.x-environment == "stg")) {
 
         if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
             if (    req.url == "/subscription"
@@ -55,6 +55,6 @@ sub set_subscription_backend {
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = subscription_stg;
     } else {
-        //set req.backend = ???;
+        set req.backend = subscription_prd;
     }
 }

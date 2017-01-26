@@ -231,3 +231,20 @@ backend games_prd {
         .threshold = 3;
     }
 }
+
+
+backend subscription_prd {
+    .host = "mwcm-app-est-public-prd-i-111546-340655147.us-east-1.elb.amazonaws.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
