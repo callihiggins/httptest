@@ -87,7 +87,7 @@ backend newsdev_k8s_elb_stg {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .request = 
+        .request =
             "GET /interactive/projects/.healthcheck HTTP/1.1"
             "Host: www.stg.nytimes.com"
             "Connection: close"
@@ -154,6 +154,22 @@ backend games_stg {
 
 backend beta_well_stg {
     .host = "np-well-stg-public-1893072346.us-east-1.elb.amazonaws.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/api/health";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
+backend beta_well_gcp_stg {
+    .host = "guides.stg.nyt.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
