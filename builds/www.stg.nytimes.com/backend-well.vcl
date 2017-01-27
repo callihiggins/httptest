@@ -50,7 +50,11 @@ sub set_beta_well_backend {
     if (req.http.host ~ "\.dev\.") {
         //set req.backend = beta_well_dev;
     } else if (req.http.host ~ "\.stg\.") {
-        set req.backend = beta_well_stg;
+        if (req.url ~ "\?gcp") {
+            set req.backend = beta_well_gcp_stg;
+        } else {
+            set req.backend = beta_well_stg;
+        }
     } else {
         set req.backend = beta_well_prd;
     }
