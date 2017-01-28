@@ -200,7 +200,8 @@ sub vcl_recv {
         call set_www_newsdev_static_backend;
     }
 
-    if ((req.url == "/es") || (req.url ~ "^/es/")) {
+    if ((req.url == "/es") || (req.url ~ "^/es/")
+        || (req.url == "/global") || (req.url ~ "^/global/")) {
         set req.http.X-PageType = "newsdev-intl";
         set req.http.x-skip-glogin = "1";
         call set_www_newsdev_intl_backend;
