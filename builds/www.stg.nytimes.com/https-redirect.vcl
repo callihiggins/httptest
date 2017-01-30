@@ -86,6 +86,7 @@ sub vcl_recv {
             || req.url ~ "^/ads/linkstorm/linkstorm_nyt_bridge.html"
             || req.url ~ "^/ads/mediaplex/mojofb_v9.html"
             || req.url ~ "^/ads/mediaplex/mojofb_v9-4.html"
+            || req.url ~ "^/ads/pickle/eval_banner.html"
             || req.url ~ "^/ads/pickle/eval_banner_v3.html"
             || req.url ~ "^/ads/Spongecell/spongecell_iframe_buster.html"
             || req.url ~ "^/ads/Weborama/adrime_burst_2_0_0.htm"
