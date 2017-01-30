@@ -364,7 +364,7 @@ sub vcl_deliver {
     }
 
     # Project Vi saint mode
-    if (req.http.X-NYT-Project-Vi != "1" ) {
+    if (req.http.X-NYT-Project-Vi == "1" ) {
         if (resp.status >= 500 && resp.status < 600) {
             // restart if the stale object is available
             if (stale.exists) {
