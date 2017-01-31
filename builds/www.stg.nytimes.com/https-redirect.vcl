@@ -1,5 +1,15 @@
 sub vcl_recv {
     /*
+     * Items that are HTTPS internally only but not assigned to a phase
+     * Not crosswords yet: "^(/ref)?/crosswords"
+     */
+    if (   req.http.X-PageType == "real-estate" 
+        || req.http.X-PageType == "blog"
+    ) {
+        set req.http.x-https-phase = "internal";
+    }
+
+    /*
      * Items permanently on HTTPS
      */
     if (   req.http.X-PageType == "homepage"
@@ -24,16 +34,6 @@ sub vcl_recv {
         || req.url ~ "^/pages/(politics|world|dining)"        // NYT4 sectionfronts
     ) {
         set req.http.x-https-phase = "live";
-    }
-
-    /*
-     * Items that are HTTPS internally only but not assigned to a phase
-     * Not crosswords yet: "^(/ref)?/crosswords"
-     */
-    if (   req.http.X-PageType == "real-estate" 
-        || req.http.X-PageType == "blog"
-    ) {
-        set req.http.x-https-phase = "internal";
     }
 
     // IS a HTTPS connection
