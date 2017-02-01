@@ -79,12 +79,18 @@ sub vcl_recv {
     if ( req.backend.healthy && var.cookie-value != 999 && geoip.country_code != "CA" ) {
 
         # First phase is that if you allocate to either test, you always go to Vi
-        if ( var.cookie-value == 1 || req.http.X-NYT-Vi-Cookie-Value ~ "(^|,)1\|" ) {
+        # Originally: ( var.cookie-value == 1 || req.http.X-NYT-Vi-Cookie-Value ~ "(^|,)1\|" )
+
+        # !!! Update from Data Engineering: always check first value in the cookie
+        if ( req.http.X-NYT-Vi-Cookie-Value ~ "^1\|" ) {
             set req.http.X-NYT-Project-Vi = "1";
             set req.backend = projectvi_fe_prd;
 
         # If cookie is set to "2", they are in control and always go to mobileweb
-        } else if (var.cookie-value == 2) {
+        # Originally: (var.cookie-value == 2)
+
+        # !!! Update from Data Engineering: always check first value in the cookie
+        } else if ( req.http.X-NYT-Vi-Cookie-Value ~ "^2\|" ) {
             set req.http.X-NYT-Project-Vi = "2";
             call set_mobileweb_fe_backend;
 
