@@ -1,10 +1,10 @@
 sub vcl_recv {
     /*
      * Items that are HTTPS internally only but not assigned to a phase
-     * Not crosswords yet: "^(/ref)?/crosswords"
      */
     if (   req.http.X-PageType == "real-estate" 
         || req.http.X-PageType == "blog"
+        || req.url ~ "^/crosswords"              // games pages, except for /ref/crosswords
     ) {
         set req.http.x-https-phase = "internal";
     }
