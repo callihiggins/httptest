@@ -85,11 +85,11 @@ sub vcl_error {
 sub redirect_to_glogin {
 
     // use "_r" querystring param to indicate number of times this request was redirected to glogin
-    set req.http.x-r = regsub(req.http.X-QueryString, ".*_r=(.).*", "\1");
+    set req.http.x-r = regsub(req.http.x-orig-querystring, ".*_r=(.).*", "\1");
 
     // increment passed-in value if exists
     // else set to zero
-    if (req.http.x-r == req.http.X-QueryString) {
+    if (req.http.x-r == req.http.x-orig-querystring) {
         set req.http.x-r = "0";
     } else {
         if (req.http.x-r == "0"){
