@@ -1,10 +1,5 @@
 sub vcl_recv {
     set req.http.X-OriginalUri = req.url;
-    if (req.url ~ "\?") {
-        set req.http.X-QueryString = regsub(req.url, ".*(\?.*)", "\1");
-    } else {
-        set req.http.X-QueryString = "";
-    }
 
     # remove query string parameters
     if (   req.url             !~ "/svc/web-products/" # except from API requests
@@ -252,4 +247,5 @@ sub vcl_recv {
         set req.url = querystring.sort(req.url);
 
     }
+
 }
