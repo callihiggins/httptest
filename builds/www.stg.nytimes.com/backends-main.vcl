@@ -301,14 +301,19 @@ sub vcl_recv {
             set req.http.x-skip-glogin = "1";
         }
 
-        // Pass those path to blogs FE origin without caching
-        // (There are CS rules on the netscaler that would switch thsoe exact paths to INT's
-        // ELBs)
-         if (   req.url ~ "^/ask/well/"
-             || req.url ~ "^/svc/int/"
-             || req.url ~ "^/projects"
-         ) {
-           return(pass);
+        // Pass those paths to newsdev dynamic without caching
+        if (   req.url ~ "^/projects"
+            && req.http.host ~ "^well\.blogs\.(dev\.|stg\.)?nytimes\.com"
+        ) {
+           set req.http.X-PageType = "newsdev-dynamic";
+           set req.http.x-skip-glogin = "1";
+           call set_www_newsdev_dynamic_backend;
+        // Send to blogs FE, separate netscaler rules points these to INT blade
+        } else if (
+               req.url ~ "^/ask/well/"
+            || req.url ~ "^/svc/int/"
+        ) {
+          return(pass);
         }
     }
 
