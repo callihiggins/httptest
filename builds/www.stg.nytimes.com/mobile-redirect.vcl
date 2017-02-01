@@ -1,7 +1,5 @@
 sub vcl_recv {
-    if (req.url ~ "\?") {
-        set req.http.x-mobile-param = regsub(req.url, ".*?.*(nytmobile=.).*", "\1");
-    }
+    set req.http.x-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
 }
 
 sub vcl_deliver {
