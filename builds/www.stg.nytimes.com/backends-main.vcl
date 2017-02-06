@@ -107,6 +107,7 @@ sub vcl_recv {
     if (   req.url ~ "^/real-estate/"
         || req.url ~ "^/real-estate?"
         || req.url ~ "^/real-estate$"
+        || req.url ~ "^/section/realestate/commercial"
     ) {
         set req.http.X-PageType = "real-estate";
         # set this to www instead of www_fe_vert so that it will PASS for now
