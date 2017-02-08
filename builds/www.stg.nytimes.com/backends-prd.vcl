@@ -87,7 +87,7 @@ backend newsdev_k8s_elb_prd {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .request = 
+        .request =
             "GET /interactive/projects/.healthcheck HTTP/1.1"
             "Host: www.nytimes.com"
             "Connection: close"
@@ -182,6 +182,22 @@ backend beta_well_prd {
     }
 }
 
+backend beta_guides_gcp_prd {
+    .host = "guides.nyt.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/api/health";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
 backend beta_watching_prd {
     .host = "np-watching-prd-public-1330526356.us-east-1.elb.amazonaws.com";
     .port = "80";
@@ -231,7 +247,6 @@ backend games_prd {
         .threshold = 3;
     }
 }
-
 
 backend subscription_prd {
     .host = "mwcm-app-est-public-prd-i-111546-340655147.us-east-1.elb.amazonaws.com";
