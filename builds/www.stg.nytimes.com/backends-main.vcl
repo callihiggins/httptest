@@ -17,7 +17,8 @@ sub vcl_recv {
     set req.http.X-PageType = "legacy";
 
     // entire paidpost hostname is NYT5
-    if (req.http.host == "paidpost.nytimes.com") {
+    if (req.http.host == "paidpost.nytimes.com"
+        && req.url.ext == "html") {
         set req.http.X-PageType = "paidpost";
         call set_www_fe_backend;
     }
