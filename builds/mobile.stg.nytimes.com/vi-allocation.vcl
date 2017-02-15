@@ -20,6 +20,7 @@ sub vcl_recv {
     if (req.http.X-Rigor-Vi-Access == "1") {
         # value to send to vi
         set var.cookie-value = 1;
+        set req.http.X-NYT-Vi-Cookie-Value = "1|1|mh,1|1|ms";
 
     # Mobile Home Screen
     } else if (req.url.path ~ "^/$") {
