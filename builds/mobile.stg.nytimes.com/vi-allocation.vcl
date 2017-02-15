@@ -16,8 +16,13 @@ sub vcl_recv {
 
     # Allocation configuration
 
+    # Special header granting access to Vi for Rigor testing
+    if (req.http.X-Rigor-Vi-Access == "1") {
+        # value to send to vi
+        set var.cookie-value = 1;
+
     # Mobile Home Screen
-    if (req.url.path ~ "^/$") {
+    } else if (req.url.path ~ "^/$") {
         set var.allocation-id = "mh";
         set var.allocation-version = 1;
         set var.allocation-numerator = 20;

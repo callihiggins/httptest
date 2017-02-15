@@ -7,6 +7,7 @@ include "frame-buster";
 include "www-redirect";
 include "mw-redirect";
 include "https-redirect";
+include "device-detect";
 include "cookie";
 include "uuid";
 include "vi-allocation";
