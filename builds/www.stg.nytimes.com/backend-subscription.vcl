@@ -1,24 +1,20 @@
 sub vcl_recv {
+    if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
+        if (    req.url == "/subscription"
+            ||  req.url ~ "^/subscription/"
+            ) {
 
-    if (client.ip ~ internal || (client.ip ~ external_staging_access && req.http.x-environment == "stg")) {
-
-        if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
-            if (    req.url == "/subscription"
-                ||  req.url ~ "^/subscription/"
-                ) {
-
-                set req.http.X-PageType = "subscription";
-                call set_subscription_backend;
-                set req.grace = 24h;
-                set req.http.x-skip-glogin = "1";
-                unset req.http.x-nyt-edition;
-                unset req.http.x-nyt-s; 
-                unset req.http.x-nyt-wpab;
-                set req.url = querystring.remove(req.url);
-                return(lookup);
-            }
+            set req.http.X-PageType = "subscription";
+            call set_subscription_backend;
+            set req.grace = 24h;
+            set req.http.x-skip-glogin = "1";
+            unset req.http.x-nyt-edition;
+            unset req.http.x-nyt-s;
+            unset req.http.x-nyt-wpab;
+            set req.url = querystring.remove(req.url);
+            return(lookup);
         }
-    }  
+    }
 }
 
 sub vcl_hash {
