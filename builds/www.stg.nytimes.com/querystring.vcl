@@ -174,6 +174,7 @@ sub vcl_recv {
                 "q" + querystring.filtersep() +
                 "sort" + querystring.filtersep() +
                 "type" + querystring.filtersep() +
+                "show_embedded" + querystring.filtersep() +
                 "dedupe_hl");
         } else if (req.http.X-PageType == "newsdev-intl"){
             set req.url = querystring.filter_except(req.url,
