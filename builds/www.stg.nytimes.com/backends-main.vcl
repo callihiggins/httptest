@@ -305,7 +305,7 @@ sub vcl_recv {
 
         // Pass those paths to newsdev dynamic without caching
         if (   req.url ~ "^/projects"
-            && req.http.host ~ "^well\.blogs\.(dev\.|stg\.)?nytimes\.com"
+            || req.url ~ "^/svc/int"
         ) {
            set req.http.X-PageType = "newsdev-dynamic";
            set req.http.x-skip-glogin = "1";
@@ -313,7 +313,6 @@ sub vcl_recv {
         // Send to blogs FE, separate netscaler rules points these to INT blade
         } else if (
                req.url ~ "^/ask/well/"
-            || req.url ~ "^/svc/int/"
         ) {
           return(pass);
         }
