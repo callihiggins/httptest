@@ -48,10 +48,10 @@ sub vcl_error {
 
 sub set_beta_well_backend {
     if (req.http.host ~ "\.dev\.") {
-        //set req.backend = beta_well_dev;
+        set req.backend = beta_guides_dev;
     } else if (req.http.host ~ "\.stg\.") {
-        set req.backend = beta_well_gcp_stg;
+        set req.backend = beta_guides_stg;
     } else {
-        set req.backend = beta_guides_gcp_prd;
+        set req.backend = beta_guides_prd;
     }
 }

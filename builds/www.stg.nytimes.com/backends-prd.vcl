@@ -166,23 +166,7 @@ director newsdev_elections_prd round-robin {
     { .backend = newsdev_instance_prd_usw1_2; }
 }
 
-backend beta_well_prd {
-    .host = "np-well-prd-public-1445398189.us-east-1.elb.amazonaws.com";
-    .port = "80";
-    .dynamic = true;
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/api/health";
-        .timeout = 3s;
-        .interval = 5s;
-        .window = 5;
-        .threshold = 4;
-    }
-}
-
-backend beta_guides_gcp_prd {
+backend beta_guides_prd {
     .host = "guides.nyt.com";
     .port = "80";
     .dynamic = true;

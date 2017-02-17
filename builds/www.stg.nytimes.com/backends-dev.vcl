@@ -114,10 +114,8 @@ director newsdev_elections_dev round-robin {
     { .backend = newsdev_instance_dev_usw1_1; }
 }
 
-# commenting well until the backend is fixed
-/*
-backend beta_instance_dev_use1_1 {
-    .host = "well-proxy-0.stg.np.newsdev.net";
+backend beta_guides_dev {
+    .host = "guides.dev.nyt.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
@@ -125,17 +123,12 @@ backend beta_instance_dev_use1_1 {
     .between_bytes_timeout = 5s;
     .probe = {
         .url = "/api/health";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
     }
 }
-
-director beta_well_dev round-robin {
-    { .backend = beta_instance_dev_use1_1; }
-}
-*/
 
 /*
 backend du_weddings_api_dev {
