@@ -1,7 +1,7 @@
 sub vcl_deliver {
 
     # some paths are whitelisted for framing on 3rd parties, check those first
-    if (		req.url !~ "^/svc/oembed/html"
+    if (	req.url !~ "^/svc/oembed/html"
     	&& 	req.url.path !~ "\.embedded\.html$"
     	&& 	req.url.path !~ "\.app\.html$"
     	&& 	req.url.path !~ "\.mobile\.html$"
