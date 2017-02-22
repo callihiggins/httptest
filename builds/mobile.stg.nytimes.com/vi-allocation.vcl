@@ -81,8 +81,11 @@ sub vcl_recv {
     set req.backend = projectvi_fe_prd;
 
     # only allocate if vi backend is up and the no-allocate cookie val isn't set
-    #  for now, Canada IP addresses are also excluded
-    if ( req.backend.healthy && var.cookie-value != 999 && geoip.country_code != "CA" ) {
+    if (   req.backend.healthy
+        && var.cookie-value != 999
+        && geoip.country_code != "CA"   # Canada excluded
+        && geoip.country_code != "AU"   # Australia excluded
+    ) {
 
         # First phase is that if you allocate to either test, you always go to Vi
         # Originally: ( var.cookie-value == 1 || req.http.X-NYT-Vi-Cookie-Value ~ "(^|,)1\|" )
