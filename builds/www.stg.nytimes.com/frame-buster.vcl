@@ -6,7 +6,7 @@ sub vcl_deliver {
     	&& 	req.url.path !~ "\.app\.html$"
     	&& 	req.url.path !~ "\.mobile\.html$"
     	&& 	req.url !~ "^/ads/"
-        &&  req.url !~ "^/newsletters/regilite/"
+        &&  	req.url !~ "^/newsletters/regilite/"
     	){
 
     	# not in the whitelist, check the Referer
