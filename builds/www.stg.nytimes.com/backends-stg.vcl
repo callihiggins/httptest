@@ -178,7 +178,7 @@ backend beta_watching_stg {
     .probe = {
         .url = "/api/health";
         .timeout = 3s;
-        .interval = 5s;
+        .interval = 10s;
         .window = 5;
         .threshold = 4;
     }
