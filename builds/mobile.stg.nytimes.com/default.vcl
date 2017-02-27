@@ -2,6 +2,8 @@ include "acl-internal";
 include "acl-external-staging-access";
 include "acl-crawlers";
 include "initialize-vars";
+include "geoip-timezone-map-table";
+include "geoip";
 include "backends-main";
 include "frame-buster";
 include "www-redirect";
@@ -110,7 +112,7 @@ sub vcl_recv {
         && req.url !~ "^/html/trending\.html"
         && req.url !~ "^/free-trial") {
         
-        set req.url = regsub(req.url, "\?.*", "");
+        set req.url = querystring.remove(req.url);
     }
 
     # From mobileweb config
@@ -197,6 +199,15 @@ sub vcl_hash {
 
     set req.hash += req.http.NYT-chromeless;   
     set req.hash += req.http.NYT-disable-for-perf-key;
+
+    # create new hashes based on geo if rendering project vi home
+    # STAGING FEATURE FLAG FOR NOW
+    if(req.http.x-nyt-geo-hash 
+        && req.http.X-NYT-Project-Vi 
+        && req.url.path ~ "^/$"
+        && req.http.x-environment == "stg"){
+        set req.hash += req.http.x-nyt-geo-hash;
+    }
 
     return(hash);
 }
@@ -349,6 +360,13 @@ sub vcl_deliver {
         set resp.http.X-Debug-ViAlloc-cookieid = req.http.X-Debug-ViAlloc-cookieid;
         set resp.http.X-Debug-ViAlloc-allocation = req.http.X-NYT-Project-Vi;
         set resp.http.X-Debug-ViAlloc-path = req.http.X-Debug-ViAlloc-path;
+
+        # geo debug headers
+        set resp.http.x-nyt-continent = req.http.x-nyt-continent;
+        set resp.http.x-nyt-country = req.http.x-nyt-country;
+        set resp.http.x-nyt-region = req.http.x-nyt-region;
+        set resp.http.x-nyt-timezone = req.http.x-nyt-timezone;
+        set resp.http.x-nyt-geo-hash = req.http.x-nyt-geo-hash;
 
     # Don't pass these headers to external client IPs
     } else {
