@@ -31,7 +31,7 @@ sub vcl_recv {
         || req.http.X-PageType == "well"          // beta - well guides
         || req.http.X-PageType == "trending"
         || req.http.X-PageType == "bestseller"
-        || req.url ~ "^/pages/(politics|world|dining)"        // NYT4 sectionfronts
+        || req.url ~ "^/pages/(politics|opinion|world|dining)"        // NYT4 sectionfronts
     ) {
         set req.http.x-https-phase = "live";
     }
