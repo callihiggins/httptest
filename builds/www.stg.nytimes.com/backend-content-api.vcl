@@ -15,7 +15,7 @@ sub vcl_recv {
         unset req.http.x-nyt-wpab;
     }
 
-    if (req.http.magicmarker-elections == "fake") {
+    if (req.http.magicmarker-content-api == "fake") {
         unset req.http.magicmarker-content-api;
         set req.backend = deadend;
         return(lookup);
@@ -58,7 +58,7 @@ sub vcl_error {
 
 sub set_content_api_backend {
     if (req.http.host ~ "\.dev\.") {
-        //set req.backend = newsdev_elections_dev;
+
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = content_api_stg;
     } else {
