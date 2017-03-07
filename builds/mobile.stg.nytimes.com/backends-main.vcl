@@ -12,3 +12,11 @@ sub set_mobileweb_fe_backend {
         set req.backend = mobileweb_fe_prd;
     }
 }
+
+sub set_projectvi_fe_backend {
+    if(req.http.host ~ "\.(dev|stg)\.") {
+        set req.backend = projectvi_fe_dev;
+    } else {
+        set req.backend = projectvi_fe_prd;
+    }
+}

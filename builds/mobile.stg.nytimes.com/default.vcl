@@ -111,7 +111,7 @@ sub vcl_recv {
         && req.url !~ "^/json/nav"
         && req.url !~ "^/html/trending\.html"
         && req.url !~ "^/free-trial") {
-        
+
         set req.url = querystring.remove(req.url);
     }
 
@@ -197,13 +197,13 @@ sub vcl_hash {
     set req.hash += req.url;
     set req.hash += req.http.host;
 
-    set req.hash += req.http.NYT-chromeless;   
+    set req.hash += req.http.NYT-chromeless;
     set req.hash += req.http.NYT-disable-for-perf-key;
 
     # create new hashes based on geo if rendering project vi home
     # STAGING FEATURE FLAG FOR NOW
-    if(req.http.x-nyt-geo-hash 
-        && req.http.X-NYT-Project-Vi 
+    if(req.http.x-nyt-geo-hash
+        && req.http.X-NYT-Project-Vi
         && req.url.path ~ "^/$"
         && req.http.x-environment == "stg"){
         set req.hash += req.http.x-nyt-geo-hash;
@@ -257,13 +257,6 @@ sub vcl_fetch {
 
     # mobileweb fetch behavior
     } else {
-
-        if (beresp.http.content-type ~ "text"
-            || beresp.http.content-type ~ "application/json"
-            || beresp.http.content-type ~ "application/x-javascript"
-            || beresp.http.content-type ~ "application/javascript") {
-            set beresp.gzip = true;
-        }
 
         # From mobileweb config
         if (req.url ~ "^/html/trending\.html") {
@@ -347,20 +340,18 @@ sub vcl_hit {
 
 sub vcl_miss {
 #FASTLY miss
+
+  // this should be removed already, but lets be sure
+  // since this was a lookup we weren't pass
+  remove bereq.http.Cookie;
+
   return(fetch);
 }
 
 sub vcl_deliver {
 #FASTLY deliver
 
-    if (client.ip ~ internal) { 
-        set resp.http.X-Debug-ViAlloc-cookiestring = req.http.X-Debug-ViAlloc-cookiestring;
-        set resp.http.X-Debug-ViAlloc-cookievalue = req.http.X-Debug-ViAlloc-cookievalue;
-        set resp.http.X-Debug-ViAlloc-cookieversion = req.http.X-Debug-ViAlloc-cookieversion;
-        set resp.http.X-Debug-ViAlloc-cookieid = req.http.X-Debug-ViAlloc-cookieid;
-        set resp.http.X-Debug-ViAlloc-allocation = req.http.X-NYT-Project-Vi;
-        set resp.http.X-Debug-ViAlloc-path = req.http.X-Debug-ViAlloc-path;
-
+    if (client.ip ~ internal) {
         # geo debug headers
         set resp.http.x-nyt-continent = req.http.x-nyt-continent;
         set resp.http.x-nyt-country = req.http.x-nyt-country;
@@ -373,14 +364,6 @@ sub vcl_deliver {
         unset resp.http.X-NYT-Backend;
     }
 
-
-    if (req.http.X-NYT-Project-Vi) { 
-        add resp.http.Set-Cookie =
-            "nyt.np.vi=" + req.http.X-NYT-Vi-Cookie-Value + "; " +
-            "Expires=" + time.add(now, 90d) + "; "+
-            "Path=/ ;" +
-            "Domain=.nytimes.com";
-    }
 
     # Project Vi saint mode
     if (req.http.X-NYT-Project-Vi == "1" ) {
@@ -420,7 +403,7 @@ sub vcl_deliver {
                 add resp.http.Set-Cookie = "NYT-Loc=i|" + resp.http.X-Currency + "|" + req.http.X-GeoIP-Country + ";path=/;domain=.nytimes.com;expires=" + strftime({"%a, %d-%b-%Y %T GMT"}, time.add(now, 7d));
                 unset resp.http.X-Currency;
             } else {
-                add resp.http.Set-Cookie = "NYT-Loc=d;path=/;domain=.nytimes.com;expires=" + 
+                add resp.http.Set-Cookie = "NYT-Loc=d;path=/;domain=.nytimes.com;expires=" +
                 strftime({"%a, %d-%b-%Y %T GMT"}, time.add(now, 7d));
             }
         }
@@ -512,8 +495,4 @@ sub vcl_error {
     }
 
 #FASTLY error
-}
-
-sub vcl_pass {
-#FASTLY pass
 }
