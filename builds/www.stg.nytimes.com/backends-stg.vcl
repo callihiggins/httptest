@@ -217,7 +217,7 @@ backend subscription_stg {
 }
 
 backend content_api_stg {
-    .host = "content.api.stg.nytimes.com";
+    .host = "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com";
     .ssl_cert_hostname = "content.api.stg.nytimes.com";
     .port = "443";
     .dynamic = true;
