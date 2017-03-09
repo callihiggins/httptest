@@ -5,6 +5,8 @@ sub vcl_recv {
     if (   req.http.X-PageType == "real-estate" 
         || req.http.X-PageType == "blog"
         || req.url ~ "^/crosswords"              // games pages, except for /ref/crosswords
+        || req.url.path == "/recommendations"
+        || req.url ~ "^/newsletters"
     ) {
         set req.http.x-https-phase = "internal";
     }
