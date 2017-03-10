@@ -145,7 +145,7 @@ sub vcl_recv {
 
     # AMP
     if (req.url ~ "\.amp\.html" && !(req.url ~ "^\/redirect")) {
-        if (client.ip ~ googlebot || client.ip ~ internal) {
+        if (client.ip ~ googlebot || client.ip ~ internal || client.ip ~ vpc_nat_gateway) {
             # avoid serving cached 403s to googlebot
             # always serve from backend and don't cache
             return (pass);
