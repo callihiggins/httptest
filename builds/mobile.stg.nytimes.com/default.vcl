@@ -1,6 +1,7 @@
 include "acl-internal";
 include "acl-external-staging-access";
 include "acl-crawlers";
+include "acl-vpc-gateway";
 include "initialize-vars";
 include "geoip-timezone-map-table";
 include "geoip";
