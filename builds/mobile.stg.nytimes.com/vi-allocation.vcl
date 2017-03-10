@@ -89,7 +89,7 @@ sub vcl_recv {
             set var.test_group = "z2"; # control, reported
 
         } else if (var.dart < 429496730) { # 10% * 0x100000000
-            set var.test_group = "b2"; # control, reported
+            set var.test_group = "b2"; # HP only, reported
 
         } else { # var.dart < 0x100000000
             set var.test_group = "z0"; # control, unreported
