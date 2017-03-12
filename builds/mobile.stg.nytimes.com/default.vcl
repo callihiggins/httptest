@@ -357,7 +357,19 @@ sub vcl_deliver {
 
     # Don't pass these headers to external client IPs
     } else {
-        unset resp.http.X-NYT-Backend;
+        remove resp.http.X-NYT-Backend;
+        remove resp.http.x-origin-server;
+        remove resp.http.X-VarnishCacheDuration;
+        remove resp.http.via;
+        remove resp.http.x-age;
+        remove resp.http.X-Powered-By;
+        remove resp.http.nnCoection;
+        remove resp.http.X-Backend;
+        remove resp.http.X-DetectedRuntimeConfigFlag;
+        remove resp.http.X-ESI-Status;
+        remove resp.http.X-Hash;
+        remove resp.http.X-Varnish;
+
     }
 
 
@@ -405,7 +417,7 @@ sub vcl_deliver {
         }
 
         # echo the perf-key along to the frontend if set
-        if (req.http.NYT-disable-for-perf-key) {
+        if (req.http.NYT-disable-for-perf-key ~ ".") {
           set resp.http.NYT-disable-for-perf-key = req.http.NYT-disable-for-perf-key;
         }
 
