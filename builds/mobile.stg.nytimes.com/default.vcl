@@ -142,7 +142,7 @@ sub vcl_recv {
 
     # If request for a native optimized article (.samizdat), return 404 unless request originates from nyt
     if (req.url ~ "\.samizdat$" || req.url ~ "^\/hybrid\/") {
-        if (client.ip ~ internal) {
+        if (client.ip ~ internal || client.ip ~ vpc_nat_gateway) {
             # avoid serving cached 404s to samizdat
             # always serve from backend and don't cache
             return (pass);
