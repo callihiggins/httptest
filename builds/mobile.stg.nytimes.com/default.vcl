@@ -1,3 +1,13 @@
+# put vcl_recv fastly macro first for consistent timings:
+sub vcl_recv {
+#FASTLY recv
+}
+
+# put vcl_deliver fastly macro first for consistent timings:
+sub vcl_deliver {
+#FASTLY deliver
+}
+
 include "acl-internal";
 include "acl-external-staging-access";
 include "acl-crawlers";
@@ -16,8 +26,6 @@ include "uuid";
 include "vi-allocation";
 
 sub vcl_recv {
-#FASTLY recv
-
     # Set the edge req header
     set req.http.X-NYT-Edge-CDN = "Fastly";
 
@@ -200,11 +208,12 @@ sub vcl_hash {
 
     set req.hash += req.http.NYT-chromeless;
     set req.hash += req.http.NYT-disable-for-perf-key;
+    set req.hash += req.http.x--fastly-project-vi;
 
     # create new hashes based on geo if rendering project vi home
     # STAGING FEATURE FLAG FOR NOW
     if(req.http.x-nyt-geo-hash
-        && req.http.X-NYT-Project-Vi
+        && req.http.x--fastly-project-vi
         && req.url.path ~ "^/$"
         && req.http.x-environment == "stg"){
         set req.hash += req.http.x-nyt-geo-hash;
@@ -219,20 +228,8 @@ sub vcl_fetch {
     # Set backend name for debugging
     set beresp.http.X-NYT-Backend = beresp.backend.name;
 
-    # Vary on:
-    #  Fastly-SSL: https version, for mobileweb. Probably defunct now
-    #  X-NYT-Project-Vi: variant holding Project Vi html
-    if (beresp.http.Vary) {
-        set beresp.http.Vary = beresp.http.Vary ", Fastly-SSL, X-NYT-Project-Vi";
-    } else {
-        set beresp.http.Vary = "Fastly-SSL, X-NYT-Project-Vi";
-    }
-
-
     # Vi fetch behavior
-    if (req.http.X-NYT-Project-Vi == "1") {
-        # if we hit Project Vi backend, set this header to Vary in cache
-        set beresp.http.X-NYT-Project-Vi = "1";
+    if (req.http.x--fastly-project-vi == "1") {
 
         // if a server error code
         if (beresp.status >= 500 && beresp.status < 600) {
@@ -311,7 +308,7 @@ sub vcl_fetch {
   #}
 
   # Vi has saint mode, so only apply this for mobileweb
-  if (req.http.X-NYT-Project-Vi != "1") {
+  if (req.http.x--fastly-project-vi != "1") {
     if (beresp.status == 500 || beresp.status == 503) {
       set req.http.Fastly-Cachetype = "ERROR";
       set beresp.ttl = 1s;
@@ -350,9 +347,7 @@ sub vcl_miss {
 }
 
 sub vcl_deliver {
-#FASTLY deliver
-
-    if (client.ip ~ internal) {
+    if (client.ip ~ internal && req.http.x-nyt-debug ~ ".") {
         # geo debug headers
         set resp.http.x-nyt-continent = req.http.x-nyt-continent;
         set resp.http.x-nyt-country = req.http.x-nyt-country;
@@ -362,12 +357,24 @@ sub vcl_deliver {
 
     # Don't pass these headers to external client IPs
     } else {
-        unset resp.http.X-NYT-Backend;
+        remove resp.http.X-NYT-Backend;
+        remove resp.http.x-origin-server;
+        remove resp.http.X-VarnishCacheDuration;
+        remove resp.http.via;
+        remove resp.http.x-age;
+        remove resp.http.X-Powered-By;
+        remove resp.http.nnCoection;
+        remove resp.http.X-Backend;
+        remove resp.http.X-DetectedRuntimeConfigFlag;
+        remove resp.http.X-ESI-Status;
+        remove resp.http.X-Hash;
+        remove resp.http.X-Varnish;
+
     }
 
 
     # Project Vi saint mode
-    if (req.http.X-NYT-Project-Vi == "1" ) {
+    if (req.http.x--fastly-project-vi == "1" ) {
         if (resp.status >= 500 && resp.status < 600) {
             // restart if the stale object is available
             if (stale.exists) {
@@ -410,7 +417,7 @@ sub vcl_deliver {
         }
 
         # echo the perf-key along to the frontend if set
-        if (req.http.NYT-disable-for-perf-key) {
+        if (req.http.NYT-disable-for-perf-key ~ ".") {
           set resp.http.NYT-disable-for-perf-key = req.http.NYT-disable-for-perf-key;
         }
 
