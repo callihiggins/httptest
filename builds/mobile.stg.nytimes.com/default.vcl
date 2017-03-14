@@ -8,6 +8,10 @@ sub vcl_deliver {
 #FASTLY deliver
 }
 
+sub vcl_pass {
+#FASTLY pass
+}
+
 include "acl-internal";
 include "acl-external-staging-access";
 include "acl-crawlers";
