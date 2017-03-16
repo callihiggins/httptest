@@ -143,11 +143,6 @@ sub vcl_recv {
             call set_mobileweb_fe_backend; # fallback to MW if Vi is unhealthy
         }
     }
-
-    if (req.backend == projectvi_fe_prd || req.backend == projectvi_fe_dev) {
-        # must set this for hashing and saint mode in default.vcl:
-        set req.http.X-NYT-Project-Vi = "1";
-    }
 }
 
 sub vcl_deliver {

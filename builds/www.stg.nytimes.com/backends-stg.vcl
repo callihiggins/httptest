@@ -215,20 +215,3 @@ backend subscription_stg {
         .threshold = 4;
     }
 }
-
-backend content_api_stg {
-    .host = "content.api.stg.nytimes.com";
-    .ssl_cert_hostname = "content.api.stg.nytimes.com";
-    .port = "443";
-    .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
-    .probe = {
-        .url = "/version.json";
-        .timeout = 3s;
-        .interval = 5s;
-        .window = 5;
-        .threshold = 4;
-    }
-}

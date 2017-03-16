@@ -11,6 +11,8 @@ sub vcl_recv {
             now.sec
             randomstr(64)
             req.http.host
+            req.http.user-agent
+            req.http.cookie
             req.url
             client.ip
             req.http.Fastly-Client-IP
