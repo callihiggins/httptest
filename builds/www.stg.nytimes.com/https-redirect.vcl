@@ -2,10 +2,7 @@ sub vcl_recv {
     /*
      * Items that are HTTPS internally only but not assigned to a phase
      */
-    if (   req.http.X-PageType == "real-estate" 
-        || req.http.X-PageType == "blog"
-        || req.url ~ "^/crosswords"              // games pages, except for /ref/crosswords
-        || req.url.path == "/recommendations"
+    if (   req.http.X-PageType == "blog"
         || req.url ~ "^/newsletters"
     ) {
         set req.http.x-https-phase = "internal";
@@ -34,6 +31,10 @@ sub vcl_recv {
         || req.http.X-PageType == "trending"
         || req.http.X-PageType == "bestseller"
         || req.url ~ "^/pages/(politics|opinion|world|dining)"        // NYT4 sectionfronts
+        || req.http.X-PageType == "real-estate"
+        || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
+        || req.url.path == "/recommendations"
+
     ) {
         set req.http.x-https-phase = "live";
     }
