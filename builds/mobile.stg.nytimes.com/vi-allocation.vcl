@@ -73,9 +73,10 @@ sub vcl_recv {
 
     } else {
         # use Abra-style allocation, like so:
-        # 0..1%:   "b2" (HP only, reported)
-        # 1..2%:   "z2" (control, reported)
-        # 2..100%: "z0" (control, unreported)
+        # 0..1%:    "b2" (HP only, reported)
+        # 1..6%:    "z2" (control, reported)
+        # 6..10%:   "b2" (HP only, reported)
+        # 10..100%: "z0" (control, unreported)
 
         set var.hash = digest.hash_sha256(req.http.x--fastly-nyt-a + " WP_ProjectVi2");
         set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
@@ -84,8 +85,11 @@ sub vcl_recv {
         if (var.dart < 42949673) { # 1% * 0x100000000
             set var.test_group = "b2"; # HP only, reported
 
-        } else if (var.dart < 85899346) { # 2% * 0x100000000
+        } else if (var.dart < 257698038) { # 6% * 0x100000000
             set var.test_group = "z2"; # control, reported
+
+        } else if (var.dart < 429496730) { # 10% * 0x100000000
+            set var.test_group = "b2"; # HP only, reported
 
         } else { # var.dart < 0x100000000
             set var.test_group = "z0"; # control, unreported
