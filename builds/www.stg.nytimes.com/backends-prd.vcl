@@ -247,3 +247,46 @@ backend subscription_prd {
         .threshold = 4;
     }
 }
+
+backend times_journeys_prd {
+    .host = "timesjourneys.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "timesjourneys.nytimes.com";
+    .ssl_sni_hostname = "timesjourneys.nytimes.com";
+    .host_header = "timesjourneys.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .ssl = true;
+    .ssl_check_cert = always;
+    .probe = {
+        .request = "HEAD / HTTP/1.1" "Host: timesjourneys.nytimes.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 1;
+        .window = 2;
+        .timeout = 5s;
+        .initial = 1;
+        .expected_response = 200;
+        .interval = 10s;
+    }
+}
+
+backend times_journeys_students_prd {
+    .host = "timesjourneysstudents.nytimes.com";
+    // This will need to be updated to 443 once the SSL cert is set up on the origin
+    // https://jira.nyt.net/browse/DV-259
+    .port = "80";
+    .dynamic = true;
+    .ssl_cert_hostname = "timesjourneysstudents.nytimes.com";
+    .host_header = "timesjourneysstudents.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/";
+        .timeout = 10s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
+    }
+}
