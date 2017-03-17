@@ -10,6 +10,18 @@ backend alpha_fe_dev {
     }
 }
 
+backend alpha_fe_test {
+    .host = "35.186.210.71";
+    .port = "80";
+    .probe = {
+        .url = "/";
+        .timeout = 10s;
+        .interval = 60s;
+        .window = 4;
+        .threshold = 3;
+    }
+}
+
 backend alpha_home_branch {
     .host = "130.211.47.210";
     .port = "80";

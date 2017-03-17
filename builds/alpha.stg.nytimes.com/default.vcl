@@ -1,4 +1,7 @@
 include "acl-internal";
+include "initialize-vars";
+include "geoip-timezone-map-table";
+include "geoip";
 include "backends";
 include "device-detect";
 
@@ -37,12 +40,36 @@ sub vcl_recv {
     set req.backend = alpha_fe_prd;
   }
 
+  # use a test backend for alpha.test, targeted briefings needs this
+  if (req.http.host == "alpha.test.nytimes.com"){
+    set req.backend = alpha_fe_test;
+    set req.url = querystring.remove(req.url);
+  }
+
   if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
     return(pass);
   }
 
   return(lookup);
 }
+
+
+sub vcl_hash {
+#FASTLY hash
+    set req.hash += req.url;
+    set req.hash += req.http.host;
+
+    # create new hashes based on geo if rendering home
+    # alpha.test.nytimes.com FEATURE FLAG FOR NOW
+    if(req.http.x-nyt-geo-hash
+        && req.url.path ~ "^/$"
+        && req.http.host == "alpha.test.nytimes.com"){
+        set req.hash += req.http.x-nyt-geo-hash;
+    }
+
+    return(hash);
+}
+
 
 sub vcl_fetch {
 
