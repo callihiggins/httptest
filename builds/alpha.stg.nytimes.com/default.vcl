@@ -158,6 +158,13 @@ sub vcl_deliver {
   set resp.http.Device-Type = req.http.Device-Type;
   set resp.http.DeviceType = req.http.DeviceType;
 
+  if (req.http.host == "alpha.test.nytimes.com") {
+    set resp.http.x-nyt-continent = req.http.x-nyt-continent;
+    set resp.http.x-nyt-country = req.http.x-nyt-country;
+    set resp.http.x-nyt-region = req.http.x-nyt-region;
+    set resp.http.x-nyt-timezone = req.http.x-nyt-timezone;
+  }
+
 #FASTLY deliver
 
   return(deliver);
