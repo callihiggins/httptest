@@ -63,7 +63,7 @@ sub vcl_hash {
     # alpha.test.nytimes.com FEATURE FLAG FOR NOW
     if(req.http.x-nyt-geo-hash
         && req.url.path ~ "^/$"
-        && req.http.host == "alpha.test.nytimes.com"){
+        && req.http.host == "alpha-test.stg.nytimes.com"){
         set req.hash += req.http.x-nyt-geo-hash;
     }
 
@@ -158,7 +158,7 @@ sub vcl_deliver {
   set resp.http.Device-Type = req.http.Device-Type;
   set resp.http.DeviceType = req.http.DeviceType;
 
-  if (req.http.host == "alpha.test.nytimes.com") {
+  if (req.http.host == "alpha-test.stg.nytimes.com") {
     set resp.http.x-nyt-continent = req.http.x-nyt-continent;
     set resp.http.x-nyt-country = req.http.x-nyt-country;
     set resp.http.x-nyt-region = req.http.x-nyt-region;
