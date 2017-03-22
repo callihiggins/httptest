@@ -127,6 +127,9 @@ sub vcl_recv {
                 "brokerages" + querystring.filtersep() +
                 "brokerages[]" + querystring.filtersep() +
                 {"brokerages%5B%5D"} + querystring.filtersep() +
+                "utm_campaign" + querystring.filtersep() +
+                "utm_source" + querystring.filtersep() +
+                "utm_medium" + querystring.filtersep() +
                 "sortBy");
         } else if (req.http.X-PageType == "newsletter") {
             set req.url = querystring.filter_except(req.url,
