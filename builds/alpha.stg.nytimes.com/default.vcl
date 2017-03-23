@@ -41,7 +41,7 @@ sub vcl_recv {
   }
 
   # use a test backend for alpha.test, targeted briefings needs this
-  if (req.http.host == "alpha.test.nytimes.com"){
+  if (req.http.host == "alpha-test.stg.nytimes.com"){
     set req.backend = alpha_fe_test;
     set req.url = querystring.remove(req.url);
   }
