@@ -283,10 +283,12 @@ backend times_journeys_students_prd {
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
-        .url = "/";
-        .timeout = 10s;
-        .interval = 5s;
-        .window = 5;
-        .threshold = 3;
+        .request = "HEAD / HTTP/1.1" "Host: timesjourneysstudents.nytimes.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 1;
+        .window = 2;
+        .timeout = 5s;
+        .initial = 1;
+        .expected_response = 200;
+        .interval = 10s;
     }
 }
