@@ -61,7 +61,6 @@ sub vcl_fetch {
 
 sub vcl_deliver {
     if (req.http.X-PageType ~ "^times-journeys") {
-    	set resp.http.x-request-host = req.http.host;
         set resp.http.X-API-Version = "TJ";
     }
 }

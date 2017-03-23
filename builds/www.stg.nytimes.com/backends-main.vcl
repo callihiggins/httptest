@@ -278,7 +278,7 @@ sub vcl_recv {
     // blog URLs that do not get glogin redirection
     if (req.http.X-PageType == "blog") {
         if (   req.url ~ "^/svc"
-            || req.url ~  "^/timesjourneys"
+            || req.url ~ "^/timesjourneys"
             || req.url ~ "^/robots\.txt"
             || req.url ~ "/live-updates/(json|text)/"
             || req.url ~ "/renderstyle/(phone|tablet)/"
