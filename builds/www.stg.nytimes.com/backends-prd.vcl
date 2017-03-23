@@ -247,3 +247,21 @@ backend subscription_prd {
         .threshold = 4;
     }
 }
+
+backend content_api_prd {
+    .host = "content.api.nytimes.com";
+    .ssl_cert_hostname = "content.api.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/version.json";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
