@@ -215,3 +215,15 @@ backend subscription_stg {
         .threshold = 4;
     }
 }
+
+backend projectvi_fe_stg {
+    .host = "35.186.192.58";
+    .port = "80";
+    .probe = {
+        .url = "/.healthcheck";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+    }
+}

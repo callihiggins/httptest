@@ -13,7 +13,7 @@ sub vcl_recv {
 
     // default is NYT4
     call set_www_backend;
-    
+
     set req.http.X-PageType = "legacy";
 
     // entire paidpost hostname is NYT5
@@ -355,7 +355,7 @@ sub vcl_recv {
             set req.http.X-PageType = "community-svc-cacheable";
             set req.http.x-skip-glogin = "1";
             call set_www_fe_backend;
-            
+
             # sub in "/esi/jsonp-callback" as the callback parameter
             set req.url = regsub(req.url,
                 "([\?&])callback=[a-zA-Z0-9_][^&]+",
@@ -400,6 +400,13 @@ sub vcl_recv {
         set req.http.cookie = req.http.X-Cookie;
         set req.http.X-PageType = "legacy";
         call set_www_backend;
+    }
+
+    if (req.http.X-Vi-Cluster == "story") {
+        set req.url = req.http.X-OriginalUri;
+        set req.http.cookie = req.http.X-Cookie;
+        set req.http.X-PageType = "vi-story";
+        call set_vi_backend;
     }
 }
 
@@ -483,5 +490,16 @@ sub set_www_newsdev_dynamic_backend {
         set req.backend = newsdev_k8s_elb_stg;
     } else {
         set req.backend = newsdev_k8s_elb_prd;
+    }
+}
+
+# set a vi backend based on host
+sub set_vi_backend {
+    if(req.http.x-environment == "dev") {
+        set req.backend = projectvi_fe_stg;
+    } else if (req.http.x-environment == "stg") {
+        set req.backend = projectvi_fe_stg;
+    } else {
+        set req.backend = www_prd;
     }
 }
