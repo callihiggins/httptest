@@ -1,8 +1,14 @@
+include "subscription-currency-map-table";
+
 sub vcl_recv {
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
         if (    req.url == "/subscription"
             ||  req.url ~ "^/subscription/"
             ) {
+
+            if (req.http.x-environment == "stg") {
+                set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, geoip.country_code, "USD");
+            }
 
             set req.http.X-PageType = "subscription";
             call set_subscription_backend;
@@ -26,6 +32,29 @@ sub vcl_hash {
 
 sub vcl_fetch {
     if (req.http.X-PageType == "subscription") {
+
+        if (req.http.x-environment == "stg") {
+            /* handle 5XX (or any other unwanted status code) */
+            if (beresp.status >= 500 && beresp.status < 600) {
+
+                /* deliver stale if the object is available */
+                if (stale.exists) {
+                  return(deliver_stale);
+                }
+
+                if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
+                  restart;
+                }
+
+            }
+
+            if (beresp.status < 500) {
+                /* set stale_if_error and stale_while_revalidate (customize these values) */
+                set beresp.stale_if_error = 86400s;
+                set beresp.stale_while_revalidate = 60s;
+            }
+        }
+
         // use very short cache TTL for HTTP 4XXs
         if (beresp.status >= 400 && beresp.status < 500) {
             set beresp.ttl = 3s;
