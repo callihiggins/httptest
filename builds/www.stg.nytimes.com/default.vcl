@@ -132,6 +132,11 @@ sub vcl_fetch {
     return(restart);
   }
 
+  if (beresp.http.X-Vi-Cluster) {
+    set req.http.X-Vi-Cluster = beresp.http.X-Vi-Cluster;
+    return(restart);
+  }
+
   if (req.restarts > 0) {
     set beresp.http.Fastly-Restarts = req.restarts;
   }
