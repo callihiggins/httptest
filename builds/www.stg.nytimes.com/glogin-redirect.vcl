@@ -4,8 +4,8 @@ sub vcl_recv {
     // glogin check: if nyt-bcet cookie timestamp is expired, redirect to glogin
 
     if (
-        (req.backend != www_dev 
-        && req.backend != www_stg 
+        (req.backend != www_dev
+        && req.backend != www_stg
         && req.backend != www_prd
         && req.backend != www_https_dev
         && req.backend != www_https_stg
@@ -115,14 +115,14 @@ sub redirect_to_glogin {
     // if new value is 6, redirect to login page
     // else redirect to glogin
     if (req.http.x-r == "6") {
-        set obj.http.location = 
+        set obj.http.location =
             "https://myaccount." +
-            if(req.http.x-environment == "dev","dev.","") + 
+            if(req.http.x-environment == "dev","dev.","") +
             if(req.http.x-environment == "stg","stg.","") +
-            "nytimes.com/auth/login?URI=" + urlencode("http://" + req.http.host + req.http.X-OriginalUri) + "&REFUSE_COOKIE_ERROR=SHOW_ERROR";
+            "nytimes.com/auth/login?URI=" + urlencode("https://" + req.http.host + req.http.X-OriginalUri) + "&REFUSE_COOKIE_ERROR=SHOW_ERROR";
         set req.http.x-redirect-reason = "redir=[login]";
     } else {
-        if (req.http.X-OriginalUri ~ "_r=") { 
+        if (req.http.X-OriginalUri ~ "_r=") {
             set req.http.x-rq = "_r=" + req.http.x-r;
             set req.http.X-OriginalUri = regsub(req.http.X-OriginalUri, "_r=[^&]*", req.http.x-rq);
         } else if (req.http.X-OriginalUri ~ "\?") {
@@ -130,10 +130,10 @@ sub redirect_to_glogin {
         } else {
             set req.http.X-OriginalUri = req.http.X-OriginalUri + "?_r=" + req.http.x-r;
         }
-        set obj.http.Location = 
-            "https://www." + 
-            if(req.http.x-environment == "dev","dev.","") + 
-            if(req.http.x-environment == "stg","stg.","") +            
+        set obj.http.Location =
+            "https://www." +
+            if(req.http.x-environment == "dev","dev.","") +
+            if(req.http.x-environment == "stg","stg.","") +
             "nytimes.com/glogin?URI=" + urlencode("https://" + req.http.host + req.http.X-OriginalUri);
         set req.http.x-redirect-reason = "redir=[glogin]";
     }
