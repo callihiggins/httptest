@@ -35,12 +35,6 @@ sub vcl_recv {
         }
     }
 
-    if (req.http.magicmarker-times-journeys == "fake") {
-        unset req.http.magicmarker-times-journeys;
-        set req.backend = deadend;
-        return(lookup);
-    }
-
     return(pass);
 }
 
@@ -68,12 +62,5 @@ sub vcl_fetch {
 sub vcl_deliver {
     if (req.http.X-PageType ~ "^times-journeys") {
         set resp.http.X-API-Version = "TJ";
-    }
-}
-
-sub vcl_error {
-    if (req.http.X-PageType ~ "^times-journeys" && obj.status >= 500 && obj.status < 600) {
-        set req.http.magicmarker-times-journeys = "fake";
-        return(restart);
     }
 }
