@@ -275,13 +275,16 @@ backend times_journeys_students_prd {
     .host = "timesjourneysstudents.nytimes.com";
     // This will need to be updated to 443 once the SSL cert is set up on the origin
     // https://jira.nyt.net/browse/DV-259
-    .port = "80";
+    .port = "443";
     .dynamic = true;
     .ssl_cert_hostname = "timesjourneysstudents.nytimes.com";
+    .ssl_sni_hostname = "timesjourneysstudents.nytimes.com";
     .host_header = "timesjourneysstudents.nytimes.com";
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
+    .ssl = true;
+    .ssl_check_cert = always;
     .probe = {
         .request = "HEAD / HTTP/1.1" "Host: timesjourneysstudents.nytimes.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
         .threshold = 1;
