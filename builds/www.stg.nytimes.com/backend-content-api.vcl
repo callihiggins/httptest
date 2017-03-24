@@ -14,12 +14,6 @@ sub vcl_recv {
         unset req.http.x-nyt-s;
         unset req.http.x-nyt-wpab;
     }
-
-    if (req.http.magicmarker-content-api == "fake") {
-        unset req.http.magicmarker-content-api;
-        set req.backend = deadend;
-        return(lookup);
-    }
 }
 
 sub vcl_fetch {
@@ -46,13 +40,6 @@ sub vcl_fetch {
 sub vcl_deliver {
     if (req.http.X-PageType == "content-api") {
         set resp.http.X-API-Version = "CA";
-    }
-}
-
-sub vcl_error {
-    if (req.http.X-PageType == "content-api" && obj.status >= 500 && obj.status < 600) {
-        set req.http.magicmarker-content-api = "fake";
-        restart;
     }
 }
 
