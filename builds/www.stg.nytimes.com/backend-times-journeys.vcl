@@ -53,9 +53,15 @@ sub vcl_fetch {
 
         // use saint mode for HTTP 5XXs
         if (beresp.status >= 500) {
-            set beresp.saintmode = 60s;
+            /* deliver stale if the object is available */
+            if (stale.exists) {
+                return(deliver_stale);
+            }
             return(restart);
         }
+
+        set beresp.stale_if_error = 86400s;
+        set beresp.stale_while_revalidate = 60s;
     }
 }
 
