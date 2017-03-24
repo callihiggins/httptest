@@ -99,6 +99,26 @@ backend newsdev_k8s_elb_prd {
     }
 }
 
+backend newsdev_k8s_gke_prd {
+    .host = "gke.newsdev.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .request =
+            "GET /healthz HTTP/1.1"
+            "Host: gke.newsdev.nytimes.com"
+            "Connection: close"
+            "Accept: */*";
+        .timeout = 10s;
+        .interval = 30s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
 backend newsdev_instance_prd_use1_1 {
     .host = "54.221.244.128";
     .port = "80";

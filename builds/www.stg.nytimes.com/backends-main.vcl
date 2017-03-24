@@ -465,9 +465,13 @@ sub set_blogs_fe_backend {
 
 sub set_www_newsdev_static_backend {
     if(req.http.host ~ "\.dev\.") {
-        set req.backend = newsdev_k8s_elb_stg;
+        // Override with newsdev-gke
+        set req.http.X-PageType = "newsdev-gke";
+        set req.backend = newsdev_k8s_gke_stg;
     } else if (req.http.host ~ "\.stg\.") {
-        set req.backend = newsdev_k8s_elb_stg;
+        // Override with newsdev-gke
+        set req.http.X-PageType = "newsdev-gke";
+        set req.backend = newsdev_k8s_gke_stg;
     } else {
         set req.backend = newsdev_k8s_elb_prd;
     }
@@ -485,9 +489,13 @@ sub set_www_newsdev_intl_backend {
 
 sub set_www_newsdev_dynamic_backend {
     if(req.http.host ~ "\.dev\.") {
-        set req.backend = newsdev_k8s_elb_stg;
+        // Override with newsdev-gke
+        set req.http.X-PageType = "newsdev-gke";
+        set req.backend = newsdev_k8s_gke_stg;
     } else if (req.http.host ~ "\.stg\.") {
-        set req.backend = newsdev_k8s_elb_stg;
+        // Override with newsdev-gke
+        set req.http.X-PageType = "newsdev-gke";
+        set req.backend = newsdev_k8s_gke_stg;
     } else {
         set req.backend = newsdev_k8s_elb_prd;
     }

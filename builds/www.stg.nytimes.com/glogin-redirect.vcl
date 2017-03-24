@@ -11,7 +11,9 @@ sub vcl_recv {
         && req.backend != www_https_stg
         && req.backend != www_https_prd
         && req.backend != newsdev_k8s_elb_stg
-        && req.backend != newsdev_k8s_elb_prd) 
+        && req.backend != newsdev_k8s_elb_prd
+        && req.backend != newsdev_k8s_gke_stg
+        && req.backend != newsdev_k8s_gke_prd)
         && req.http.X-CRWL != "true"
         && req.request != "FASTLYPURGE"
         && !req.http.x-skip-glogin
@@ -26,6 +28,7 @@ sub vcl_recv {
         && req.http.X-PageType != "elections"
         && req.http.X-PageType != "newsdev-static"
         && req.http.X-PageType != "newsdev-dynamic"
+        && req.http.X-PageType != "newsdev-gke"
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "video-library"
         && req.http.X-PageType != "video-api"
