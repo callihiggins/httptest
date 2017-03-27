@@ -267,7 +267,6 @@ sub vcl_recv {
             || req.url ~  "^/news$"
             || req.url ~  "^/politics/first-draft"
             || req.url ~  "^/times-insider"
-            || req.url ~  "^/times-journeys"
             || req.url ~  "^/timesjourneys"
             || req.url ~  "^/live/"
             || req.url ~  "^/live$"
@@ -279,7 +278,6 @@ sub vcl_recv {
     // blog URLs that do not get glogin redirection
     if (req.http.X-PageType == "blog") {
         if (   req.url ~ "^/svc"
-            || req.url ~ "^/times-journeys"
             || req.url ~ "^/timesjourneys"
             || req.url ~ "^/robots\.txt"
             || req.url ~ "/live-updates/(json|text)/"
