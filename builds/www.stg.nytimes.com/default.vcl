@@ -14,8 +14,6 @@ include "www-redirect";
 include "backends-main";
 include "backend-well";
 include "backend-elections";
-include "backend-newsdev-static";
-include "backend-newsdev-dynamic";
 include "backend-newsdev-gke";
 include "backend-newsdev-intl";
 include "backend-watching";

@@ -26,8 +26,6 @@ sub vcl_recv {
         && req.http.X-PageType != "static"
         && req.http.X-PageType != "paidpost"
         && req.http.X-PageType != "elections"
-        && req.http.X-PageType != "newsdev-static"
-        && req.http.X-PageType != "newsdev-dynamic"
         && req.http.X-PageType != "newsdev-gke"
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "video-library"

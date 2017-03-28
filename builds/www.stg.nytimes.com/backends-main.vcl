@@ -187,19 +187,12 @@ sub vcl_recv {
     }
 
     if (    req.url ~ "^/svc/int/"
+        ||  req.url ~ "^/interactive/projects/"
+        || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway)
     ) {
-        set req.http.X-PageType = "newsdev-dynamic";
+        set req.http.X-PageType = "newsdev-gke";
         set req.http.x-skip-glogin = "1";
-        call set_www_newsdev_dynamic_backend;
-    }
-
-    if (
-            req.url ~ "^/interactive/projects/"
-        || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway/")
-    ) {
-        set req.http.X-PageType = "newsdev-static";
-        set req.http.x-skip-glogin = "1";
-        call set_www_newsdev_static_backend;
+        call set_www_newsdev_gke_backend;
     }
 
     if ((req.url == "/es") || (req.url ~ "^/es/")
@@ -214,9 +207,9 @@ sub vcl_recv {
        || req.http.host == "www-newsdev.stg.nytimes.com"
         ) {
         if (req.url ~ "^/roomfordebate"){
-            set req.http.X-PageType = "newsdev-static";
+            set req.http.X-PageType = "newsdev-gke";
             set req.http.x-skip-glogin = "1";
-            call set_www_newsdev_static_backend;
+            call set_www_newsdev_gke_backend;
         }
     }
 
@@ -304,17 +297,17 @@ sub vcl_recv {
         // Send to blogs FE, separate netscaler rules points these to INT blade
         if (    req.http.host ~ "^well\.blogs\.(dev\.|stg\.)?nytimes\.com"
             && (    req.url ~ "^/ask/well/"
-                ||  req.url ~ "^/svc/int/"
+                ||  req.url ~ "^/svc/int/qa"
             )
         ) {
             return(pass);
-        // Pass those paths to newsdev dynamic without caching
+        // Pass those paths to newsdev gke without caching
         } else if ( req.url ~ "^/projects"
                  || req.url ~ "^/svc/int"
         ) {
-           set req.http.X-PageType = "newsdev-dynamic";
+           set req.http.X-PageType = "newsdev-gke";
            set req.http.x-skip-glogin = "1";
-           call set_www_newsdev_dynamic_backend;
+           call set_www_newsdev_gke_backend;
         }
     }
 
@@ -461,20 +454,6 @@ sub set_blogs_fe_backend {
     }
 }
 
-sub set_www_newsdev_static_backend {
-    if(req.http.host ~ "\.dev\.") {
-        // Override with newsdev-gke
-        set req.http.X-PageType = "newsdev-gke";
-        set req.backend = newsdev_k8s_gke_stg;
-    } else if (req.http.host ~ "\.stg\.") {
-        // Override with newsdev-gke
-        set req.http.X-PageType = "newsdev-gke";
-        set req.backend = newsdev_k8s_gke_stg;
-    } else {
-        set req.backend = newsdev_k8s_elb_prd;
-    }
-}
-
 sub set_www_newsdev_intl_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = newsdev_k8s_elb_stg;
@@ -485,17 +464,13 @@ sub set_www_newsdev_intl_backend {
     }
 }
 
-sub set_www_newsdev_dynamic_backend {
+sub set_www_newsdev_gke_backend {
     if(req.http.host ~ "\.dev\.") {
-        // Override with newsdev-gke
-        set req.http.X-PageType = "newsdev-gke";
         set req.backend = newsdev_k8s_gke_stg;
     } else if (req.http.host ~ "\.stg\.") {
-        // Override with newsdev-gke
-        set req.http.X-PageType = "newsdev-gke";
         set req.backend = newsdev_k8s_gke_stg;
     } else {
-        set req.backend = newsdev_k8s_elb_prd;
+        set req.backend = newsdev_k8s_gke_prd;
     }
 }
 
