@@ -1,5 +1,5 @@
 sub vcl_recv {
-  if (req.http.X-PageType == "newsdev-dynamic") {
+  if (req.http.X-PageType == "newsdev-gke") {
 
     // Bypass cache for certain /svc/int routes
     if (
@@ -8,6 +8,7 @@ sub vcl_recv {
       || req.url ~ "^/svc/int/godzown/u"
       || req.url ~ "^/svc/int/dialects"
       || req.url ~ "^/svc/int/grandmominator"
+      || req.url ~ "^/svc/int/attribute"
     ) {
       return (pass);
     }
@@ -35,8 +36,20 @@ sub vcl_recv {
   }
 }
 
+sub vcl_miss {
+  if ((req.http.X-PageType == "newsdev-gke") &&
+      (req.url ~ "^/interactive/projects/cp")) {
+    unset bereq.http.Accept-Encoding;
+    unset req.http.Accept-Encoding;
+  }
+}
+
 sub vcl_fetch {
-  if (req.http.X-PageType == "newsdev-dynamic") {
+  if (req.http.X-PageType == "newsdev-gke") {
+    if ( req.url ~ "^/interactive/projects/cp" ) {
+      esi;
+    }
+
     unset beresp.http.X-Amz-Id-2;
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;

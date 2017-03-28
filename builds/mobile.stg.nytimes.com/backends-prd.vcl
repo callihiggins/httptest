@@ -22,3 +22,22 @@ backend projectvi_fe_prd {
         .threshold = 3;
     }
 }
+
+backend vp_prd {
+    .host = "vp.nyt.com";
+    .port = "443";
+    .dynamic = true;
+    .host_header = "vp.nyt.com";
+    .ssl_cert_hostname = "vp.nyt.com";
+    .ssl_sni_hostname = "vp.nyt.com";
+    .ssl_check_cert = always;
+    .ssl = true;
+    .probe = {
+        .request = "HEAD /video/360/video.min.js HTTP/1.1" "Host: vp.nyt.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+        .expected_response = 200;
+    }
+}
