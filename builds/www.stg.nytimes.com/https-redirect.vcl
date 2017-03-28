@@ -35,8 +35,8 @@ sub vcl_recv {
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
         || req.url.path == "/recommendations"
         || req.url.path ~ "^/.well-known/" // https://tools.ietf.org/html/rfc5785
-        || req.http.X-PageType = "times-journeys"
-        || req.http.X-PageType = "times-journeys-students"
+        || req.http.X-PageType == "times-journeys"
+        || req.http.X-PageType == "times-journeys-students"
     ) {
         set req.http.x-https-phase = "live";
     }
