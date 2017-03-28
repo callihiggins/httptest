@@ -188,7 +188,7 @@ sub vcl_recv {
 
     if (    req.url ~ "^/svc/int/"
         ||  req.url ~ "^/interactive/projects/"
-        || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway)
+        || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
     ) {
         set req.http.X-PageType = "newsdev-gke";
         set req.http.x-skip-glogin = "1";
