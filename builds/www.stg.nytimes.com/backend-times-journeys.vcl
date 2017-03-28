@@ -32,10 +32,10 @@ sub vcl_recv {
 	        // We're going to unset the cookies on the request
 	        unset req.http.Cookie;
             unset req.http.X-Cookie;
+
+            return(pass);
         }
     }
-
-    return(pass);
 }
 
 sub vcl_fetch {
