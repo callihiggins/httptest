@@ -13,7 +13,7 @@ table subscription_currency_map {
 	"ES": "EUR",
 	"FI": "EUR",
 	"FR": "EUR",
-	"GB": "EUR",
+	"GB": "GBP",
 	"GR": "EUR",
 	"HR": "EUR",
 	"HU": "EUR",

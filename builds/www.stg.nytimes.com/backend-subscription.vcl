@@ -67,7 +67,11 @@ sub vcl_deliver {
 
         set resp.http.X-API-Version = "WCM";
 
-        if(resp.status == 301 || resp.status == 302) {
+        if (client.ip ~ internal && req.http.x-environment == "stg") {
+          set resp.http.X-NYT-Currency = req.http.X-NYT-Currency;
+        }
+
+        if (resp.status == 301 || resp.status == 302) {
             set resp.http.Location = resp.http.Location + req.http.x-orig-querystring;
         }
     }
