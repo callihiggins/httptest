@@ -3,6 +3,7 @@ include "initialize-vars";
 include "geoip-timezone-map-table";
 include "geoip";
 include "backends";
+include "backend-vp";
 include "device-detect";
 
 sub vcl_recv {
