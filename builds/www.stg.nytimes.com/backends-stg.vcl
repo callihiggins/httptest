@@ -188,6 +188,21 @@ backend beta_guides_stg {
     }
 }
 
+backend ask_well_stg {
+    .host = "ask-well.stg.nyt.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/health";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
 backend beta_watching_stg {
     .host = "np-watching-stg-public-668029006.us-east-1.elb.amazonaws.com";
     .port = "80";

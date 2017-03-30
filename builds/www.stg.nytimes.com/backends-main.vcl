@@ -141,7 +141,6 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-
     if (req.url ~ "^/404\.html") {
         set req.http.X-PageType = "miscellany";
         call set_www_fe_backend;
@@ -186,7 +185,10 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    if (    req.url ~ "^/svc/int/"
+    // Send to GCP
+    if ( req.url ~ "^/svc/int/qa" ) {
+      call set_ask_well_backend;
+    } else if (    req.url ~ "^/svc/int/"
         ||  req.url ~ "^/interactive/projects/"
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
     ) {
@@ -212,7 +214,6 @@ sub vcl_recv {
             call set_www_newsdev_gke_backend;
         }
     }
-
 
     // interactive years 2014-forever are NYT5
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
@@ -294,13 +295,13 @@ sub vcl_recv {
             set req.http.x-skip-glogin = "1";
         }
 
-        // Send to blogs FE, separate netscaler rules points these to INT blade
+        // Send to GCP
         if (    req.http.host ~ "^well\.blogs\.(dev\.|stg\.)?nytimes\.com"
             && (    req.url ~ "^/ask/well/"
                 ||  req.url ~ "^/svc/int/qa"
             )
         ) {
-            return(pass);
+            call set_ask_well_backend;
         // Pass those paths to newsdev gke without caching
         } else if ( req.url ~ "^/projects"
                  || req.url ~ "^/svc/int"
@@ -471,6 +472,28 @@ sub set_www_newsdev_gke_backend {
         set req.backend = newsdev_k8s_gke_stg;
     } else {
         set req.backend = newsdev_k8s_gke_prd;
+    }
+}
+
+sub set_ask_well_backend {
+    if(req.http.host ~ "\.dev\.") {
+      // no dev
+    } else if (req.http.host ~ "\.stg\.") {
+        set req.backend = ask_well_stg;
+    } else {
+        set req.backend = ask_well_prd;
+    }
+
+    set req.http.X-PageType = "askwell";
+
+    if (req.url ~ "^/ask/well/questions") {
+      set req.url = querystring.regfilter(req.url, "^(?!limit|offset|partial)");
+      set req.url = querystring.sort(req.url);
+    } elsif (req.url ~ "^/svc/int/qa/questions") {
+      set req.url = querystring.regfilter(req.url, "^(?!limit|offset|sort)");
+      set req.url = querystring.sort(req.url);
+    } else {
+      set req.url = querystring.remove(req.url);
     }
 }
 

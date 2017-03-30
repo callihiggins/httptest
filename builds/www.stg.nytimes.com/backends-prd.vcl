@@ -202,6 +202,22 @@ backend beta_guides_prd {
     }
 }
 
+backend ask_well_prd {
+    .host = "ask-well.nyt.com";
+    .port = "80";
+    .dynamic = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/health";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
 backend beta_watching_prd {
     .host = "np-watching-prd-public-1330526356.us-east-1.elb.amazonaws.com";
     .port = "80";
