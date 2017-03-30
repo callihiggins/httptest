@@ -485,6 +485,7 @@ sub set_ask_well_backend {
     }
 
     set req.http.X-PageType = "askwell";
+    set req.http.x-skip-glogin = "1";
 
     if (req.url ~ "^/ask/well/questions") {
       set req.url = querystring.regfilter(req.url, "^(?!limit|offset|partial)");
