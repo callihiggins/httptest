@@ -193,7 +193,7 @@ backend ask_well_stg {
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
+    .first_byte_timeout = 15s;
     .between_bytes_timeout = 5s;
     .probe = {
         .url = "/health";
@@ -203,6 +203,7 @@ backend ask_well_stg {
         .threshold = 4;
     }
 }
+
 backend beta_watching_stg {
     .host = "np-watching-stg-public-668029006.us-east-1.elb.amazonaws.com";
     .port = "80";

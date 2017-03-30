@@ -207,7 +207,7 @@ backend ask_well_prd {
     .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
+    .first_byte_timeout = 15s;
     .between_bytes_timeout = 5s;
     .probe = {
         .url = "/health";
