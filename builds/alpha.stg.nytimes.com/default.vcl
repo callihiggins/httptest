@@ -5,6 +5,7 @@ include "geoip";
 include "backends";
 include "backend-vp";
 include "device-detect";
+include "surrogate-key";
 
 sub vcl_recv {
 #FASTLY recv
