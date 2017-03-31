@@ -21,6 +21,7 @@ include "geoip-timezone-map-table";
 include "geoip";
 include "backends-main";
 include "backend-vp";
+include "surrogate-key";
 include "frame-buster";
 include "www-redirect";
 include "mw-redirect";
