@@ -1,12 +1,6 @@
 sub vcl_recv {
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
-        if (req.url ~ "^/svc/crosswords/") {
-            set req.http.X-PageType = "games-service";
-            call set_games_backend;
-            set req.http.x-skip-glogin = "1";
-            return(pass);
-        }
-        if (req.http.x-environment == "stg" && req.url ~ "^/svc/games/(sudoku|set)/") {
+        if (req.url ~ "^/svc/crosswords/" || req.url ~ "^/svc/games/(sudoku|set)/") {
             set req.http.X-PageType = "games-service";
             call set_games_backend;
             set req.http.x-skip-glogin = "1";
