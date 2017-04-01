@@ -22,11 +22,11 @@ sub vcl_recv {
         || req.http.X-PageType == "podcasts"
         || ( req.http.X-PageType == "interactive" 
                 && req.url ~ "^/interactive/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2014 - future
-        || req.url ~ "^/interactive/projects/"
         || req.url ~ "^/projects/2020-report/"
         || req.url ~ "^/content/help"             // help pages
         || req.http.X-PageType ~ "^watching"
         || req.http.X-PageType == "newsdev-intl"  // espanol/international
+        || req.http.X-PageType == "newsdev-gke"   // interative news
         || req.http.X-PageType == "well"          // beta - well guides
         || req.http.X-PageType == "trending"
         || req.http.X-PageType == "bestseller"
