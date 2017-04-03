@@ -15,7 +15,10 @@ sub vcl_recv {
         && req.backend != www_https_dev
         && req.backend != www_https_stg
         && req.backend != www_https_prd
-        && req.restarts == 0) {
+        && req.restarts == 0
+        && ( req.request == "HEAD"
+          || req.request == "GET"
+        ) ) {
         set req.http.X-Cookie = req.http.Cookie;
         unset req.http.Cookie;
     }
