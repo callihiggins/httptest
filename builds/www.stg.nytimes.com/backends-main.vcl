@@ -487,6 +487,11 @@ sub set_ask_well_backend {
     set req.http.X-PageType = "askwell";
     set req.http.x-skip-glogin = "1";
 
+    if (req.url ~ "^(/svc/int/qa/questions/[a-z0-9\-]*/votes|/ask/well/questions/yours)") {
+        # we have to pass directly here, so that req.http.Cookie passes through
+        return (pass);
+    }
+
     if (req.url ~ "^/ask/well/questions") {
       set req.url = querystring.regfilter(req.url, "^(?!limit|offset|partial)");
       set req.url = querystring.sort(req.url);
