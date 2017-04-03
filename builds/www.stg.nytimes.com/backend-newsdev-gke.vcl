@@ -28,7 +28,14 @@ sub vcl_recv {
 
     set req.grace = 24h;
 
-    unset req.http.Cookie;
+    // Strip Cookie from GET and HEAD requests where it is not needed,
+    // to avoid passing unnecessarily large headers through to the backend.
+    if ( req.request == "GET" || req.request == "HEAD" ) {
+      unset req.http.Cookie;
+    }
+
+    // These are internal VCL headers and should not be sent to
+    // the backend for any type of request.
     unset req.http.X-Cookie;
     unset req.http.x-nyt-edition;
     unset req.http.x-nyt-s;
