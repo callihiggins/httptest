@@ -331,3 +331,16 @@ backend times_journeys_students_prd {
         .interval = 10s;
     }
 }
+
+backend projectvi_asset_prd {
+    .host = "storage.googleapis.com";
+    .port = "80";
+    .probe = {
+        .url = "/vi-assets/up.txt";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+        .expected_response = 200;
+    }
+}

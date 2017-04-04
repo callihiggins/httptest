@@ -263,3 +263,16 @@ backend projectvi_fe_stg {
         .threshold = 3;
     }
 }
+
+backend projectvi_asset_stg {
+    .host = "storage.googleapis.com";
+    .port = "80";
+    .probe = {
+        .url = "/vi-assets/up.txt";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+        .expected_response = 200;
+    }
+}
