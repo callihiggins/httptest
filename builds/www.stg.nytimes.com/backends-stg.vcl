@@ -266,7 +266,13 @@ backend projectvi_fe_stg {
 
 backend projectvi_asset_stg {
     .host = "storage.googleapis.com";
-    .port = "80";
+    .port = "443";
+    .dynamic = true;
+    .host_header = "storage.googleapis.com";
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
     .probe = {
         .url = "/vi-assets/up.txt";
         .timeout = 5s;
