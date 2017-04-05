@@ -13,6 +13,8 @@ sub vcl_recv {
         unset req.http.x-nyt-edition;
         unset req.http.x-nyt-s;
         unset req.http.x-nyt-wpab;
+
+        return(pass);
     }
 }
 
