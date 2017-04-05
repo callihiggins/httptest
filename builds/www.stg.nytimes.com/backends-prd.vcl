@@ -284,6 +284,25 @@ backend subscription_prd {
     }
 }
 
+
+backend content_api_prd {
+    .host = "content.api.nytimes.com";
+    .ssl_cert_hostname = "content.api.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .ssl = true;
+    .probe = {
+        .url = "/version.json";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
 backend times_journeys_prd {
     .host = "timesjourneys.nytimes.com";
     .port = "443";

@@ -20,6 +20,7 @@ include "backend-watching";
 include "backend-games";
 include "backend-weddings-api";
 include "backend-subscription";
+include "backend-content-api";
 include "backend-times-journeys";
 include "community-esi";
 include "https-redirect";
