@@ -523,11 +523,5 @@ sub set_projectvi_fe_backend {
 
 # set a vi asset backend based on host
 sub set_projectvi_asset_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = projectvi_asset_stg;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = projectvi_asset_stg;
-    } else {
-        set req.backend = projectvi_asset_prd;
-    }
+    set req.backend = projectvi_asset_prd;
 }
