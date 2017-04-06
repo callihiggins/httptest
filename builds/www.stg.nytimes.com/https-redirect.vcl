@@ -12,7 +12,7 @@ sub vcl_recv {
      * Items permanently on HTTPS
      */
     if (   req.http.X-PageType == "homepage"
-        || ( req.http.X-PageType == "article" 
+        || ( req.http.X-PageType == "article"
                 && req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || ( req.http.X-PageType == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources
         || ( req.http.X-PageType == "blog" && req.http.host !~ "^tmagazine\.blogs" ) // all blogs, but not tmag
@@ -20,7 +20,7 @@ sub vcl_recv {
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "podcasts"
-        || ( req.http.X-PageType == "interactive" 
+        || ( req.http.X-PageType == "interactive"
                 && req.url ~ "^/interactive/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2014 - future
         || req.url ~ "^/interactive/projects/"
         || req.url ~ "^/projects/2020-report/"
@@ -38,6 +38,7 @@ sub vcl_recv {
         || req.http.X-PageType == "times-journeys"
         || req.http.X-PageType == "times-journeys-students"
         || req.http.X-PageType == "askwell"
+        || req.http.X-PageType == "vi-asset"
     ) {
         set req.http.x-https-phase = "live";
     }
@@ -95,7 +96,7 @@ sub vcl_recv {
         } else if (req.http.x-https-phase == "live") {
 
         // Urls live over HTTPS internally
-        } else if ( 
+        } else if (
                client.ip ~ internal
             && req.http.x-https-phase == "internal"
             && !req.http.x-internal-https-opt-out
@@ -123,7 +124,7 @@ sub vcl_recv {
             || req.url ~ "^/newsgraphics/2016/news-tips"
             || req.url ~ "^/tips(/)?$"
             || req.url == "/securedrop"
-        ) { 
+        ) {
             call redirect_to_https;
 
         // Urls that are on HTTPS internally
