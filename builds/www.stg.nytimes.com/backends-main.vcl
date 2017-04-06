@@ -398,7 +398,14 @@ sub vcl_recv {
         set req.url = req.http.X-OriginalUri;
         set req.http.cookie = req.http.X-Cookie;
         set req.http.X-PageType = "vi-story";
-        call set_vi_backend;
+        call set_projectvi_fe_backend;
+    }
+
+    // A request for assets from VI
+    if (req.url ~ "^/vi-assets/") {
+        set req.http.X-PageType = "vi-asset";
+        call set_projectvi_asset_backend;
+        set req.http.x-skip-glogin = "1";
     }
 }
 
@@ -504,7 +511,7 @@ sub set_ask_well_backend {
 }
 
 # set a vi backend based on host
-sub set_vi_backend {
+sub set_projectvi_fe_backend {
     if(req.http.x-environment == "dev") {
         set req.backend = projectvi_fe_stg;
     } else if (req.http.x-environment == "stg") {
@@ -512,4 +519,9 @@ sub set_vi_backend {
     } else {
         set req.backend = www_prd;
     }
+}
+
+# set a vi asset backend based on host
+sub set_projectvi_asset_backend {
+    set req.backend = projectvi_asset_prd;
 }

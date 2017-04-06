@@ -351,6 +351,25 @@ backend times_journeys_students_prd {
     }
 }
 
+backend projectvi_asset_prd {
+    .host = "storage.googleapis.com";
+    .port = "443";
+    .dynamic = true;
+    .host_header = "storage.googleapis.com";
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
+    .probe = {
+        .url = "/vi-assets/up.txt";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+        .expected_response = 200;
+    }
+}
+
 backend vp_prd {
     .host = "vp.nyt.com";
     .port = "443";
