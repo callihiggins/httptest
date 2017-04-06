@@ -252,6 +252,24 @@ backend subscription_stg {
     }
 }
 
+backend content_api_stg {
+    .host = "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com";
+    .ssl_cert_hostname = "content.api.stg.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .ssl = true;
+    .probe = {
+        .url = "/version.json";
+        .timeout = 3s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
 backend projectvi_fe_stg {
     .host = "35.186.192.58";
     .port = "80";
