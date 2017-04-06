@@ -404,6 +404,7 @@ sub vcl_recv {
     // A request for assets from VI
     if (req.url ~ "^/vi-assets/") {
         set req.http.X-PageType = "vi-asset";
+        set req.http.host = "storage.googleapis.com";
         call set_projectvi_asset_backend;
         set req.http.x-skip-glogin = "1";
     }
