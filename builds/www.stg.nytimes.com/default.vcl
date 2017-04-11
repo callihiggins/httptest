@@ -2,6 +2,7 @@ include "acl-internal";
 include "acl-external-staging-access";
 include "acl-crawlers";
 include "acl-blacklist";
+include "error-pages";
 include "surrogate-key";
 include "sanitize-url";
 include "normalize-url";
@@ -91,7 +92,63 @@ sub vcl_recv {
 }
 
 sub vcl_fetch {
+
+  # This logic will handle serving stale content if we got an error from the backend
+  if (beresp.status >= 500 && beresp.status < 600) {
+
+      # Deliver stale if the object is avilable
+      if (stale.exists) {
+        return(deliver_stale);
+      }
+
+      # if the object was not in cache and we have not restarted, try one more time
+      if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
+        restart;
+      }
+
+      set req.http.Fastly-Cachetype = "ERROR";
+
+      /*  
+        we got an error and we already restarted at least once, time to bail
+        return a pretty error page if the requested page was an html page
+        assuming ending in .html or "/" is good enough here.
+        otherwise lets just return the default Fastly page
+        Doing this to limit what gets a large error page download
+      */
+
+      if ( (req.url.path ~ ".html$" || req.url.path ~ "/$")
+           && (req.url.path !~ "^/svc" && req.url.path !~ "^/adx")
+          ) {
+        error 503;
+      }
+
+  }
+
+  # if we did not get an error from the backend, set stale content handling headers
+  # per https://tools.ietf.org/html/rfc5861
+  if (beresp.status < 500) {
+      if (beresp.http.Cache-Control !~ "stale-if-error") {
+        set beresp.stale_if_error = 86400s;
+      }
+      if (beresp.http.Cache-Control !~ "stale-while-revalidate") {
+        set beresp.stale_while_revalidate = 60s;
+      }
+  }
+
+  # DO NOT REMOVE THE NEXT LINE - FASTY SPECIFIC MACRO
 #FASTLY fetch
+
+  # moved the next two blocks up the chain
+  # these running earlier is faster
+  if (beresp.http.X-Is-NYT4) {
+    set req.http.X-Is-NYT4 = "1";
+    return(restart);
+  }
+
+  if (beresp.http.X-Vi-Cluster) {
+    set req.http.X-Vi-Cluster = beresp.http.X-Vi-Cluster;
+    return(restart);
+  }
 
   # setting this for debugging
   set req.http.X-NYT-Backend = beresp.backend.name;
@@ -103,6 +160,7 @@ sub vcl_fetch {
     set beresp.http.Vary = "Fastly-SSL";
   }
 
+  # hacky, TODO: fix the backends
   # unset headers for cacheable community requests
   if (req.http.X-PageType == "community-svc-cacheable") {
     esi;
@@ -110,6 +168,7 @@ sub vcl_fetch {
     unset beresp.http.Pragma;
   }
 
+  # hacky, TODO: fix the backends
   # legacy cacheable content should not be private
   if(req.http.X-PageType == "legacy-cacheable"){
     unset beresp.http.Cache-Control;
@@ -118,26 +177,13 @@ sub vcl_fetch {
   set beresp.http.X-Origin-Time = strftime({"%F %T EDT"}, time.sub(now,4h));
 
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
-  # we're also going to remove set-cookie if RMID is there, no one is using it anymore
-  # unfortunately this is greedy, we shouldn't be setting cookies in a cacheable request
+  # we are also going to remove set-cookie if RMID is there, no one is using it anymore
+  # unfortunately this is sloppy but we do not have much choice
+  # TODO: Backends stop setting nyt-a and RMID cookies
   if(req.url !~ "^/adx") {
     if(setcookie.get_value_by_name(beresp,"nyt-a") || setcookie.get_value_by_name(beresp,"RMID")){
       remove beresp.http.Set-Cookie;
     }
-  }
-
-  if ((beresp.status == 500 || beresp.status == 503) && req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
-    restart;
-  }
-
-  if (beresp.http.X-Is-NYT4) {
-    set req.http.X-Is-NYT4 = "1";
-    return(restart);
-  }
-
-  if (beresp.http.X-Vi-Cluster) {
-    set req.http.X-Vi-Cluster = beresp.http.X-Vi-Cluster;
-    return(restart);
   }
 
   if (req.restarts > 0) {
@@ -152,13 +198,6 @@ sub vcl_fetch {
   if (beresp.http.Cache-Control ~ "private") {
     set req.http.Fastly-Cachetype = "PRIVATE";
     return(pass);
-  }
-
-  if (beresp.status == 500 || beresp.status == 503) {
-    set req.http.Fastly-Cachetype = "ERROR";
-    set beresp.ttl = 1s;
-    set beresp.grace = 5s;
-    return(deliver);
   }
 
   set beresp.grace = 24h;
@@ -199,11 +238,11 @@ sub vcl_miss {
   call unset_extraneous_bereq_headers;
 
   // this should be removed already, but lets be sure
-  // since this was a lookup we weren't pass
+  // since this was a lookup we were not pass
   remove bereq.http.Cookie;
 
   // cacheable community svc requests are ESI jsonp
-  // we can't compress these... yet...
+  // we can not compress these... yet...
   if(req.http.X-PageType == "community-svc-cacheable"){
     unset bereq.http.Accept-Encoding;
     unset req.http.Accept-Encoding;
@@ -232,6 +271,22 @@ sub vcl_deliver {
 
 sub vcl_error {
 #FASTLY error
+
+  # handle 50x errors if the error handler was called
+  # with a 500-599 code
+  if (obj.status >= 500 && obj.status < 600) {
+
+    # deliver stale object if it is available
+    if (stale.exists) {
+      return(deliver_stale);
+    }
+
+    call render_50x_page;
+
+    return(deliver);
+  }
+
+
 }
 
 sub vcl_pass {
@@ -241,7 +296,7 @@ sub vcl_pass {
 
 sub unset_extraneous_bereq_headers {
   // remove headers used as variables for logic
-  // backend definitely doesn't need these
+  // backend definitely does not need these
   unset bereq.http.x-nyt-edition;
   unset bereq.http.x-nyt-a;
   unset bereq.http.x-nyt-wpab;
