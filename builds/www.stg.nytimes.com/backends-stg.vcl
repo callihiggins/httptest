@@ -271,7 +271,7 @@ backend content_api_stg {
 }
 
 backend projectvi_fe_stg {
-    .host = "35.186.192.58";
+    .host = "35.186.226.73";
     .port = "80";
     .probe = {
         .url = "/.healthcheck";
