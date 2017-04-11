@@ -2,9 +2,14 @@
 
 ## What is this change for?
 
-## Have tests been added that cover this change? Functional tests can be added in https://github.com/nytm/web-products-tests
-
 ## How has this been tested?
+
+## Have tests been added that cover this change? Functional tests can be added in https://github.com/nytm/web-products-tests
+- [ ] yes
+- [ ] no - blocker for merge
+
+## Link to tests PR
+
 
 ## Pre-merge To Dos
 - [ ] if any, otherwise remove this section
