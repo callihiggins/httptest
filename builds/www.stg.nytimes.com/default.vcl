@@ -24,6 +24,7 @@ include "backend-subscription";
 include "backend-content-api";
 include "backend-times-journeys";
 include "backend-video";
+include "backend-tbooks";
 include "community-esi";
 include "https-redirect";
 include "device-detect";
