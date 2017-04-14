@@ -4,13 +4,21 @@ sub vcl_recv {
   declare local var.geo_timezone STRING;
   declare local var.geo_lookup_key STRING;
 
-	set var.ip_override = regsub(req.http.x-orig-querystring, ".*?.*ip-override=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*", "\1");
-	
-	if (var.ip_override != req.http.x-orig-querystring){
-		set geoip.ip_override = var.ip_override;
-	} else {
-		set geoip.ip_override = req.http.Fastly-Client-IP;
-	}
+  # override if restarted since we would have lost the qparam on resrart
+  if (req.restarts > 0){
+    set var.ip_override = req.http.x-geoip-ip;
+  } else {
+    set var.ip_override = regsub(req.http.x-orig-querystring, ".*?.*ip-override=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*", "\1");
+  }
+
+  # check if we got the ip-override param
+  if (var.ip_override != req.http.x-orig-querystring){
+    set geoip.ip_override = var.ip_override;
+    # save this in a req header incase we restart
+    set req.http.x-geoip-ip = var.ip_override;
+  } else {
+    set req.http.x-geoip-ip = req.http.Fastly-Client-IP;
+  }
 
   # try to lookup the TZ with region resolution
   set var.geo_lookup_key = geoip.continent_code + geoip.country_code + geoip.region;
@@ -77,7 +85,7 @@ sub vcl_error {
       </style>
       <body>
       <h1>GeoIP Test</h1>
-      <h1>IP: "} + geoip.ip_override + {"</h1>
+      <h1>IP: "} + req.http.x-geoip-ip + {"</h1>
       <table>
         <tr><td>geoip.latitude</td><td>"} + geoip.latitude + {"</td></tr>
         <tr><td>geoip.longitude</td><td>"} + geoip.longitude + {"</td></tr>
