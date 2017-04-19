@@ -38,6 +38,10 @@ sub vcl_deliver {
         set resp.http.X-PageType = req.http.X-PageType;
     }
 
+    if (req.http.X-Health) {
+        set resp.http.X-Health = req.http.X-Health;
+    }
+
     // if we found two NYT-S cookies, try to expire the possible non-canonical versions
     // only dev/stg for now
     if (req.http.x-environment != "prd"){
