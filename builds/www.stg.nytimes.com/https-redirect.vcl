@@ -34,7 +34,6 @@ sub vcl_recv {
         || req.http.X-PageType == "real-estate"
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
         || req.url.path == "/recommendations"
-        || req.url.path ~ "^/.well-known/" // https://tools.ietf.org/html/rfc5785
         || req.http.X-PageType == "times-journeys"
         || req.http.X-PageType == "times-journeys-students"
         || req.http.X-PageType == "askwell"
@@ -64,6 +63,7 @@ sub vcl_recv {
             || req.url ~ "^/wrapper.html"
             || req.url ~ "^/newsgraphics/2016/news-tips"
             || req.url ~ "^/tips(/)?$"
+            || req.url.path ~ "^/.well-known/" // https://tools.ietf.org/html/rfc5785
             || req.url == "/securedrop"
             || req.url ~ "^/es/wp-json/nyt/"
             || req.url ~ "^/mem/email-this.html"
