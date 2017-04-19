@@ -13,9 +13,11 @@ sub vcl_deliver {
     if (req.http.X-PageType ~ "games-service") {
         set resp.http.X-API-Version = "GS";
     }
+    unset req.http.X-Original-Host;
 }
 
 sub set_games_backend {
+    set req.http.X-Original-Host = req.http.host;
     if (req.http.host ~ "\.dev\.") {
         //set req.backend = ???;
     } else if (req.http.host ~ "\.stg\.") {
