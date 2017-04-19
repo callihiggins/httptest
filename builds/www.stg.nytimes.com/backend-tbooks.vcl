@@ -7,7 +7,7 @@ sub vcl_recv {
             if (req.url ~ "^/tbooks") {
                 set req.http.X-PageType = "tbooks";
 
-                set req.url = regsub(req.url, "^/tbooks", "/");
+                set req.url = regsub(req.url, "^/tbooks", "");
                 set req.backend = tbooks_prd;
                 set req.http.host = "nytinsider.wordpress.com";
 
