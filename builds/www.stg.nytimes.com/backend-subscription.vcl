@@ -7,7 +7,7 @@ sub vcl_recv {
             ) {
 
             if (req.http.x-environment == "stg") {
-                set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, geoip.country_code, "USD");
+                set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
             }
 
             set req.http.X-PageType = "subscription";
