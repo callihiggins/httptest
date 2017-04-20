@@ -39,6 +39,7 @@ sub vcl_recv {
         || req.http.X-PageType == "times-journeys-students"
         || req.http.X-PageType == "askwell"
         || req.http.X-PageType == "vi-asset"
+        || req.http.X-PageType == "vi-story"
         || req.url ~ "^/ads/RE/"
     ) {
         set req.http.x-https-phase = "live";
