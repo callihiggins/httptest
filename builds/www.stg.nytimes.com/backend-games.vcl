@@ -22,7 +22,7 @@ sub vcl_deliver {
 
 sub set_games_backend {
     if (req.http.host ~ "\.dev\.") {
-        //set bereq.backend = ???;
+        //set req.backend = ???;
     } else if (req.http.host ~ "\.stg\.") {
         set req.backend = games_stg;
         set bereq.http.host = "nyt-games-dev.appspot.com";
