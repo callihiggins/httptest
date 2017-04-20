@@ -453,7 +453,7 @@ sub set_www_fe_backend {
     if(req.http.host ~ "\.dev\.") {
         set req.backend = www_fe_dev;
     } else if (req.http.host ~ "\.stg\.") {
-        set req.backend = www_fe_stg;
+        set req.backend = www_fe_prd;
     } else {
         set req.backend = www_fe_prd;
     }
