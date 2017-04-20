@@ -530,7 +530,7 @@ sub set_ask_well_backend {
 # set a vi backend based on host
 sub set_projectvi_fe_backend {
     if(req.http.x-environment == "dev") {
-        set req.backend = projectvi_fe_prd;
+        set req.backend = projectvi_fe_stg;
     } else if (req.http.x-environment == "stg") {
         set req.backend = projectvi_fe_prd;
     } else {
