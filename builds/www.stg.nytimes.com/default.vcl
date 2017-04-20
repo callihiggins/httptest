@@ -103,10 +103,6 @@ sub vcl_fetch {
 
       # if the object was not in cache and we have not restarted, try one more time
       if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
-        if (req.http.X-Original-Host) {
-          set req.http.host = req.http.X-Original-Host;
-          unset req.http.X-Original-Host;
-        }
         restart;
       }
 
