@@ -368,6 +368,18 @@ backend projectvi_asset_prd {
     }
 }
 
+backend projectvi_fe_prd {
+    .host = "130.211.7.66";
+    .port = "80";
+    .probe = {
+        .url = "/.healthcheck";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+    }
+}
+
 backend vp_prd {
     .host = "vp.nyt.com";
     .port = "443";
