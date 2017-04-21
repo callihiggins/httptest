@@ -107,6 +107,7 @@ table geo_tz_map {
   "EUFR": "Europe/Paris",
   "AFGA": "Africa/Libreville",
   "EUGB": "Europe/London",
+  "EUUK": "Europe/London",
   "NAGD": "America/Grenada",
   "ASGE": "Asia/Tbilisi",
   "AFGH": "Africa/Accra",
