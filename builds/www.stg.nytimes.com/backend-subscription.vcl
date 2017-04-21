@@ -6,6 +6,7 @@ sub vcl_recv {
             ||  req.url ~ "^/subscription/"
             ) {
 
+
             set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, geoip.country_code, "USD");
             set req.http.X-PageType = "subscription";
             call set_subscription_backend;

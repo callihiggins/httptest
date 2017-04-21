@@ -13,7 +13,7 @@ sub vcl_recv {
 
     // block everyone but internal acl and staging access acl to staging service
     if ( client.ip !~ internal && client.ip !~ external_staging_access && req.http.x-environment == "stg") {
-      error 403 "Forbidden";
+        error 403 "Forbidden";
     }
 
 

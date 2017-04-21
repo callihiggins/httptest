@@ -399,6 +399,15 @@ sub vcl_recv {
         set req.http.cookie = req.http.X-Cookie;
         set req.http.X-PageType = "vi-story";
         call set_projectvi_fe_backend;
+
+        // If the VI backend is not healthy, we reset the backend
+        // to www-fe, and set a header to prevent the request from restarting
+        if (!req.backend.healthy) {
+            set req.http.X-PageType = "article";
+            set req.http.X-Health = "NOT_HEALTHY";
+            set req.http.X-RelevantBackendStatus = "unchanged";
+            call set_www_fe_backend;
+        }
     }
 
     // A request for assets from VI
@@ -407,6 +416,13 @@ sub vcl_recv {
         set req.http.host = "storage.googleapis.com";
         call set_projectvi_asset_backend;
         set req.http.x-skip-glogin = "1";
+    }
+
+    // A request for graphql data
+    if (req.url ~ "^/graphql/") {
+        set req.http.X-PageType = "vi-qraphql";
+        call set_projectvi_fe_backend;
+        return(pass);
     }
 }
 
