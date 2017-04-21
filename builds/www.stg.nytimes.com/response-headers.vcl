@@ -20,12 +20,15 @@ sub vcl_deliver {
 
     # lets return some headers to internal clients for debugging
     if (client.ip !~ internal){
-        # if you're not internal, remove these
+        # remove these headers for external requests
         remove resp.http.X-VarnishCacheDuration;
         remove resp.http.X-Origin-Server;
     } else {
-        # if you are internal, set these
+        # set these headers for internal requests
         set resp.http.X-NYT-Backend = req.http.X-NYT-Backend;
+        set resp.http.x-nyt-continent = req.http.x-nyt-continent;
+        set resp.http.x-nyt-country = req.http.x-nyt-country;
+        set resp.http.x-nyt-region = req.http.x-nyt-region;
     }
 
     if (resp.http.X-API-Version) {
@@ -36,6 +39,10 @@ sub vcl_deliver {
 
     if (!resp.http.X-PageType){
         set resp.http.X-PageType = req.http.X-PageType;
+    }
+
+    if (req.http.X-Health) {
+        set resp.http.X-Health = req.http.X-Health;
     }
 
     // if we found two NYT-S cookies, try to expire the possible non-canonical versions

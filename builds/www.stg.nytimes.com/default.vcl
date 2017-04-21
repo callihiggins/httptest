@@ -108,7 +108,7 @@ sub vcl_fetch {
 
       set req.http.Fastly-Cachetype = "ERROR";
 
-      /*  
+      /*
         we got an error and we already restarted at least once, time to bail
         return a pretty error page if the requested page was an html page
         assuming ending in .html or "/" is good enough here.
@@ -147,7 +147,10 @@ sub vcl_fetch {
 
   if (beresp.http.X-Vi-Cluster) {
     set req.http.X-Vi-Cluster = beresp.http.X-Vi-Cluster;
-    return(restart);
+
+    if (req.http.X-RelevantBackendStatus != "unchanged") {
+      return (restart);
+    }
   }
 
   # setting this for debugging
