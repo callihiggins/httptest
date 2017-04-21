@@ -7,7 +7,7 @@ sub vcl_recv {
             ) {
 
 
-            set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, geoip.country_code, "USD");
+            set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
             set req.http.X-PageType = "subscription";
             call set_subscription_backend;
             set req.grace = 24h;
