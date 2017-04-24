@@ -6,10 +6,8 @@ sub vcl_recv {
             ||  req.url ~ "^/subscription/"
             ) {
 
-            if (req.http.x-environment == "stg") {
-                set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
-            }
 
+            set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
             set req.http.X-PageType = "subscription";
             call set_subscription_backend;
             set req.grace = 24h;
@@ -33,26 +31,24 @@ sub vcl_hash {
 sub vcl_fetch {
     if (req.http.X-PageType == "subscription") {
 
-        if (req.http.x-environment == "stg") {
-            /* handle 5XX (or any other unwanted status code) */
-            if (beresp.status >= 500 && beresp.status < 600) {
+        /* handle 5XX (or any other unwanted status code) */
+        if (beresp.status >= 500 && beresp.status < 600) {
 
-                /* deliver stale if the object is available */
-                if (stale.exists) {
-                  return(deliver_stale);
-                }
-
-                if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
-                  restart;
-                }
-
+            /* deliver stale if the object is available */
+            if (stale.exists) {
+              return(deliver_stale);
             }
 
-            if (beresp.status < 500) {
-                /* set stale_if_error and stale_while_revalidate (customize these values) */
-                set beresp.stale_if_error = 86400s;
-                set beresp.stale_while_revalidate = 60s;
+            if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
+              restart;
             }
+
+        }
+
+        if (beresp.status < 500) {
+            /* set stale_if_error and stale_while_revalidate (customize these values) */
+            set beresp.stale_if_error = 86400s;
+            set beresp.stale_while_revalidate = 60s;
         }
 
         // use very short cache TTL for HTTP 4XXs
@@ -67,7 +63,7 @@ sub vcl_deliver {
 
         set resp.http.X-API-Version = "WCM";
 
-        if (client.ip ~ internal && req.http.x-environment == "stg") {
+        if (client.ip ~ internal) {
           set resp.http.X-NYT-Currency = req.http.X-NYT-Currency;
         }
 
