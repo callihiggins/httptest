@@ -12,12 +12,13 @@ sub vcl_deliver {
             server.identity);
     }
 
-    # set the header 
+    # set the header
     # this will either set a new cookie
     # or extend the existing one to a year
     # we will only do this for content pages
 
     if (req.http.X-PageType == "article"
+        || req.http.X-PageType == "vi-story"
         || req.http.X-PageType == "bestseller"
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "elections"
@@ -31,11 +32,11 @@ sub vcl_deliver {
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "watching"
         || req.http.X-PageType == "well") {
-            add resp.http.Set-Cookie = 
+            add resp.http.Set-Cookie =
                 "nyt-a=" + req.http.x-nyt-a + "; "+
                 "Expires=" + time.add(now, 365d) + "; "+
                 "Path=/; "+
-                "Domain=.nytimes.com";        
+                "Domain=.nytimes.com";
     }
 
 }
