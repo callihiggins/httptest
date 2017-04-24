@@ -544,7 +544,7 @@ sub set_projectvi_fe_backend {
     } else if (req.http.x-environment == "stg") {
         set req.backend = projectvi_fe_stg;
     } else {
-        set req.backend = www_prd;
+        set req.backend = projectvi_fe_prd;
     }
 }
 
