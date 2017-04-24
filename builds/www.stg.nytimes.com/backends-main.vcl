@@ -54,6 +54,16 @@ sub vcl_recv {
         call set_www_https_backend;
         set req.http.x-skip-glogin = "1";
     }
+
+    // remove source IP from tips related pages
+    // https://jira.nyt.net/browse/DV-237
+    if (   req.url ~ "^/tips(/)?$"
+        || req.url == "/securedrop"
+        || req.url ~ "^/newsgraphics/2016/news-tips"
+    ) {
+        set req.http.Fastly-Client-IP = "0.0.0.0";
+    }
+
     // collection application
     if (   req.url ~ "^/by/"
         || req.url ~ "^/column/"
