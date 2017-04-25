@@ -3,7 +3,7 @@ sub vcl_recv {
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
         // Doing this only in staging and internal for now
         // https://jira.nyt.net/browse/DV-273
-        if (req.http.x-environment == "stg" && client.ip ~ internal) {
+        if (client.ip ~ internal) {
             if (req.url ~ "^/tbooks") {
                 set req.http.X-PageType = "tbooks";
 
