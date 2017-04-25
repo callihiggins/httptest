@@ -1,30 +1,27 @@
 sub vcl_recv {
-
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
         // Doing this only in staging and internal for now
         // https://jira.nyt.net/browse/DV-273
-        if (client.ip ~ internal) {
-            if (req.url ~ "^/tbooks") {
-                set req.http.X-PageType = "tbooks";
+        if (req.url ~ "^/tbooks") {
+            set req.http.X-PageType = "tbooks";
 
-                set req.url = regsub(req.url, "^/tbooks", "");
-                set req.backend = tbooks_prd;
-                set req.http.host = "nytinsider.wordpress.com";
+            set req.url = regsub(req.url, "^/tbooks", "");
+            set req.backend = tbooks_prd;
+            set req.http.host = "nytinsider.wordpress.com";
 
-                set req.grace = 24h;
-                set req.http.x-skip-glogin = "1";
-                unset req.http.x-nyt-edition;
-                unset req.http.x-nyt-s;
-                unset req.http.x-nyt-wpab;
+            set req.grace = 24h;
+            set req.http.x-skip-glogin = "1";
+            unset req.http.x-nyt-edition;
+            unset req.http.x-nyt-s;
+            unset req.http.x-nyt-wpab;
 
-                // We want to pass the NYT-S cookie only to the tbooks backend
-                // becasue of the 8k headers size limit
-                set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
+            // We want to pass the NYT-S cookie only to the tbooks backend
+            // becasue of the 8k headers size limit
+            set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
 
-                unset req.http.X-Cookie;
+            unset req.http.X-Cookie;
 
-                return(pass);
-            }
+            return(pass);
         }
     }
 }
