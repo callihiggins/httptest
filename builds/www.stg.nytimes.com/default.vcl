@@ -13,6 +13,7 @@ include "frame-buster";
 include "health-check";
 include "ipauth";
 include "www-redirect";
+include "tips";
 include "backends-main";
 include "backend-well";
 include "backend-elections";

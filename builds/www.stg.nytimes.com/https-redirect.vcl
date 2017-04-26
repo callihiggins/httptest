@@ -64,7 +64,7 @@ sub vcl_recv {
             || req.url ~ "^/newsletters/regilite"
             || req.url ~ "^/wrapper.html"
             || req.url ~ "^/newsgraphics/2016/news-tips"
-            || req.url ~ "^/tips(/)?$"
+            || req.url ~ "^/tips(/)?(\?.*)?$"
             || req.url.path ~ "^/.well-known/" // https://tools.ietf.org/html/rfc5785
             || req.url == "/securedrop"
             || req.url ~ "^/es/wp-json/nyt/"
@@ -124,7 +124,7 @@ sub vcl_recv {
             || req.url ~ "^/membercenter/emailus.html"
             || req.url ~ "^/gst/emailus.html"
             || req.url ~ "^/newsgraphics/2016/news-tips"
-            || req.url ~ "^/tips(/)?$"
+            || req.url ~ "^/tips(/)?(\?.*)?$"
             || req.url == "/securedrop"
         ) {
             call redirect_to_https;
