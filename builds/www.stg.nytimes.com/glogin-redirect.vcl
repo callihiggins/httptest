@@ -1,37 +1,12 @@
 include "glogin-killswitch";
 
 sub vcl_recv {
-    // glogin check: if nyt-bcet cookie timestamp is expired, redirect to glogin
+    # call sub to check if the request should skip glogin (at bottom of file)
+    call check_skip_glogin;
 
-    if (
-        (req.backend != www_dev
-        && req.backend != www_stg
-        && req.backend != www_prd
-        && req.backend != www_https_dev
-        && req.backend != www_https_stg
-        && req.backend != www_https_prd
-        && req.backend != newsdev_k8s_elb_stg
-        && req.backend != newsdev_k8s_elb_prd
-        && req.backend != newsdev_k8s_gke_stg
-        && req.backend != newsdev_k8s_gke_prd)
-        && req.http.X-CRWL != "true"
-        && req.request != "FASTLYPURGE"
-        && !req.http.x-skip-glogin
-        && req.http.X-PageType != "homepage"
-        && req.http.X-PageType != "trending"
-        && req.http.X-PageType != "collection"
-        && req.http.X-PageType != "newsletter"
-        && req.http.X-PageType != "blog2"
-        && req.http.X-PageType != "service"
-        && req.http.X-PageType != "static"
-        && req.http.X-PageType != "paidpost"
-        && req.http.X-PageType != "elections"
-        && req.http.X-PageType != "newsdev-gke"
-        && req.http.X-PageType != "community-svc-cacheable"
-        && req.http.X-PageType != "video-library"
-        && req.http.X-PageType != "video-api"
-        && req.http.X-PageType != "messaging-api"
-    ) {
+    # if we should not skip glogin, enter this logic to validate cookies
+    # validate NYT-BCET timestamp and signature, as well as NYT-S existence
+    if (!req.http.x-skip-glogin) {
         if (!req.http.x-nyt-s) {
             error 990;
         }
@@ -141,4 +116,60 @@ sub redirect_to_glogin {
     set obj.http.X-API-Version = "0";
 
     return(deliver);
+}
+
+sub check_skip_glogin {
+
+    # conditional logic that will check if we should skip glogin for this request
+
+    # some backends that should skip glogin
+    if (req.backend == www_dev
+        || req.backend == www_stg
+        || req.backend == www_prd
+        || req.backend == www_https_dev
+        || req.backend == www_https_stg
+        || req.backend == www_https_prd
+        || req.backend == newsdev_k8s_elb_stg
+        || req.backend == newsdev_k8s_elb_prd
+        || req.backend == newsdev_k8s_gke_stg
+        || req.backend == newsdev_k8s_gke_prd) {
+
+        set req.http.x-skip-glogin = "1";
+    }
+
+    # pagetypes that should skip glogin
+    if (req.http.X-PageType == "homepage"
+        || req.http.X-PageType == "trending"
+        || req.http.X-PageType == "collection"
+        || req.http.X-PageType == "newsletter"
+        || req.http.X-PageType == "blog2"
+        || req.http.X-PageType == "service"
+        || req.http.X-PageType == "static"
+        || req.http.X-PageType == "paidpost"
+        || req.http.X-PageType == "elections"
+        || req.http.X-PageType == "newsdev-gke"
+        || req.http.X-PageType == "community-svc-cacheable"
+        || req.http.X-PageType == "video-library"
+        || req.http.X-PageType == "video-api"
+        || req.http.X-PageType == "messaging-api") {
+
+        set req.http.x-skip-glogin = "1";
+    }
+
+
+    # if we got a fastly purge request, skip glogin
+    if (req.request == "FASTLYPURGE") {
+        set req.http.x-skip-glogin = "1";
+    }
+
+    # clients identified as crawlers/bots should skip glogin
+    if (req.http.X-CRWL == "true") {
+        set req.http.x-skip-glogin = "1";
+    }
+
+    # user agents that match a pattern for facebook native apps should skip glogin
+    if (req.http.user-agent ~ "\[FB\_IAB\/FB4A" || req.http.user-agent ~ "\[FBAN\/FBIOS\;") {
+        set req.http.x-skip-glogin = "1";
+    }
+
 }
