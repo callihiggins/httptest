@@ -5,7 +5,15 @@ sub vcl_recv {
         if (req.url ~ "^/tbooks") {
             set req.http.X-PageType = "tbooks";
 
-            set req.url = regsub(req.url, "^/tbooks", "");
+            // If it's a request to the tbooks homepage we need to leave the / at the end so that
+            // the path "exists". Otherwise, we should remove the whole /tbooks from the path.
+            // Removing the whole path is causing errors on the wordpress side where they state 
+            // they could not read the request
+            if (req.url.path == "/tbooks") {
+                set req.url = regsub(req.url, "^/tbooks", "/");
+            } else {
+                set req.url = regsub(req.url, "^/tbooks", "");
+            }
             set req.backend = tbooks_prd;
             set req.http.host = "nytinsider.wordpress.com";
 
