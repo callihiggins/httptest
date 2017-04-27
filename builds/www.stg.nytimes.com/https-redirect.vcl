@@ -40,6 +40,8 @@ sub vcl_recv {
         || req.http.X-PageType == "vi-asset"
         || req.http.X-PageType == "vi-story"
         || req.url ~ "^/ads/RE/"
+        || req.url ~ "^/elections"
+        || req.url ~ "^/newsgraphics/2017"
     ) {
         set req.http.x-https-phase = "live";
     }
