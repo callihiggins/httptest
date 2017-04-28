@@ -309,7 +309,6 @@ backend times_journeys_prd {
     .dynamic = true;
     .ssl_cert_hostname = "timesjourneys.nytimes.com";
     .ssl_sni_hostname = "timesjourneys.nytimes.com";
-    .host_header = "timesjourneys.nytimes.com";
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
@@ -332,7 +331,6 @@ backend times_journeys_students_prd {
     .dynamic = true;
     .ssl_cert_hostname = "timesjourneysstudents.nytimes.com";
     .ssl_sni_hostname = "timesjourneysstudents.nytimes.com";
-    .host_header = "timesjourneysstudents.nytimes.com";
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
