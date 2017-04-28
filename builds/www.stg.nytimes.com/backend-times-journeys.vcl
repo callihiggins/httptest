@@ -27,7 +27,7 @@ sub set_backend_request {
             } else {
                 set bereq.url = regsub(req.url, "^/times-journeys", "");
             }
-            set bereq.backend = times_journeys_prd;
+            set req.backend = times_journeys_prd;
             set bereq.http.host = "timesjourneys.nytimes.com";
         }
 
@@ -38,7 +38,7 @@ sub set_backend_request {
                 set bereq.url = regsub(req.url, "^/times-journeys/students", "");
             }
 
-            set bereq.backend = times_journeys_students_prd;
+            set req.backend = times_journeys_students_prd;
             set bereq.http.host = "timesjourneysstudents.nytimes.com";
         }
 
