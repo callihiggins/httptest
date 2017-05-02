@@ -397,7 +397,7 @@ sub vcl_recv {
 
     if (req.http.X-Vi-Cluster == "story") {
         set req.url = req.http.X-OriginalUri;
-        set req.http.cookie = req.http.X-Cookie;
+        //set req.http.cookie = req.http.X-Cookie;
         set req.http.X-PageType = "vi-story";
         call set_projectvi_fe_backend;
 
