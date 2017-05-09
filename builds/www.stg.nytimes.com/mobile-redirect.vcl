@@ -98,7 +98,7 @@ sub vcl_deliver {
             }
 
             // vi stories should not be redirected to mobile web
-            if (req.http.X-PageType == "vi-story") {
+            if (resp.http.X-PageType == "vi-story") {
                 set req.http.x-do-mobile-redirect = "0";
             }
 

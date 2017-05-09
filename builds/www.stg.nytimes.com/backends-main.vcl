@@ -418,13 +418,6 @@ sub vcl_recv {
         call set_projectvi_asset_backend;
         set req.http.x-skip-glogin = "1";
     }
-
-    // A request for graphql data
-    if (req.url ~ "^/graphql/") {
-        set req.http.X-PageType = "vi-qraphql";
-        call set_projectvi_fe_backend;
-        return(pass);
-    }
 }
 
 # set a www backend based on host
