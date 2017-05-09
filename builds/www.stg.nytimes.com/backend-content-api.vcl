@@ -1,5 +1,6 @@
 sub vcl_recv {
     if (   req.url.path ~ "^/svc/bitly/"
+        || req.url.path ~ "^/svc/dining/"
         || req.url.path ~ "^/svc/location/"
         || req.url.path ~ "^/svc/mostpopular/"
         || req.url.path ~ "^/svc/news/"
