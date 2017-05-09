@@ -130,6 +130,7 @@ sub vcl_recv {
                 "utm_campaign" + querystring.filtersep() +
                 "utm_source" + querystring.filtersep() +
                 "utm_medium" + querystring.filtersep() +
+                "region" + querystring.filtersep() +
                 "sortBy");
         } else if (req.http.X-PageType == "newsletter") {
             set req.url = querystring.filter_except(req.url,
