@@ -60,7 +60,7 @@ sub vcl_recv {
                 "tag");
         } else if (req.http.X-PageType == "real-estate") {
             set req.url = querystring.filter_except(req.url,
-                                "agents" + querystring.filtersep() +
+                "agents" + querystring.filtersep() +
                 "agents[]" + querystring.filtersep() +
                 {"agents%5B%5D"} + querystring.filtersep() +
                 "alertFrequency[]" + querystring.filtersep() +
