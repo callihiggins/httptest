@@ -250,7 +250,7 @@ backend du_weddings_api_prd {
     }
 }
 
-backend games_prd {
+backend games_svc_prd {
     .host = "nyt-games-prd.appspot.com";
     .port = "443";
     .dynamic = true;
