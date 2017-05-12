@@ -90,7 +90,7 @@ sub vcl_recv {
                 "listingType" + querystring.filtersep() +
                 "listingType[]" + querystring.filtersep() +
                 {"listingType%5B%5D"} + querystring.filtersep() +
-                location + querystring.filtersep() +
+                "location" + querystring.filtersep() +
                 "locationAmenities[]" + querystring.filtersep() +
                 {"locationAmenities%5B%5D"} + querystring.filtersep() +
                 "locations[]" + querystring.filtersep() +
