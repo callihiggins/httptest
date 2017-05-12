@@ -17,10 +17,10 @@ sub vcl_recv {
     set req.http.X-PageType = "legacy";
 
     // entire paidpost hostname is NYT5
-    if (req.http.host == "paidpost.nytimes.com"
+    if (req.http.host ~ "^paidpost([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$"
         && req.url.ext == "html") {
         set req.http.X-PageType = "paidpost";
-        call set_www_fe_backend;
+        call set_www_https_backend;
     }
 
     // homepages, domestic and international, are NYT5
@@ -162,6 +162,7 @@ sub vcl_recv {
         && req.http.host !~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$"
         && req.http.host !~ "^international\.(dev\.|stg\.|)?nytimes.com$"
         && req.http.host !~ "^feeds1?\.(dev\.|stg\.|)?nytimes.com$"
+        && req.http.host !~ "^paidpost([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$"
     ) {
         set req.http.X-PageType = "legacy-override";
         call set_www_backend;
