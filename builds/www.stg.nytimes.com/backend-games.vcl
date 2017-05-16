@@ -19,11 +19,11 @@ sub vcl_recv {
 }
 
 sub vcl_pass {
-    call set_games_backend;
+    call set_backend_request;
 }
 
 sub vcl_miss {
-    call set_games_backend;
+    call set_backend_request;
 }
 
 sub set_backend_request {
