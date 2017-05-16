@@ -19,21 +19,17 @@ sub vcl_recv {
 }
 
 sub vcl_pass {
-    if (req.http.X-PageType == "games-service") {
-      call set_games_svc_backend;
-    }
-
-    if (req.http.X-PageType == "games-web") {
-      call set_games_web_backend;
-    }
+    call set_games_backend;
 }
 
 sub vcl_miss {
+    call set_games_backend;
+}
+
+sub set_games_backend {
     if (req.http.X-PageType == "games-service") {
       call set_games_svc_backend;
-    }
-
-    if (req.http.X-PageType == "games-web") {
+    } else if (req.http.X-PageType == "games-web") {
       call set_games_web_backend;
     }
 }
@@ -41,9 +37,7 @@ sub vcl_miss {
 sub vcl_deliver {
     if (req.http.X-PageType == "games-service") {
         set resp.http.X-API-Version = "GS";
-    }
-
-    if (req.http.X-PageType == "games-web") {
+    } else if (req.http.X-PageType == "games-web") {
         set resp.http.X-API-Version = "GW";
     }
 }
