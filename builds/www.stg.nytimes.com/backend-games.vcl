@@ -43,9 +43,9 @@ sub vcl_deliver {
 }
 
 sub set_games_svc_backend {
-    if (req.http.host ~ "\.dev\.") {
+    if (req.http.x-environment == "dev") {
         //set req.backend = ???;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = games_svc_stg;
         set bereq.http.host = "nyt-games-dev.appspot.com";
     } else {
@@ -55,9 +55,9 @@ sub set_games_svc_backend {
 }
 
 sub set_games_web_backend {
-    if (req.http.host ~ "\.dev\.") {
+    if (req.http.x-environment == "dev") {
         // No dev
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = games_web_stg;
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else {
