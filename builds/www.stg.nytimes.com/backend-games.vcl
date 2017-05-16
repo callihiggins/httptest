@@ -26,7 +26,7 @@ sub vcl_miss {
     call set_games_backend;
 }
 
-sub set_games_backend {
+sub set_backend_request {
     if (req.http.X-PageType == "games-service") {
       call set_games_svc_backend;
     } else if (req.http.X-PageType == "games-web") {
