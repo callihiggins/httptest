@@ -19,14 +19,14 @@ sub vcl_recv {
 }
 
 sub vcl_pass {
-    call set_backend_request;
+    call set_games_backend_request;
 }
 
 sub vcl_miss {
-    call set_backend_request;
+    call set_games_backend_request;
 }
 
-sub set_backend_request {
+sub set_games_backend_request {
     if (req.http.X-PageType == "games-service") {
       call set_games_svc_backend;
     } else if (req.http.X-PageType == "games-web") {
