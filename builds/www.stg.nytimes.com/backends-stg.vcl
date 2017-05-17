@@ -154,7 +154,7 @@ director newsdev_elections_stg round-robin {
     { .backend = newsdev_instance_stg_usw1_1; }
 }
 
-backend games_stg {
+backend games_svc_stg {
     .host = "nyt-games-dev.appspot.com";
     .port = "443";
     .dynamic = true;
@@ -165,6 +165,26 @@ backend games_stg {
     .between_bytes_timeout = 10s;
     .probe = {
         .url = "/status.txt";
+        .timeout = 10s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
+    }
+}
+
+backend games_web_stg {
+    .host = "puzzles.dev.nyt.net";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .ssl_cert_hostname = "puzzles.dev.nyt.net";
+    .ssl_sni_hostname  = "puzzles.dev.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = never;
+    .probe = {
+        .url = "/health-web";
         .timeout = 10s;
         .interval = 5s;
         .window = 5;
