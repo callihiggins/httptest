@@ -43,6 +43,7 @@ sub vcl_recv {
         || req.url ~ "^/ads/RE/"
         || req.url ~ "^/elections"
         || req.url ~ "^/newsgraphics/2017"
+        || req.http.X-PageType == "games-web"
     ) {
         set req.http.x-https-phase = "live";
     }
