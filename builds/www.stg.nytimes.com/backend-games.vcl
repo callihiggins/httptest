@@ -7,12 +7,18 @@ sub vcl_recv {
         }
 
         if (req.http.x-environment == "stg") {
-            if (req.url.path ~ "^/crosswords/game/(daily|mini|variety|bonus|special|paid)" || req.url.path ~ "^/games-assets/") {
+            if (req.url.path ~ "^/crosswords/game/(daily|mini|variety|bonus|special|paid)") {
                 set req.http.X-PageType = "games-web";
                 set req.http.x-skip-glogin = "1";
 
-                // Games need cookies, so returning returning lookup early
-                return(lookup);
+                // Games need cookies and until we sort out our mess with cookies we need to pass requests
+                // to the apps
+                return(pass);
+            }
+            // We can treat the games assets as everything else and cache those (no cookies needed there)
+            if (req.url.path ~ "^/games-assets/") {
+                set req.http.X-PageType = "games-web";
+                set req.http.x-skip-glogin = "1";
             }
         }
     }
