@@ -206,7 +206,9 @@ sub vcl_fetch {
 
   set beresp.grace = 24h;
 
-  if (beresp.http.X-VarnishCacheDuration) {
+  if (beresp.http.Expires || beresp.http.Surrogate-Control ~ "max-age" || beresp.http.Cache-Control ~ "(s-maxage|max-age)") {
+    # keep the ttl here
+  } else if (beresp.http.X-VarnishCacheDuration) {
     set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
   } else {
     # apply the default ttl
@@ -221,7 +223,6 @@ sub vcl_fetch {
     } else {
       set beresp.ttl = 60s;
     }
-
   }
 
   return(deliver);
