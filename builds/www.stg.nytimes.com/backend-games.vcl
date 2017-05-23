@@ -19,6 +19,18 @@ sub vcl_recv {
             if (req.url.path ~ "^/games-assets/") {
                 set req.http.X-PageType = "games-web";
                 set req.http.x-skip-glogin = "1";
+
+                if (!req.http.Fastly-SSL) {
+                    call redirect_to_https;
+                }
+
+                unset req.http.Cookie;
+                unset req.http.X-Cookie;
+                unset req.http.x-nyt-edition;
+                unset req.http.x-nyt-s;
+                unset req.http.x-nyt-wpab;
+
+                return(lookup);
             }
         }
     }
