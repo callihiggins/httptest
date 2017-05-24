@@ -4,7 +4,6 @@ sub vcl_recv {
      */
     if (   req.http.X-PageType == "blog"
         || req.url ~ "^/newsletters"
-        || req.http.X-PageType == "paidpost"
     ) {
         set req.http.x-https-phase = "internal";
     }
@@ -44,6 +43,7 @@ sub vcl_recv {
         || req.url ~ "^/elections"
         || req.url ~ "^/newsgraphics/2017"
         || req.http.X-PageType == "games-web"
+        || req.http.X-PageType == "paidpost"
     ) {
         set req.http.x-https-phase = "live";
     }
