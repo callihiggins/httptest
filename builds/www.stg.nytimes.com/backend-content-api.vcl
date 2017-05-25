@@ -16,6 +16,16 @@ sub vcl_recv {
         unset req.http.x-nyt-wpab;
 
         return(pass);
+    } 
+    if (req.url.path ~ "^/svc/oembed/"){
+        set req.http.X-PageType = "content-api-gae";
+        set req.grace = 24h;
+
+        unset req.http.X-Cookie;
+        unset req.http.x-nyt-edition;
+        unset req.http.x-nyt-s;
+        unset req.http.x-nyt-wpab;
+        return(lookup);
     }
 }
 
@@ -53,5 +63,27 @@ sub set_content_api_backend {
         set req.backend = content_api_stg;
     } else {
         set req.backend = content_api_prd;
+    }
+}
+
+sub vcl_pass {
+    call set_gae_content_api_backend;
+}
+
+sub vcl_miss {
+    call set_gae_content_api_backend;
+}
+
+sub set_gae_content_api_backend {
+    if (req.http.X-PageType == "content-api-gae") {
+        if (req.http.x-environment == "dev") {
+            # no dev yet
+        } else if (req.http.x-environment == "stg") {
+            set req.backend = gae_oembed_content_api_stg;
+            set bereq.http.host = "nyt-du-dev.appspot.com";
+        } else {
+            set req.backend = gae_oembed_content_api_prd;
+            set bereq.http.host = "nyt-du-prd.appspot.com";
+        }
     }
 }

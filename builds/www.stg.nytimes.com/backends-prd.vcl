@@ -284,6 +284,23 @@ backend subscription_prd {
     }
 }
 
+backend gae_oembed_content_api_prd {
+    .host = "nyt-du-prd.appspot.com";
+    .ssl_cert_hostname = "nyt-du-prd.appspot.com";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .ssl = true;
+    .probe = {
+        .url = "/healthcheck";
+        .timeout = 3s;
+        .interval = 60s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
 
 backend content_api_prd {
     .host = "content.api.nytimes.com";
