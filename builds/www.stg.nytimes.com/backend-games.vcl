@@ -8,34 +8,40 @@ sub vcl_recv {
 
         if (req.http.x-environment == "stg") {
             if (req.url.path ~ "^/crosswords/game/(daily|mini|variety|bonus|special|paid)") {
-                set req.http.X-PageType = "games-web";
-                set req.http.x-skip-glogin = "1";
+                call games_allocation;
+                if (req.http.x-nyt-games == "games-web" ) {
+                  set req.http.X-PageType = "games-web";
+                  set req.http.x-skip-glogin = "1";
 
-                // Since we're returning early, we need to do this here for now
-                if (!req.http.Fastly-SSL) {
-                    call redirect_to_https;
+                  // Since we're returning early, we need to do this here for now
+                  if (!req.http.Fastly-SSL) {
+                      call redirect_to_https;
+                  }
+
+                  // Games need cookies and until we sort out our mess with cookies we need to pass requests
+                  // to the apps
+                  return(pass);
                 }
-
-                // Games need cookies and until we sort out our mess with cookies we need to pass requests
-                // to the apps
-                return(pass);
             }
             // We can treat the games assets as everything else and cache those (no cookies needed there)
             if (req.url.path ~ "^/games-assets/") {
-                set req.http.X-PageType = "games-web";
-                set req.http.x-skip-glogin = "1";
+                call games_allocation;
+                if (req.http.x-nyt-games == "games-web" ) {
+                  set req.http.X-PageType = "games-web";
+                  set req.http.x-skip-glogin = "1";
 
-                if (!req.http.Fastly-SSL) {
-                    call redirect_to_https;
+                  if (!req.http.Fastly-SSL) {
+                      call redirect_to_https;
+                  }
+
+                  unset req.http.Cookie;
+                  unset req.http.X-Cookie;
+                  unset req.http.x-nyt-edition;
+                  unset req.http.x-nyt-s;
+                  unset req.http.x-nyt-wpab;
+
+                  return(lookup);
                 }
-
-                unset req.http.Cookie;
-                unset req.http.X-Cookie;
-                unset req.http.x-nyt-edition;
-                unset req.http.x-nyt-s;
-                unset req.http.x-nyt-wpab;
-
-                return(lookup);
             }
         }
     }
@@ -49,6 +55,21 @@ sub vcl_miss {
     call set_games_backend_request;
 }
 
+sub games_allocation {
+    if (req.http.Cookie:nyt-games) {
+      set req.http.x-nyt-games = urldecode(req.http.Cookie:nyt-games);
+    } else {
+      if (randombool(1, 100)) {
+        set req.http.x-nyt-games = "games-web";
+      } else {
+        set req.http.x-nyt-games = "legacy";
+      }
+    }
+    if (req.url.qs ~ "nyt-games=(games-web|legacy)") {
+      set req.http.x-nyt-games = re.group.1;
+    }
+}
+      
 sub set_games_backend_request {
     if (req.http.X-PageType == "games-service") {
       call set_games_svc_backend;
@@ -62,6 +83,13 @@ sub vcl_deliver {
         set resp.http.X-API-Version = "GS";
     } else if (req.http.X-PageType == "games-web") {
         set resp.http.X-API-Version = "GW";
+    }
+    if (req.http.x-nyt-games == "games-web" || req.http.x-nyt-games == "legacy") {
+      add resp.http.Set-Cookie =
+        "nyt-games=" + req.http.x-nyt-games + "; "+
+        "Expires=" + time.add(now, 365d) + "; "+
+        "Path=/; "+
+        "Domain=.nytimes.com";
     }
 }
 
