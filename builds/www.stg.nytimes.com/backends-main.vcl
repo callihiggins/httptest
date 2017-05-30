@@ -222,7 +222,7 @@ sub vcl_recv {
         if (req.url ~ "^/interactive/2014/"
             && !req.url ~ "\.(embedded|mobile|app)\.html$") {
             set req.http.X-PageType = "vi-interactive";
-            set req.backend = projectvi_fe_stg;
+            call set_projectvi_fe_backend;
         } else {
             set req.http.X-PageType = "interactive";
             call set_www_fe_backend;
