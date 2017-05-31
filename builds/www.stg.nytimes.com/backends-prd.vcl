@@ -268,6 +268,26 @@ backend games_svc_prd {
     }
 }
 
+backend games_web_prd {
+    .host = "puzzles.prd.nyt.net";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .ssl_cert_hostname = "puzzles.prd.nyt.net";
+    .ssl_sni_hostname  = "puzzles.prd.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = never;
+    .probe = {
+        .url = "/health-web";
+        .timeout = 10s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
+    }
+}
+
 backend subscription_prd {
     .host = "mwcm-app-est-public-prd-i-111546-340655147.us-east-1.elb.amazonaws.com";
     .port = "80";

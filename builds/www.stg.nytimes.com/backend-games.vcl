@@ -110,6 +110,7 @@ sub set_games_web_backend {
         set req.backend = games_web_stg;
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else {
-        // No prod yet
+        set req.backend = games_web_prd;
+        set bereq.http.host = "puzzles.prd.nyt.net";
     }
 }
