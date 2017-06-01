@@ -219,11 +219,10 @@ sub vcl_recv {
 
     // interactive years 2014-forever are NYT5
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
-        if (req.http.x-environment == "stg" 
-            && req.url ~ "^/interactive/2014/"
+        if (req.url ~ "^/interactive/2014/"
             && !req.url ~ "\.(embedded|mobile|app)\.html$") {
             set req.http.X-PageType = "vi-interactive";
-            set req.backend = projectvi_fe_stg;
+            call set_projectvi_fe_backend;
         } else {
             set req.http.X-PageType = "interactive";
             call set_www_fe_backend;
