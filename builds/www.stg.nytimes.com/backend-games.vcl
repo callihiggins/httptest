@@ -8,7 +8,7 @@ sub vcl_recv {
 
         if (req.url.path ~ "^/crosswords/game/(daily|mini|variety|bonus|special|paid)") {
             call games_allocation;
-            if (req.http.x-nyt-games == "games-web" ) {
+            if (req.http.x-nyt-games ~ "games-web" ) {
               set req.http.X-PageType = "games-web";
               set req.http.x-skip-glogin = "1";
 
@@ -25,7 +25,7 @@ sub vcl_recv {
         // We can treat the games assets as everything else and cache those (no cookies needed there)
         if (req.url.path ~ "^/games-assets/") {
             call games_allocation;
-            if (req.http.x-nyt-games == "games-web" ) {
+            if (req.http.x-nyt-games ~ "games-web" ) {
               set req.http.X-PageType = "games-web";
               set req.http.x-skip-glogin = "1";
 
@@ -54,6 +54,30 @@ sub vcl_miss {
 }
 
 sub games_allocation {
+  if (req.http.x-environment == "stg" ) {
+    set req.http.x-nyt-games = urldecode(req.http.Cookie:nyt-games);
+    // if nyt-games cookie includes 5pct marker, use it
+    // if nyt-games cookie exists without 5pct use it, but reallocate some of legacy
+    if (req.http.x-nyt-games == "games-web") {
+        set req.http.x-nyt-games = "games-web 5pct";
+    }
+    if (req.http.x-nyt-games == "legacy") {
+      if (randombool(4, 99)) {
+        set req.http.x-nyt-games = "games-web 5pct";
+      } else {
+        set req.http.x-nyt-games = "legacy 5pct";
+      }
+    }
+    // if cookie isn't set, alloc 5%
+    if (req.http.x-nyt-games == "") {
+      if(randombool(5, 100)) {
+        set req.http.x-nyt-games = "games-web 5pct";
+      } else {
+        set req.http.x-nyt-games = "legacy 5pct";
+      }
+    }
+  } else {
+    // prd logic
     if (req.http.Cookie:nyt-games) {
       set req.http.x-nyt-games = urldecode(req.http.Cookie:nyt-games);
     } else {
@@ -63,9 +87,11 @@ sub games_allocation {
         set req.http.x-nyt-games = "legacy";
       }
     }
-    if (req.url.qs ~ "nyt-games=(games-web|legacy)") {
-      set req.http.x-nyt-games = re.group.1;
-    }
+  }
+  // querystring should always work
+  if (req.url.qs ~ "nyt-games=(games-web|legacy)") {
+    set req.http.x-nyt-games = re.group.1 + " 5pct";
+  }
 }
       
 sub set_games_backend_request {
@@ -82,9 +108,9 @@ sub vcl_deliver {
     } else if (req.http.X-PageType == "games-web") {
         set resp.http.X-API-Version = "GW";
     }
-    if (req.http.x-nyt-games == "games-web" || req.http.x-nyt-games == "legacy") {
+    if (req.http.x-nyt-games ~ "games-web" || req.http.x-nyt-games ~ "legacy") {
       add resp.http.Set-Cookie =
-        "nyt-games=" + req.http.x-nyt-games + "; "+
+        "nyt-games=" + urlencode(req.http.x-nyt-games) +"; "+
         "Expires=" + time.add(now, 365d) + "; "+
         "Path=/; "+
         "Domain=.nytimes.com";
