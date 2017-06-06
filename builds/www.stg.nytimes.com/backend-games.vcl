@@ -24,23 +24,19 @@ sub vcl_recv {
         }
         // We can treat the games assets as everything else and cache those (no cookies needed there)
         if (req.url.path ~ "^/games-assets/") {
-            call games_allocation;
-            if (req.http.x-nyt-games ~ "games-web" ) {
-              set req.http.X-PageType = "games-web";
-              set req.http.x-skip-glogin = "1";
+            set req.http.X-PageType = "games-assets";
+            set req.http.x-skip-glogin = "1";
 
-              if (!req.http.Fastly-SSL) {
-                  call redirect_to_https;
-              }
-
-              unset req.http.Cookie;
-              unset req.http.X-Cookie;
-              unset req.http.x-nyt-edition;
-              unset req.http.x-nyt-s;
-              unset req.http.x-nyt-wpab;
-
-              return(lookup);
+            if (!req.http.Fastly-SSL) {
+                call redirect_to_https;
             }
+
+            unset req.http.Cookie;
+            unset req.http.X-Cookie;
+            unset req.http.x-nyt-edition;
+            unset req.http.x-nyt-s;
+            unset req.http.x-nyt-wpab;
+            return(lookup);
         }
     }
 }
@@ -99,6 +95,8 @@ sub set_games_backend_request {
       call set_games_svc_backend;
     } else if (req.http.X-PageType == "games-web") {
       call set_games_web_backend;
+    } else if (req.http.X-PageType == "games-assets") {
+      call set_games_assets_backend;
     }
 }
 
@@ -135,6 +133,19 @@ sub set_games_web_backend {
     } else if (req.http.x-environment == "stg") {
         set req.backend = games_web_stg;
         set bereq.http.host = "puzzles.dev.nyt.net";
+    } else {
+        set req.backend = games_web_prd;
+        set bereq.http.host = "puzzles.prd.nyt.net";
+    }
+}
+
+sub set_games_assets_backend {
+    if (req.http.x-environment == "dev") {
+        // No dev
+    } else if (req.http.x-environment == "stg") {
+        // one asset bucket for stg and prd
+        set req.backend = games_assets_prd;
+        set bereq.http.host = "storage.googleapis.com";
     } else {
         set req.backend = games_web_prd;
         set bereq.http.host = "puzzles.prd.nyt.net";

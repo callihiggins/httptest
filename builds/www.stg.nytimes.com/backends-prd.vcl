@@ -288,6 +288,27 @@ backend games_web_prd {
     }
 }
 
+backend games_assets_prd {
+    .host = "storage.googleapis.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .url = "/games-assets/fastly-up.txt";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+        .expected_response = 200;
+    }
+}
+
 backend subscription_prd {
     .host = "mwcm-app-est-public-prd-i-111546-340655147.us-east-1.elb.amazonaws.com";
     .port = "80";
