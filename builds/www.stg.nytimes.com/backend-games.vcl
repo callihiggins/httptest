@@ -129,12 +129,9 @@ sub set_games_web_backend {
 sub set_games_assets_backend {
     if (req.http.x-environment == "dev") {
         // No dev
-    } else if (req.http.x-environment == "stg") {
+    } else {
         // one asset bucket for stg and prd
         set req.backend = games_assets_prd;
         set bereq.http.host = "storage.googleapis.com";
-    } else {
-        set req.backend = games_web_prd;
-        set bereq.http.host = "puzzles.prd.nyt.net";
     }
 }
