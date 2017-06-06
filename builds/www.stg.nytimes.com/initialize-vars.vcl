@@ -1,5 +1,5 @@
-sub vcl_recv {    
-    
+sub vcl_recv {
+
     # unset anything that we shouldn't trust from the user request
     unset req.http.x-skip-glogin;
 
@@ -36,6 +36,17 @@ sub vcl_recv {
 
     if (req.http.Cookie:nyt-a) {
       set req.http.x-nyt-a = req.http.Cookie:nyt-a;
+    }
+    else {
+      # we didn't get a uuid, generate and set one
+      set req.http.x-nyt-a = digest.hash_sha256(
+          now.sec+
+          randomstr(64)+
+          req.http.host+
+          req.url+
+          client.ip+
+          client.port+
+          server.identity);
     }
 
     if (req.http.Cookie:nyt-bcet){
@@ -77,7 +88,7 @@ sub vcl_recv {
     } else {
         set req.http.x-orig-querystring = "";
     }
-  
+
     /*
      * salt for BCET, we'll put this in drone secrets when we refactor
      */

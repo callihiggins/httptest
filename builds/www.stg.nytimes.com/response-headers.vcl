@@ -1,14 +1,14 @@
 sub vcl_deliver {
 
     # remove extraneous response headers
-    remove resp.http.nnCoection;
-    remove resp.http.Via;
-    remove resp.http.X-Backend;
-    remove resp.http.X-DetectedRuntimeConfigFlag;
-    remove resp.http.X-ESI-Status;
-    remove resp.http.X-Hash;
-    remove resp.http.X-Powered-By;
-    remove resp.http.X-Varnish;
+    unset resp.http.nnCoection;
+    unset resp.http.Via;
+    unset resp.http.X-Backend;
+    unset resp.http.X-DetectedRuntimeConfigFlag;
+    unset resp.http.X-ESI-Status;
+    unset resp.http.X-Hash;
+    unset resp.http.X-Powered-By;
+    unset resp.http.X-Varnish;
 
 
     // Well is setting Strict-Transport-Security! This leaks out so we need to remove it.
@@ -21,15 +21,16 @@ sub vcl_deliver {
     # lets return some headers to internal clients for debugging
     if (client.ip !~ internal){
         # remove these headers for external requests
-        remove resp.http.X-VarnishCacheDuration;
-        remove resp.http.X-Origin-Server;
+        unset resp.http.X-VarnishCacheDuration;
+        unset resp.http.X-Origin-Server;
+        unset resp.http.X-NYT-Backend;
     } else {
         # set these headers for internal requests
-        set resp.http.X-NYT-Backend = req.http.X-NYT-Backend;
         set resp.http.x-nyt-continent = req.http.x-nyt-continent;
         set resp.http.x-nyt-country = req.http.x-nyt-country;
         set resp.http.x-nyt-region = req.http.x-nyt-region;
         set resp.http.x-nyt-geo-hash = req.http.x-nyt-geo-hash;
+        set resp.http.device_type = req.http.device_type;
     }
 
     if (resp.http.X-API-Version) {

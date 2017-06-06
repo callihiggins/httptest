@@ -27,6 +27,7 @@ include "backend-content-api";
 include "backend-times-journeys";
 include "backend-video";
 include "backend-tbooks";
+include "vi-allocation";
 include "community-esi";
 include "https-redirect";
 include "device-detect";
@@ -94,6 +95,9 @@ sub vcl_recv {
 
 sub vcl_fetch {
 
+  # setting this for debugging
+  set beresp.http.X-NYT-Backend = beresp.backend.name;
+
   # This logic will handle serving stale content if we got an error from the backend
   if (beresp.status >= 500 && beresp.status < 600) {
 
@@ -153,9 +157,6 @@ sub vcl_fetch {
       return (restart);
     }
   }
-
-  # setting this for debugging
-  set req.http.X-NYT-Backend = beresp.backend.name;
 
   # Vary on this header for HTTPS version, so we can purge both versions at the same time
   if (beresp.http.Vary) {
@@ -265,6 +266,14 @@ sub vcl_hash {
   if(req.http.X-PageType == "video-library"){
     set req.hash += req.http.device_type;
   }
+
+  # create new hashes based on geo if rendering project vi home
+  if(req.http.x--fastly-project-vi && req.http.x-environment == "stg"
+    && req.url.path == "/"){
+    set req.hash += req.http.x-nyt-geo-hash;
+    set req.hash += req.http.device_type;
+  }
+
 
   return(hash);
 }

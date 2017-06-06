@@ -537,6 +537,8 @@ sub set_projectvi_fe_backend {
     } else {
         set req.backend = projectvi_fe_prd;
     }
+    # must set this for hashing and saint mode in default.vcl:
+    set req.http.x--fastly-project-vi = "1";
 }
 
 # set a vi asset backend based on host
