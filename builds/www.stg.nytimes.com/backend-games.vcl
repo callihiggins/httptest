@@ -71,7 +71,6 @@ sub games_allocation {
         set req.http.x-nyt-games = "legacy 5pct";
       }
     }
-  }
   // querystring should always work
   if (req.url.qs ~ "nyt-games=(games-web|legacy)") {
     set req.http.x-nyt-games = re.group.1 + " 5pct";
