@@ -136,61 +136,62 @@ sub vcl_deliver {
     declare local var.expire_year STRING;
     declare local var.expire_year_last_digit STRING;
     declare local var.vi_cookie_desired STRING;
+    if (req.http.x-environment == "stg") {
+        if (resp.http.Content-Type ~ "^text/html *(;|$)") {
 
-    if (resp.http.Content-Type ~ "^text/html *(;|$)") {
+            # Requirements for the `vi_www_hp` cookie:
+            #
+            #  1. It should be set once per calendar year, at most, to minimize
+            #     the weight of Set-Cookie headers
+            #  2. It should last at least ~365 days after response is delivered,
+            #     for frontend JS to read it during lifetime of page
+            #  3. It should expire as soon as possible, within these constraints
+            #     and without bloating the cookie size
+            #
+            # We achieve this (micro-)optimization by setting the cookie's
+            # expiration date to Jan 1 of the year after next, and encoding this
+            # date (as the last digit of the year) inside the cookie so we can
+            # check it here and bump the expiration if needed. Of course, we also
+            # update the cookie if its payload just needs to be changed.
 
-        # Requirements for the `vi_www_hp` cookie:
-        #
-        #  1. It should be set once per calendar year, at most, to minimize
-        #     the weight of Set-Cookie headers
-        #  2. It should last at least ~365 days after response is delivered,
-        #     for frontend JS to read it during lifetime of page
-        #  3. It should expire as soon as possible, within these constraints
-        #     and without bloating the cookie size
-        #
-        # We achieve this (micro-)optimization by setting the cookie's
-        # expiration date to Jan 1 of the year after next, and encoding this
-        # date (as the last digit of the year) inside the cookie so we can
-        # check it here and bump the expiration if needed. Of course, we also
-        # update the cookie if its payload just needs to be changed.
+            set var.now_dt = now;
 
-        set var.now_dt = now;
+            # UGH. Maybe there's a better way, but I had to abuse timestamp
+            # manipulation functions here to awkwardly workaround Fastly's lack of
+            # support for integer math. See:
+            # <https://community.fastly.com/t/vcl-fastly-integer-math/817>
+            # <https://docs.fastly.com/guides/vcl/date-and-time-related-vcl-
+            # features>
 
-        # UGH. Maybe there's a better way, but I had to abuse timestamp
-        # manipulation functions here to awkwardly workaround Fastly's lack of
-        # support for integer math. See:
-        # <https://community.fastly.com/t/vcl-fastly-integer-math/817>
-        # <https://docs.fastly.com/guides/vcl/date-and-time-related-vcl-
-        # features>
+            # get current year as integer:
+            set var.now_year = std.atoi(strftime({"%Y"}, var.now_dt));
+            # add 2 directly to year number (thereby accounting for leap years), getting result as string:
+            set var.expire_year = strftime({"%s"}, time.add(std.integer2time(var.now_year), 2s));
 
-        # get current year as integer:
-        set var.now_year = std.atoi(strftime({"%Y"}, var.now_dt));
-        # add 2 directly to year number (thereby accounting for leap years), getting result as string:
-        set var.expire_year = strftime({"%s"}, time.add(std.integer2time(var.now_year), 2s));
+            # We want our `vi_www_hp` cookie to be our test group, plus the year number
+            # at least ~365 days from now (encoded as its last digit):
+            set var.expire_year_last_digit = regsub(var.expire_year, "^\d+(\d)$|^.*$", "\1");
+            set var.vi_cookie_desired = req.http.x--fastly-vi-test-group + var.expire_year_last_digit;
 
-        # We want our `vi_www_hp` cookie to be our test group, plus the year number
-        # at least ~365 days from now (encoded as its last digit):
-        set var.expire_year_last_digit = regsub(var.expire_year, "^\d+(\d)$|^.*$", "\1");
-        set var.vi_cookie_desired = req.http.x--fastly-vi-test-group + var.expire_year_last_digit;
+            # If the existing cookie is wrong, we need to update it. But also, if
+            # the date encoded within it is different from our desired expiration
+            # date, we need to bump it.
+            if (req.http.x--fastly-req-cookie-vi != var.vi_cookie_desired) {
+                add resp.http.Set-Cookie =
+                    "vi_www_hp=" + var.vi_cookie_desired +
+                    "; path=/; domain=.nytimes.com; expires=" +
+                    std.time(
+                        "Sun, 1 Jan " + var.expire_year + " 00:00:00 GMT", # the "Sun" part doesn't matter
+                        time.add(var.now_dt, 730d) # default to 2 years from now if std.time parsing fails
+                    );
+            }
 
-        # If the existing cookie is wrong, we need to update it. But also, if
-        # the date encoded within it is different from our desired expiration
-        # date, we need to bump it.
-        if (req.http.x--fastly-req-cookie-vi != var.vi_cookie_desired) {
-            add resp.http.Set-Cookie =
-                "vi_www_hp=" + var.vi_cookie_desired +
-                "; path=/; domain=.nytimes.com; expires=" +
-                std.time(
-                    "Sun, 1 Jan " + var.expire_year + " 00:00:00 GMT", # the "Sun" part doesn't matter
-                    time.add(var.now_dt, 730d) # default to 2 years from now if std.time parsing fails
-                );
+            # set resp.http.X-Debug-now_dt = var.now_dt;
+            # set resp.http.X-Debug-now_year = var.now_year;
+            # set resp.http.X-Debug-expire_year = var.expire_year;
+            # set resp.http.X-Debug-vi_cookie_desired = var.vi_cookie_desired;
+            # set resp.http.X-Debug-vi_cookie_actual = "here --> '" + req.http.x--fastly-req-cookie-vi + "'";
         }
-
-        # set resp.http.X-Debug-now_dt = var.now_dt;
-        # set resp.http.X-Debug-now_year = var.now_year;
-        # set resp.http.X-Debug-expire_year = var.expire_year;
-        # set resp.http.X-Debug-vi_cookie_desired = var.vi_cookie_desired;
-        # set resp.http.X-Debug-vi_cookie_actual = "here --> '" + req.http.x--fastly-req-cookie-vi + "'";
     }
 }
 
