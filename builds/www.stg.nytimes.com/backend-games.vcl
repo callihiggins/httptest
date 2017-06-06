@@ -50,7 +50,6 @@ sub vcl_miss {
 }
 
 sub games_allocation {
-  if (req.http.x-environment == "stg" ) {
     set req.http.x-nyt-games = urldecode(req.http.Cookie:nyt-games);
     // if nyt-games cookie includes 5pct marker, use it
     // if nyt-games cookie exists without 5pct use it, but reallocate some of legacy
@@ -70,17 +69,6 @@ sub games_allocation {
         set req.http.x-nyt-games = "games-web 5pct";
       } else {
         set req.http.x-nyt-games = "legacy 5pct";
-      }
-    }
-  } else {
-    // prd logic
-    if (req.http.Cookie:nyt-games) {
-      set req.http.x-nyt-games = urldecode(req.http.Cookie:nyt-games);
-    } else {
-      if (randombool(1, 100)) {
-        set req.http.x-nyt-games = "games-web";
-      } else {
-        set req.http.x-nyt-games = "legacy";
       }
     }
   }
