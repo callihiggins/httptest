@@ -1,7 +1,9 @@
 sub vcl_recv {
   if (req.http.X-PageType == "newsdev-intl") {
     if (req.request != "GET" &&
-      req.request != "HEAD") {
+        req.request != "HEAD" &&
+        req.request != "FASTLYPURGE"
+    ) {
       error 405 "Not allowed.";
     }
 
@@ -25,7 +27,7 @@ sub vcl_fetch {
     unset beresp.http.X-Amz-Id-2;
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;
-    
+
     if ( client.ip !~ internal && req.http.x-environment == "prd") {
       unset beresp.http.X-Kubernetes-Url;
     }
