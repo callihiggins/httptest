@@ -1,6 +1,6 @@
 sub vcl_recv {
 
-    if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
+    if (req.http.host ~ "^(www|paidpost)([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
     	// The order of these two checks is important since the second one is a sub path of the first one
         if (req.url ~ "^/video-media") {
             set req.http.X-PageType = "video-media";
