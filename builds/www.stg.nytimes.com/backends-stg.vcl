@@ -190,7 +190,7 @@ backend gae_oembed_content_api_stg {
         .threshold = 4;
     }
 }
-  
+
 backend games_web_stg {
     .host = "puzzles.dev.nyt.net";
     .port = "443";
@@ -310,7 +310,7 @@ backend content_api_stg {
 }
 
 backend projectvi_fe_stg {
-    .host = "35.186.240.2";
+    .host = "35.186.226.73";
     .port = "80";
     .probe = {
         .url = "/.healthcheck";
