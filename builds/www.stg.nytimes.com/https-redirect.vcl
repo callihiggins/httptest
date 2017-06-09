@@ -4,7 +4,8 @@ sub vcl_recv {
      */
     if (   req.http.X-PageType == "blog"
         || req.url ~ "^/newsletters"
-        || req.url ~ "^/slideshows/2(01[4-9]|" // 2014 - future
+        || (  req.http.X-PageType == "slideshow"
+              && req.url ~ "^/slideshows/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
     ) {
         set req.http.x-https-phase = "internal";
     }
