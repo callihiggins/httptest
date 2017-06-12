@@ -75,9 +75,9 @@ sub vcl_deliver {
 
 
 sub set_subscription_backend {
-    if (req.http.host ~ "\.dev\.") {
+    if (req.http.x-environment == "dev") {
         //set req.backend = ???;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = subscription_stg;
     } else {
         set req.backend = subscription_prd;

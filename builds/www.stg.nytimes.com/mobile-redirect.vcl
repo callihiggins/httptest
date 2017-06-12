@@ -130,9 +130,9 @@ sub vcl_deliver {
 sub do_redirect {
 
     // pick mobile host based on the Fastly service we're in
-    if (req.http.host ~ "\.dev\.") {
+    if (req.http.x-environment == "dev") {
         set req.http.mobile-host = "mobile.dev.nytimes.com";
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.http.mobile-host = "mobile.stg.nytimes.com";
     } else {
         set req.http.mobile-host = "mobile.nytimes.com";

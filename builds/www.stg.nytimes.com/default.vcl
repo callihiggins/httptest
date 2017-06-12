@@ -14,6 +14,19 @@ include "health-check";
 include "ipauth";
 include "www-redirect";
 include "tips";
+
+# the follow files define the backends themselves
+include "backends-dev";
+include "backends-stg";
+include "backends-prd";
+include "backends-deadend";
+# end defining backends
+
+# this backend route logic needs to come before all others
+include "backends-glogin-healthcheck";
+
+# the following files contain routes for the backends defined above
+include "backend-health-service"; # service that reports health of defined backends
 include "backends-main";
 include "backend-well";
 include "backend-elections";
@@ -27,6 +40,10 @@ include "backend-content-api";
 include "backend-times-journeys";
 include "backend-video";
 include "backend-tbooks";
+
+
+
+# begin other logic
 include "vi-allocation";
 include "community-esi";
 include "https-redirect";
@@ -93,10 +110,65 @@ sub vcl_recv {
   return(lookup);
 }
 
+sub vcl_hash {
+#FASTLY hash
+  set req.hash += req.url;
+  set req.hash += req.http.host;
+
+  // video library needs to pivot on device type
+  if(req.http.X-PageType == "video-library"){
+    set req.hash += req.http.device_type;
+  }
+
+  # create new hashes based on geo if rendering project vi home
+  if(req.http.x--fastly-project-vi && req.http.x-environment == "stg"
+    && req.url.path == "/"){
+    set req.hash += req.http.x-nyt-geo-hash;
+    set req.hash += req.http.device_type;
+  }
+
+
+  return(hash);
+}
+
+sub vcl_hit {
+#FASTLY hit
+
+  if (!obj.cacheable) {
+    return(pass);
+  }
+  return(deliver);
+}
+
+sub vcl_miss {
+#FASTLY miss
+
+  call unset_extraneous_bereq_headers;
+
+  // this should be removed already, but lets be sure
+  // since this was a lookup we were not pass
+  remove bereq.http.Cookie;
+
+  // cacheable community svc requests are ESI jsonp
+  // we can not compress these... yet...
+  if(req.http.X-PageType == "community-svc-cacheable"){
+    unset bereq.http.Accept-Encoding;
+    unset req.http.Accept-Encoding;
+  }
+
+  return(fetch);
+}
+
+sub vcl_pass {
+#FASTLY pass
+  call unset_extraneous_bereq_headers;
+}
+
 sub vcl_fetch {
 
-  # setting this for debugging
+  # need to set these here so they are accessible in deliver/log
   set beresp.http.X-NYT-Backend = beresp.backend.name;
+  set beresp.http.x-nyt-backend-health = req.backend.healthy;
 
   # This logic will handle serving stale content if we got an error from the backend
   if (beresp.status >= 500 && beresp.status < 600) {
@@ -229,55 +301,6 @@ sub vcl_fetch {
   return(deliver);
 }
 
-sub vcl_hit {
-#FASTLY hit
-
-  if (!obj.cacheable) {
-    return(pass);
-  }
-  return(deliver);
-}
-
-sub vcl_miss {
-#FASTLY miss
-
-  call unset_extraneous_bereq_headers;
-
-  // this should be removed already, but lets be sure
-  // since this was a lookup we were not pass
-  remove bereq.http.Cookie;
-
-  // cacheable community svc requests are ESI jsonp
-  // we can not compress these... yet...
-  if(req.http.X-PageType == "community-svc-cacheable"){
-    unset bereq.http.Accept-Encoding;
-    unset req.http.Accept-Encoding;
-  }
-
-  return(fetch);
-}
-
-sub vcl_hash {
-#FASTLY hash
-  set req.hash += req.url;
-  set req.hash += req.http.host;
-
-  // video library needs to pivot on device type
-  if(req.http.X-PageType == "video-library"){
-    set req.hash += req.http.device_type;
-  }
-
-  # create new hashes based on geo if rendering project vi home
-  if(req.http.x--fastly-project-vi && req.http.x-environment == "stg"
-    && req.url.path == "/"){
-    set req.hash += req.http.x-nyt-geo-hash;
-    set req.hash += req.http.device_type;
-  }
-
-
-  return(hash);
-}
-
 sub vcl_deliver {
 #FASTLY deliver
   return(deliver);
@@ -303,9 +326,10 @@ sub vcl_error {
 
 }
 
-sub vcl_pass {
-#FASTLY pass
-  call unset_extraneous_bereq_headers;
+sub vcl_log {
+#FASTLY log
+
+  #hello world
 }
 
 sub unset_extraneous_bereq_headers {
@@ -317,4 +341,5 @@ sub unset_extraneous_bereq_headers {
   unset bereq.http.x-nyt-s;
   unset bereq.http.x-nyt-d;
   unset bereq.http.x-bcet-secret-key;
+  unset bereq.http.x-nyt-glogin-error-skip-key;
 }

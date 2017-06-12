@@ -54,9 +54,9 @@ sub vcl_error {
 }
 
 sub set_newsdev_elections_backend {
-    if (req.http.host ~ "\.dev\.") {
+    if (req.http.x-environment == "dev") {
         set req.backend = newsdev_elections_dev;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = newsdev_elections_stg;
     } else {
         set req.backend = newsdev_elections_prd;

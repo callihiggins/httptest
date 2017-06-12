@@ -1,6 +1,12 @@
 include "glogin-killswitch";
 
 sub vcl_recv {
+
+    # call a function that will check to see if we got a parameter that should FORCE NO redirect to glogin
+    # see backends-glogin-healthcheck.vcl for the other side of this logic
+    if (req.http.x-environment == "stg") {
+        call check_glogin_error_skip;
+    }
     # call sub to check if the request should skip glogin (at bottom of file)
     call check_skip_glogin;
 
@@ -18,7 +24,7 @@ sub vcl_recv {
         set req.http.x-nyt-bcet = urldecode(req.http.x-nyt-bcet);
 
         # we switched from 3 to 4 fields pipe-delimited to add data to the cookie
-        # if there aren't 4 fields, use the 3 field method
+        # if there are not 4 fields, use the 3 field method
         if (req.http.x-nyt-bcet ~ "^[0-9]+\|.+\|.+\|.+$"){
             # 4 fields
             set req.http.x-bcet-timestamp = if(req.http.x-nyt-bcet ~ "^([0-9]+)\|.+\|.+\|.+$", re.group.1, "");
@@ -116,6 +122,39 @@ sub redirect_to_glogin {
     set obj.http.X-API-Version = "0";
 
     return(deliver);
+}
+
+/**
+  * This logic looks for the GLS (glogin skip) query parameter.
+  * it then validates that it is not expired and as well validates
+  * the signature using a shared secret
+  * If it is valid, glogin must have returned 5xx for this user
+  * we will allow them to pass without hitting it again
+  *
+  */
+sub check_glogin_error_skip {
+    declare local var.expire_time INTEGER;
+    declare local var.signature STRING;
+    declare local var.glogin_skip_qparam STRING;
+
+    set req.http.x-glogin-error = req.http.x-glogin-error + req.restarts;
+
+    set var.glogin_skip_qparam = if(req.http.x-orig-querystring ~ "(?i)\?.*GLS=([^&]*)", re.group.1, "");
+    if (var.glogin_skip_qparam != ""){
+        set var.glogin_skip_qparam = urldecode(var.glogin_skip_qparam);
+        set var.expire_time = std.atoi(if(var.glogin_skip_qparam ~ "^([0-9]+)\|.+$", re.group.1, ""));
+        set var.signature = if(var.glogin_skip_qparam ~ "^[0-9]+\|(.+)$", re.group.1, "");
+    } else {
+        # if we are here the GLS parameter did not exist, return
+        return;
+    }
+
+    # if the GLS param signature matches and is not expired, return
+    if ( digest.hmac_sha256_base64(req.http.x-nyt-glogin-error-skip-key, var.expire_time) == var.signature
+         && time.is_after(std.integer2time(var.expire_time), now) ) {
+        set req.http.x-skip-glogin = "1";
+    }
+
 }
 
 sub check_skip_glogin {

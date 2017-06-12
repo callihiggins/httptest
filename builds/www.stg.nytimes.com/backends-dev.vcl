@@ -163,3 +163,22 @@ backend beta_watching_dev {
         .threshold = 4;
     }
 }
+
+backend glogin_healthcheck_dev {
+    .host = "www.stg.gtm.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "www.stg.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/glogin";
+        .timeout = 3s;
+        .interval = 3s;
+        .window = 15;
+        .threshold = 1;
+        .initial = 15;
+        .expected_response = 302;
+    }
+}

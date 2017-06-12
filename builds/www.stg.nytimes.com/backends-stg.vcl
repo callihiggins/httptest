@@ -73,9 +73,9 @@ backend www_static_stg {
     .probe = {
         .url = "/.status";
         .timeout = 10s;
-        .interval = 30s;
-        .window = 10;
-        .threshold = 8;
+        .interval = 10s;
+        .window = 5;
+        .threshold = 4;
     }
 }
 
@@ -318,5 +318,24 @@ backend projectvi_fe_stg {
         .interval = 20s;
         .window = 4;
         .threshold = 3;
+    }
+}
+
+backend glogin_healthcheck_stg {
+    .host = "www.stg.gtm.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "www.stg.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/glogin";
+        .timeout = 3s;
+        .interval = 3s;
+        .window = 15;
+        .threshold = 1;
+        .initial = 15;
+        .expected_response = 302;
     }
 }

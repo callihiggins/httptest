@@ -57,9 +57,9 @@ sub vcl_deliver {
 }
 
 sub set_content_api_backend {
-    if (req.http.host ~ "\.dev\.") {
+    if (req.http.x-environment == "dev") {
 
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = content_api_stg;
     } else {
         set req.backend = content_api_prd;

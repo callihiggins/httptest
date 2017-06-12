@@ -47,9 +47,9 @@ sub vcl_error {
 }
 
 sub set_beta_well_backend {
-    if (req.http.host ~ "\.dev\.") {
+    if (req.http.x-environment == "dev") {
         set req.backend = beta_guides_dev;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = beta_guides_stg;
     } else {
         set req.backend = beta_guides_prd;

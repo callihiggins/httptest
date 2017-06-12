@@ -23,6 +23,7 @@ sub vcl_deliver {
         # remove these headers for external requests
         unset resp.http.X-VarnishCacheDuration;
         unset resp.http.X-Origin-Server;
+        unset resp.http.x-nyt-backend-health;
         unset resp.http.X-NYT-Backend;
     } else {
         # set these headers for internal requests

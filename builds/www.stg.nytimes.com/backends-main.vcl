@@ -1,8 +1,3 @@
-include "backends-dev";
-include "backends-stg";
-include "backends-prd";
-include "backends-deadend";
-
 sub vcl_recv {
 #FASTLY recv
 
@@ -189,7 +184,7 @@ sub vcl_recv {
 
     // Send to GCP
     if ( req.url ~ "^/svc/int/qa" ) {
-      call set_ask_well_backend;
+        call set_ask_well_backend;
     } else if (    req.url ~ "^/svc/int/"
         ||  req.url ~ "^/interactive/projects/"
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
@@ -429,9 +424,9 @@ sub vcl_recv {
 
 # set a www backend based on host
 sub set_www_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
         set req.backend = www_dev;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = www_stg;
     } else {
         set req.backend = www_prd;
@@ -440,9 +435,9 @@ sub set_www_backend {
 
 # set a www backend based on host
 sub set_www_https_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
         set req.backend = www_https_dev;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = www_https_stg;
     } else {
         set req.backend = www_https_prd;
@@ -451,9 +446,9 @@ sub set_www_https_backend {
 
 # set a www_fe backend based on host
 sub set_www_fe_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
         set req.backend = www_fe_dev;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = www_fe_stg;
     } else {
         set req.backend = www_fe_prd;
@@ -461,9 +456,9 @@ sub set_www_fe_backend {
 }
 
 sub set_www_static_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
         set req.backend = www_static_dev;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = www_static_stg;
     } else {
         set req.backend = www_static_prd;
@@ -471,9 +466,9 @@ sub set_www_static_backend {
 }
 
 sub set_blogs_fe_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
         set req.backend = blogs_fe_dev;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = blogs_fe_stg;
     } else {
         set req.backend = blogs_fe_prd;
@@ -481,9 +476,9 @@ sub set_blogs_fe_backend {
 }
 
 sub set_www_newsdev_intl_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
         set req.backend = newsdev_k8s_elb_stg;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = newsdev_k8s_elb_stg;
     } else {
         set req.backend = newsdev_k8s_elb_prd;
@@ -491,9 +486,9 @@ sub set_www_newsdev_intl_backend {
 }
 
 sub set_www_newsdev_gke_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
         set req.backend = newsdev_k8s_gke_stg;
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = newsdev_k8s_gke_stg;
     } else {
         set req.backend = newsdev_k8s_gke_prd;
@@ -501,9 +496,9 @@ sub set_www_newsdev_gke_backend {
 }
 
 sub set_ask_well_backend {
-    if(req.http.host ~ "\.dev\.") {
+    if(req.http.x-environment == "dev") {
       // no dev
-    } else if (req.http.host ~ "\.stg\.") {
+    } else if (req.http.x-environment == "stg") {
         set req.backend = ask_well_stg;
     } else {
         set req.backend = ask_well_prd;

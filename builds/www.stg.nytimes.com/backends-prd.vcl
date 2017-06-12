@@ -476,3 +476,22 @@ backend tbooks_prd {
         .interval = 10s;
     }
 }
+
+backend glogin_healthcheck_prd {
+    .host = "www.gtm.nytimes.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "www.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/glogin";
+        .timeout = 3s;
+        .interval = 3s;
+        .window = 15;
+        .threshold = 1;
+        .initial = 15;
+        .expected_response = 302;
+    }
+}
