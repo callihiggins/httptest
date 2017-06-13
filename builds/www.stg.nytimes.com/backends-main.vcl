@@ -89,6 +89,7 @@ sub vcl_recv {
     // slideshow application
     if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
         || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
+        || (req.url ~ "^/slideshow/" && req.http.x-environment == "stg") 
     ) {
         set req.http.X-PageType = "slideshow";
         call set_www_fe_backend;
