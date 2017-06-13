@@ -117,13 +117,17 @@ sub vcl_recv {
     } else {
         # For other resources:
         # check if it is a homepage route, has a a/b test group, and is not opted out.
-        if (req.url.path == "/" && ((var.test_group ~ "^[ab]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")) {
-            # homepage, in a test group getting Vi homepage
-            call set_projectvi_fe_backend;
-        } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))"
-                   && req.url.path !~ "\.amp\.html$" && var.test_group ~ "^[ac]") {
-            # story page, in a test group getting Vi story pages
-            call set_projectvi_fe_backend;
+        if (req.http.host ~ "^(www\.)?(www-[a-z0-9\-]+\.)?(dev\.|stg\.|)?nytimes.com$") {
+            if ( req.url.path == "/"
+                    && ((var.test_group ~ "^[ab]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")
+                ) {
+                # homepage, in a test group getting Vi homepage
+                call set_projectvi_fe_backend;
+            } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))"
+                       && req.url.path !~ "\.amp\.html$" && var.test_group ~ "^[ac]") {
+                # story page, in a test group getting Vi story pages
+                call set_projectvi_fe_backend;
+            }
         }
     }
 }
