@@ -70,25 +70,20 @@ sub games_allocation {
         set req.http.x-nyt-games = "legacy 5pct";
       }
     }
-    // 20% logic in stg
-    if (req.http.x-environment == "stg") {
-      // if cookie is set to 5pct, move to 20pct group
-      if (req.http.x-nyt-games == "games-web 5pct") {
+    // 20% logic 
+    // if cookie is set to 5pct, move to 20pct group
+    if (req.http.x-nyt-games == "games-web 5pct") {
+      set req.http.x-nyt-games = "games-web 20pct";
+    }
+    if (req.http.x-nyt-games == "legacy 5pct") {
+      if (randombool(15, 95)) {
         set req.http.x-nyt-games = "games-web 20pct";
-      }
-      if (req.http.x-nyt-games == "legacy 5pct") {
-        if (randombool(15, 95)) {
-          set req.http.x-nyt-games = "games-web 20pct";
-        } else {
-          set req.http.x-nyt-games = "legacy 20pct";
-        }
+      } else {
+        set req.http.x-nyt-games = "legacy 20pct";
       }
     }
   // querystring should always work
   if (req.url.qs ~ "nyt-games=(games-web|legacy)") {
-    set req.http.x-nyt-games = re.group.1 + " 5pct";
-  }
-  if (req.url.qs ~ "nyt-games=(games-web|legacy)" && req.http.x-environment == "stg") {
     set req.http.x-nyt-games = re.group.1 + " 20pct";
   }
 }
