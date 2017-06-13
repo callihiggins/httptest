@@ -121,8 +121,7 @@ sub vcl_hash {
   }
 
   # create new hashes based on geo if rendering project vi home
-  if(req.http.x--fastly-project-vi && req.http.x-environment == "stg"
-    && req.url.path == "/"){
+  if(req.http.x--fastly-project-vi && req.url.path == "/"){
     set req.hash += req.http.x-nyt-geo-hash;
     set req.hash += req.http.device_type;
   }
