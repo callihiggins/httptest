@@ -1,3 +1,9 @@
+# use keys in x-fastly-stg header for staging access from non-whitelisted IPs
+table staging_access_tokens {
+  # "app-<random>" : "<issue date>"
+  "watching-2gk6" : "20170614"
+}
+
 sub vcl_recv {
 
 
@@ -11,11 +17,10 @@ sub vcl_recv {
       error 403 "Forbidden";
     }
 
-    // block everyone but internal acl and staging access acl to staging service
-    if ( client.ip !~ internal && client.ip !~ external_staging_access && req.http.x-environment == "stg") {
+    // block everyone but internal acl, staging access acl, and super secret header to staging service
+    if ( req.http.x-environment == "stg" && client.ip !~ internal && client.ip !~ external_staging_access && (table.lookup(staging_access_tokens, req.http.x-fastly-stg) !~ "^[0-9]{8}$") ) {
         error 403 "Forbidden";
     }
-
 
     if (req.http.user-agent ~ "(?i)googlebot|mediapartners-google|adsbot-google|amphtml|developers\.google\.com/\+/web/snippet/") {
         # Googlebot user-agents: https://support.google.com/webmasters/answer/1061943
