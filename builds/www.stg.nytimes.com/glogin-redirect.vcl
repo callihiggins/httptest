@@ -4,9 +4,7 @@ sub vcl_recv {
 
     # call a function that will check to see if we got a parameter that should FORCE NO redirect to glogin
     # see backends-glogin-healthcheck.vcl for the other side of this logic
-    if (req.http.x-environment == "stg") {
-        call check_glogin_error_skip;
-    }
+    call check_glogin_error_skip;
     # call sub to check if the request should skip glogin (at bottom of file)
     call check_skip_glogin;
 
