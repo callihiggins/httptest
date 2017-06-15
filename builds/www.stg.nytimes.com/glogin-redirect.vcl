@@ -159,6 +159,16 @@ sub check_skip_glogin {
 
     # conditional logic that will check if we should skip glogin for this request
 
+
+    # anonymous/guest cookie users should skip glogin
+    # guest cookie starts with  '0' character
+    # staging only feature flag for now (20170613)
+    if (req.http.x-environment == "stg") {
+        if (req.http.x-nyt-s ~ "^0" || !req.http.x-nyt-s) {
+            set req.http.x-skip-glogin = "1";
+        }
+    }
+
     # some backends that should skip glogin
     if (req.backend == www_dev
         || req.backend == www_stg
