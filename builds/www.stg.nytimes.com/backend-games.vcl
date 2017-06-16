@@ -8,7 +8,7 @@ sub vcl_recv {
 
         if (req.url.path ~ "^/crosswords/game/(daily|mini|variety|bonus|special|paid)") {
             call games_allocation;
-            if (req.http.x-nyt-games ~ "games-web" ) {
+            if (req.http.x-nyt-games ~ "games-web" || req.http.x-environment == "stg" ) {
               set req.http.X-PageType = "games-web";
               set req.http.x-skip-glogin = "1";
 
@@ -104,7 +104,7 @@ sub vcl_deliver {
     } else if (req.http.X-PageType == "games-web") {
         set resp.http.X-API-Version = "GW";
     }
-    if (req.http.x-nyt-games ~ "games-web" || req.http.x-nyt-games ~ "legacy") {
+    if ((req.http.x-nyt-games ~ "games-web" || req.http.x-nyt-games ~ "legacy") && req.http.x-environment != "stg") {
       add resp.http.Set-Cookie =
         "nyt-games=" + urlencode(req.http.x-nyt-games) +"; "+
         "Expires=" + time.add(now, 365d) + "; "+
