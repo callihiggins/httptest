@@ -328,8 +328,33 @@ sub vcl_error {
 sub vcl_log {
 #FASTLY log
 
-  #hello world
-}
+    # sumologic log
+    # do not log services and adx requests unless they are a 5xx response, also always log in staging
+    if ( (req.url !~ "^/svc/" && req.url !~ "^/adx/") || resp.status >= 500 || req.http.x-environment != "prd") {
+      log {"syslog "} + req.service_id + {" "} + req.http.x-nyt-logger-name + {" :: "}
+      req.http.Fastly-Client-IP
+      {" "-" "-" "}
+      {"["} strftime({"%d/%b/%Y:%H:%M:%S %z"}, time.start) {"]"}
+      {" "} cstr_escape(req.http.host)
+      {" ""} cstr_escape(req.request) " " cstr_escape(req.url) " " cstr_escape(req.proto) {"""}
+      {" "} resp.status
+      {" "} regsub(resp.body_bytes_written, "^0$", {""-""})
+      {" ""} cstr_escape(req.http.referer) {"""}
+      {"" ""} cstr_escape(req.http.user-agent) {"""}
+      {" backend=["} if(req.http.X-NYT-Backend,req.http.X-NYT-Backend,"-") {"]"}
+      {" pagetype=["} if(resp.http.X-PageType,resp.http.X-PageType,"-") {"]"}
+      {" apiversion=["} if(resp.http.X-API-Version,resp.http.X-API-Version,"-") {"]"}
+      {" cachetype=["} if(fastly_info.state,fastly_info.state,"-") {"]"}
+      {" reqtime=["} time.elapsed {"]"}
+      {" reqsize=["} req.bytes_read {"]"}
+      {" protocol=["} if(req.http.Fastly-SSL,"https","http") {"]"}
+      {" behealth=["} if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,"-") {"]"}
+      {" vialloc=["} if(req.http.x--fastly-project-vi,"1","0") {"]"}
+      {" restarts=["} req.restarts {"]"}
+      if(req.http.x-redirect-reason, {" "} + req.http.x-redirect-reason, "")
+      if(req.http.x-vi-health, {" "} + req.http.x-vi-health, "");
+    }
+  }
 
 sub unset_extraneous_bereq_headers {
   // remove headers used as variables for logic

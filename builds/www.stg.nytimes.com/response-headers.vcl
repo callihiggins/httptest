@@ -18,6 +18,10 @@ sub vcl_deliver {
     # set some headers
     set resp.http.Connection = "close";
 
+    # make sure these are available for vcl_log as we might remove it
+    set req.http.x-nyt-backend-health = resp.http.x-nyt-backend-health;
+    set req.http.X-NYT-Backend = resp.http.X-NYT-Backend;
+
     # lets return some headers to internal clients for debugging
     if (client.ip !~ internal){
         # remove these headers for external requests
@@ -42,10 +46,6 @@ sub vcl_deliver {
 
     if (!resp.http.X-PageType){
         set resp.http.X-PageType = req.http.X-PageType;
-    }
-
-    if (req.http.X-Health) {
-        set resp.http.X-Health = req.http.X-Health;
     }
 
     // if we found two NYT-S cookies, try to expire the possible non-canonical versions

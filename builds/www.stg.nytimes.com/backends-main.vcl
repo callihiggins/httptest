@@ -408,7 +408,9 @@ sub vcl_recv {
         // to www-fe, and set a header to prevent the request from restarting
         if (!req.backend.healthy) {
             set req.http.X-PageType = "article";
-            set req.http.X-Health = "NOT_HEALTHY";
+            # using this full string becasue we do not want this
+            # consuming log volume unless it was unhealthy and we failed over
+            set req.http.x-vi-health = "vihealth=[0]";
             set req.http.X-RelevantBackendStatus = "unchanged";
             call set_www_fe_backend;
         }
@@ -454,6 +456,9 @@ sub set_www_fe_backend {
     } else {
         set req.backend = www_fe_prd;
     }
+
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
 }
 
 sub set_www_static_backend {
