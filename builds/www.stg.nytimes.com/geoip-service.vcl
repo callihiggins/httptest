@@ -71,6 +71,11 @@ sub vcl_recv {
 		set req.http.x-nyt-timezone = var.final_timezone;
 	}
 
+	# set the request headers for the backend
+	set req.http.x-nyt-continent = client.geo.continent_code;
+	set req.http.x-nyt-country = client.geo.country_code;
+	set req.http.x-nyt-region = client.geo.region;
+
 	# geoip test service error call
 	if ( client.ip ~ internal) {
 		if (req.url ~ "^/svc/web-products/geoip-test.html") {
