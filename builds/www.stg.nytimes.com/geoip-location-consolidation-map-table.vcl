@@ -1,8 +1,8 @@
 table geo_consolidation_map {
   "NA": "NA",
-  "SA": "NA",
+  "SA": "SA",
   "AS": "AS",
-  "OC": "AS",
+  "OC": "OC",
   "EU": "EU",
   "AF": "AF",
   "NAUSNY": "NAUSNY",
