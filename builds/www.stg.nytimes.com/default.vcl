@@ -8,6 +8,7 @@ include "sanitize-url";
 include "normalize-url";
 include "initialize-vars";
 include "geoip-timezone-map-table";
+include "geoip-location-consolidation-map-table";
 include "geoip-service";
 include "frame-buster";
 include "health-check";
