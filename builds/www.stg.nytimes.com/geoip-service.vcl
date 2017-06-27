@@ -75,6 +75,7 @@ sub vcl_recv {
 	set req.http.x-nyt-continent = client.geo.continent_code;
 	set req.http.x-nyt-country = client.geo.country_code;
 	set req.http.x-nyt-region = client.geo.region;
+	set req.http.x-nyt-gmt-offset = client.geo.gmt_offset;
 
 	# geoip test service error call
 	if ( client.ip ~ internal) {
