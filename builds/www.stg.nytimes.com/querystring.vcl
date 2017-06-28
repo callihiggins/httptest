@@ -159,6 +159,7 @@ sub vcl_recv {
                 "q" + querystring.filtersep() +
                 "sub_genre" + querystring.filtersep() +
                 "type" + querystring.filtersep() +
+                "ids[]" + querystring.filtersep() +
                 "services[]");
         } else if (req.http.X-PageType == "bestsellers") {
             set req.url = querystring.filter_except(req.url, "nytapp");
