@@ -155,11 +155,14 @@ sub vcl_recv {
         } else if (req.http.X-PageType == "watching") {
             set req.url = querystring.filter_except(req.url,
                 "genre" + querystring.filtersep() +
+                "ids[]" + querystring.filtersep() +
+                {"ids%5B%5D"} + querystring.filtersep() +
                 "mood" + querystring.filtersep() +
                 "q" + querystring.filtersep() +
+                "services[]" + querystring.filtersep() +
+                {"services%5B%5D"} + querystring.filtersep() +
                 "sub_genre" + querystring.filtersep() +
-                "type" + querystring.filtersep() +
-                "services[]");
+                "type");
         } else if (req.http.X-PageType == "bestsellers") {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.X-PageType == "collection") {
