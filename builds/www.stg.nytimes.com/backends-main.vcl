@@ -189,7 +189,7 @@ sub vcl_recv {
     } else if ( req.http.x-environment == "stg" && req.url ~ "^/svc/int/attribute" ) {
       set req.http.X-PageType = "newsdev-attribute-cloud-function";
       set req.http.X-OldURL = req.url;
-      set req.url = regsub(req.url, "^/svc/int/attribute/", "/attribute-submission/"); //rewrite www.stg.nytimes.com/svc/int/attribute/* to us-central1-nytint-stg.cloudfunctions.net/attribute-submission/*
+      set req.url = regsub(req.url, "^/svc/int/attribute/projects/([^/]+)/submissions.json", "/attribute-submission/\1");
       set req.http.x-skip-glogin = "1";
       call set_www_newsdev_attribute_gclod_function_backend;
     } else if (    req.url ~ "^/svc/int/"
