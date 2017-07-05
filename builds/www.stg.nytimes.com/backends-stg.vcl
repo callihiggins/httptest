@@ -99,6 +99,26 @@ backend newsdev_k8s_elb_stg {
     }
 }
 
+backend newsdev_attribute_gclod_function_stg {
+    .host = "us-central1-nytint-stg.cloudfunctions.net";
+    .port = "443";
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .request =
+            "GET /attribute-submission/healthz HTTP/1.1"
+            "Host: us-central1-nytint-stg.cloudfunctions.net"
+            "Connection: close"
+            "Accept: */*";
+        .timeout = 10s;
+        .interval = 30s;
+        .window = 5;
+        .threshold = 4;
+    }
+}
+
 backend newsdev_k8s_gke_stg {
     .host = "gke.stg.newsdev.nytimes.com";
     .port = "443";

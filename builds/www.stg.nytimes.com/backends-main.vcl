@@ -186,6 +186,10 @@ sub vcl_recv {
     // Send to GCP
     if ( req.url ~ "^/svc/int/qa" ) {
         call set_ask_well_backend;
+    } else if ( req.url ~ "^/svc/int/attribute" && req.http.x-environment == "stg" ) {
+      set req.http.X-PageType = "newsdev-attribute-cloud-function";
+      set req.http.x-skip-glogin = "1";
+      call set_www_newsdev_attribute_gclod_function_stg;
     } else if (    req.url ~ "^/svc/int/"
         ||  req.url ~ "^/interactive/projects/"
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
@@ -496,6 +500,14 @@ sub set_www_newsdev_gke_backend {
         set req.backend = newsdev_k8s_gke_stg;
     } else if (req.http.x-environment == "stg") {
         set req.backend = newsdev_k8s_gke_stg;
+    } else {
+        set req.backend = newsdev_k8s_gke_prd;
+    }
+}
+
+sub set_www_newsdev_attribute_gclod_function_stg {
+    if(req.http.x-environment == "dev" || req.http.x-environment == "stg") {
+        set req.backend = newsdev_attribute_gclod_function_stg;
     } else {
         set req.backend = newsdev_k8s_gke_prd;
     }
