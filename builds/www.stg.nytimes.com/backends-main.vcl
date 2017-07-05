@@ -508,7 +508,8 @@ sub set_www_newsdev_gke_backend {
 
 sub set_www_newsdev_attribute_gclod_function_backend {
     if(req.http.x-environment == "dev" || req.http.x-environment == "stg") {
-        set req.backend = newsdev_attribute_gclod_function_stg;
+      set req.http.host = "us-central1-nytint-stg.cloudfunctions.net";
+      set req.backend = newsdev_attribute_gclod_function_stg;
     } else {
         set req.backend = newsdev_k8s_gke_prd;
     }
