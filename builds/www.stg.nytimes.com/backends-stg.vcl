@@ -102,6 +102,7 @@ backend newsdev_k8s_elb_stg {
 backend newsdev_attribute_gclod_function_stg {
     .host = "us-central1-nytint-stg.cloudfunctions.net";
     .port = "443";
+    .ssl_cert_hostname = "www.stg.nytimes.com";
     .dynamic = true;
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;

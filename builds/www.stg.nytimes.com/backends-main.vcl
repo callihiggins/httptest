@@ -186,10 +186,12 @@ sub vcl_recv {
     // Send to GCP
     if ( req.url ~ "^/svc/int/qa" ) {
         call set_ask_well_backend;
-    } else if ( req.url ~ "^/svc/int/attribute" && req.http.x-environment == "stg" ) {
+    } else if ( req.http.x-environment == "stg" && req.url ~ "^/svc/int/attribute" ) {
       set req.http.X-PageType = "newsdev-attribute-cloud-function";
+      set req.http.X-OldURL = req.url;
+      set req.url = regsub(req.url, "^/svc/int/attribute/", "/attribute-submission/"); //rewrite www.stg.nytimes.com/svc/int/attribute/* to us-central1-nytint-stg.cloudfunctions.net/attribute-submission/*
       set req.http.x-skip-glogin = "1";
-      call set_www_newsdev_attribute_gclod_function_stg;
+      call set_www_newsdev_attribute_gclod_function_backend;
     } else if (    req.url ~ "^/svc/int/"
         ||  req.url ~ "^/interactive/projects/"
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
@@ -505,7 +507,7 @@ sub set_www_newsdev_gke_backend {
     }
 }
 
-sub set_www_newsdev_attribute_gclod_function_stg {
+sub set_www_newsdev_attribute_gclod_function_backend {
     if(req.http.x-environment == "dev" || req.http.x-environment == "stg") {
         set req.backend = newsdev_attribute_gclod_function_stg;
     } else {
