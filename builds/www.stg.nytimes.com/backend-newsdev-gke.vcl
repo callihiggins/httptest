@@ -8,7 +8,6 @@ sub vcl_recv {
       || req.url ~ "^/svc/int/godzown/u"
       || req.url ~ "^/svc/int/dialects"
       || req.url ~ "^/svc/int/grandmominator"
-      || req.url ~ "^/svc/int/attribute"
     ) {
       return (pass);
     }
@@ -60,7 +59,7 @@ sub vcl_fetch {
     unset beresp.http.X-Amz-Id-2;
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;
-    
+
     if ( client.ip !~ internal && req.http.x-environment == "prd") {
       unset beresp.http.X-Kubernetes-Url;
     }
