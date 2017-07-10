@@ -226,8 +226,6 @@ sub vcl_recv {
         ) {
             set req.http.X-PageType = "vi-interactive";
             call set_projectvi_fe_backend;
-            set req.http.X-PageType = "vi-interactive";
-            call set_projectvi_fe_backend;
         } else {
             set req.http.X-PageType = "interactive";
             call set_www_fe_backend;
