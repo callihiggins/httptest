@@ -105,17 +105,17 @@ backend newsdev_attribute_gclod_function_stg {
     .ssl_cert_hostname = "us-central1-nytint-stg.cloudfunctions.net";
     .ssl_sni_hostname =  "us-central1-nytint-stg.cloudfunctions.net";
     .dynamic = true;
-    .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
+    .connect_timeout = 300s;
+    .first_byte_timeout = 300s;
+    .between_bytes_timeout = 300s;
     .probe = {
         .request =
             "GET /attribute-submission/healthz HTTP/1.1"
             "Host: us-central1-nytint-stg.cloudfunctions.net"
             "Connection: close"
             "Accept: */*";
-        .timeout = 10s;
-        .interval = 30s;
+        .timeout = 300s;
+        .interval = 60s;
         .window = 5;
         .threshold = 4;
     }
