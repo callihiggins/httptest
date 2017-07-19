@@ -49,12 +49,9 @@ sub vcl_error {
 sub set_beta_well_backend {
     if (req.http.x-environment == "dev") {
         set req.backend = beta_guides_dev;
-        set req.http.host = "guides.dev.nyt.net";
     } else if (req.http.x-environment == "stg") {
         set req.backend = beta_guides_stg;
-        set req.http.host = "guides.stg.nyt.net";
     } else {
         set req.backend = beta_guides_prd;
-        // set req.http.host = "guides.nyt.net";
     }
 }
