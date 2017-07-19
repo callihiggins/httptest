@@ -115,9 +115,11 @@ director newsdev_elections_dev round-robin {
 }
 
 backend beta_guides_dev {
-    .host = "guides.dev.nyt.com";
-    .port = "80";
+    .host = "guides.dev.nyt.net";
+    .port = "443";
     .dynamic = true;
+    .ssl_cert_hostname = "guides.dev.nyt.net";
+    .ssl_sni_hostname = "guides.dev.nyt.net";
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
