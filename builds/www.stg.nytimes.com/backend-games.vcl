@@ -52,6 +52,18 @@ sub vcl_recv {
             unset req.http.x-nyt-wpab;
             return(lookup);
         }
+
+        // one-off submissions page in stag, not so static after all
+        if (req.http.x-environment == "stg" &&
+            req.url.path ~ "^/crosswords/submissions$") {
+            set req.http.X-PageType = "games-web";
+            set req.http.x-skip-glogin = "1";
+
+            if (!req.http.Fastly-SSL) {
+                call redirect_to_https;
+            }
+            return(pass);
+        }
     }
 }
 
