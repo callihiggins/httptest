@@ -526,7 +526,7 @@ sub set_www_slideshow_backend {
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
-sub set_www_newsletters_backend {
+sub set_www_newsletter_backend {
     if(req.http.x-environment == "dev") {
         set req.backend = www_fe_dev;
     } else if (req.http.x-environment == "stg") {
