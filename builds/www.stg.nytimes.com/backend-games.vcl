@@ -53,9 +53,8 @@ sub vcl_recv {
             return(lookup);
         }
 
-        // one-off submissions page in stag, not so static after all
-        if (req.http.x-environment == "stg" &&
-            req.url.path ~ "^/crosswords/submissions$") {
+        // submissions page
+        if (req.url.path ~ "^/crosswords/submissions$") {
             set req.http.X-PageType = "games-web";
             set req.http.x-skip-glogin = "1";
 
