@@ -16,12 +16,15 @@ include "ipauth";
 include "www-redirect";
 include "tips";
 
-# the follow files define the backends themselves
+# the following files define the backends themselves
 include "backends-dev";
 include "backends-stg";
 include "backends-prd";
 include "backends-deadend";
 # end defining backends
+
+# this adds vcl_fetch logic for logging purposes
+include "backend-init-vars";
 
 # this backend route logic needs to come before all others
 include "backends-glogin-healthcheck";
@@ -165,10 +168,6 @@ sub vcl_pass {
 }
 
 sub vcl_fetch {
-
-  # need to set these here so they are accessible in deliver/log
-  set beresp.http.X-NYT-Backend = beresp.backend.name;
-  set beresp.http.x-nyt-backend-health = req.backend.healthy;
 
   # This logic will handle serving stale content if we got an error from the backend
   if (beresp.status >= 500 && beresp.status < 600) {
