@@ -5,6 +5,8 @@
 1. Create a branch off of master
 1. Add as many commits as you like
 1. Push the branch, and open a PR
+1. Use the following template for your PR: https://github.com/nytm/www-fastly/blob/master/PULL_REQUEST_TEMPLATE.md
+1. Be sure to add tests to the test suite if you are adding new features or routes: https://github.com/nytm/web-products-tests (if you need help, ask someone in #fastly)
 1. Keep adding commits until you're ready
 1. Assign someone from [delivery engineering][dv] to indicate that you'd like
 a review
