@@ -223,7 +223,7 @@ sub vcl_recv {
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
       // keep 2017 and .embedded/mobile/app.html on NYT5 in production
       if (req.http.x-environment == "prd"
-      &&  req.url.path ~ "(^/interactive/2017/|\.(embedded|mobile|app)\.html$)")
+      &&  req.url.path ~ "(^/interactive/2017/|\.(embedded|mobile|app)\.html$)") {
         set req.http.X-PageType = "interactive";
         call set_www_fe_backend;
       } else {
