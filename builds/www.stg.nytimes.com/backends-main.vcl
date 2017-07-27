@@ -219,17 +219,17 @@ sub vcl_recv {
         }
     }
 
-    // interactive years 2014-forever are NYT5
+    // interactive years 2014-forever are NYT5/Vi
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
-        if (   req.url.path !~ "\.(embedded|mobile|app)\.html$"
-            || req.http.x-environment == "stg"
-        ) {
-            set req.http.X-PageType = "vi-interactive";
-            call set_projectvi_fe_backend;
-        } else {
-            set req.http.X-PageType = "interactive";
-            call set_www_fe_backend;
-        }
+      // keep 2017 and .embedded/mobile/app.html on NYT5 in production
+      if (req.http.x-environment == "prd"
+      &&  req.url.path ~ "(^/interactive/2017/|\.(embedded|mobile|app)\.html$)")
+        set req.http.X-PageType = "interactive";
+        call set_www_fe_backend;
+      } else {
+          set req.http.X-PageType = "vi-interactive";
+          call set_projectvi_fe_backend;
+      }
     }
 
     // embedded interactives on mobile should not go to glogin
