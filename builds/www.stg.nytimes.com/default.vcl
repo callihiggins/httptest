@@ -278,14 +278,20 @@ sub vcl_fetch {
 
   set beresp.grace = 24h;
 
-  if (beresp.http.Expires || beresp.http.Surrogate-Control ~ "max-age" || beresp.http.Cache-Control ~ "(s-maxage|max-age)") {
-    # keep the ttl here
-  } else if (beresp.http.X-VarnishCacheDuration) {
+  if (beresp.http.X-VarnishCacheDuration) {
+    # NYT custom header
+    # TODO: DEPRECATED - DO NOT USE THIS FOR NEW IMPLEMENTATIONS
     set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
+  } else if (beresp.http.Expires || beresp.http.Surrogate-Control ~ "max-age" || beresp.http.Cache-Control ~ "(s-maxage|max-age)") {
+    #    These are the OFFICIAL STANDARD
+    #    Fastly honors these in the following priority order
+    # 1. Surrogate-Control header max-age (this will be removed from client response)
+    # 2. Cache-Control header s-maxage (Only Fastly honors, is not removed from client response)
+    # 3. Cache-Control header max-age (Browser and downstream cache will also honor this)
+    # 4. Expires header
   } else {
-    # apply the default ttl
-    # TODO: remove this condition when the services
-    # implement setting X-VarnishCacheDuration
+    # pagetype defaults
+    # TODO: remove these conditionals when origins implement one of the above OFFICIAL standrds
     if(req.http.X-PageType == "video-api"){
       set beresp.ttl = 30s;
     } else if (req.http.X-PageType == "messaging-api") {
@@ -293,6 +299,8 @@ sub vcl_fetch {
     } else if (req.http.X-PageType == "elections") {
       set beresp.ttl = 10s;
     } else {
+
+      # this is the catch-all default TTL if the object is cacheable and does none of the above
       set beresp.ttl = 60s;
     }
   }
