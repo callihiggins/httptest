@@ -298,7 +298,7 @@ backend du_weddings_api_stg {
 }
 
 backend subscription_stg {
-    .host = "mwcm-app-est-public-stg-i-111544-1617096150.us-east-1.elb.amazonaws.com";
+    .host = "mwcm-pub-est-stg-iad1-121755-1402429080.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
