@@ -343,6 +343,18 @@ backend projectvi_fe_stg {
     }
 }
 
+backend collection_fe_stg {
+    .host = "35.190.44.66";
+    .port = "80";
+    .probe = {
+        .url = "/.status";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+    }
+}
+
 backend glogin_healthcheck_stg {
     .host = "www.stg.gtm.nytimes.com";
     .port = "443";

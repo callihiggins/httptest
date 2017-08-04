@@ -30,6 +30,18 @@ backend www_fe_dev {
     }
 }
 
+backend collection_fe_dev {
+    .host = "35.186.242.209";
+    .port = "80";
+    .probe = {
+        .url = "/.status";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+    }
+}
+
 backend www_dev {
     .host = "www.stg.gtm.nytimes.com";
     .port = "80";

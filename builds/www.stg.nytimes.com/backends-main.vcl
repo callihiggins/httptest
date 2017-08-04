@@ -44,6 +44,7 @@ sub vcl_recv {
         || req.url ~ "^/tips(/)?(\?.*)?$"
         || req.url == "/securedrop"
         || req.url ~ "^/newsgraphics/2016/news-tips"
+    
     ) {
         set req.http.x-PageType = "legacy";
         call set_www_https_backend;
@@ -482,14 +483,17 @@ sub set_www_fe_backend {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_collection_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_fe_stg;
+    if (req.http.cookie:nyt5.dv.nyt5-on-gke == "1" ) {
+        set req.backend = collection_fe_dev
     } else {
-        set req.backend = www_fe_prd;
+        if(req.http.x-environment == "dev") {
+            set req.backend = www_fe_dev;
+        } else if (req.http.x-environment == "stg") {
+            set req.backend = www_fe_stg;
+        } else {
+            set req.backend = www_fe_prd;
+        }
     }
-
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
@@ -497,6 +501,7 @@ sub set_www_collection_backend {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_article_backend {
+
     if(req.http.x-environment == "dev") {
         set req.backend = www_fe_dev;
     } else if (req.http.x-environment == "stg") {
@@ -648,3 +653,4 @@ sub set_projectvi_fe_backend {
 sub set_projectvi_asset_backend {
     set req.backend = projectvi_asset_prd;
 }
+
