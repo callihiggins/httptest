@@ -1,4 +1,5 @@
 include "acl-internal";
+include "acl-vpc-gateway";
 include "acl-external-staging-access";
 include "acl-crawlers";
 include "acl-blacklist";

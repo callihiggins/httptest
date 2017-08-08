@@ -17,8 +17,12 @@ sub vcl_recv {
       error 403 "Forbidden";
     }
 
-    // block everyone but internal acl, staging access acl, and super secret header to staging service
-    if ( req.http.x-environment == "stg" && client.ip !~ internal && client.ip !~ external_staging_access && (table.lookup(staging_access_tokens, req.http.x-fastly-stg) !~ "^[0-9]{8}$") ) {
+    // block everyone but internal acl, aws vpc acl, staging access acl, and whitelisted header to staging service
+    if (    req.http.x-environment == "stg" &&
+            client.ip !~ internal &&
+            client.ip !~ vpc_nat_gateway &&
+            client.ip !~ external_staging_access &&
+            (table.lookup(staging_access_tokens, req.http.x-fastly-stg) !~ "^[0-9]{8}$") ) {
         error 403 "Forbidden";
     }
 
