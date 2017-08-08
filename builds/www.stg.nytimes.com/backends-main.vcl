@@ -483,7 +483,7 @@ sub set_www_fe_backend {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_collection_backend {
-    if (req.http.cookie:nyt5.dv.nyt5-on-gke == "1" ) {
+    if (req.http.X-Collection-Backend == "on-GKE" ) {
         set req.backend = collection_fe_dev
     } else {
         if(req.http.x-environment == "dev") {
