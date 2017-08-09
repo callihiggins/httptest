@@ -484,7 +484,7 @@ sub set_www_fe_backend {
 # first step is to separate backend per each app
 sub set_www_collection_backend {
     if (req.http.X-Collection-Backend == "on-GKE" ) {
-        set req.backend = collection_fe_dev
+        set req.backend = collection_fe_dev;
     } else {
         if(req.http.x-environment == "dev") {
             set req.backend = www_fe_dev;
