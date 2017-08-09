@@ -1,5 +1,5 @@
 sub vcl_recv {
-    if ( ! req.http.Cookie: nyt.dv.nyt5-on-gke ) {
+    if ( ! req.http.Cookie:nyt.dv.nyt5-on-gke ) {
         if (randombool(0,100)) {   ## this says 0 out 100 (or zero% on GKE)
             set req.http.X-Collection-Backend = "on-GKE";
         } else {
