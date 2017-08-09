@@ -1,22 +1,9 @@
 sub vcl_recv {
-    if ( ! req.http.Cookie:nyt.dv.nyt5-on-gke ) {
-        if (randombool(0,100)) {   ## this says 0 out 100 (or zero% on GKE)
-            set req.http.X-Collection-Backend = "on-GKE";
-        } else {
-            set req.http.X-Collection-Backend = "on-ESX";
-        } 
+    if ( req.http.Cookie:nyt.dv.nyt5-on-gke.collection ) {
+        set req.http.X-Collection-Backend = "on-GKE";
     } else {
-        set req.http.X-Collection-Backend = req.http.Cookie:nyt.dv.nyt5-on-gke;
-    }
-}
-
-sub vcl_deliver {
-  if (!req.http.Cookie:nyt.dv.nyt5-on-gke) {
-    add resp.http.Set-Cookie = 
-        "nyt.dv.nyt5-on-gke=" + req.http.X-Collection-Backend + "; " +
-        "Expires=" + time.sub(now,365d);
-  }
-  return(deliver);
+        set req.http.X-Collection-Backend = "on-ESX";
+    } 
 }
 
 sub vcl_fetch {

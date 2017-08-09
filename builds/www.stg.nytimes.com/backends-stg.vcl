@@ -345,7 +345,7 @@ backend projectvi_fe_stg {
 
 backend collection_fe_stg {
     .host = "35.190.44.66";
-    .port = "80";
+    .port = "443";
     .probe = {
         .url = "/.status";
         .timeout = 5s;

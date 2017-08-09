@@ -32,7 +32,7 @@ backend www_fe_dev {
 
 backend collection_fe_dev {
     .host = "35.186.242.209";
-    .port = "80";
+    .port = "443";
     .probe = {
         .url = "/.status";
         .timeout = 5s;
