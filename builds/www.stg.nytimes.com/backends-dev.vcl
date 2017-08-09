@@ -33,6 +33,11 @@ backend www_fe_dev {
 backend collection_fe_dev {
     .host = "35.186.242.209";
     .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "www.dev.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
     .probe = {
         .url = "/.status";
         .timeout = 5s;

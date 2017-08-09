@@ -48,7 +48,7 @@ include "backend-tbooks";
 
 
 # begin other logic
-include "nyt5-gke-allocation"
+include "collection-allocation"
 include "vi-allocation";
 include "community-esi";
 include "https-redirect";

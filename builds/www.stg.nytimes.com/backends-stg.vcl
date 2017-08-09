@@ -346,6 +346,11 @@ backend projectvi_fe_stg {
 backend collection_fe_stg {
     .host = "35.190.44.66";
     .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "www.stg.nytimes.com";
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
     .probe = {
         .url = "/.status";
         .timeout = 5s;

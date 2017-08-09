@@ -1,9 +1,10 @@
 sub vcl_recv {
-    if ( req.http.Cookie:nyt.dv.nyt5-on-gke.collection ) {
-        set req.http.X-Collection-Backend = "on-GKE";
+  # based on existance of internal cookie to pivot the traffic
+  if ( req.http.Cookie:nyt.dv.nyt5-on-gke.collection == "1" ) {
+      set req.http.X-Collection-Backend = "on-GKE";
     } else {
-        set req.http.X-Collection-Backend = "on-ESX";
-    } 
+      set req.http.X-Collection-Backend = "on-ESX";
+  } 
 }
 
 sub vcl_fetch {
