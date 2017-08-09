@@ -13,7 +13,7 @@ sub vcl_recv {
 sub vcl_deliver {
   if (!req.http.Cookie:nyt.dv.nyt5-on-gke){
     add resp.http.Set-Cookie = 
-        "nyt.dv.nyt5-on-gke=" + req.http.X-Collection-Backend ”; "+ 
+        "nyt.dv.nyt5-on-gke=" + req.http.X-Collection-Backend + ”; "+ 
         "Expires=" + time.sub(now,365d);  
   }   
   return(deliver);
