@@ -76,7 +76,7 @@ sub vcl_recv {
         if (req.http.X-Collection-Backend == "on-GKE" ) {
             call set_www_collection_backend_gke;
         } else {
-            call set_www_collection_back;
+            call set_www_collection_backend;
         }
         set req.http.x-skip-glogin = "1";
     }
