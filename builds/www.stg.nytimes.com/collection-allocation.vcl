@@ -10,7 +10,7 @@ sub vcl_recv {
 sub vcl_deliver {
   # set and display resp X-Collection-Backend header to aid debugging
   if (client.ip ~ internal){
-      set resp.http.X-Collection-Backend = req.http.X-Collection-Backen;
+      set resp.http.X-Collection-Backend = req.http.X-Collection-Backend;
   }
 }
 
