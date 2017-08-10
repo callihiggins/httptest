@@ -73,7 +73,7 @@ sub vcl_recv {
         || req.url ~ "^/upshot"
     ) {
         set req.http.X-PageType = "collection";
-        if ( nyt.dv.nyt5-on-gke.collection == "1" ) {
+        if ( req.http.X-Collection-Backend = "on-GKE" ) {
             call set_www_collection_backend_gke;
         } else {
             call set_www_collection_backend;
