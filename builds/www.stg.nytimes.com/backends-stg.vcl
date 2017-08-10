@@ -195,6 +195,7 @@ backend games_svc_stg {
     }
 }
 
+
 backend gae_oembed_content_api_stg {
     .host = "nyt-du-dev.appspot.com";
     .ssl_cert_hostname = "nyt-du-dev.appspot.com";
@@ -234,10 +235,8 @@ backend games_web_stg {
 }
 
 backend beta_guides_stg {
-    .host = "guides.stg.nyt.net";
-    .port = "443";
-    .ssl_cert_hostname = "guides.stg.nyt.net";
-    .ssl_sni_hostname = "guides.stg.nyt.net";
+    .host = "guides.stg.nyt.com";
+    .port = "80";
     .dynamic = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
