@@ -55,6 +55,5 @@ sub set_beta_well_backend {
         set req.http.host = "guides.stg.nyt.net";
     } else {
         set req.backend = beta_guides_prd;
-        set req.http.host = "guides.nyt.net";
     }
 }
