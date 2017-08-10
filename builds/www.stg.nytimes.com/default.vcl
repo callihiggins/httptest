@@ -31,6 +31,7 @@ include "backends-glogin-healthcheck";
 
 # the following files contain routes for the backends defined above
 include "backend-health-service"; # service that reports health of defined backends
+include "collection-allocation"
 include "backends-main";
 include "backend-well";
 include "backend-elections";
@@ -48,7 +49,6 @@ include "backend-tbooks";
 
 
 # begin other logic
-include "collection-allocation"
 include "vi-allocation";
 include "community-esi";
 include "https-redirect";
