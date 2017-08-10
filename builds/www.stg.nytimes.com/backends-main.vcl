@@ -502,7 +502,7 @@ sub set_www_collection_backend_gke {
     if(req.http.x-environment == "dev") {
         set req.backend = collection_fe_dev;
     } else if (req.http.x-environment == "stg") {
-        set req.backend = collection_fe_stg;
+        set req.backend = collection_fe_dev;
     } else {
         set req.backend = www_fe_prd;
     }
