@@ -7,6 +7,13 @@ sub vcl_recv {
   } 
 }
 
+sub vcl_deliver {
+  # set and display resp X-Collection-Backend header to aid debugging
+  if (client.ip ~ internal){
+      set resp.http.X-Collection-Backend = req.http.X-Collection-Backen;
+  }
+}
+
 sub vcl_fetch {
   # Vary on X-Collection-Backend header for collection source GKE vs ESX, so we can purge both versions at the same time
   if (beresp.http.Vary) {
