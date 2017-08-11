@@ -35,6 +35,8 @@ backend collection_fe_dev {
     .port = "443";
     .dynamic = true;
     .ssl_cert_hostname = "www.dev.nytimes.com";
+    .ssl = true;
+    .ssl_check_cert = always;
     .connect_timeout = 10s;
     .first_byte_timeout = 30s;
     .between_bytes_timeout = 10s;
