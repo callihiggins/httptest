@@ -460,15 +460,16 @@ backend projectvi_fe_prd {
 }
 
 backend vp_prd {
-    .host = "video.nyt.com";
+    .host = "vp.nyt.com";
     .port = "443";
     .dynamic = true;
-    .ssl_cert_hostname = "video.nyt.com";
-    .ssl_sni_hostname = "video.nyt.com";
+    .host_header = "vp.nyt.com";
+    .ssl_cert_hostname = "vp.nyt.com";
+    .ssl_sni_hostname = "vp.nyt.com";
     .ssl_check_cert = always;
     .ssl = true;
     .probe = {
-        .request = "HEAD /video/360/video.min.js HTTP/1.1" "Host: video.nyt.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .request = "HEAD /video/360/video.min.js HTTP/1.1" "Host: vp.nyt.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
         .timeout = 5s;
         .interval = 20s;
         .window = 4;

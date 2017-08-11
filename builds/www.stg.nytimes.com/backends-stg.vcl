@@ -344,24 +344,6 @@ backend projectvi_fe_stg {
     }
 }
 
-backend vp_stg {
-    .host = "video.stg.nyt.com";
-    .port = "443";
-    .dynamic = true;
-    .ssl_cert_hostname = "video.stg.nyt.com";
-    .ssl_sni_hostname = "video.stg.nyt.com";
-    .ssl_check_cert = always;
-    .ssl = true;
-    .probe = {
-        .request = "HEAD /video/360/video.min.js HTTP/1.1" "Host: video.stg.nyt.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
-        .timeout = 5s;
-        .interval = 20s;
-        .window = 4;
-        .threshold = 3;
-        .expected_response = 200;
-    }
-}
-
 backend glogin_healthcheck_stg {
     .host = "www.stg.gtm.nytimes.com";
     .port = "443";
