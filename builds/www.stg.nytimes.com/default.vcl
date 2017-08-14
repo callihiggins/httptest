@@ -39,6 +39,7 @@ include "backend-newsdev-gke";
 include "backend-newsdev-intl";
 include "backend-watching";
 include "backend-games";
+include "backend-programs";
 include "backend-weddings-api";
 include "backend-subscription";
 include "backend-content-api";
