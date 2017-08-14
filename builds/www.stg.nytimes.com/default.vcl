@@ -15,6 +15,7 @@ include "health-check";
 include "ipauth";
 include "www-redirect";
 include "tips";
+include "collection-allocation";
 
 # the following files define the backends themselves
 include "backends-dev";
@@ -31,7 +32,6 @@ include "backends-glogin-healthcheck";
 
 # the following files contain routes for the backends defined above
 include "backend-health-service"; # service that reports health of defined backends
-include "collection-allocation"
 include "backends-main";
 include "backend-well";
 include "backend-elections";

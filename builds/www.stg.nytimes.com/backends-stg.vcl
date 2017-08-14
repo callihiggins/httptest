@@ -348,6 +348,7 @@ backend collection_fe_stg {
     .port = "443";
     .dynamic = true;
     .ssl_cert_hostname = "www.stg.nytimes.com";
+    .ssl_sni_hostname = "www.stg.nytimes.com";
     .ssl = true;
     .ssl_check_cert = always;
     .connect_timeout = 10s;
