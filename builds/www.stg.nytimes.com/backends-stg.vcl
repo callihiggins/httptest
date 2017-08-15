@@ -105,7 +105,6 @@ backend newsdev_attribute_gclod_function_stg {
     .ssl_cert_hostname = "us-central1-nytint-stg.cloudfunctions.net";
     .ssl_sni_hostname =  "us-central1-nytint-stg.cloudfunctions.net";
     .dynamic = true;
-    .ssl = true;
     .connect_timeout = 300s;
     .first_byte_timeout = 300s;
     .between_bytes_timeout = 300s;

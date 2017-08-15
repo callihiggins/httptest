@@ -99,29 +99,6 @@ backend newsdev_k8s_elb_prd {
     }
 }
 
-backend newsdev_attribute_gclod_function_prd {
-    .host = "us-central1-nytint-prd.cloudfunctions.net";
-    .port = "443";
-    .ssl_cert_hostname = "us-central1-nytint-prd.cloudfunctions.net";
-    .ssl_sni_hostname =  "us-central1-nytint-prd.cloudfunctions.net";
-    .dynamic = true;
-    .ssl = true;
-    .connect_timeout = 300s;
-    .first_byte_timeout = 300s;
-    .between_bytes_timeout = 300s;
-    .probe = {
-        .request =
-            "GET /attribute-submission/healthz HTTP/1.1"
-            "Host: us-central1-nytint-prd.cloudfunctions.net"
-            "Connection: close"
-            "Accept: */*";
-        .timeout = 300s;
-        .interval = 60s;
-        .window = 5;
-        .threshold = 4;
-    }
-}
-
 backend newsdev_k8s_gke_prd {
     .host = "gke.newsdev.nytimes.com";
     .port = "443";
