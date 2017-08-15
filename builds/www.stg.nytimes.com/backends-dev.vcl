@@ -31,11 +31,11 @@ backend www_fe_dev {
 }
 
 backend collection_fe_dev {
-    .host = "35.186.242.209";
+    .host = "nyt5-app-collection.dev.oma1.nyt.net";
     .port = "443";
     .dynamic = true;
-    .ssl_cert_hostname = "www.dev.nytimes.com";
-    .ssl_sni_hostname = "www.dev.nytimes.com";
+    .ssl_cert_hostname = "nyt5-app-collection.dev.oma1.nyt.net";
+    .ssl_sni_hostname = "nyt5-app-collection.dev.oma1.nyt.net";
     .ssl = true;
     .ssl_check_cert = always;
     .connect_timeout = 10s;

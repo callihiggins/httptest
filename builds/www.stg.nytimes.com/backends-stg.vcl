@@ -344,11 +344,11 @@ backend projectvi_fe_stg {
 }
 
 backend collection_fe_stg {
-    .host = "35.190.44.66";
+    .host = "nyt5-app-collection.stg.oma1.nyt.net";
     .port = "443";
     .dynamic = true;
-    .ssl_cert_hostname = "www.stg.nytimes.com";
-    .ssl_sni_hostname = "www.stg.nytimes.com";
+    .ssl_cert_hostname = "nyt5-app-collection.stg.oma1.nyt.net";
+    .ssl_sni_hostname = "nyt5-app-collection.stg.oma1.nyt.net";
     .ssl = true;
     .ssl_check_cert = always;
     .connect_timeout = 10s;
