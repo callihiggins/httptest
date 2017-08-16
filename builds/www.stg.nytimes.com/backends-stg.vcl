@@ -201,7 +201,7 @@ backend programs_svc_stg {
     .ssl_cert_hostname = "nyt-betaprog-dev.appspot.com";
     .ssl_sni_hostname = "nyt-betaprog-dev.appspot.com";
     .ssl_check_cert = always;
-    .ssl = true;    
+    .ssl = true;
     .host_header = "nyt-betaprog-dev.appspot.com";
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
@@ -214,7 +214,6 @@ backend programs_svc_stg {
         .threshold = 3;
     }
 }
-
 
 backend gae_oembed_content_api_stg {
     .host = "nyt-du-dev.appspot.com";
@@ -255,8 +254,10 @@ backend games_web_stg {
 }
 
 backend beta_guides_stg {
-    .host = "guides.stg.nyt.com";
-    .port = "80";
+    .host = "guides.stg.nyt.net";
+    .port = "443";
+    .ssl_cert_hostname = "guides.stg.nyt.net";
+    .ssl_sni_hostname = "guides.stg.nyt.net";
     .dynamic = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
