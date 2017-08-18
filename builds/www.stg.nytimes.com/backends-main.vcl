@@ -143,7 +143,7 @@ sub vcl_recv {
         call set_www_misc_backend;
     }
 
-    // collection reviews diningmap 
+    // collection reviews diningmap pattern is part of misc
     if (req.url ~ "^/reviews/dining/map") {
         set req.http.X-PageType = "collection";
         call set_www_misc_backend;
