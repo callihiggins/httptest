@@ -124,14 +124,14 @@ sub vcl_recv {
         || req.url ~ "^/trending$"
     ) {
         set req.http.X-PageType = "trending";
-        call set_www_trending_backend;
+        call set_www_misc_backend;
         set req.http.x-skip-glogin = "1";
     }
 
     // podcasts application
     if (req.url ~ "^/podcasts") {
         set req.http.X-PageType = "podcasts";
-        call set_www_fe_backend;
+        call set_www_misc_backend;
     }
 
     // bestseller application
@@ -140,7 +140,13 @@ sub vcl_recv {
         || req.url ~ "^/books/best-sellers$"
     ) {
         set req.http.X-PageType = "bestseller";
-        call set_www_fe_backend;
+        call set_www_misc_backend;
+    }
+
+    // collection reviews diningmap pattern is part of misc
+    if (req.url ~ "^/reviews/dining/map") {
+        set req.http.X-PageType = "collection";
+        call set_www_misc_backend;
     }
 
     if (req.url ~ "^/404\.html") {
@@ -558,7 +564,7 @@ sub set_www_newsletter_backend {
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
-sub set_www_trending_backend {
+sub set_www_misc_backend {
     if(req.http.x-environment == "dev") {
         set req.backend = www_fe_dev;
     } else if (req.http.x-environment == "stg") {
