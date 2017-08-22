@@ -187,8 +187,10 @@ director newsdev_elections_prd round-robin {
 }
 
 backend beta_guides_prd {
-    .host = "guides.nyt.com";
-    .port = "80";
+    .host = "guides.prd.nyt.net";
+    .port = "443";
+    .ssl_cert_hostname = "guides.prd.nyt.net";
+    .ssl_sni_hostname = "guides.prd.nyt.net";
     .dynamic = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
