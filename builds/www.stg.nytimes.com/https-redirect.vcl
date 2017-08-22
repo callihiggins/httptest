@@ -4,6 +4,9 @@ sub vcl_recv {
      */
     if (   req.http.X-PageType == "blog"
         || req.url ~ "^/newsletters"
+        || req.url ~ "^/pages/video/"
+        || req.url ~ "^/pages/cooking/"
+        || req.url ~ "^/packages/images/email/"
     ) {
         set req.http.x-https-phase = "internal";
     }
