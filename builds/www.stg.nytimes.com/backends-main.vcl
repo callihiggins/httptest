@@ -44,7 +44,7 @@ sub vcl_recv {
         || req.url ~ "^/tips(/)?(\?.*)?$"
         || req.url == "/securedrop"
         || req.url ~ "^/newsgraphics/2016/news-tips"
-    
+
     ) {
         set req.http.x-PageType = "legacy";
         call set_www_https_backend;
@@ -232,9 +232,9 @@ sub vcl_recv {
 
     // interactive years 2014-forever are NYT5/Vi
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
-      // keep 2017 and .embedded/mobile/app.html on NYT5 in production
+      // keep .embedded/mobile/app.html on NYT5 in production
       if (req.http.x-environment == "prd"
-      &&  req.url.path ~ "(^/interactive/2017/|\.(embedded|mobile|app)\.html$)") {
+      &&  req.url.path ~ "\.(embedded|mobile|app)\.html$") {
         set req.http.X-PageType = "interactive";
         call set_www_fe_backend;
       } else {
@@ -671,4 +671,3 @@ sub set_projectvi_fe_backend {
 sub set_projectvi_asset_backend {
     set req.backend = projectvi_asset_prd;
 }
-
