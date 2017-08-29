@@ -10,7 +10,7 @@ sub vcl_recv {
     // redirect international to www
     if (req.http.host ~ "^international\.(dev\.|stg\.)?nytimes.com$") {
         set req.http.x-Redir-Url = 
-            "http://" + 
+            "https://" +
             regsub(req.http.host, "^international.","www.") +
             req.url;
         error 750 req.http.x-Redir-Url;
@@ -20,7 +20,7 @@ sub vcl_recv {
     # remove query strings like login-email, login-password etc.
     if (req.url ~ "[?&]login-[^=&]+") {
         set req.url = querystring.regfilter(req.url, "^login-*");
-        set req.http.X-Redir-Url =  if(req.http.Fastly-SSL,"https","http") + "://" + req.http.host + req.url;
+        set req.http.X-Redir-Url =  "https://" + req.http.host + req.url;
         error 750 req.http.X-Redir-Url;
     }
 
