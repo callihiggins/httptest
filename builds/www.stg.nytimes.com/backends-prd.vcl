@@ -438,7 +438,7 @@ backend projectvi_fe_prd {
     }
 }
 
-backend collection_prd_stg {
+backend collection_fe_prd {
     .host = "nyt5-app-collection.prd.oma1.nyt.net";
     .port = "443";
     .dynamic = true;
