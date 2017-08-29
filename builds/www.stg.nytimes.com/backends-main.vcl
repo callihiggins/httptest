@@ -510,7 +510,7 @@ sub set_www_collection_backend_gke {
     } else if (req.http.x-environment == "stg") {
         set req.backend = collection_fe_stg;
     } else {
-        set req.backend = www_fe_prd;
+        set req.backend = collection_fe_prd;
     }
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
