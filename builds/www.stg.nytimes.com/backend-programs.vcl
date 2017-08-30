@@ -29,7 +29,7 @@ sub set_programs_web_backend {
         // No dev
     } else if (req.http.x-environment == "stg") {
         set req.backend = programs_svc_stg;
-        set bereq.http.host = "nyt-betaprog-dev.appspot.com";
+        set bereq.http.host = "smw-dot-nyt-betaprog-dev.appspot.com";
         set bereq.url = regsub(req.url, "^/programs/", "/"); 
     }
 }
