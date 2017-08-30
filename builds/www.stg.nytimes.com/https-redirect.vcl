@@ -23,7 +23,7 @@ sub vcl_recv {
         || req.url ~ "^/projects/2020-report/"
         || req.url ~ "^/content/help"             // help pages
         || req.http.X-PageType ~ "^watching"
-        || req.http.X-PageType == "newsdev-intl"  // espanol/international
+        || req.http.X-PageType == "intl"  // espanol/international
         || req.http.X-PageType == "newsdev-gke"   // interative news
         || req.http.X-PageType == "newsdev-attribute-cloud-function"   // interative news
         || req.http.X-PageType == "well"          // beta - well guides

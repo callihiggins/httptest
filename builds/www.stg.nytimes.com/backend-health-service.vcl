@@ -23,7 +23,7 @@ sub process_backend_health_req {
 
     # create json structure head
     call create_response_head;
-    
+
     if (var.backend_choice == "www" || var.backend_choice == "all_backends") {
       call set_www_backend;
       set req.http.x-nyt-temp-backend-name = "www";
@@ -59,9 +59,9 @@ sub process_backend_health_req {
       set req.http.x-nyt-appended-status = "true";
     }
 
-    if (var.backend_choice == "newsdev_intl" || var.backend_choice == "all_backends") {
-      call set_www_newsdev_intl_backend;
-      set req.http.x-nyt-temp-backend-name = "newsdev_intl";
+    if (var.backend_choice == "intl" || var.backend_choice == "all_backends") {
+      call set_www_intl_backend;
+      set req.http.x-nyt-temp-backend-name = "intl";
       call append_backend_status;
       set req.http.x-nyt-appended-status = "true";
     }

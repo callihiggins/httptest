@@ -14,7 +14,7 @@ sub vcl_recv {
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
         && req.http.X-PageType != "interactive" # except from interactive requests
         && req.http.X-PageType != "newsdev-gke" #except from newsdev
-        && req.http.X-PageType != "newsdev-intl"
+        && req.http.X-PageType != "intl"
         && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "legacy-cacheable"
         && req.http.X-PageType != "collections-svc"
@@ -185,7 +185,7 @@ sub vcl_recv {
                 "type" + querystring.filtersep() +
                 "show_embedded" + querystring.filtersep() +
                 "dedupe_hl");
-        } else if (req.http.X-PageType == "newsdev-intl"){
+        } else if (req.http.X-PageType == "intl"){
             set req.url = querystring.filter_except(req.url,
                 "sort" + querystring.filtersep() +
                 "q" + querystring.filtersep() +

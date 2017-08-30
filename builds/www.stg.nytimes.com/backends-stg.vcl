@@ -79,16 +79,16 @@ backend www_static_stg {
     }
 }
 
-backend newsdev_k8s_elb_stg {
-    .host = "fastly-k8s-stg-pub-elb-1179075004.us-east-1.elb.amazonaws.com";
-    .port = "80";
+backend intl_gcp_stg {
+    .host = "35.190.37.254";
+    .port = "443";
     .dynamic = true;
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
     .probe = {
         .request =
-            "GET /interactive/projects/.healthcheck HTTP/1.1"
+            "GET /healthcheck.php HTTP/1.1"
             "Host: www.stg.nytimes.com"
             "Connection: close"
             "Accept: */*";

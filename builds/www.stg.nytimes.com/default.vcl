@@ -37,7 +37,7 @@ include "backends-main";
 include "backend-well";
 include "backend-elections";
 include "backend-newsdev-gke";
-include "backend-newsdev-intl";
+include "backend-intl";
 include "backend-watching";
 include "backend-games";
 include "backend-programs";

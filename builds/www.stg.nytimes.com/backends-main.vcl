@@ -214,9 +214,9 @@ sub vcl_recv {
 
     if ((req.url == "/es") || (req.url ~ "^/es/")
         || (req.url == "/global") || (req.url ~ "^/global/")) {
-        set req.http.X-PageType = "newsdev-intl";
+        set req.http.X-PageType = "intl";
         set req.http.x-skip-glogin = "1";
-        call set_www_newsdev_intl_backend;
+        call set_www_intl_backend;
     }
 
     if (  req.http.host == "www.nytimes.com"
@@ -597,11 +597,11 @@ sub set_blogs_fe_backend {
     }
 }
 
-sub set_www_newsdev_intl_backend {
+sub set_www_intl_backend {
     if(req.http.x-environment == "dev") {
-        set req.backend = newsdev_k8s_elb_stg;
+        set req.backend = intl_gcp_stg;
     } else if (req.http.x-environment == "stg") {
-        set req.backend = newsdev_k8s_elb_stg;
+        set req.backend = intl_gcp_stg;
     } else {
         set req.backend = newsdev_k8s_elb_prd;
     }

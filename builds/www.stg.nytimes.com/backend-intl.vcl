@@ -1,5 +1,5 @@
 sub vcl_recv {
-  if (req.http.X-PageType == "newsdev-intl") {
+  if (req.http.X-PageType == "intl") {
     if (req.request != "GET" &&
         req.request != "HEAD" &&
         req.request != "FASTLYPURGE"
@@ -23,11 +23,7 @@ sub vcl_recv {
 }
 
 sub vcl_fetch {
-  if (req.http.X-PageType == "newsdev-intl") {
-    unset beresp.http.X-Amz-Id-2;
-    unset beresp.http.X-Amz-Request-Id;
-    unset beresp.http.X-Request-Id;
-
+  if (req.http.X-PageType == "intl") {
     if ( client.ip !~ internal && req.http.x-environment == "prd") {
       unset beresp.http.X-Kubernetes-Url;
     }

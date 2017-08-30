@@ -173,7 +173,7 @@ sub check_skip_glogin {
         || req.backend == www_https_dev
         || req.backend == www_https_stg
         || req.backend == www_https_prd
-        || req.backend == newsdev_k8s_elb_stg
+        || req.backend == intl_gcp_stg
         || req.backend == newsdev_k8s_elb_prd
         || req.backend == newsdev_k8s_gke_stg
         || req.backend == newsdev_k8s_gke_prd) {
