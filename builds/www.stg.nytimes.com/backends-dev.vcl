@@ -99,41 +99,6 @@ backend www_static_dev {
     }
 }
 
-backend newsdev_instance_dev_use1_1 {
-    .host = "23.21.133.252";
-    .port = "80";
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
-    }
-}
-
-backend newsdev_instance_dev_usw1_1 {
-    .host = "54.215.2.74";
-    .port = "80";
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 10;
-        .threshold = 9;
-    }
-}
-
-director newsdev_elections_dev round-robin {
-    { .backend = newsdev_instance_dev_use1_1; }
-    { .backend = newsdev_instance_dev_usw1_1; }
-}
-
 backend beta_guides_dev {
     .host = "guides.dev.nyt.net";
     .port = "443";

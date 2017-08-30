@@ -141,39 +141,48 @@ backend newsdev_k8s_gke_stg {
     }
 }
 
-backend newsdev_instance_stg_use1_1 {
-    .host = "23.21.133.252";
-    .port = "80";
+backend newsdev_elections_stg {
+    .host = "storage.googleapis.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
     .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
+        .request = "HEAD /healthcheck.txt HTTP/1.1" "Host: nytint-stg-elections.storage.googleapis.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 3;
         .window = 5;
-        .threshold = 4;
+        .timeout = 2s;
+        .initial = 2;
+        .expected_response = 200;
+        .interval = 5s;
     }
 }
 
-backend newsdev_instance_stg_usw1_1 {
-    .host = "54.215.2.74";
-    .port = "80";
+backend newsdev_gcs_stg {
+    .host = "storage.googleapis.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
     .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
+        .request = "HEAD /healthcheck.txt HTTP/1.1" "Host: nytint-stg-www.storage.googleapis.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 3;
         .window = 5;
-        .threshold = 4;
+        .timeout = 2s;
+        .initial = 2;
+        .expected_response = 200;
+        .interval = 5s;
     }
-}
-
-director newsdev_elections_stg round-robin {
-    { .backend = newsdev_instance_stg_use1_1; }
-    { .backend = newsdev_instance_stg_usw1_1; }
 }
 
 backend games_svc_stg {
