@@ -6,8 +6,7 @@ sub vcl_recv {
             return(pass);
         }
 
-        if (req.http.x-environment == "stg" &&
-            req.url.path ~ "^/crosswords(/|/index.html)?$" &&
+        if (req.url.path ~ "^/crosswords(/|/index.html)?$" &&
             req.url.qs !~ "nyt-games=legacy") {
 
             set req.http.X-PageType = "games-web";
