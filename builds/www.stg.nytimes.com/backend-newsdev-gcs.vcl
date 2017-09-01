@@ -10,6 +10,11 @@ sub vcl_recv {
     unset req.http.x-nyt-s;
     unset req.http.x-nyt-wpab;
 
+    # Redirect to https before updating req.http.host header
+    if ( !req.http.Fastly-SSL ) {
+      call redirect_to_https;
+    }
+
     # Configure access to Cloud Storage
     set req.http.Date = now;
     set req.http.Authorization = "AWS " table.lookup(newsdev_gcs, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_gcs, "secret"), req.request LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
@@ -22,7 +27,7 @@ sub vcl_fetch {
     # Fake behavior of Amazon's WebsiteRedirectLocation
     if (beresp.http.x-amz-meta-website-redirect-location) {
       set req.http.Location = beresp.http.x-amz-meta-website-redirect-location;
-      error 761 "Moved Temporarily";
+      error 761 "Moved Permanently";
     }
 
     // use very short cache TTL for HTTP 4XXs
@@ -62,8 +67,8 @@ sub set_newsdev_gcs_backend {
   } else if (req.http.x-environment == "stg") {
     set req.backend = newsdev_gcs_stg;
     set req.http.x-gcs-bucket = "nytint-stg-www";
-  } else {
-    set req.backend = newsdev_gcs_prd;
-    set req.http.x-gcs-bucket = "nytint-prd-www";
+  # } else {
+  #   set req.backend = newsdev_gcs_prd;
+  #   set req.http.x-gcs-bucket = "nytint-prd-www";
   }
 }

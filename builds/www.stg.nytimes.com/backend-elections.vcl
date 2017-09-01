@@ -12,6 +12,11 @@ sub vcl_recv {
         unset req.http.x-nyt-s;
         unset req.http.x-nyt-wpab;
 
+        # Redirect to https before updating req.http.host header
+        if ( !req.http.Fastly-SSL ) {
+          call redirect_to_https;
+        }
+
         # Configure access to Cloud Storage
         if (req.http.x-environment != "prd") {
           set req.http.Date = now;
@@ -32,7 +37,7 @@ sub vcl_fetch {
         if (req.http.x-environment != "prd") {
             if (beresp.http.x-amz-meta-website-redirect-location) {
               set req.http.Location = beresp.http.x-amz-meta-website-redirect-location;
-              error 760 "Moved Temporarily";
+              error 760 "Moved Permanently";
             }
         }
 
