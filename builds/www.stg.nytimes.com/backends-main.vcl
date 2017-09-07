@@ -657,10 +657,13 @@ sub set_ask_well_backend {
 # set a vi backend based on host
 sub set_projectvi_fe_backend {
     if(req.http.x-environment == "dev") {
+        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
         set req.backend = projectvi_fe_stg;
     } else if (req.http.x-environment == "stg") {
+        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
         set req.backend = projectvi_fe_stg;
     } else {
+        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_prd");
         set req.backend = projectvi_fe_prd;
     }
     # must set this for hashing and saint mode in default.vcl:
