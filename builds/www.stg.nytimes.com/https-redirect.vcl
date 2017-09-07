@@ -2,8 +2,7 @@ sub vcl_recv {
     /*
      * Items that are HTTPS internally only but not assigned to a phase
      */
-    if (    req.http.X-PageType == "blog"
-         || req.url ~ "^/pages/todaysheadlines/") {
+    if ( req.http.X-PageType == "blog" ) {
 
         set req.http.x-https-phase = "internal";
     }
@@ -53,6 +52,7 @@ sub vcl_recv {
         || req.url ~ "^/newsletters"
         || req.url ~ "^/pages/cooking/" // newsletters
         || req.url ~ "^/packages/images/email/" // newsletters
+        || req.url ~ "^/pages/todaysheadlines/" // newsletters
     ) {
         set req.http.x-https-phase = "live";
     }
