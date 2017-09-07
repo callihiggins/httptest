@@ -191,6 +191,11 @@ sub vcl_recv {
                 "q" + querystring.filtersep() +
                 "dom" + querystring.filtersep() +
                 "dedupe_hl" + querystring.filtersep() +
+                "mc" + querystring.filtersep() +
+                "mcid" + querystring.filtersep() +
+                "mccr" + querystring.filtersep() +
+                "subid" + querystring.filtersep() +
+                "ref" + querystring.filtersep() +
                 "filter" + querystring.filtersep() +
                 "attachment" + querystring.filtersep() +
                 "attachment_id" + querystring.filtersep() +
