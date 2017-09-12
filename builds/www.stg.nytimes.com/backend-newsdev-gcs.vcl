@@ -17,8 +17,19 @@ sub vcl_recv {
 
     # Configure access to Cloud Storage
     set req.http.Date = now;
-    set req.http.Authorization = "AWS " table.lookup(newsdev_gcs, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_gcs, "secret"), req.request LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
     set req.http.host = req.http.x-gcs-bucket ".storage.googleapis.com";
+  }
+}
+
+sub vcl_miss {
+  if (req.http.X-PageType == "newsdev-gcs") {
+    set bereq.http.Authorization = "AWS " table.lookup(newsdev_gcs, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_gcs, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
+  }
+}
+
+sub vcl_pass {
+  if (req.http.X-PageType == "newsdev-gcs") {
+    set bereq.http.Authorization = "AWS " table.lookup(newsdev_gcs, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_gcs, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
   }
 }
 
