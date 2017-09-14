@@ -79,9 +79,13 @@ backend www_static_prd {
     }
 }
 
-backend newsdev_k8s_elb_prd {
-    .host = "fastly-k8s-prd-pub-elb-636293017.us-east-1.elb.amazonaws.com";
-    .port = "80";
+backend intl_gcp_prd {
+    .host = "intl.prd.nytimes.com";
+    .ssl_cert_hostname = "intl.prd.nytimes.com";
+    .ssl_sni_hostname = "intl.prd.nytimes.com";
+    .ssl_check_cert = always;
+    .ssl = true;
+    .port = "443";
     .dynamic = true;
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;

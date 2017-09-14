@@ -80,8 +80,11 @@ backend www_static_stg {
 }
 
 backend intl_gcp_stg {
-    .host = "35.190.37.254";
+    .host = "intl.stg.nytimes.com";
     .ssl_cert_hostname = "intl.stg.nytimes.com";
+    .ssl_sni_hostname = "intl.stg.nytimes.com";
+    .ssl_check_cert = always;
+    .ssl = true;
     .port = "443";
     .dynamic = true;
     .connect_timeout = 10s;

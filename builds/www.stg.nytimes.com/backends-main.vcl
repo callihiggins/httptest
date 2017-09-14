@@ -603,7 +603,7 @@ sub set_www_intl_backend {
     } else if (req.http.x-environment == "stg") {
         set req.backend = intl_gcp_stg;
     } else {
-        set req.backend = newsdev_k8s_elb_prd;
+        set req.backend = intl_gcp_prd;
     }
 }
 
