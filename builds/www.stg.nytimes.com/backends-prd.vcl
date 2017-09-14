@@ -92,7 +92,7 @@ backend intl_gcp_prd {
     .between_bytes_timeout = 10s;
     .probe = {
         .request =
-            "GET /interactive/projects/.healthcheck HTTP/1.1"
+            "GET /healthcheck.php HTTP/1.1"
             "Host: www.nytimes.com"
             "Connection: close"
             "Accept: */*";
