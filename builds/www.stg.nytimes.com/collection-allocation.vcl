@@ -9,9 +9,18 @@ sub vcl_recv {
 
 sub vcl_fetch {
   # Vary on X-Collection-Backend header for collection source GKE vs ESX, so we can purge both versions at the same time
-  if (beresp.http.Vary) {
-    set beresp.http.Vary = beresp.http.Vary ", X-Collection-Backend";
-  } else {
-    set beresp.http.Vary = "X-Collection-Backend";
+  if ( req.http.X-PageType == "collection" ) {
+    if (beresp.http.Vary) {
+      set beresp.http.Vary = beresp.http.Vary ", X-Collection-Backend";
+    } else {
+      set beresp.http.Vary = "X-Collection-Backend";
+    }
   }    
 }
+
+sub vcl_deliver {
+  # Hide the existence of the header from downstream
+  if (resp.http.Vary) {
+    set resp.http.Vary = regsub(resp.http.Vary, "X-Collection-Backend,?", "");
+  }
+} 
