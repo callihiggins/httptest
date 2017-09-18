@@ -9,9 +9,18 @@ sub vcl_recv {
 
 sub vcl_fetch {
   # Vary on X-Article-Backend header for Article source GKE vs ESX, so we can purge both versions at the same time
-  if (beresp.http.Vary) {
-    set beresp.http.Vary = beresp.http.Vary ", X-Article-Backend";
-  } else {
-    set beresp.http.Vary = "X-Article-Backend";
+  if ( req.http.X-PageType == "article" ) {
+    if (beresp.http.Vary) {
+      set beresp.http.Vary = beresp.http.Vary ", X-Article-Backend";
+    } else {
+      set beresp.http.Vary = "X-Article-Backend";
+    }
   }    
 }
+
+sub vcl_deliver {
+  # remove the customer header header from downstream
+  if (resp.http.Vary) {
+    set resp.http.Vary = regsub(resp.http.Vary, "X-Article-Backend,?", "");
+  }
+} 
