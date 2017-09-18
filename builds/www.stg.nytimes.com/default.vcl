@@ -17,6 +17,7 @@ include "ipauth";
 include "www-redirect";
 include "tips";
 include "collection-allocation";
+include "article-allocation";
 
 # the following files define the backends themselves
 include "backends-dev";
