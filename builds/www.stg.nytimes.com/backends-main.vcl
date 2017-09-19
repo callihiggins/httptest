@@ -73,11 +73,7 @@ sub vcl_recv {
         || req.url ~ "^/upshot"
     ) {
         set req.http.X-PageType = "collection";
-        if ( req.http.X-Collection-Backend == "on-GKE" ) {
-            call set_www_collection_backend_gke;
-        } else {
-            call set_www_collection_backend;
-        }
+        call set_www_collection_backend_gke;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -492,17 +488,17 @@ sub set_www_fe_backend {
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
-sub set_www_collection_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_fe_stg;
-    } else {
-        set req.backend = www_fe_prd;
-    }
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
+#sub set_www_collection_backend {
+#    if(req.http.x-environment == "dev") {
+#        set req.backend = www_fe_dev;
+#    } else if (req.http.x-environment == "stg") {
+#        set req.backend = www_fe_stg;
+#    } else {
+#        set req.backend = www_fe_prd;
+#    }
+#    # if we needed to switch back to NYT5, unset the vi flag
+#    unset req.http.x--fastly-project-vi;
+#}
 
 sub set_www_collection_backend_gke {
     if(req.http.x-environment == "dev") {
