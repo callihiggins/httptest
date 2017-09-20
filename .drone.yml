@@ -1,0 +1,108 @@
+pipeline:
+  dev-template:
+    image: hairyhenderson/gomplate
+    commands:
+      - /gomplate -f main.tmpl -o main.tf -d config=var-dev.yml
+    when:
+      event: [push, pull_request]
+
+  # Used to verify TF syntax
+  syntax_check:
+    image: jmccann/drone-terraform:4.0-0.10.3
+    plan: true
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/dev/terraform.tfstate"
+    vars:
+      env: dev
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: push
+
+  # Deploys to dev service  to validate if Fastly can generate the final VCL
+  dev:
+    image: jmccann/drone-terraform:4.0-0.10.3
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/dev/terraform.tfstate"
+    vars:
+      env: dev
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: pull_request
+
+  # # Run tests against dev service
+  # dev-test:
+  #   image: us.gcr.io/nyt-bsre-prd/drone-fastly-test
+  #   servername: www.dev.nytimes.com
+  #   when:
+  #     event: pull_request
+
+  stg-template:
+    image: hairyhenderson/gomplate
+    commands:
+      - /gomplate -f main.tmpl -o main.tf -d config=var-stg.yml
+    when:
+      event: push
+      branch: master
+
+  # --------
+  # Deployment to staging service
+  staging:
+    image: jmccann/drone-terraform:4.0-0.10.3
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/stg/terraform.tfstate"
+    vars:
+      env: stg
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: push
+      branch: master
+
+  # stg-test:
+  #   image: us.gcr.io/nyt-bsre-prd/drone-fastly-test
+  #   servername: www.stg.nytimes.com
+  #   when:
+  #     event: push
+  #     branch: master
+
+  # -----
+  prd-template:
+    image: hairyhenderson/gomplate
+    commands:
+      - /gomplate -f main.tmpl -o main.tf -d config=var-prd.yml
+    when:
+      event: tag
+
+ # Deployment to production service
+  production:
+    image: jmccann/drone-terraform:4.0-0.10.3
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/prd/terraform.tfstate"
+    vars:
+      env: prd
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: tag
+
+  # prd-test:
+  #   image: us.gcr.io/nyt-bsre-prd/drone-fastly-test
+  #   servername: www.nytimes.com
+  #   when:
+  #     event: tag
+
+  slack:
+    image: plugins/slack
+    channel: fastly-builds
+    username: fastly-static
+    secrets:
+      - source: SLACK_WEBHOOK_URL
+        target: SLACK_WEBHOOK
+    when: 
+      event: [success, failure, blocked]
+

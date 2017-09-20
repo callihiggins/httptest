@@ -1,0 +1,4 @@
+domains:
+  - "*.blogs.stg.nytimes.com"
+  - "*.stg.nytimes.com"
+  - "www.stg.nytimes.com"

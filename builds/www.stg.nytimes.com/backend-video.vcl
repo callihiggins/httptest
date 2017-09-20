@@ -47,4 +47,3 @@ sub vcl_deliver {
         set resp.http.X-API-Version = "VM";
     }
 }
-

@@ -104,4 +104,3 @@ sub set_newsdev_elections_backend {
         set req.backend = newsdev_elections_prd;
     }
 }
-

@@ -1,0 +1,449 @@
+terraform {
+  backend "gcs" {
+    bucket  = "nyt-bsre-prd-tfstate"
+    project = "nyt-bsre-prd"
+  }
+}
+
+variable "env" {
+  type = "string"
+}
+
+variable "sumologic_endpoint" {
+  type = "map"
+
+  default = {
+    dev = "https://collectors.sumologic.com/receiver/v1/http/ZaVnC4dhaV090sPFU_YnnEP_F61BBPpciroz627Cc5zoPONnZQtGWWIiqPAs6g3LsPXOc3JfFUPl44yl-tlLnkH-Pn7xp1X9QarWeCQeQjSPeA0wqbLn-A=="
+    stg = "https://collectors.sumologic.com/receiver/v1/http/ZaVnC4dhaV090sPFU_YnnEP_F61BBPpciroz627Cc5zoPONnZQtGWWIiqPAs6g3LsPXOc3JfFUPl44yl-tlLnkH-Pn7xp1X9QarWeCQeQjSPeA0wqbLn-A=="
+    prd = "https://collectors.sumologic.com/receiver/v1/http/ZaVnC4dhaV3DIdcy2GqnQ5DMhk6CZkjlLK9C5V5fjRSlaVm4RJg3dU1REHf-_owjetrn1mzlLqDx1KlNQ6qwtrgHf1KwvOaVcZBHpQSdqG-tFYf0OFYEUQ=="
+  }
+}
+
+resource "fastly_service_v1" "www" {
+  name = "www.${var.env}"
+
+{{ $domains := (datasource "config").domains }}
+{{range $domains -}}
+  domain = {
+    name = "{{.}}"
+  }
+
+{{end -}}
+
+  header {
+    action      = "set"
+    name        = "environment"
+    priority    = "1"
+    source      = "\"${var.env}\""
+    destination = "http.x-environment"
+    type        = "request"
+  }
+
+  condition {
+    name      = "Suppress adx and svc unless 50x response code"
+    priority  = 10
+    statement = "(req.url !~ \"^/svc/\" && req.url !~ \"^/adx/\") || resp.status >= 500"
+    type      = "RESPONSE"
+  }
+
+  condition {
+    name      = "do-not-log"
+    priority  = 10
+    statement = "!req.url"
+    type      = "RESPONSE"
+  }
+
+  default_ttl = 3600
+
+  gzip {
+    content_types = [
+      "application/x-font-opentype",
+      "text/xml",
+      "text/javascript",
+      "application/x-font-ttf",
+      "font/otf",
+      "font/eot",
+      "image/svg+xml",
+      "application/json",
+      "text/plain",
+      "font/opentype",
+      "application/vnd.ms-fontobject",
+      "image/vnd.microsoft.icon",
+      "application/xml",
+      "application/x-javascript",
+      "application/javascript",
+      "text/css",
+      "text/html",
+      "application/x-font-truetype",
+    ]
+
+    extensions = [
+      "json",
+      "ico",
+      "svg",
+      "otf",
+      "eot",
+      "js",
+      "html",
+      "ttf",
+      "css",
+    ]
+
+    name = "Default Gzip Policy"
+  }
+
+  header {
+    action        = "set"
+    destination   = "http.Fastly-Purge-Requires-Auth"
+    ignore_if_set = false
+    name          = "Fastly Purge"
+    priority      = "10"
+    source        = "\"1\""
+    type          = "request"
+  }
+  
+  sumologic {
+    format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.X-NYT-Backend,req.http.X-NYT-Backend,\"-\")}V] pagetype=[%{if(req.http.X-PageType,req.http.X-PageType,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.x-redirect-reason,req.http.x-redirect-reason,\"\")}V"
+    format_version     = "2"
+    message_type       = "classic"
+    name               = "web${var.env}-www"
+    response_condition = "do-not-log"
+    url                = "${var.sumologic_endpoint[var.env]}"
+  }
+
+  vcl {
+    name    = "normalize-url"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/normalize-url.vcl")}"
+  }
+
+  vcl {
+    name    = "backends-dev"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-dev.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-newsdev-gcs"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-gcs.vcl")}"
+  }
+
+  vcl {
+    name    = "acl-blacklist"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-blacklist.vcl")}"
+  }
+
+  vcl {
+    name    = "default"
+    main    = true
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/default.vcl")}"
+  }
+
+  vcl {
+    name    = "surrogate-key"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/surrogate-key.vcl")}"
+  }
+
+  vcl {
+    name    = "geoip-timezone-map-table"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-timezone-map-table.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-elections"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-elections.vcl")}"
+  }
+
+  vcl {
+    name    = "querystring"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/querystring.vcl")}"
+  }
+
+  vcl {
+    name    = "ipauth"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/ipauth.vcl")}"
+  }
+
+  vcl {
+    name    = "https-redirect"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/https-redirect.vcl")}"
+  }
+
+  vcl {
+    name    = "backends-prd"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-prd.vcl")}"
+  }
+
+  vcl {
+    name    = "response-headers"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/response-headers.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-subscription"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-subscription.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-weddings-api"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-weddings-api.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-content-api"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-content-api.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-intl"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-intl.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-init-vars"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-init-vars.vcl")}"
+  }
+
+  vcl {
+    name    = "initialize-vars"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/initialize-vars.vcl")}"
+  }
+
+  vcl {
+    name    = "glogin-killswitch"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/glogin-killswitch.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-newsdev-gke"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-gke.vcl")}"
+  }
+
+  vcl {
+    name    = "frame-buster"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/frame-buster.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-games"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-games.vcl")}"
+  }
+
+  vcl {
+    name    = "tips"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/tips.vcl")}"
+  }
+
+  vcl {
+    name    = "backends-stg"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-stg.vcl")}"
+  }
+
+  vcl {
+    name    = "device-detect"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/device-detect.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-video"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-video.vcl")}"
+  }
+
+  vcl {
+    name    = "subscription-currency-map-table"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/subscription-currency-map-table.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-tbooks"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-tbooks.vcl")}"
+  }
+
+  vcl {
+    name    = "acl-vpc-gateway"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-vpc-gateway.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-well"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-well.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-programs"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-programs.vcl")}"
+  }
+
+  vcl {
+    name    = "collection-allocation"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/collection-allocation.vcl")}"
+  }
+
+  vcl {
+    name    = "www-redirect"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/www-redirect.vcl")}"
+  }
+
+  vcl {
+    name    = "homepage-redirect"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/homepage-redirect.vcl")}"
+  }
+
+  vcl {
+    name    = "health-check"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/health-check.vcl")}"
+  }
+
+  vcl {
+    name    = "mobile-redirect"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/mobile-redirect.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-times-journeys"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-times-journeys.vcl")}"
+  }
+
+  vcl {
+    name    = "userinfo"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/userinfo.vcl")}"
+  }
+
+  vcl {
+    name    = "cookie"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/cookie.vcl")}"
+  }
+
+  vcl {
+    name    = "community-esi"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/community-esi.vcl")}"
+  }
+
+  vcl {
+    name    = "geoip-location-consolidation-map-table"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-location-consolidation-map-table.vcl")}"
+  }
+
+  vcl {
+    name    = "sanitize-url"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/sanitize-url.vcl")}"
+  }
+
+  vcl {
+    name    = "acl-internal"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-internal.vcl")}"
+  }
+
+  vcl {
+    name    = "vi-allocation"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/vi-allocation.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-health-service"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-health-service.vcl")}"
+  }
+
+  vcl {
+    name    = "backends-glogin-healthcheck"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-glogin-healthcheck.vcl")}"
+  }
+
+  vcl {
+    name    = "geoip-service"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-service.vcl")}"
+  }
+
+  vcl {
+    name    = "acl-crawlers"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-crawlers.vcl")}"
+  }
+
+  vcl {
+    name    = "acl-external-staging-access"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-external-staging-access.vcl")}"
+  }
+
+  vcl {
+    name    = "backends-main"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-main.vcl")}"
+  }
+
+  vcl {
+    name    = "backends-deadend"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-deadend.vcl")}"
+  }
+
+  vcl {
+    name    = "glogin-redirect"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/glogin-redirect.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-watching"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-watching.vcl")}"
+  }
+
+  vcl {
+    name    = "uuid"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/uuid.vcl")}"
+  }
+
+  vcl {
+    name    = "error-pages"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/error-pages.vcl")}"
+  }
+}
