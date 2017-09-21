@@ -40,6 +40,24 @@ sub vcl_recv {
             return(pass);
         }
 
+        // Work on sudoku page has started
+        if (req.http.x-environment == "stg" &&
+            req.url.path ~ "^/crosswords/game/sudoku" &&
+            req.url.qs !~ "nyt-games=legacy") {
+
+            set req.http.X-PageType = "games-web";
+            set req.http.x-skip-glogin = "1";
+
+            // Since we're returning early, we need to do this here for now
+            if (!req.http.Fastly-SSL) {
+                call redirect_to_https;
+            }
+
+            // Games need cookies and until we sort out our mess with cookies we need to pass requests
+            // to the apps
+            return(pass);
+        }
+
         if (req.url.path ~ "^/crosswords/game/(daily|mini|variety|bonus|special|paid)") {
             set req.http.X-PageType = "games-web";
             set req.http.x-skip-glogin = "1";
