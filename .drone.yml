@@ -99,10 +99,9 @@ pipeline:
   slack:
     image: plugins/slack
     channel: fastly-builds
-    username: fastly-static
+    username: fastly-www
     secrets:
       - source: SLACK_WEBHOOK_URL
         target: SLACK_WEBHOOK
     when: 
       event: [success, failure, blocked]
-
