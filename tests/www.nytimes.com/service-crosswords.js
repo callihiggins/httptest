@@ -1,0 +1,268 @@
+var suite = require('/lib/suite.js');
+var scenarios = getScenarioEvents();
+suite.run(suite, scenarios);
+
+/**
+ * @return array
+ */
+function getScenarioEvents()
+{
+  var scenarios = [
+    {
+      'id': 'Functional Test For Games',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-service',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/games/set/v1/puzzles.json',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /svc/games endpoint',
+      'testId': 1,
+    },
+    {
+      'id': 'Functional Test For Crosswords',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-service',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/crosswords/v2/puzzle/daily.json',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /svc/crosswords endpoint',
+      'testId': 2,
+    },
+    {
+      'id': 'Functional Test For Crosswords',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/game/daily',
+      'responseStatusCode': 403,
+      'scenarioDescription': 'Test hitting a /crosswords/game/daily web app with games-web backend',
+      'testId': 3,
+    },
+    {
+      'id': 'Functional Test For Crosswords',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/game/mini',
+      'responseStatusCode': [200,403],
+      'scenarioDescription': 'Test hitting a /crosswords/game/mini web app with games-web backend',
+      'testId': 4,
+    },
+    {
+      'id': 'Functional Test For Crosswords',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'requestScheme': 'http://',
+      'requestUri': '/crosswords/game/mini',
+      'responseStatusCode': 301,
+      'scenarioDescription': 'Test redirect to https for /crosswords/game/mini web app',
+      'testId': 5,
+    },
+    {
+      'id': 'Functional Test For Crosswords',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/game/variety',
+      'responseStatusCode': 404,
+      'scenarioDescription': 'Test hitting a /crosswords/game/variety web app with games-web backend',
+      'testId': 6,
+    },
+    {
+      'id': 'Functional Test For Crosswords',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-assets',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/games-assets/favicon.ico',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /games-assets/favicon.ico with gcs backend',
+      'testId': 7,
+    },
+    {
+      'id': 'Functional Test For Games Prototype Staging',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-service',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/games/prototype/kenken',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /games/prototype endpoint',
+      'testId': 8,
+    },
+    {
+      'id': 'Functional Test For Games Prototype Production',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-service',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/games/prototype/kenken',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /games/prototype endpoint',
+      'testId': 9,
+    },
+    {
+      'id': 'Functional Test For Games Hub Routing',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /crosswords endpoint',
+      'testId': 10,
+    },
+    {
+      'id': 'Functional Test For Games Submission page (stg)',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/submissions',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /crosswords/submissions endpoint',
+      'testId': 11,
+    },
+    {
+      'id': 'Functional Test For Games Submission page (prd)',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'legacy',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/submissions',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting /crosswords/submissions in prod still not published',
+      'testId': 12,
+    },
+    {
+      'id': 'Functional Test For Sudoku',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/game/sudoku/easy',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Sudoku Easy endpoint',
+      'testId': 13,
+    },
+  ];
+
+  return scenarios;
+}
