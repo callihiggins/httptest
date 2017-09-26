@@ -446,4 +446,9 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/error-pages.vcl")}"
   }
+  vcl {
+    name    = "article-allocation"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/article-allocation.vcl")}"
+  }
 }
