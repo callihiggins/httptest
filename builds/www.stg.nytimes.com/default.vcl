@@ -301,8 +301,6 @@ sub vcl_fetch {
       set beresp.ttl = 30s;
     } else if (req.http.X-PageType == "messaging-api") {
       set beresp.ttl = 5s;
-    } else if (req.http.X-PageType == "elections") {
-      set beresp.ttl = 10s;
     } else {
 
       # this is the catch-all default TTL if the object is cacheable and does none of the above

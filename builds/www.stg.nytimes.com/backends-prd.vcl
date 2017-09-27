@@ -123,72 +123,50 @@ backend newsdev_k8s_gke_prd {
     }
 }
 
-backend newsdev_instance_prd_use1_1 {
-    .host = "54.221.244.128";
-    .port = "80";
+backend newsdev_elections_prd {
+    .host = "storage.googleapis.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
     .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
+        .request = "HEAD /healthcheck.txt HTTP/1.1" "Host: nytint-prd-elections.storage.googleapis.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 3;
         .window = 5;
-        .threshold = 4;
+        .timeout = 2s;
+        .initial = 2;
+        .expected_response = 200;
+        .interval = 5s;
     }
 }
 
-backend newsdev_instance_prd_use1_2 {
-    .host = "54.163.228.138";
-    .port = "80";
+backend newsdev_gcs_prd {
+    .host = "storage.googleapis.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
     .connect_timeout = 5s;
     .first_byte_timeout = 5s;
     .between_bytes_timeout = 5s;
     .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
+        .request = "HEAD /healthcheck.txt HTTP/1.1" "Host: nytint-prd-www.storage.googleapis.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 3;
         .window = 5;
-        .threshold = 4;
+        .timeout = 2s;
+        .initial = 2;
+        .expected_response = 200;
+        .interval = 5s;
     }
 }
 
-backend newsdev_instance_prd_usw1_1 {
-    .host = "50.18.47.251";
-    .port = "80";
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 5;
-        .threshold = 4;
-    }
-}
-
-backend newsdev_instance_prd_usw1_2 {
-    .host = "54.215.5.96";
-    .port = "80";
-    .connect_timeout = 5s;
-    .first_byte_timeout = 5s;
-    .between_bytes_timeout = 5s;
-    .probe = {
-        .url = "/healthchecke";
-        .timeout = 1s;
-        .interval = 4s;
-        .window = 5;
-        .threshold = 4;
-    }
-}
-
-director newsdev_elections_prd round-robin {
-    { .backend = newsdev_instance_prd_use1_1; }
-    { .backend = newsdev_instance_prd_use1_2; }
-    { .backend = newsdev_instance_prd_usw1_1; }
-    { .backend = newsdev_instance_prd_usw1_2; }
-}
 
 backend beta_guides_prd {
     .host = "guides.prd.nyt.net";

@@ -1,5 +1,5 @@
 sub vcl_recv {
-  if (req.http.x-environment == "stg" && req.url ~ "^/interactive/projects/") {
+  if (req.http.X-PageType != "newsdev-gke" && req.url ~ "^/interactive/projects/") {
     set req.http.X-PageType = "newsdev-gcs";
     call set_newsdev_gcs_backend;
 
@@ -44,6 +44,7 @@ sub vcl_fetch {
     // use very short cache TTL for HTTP 4XXs
     if (beresp.status >= 400 && beresp.status < 500) {
       set beresp.ttl = 3s;
+      unset beresp.http.cache-control;
     }
 
     if (beresp.status >= 500) {
@@ -78,8 +79,8 @@ sub set_newsdev_gcs_backend {
   } else if (req.http.x-environment == "stg") {
     set req.backend = newsdev_gcs_stg;
     set req.http.x-gcs-bucket = "nytint-stg-www";
-  # } else {
-  #   set req.backend = newsdev_gcs_prd;
-  #   set req.http.x-gcs-bucket = "nytint-prd-www";
+  } else {
+    set req.backend = newsdev_gcs_prd;
+    set req.http.x-gcs-bucket = "nytint-prd-www";
   }
 }

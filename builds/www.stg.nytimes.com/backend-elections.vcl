@@ -18,10 +18,8 @@ sub vcl_recv {
         }
 
         # Configure access to Cloud Storage
-        if (req.http.x-environment != "prd") {
-          set req.http.Date = now;
-          set req.http.host = req.http.x-gcs-bucket ".storage.googleapis.com";
-        }
+        set req.http.Date = now;
+        set req.http.host = req.http.x-gcs-bucket ".storage.googleapis.com";
     }
 
     if (req.http.magicmarker-elections == "fake") {
@@ -32,29 +30,28 @@ sub vcl_recv {
 }
 
 sub vcl_miss {
-  if (req.http.X-PageType == "elections" && req.http.x-environment != "prd") {
+  if (req.http.X-PageType == "elections") {
     set bereq.http.Authorization = "AWS " table.lookup(newsdev_elections, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
   }
 }
 
 sub vcl_pass {
-  if (req.http.X-PageType == "elections" && req.http.x-environment != "prd") {
+  if (req.http.X-PageType == "elections") {
     set bereq.http.Authorization = "AWS " table.lookup(newsdev_elections, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
   }
 }
 
 sub vcl_fetch {
     if (req.http.X-PageType == "elections") {
-        if (req.http.x-environment != "prd") {
-            if (beresp.http.x-amz-meta-website-redirect-location) {
-              set req.http.Location = beresp.http.x-amz-meta-website-redirect-location;
-              error 760 "Moved Permanently";
-            }
+        if (beresp.http.x-amz-meta-website-redirect-location) {
+          set req.http.Location = beresp.http.x-amz-meta-website-redirect-location;
+          error 760 "Moved Permanently";
         }
 
         // use very short cache TTL for HTTP 4XXs
         if (beresp.status >= 400 && beresp.status < 500) {
             set beresp.ttl = 3s;
+            unset beresp.http.cache-control;
         }
 
         if (beresp.status >= 500) {
@@ -102,5 +99,6 @@ sub set_newsdev_elections_backend {
         set req.http.x-gcs-bucket = "nytint-stg-elections";
     } else {
         set req.backend = newsdev_elections_prd;
+        set req.http.x-gcs-bucket = "nytint-prd-elections";
     }
 }

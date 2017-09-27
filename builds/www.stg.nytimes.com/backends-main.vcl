@@ -208,7 +208,7 @@ sub vcl_recv {
       set req.http.x-skip-glogin = "1";
       call set_www_newsdev_attribute_gclod_function_backend;
     } else if (    req.url ~ "^/svc/int/"
-        || (req.http.x-environment == "prd" && req.url ~ "^/interactive/projects/")
+        || (req.url ~ "^/interactive/projects/(cp|gu|your-stories|notable-deaths|portraits|storywall|static-feeds|calendar-signup|guantanamo)")
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
     ) {
         set req.http.X-PageType = "newsdev-gke";
