@@ -50,15 +50,12 @@ function getScenarioEvents()
       'testId': 2,
     },
     {
+      'id': 'FunctionalTestScenarioDefinitionForCache',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
-      },
-      'requestHeaders': {
-      'id': 'FunctionalTestScenarioDefinitionForCache',
-        'Host': suite.hosts.www,
       },
       'requestScheme': 'https://',
       'requestUri': '/elections/results/president',
@@ -70,15 +67,12 @@ function getScenarioEvents()
       'testId': 3,
     },
     {
+      'id': 'FunctionalTestScenarioDefinitionFor404Cache',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
-      },
-      'requestHeaders': {
-      'id': 'FunctionalTestScenarioDefinitionFor404Cache',
-        'Host': suite.hosts.www,
       },
       'requestScheme': 'https://',
       'requestUri': '/elections/page-that-does-not-exist',

@@ -110,15 +110,12 @@ function getScenarioEvents()
       'testId': 5,
     },
     {
+      'id': 'FunctionalTestScenarioDefinitionForGCSPage404Cache',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
-      },
-      'requestHeaders': {
-      'id': 'FunctionalTestScenarioDefinitionForGCSPage404Cache',
-        'Host': suite.hosts.www,
       },
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/page-that-does-not-exist',

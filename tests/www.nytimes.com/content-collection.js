@@ -340,9 +340,6 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaderCookie': 'nyt.dv.nyt5-on-gke.collection=0',
-      'requestHeaders': {
-        'Host': suite.hosts.www,
-      },
       'requestScheme': 'https://',
       'requestUri': '/by/a-o-scott',
       'responseHeaderNotContains': {
@@ -360,9 +357,6 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaderCookie': 'nyt.dv.nyt5-on-gke.collection=1',
-      'requestHeaders': {
-        'Host': suite.hosts.www,
-      },
       'requestScheme': 'https://',
       'requestUri': '/by/a-o-scott',
       'responseHeaderNotContains': {

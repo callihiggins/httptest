@@ -16,9 +16,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaders': {
-        'Host': suite.hosts.www,
-      },
       'requestScheme': 'https://',
       'requestUri': '/svc/int/attribute/healthz',
       'responseHeaderMatches': {
@@ -36,9 +33,6 @@ function getScenarioEvents()
         'stg': true,
         'dev': false,
         'sbx': false,
-      },
-      'requestHeaders': {
-        'Host': suite.hosts.www,
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/int/attribute',

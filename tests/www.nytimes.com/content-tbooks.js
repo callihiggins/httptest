@@ -52,9 +52,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaders': {
-        'Host': suite.hosts.www,
-      },
       'requestScheme': 'https://',
       'requestUri': '/tbooks?action=click&contentCollection=insider&region=navbar&module=collectionsnav&pagetype=sectionfront&pgtype=sectionfront',
       'responseHeaderMatches': {

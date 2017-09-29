@@ -16,9 +16,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaders': {
-        'Host': suite.hosts.www,
-      },
       'requestScheme': 'https://',
       'requestUri': '/es/',
       'responseHeaderMatches': {
@@ -58,9 +55,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaders': {
-        'Host': suite.hosts.www,
-      },
       'requestScheme': 'https://',
       'requestUri': '/es/al-dia?withcomments=true',
       'responseHeaderPattern': {
@@ -76,9 +70,6 @@ function getScenarioEvents()
         'stg': true,
         'dev': false,
         'sbx': false,
-      },
-      'requestHeaders': {
-        'Host': suite.hosts.www,
       },
       'requestScheme': 'https://',
       'requestUri': '/es/al-dia?mccr=ES',
