@@ -107,7 +107,7 @@ sub vcl_recv {
     }
 
     #/uadiag commands
-    if (client.ip ~ internal) {
+    if (req.http.x-nyt-internal-access) {
         if (req.url ~ "^/svc/web-products/uadiag.js") {
             error 849 "uadiag.js";
         } else if (req.url ~ "^/svc/web-products/uadiag") {

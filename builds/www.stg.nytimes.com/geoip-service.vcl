@@ -78,7 +78,7 @@ sub vcl_recv {
 	set req.http.x-nyt-gmt-offset = client.geo.gmt_offset;
 
 	# geoip test service error call
-	if ( client.ip ~ internal) {
+	if (req.http.x-nyt-internal-access) {
 		if (req.url ~ "^/svc/web-products/geoip-test.html") {
 			error 949 "uadiag";
 		}

@@ -33,7 +33,7 @@ sub vcl_recv {
 
     # allow forcing our variation with querystring like `?abra=WP_ProjectVi_www_hp=hp-st`
     # or cookie like `ab7=WP_ProjectVi_www_hp=hp-st`:
-    if (client.ip ~ internal || client.ip ~ external_staging_access) {
+    if (req.http.x-nyt-internal-access || req.http.x-nyt-external-access) {
         set var.abra_overrides = "";
         # let `abra` querystring come first for priority over `ab7` cookie:
         if (req.url ~ "(?i)\?(?:|.*&)abra=([^&]*)") {

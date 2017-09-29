@@ -23,7 +23,7 @@ sub vcl_deliver {
     set req.http.X-NYT-Backend = resp.http.X-NYT-Backend;
 
     # lets return some headers to internal clients for debugging
-    if (client.ip !~ internal){
+    if (!req.http.x-nyt-internal-access){
         # remove these headers for external requests
         unset resp.http.X-VarnishCacheDuration;
         unset resp.http.X-Origin-Server;
@@ -80,7 +80,7 @@ sub vcl_deliver {
     }
 
     // remove deprecated internal https cookie
-    if (client.ip ~ internal && req.http.Cookie:nyt.np.https-everywhere) {
+    if (req.http.x-nyt-internal-access && req.http.Cookie:nyt.np.https-everywhere) {
         add resp.http.Set-Cookie =
             "nyt.np.https-everywhere=; " +
             "Expires=" + time.sub(now, 365d) + "; " +
@@ -98,7 +98,7 @@ sub vcl_deliver {
 
         if (req.http.x-environment == "prd") {
             // all internal traffic, and 1% of external traffic should report CSP violations
-            if (client.ip ~ internal || randombool(1, 100)) {
+            if (req.http.x-nyt-internal-access || randombool(1, 100)) {
                 set resp.http.Content-Security-Policy = var.csp + " " + var.report-uri;
             } else {
                 set resp.http.Content-Security-Policy = var.csp;

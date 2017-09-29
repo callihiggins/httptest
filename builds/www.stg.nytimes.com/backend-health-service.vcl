@@ -7,7 +7,7 @@ sub vcl_miss {
 }
 
 sub process_backend_health_req {
-  if (req.url ~ "^/backendhealth/([^/\.]*)" && client.ip ~ internal) {
+  if (req.url ~ "^/backendhealth/([^/\.]*)" && req.http.x-nyt-internal-access) {
 
     declare local var.backend_choice STRING;
 

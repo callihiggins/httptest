@@ -63,7 +63,7 @@ sub vcl_deliver {
 
         set resp.http.X-API-Version = "WCM";
 
-        if (client.ip ~ internal) {
+        if (req.http.x-nyt-internal-access) {
           set resp.http.X-NYT-Currency = req.http.X-NYT-Currency;
         }
 

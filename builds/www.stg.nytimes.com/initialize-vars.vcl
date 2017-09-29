@@ -1,7 +1,25 @@
+# use keys in x-fastly-stg header for staging access from non-whitelisted IPs
+table staging_access_tokens {
+  # "app-<random>" : "<issue date>"
+  "watching-2gk6" : "20170614"
+}
+
 sub vcl_recv {
 
+    // Reset access levels before setting them
+    unset req.http.x-nyt-internal-access;
+    unset req.http.x-nyt-external-access;
+
+    if (client.ip ~ internal || client.ip ~ vpc_nat_gateway) {
+      set req.http.x-nyt-internal-access = "1";
+    }
+
+    if (client.ip ~ external_staging_access || table.lookup(staging_access_tokens, req.http.x-fastly-stg) ~ "^[0-9]{8}$") {
+      set req.http.x-nyt-external-access = "1";
+    }
+
     # unset anything that we shouldn't trust from the user request
-    if (client.ip !~ internal) {
+    if (!req.http.x-nyt-internal-access) {
       unset req.http.x-skip-glogin;
       unset req.http.x-nyt-backend-health;
     }

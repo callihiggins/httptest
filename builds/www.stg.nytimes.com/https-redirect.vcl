@@ -112,14 +112,14 @@ sub vcl_recv {
 
         // Urls live over HTTPS internally
         } else if (
-               client.ip ~ internal
+               req.http.x-nyt-internal-access
             && req.http.x-https-phase == "internal"
             && !req.http.x-internal-https-opt-out
         ) {
 
         // internal https cookie-based test
         } else if (
-               client.ip ~ internal
+               req.http.x-nyt-internal-access
             && req.http.x-nyt-np-enable-https == "1"
             && !req.http.x-internal-https-opt-out
         ) {
@@ -144,7 +144,7 @@ sub vcl_recv {
 
         // Urls that are on HTTPS internally
         } else if (
-            client.ip ~ internal
+            req.http.x-nyt-internal-access
             && req.request != "FASTLYPURGE"
             && req.http.x-https-phase == "internal"
             && !req.http.x-internal-https-opt-out
@@ -157,7 +157,7 @@ sub vcl_recv {
 
         // internal https cookie-based test
         } else if (
-               client.ip ~ internal
+               req.http.x-nyt-internal-access
             && req.http.x-nyt-np-enable-https == "1"
             && !req.http.x-internal-https-opt-out
         ) {

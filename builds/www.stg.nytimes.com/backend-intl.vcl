@@ -24,7 +24,7 @@ sub vcl_recv {
 
 sub vcl_fetch {
   if (req.http.X-PageType == "intl") {
-    if ( client.ip !~ internal && req.http.x-environment == "prd") {
+    if (!req.http.x-nyt-internal-access && req.http.x-environment == "prd") {
       unset beresp.http.X-Kubernetes-Url;
     }
 

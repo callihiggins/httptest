@@ -1,28 +1,17 @@
-# use keys in x-fastly-stg header for staging access from non-whitelisted IPs
-table staging_access_tokens {
-  # "app-<random>" : "<issue date>"
-  "watching-2gk6" : "20170614"
-}
-
 sub vcl_recv {
 
-
     // IPs that are blocked from all environments
-    if ( client.ip ~ blacklist) {
+    if (client.ip ~ blacklist) {
         error 403 "Forbidden";
     }
 
     // block everyone but the internal ACL to dev service
-    if ( client.ip !~ internal && req.http.x-environment == "dev") {
+    if (req.http.x-environment == "dev" && !req.http.x-nyt-internal-access) {
       error 403 "Forbidden";
     }
 
     // block everyone but internal acl, aws vpc acl, staging access acl, and whitelisted header to staging service
-    if (    req.http.x-environment == "stg" &&
-            client.ip !~ internal &&
-            client.ip !~ vpc_nat_gateway &&
-            client.ip !~ external_staging_access &&
-            (table.lookup(staging_access_tokens, req.http.x-fastly-stg) !~ "^[0-9]{8}$") ) {
+    if (req.http.x-environment == "stg" && !req.http.x-nyt-internal-access && !req.http.x-nyt-external-access) {
         error 403 "Forbidden";
     }
 

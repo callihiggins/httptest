@@ -61,7 +61,7 @@ sub vcl_fetch {
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;
     
-    if ( client.ip !~ internal && req.http.x-environment == "prd") {
+    if (!req.http.x-nyt-internal-access && req.http.x-environment == "prd") {
       unset beresp.http.X-Kubernetes-Url;
     }
 
