@@ -282,6 +282,26 @@ function getScenarioEvents()
       'scenarioDescription': 'Test hitting KenKen page',
       'testId': 14,
     },
+    {
+      'id': 'Functional Test For KenKen',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/game/set',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting KenKen page',
+      'testId': 14,
+    },
   ];
 
   return scenarios;

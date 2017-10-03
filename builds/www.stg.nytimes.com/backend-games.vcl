@@ -42,7 +42,7 @@ sub vcl_recv {
 
         // Work on sudoku page has started
         if (req.http.x-environment == "stg" &&
-            req.url.path ~ "^/crosswords/game/(sudoku|kenken)" &&
+            req.url.path ~ "^/crosswords/game/(sudoku|kenken|set)" &&
             req.url.qs !~ "nyt-games=legacy") {
 
             set req.http.X-PageType = "games-web";
