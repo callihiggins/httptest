@@ -793,6 +793,37 @@ function getScenarioEvents()
       'scenarioDescription': 'Test HTTPS Everywhere; todays headlines cooking; non-secure',
       'testId': 57,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/us/faces-of-the-dead.html',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test HTTPS Everywhere; 9/11 interactive; secure',
+      'testId': 58,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/interactive/us/faces-of-the-dead.html',
+      'responseHeaderMatches': {
+        'location': 'https://' + suite.servername + '/interactive/us/faces-of-the-dead.html',
+      },
+      'responseStatusCode': 301,
+      'scenarioDescription': 'Test HTTPS Everywhere; 9/11 interactive; non-secure',
+      'testId': 59,
+    },
   ];
   return scenarios;
 }
