@@ -208,14 +208,14 @@ backend games_svc_stg {
 }
 
 backend programs_svc_stg {
-    .host = "smw-dot-nyt-betaprog-dev.appspot.com";
+    .host = "ftu-dot-nyt-betaprog-dev.appspot.com";
     .port = "443";
     .dynamic = true;
-    .ssl_cert_hostname = "smw-dot-nyt-betaprog-dev.appspot.com";
-    .ssl_sni_hostname = "smw-dot-nyt-betaprog-dev.appspot.com";
+    .ssl_cert_hostname = "ftu-dot-nyt-betaprog-dev.appspot.com";
+    .ssl_sni_hostname = "ftu-dot-nyt-betaprog-dev.appspot.com";
     .ssl_check_cert = always;
     .ssl = true;
-    .host_header = "smw-dot-nyt-betaprog-dev.appspot.com";
+    .host_header = "ftu-dot-nyt-betaprog-dev.appspot.com";
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
