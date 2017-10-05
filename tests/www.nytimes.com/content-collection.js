@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/by/qqq',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [404],
@@ -37,7 +37,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/column/qqq',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [404],
@@ -55,7 +55,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/issue/qqq',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [404],
@@ -73,7 +73,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/news-event/qqq',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [404],
@@ -91,7 +91,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/reviews',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 404],
@@ -109,7 +109,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/reviews/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 301, 404],
@@ -145,7 +145,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/saved',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 404],
@@ -163,7 +163,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/saved/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [301],
@@ -181,7 +181,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/section/qqq',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [404],
@@ -199,7 +199,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/spotlight/qqq',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [404],
@@ -217,7 +217,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/company/alphabet-inc',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 404],
@@ -235,7 +235,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/destination/france',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 404],
@@ -253,7 +253,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/organization/new-york-yankees',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 404],
@@ -271,7 +271,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/person/qqq',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [404],
@@ -289,7 +289,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/subject/whistleblowers',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 404],
@@ -307,7 +307,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/section/upshot',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200, 404],
@@ -325,7 +325,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/upshot/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GC',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [301],

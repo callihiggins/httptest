@@ -73,11 +73,7 @@ sub vcl_recv {
         || req.url ~ "^/upshot"
     ) {
         set req.http.X-PageType = "collection";
-        if ( req.http.X-Collection-Backend == "on-GKE" ) {
-            call set_www_collection_backend_gke;
-        } else {
-            call set_www_collection_backend;
-        }
+        call set_www_collection_backend_gke;
         set req.http.x-skip-glogin = "1";
     }
 
