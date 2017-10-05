@@ -304,12 +304,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "collection-allocation"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/collection-allocation.vcl")}"
-  }
-
-  vcl {
     name    = "www-redirect"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/www-redirect.vcl")}"
