@@ -283,7 +283,7 @@ function getScenarioEvents()
       'testId': 14,
     },
     {
-      'id': 'Functional Test For KenKen',
+      'id': 'Functional Test For Set',
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
@@ -299,8 +299,28 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/set',
       'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting KenKen page',
-      'testId': 14,
+      'scenarioDescription': 'Test hitting Set page',
+      'testId': 15,
+    },
+    {
+      'id': 'Functional Test For Archive Daily',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/archive/daily',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Archive Daily page',
+      'testId': 16,
     },
   ];
 
