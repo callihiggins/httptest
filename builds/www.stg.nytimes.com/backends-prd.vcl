@@ -294,7 +294,7 @@ backend games_assets_prd {
 }
 
 backend subscription_prd {
-    .host = "mwcm-app-est-public-prd-i-111546-340655147.us-east-1.elb.amazonaws.com";
+    .host = "mwcm-pub-est-prd-iad1-121757-1072184006.us-east-1.elb.amazonaws.com";
     .port = "80";
     .dynamic = true;
     .connect_timeout = 10s;
