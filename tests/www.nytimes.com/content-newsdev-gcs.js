@@ -126,6 +126,23 @@ function getScenarioEvents()
       'scenarioDescription': 'Test gcs 404 cache',
       'testId': 6,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForGCSPageConversationPiecesRouting',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/projects/cp/awards-season/emmys-2015/uzo-aduba-thanks-those-who-let-her-be-herself',
+      'responseHeaderMatches': {
+        'x-pagetype': 'newsdev-gcs',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test gcs conversation pieces routing',
+      'testId': 7,
+    },
   ];
 
   return scenarios;

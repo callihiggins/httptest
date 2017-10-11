@@ -43,20 +43,8 @@ sub vcl_recv {
   }
 }
 
-sub vcl_miss {
-  if ((req.http.X-PageType == "newsdev-gke") &&
-      (req.url ~ "^/interactive/projects/cp")) {
-    unset bereq.http.Accept-Encoding;
-    unset req.http.Accept-Encoding;
-  }
-}
-
 sub vcl_fetch {
   if (req.http.X-PageType == "newsdev-gke") {
-    if ( req.url ~ "^/interactive/projects/cp" ) {
-      esi;
-    }
-
     unset beresp.http.X-Amz-Id-2;
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;

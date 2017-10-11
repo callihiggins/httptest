@@ -70,7 +70,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForRoomForDebateIndex',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': false,
         'sbx': false,
       },
@@ -90,7 +90,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForRoomForDebateDetail',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': false,
         'sbx': false,
       },
@@ -105,6 +105,26 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Room for debate detail',
       'testId': 5,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForGuantanamoRouting',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'Host': suite.servername,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/projects/guantanamo',
+      'responseHeaderMatches': {
+        'x-pagetype': 'newsdev-gke',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Guantanamo routing',
+      'testId': 6,
     },
   ];
 
