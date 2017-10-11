@@ -11,6 +11,9 @@
 ## Link to tests PR
 
 
+## Link to [Documentation Guide](https://github.com/nytm/dv-fastly-guide) PR
+
+
 ## Pre-merge To Dos
 - [ ] if any, otherwise remove this section
 
