@@ -230,19 +230,6 @@ sub vcl_recv {
         }
     }
 
-    // interactive years 2014-forever are NYT5/Vi
-    if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
-      // keep .embedded/mobile/app.html on NYT5 in production
-      if (req.http.x-environment == "prd"
-      &&  req.url.path ~ "\.(embedded|mobile|app)\.html$") {
-        set req.http.X-PageType = "interactive";
-        call set_www_fe_backend;
-      } else {
-          set req.http.X-PageType = "vi-interactive";
-          call set_projectvi_fe_backend;
-      }
-    }
-
     // embedded interactives on mobile should not go to glogin
     if (req.url ~ "^/interactive/.*([0-9]+).embedded.html") {
         set req.http.x-skip-glogin = "1";
@@ -414,32 +401,6 @@ sub vcl_recv {
         set req.http.cookie = req.http.X-Cookie;
         set req.http.X-PageType = "legacy";
         call set_www_backend;
-    }
-
-    if (req.http.X-Vi-Cluster == "story") {
-        set req.url = req.http.X-OriginalUri;
-        //set req.http.cookie = req.http.X-Cookie;
-        set req.http.X-PageType = "vi-story";
-        call set_projectvi_fe_backend;
-
-        // If the VI backend is not healthy, we reset the backend
-        // to www-fe, and set a header to prevent the request from restarting
-        if (!req.backend.healthy) {
-            set req.http.X-PageType = "article";
-            # using this full string becasue we do not want this
-            # consuming log volume unless it was unhealthy and we failed over
-            set req.http.x-vi-health = "vihealth=[0]";
-            set req.http.X-RelevantBackendStatus = "unchanged";
-            call set_www_fe_backend;
-        }
-    }
-
-    // A request for assets from VI
-    if (req.url ~ "^/vi-assets/") {
-        set req.http.X-PageType = "vi-asset";
-        set req.http.host = "storage.googleapis.com";
-        call set_projectvi_asset_backend;
-        set req.http.x-skip-glogin = "1";
     }
 }
 
@@ -666,25 +627,4 @@ sub set_ask_well_backend {
     } else {
       set req.url = querystring.remove(req.url);
     }
-}
-
-# set a vi backend based on host
-sub set_projectvi_fe_backend {
-    if(req.http.x-environment == "dev") {
-        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
-        set req.backend = projectvi_fe_stg;
-    } else if (req.http.x-environment == "stg") {
-        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
-        set req.backend = projectvi_fe_stg;
-    } else {
-        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_prd");
-        set req.backend = projectvi_fe_prd;
-    }
-    # must set this for hashing and saint mode in default.vcl:
-    set req.http.x--fastly-project-vi = "1";
-}
-
-# set a vi asset backend based on host
-sub set_projectvi_asset_backend {
-    set req.backend = projectvi_asset_prd;
 }
