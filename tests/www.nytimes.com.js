@@ -26,7 +26,6 @@ require("./www.nytimes.com/redirect-glogin.js");
 require("./www.nytimes.com/content-timesjourneysstudents.js");
 require("./www.nytimes.com/content-timesjourneys.js");
 require("./www.nytimes.com/vi-allocation.js");
-require('./www.nytimes.com/vi-story.js');
 require("./www.nytimes.com/content-programs.js");
 
 // please leave these tests here and add you includes above
