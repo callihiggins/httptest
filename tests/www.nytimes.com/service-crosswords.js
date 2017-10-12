@@ -322,6 +322,66 @@ function getScenarioEvents()
       'scenarioDescription': 'Test hitting Archive Daily page',
       'testId': 16,
     },
+    {
+      'id': 'Functional Test For Tips and Tricks',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/tips-and-tricks',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Tips and Tricks page',
+      'testId': 17,
+    },
+    {
+      'id': 'Functional Test For Acrostic',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/game/acrostic/2017/09/03',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Acrostic page',
+      'testId': 18,
+    },
+    {
+      'id': 'Functional Test Stats Page',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/stats',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Stats page',
+      'testId': 19,
+    },
   ];
 
   return scenarios;
