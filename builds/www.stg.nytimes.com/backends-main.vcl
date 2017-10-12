@@ -187,7 +187,7 @@ sub vcl_recv {
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
     ) {
         set req.http.X-PageType = "article";
-        if ( req.http.X-Article-Backend == "on-GKE" ) {
+        if ( req.http.X-Article-Backend == "article-GKE" ) {
             call set_www_article_backend_gke;
         } else {
             call set_www_article_backend;
