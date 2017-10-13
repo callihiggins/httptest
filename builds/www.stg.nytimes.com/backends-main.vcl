@@ -73,6 +73,8 @@ sub vcl_recv {
         || req.url ~ "^/upshot"
     ) {
         set req.http.X-PageType = "collection";
+        unset req.http.Cookie;
+        unset req.http.X-Cookie;
         call set_www_collection_backend_gke;
         set req.http.x-skip-glogin = "1";
     }

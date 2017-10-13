@@ -365,7 +365,79 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Test Fastly; Collection; Vary header;',
       'testId': '20',
-    },    
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': suite.cookies.is_4k,
+      'requestScheme': 'https://',
+      'requestUri': '/column/modern-love',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-GC',
+        'x-pagetype': 'collection',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test Fastly; Collection; secure; publish; 4kb cookie string ',
+      'testId': '201',
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': suite.cookies.is_8k,
+      'requestScheme': 'https://',
+      'requestUri': '/column/modern-love',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-GC',
+        'x-pagetype': 'collection',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test Fastly; Collection; secure; publish; 8kb cookie string ',
+      'testId': '202',
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': suite.cookies.is_12k,
+      'requestScheme': 'https://',
+      'requestUri': '/column/modern-love',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-GC',
+        'x-pagetype': 'collection',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test Fastly; Collection; secure; publish; 12kb cookie string ',
+      'testId': '203',
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': suite.cookies.is_16k,
+      'requestScheme': 'https://',
+      'requestUri': '/column/modern-love',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-GC',
+        'x-pagetype': 'collection',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test Fastly; Collection; secure; publish; 16kb cookie string ',
+      'testId': '204',
+    },
   ];
 
   return scenarios;
