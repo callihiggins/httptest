@@ -143,6 +143,46 @@ function getScenarioEvents()
       'scenarioDescription': 'Test gcs conversation pieces routing',
       'testId': 7,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForRoomForDebateIndex',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'Host': suite.servername,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/roomfordebate',
+      'responseHeaderMatches': {
+        'x-pagetype': 'newsdev-gcs',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Room for debate homepage',
+      'testId': 8,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForRoomForDebateDetail',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'Host': suite.servername,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/roomfordebate/2017/01/17/can-western-states-afford-a-federal-land-transfer/state-management-of-federal-lands-would-advance-corporate-profits-over-public-benefit',
+      'responseHeaderMatches': {
+        'x-pagetype': 'newsdev-gcs',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Room for debate detail',
+      'testId': 9,
+    },
   ];
 
   return scenarios;

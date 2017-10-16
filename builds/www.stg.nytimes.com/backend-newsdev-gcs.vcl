@@ -1,5 +1,8 @@
 sub vcl_recv {
-  if (req.http.X-PageType != "newsdev-gke" && req.url ~ "^/interactive/projects/") {
+  if ( req.http.X-PageType != "newsdev-gke" && (
+       req.url ~ "^/interactive/projects/"
+    || req.url ~ "^/roomfordebate" )) {
+
     set req.http.X-PageType = "newsdev-gcs";
     call set_newsdev_gcs_backend;
 

@@ -221,17 +221,6 @@ sub vcl_recv {
         call set_www_intl_backend;
     }
 
-    if (  req.http.host == "www.nytimes.com"
-       || req.http.host == "www.stg.nytimes.com"
-       || req.http.host == "www-newsdev.stg.nytimes.com"
-        ) {
-        if (req.url ~ "^/roomfordebate"){
-            set req.http.X-PageType = "newsdev-gke";
-            set req.http.x-skip-glogin = "1";
-            call set_www_newsdev_gke_backend;
-        }
-    }
-
     // interactive years 2014-forever are NYT5/Vi
     if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
       // keep .embedded/mobile/app.html on NYT5 in production
