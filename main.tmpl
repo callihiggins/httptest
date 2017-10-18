@@ -30,6 +30,7 @@ resource "fastly_service_v1" "www" {
 
 {{end -}}
 
+  # this is set in init-vars.vcl
   header {
     action      = "set"
     name        = "environment"
@@ -39,6 +40,7 @@ resource "fastly_service_v1" "www" {
     type        = "request"
   }
 
+  # this is not being used yet in TF, look in default.vcl
   condition {
     name      = "Suppress adx and svc unless 50x response code"
     priority  = 10
@@ -53,6 +55,7 @@ resource "fastly_service_v1" "www" {
     type      = "RESPONSE"
   }
 
+  # look in default.vcl for this logic for the time being
   default_ttl = 3600
 
   gzip {
@@ -102,6 +105,7 @@ resource "fastly_service_v1" "www" {
     type          = "request"
   }
   
+  # this does not currently log anything, it's only providing the log stream configuration, see the conditional
   sumologic {
     format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.X-NYT-Backend,req.http.X-NYT-Backend,\"-\")}V] pagetype=[%{if(req.http.X-PageType,req.http.X-PageType,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.x-redirect-reason,req.http.x-redirect-reason,\"\")}V"
     format_version     = "2"
@@ -444,5 +448,10 @@ resource "fastly_service_v1" "www" {
     name    = "article-allocation"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/article-allocation.vcl")}"
+  }
+  vcl {
+    name    = "backend-adx-static"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-adx-static.vcl")}"
   }
 }

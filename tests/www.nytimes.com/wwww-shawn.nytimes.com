@@ -1,1 +1,0 @@
-wwww-shawn.nytimes.com

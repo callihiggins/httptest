@@ -185,6 +185,14 @@ sub process_backend_health_req {
       set req.http.x-nyt-appended-status = "true";
     }
 
+    if (var.backend_choice == "adx_static" || var.backend_choice == "all_backends") {
+      call set_adx_static_backend;
+      set req.http.x-nyt-temp-backend-name = "adx_static";
+      call append_backend_status;
+      set req.http.x-nyt-appended-status = "true";
+    }
+
+
     # create json structure tail
     call create_response_tail;
 

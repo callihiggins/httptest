@@ -499,3 +499,25 @@ backend glogin_healthcheck_prd {
         .expected_response = 302;
     }
 }
+
+backend adx_static_prd {
+    .host = "storage.googleapis.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "storage.googleapis.com";
+    .ssl_sni_hostname = "storage.googleapis.com";
+    .ssl_check_cert = always;
+    .ssl = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .request = "HEAD /healthcheck.txt HTTP/1.1" "Host: nyt-adx-static.storage.googleapis.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 3;
+        .window = 5;
+        .timeout = 2s;
+        .initial = 2;
+        .expected_response = 200;
+        .interval = 5s;
+    }
+}

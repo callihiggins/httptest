@@ -34,7 +34,7 @@ sub vcl_recv {
         || req.url ~ "^/content/help/rights/privacy/policy/privacy-policy.html"
         || req.url ~ "^/apple-app-site-association"
         || req.url ~ "^/google34e0037c9fda7c66.html"
-        || req.url ~ "^/adx/"
+        || (req.url ~ "^/adx/" && req.http.x-environment == "prd")
         || req.url ~ "^/store"
         || req.url ~ "^/auth/hdlogin"
         || req.url ~ "^/membercenter/emailus.html"
