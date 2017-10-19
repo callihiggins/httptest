@@ -124,7 +124,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-X',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'newsdev-gke',
+        'x-pagetype': 'newsdev-gcs',
       },
       'responseHeadersPresent': [
         'age',
