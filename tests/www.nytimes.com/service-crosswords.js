@@ -11,7 +11,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For Games',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -245,7 +245,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For Sudoku',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -265,7 +265,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For KenKen',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
