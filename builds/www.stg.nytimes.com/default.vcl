@@ -377,4 +377,6 @@ sub unset_extraneous_bereq_headers {
   unset bereq.http.x-nyt-d;
   unset bereq.http.x-bcet-secret-key;
   unset bereq.http.x-nyt-glogin-error-skip-key;
+  unset bereq.http.Cookie;
+  unset bereq.http.X-Cookie;
 }
