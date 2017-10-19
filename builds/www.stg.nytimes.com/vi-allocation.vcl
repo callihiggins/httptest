@@ -31,9 +31,14 @@ sub vcl_recv {
     # (1) Determine our test_group.
     #
 
+    # Bypass to vi for onion clients
+    if (req.http.X-From-Onion == "1") {
+        set var.test_group = "b2";
+    }
+
     # allow forcing our variation with querystring like `?abra=WP_ProjectVi_www_hp=hp-st`
     # or cookie like `ab7=WP_ProjectVi_www_hp=hp-st`:
-    if (req.http.x-nyt-internal-access || req.http.x-nyt-external-access) {
+    else if (req.http.x-nyt-internal-access || req.http.x-nyt-external-access) {
         set var.abra_overrides = "";
         # let `abra` querystring come first for priority over `ab7` cookie:
         if (req.url ~ "(?i)\?(?:|.*&)abra=([^&]*)") {
