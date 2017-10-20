@@ -160,6 +160,11 @@ sub vcl_miss {
   // cookie removing for collection
   if(req.http.X-PageType == "collection"){
     unset bereq.http.X-Cookie;
+  }
+
+  // cookie removing for article
+  if(req.http.X-PageType == "article"){
+    unset bereq.http.X-Cookie;
   }  
 
   // cacheable community svc requests are ESI jsonp
@@ -176,11 +181,16 @@ sub vcl_pass {
 #FASTLY pass
   call unset_extraneous_bereq_headers;
 
-  // cookie striping for collection
+  // cookie removing for collection
   if(req.http.X-PageType == "collection"){
     unset bereq.http.Cookie;
     unset bereq.http.X-Cookie;
-  }  
+  }
+  // cookie removing for article
+  if(req.http.X-PageType == "article"){
+    unset bereq.http.Cookie;
+    unset bereq.http.X-Cookie;
+  }    
 
 }
 
