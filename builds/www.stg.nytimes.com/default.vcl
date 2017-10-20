@@ -157,7 +157,7 @@ sub vcl_miss {
   // since this was a lookup we were not pass
   remove bereq.http.Cookie;
 
-  // cookie striping for collection
+  // cookie removing for collection
   if(req.http.X-PageType == "collection"){
     unset bereq.http.X-Cookie;
   }  
