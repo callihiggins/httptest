@@ -327,5 +327,6 @@ table geo_tz_map {
   "ASYE": "Asia/Aden",
   "AFZA": "Africa/Johannesburg",
   "AFZM": "Africa/Lusaka",
-  "AFZW": "Africa/Harare"
+  "AFZW": "Africa/Harare",
+  "ASHK": "Asia/Hong_Kong"
 }

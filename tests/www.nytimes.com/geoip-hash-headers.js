@@ -59,6 +59,27 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
+      'requestUri': '/svc/web-products/geoip-test.html?ip-override=112.120.130.250',
+      'responseHeaderMatches': {
+        'x-nyt-geo-hash': 'ASAsia/Hong_Kong',
+        'x-nyt-continent': 'AS',
+        'x-nyt-country': 'HK',
+        'x-nyt-region': 'NO REGION',
+        'x-nyt-gmt-offset': '800',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test geo hash return value for IP 112.120.130.250',
+      'testId': 3,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
       'requestUri': '/svc/web-products/geoip-test.html?ip-override=209.59.96.38',
       'responseHeaderMatches': {
         'x-nyt-geo-hash': 'NAAmerica/Antigua',
