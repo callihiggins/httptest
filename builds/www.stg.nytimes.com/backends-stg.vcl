@@ -266,6 +266,46 @@ backend games_web_stg {
     }
 }
 
+backend video_library_stg {
+    .host = "times-video.stg.nyt.net";
+    .port = "443";
+    .ssl_cert_hostname = "times-video.stg.nyt.net";
+    .ssl_sni_hostname = "times-video.stg.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = always;
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 10s;
+        .interval = 30s;
+        .window = 10;
+        .threshold = 8;
+    }
+}
+
+backend video_api_stg {
+    .host = "cherry-api.stg.nyt.net";
+    .port = "443";
+    .ssl_cert_hostname = "cherry-api.stg.nyt.net";
+    .ssl_sni_hostname = "cherry-api.stg.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = always;
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 10s;
+        .interval = 30s;
+        .window = 10;
+        .threshold = 8;
+    }
+}
+
 backend beta_guides_stg {
     .host = "guides.stg.nyt.net";
     .port = "443";

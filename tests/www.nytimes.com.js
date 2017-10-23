@@ -34,3 +34,5 @@ require("./www.nytimes.com/redirect-mobile-homepage.js");
 require("./www.nytimes.com/redirect-mobile-article.js");
 require("./www.nytimes.com/redirect-mobile-interactive.js");
 require("./www.nytimes.com/redirect-mobile-slideshow.js");
+require("./www.nytimes.com/service-video.js");
+require("./www.nytimes.com/content-video.js");

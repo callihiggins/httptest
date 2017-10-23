@@ -329,13 +329,13 @@ sub vcl_recv {
     if ( req.url == "/video" || req.url ~ "^/video/") {
         set req.http.X-PageType = "video-library";
         set req.http.x-skip-glogin = "1";
-        call set_www_fe_backend;
+        call set_video_library_backend;
     }
 
-    if ( req.url ~ "^/svc/video" ){
+    if ( req.url ~ "^/svc/video" ) {
         set req.http.X-PageType = "video-api";
         set req.http.x-skip-glogin = "1";
-        call set_www_fe_backend;
+        call set_video_api_backend;
     }
 
     // send global messaging API to the backend that caches
@@ -429,6 +429,28 @@ sub vcl_recv {
         set req.http.host = "storage.googleapis.com";
         call set_projectvi_asset_backend;
         set req.http.x-skip-glogin = "1";
+    }
+}
+
+# set a video library backend based on env
+sub set_video_library_backend {
+    if(req.http.x-environment == "dev") {
+        set req.backend = video_library_stg;
+    } else if (req.http.x-environment == "stg") {
+        set req.backend = video_library_stg;
+    } else {
+        set req.backend = www_fe_prd;
+    }
+}
+
+# set a video api backend based on env
+sub set_video_api_backend {
+    if(req.http.x-environment == "dev") {
+        set req.backend = video_api_stg;
+    } else if (req.http.x-environment == "stg") {
+        set req.backend = video_api_stg;
+    } else {
+        set req.backend = www_fe_prd;
     }
 }
 
