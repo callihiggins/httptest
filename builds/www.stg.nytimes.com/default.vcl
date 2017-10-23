@@ -157,6 +157,16 @@ sub vcl_miss {
   // since this was a lookup we were not pass
   remove bereq.http.Cookie;
 
+  // cookie removing for collection
+  if(req.http.X-PageType == "collection"){
+    unset bereq.http.X-Cookie;
+  }
+
+  // cookie removing for article
+  if(req.http.X-PageType == "article"){
+    unset bereq.http.X-Cookie;
+  }  
+
   // cacheable community svc requests are ESI jsonp
   // we can not compress these... yet...
   if(req.http.X-PageType == "community-svc-cacheable"){
@@ -170,6 +180,18 @@ sub vcl_miss {
 sub vcl_pass {
 #FASTLY pass
   call unset_extraneous_bereq_headers;
+
+  // cookie removing for collection
+  if(req.http.X-PageType == "collection"){
+    unset bereq.http.Cookie;
+    unset bereq.http.X-Cookie;
+  }
+  // cookie removing for article
+  if(req.http.X-PageType == "article"){
+    unset bereq.http.Cookie;
+    unset bereq.http.X-Cookie;
+  }    
+
 }
 
 sub vcl_fetch {
