@@ -27,7 +27,7 @@ sub vcl_recv {
         || req.http.X-PageType == "intl"  // espanol/international
         || req.http.X-PageType == "newsdev-gke"   // interative news
         || req.http.X-PageType == "newsdev-gcs"   // interative news
-        || req.http.X-PageType == "newsdev-attribute-cloud-function"   // interative news
+        || req.http.X-PageType == "newsdev-attribute"   // interative news
         || req.http.X-PageType == "well"          // beta - well guides
         || req.http.X-PageType == "trending"
         || req.http.X-PageType == "bestseller"

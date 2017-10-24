@@ -197,11 +197,7 @@ sub vcl_recv {
     // Send to GCP
     if ( req.url ~ "^/svc/int/qa" ) {
         call set_ask_well_backend;
-    } else if ( req.http.x-environment == "stg" && req.url ~ "^/svc/int/attribute" ) {
-      set req.http.X-PageType = "newsdev-attribute-cloud-function";
-      set req.http.X-OldURL = req.url;
-      set req.url = regsub(req.url, "^/svc/int/attribute/projects/([^/]+)/submissions.json", "/attribute-submission/\1");
-      set req.http.x-skip-glogin = "1";
+    } else if ( req.url ~ "^/svc/int/attribute/projects/" ) {
       call set_www_newsdev_attribute_gclod_function_backend;
     } else if (    req.url ~ "^/svc/int/"
         || (req.url ~ "^/interactive/projects/(notable-deaths|guantanamo)")
@@ -644,10 +640,11 @@ sub set_www_newsdev_gke_backend {
 
 sub set_www_newsdev_attribute_gclod_function_backend {
     if(req.http.x-environment == "dev" || req.http.x-environment == "stg") {
-      set req.http.host = "us-central1-nytint-stg.cloudfunctions.net";
+      set req.http.x-cf-host = "us-central1-nytint-stg.cloudfunctions.net";
       set req.backend = newsdev_attribute_gclod_function_stg;
     } else {
-        set req.backend = newsdev_k8s_gke_prd;
+      set req.http.x-cf-host = "us-central1-nytint-prd.cloudfunctions.net";
+      set req.backend = newsdev_attribute_gclod_function_prd;
     }
 }
 

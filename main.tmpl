@@ -116,6 +116,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "backend-newsdev-attribute"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-attribute.vcl")}"
+  }
+
+  vcl {
     name    = "normalize-url"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/normalize-url.vcl")}"
