@@ -31,14 +31,9 @@ sub vcl_recv {
     # (1) Determine our test_group.
     #
 
-    # Bypass to vi for onion clients
-    if (req.http.X-From-Onion == "1") {
-        set var.test_group = "b2";
-    }
-
     # allow forcing our variation with querystring like `?abra=WP_ProjectVi_www_hp=hp-st`
     # or cookie like `ab7=WP_ProjectVi_www_hp=hp-st`:
-    else if (req.http.x-nyt-internal-access || req.http.x-nyt-external-access) {
+    if (req.http.x-nyt-internal-access || req.http.x-nyt-external-access) {
         set var.abra_overrides = "";
         # let `abra` querystring come first for priority over `ab7` cookie:
         if (req.url ~ "(?i)\?(?:|.*&)abra=([^&]*)") {
@@ -49,7 +44,11 @@ sub vcl_recv {
         }
     }
 
-    if (var.abra_overrides ~ "(?:^|&)WP_ProjectVi_www_hp=([^&]*)") {
+
+    # Bypass to vi for onion clients
+    if (req.http.X-From-Onion == "1") {
+        set var.test_group = "b2";
+    } else if (var.abra_overrides ~ "(?:^|&)WP_ProjectVi_www_hp=([^&]*)") {
         if      (re.group.1 == "hp-st")   { set var.test_group = "a0"; } # translate to equiv.
         else if (re.group.1 == "hp")      { set var.test_group = "b0"; } # test_group code
         else if (re.group.1 == "st")      { set var.test_group = "c0"; }

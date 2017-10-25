@@ -115,7 +115,29 @@ function getScenarioEvents()
         'x-nyt-backend': 'www_',
       },
       'responseStatusCode': [200, 404],
-      'scenarioDescription': 'ab7 => mw/mw/mw reported; other page',
+      'scenarioDescription': 'ab7 => mw/mw/mw reported; homepage',
+      'testId': 40,
+    },
+
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'X-From-Onion': '1'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'set-cookie': 'vi_www_hp=b2',
+        'x-nyt-backend': 'projectvi_fe_',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Custom onion header sets backend to vi',
       'testId': 60,
     },
 
