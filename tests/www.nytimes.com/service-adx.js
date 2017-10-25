@@ -25,8 +25,6 @@ function getScenarioEvents() {
         "cache-control",
         "x-goog-generation"
       ],
-      responseHeadersNotPresent: [
-      ],
       responseStatusCode: [200],
       scenarioDescription: "ADX Clientside responds with 200 from GCS",
       testId: 1
@@ -48,8 +46,6 @@ function getScenarioEvents() {
       responseHeadersPresent: [
         "cache-control",
         "x-goog-generation"
-      ],
-      responseHeadersNotPresent: [
       ],
       responseStatusCode: [200],
       scenarioDescription: "ADX adxrun.html responds with 200 from GCS",
@@ -73,11 +69,75 @@ function getScenarioEvents() {
         "cache-control",
         "x-goog-generation"
       ],
-      responseHeadersNotPresent: [
-      ],
       responseStatusCode: [200],
       scenarioDescription: "ADX adxrun.json responds with 200 from GCS",
       testId: 3
+    },
+    {
+      id: "FunctionalTestScenarioDefinitionForHtmlPage",
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false,
+        sbx: false
+      },
+      requestScheme: "https://",
+      requestUri: "/svc/adxmulti/hello.json",
+      responseHeaderMatches: {
+        "x-api-version": "F-AS",
+        "x-pagetype": "adx-static"
+      },
+      responseHeadersPresent: [
+        "cache-control",
+        "x-goog-generation"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "ADX adxmulti responds with 200 from GCS",
+      testId: 4
+    },
+    {
+      id: "FunctionalTestScenarioDefinitionForHtmlPage",
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false,
+        sbx: false
+      },
+      requestScheme: "https://",
+      requestUri: "/gst/svc/adx.html",
+      responseHeaderMatches: {
+        "x-api-version": "F-AS",
+        "x-pagetype": "adx-static"
+      },
+      responseHeadersPresent: [
+        "cache-control",
+        "x-goog-generation"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "ADX /gst/svc/adx.html responds with 200 from GCS",
+      testId: 5
+    },
+    {
+      id: "FunctionalTestScenarioDefinitionForHtmlPage",
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false,
+        sbx: false
+      },
+      requestScheme: "https://",
+      requestUri: "/adxbin/hello.txt",
+      responseHeaderMatches: {
+        "x-api-version": "F-AS",
+        "x-pagetype": "adx-static"
+      },
+      responseHeadersPresent: [
+        "cache-control",
+        "x-goog-generation"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "ADX /adxbin/ responds with 200 from GCS",
+      testId: 6
     },
   ];
 
