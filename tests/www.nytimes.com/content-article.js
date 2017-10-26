@@ -11,7 +11,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -32,7 +32,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -53,7 +53,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -74,7 +74,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -95,7 +95,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -116,7 +116,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -137,7 +137,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -146,19 +146,19 @@ function getScenarioEvents()
         'nyt.dv.nyt5-on-gke.article=1',
       ],
       'requestScheme': 'https://',
-      'requestUri': '/aponline/2017/09/28/us/politics/ap-us-flu-vaccine.html',
+      'requestUri': '/aponline/2017/10/23/us/ap-us-governors-race-coal-country.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GA',
         'x-pagetype': 'article',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Test article on /aponline/2017/09/28/us/politics/ap-us-flu-vaccine.html',
+      'scenarioDescription': 'Test article on /aponline/2017/10/23/us/ap-us-governors-race-coal-country.html',
       'testId': 7,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -179,7 +179,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -200,7 +200,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -221,7 +221,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -242,7 +242,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -263,7 +263,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -284,7 +284,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
