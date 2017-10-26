@@ -51,12 +51,10 @@ include "backend-video";
 include "backend-tbooks";
 include "backend-adx-static";
 
-# vi allocation and routing
-# intentionally after other backend logic
-include "vi-allocation";
-include "backend-vi";
+
 
 # begin other logic
+include "vi-allocation";
 include "community-esi";
 include "https-redirect";
 include "device-detect";
@@ -132,6 +130,13 @@ sub vcl_hash {
     set req.hash += req.http.device_type;
   }
 
+  # create new hashes based on geo if rendering project vi home
+  if(req.http.x--fastly-project-vi && req.url.path == "/"){
+    set req.hash += req.http.x-nyt-geo-hash;
+    set req.hash += req.http.device_type;
+  }
+
+
   return(hash);
 }
 
@@ -161,7 +166,7 @@ sub vcl_miss {
   // cookie removing for article
   if(req.http.X-PageType == "article"){
     unset bereq.http.X-Cookie;
-  }
+  }  
 
   // cacheable community svc requests are ESI jsonp
   // we can not compress these... yet...
@@ -186,7 +191,7 @@ sub vcl_pass {
   if(req.http.X-PageType == "article"){
     unset bereq.http.Cookie;
     unset bereq.http.X-Cookie;
-  }
+  }    
 
 }
 
@@ -242,6 +247,14 @@ sub vcl_fetch {
   if (beresp.http.X-Is-NYT4) {
     set req.http.X-Is-NYT4 = "1";
     return(restart);
+  }
+
+  if (beresp.http.X-Vi-Cluster) {
+    set req.http.X-Vi-Cluster = beresp.http.X-Vi-Cluster;
+
+    if (req.http.X-RelevantBackendStatus != "unchanged") {
+      return (restart);
+    }
   }
 
   # Vary on this header for HTTPS version, so we can purge both versions at the same time

@@ -91,6 +91,17 @@ sub vcl_deliver {
                 set req.http.x-do-mobile-redirect = "0";
             }
 
+            # don't redirect to mobile if data source is oak
+            # STORY-173: Serve OAK Articles to mobile devices through www
+            if (resp.http.X-Cms-Format == "oak") {
+                set req.http.x-do-mobile-redirect = "0";
+            }
+
+            // vi stories should not be redirected to mobile web
+            if (resp.http.X-PageType == "vi-story") {
+                set req.http.x-do-mobile-redirect = "0";
+            }
+
             //do not redirect Watching section; WP-19158
             if (req.url ~ "^\/\d{4}\/\d{2}\/\d{2}\/watching\/") {
               set req.http.x-do-mobile-redirect = "0";

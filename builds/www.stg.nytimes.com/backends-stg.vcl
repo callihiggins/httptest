@@ -407,9 +407,8 @@ backend content_api_stg {
 }
 
 backend projectvi_fe_stg {
-    .host = "alpha-test.stg.nyt.net";
+    .host = "35.186.240.2";
     .port = "80";
-    .dynamic = true;
     .probe = {
         .url = "/.healthcheck";
         .timeout = 5s;

@@ -15,6 +15,7 @@ require("./www.nytimes.com/content-subscription.js");
 require("./www.nytimes.com/service-userinfo-v1.js");
 require("./www.nytimes.com/service-userinfo-v2.js");
 require("./www.nytimes.com/service-userinfo-v3.js");
+require("./www.nytimes.com/assets-vi.js");
 require("./www.nytimes.com/service-crosswords.js");
 require("./www.nytimes.com/content-tbooks.js");
 require("./www.nytimes.com/content-well-known.js");
@@ -25,8 +26,6 @@ require("./www.nytimes.com/redirect-glogin.js");
 require("./www.nytimes.com/content-timesjourneysstudents.js");
 require("./www.nytimes.com/content-timesjourneys.js");
 require("./www.nytimes.com/vi-allocation.js");
-require("./www.nytimes.com/vi-assets.js");
-require('./www.nytimes.com/vi-story.js');
 require("./www.nytimes.com/content-programs.js");
 require("./www.nytimes.com/service-adx.js");
 
