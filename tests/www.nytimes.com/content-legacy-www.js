@@ -28,7 +28,7 @@ function getScenarioEvents()
         'x-frame-options': 'DENY',
         'x-pagetype': 'legacy',
       },
-      'responseStatusCode': [200, 404],
+      'responseStatusCode': 200,
       'scenarioDescription': 'Test legacy; www cluster; archive article, 1961',
       'testId': 1,
     },
@@ -1044,5 +1044,3 @@ function getScenarioEvents()
 
   return scenarios;
 }
-
-

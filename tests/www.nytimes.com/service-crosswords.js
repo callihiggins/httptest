@@ -382,6 +382,26 @@ function getScenarioEvents()
       'scenarioDescription': 'Test hitting Stats page',
       'testId': 19,
     },
+    {
+      'id': 'Functional Test For Archive Daily',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'legacy',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/archive/daily',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Archive Daily page',
+      'testId': 20,
+    },
   ];
 
   return scenarios;

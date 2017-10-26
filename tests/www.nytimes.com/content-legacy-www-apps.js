@@ -292,7 +292,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': false,
         'sbx': false,
       },
@@ -745,6 +745,29 @@ function getScenarioEvents()
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; email this form',
       'testId': '18d',
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/archive/',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-GW',
+        'x-frame-options': 'DENY',
+        'x-pagetype': 'legacy',
+      },
+      'responseStatusCode': [200, 404, 403],
+      'scenarioDescription': 'Test legacy; www-apps cluster; crosswords; archive',
+      'testId': '18e',
     },
   ];
   return scenarios;

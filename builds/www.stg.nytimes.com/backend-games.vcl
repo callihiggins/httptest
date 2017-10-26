@@ -22,7 +22,8 @@ sub vcl_recv {
             return(pass);
         }
 
-        if (req.url.path ~ "^/crosswords/game/(sudoku|kenken|set)" &&
+        if ((req.url.path ~ "^/crosswords/game/(sudoku|kenken|set)" ||
+            req.url.path ~ "^/crosswords/archive") &&
             req.url.qs !~ "nyt-games=legacy") {
 
             set req.http.X-PageType = "games-web";
@@ -39,7 +40,7 @@ sub vcl_recv {
         }
 
         if (req.http.x-environment == "stg" &&
-            (req.url.path ~ "^/crosswords/(tips-and-tricks|stats|archive|primer)" ||
+            (req.url.path ~ "^/crosswords/(tips-and-tricks|stats|primer)" ||
              req.url.path ~ "^/crosswords/game/acrostic") &&
             req.url.qs !~ "nyt-games=legacy") {
 
