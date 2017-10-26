@@ -60,7 +60,7 @@ function getScenarioEvents()
       'requestUri': '/video-media/2017/03/27/38483_1_arconic-fiction-video_v1_wg_hls/segment-2-f2-v1-a1.ts',
       'responseHeaderMatches': {
         'x-frame-options': 'DENY',
-        'content-type': 'video/mp2t',
+        'content-type': 'video/MP2T',
         'surrogate-key': 'video/38483 video/chop-chop',
         'x-api-version': 'F-VM',
       },
