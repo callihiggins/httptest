@@ -104,7 +104,7 @@ resource "fastly_service_v1" "www" {
     source        = "\"1\""
     type          = "request"
   }
-  
+
   # this does not currently log anything, it's only providing the log stream configuration, see the conditional
   sumologic {
     format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.X-NYT-Backend,req.http.X-NYT-Backend,\"-\")}V] pagetype=[%{if(req.http.X-PageType,req.http.X-PageType,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.x-redirect-reason,req.http.x-redirect-reason,\"\")}V"
@@ -450,11 +450,19 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/error-pages.vcl")}"
   }
+
   vcl {
     name    = "article-allocation"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/article-allocation.vcl")}"
   }
+
+  vcl {
+    name    = "backend-vi"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-vi.vcl")}"
+  }
+
   vcl {
     name    = "backend-adx-static"
     main    = false

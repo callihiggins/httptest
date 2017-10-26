@@ -20,12 +20,29 @@
 #   `vi_www_hp_opt` cookie meaning:
 #       1 = force vi homepage
 #       0 = opt out vi homepage
+#
+#   `vi_story_opt` cookie meaning:
+#       1 = force vi stories
+#       0 = opt out vi stories
 
 sub vcl_recv {
     declare local var.hash STRING;
     declare local var.dart INTEGER;
     declare local var.test_group STRING;
+    declare local var.test_group_story STRING;
     declare local var.abra_overrides STRING;
+
+    if (!req.http.x-ab7 && req.http.cookie:ab7) {
+        set req.http.x-ab7 = req.http.cookie:ab7;
+    }
+
+    if (!req.http.x-vistory && req.http.cookie:vistory) {
+        set req.http.x-vistory = req.http.cookie:vistory;
+    }
+
+    if (!req.http.x-vi-story-opt && req.http.cookie:vi_story_opt) {
+        set req.http.x-vi-story-opt = req.http.cookie:vi_story_opt;
+    }
 
     #
     # (1) Determine our test_group.
@@ -39,8 +56,8 @@ sub vcl_recv {
         if (req.url ~ "(?i)\?(?:|.*&)abra=([^&]*)") {
             set var.abra_overrides = urldecode(re.group.1);
         }
-        if (req.http.cookie:ab7) {
-            set var.abra_overrides = var.abra_overrides + "&" + urldecode(req.http.cookie:ab7);
+        if (req.http.x-ab7) {
+            set var.abra_overrides = var.abra_overrides + "&" + urldecode(req.http.x-ab7);
         }
     }
 
@@ -101,39 +118,44 @@ sub vcl_recv {
         }
     }
 
+    #
+    # Story allocation
+    #
+
+    if (var.abra_overrides ~ "(?:^|&)WP_ProjectVi_Story=([^&]*)") {
+        if (re.group.1 == "st")   { set var.test_group_story = "a0"; } # translate to equiv.
+        else                      { set var.test_group_story = "z0"; } # default to ctrl grp
+    } else {
+        # use Abra-style allocation, like so:
+        # 0..3%:       "a0" (Story on VI except incompatible)
+        # 3..50%:      "b0" (nyt5 bucketed for reporting)
+        # 50..53%:     "c0" (nyt5 bucketed for reporting)
+        # 53..100%:    "z0" (nyt5 bucketed for reporting)
+
+        set var.hash = digest.hash_sha256(req.http.x-nyt-a + " WP_ProjectVi_Story");
+        set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+        set var.dart = std.strtol(var.hash, 16);
+
+        # at launch the values will be updated to match comments
+        if (var.dart < 0) { # 3% * 0x100000000
+            set var.test_group_story = "a0"; # Getting VI response
+        } else if (var.dart < 0) { # 50% * 0x100000000
+            set var.test_group_story = "b0"; # Not getting VI response
+        } else if (var.dart < 0) { # 53% * 0x100000000
+            set var.test_group_story = "c0"; # Not getting VI response
+        } else { # var.dart < 0x100000000
+            set var.test_group_story = "z0"; # Not getting VI response
+        }
+    }
+
     # use the req object to stash our test group and incoming `vi_www_hp` cookie,
     # so later in vcl_recv we can set the outgoing `vi_www_hp` cookie if needed:
     set req.http.x--fastly-vi-test-group = var.test_group;
     set req.http.x--fastly-req-cookie-vi = req.http.cookie:vi_www_hp;
-
-
-    #
-    # (2) Decide which beckend to use for this request.
-    #
-
-    # Resources hosted by Vi must go to Vi, dead or alive:
-    if (req.url.path ~ "^/((0_vendor-|main-|[0-9]+-).+|fonts).js$") {
-        call set_projectvi_fe_backend;
-    } else if (req.url ~ "^/vi-assets") {
-        set req.http.host = "storage.googleapis.com";
-        set req.backend = projectvi_asset_prd;
-        set req.http.X-PageType = "vi-asset";
-    } else {
-        # For other resources:
-        # check if it is a homepage route, has a a/b test group, and is not opted out.
-        if (req.http.host ~ "^(www\.)?(www-[a-z0-9\-]+\.)?(dev\.|stg\.|)?nytimes.com$") {
-            if ( req.url.path == "/"
-                    && ((var.test_group ~ "^[ab]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")
-                ) {
-                # homepage, in a test group getting Vi homepage
-                call set_projectvi_fe_backend;
-            } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))"
-                       && req.url.path !~ "\.amp\.html$" && var.test_group ~ "^[ac]") {
-                # story page, in a test group getting Vi story pages
-                call set_projectvi_fe_backend;
-            }
-        }
-    }
+    set req.http.x--fastly-vi-test-group-story = var.test_group_story;
+    set req.http.x--fastly-req-cookie-vi-story = req.http.x-vistory;
+    set req.http.x--fastly-vi-story-opt = req.http.x-vi-story-opt;
+    set req.http.x--fastly-dart = var.dart;
 }
 
 sub vcl_deliver {
@@ -142,6 +164,8 @@ sub vcl_deliver {
     declare local var.expire_year STRING;
     declare local var.expire_year_last_digit STRING;
     declare local var.vi_cookie_desired STRING;
+    declare local var.vi_cookie_desired_story STRING;
+
     if (resp.http.Content-Type ~ "^text/html *(;|$)") {
 
         # Requirements for the `vi_www_hp` cookie:
@@ -177,6 +201,7 @@ sub vcl_deliver {
         # at least ~365 days from now (encoded as its last digit):
         set var.expire_year_last_digit = regsub(var.expire_year, "^\d+(\d)$|^.*$", "\1");
         set var.vi_cookie_desired = req.http.x--fastly-vi-test-group + var.expire_year_last_digit;
+        set var.vi_cookie_desired_story = req.http.x--fastly-vi-test-group-story + var.expire_year_last_digit;
 
         # If the existing cookie is wrong, we need to update it. But also, if
         # the date encoded within it is different from our desired expiration
@@ -191,25 +216,47 @@ sub vcl_deliver {
                 );
         }
 
-        # set resp.http.X-Debug-now_dt = var.now_dt;
-        # set resp.http.X-Debug-now_year = var.now_year;
-        # set resp.http.X-Debug-expire_year = var.expire_year;
-        # set resp.http.X-Debug-vi_cookie_desired = var.vi_cookie_desired;
-        # set resp.http.X-Debug-vi_cookie_actual = "here --> '" + req.http.x--fastly-req-cookie-vi + "'";
+        # If the existing cookie is wrong, we need to update it. But also, if
+        # the date encoded within it is different from our desired expiration
+        # date, we need to bump it:
+        if (req.http.x--fastly-req-cookie-vi-story != var.vi_cookie_desired_story) {
+            add resp.http.Set-Cookie =
+                "vistory=" + var.vi_cookie_desired_story +
+                "; path=/; domain=.nytimes.com; expires=" +
+                std.time(
+                    "Sun, 1 Jan " + var.expire_year + " 00:00:00 GMT", # the "Sun" part doesn't matter
+                    time.add(var.now_dt, 730d) # default to 2 years from now if std.time parsing fails
+                );
+        }
+
+    #     set resp.http.X-Debug-now_dt = var.now_dt;
+    #     set resp.http.X-Debug-now_year = var.now_year;
+    #     set resp.http.X-Debug-expire_year = var.expire_year;
+    #     set resp.http.X-Debug-vi_cookie_desired = var.vi_cookie_desired;
+    #     set resp.http.X-Debug-vi_cookie_actual = "here --> '" + req.http.x--fastly-req-cookie-vi + "'";
+    #     set resp.http.X-Debug-vi_cookie_desired_story = var.vi_cookie_desired_story;
+    #     set resp.http.X-Debug-vi_cookie_actual_story = "here --> '" + req.http.x--fastly-req-cookie-vi-story + "'";
+    #     set resp.http.X-Debug-dart = "dart --> '" + req.http.x--fastly-dart + "'";
+    #     set resp.http.X-Debug-vi_story_opt = "here --> '" + req.http.x--fastly-vi-story-opt + "'";
     }
 }
 
+sub clear_vi_group_vars {
+    unset bereq.http.x--fastly-req-cookie-vi;
+    unset bereq.http.x--fastly-vi-test-group;
+    unset bereq.http.x--fastly-req-cookie-vi-story;
+    unset bereq.http.x--fastly-vi-test-group-story;
+    unset bereq.http.x--fastly-project-vi;
+}
 
 # the backend doesn't need the private vars we've stashed on the request,
 # so zap them from the backend request using vcl_miss and vcl_pass:
 sub vcl_miss {
-    unset bereq.http.x--fastly-req-cookie-vi;
-    unset bereq.http.x--fastly-vi-test-group;
-}
-sub vcl_pass {
-    unset bereq.http.x--fastly-req-cookie-vi;
-    unset bereq.http.x--fastly-vi-test-group;
+    call clear_vi_group_vars;
 }
 
+sub vcl_pass {
+    call clear_vi_group_vars;
+}
 
 # SAVE EITAN
