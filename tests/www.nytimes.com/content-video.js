@@ -25,6 +25,24 @@ function getScenarioEvents()
       'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a video library page',
       'testId': 1,
+    },
+    {
+      'id':  'Functional Test For Video Library Homepage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaderCookie': '',
+      'responseHeaderMatches': {
+        'X-Pagetype': 'video-library',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/video?param=1',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting the library homepage with a query string at the end',
+      'testId': 2,
     }
   ];
   return scenarios;
