@@ -11,7 +11,7 @@ function getScenarioEvents()
     {
       'id':  'Functional Test For Video Library',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -29,7 +29,7 @@ function getScenarioEvents()
     {
       'id':  'Functional Test For Video Library Homepage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
