@@ -408,8 +408,15 @@ backend content_api_stg {
 
 backend projectvi_fe_stg {
     .host = "alpha-test.stg.nyt.net";
-    .port = "80";
+    .port = "443";
     .dynamic = true;
+    .ssl_cert_hostname = "alpha-test.stg.nyt.net";
+    .ssl_sni_hostname = "alpha-test.stg.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = always;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
     .probe = {
         .url = "/.healthcheck";
         .timeout = 5s;
