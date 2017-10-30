@@ -60,31 +60,6 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForService',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaderCookie': '',
-      'requestHeaderRemoteIp': '205.193.117.158',
-      'requestScheme': 'http://',
-      'requestUri': '/svc/web-products/userinfo-v3.json',
-      'responseHeaderContains': {},
-      'responseHeaderMatches': {
-        'x-api-version': 'F-0',
-        'x-pagetype': 'service',
-      },
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test userinfo service, version 3: no cookies; GeoIP of Canada; JSON format',
-      'testId': 2,
-      'userInfoAuthId': '0',
-      'userInfoAuthName': '',
-      'userInfoCountry': 'canada',
-      'userInfoSubscriptions': [],
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForService',
-      'isDeployedInEnv': {
         'prd': true,
         'stg': true,
         'dev': false,
@@ -105,7 +80,7 @@ function getScenarioEvents()
       'userInfoAuthId': '37593002',
       'userInfoAuthName': 'qa_fake',
       'userInfoCountry': 'United States',
-      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA'],
+      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA', 'XWD'],
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForService',
@@ -133,7 +108,7 @@ function getScenarioEvents()
       'userInfoAuthId': '37593002',
       'userInfoAuthName': 'qa_fake',
       'userInfoCountry': 'United States',
-      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA',],
+      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA', 'XWD'],
     },
   ];
 

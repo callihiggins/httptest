@@ -104,4 +104,4 @@ pipeline:
       - source: SLACK_WEBHOOK_URL
         target: SLACK_WEBHOOK
     when: 
-      event: [success, failure, blocked]
+      status: [success, failure, blocked]

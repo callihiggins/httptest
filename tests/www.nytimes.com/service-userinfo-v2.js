@@ -76,7 +76,7 @@ function getScenarioEvents()
       'userInfoAuthId': '37593002',
       'userInfoAuthName': 'qa_fake',
       'userInfoCountry': '(null)',
-      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA'],
+      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA', 'XWD'],
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForService',

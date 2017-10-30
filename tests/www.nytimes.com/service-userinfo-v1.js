@@ -72,7 +72,7 @@ function getScenarioEvents()
       'testId': 2,
       'userInfoAuthId': '37593002',
       'userInfoAuthName': 'qa_fake',
-      'userInfoSubscriptions': {'web': '0', 'mobile': '0', 'crosswords': '0', 'hd': '0', 'now': '0'},
+      'userInfoSubscriptions': {'web': '0', 'mobile': '0', 'crosswords': '1', 'hd': '0', 'now': '0'},
     },
   ];
 
