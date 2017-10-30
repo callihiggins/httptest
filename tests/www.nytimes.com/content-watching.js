@@ -11,7 +11,7 @@ function getScenarioEvents()
     {
       'id': 'Watching Homepage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -29,7 +29,7 @@ function getScenarioEvents()
     {
       'id': 'Watching Homepage redirect to https',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -47,7 +47,7 @@ function getScenarioEvents()
     {
       'id': 'Redirect to remove trailing slash',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -68,7 +68,7 @@ function getScenarioEvents()
     {
       'id': 'Watching page with article URL pattern',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -86,7 +86,7 @@ function getScenarioEvents()
     {
       'id': 'Watching recommendations URL',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -104,7 +104,7 @@ function getScenarioEvents()
     {
       'id': 'Watching multi-recommendations URL with query param',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -122,7 +122,7 @@ function getScenarioEvents()
     {
       'id': 'Watching recommendations URL without query param',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
