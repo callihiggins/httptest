@@ -8,7 +8,7 @@ pipeline:
 
   # Used to verify TF syntax
   syntax_check:
-    image: jmccann/drone-terraform:4.0-0.10.3
+    image: jmccann/drone-terraform:4.0-0.10.7 
     plan: true
     init_options:
       backend-config:
@@ -21,7 +21,7 @@ pipeline:
 
   # Deploys to dev service  to validate if Fastly can generate the final VCL
   dev:
-    image: jmccann/drone-terraform:4.0-0.10.3
+    image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
     init_options:
       backend-config:
@@ -50,7 +50,7 @@ pipeline:
   # --------
   # Deployment to staging service
   staging:
-    image: jmccann/drone-terraform:4.0-0.10.3
+    image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
     init_options:
       backend-config:
@@ -79,7 +79,7 @@ pipeline:
 
  # Deployment to production service
   production:
-    image: jmccann/drone-terraform:4.0-0.10.3
+    image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
     init_options:
       backend-config:
