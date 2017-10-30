@@ -55,10 +55,12 @@ sub vcl_recv {
       set req.http.x-nyt-wpab = urldecode(req.http.Cookie:NYT-wpAB);
     }
 
-    if (req.http.Cookie:nyt-a) {
+    # handle the nyt-a cookie in a restart safe manner
+    if (!req.http.x-nyt-a && req.http.Cookie:nyt-a) {
       set req.http.x-nyt-a = req.http.Cookie:nyt-a;
     }
-    else {
+
+    if (!req.http.x-nyt-a) {
       # we didn't get a uuid, generate and set one
       set req.http.x-nyt-a = digest.hash_sha256(
           now.sec+
