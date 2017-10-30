@@ -124,40 +124,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestScheme': 'https://',
-      'requestUri': '/aponline/2017/10/23/us/ap-us-governors-race-coal-country.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GA',
-        'x-pagetype': 'article',
-      },
-      'scenarioDescription': 'Test article on /aponline/2017/10/23/us/ap-us-governors-race-coal-country.html',
-      'testId': 7,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/reuters/2017/10/11/business/11reuters-csx-disruptions.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GA',
-        'x-pagetype': 'article',
-      },
-      'scenarioDescription': 'Test article on /reuters/2017/10/11/business/11reuters-csx-disruptions.html',
-      'testId': 8,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
       'requestScheme': 'http://',
       'requestUri': '/2001/01/20/technology/20ANNIVERSARY.html',
       'responseHeaderMatches': {
