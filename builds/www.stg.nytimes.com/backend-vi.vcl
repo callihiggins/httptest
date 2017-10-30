@@ -1,17 +1,21 @@
 sub vcl_recv {
   // article
-  if (   req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" // 2014-future
-      || req.url ~ "^/200[4-5]/" // 2004-2005
-      || req.url ~ "^/197[0-9]/" // 1970-1979
-      || req.url ~ "^/1964/" // 1964
-      || req.url ~ "^/1959/" // 1959
-      || req.url ~ "^/(aponline|reuters)/" // wire sources
-      || req.url ~ "^/blog/" // all blogposts
-      || req.url ~ "^/2001/01/20/technology/20ANNIVERSARY.html" // WP-16051
-      || req.url ~ "^/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html" // WP-16051
-      || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
-      || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
-      || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
+  if (
+      ( req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" // 2014-future
+        || req.url ~ "^/200[4-5]/" // 2004-2005
+        || req.url ~ "^/197[0-9]/" // 1970-1979
+        || req.url ~ "^/1964/" // 1964
+        || req.url ~ "^/1959/" // 1959
+        || req.url ~ "^/(aponline|reuters)/" // wire sources
+        || req.url ~ "^/blog/" // all blogposts
+        || req.url ~ "^/2001/01/20/technology/20ANNIVERSARY.html" // WP-16051
+        || req.url ~ "^/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html" // WP-16051
+        || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
+        || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
+        || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
+      )
+      && req.http.X-PageType != "watching-nocache"
+      && req.http.X-PageType != "watching"
   ) {
       # The articles that are potentially served by the publishing pipeline
       # are limited by a date range of later than 2017/10/09. This date is going
