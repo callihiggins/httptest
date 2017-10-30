@@ -137,11 +137,11 @@ sub vcl_recv {
         set var.dart = std.strtol(var.hash, 16);
 
         # at launch the values will be updated to match comments
-        if (var.dart < 0) { # 3% * 0x100000000
+        if (var.dart < 128849019) { # 3% * 0x100000000
             set var.test_group_story = "a0"; # Getting VI response
-        } else if (var.dart < 0) { # 50% * 0x100000000
+        } else if (var.dart < 2147483648) { # 50% * 0x100000000
             set var.test_group_story = "b0"; # Not getting VI response
-        } else if (var.dart < 0) { # 53% * 0x100000000
+        } else if (var.dart < 2276332667) { # 53% * 0x100000000
             set var.test_group_story = "c0"; # Not getting VI response
         } else { # var.dart < 0x100000000
             set var.test_group_story = "z0"; # Not getting VI response
