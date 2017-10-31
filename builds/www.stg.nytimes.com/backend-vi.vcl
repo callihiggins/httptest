@@ -16,6 +16,7 @@ sub vcl_recv {
       )
       && req.http.X-PageType != "watching-nocache"
       && req.http.X-PageType != "watching"
+      && req.http.host !~ "blogs"
   ) {
       # The articles that are potentially served by the publishing pipeline
       # are limited by a date range of later than 2017/10/09. This date is going
