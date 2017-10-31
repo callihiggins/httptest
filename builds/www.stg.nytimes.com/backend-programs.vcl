@@ -30,6 +30,5 @@ sub set_programs_web_backend {
     } else if (req.http.x-environment == "stg") {
         set req.backend = programs_svc_stg;
         set bereq.http.host = "ftu-dot-nyt-betaprog-dev.appspot.com";
-        set bereq.url = regsub(req.url, "^/programs/", "/"); 
     }
 }
