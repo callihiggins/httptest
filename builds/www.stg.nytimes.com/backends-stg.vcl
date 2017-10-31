@@ -196,12 +196,12 @@ backend games_svc_stg {
     .ssl_cert_hostname = "nyt-games-dev.appspot.com";
     .host_header = "nyt-games-dev.appspot.com";
     .connect_timeout = 10s;
-    .first_byte_timeout = 10s;
-    .between_bytes_timeout = 10s;
+    .first_byte_timeout = 15s;
+    .between_bytes_timeout = 15s;
     .probe = {
         .url = "/status.txt";
         .timeout = 10s;
-        .interval = 5s;
+        .interval = 10s;
         .window = 5;
         .threshold = 3;
     }
