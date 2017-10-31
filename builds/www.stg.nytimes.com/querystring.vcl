@@ -163,6 +163,10 @@ sub vcl_recv {
                 {"services%5B%5D"} + querystring.filtersep() +
                 "sub_genre" + querystring.filtersep() +
                 "type");
+        } else if (req.http.X-PageType == "well") {
+            set req.url = querystring.filter_except(req.url,
+                "price" + querystring.filtersep() +
+                "category");
         } else if (req.http.X-PageType == "bestsellers") {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.X-PageType == "collection") {
