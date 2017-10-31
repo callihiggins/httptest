@@ -18,7 +18,7 @@ function getScenarioEvents()
       },
       'requestHeaderCookie': '',
       'responseHeaderMatches': {
-        'X-Pagetype': 'video-library',
+        'x-pagetype': 'video-library',
       },
       'requestScheme': 'https://',
       'requestUri': '/video/sciencetake',
@@ -36,7 +36,7 @@ function getScenarioEvents()
       },
       'requestHeaderCookie': '',
       'responseHeaderMatches': {
-        'X-Pagetype': 'video-library',
+        'x-pagetype': 'video-library',
       },
       'requestScheme': 'https://',
       'requestUri': '/video?param=1',

@@ -11,17 +11,17 @@ function getScenarioEvents()
     {
       'id':  'Functional Test For Video API',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': '',
       'responseHeaderMatches': {
-        'X-Pagetype': 'video-api',
+        'x-pagetype': 'video-api',
       },
       'requestScheme': 'https://',
-      'requestUri': '/svc/video/api/v3/video/100000005022783',
+      'requestUri': '/svc/video/api/v3/video/100000002883899',
       'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /svc/video endpoint',
       'testId': 1,
