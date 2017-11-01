@@ -21,7 +21,11 @@ sub vcl_recv {
           # to be Incompatible then we don't send to VI again
           if (req.http.x-pre-restart-status == "Incompatible") {
             set req.http.X-PageType = "article";
-            call set_www_article_backend_gke;
+            if ( req.http.X-Article-Backend == "on-GKE" ) {
+                call set_www_article_backend_gke;
+            } else {
+                call set_www_article_backend;
+            }
           } else {
             set req.http.X-PageType = "vi-story";
             call set_projectvi_fe_backend;
@@ -36,7 +40,11 @@ sub vcl_recv {
             call check_vi_unhealthy;
           } else {
             set req.http.X-PageType = "article";
-            call set_www_article_backend_gke;
+            if ( req.http.X-Article-Backend == "on-GKE" ) {
+                call set_www_article_backend_gke;
+            } else {
+                call set_www_article_backend;
+            }
           }
       }
   }
