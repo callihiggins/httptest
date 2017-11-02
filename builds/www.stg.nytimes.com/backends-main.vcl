@@ -215,8 +215,8 @@ sub vcl_recv {
         call set_www_intl_backend;
     }
 
-    // embedded interactives on mobile should not go to glogin
-    if (req.url ~ "^/interactive/.*([0-9]+).embedded.html") {
+    // embedded or standalone interactives on mobile should not go to glogin
+    if (req.url ~ "^/interactive/.*([0-9]+).(embedded|app).html") {
         set req.http.x-skip-glogin = "1";
     }
 

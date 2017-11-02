@@ -108,6 +108,102 @@ function getScenarioEvents()
       'scenarioDescription': 'glogin down invalid GLS parameter DOES redirect to /glogin',
       'testId': 4,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s_invalid,
+      ],
+      'requestHeaders': {
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_3 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) nytios',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/2017/02/09/upshot/100000004922380.app.html',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-5-5',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
+      'testId': 1,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s_invalid,
+      ],
+      'requestHeaders': {
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_3 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) nytios',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-5-5',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
+      'testId': 1,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s_invalid,
+      ],
+      'requestHeaders': {
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_3 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) nytios',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/2017/multimedia/100000005059100.app.html',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-5-5',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
+      'testId': 1,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s_invalid,
+      ],
+      'requestHeaders': {
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_3 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) nytios',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/2017/admin/100000005250034.embedded.html',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-5-5',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
+      'testId': 1,
+    },
   ];
 
   return scenarios;
