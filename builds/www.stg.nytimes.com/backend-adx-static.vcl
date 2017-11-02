@@ -1,10 +1,9 @@
 sub vcl_recv {
 
     # various ADX related path patterns that we will send to a GCS bucket
-    if ( req.http.x-environment != "prd" && 
-         (req.url.path ~ "^/adx" ||
-          req.url.path == "/gst/svc/adx.html" ||
-          req.url.path ~ "^/svc/adxmulti")
+    if ( req.url.path ~ "^/adx" ||
+         req.url.path == "/gst/svc/adx.html" ||
+         req.url.path ~ "^/svc/adxmulti"
         ) {
 
         # clientside URL is generated dynamically
@@ -31,10 +30,10 @@ sub vcl_recv {
         unset req.http.x-nyt-wpab;
         unset req.http.Authorization;
 
+        # remove query string parameters
+        set req.url = querystring.remove(req.url);
         return(lookup);
 
-    } else if(req.url ~ "^/adx"){
-        set req.http.X-PageType = "adx-legacy";
     }
 }
 
