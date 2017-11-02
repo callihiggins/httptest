@@ -19,11 +19,11 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/int/attribute/projects/healthz/submissions.json',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-attribute-cloud-function',
+        'x-pagetype': 'newsdev-attribute',
         'content-type': 'application/json; charset=utf-8',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Test GET success on healthz path',
+      'scenarioDescription': 'content-newsdev-attribute: Test GET success on healthz path',
       'testId': 1,
     }
   ];

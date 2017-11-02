@@ -394,7 +394,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',

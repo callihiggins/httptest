@@ -291,29 +291,6 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
-      'requestScheme': 'https://',
-      'requestUri': '/crosswords/archive/',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test legacy; www-apps cluster; crosswords; archive',
-      'testId': '6p',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
         'prd': false,
         'stg': false,
         'dev': true,
@@ -485,25 +462,6 @@ function getScenarioEvents()
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; gift guide; 2010 holiday',
       'testId': '11d',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
-      'requestUri': '/health/guides/symptoms/rashes/overview.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test legacy; www-apps cluster; health; guide',
-      'testId': '12p',
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -763,7 +721,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GW',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'games-web',
       },
       'responseStatusCode': [200, 404, 403],
       'scenarioDescription': 'Test legacy; www-apps cluster; crosswords; archive',

@@ -112,11 +112,11 @@ function getScenarioEvents()
       'requestUri': '/section/nyregion',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=z2',
-        'x-nyt-backend': 'www_',
+        'x-nyt-backend': 'collection_',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'ab7 => mw/mw/mw reported; homepage',
-      'testId': 40,
+      'testId': 50,
     },
 
     {
@@ -184,7 +184,7 @@ function getScenarioEvents()
       'requestUri': '/section/nyregion',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=a2',
-        'x-nyt-backend': 'www_',
+        'x-nyt-backend': 'collection_',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'ab7 => vi/vi/mw; other page',
@@ -234,7 +234,7 @@ function getScenarioEvents()
       'requestUri': '/section/nyregion',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=b2',
-        'x-nyt-backend': 'www_',
+        'x-nyt-backend': 'collection_',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'ab7 => vi/mw/mw; other page',

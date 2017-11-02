@@ -29,11 +29,12 @@ require("./www.nytimes.com/vi-assets.js");
 require('./www.nytimes.com/vi-story.js');
 require("./www.nytimes.com/content-programs.js");
 require("./www.nytimes.com/service-adx.js");
+require("./www.nytimes.com/service-video.js");
+require("./www.nytimes.com/content-video.js");
 
-// please leave these tests here and add you includes above
+// please leave these tests here and add your includes above
 require("./www.nytimes.com/redirect-mobile-homepage.js");
 require("./www.nytimes.com/redirect-mobile-article.js");
 require("./www.nytimes.com/redirect-mobile-interactive.js");
 require("./www.nytimes.com/redirect-mobile-slideshow.js");
-require("./www.nytimes.com/service-video.js");
-require("./www.nytimes.com/content-video.js");
+
