@@ -119,10 +119,10 @@ sub set_newsdev_elections_authorization {
     set bereq.http.date = now;
     if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
         set bereq.http.host = req.http.x-bucket ".s3.amazonaws.com";
-        set bereq.http.authorization = "AWS " table.lookup(newsdev_elections, "s3_access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "s3_secret"), "GET" LF LF LF req.http.date LF "/" req.http.x-bucket req.url.path);
+        set bereq.http.authorization = "AWS " table.lookup(newsdev_elections, "s3_access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "s3_secret"), "GET" LF LF LF bereq.http.date LF "/" req.http.x-bucket req.url.path);
     } else {
         set bereq.http.host = req.http.x-bucket ".storage.googleapis.com";
-        set bereq.http.authorization = "AWS " table.lookup(newsdev_elections, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "secret"), "GET" LF LF LF req.http.date LF "/" req.http.x-bucket req.url.path);
+        set bereq.http.authorization = "AWS " table.lookup(newsdev_elections, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "secret"), "GET" LF LF LF bereq.http.date LF "/" req.http.x-bucket req.url.path);
     }
 }
 
