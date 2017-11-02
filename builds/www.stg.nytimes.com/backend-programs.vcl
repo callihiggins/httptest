@@ -3,7 +3,11 @@ sub vcl_recv {
         if (req.url.path ~ "^/programs/" ) {
             set req.http.X-PageType = "programs-service";
         }
-   }
+    }
+
+    if (req.url.path ~ "^/programs/svc/") {
+        return(pass);
+    }
 }
 
 sub vcl_pass {
