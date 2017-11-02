@@ -167,6 +167,28 @@ backend newsdev_elections_prd {
     }
 }
 
+backend newsdev_elections_s3_prd {
+    .host = "s3.amazonaws.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "s3.amazonaws.com";
+    .ssl_sni_hostname = "s3.amazonaws.com";
+    .ssl_check_cert = always;
+    .ssl = true;
+    .connect_timeout = 5s;
+    .first_byte_timeout = 5s;
+    .between_bytes_timeout = 5s;
+    .probe = {
+        .request = "HEAD /healthcheck.txt HTTP/1.1" "Host: nytint-prd-elections.s3.amazonaws.com" "Connection: close" "User-Agent: Varnish/fastly (healthcheck)";
+        .threshold = 3;
+        .window = 5;
+        .timeout = 2s;
+        .initial = 2;
+        .expected_response = 200;
+        .interval = 5s;
+    }
+}
+
 backend newsdev_gcs_prd {
     .host = "storage.googleapis.com";
     .port = "443";

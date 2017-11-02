@@ -83,6 +83,23 @@ function getScenarioEvents()
       'scenarioDescription': 'Test elections 404 cache',
       'testId': 4,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForBackendFailover',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/elections/results/president',
+      'responseHeadersPresent': [
+        'x-goog-hash'
+      ],
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test elections served by GCS, not S3',
+      'testId': 5,
+    },
   ];
 
   return scenarios;

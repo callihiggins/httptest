@@ -16,10 +16,6 @@ sub vcl_recv {
         if ( !req.http.Fastly-SSL ) {
           call redirect_to_https;
         }
-
-        # Configure access to Cloud Storage
-        set req.http.Date = now;
-        set req.http.host = req.http.x-gcs-bucket ".storage.googleapis.com";
     }
 
     if (req.http.magicmarker-elections == "fake") {
@@ -31,13 +27,13 @@ sub vcl_recv {
 
 sub vcl_miss {
   if (req.http.X-PageType == "elections") {
-    set bereq.http.Authorization = "AWS " table.lookup(newsdev_elections, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
+    call set_newsdev_elections_authorization;
   }
 }
 
 sub vcl_pass {
   if (req.http.X-PageType == "elections") {
-    set bereq.http.Authorization = "AWS " table.lookup(newsdev_elections, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
+    call set_newsdev_elections_authorization;
   }
 }
 
@@ -91,14 +87,42 @@ sub vcl_error {
 }
 
 sub set_newsdev_elections_backend {
-    if (req.http.x-environment == "dev") {
-        set req.backend = newsdev_elections_stg;
-        set req.http.x-gcs-bucket = "nytint-stg-elections";
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = newsdev_elections_stg;
-        set req.http.x-gcs-bucket = "nytint-stg-elections";
+    if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
+        if (req.http.x-environment == "dev") {
+            set req.backend = newsdev_elections_s3_stg;
+            set req.http.x-bucket = "nytint-stg-elections";
+        } else if (req.http.x-environment == "stg") {
+            set req.backend = newsdev_elections_s3_stg;
+            set req.http.x-bucket = "nytint-stg-elections";
+        } else {
+            set req.backend = newsdev_elections_s3_prd;
+            set req.http.x-bucket = "nytint-prd-elections";
+        }
+
     } else {
-        set req.backend = newsdev_elections_prd;
-        set req.http.x-gcs-bucket = "nytint-prd-elections";
+        if (req.http.x-environment == "dev") {
+            set req.backend = newsdev_elections_stg;
+            set req.http.x-bucket = "nytint-stg-elections";
+        } else if (req.http.x-environment == "stg") {
+            set req.backend = newsdev_elections_stg;
+            set req.http.x-bucket = "nytint-stg-elections";
+        } else {
+            set req.backend = newsdev_elections_prd;
+            set req.http.x-bucket = "nytint-prd-elections";
+        }
     }
 }
+
+# Sets backend request headers sent to GCS or S3 used to
+# authenticate the request.
+sub set_newsdev_elections_authorization {
+    set bereq.http.date = now;
+    if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
+        set bereq.http.host = req.http.x-bucket ".s3.amazonaws.com";
+        set bereq.http.authorization = "AWS " table.lookup(newsdev_elections, "s3_access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "s3_secret"), "GET" LF LF LF req.http.date LF "/" req.http.x-bucket req.url.path);
+    } else {
+        set bereq.http.host = req.http.x-bucket ".storage.googleapis.com";
+        set bereq.http.authorization = "AWS " table.lookup(newsdev_elections, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_elections, "secret"), "GET" LF LF LF req.http.date LF "/" req.http.x-bucket req.url.path);
+    }
+}
+
