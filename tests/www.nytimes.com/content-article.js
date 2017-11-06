@@ -16,9 +16,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'https://',
       'requestUri': '/2016/11/04/homepage/new-york-times-open-access-election-2016.html',
       'responseHeaderMatches': {
@@ -37,9 +34,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       'responseHeaderMatches': {
@@ -58,9 +52,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
       'responseHeaderMatches': {
@@ -79,9 +70,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
       'responseHeaderMatches': {
@@ -100,9 +88,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
       'responseHeaderMatches': {
@@ -121,9 +106,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
       'responseHeaderMatches': {
@@ -142,51 +124,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
-      'requestScheme': 'https://',
-      'requestUri': '/aponline/2017/09/28/us/politics/ap-us-flu-vaccine.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GA',
-        'x-pagetype': 'article',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test article on /aponline/2017/09/28/us/politics/ap-us-flu-vaccine.html',
-      'testId': 7,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
-      'requestScheme': 'https://',
-      'requestUri': '/reuters/2017/10/11/business/11reuters-csx-disruptions.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GA',
-        'x-pagetype': 'article',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test article on /reuters/2017/10/11/business/11reuters-csx-disruptions.html',
-      'testId': 8,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2001/01/20/technology/20ANNIVERSARY.html',
       'responseHeaderMatches': {
@@ -205,9 +142,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
       'responseHeaderMatches': {
@@ -226,9 +160,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2006/01/29/fashion/sundaystyles/29LOVE.html',
       'responseHeaderMatches': {
@@ -247,9 +178,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2006/02/26/fashion/sundaystyles/26LOVE.html',
       'responseHeaderMatches': {
@@ -268,9 +196,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2006/11/12/fashion/12love.html',
       'responseHeaderMatches': {
@@ -289,9 +214,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'nyt.dv.nyt5-on-gke.article=1',
-      ],
       'requestScheme': 'http://',
       'requestUri': '/blog/2000/01/01/us/slug.html',
       'responseHeaderMatches': {

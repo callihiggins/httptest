@@ -70,6 +70,12 @@ backend article_fe_dev {
     }
 }
 
+director nyt5_article_director_dev random {
+  {
+    .backend = article_fe_dev;
+    .weight  = 100;
+  }
+}
 
 backend www_dev {
     .host = "www.stg.gtm.nytimes.com";

@@ -488,6 +488,13 @@ backend article_fe_stg {
     }
 }
 
+director nyt5_article_director_stg random {
+  {
+    .backend = article_fe_stg;
+    .weight  = 100;
+  }
+}
+
 backend glogin_healthcheck_stg {
     .host = "www.stg.gtm.nytimes.com";
     .port = "443";

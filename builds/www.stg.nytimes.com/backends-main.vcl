@@ -1,3 +1,4 @@
+
 sub vcl_recv {
 #FASTLY recv
 
@@ -187,11 +188,7 @@ sub vcl_recv {
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
     ) {
         set req.http.X-PageType = "article";
-        if ( req.http.X-Article-Backend == "article-GKE" ) {
-            call set_www_article_backend_gke;
-        } else {
-            call set_www_article_backend;
-        }
+        call set_www_article_backend;
     }
 
     // Send to GCP
@@ -489,30 +486,16 @@ sub set_www_collection_backend_gke {
 # first step is to separate backend per each app
 sub set_www_article_backend {
     if(req.http.x-environment == "dev") {
-        set req.backend = www_fe_dev;
+        set req.backend = nyt5_article_director_dev;
     } else if (req.http.x-environment == "stg") {
-        set req.backend = www_fe_stg;
+        set req.backend = nyt5_article_director_stg;
     } else {
-        set req.backend = www_fe_prd;
+        set req.backend = nyt5_article_director_prd;
     }
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
-
-sub set_www_article_backend_gke {
-    if(req.http.x-environment == "dev") {
-        set req.backend = article_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = article_fe_stg;
-    } else {
-        set req.backend = article_fe_prd;
-    }
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
-
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app

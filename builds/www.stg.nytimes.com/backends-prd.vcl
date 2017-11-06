@@ -512,6 +512,16 @@ backend article_fe_prd {
     }
 }
 
+director nyt5_article_director_prd random {
+  {
+    .backend = www_fe_prd;
+    .weight  = 90;
+  }{
+    .backend = article_fe_prd;
+    .weight  = 10;
+  }
+}
+
 backend vp_prd {
     .host = "vp.nyt.com";
     .port = "443";
