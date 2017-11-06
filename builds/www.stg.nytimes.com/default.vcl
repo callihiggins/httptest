@@ -75,16 +75,7 @@ sub vcl_recv {
   set req.http.X-NYT-Edge-CDN = "Fastly";
 
   if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
-
-    # the following pagetypes are allowed to try to cache POST method requests
-    # doing this logic a little weirdly because I need it to fall through
-    if (req.request == "POST" &&
-        req.http.X-PageType == "well") {
-        # do nothing here, let it fall through
-    } else {
-      return(pass);
-    }
-
+    return(pass);
   }
 
   if ( req.backend == www_dev
