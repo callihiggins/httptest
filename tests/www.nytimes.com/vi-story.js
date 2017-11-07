@@ -28,8 +28,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'No vistory cookie',
@@ -54,8 +54,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Empty vistory cookie',
@@ -141,8 +141,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff. Not Allocated',
@@ -213,9 +213,9 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
-        'fastly-restarts': '1',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'fastly-restarts': /1/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Allocated',
@@ -237,8 +237,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Not Allocated',
@@ -260,8 +260,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Allocated',
@@ -283,8 +283,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
@@ -306,8 +306,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Allocated',
@@ -329,8 +329,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Not Allocated',
@@ -352,8 +352,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200, 410],
       'scenarioDescription': 'Wire article outside correct date range. Not Allocated',
@@ -375,8 +375,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200, 410],
       'scenarioDescription': 'Wire article outside correct date range. Allocated',
@@ -398,8 +398,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200, 410],
       'scenarioDescription': 'Wire article in correct date range. Not Allocated',
@@ -447,8 +447,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'No vistory cookie',
@@ -473,8 +473,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Empty vistory cookie',
@@ -560,8 +560,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff. Not Allocated',
@@ -632,9 +632,9 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
-        'fastly-restarts': '1',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'fastly-restarts': /1/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Allocated',
@@ -656,8 +656,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Not Allocated',
@@ -679,8 +679,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Allocated',
@@ -702,8 +702,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
@@ -725,8 +725,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Allocated',
@@ -748,8 +748,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Not Allocated',
@@ -771,8 +771,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200, 410],
       'scenarioDescription': 'Wire article outside correct date range. Not Allocated',
@@ -794,8 +794,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200, 410],
       'scenarioDescription': 'Wire article outside correct date range. Allocated',
@@ -817,8 +817,8 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
-      'responseHeaderContains': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200, 410],
       'scenarioDescription': 'Wire article in correct date range. Not Allocated',
