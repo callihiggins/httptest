@@ -17,12 +17,6 @@ sub vcl_recv {
           call redirect_to_https;
         }
     }
-
-    if (req.http.magicmarker-elections == "fake") {
-        unset req.http.magicmarker-elections;
-        set req.backend = deadend;
-        return(lookup);
-    }
 }
 
 sub vcl_miss {
@@ -50,11 +44,14 @@ sub vcl_fetch {
             unset beresp.http.cache-control;
         }
 
-        if (beresp.status >= 500) {
+        if (beresp.status >= 500 || beresp.status == 403) {
             /* deliver stale if the object is available */
             if (stale.exists) {
                 return(deliver_stale);
             }
+        }
+
+        if (req.restarts < 1 && beresp.status >= 500) {
             return(restart);
         }
 
@@ -72,11 +69,6 @@ sub vcl_deliver {
 
 sub vcl_error {
     if (req.http.X-PageType == "elections") {
-        if (obj.status >= 500 && obj.status < 600) {
-          set req.http.magicmarker-elections = "fake";
-          restart;
-        }
-
         # Fake behavior of Amazon's WebsiteRedirectLocation
         if (obj.status == 760) {
           set obj.http.Location = req.http.Location;
