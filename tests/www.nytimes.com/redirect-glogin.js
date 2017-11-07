@@ -25,8 +25,8 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/2016/10/11/slug.html?nytmobile=0',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Facebook Native in-app browser does not redirect to glogin: iOS',
@@ -49,8 +49,8 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/2016/10/11/slug.html?nytmobile=0',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Facebook Native in-app browser does not redirect to glogin: Android',
@@ -74,8 +74,10 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/2015/08/02/education/edlife/four-steps-to-choosing-a-career-path.html?_r=0&GLS=1590843953%7Cz1fxF9cXL5SqGJTUwaFuYdcYQNVR53n9%2BN95mIcjRNM%3D&abra=WP_ProjectVi_www_hp=0',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
         'x-pagetype': 'article',
+      },
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'glogin down valid GLS paramter does NOT redirect to /glogin',
@@ -100,8 +102,6 @@ function getScenarioEvents()
       'requestUri': '/2015/08/02/education/edlife/four-steps-to-choosing-a-career-path.html?_r=0&GLS=159084393%7Cz1fxF9cXL5SqGJTUwaFuYdcYQNVR53n9%2BN95mIcjRNM%3D&abra=WP_ProjectVi_www_hp=0',
       'responseHeaderMatches': {
         'x-api-version': 'F-0',
-      },
-      'responseHeaderMatches': {
         'location': 'https://' + suite.hosts.glogin + '/glogin?URI=' + encodeURIComponent('https://' + suite.servername + '/2015/08/02/education/edlife/four-steps-to-choosing-a-career-path.html?_r=1&GLS=159084393%7Cz1fxF9cXL5SqGJTUwaFuYdcYQNVR53n9%2BN95mIcjRNM%3D&abra=WP_ProjectVi_www_hp=0'),
       },
       'responseStatusCode': 303,
@@ -125,12 +125,12 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/interactive/2017/02/09/upshot/100000004922380.app.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
-      'testId': 1,
+      'testId': 5,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -149,12 +149,12 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
-      'testId': 1,
+      'testId': 6,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -174,11 +174,11 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/2017/multimedia/100000005059100.app.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-VI',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
-      'testId': 1,
+      'testId': 7,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -198,11 +198,35 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/2017/admin/100000005250034.embedded.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-VI',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Interactive .app.html does not redirect to glogin: iOS',
-      'testId': 1,
+      'testId': 8,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s_invalid,
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/vi-assets/dummy-url-do-not-redirect-to-glogin.css',
+      'responseHeaderPattern': {
+        'x-nyt-backend': /^projectvi_asset/,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'vi-asset',
+      },
+      'responseStatusCode': [404],
+      'scenarioDescription': 'vi-asset route does not redirect to glogin',
+      'testId': 9,
     },
   ];
 

@@ -196,7 +196,8 @@ sub check_skip_glogin {
         || req.http.X-PageType == "community-svc-cacheable"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "video-api"
-        || req.http.X-PageType == "messaging-api") {
+        || req.http.X-PageType == "messaging-api"
+        || req.http.X-PageType == "vi-asset") {
 
         set req.http.x-skip-glogin = "1";
     }
