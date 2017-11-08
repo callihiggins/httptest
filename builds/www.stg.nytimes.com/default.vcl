@@ -16,6 +16,7 @@ include "health-check";
 include "ipauth";
 include "www-redirect";
 include "tips";
+include "slideshow-allocation"
 
 # the following files define the backends themselves
 include "backends-dev";
@@ -162,6 +163,11 @@ sub vcl_miss {
     unset bereq.http.X-Cookie;
   }
 
+    // cookie removing for slideshow
+  if(req.http.X-PageType == "slideshow"){
+    unset bereq.http.X-Cookie;
+  }
+
   // cacheable community svc requests are ESI jsonp
   // we can not compress these... yet...
   if(req.http.X-PageType == "community-svc-cacheable"){
@@ -186,7 +192,11 @@ sub vcl_pass {
     unset bereq.http.Cookie;
     unset bereq.http.X-Cookie;
   }
-
+  // cookie removing for slideshow
+  if(req.http.X-PageType == "slideshow"){
+    unset bereq.http.Cookie;
+    unset bereq.http.X-Cookie;
+  }
 }
 
 sub vcl_fetch {

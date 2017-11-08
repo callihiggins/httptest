@@ -94,7 +94,11 @@ sub vcl_recv {
         || (req.url ~ "^/slideshow/" && req.http.x-environment == "stg")
     ) {
         set req.http.X-PageType = "slideshow";
-        call set_www_slideshow_backend;
+        if ( req.http.X-Slideshow-Backend == "slideshow-GKE" ) {
+            call set_www_slideshow_backend_gke;
+        } else {
+            call set_www_slideshow_backend;
+        }
     }
 
     // slideshow JSON files
@@ -506,6 +510,18 @@ sub set_www_slideshow_backend {
         set req.backend = www_fe_stg;
     } else {
         set req.backend = www_fe_prd;
+    }
+
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
+}
+sub set_www_slideshow_backend_gke {
+    if(req.http.x-environment == "dev") {
+        set req.backend = slideshow_fe_dev;
+    } else if (req.http.x-environment == "stg") {
+        set req.backend = slideshow_fe_stg;
+    } else {
+        set req.backend = slideshow_fe_prd;
     }
 
     # if we needed to switch back to NYT5, unset the vi flag
