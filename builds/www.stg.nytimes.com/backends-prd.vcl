@@ -515,10 +515,10 @@ backend article_fe_prd {
 director nyt5_article_director_prd random {
   {
     .backend = www_fe_prd;
-    .weight  = 90;
+    .weight  = 50;
   }{
     .backend = article_fe_prd;
-    .weight  = 10;
+    .weight  = 50;
   }
 }
 
