@@ -325,7 +325,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For Tips and Tricks',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -345,7 +345,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For Acrostic',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -365,7 +365,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test Stats Page',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -401,6 +401,46 @@ function getScenarioEvents()
       'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Archive Daily page',
       'testId': 20,
+    },
+    {
+      'id': 'Functional Test For Archive Daily',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/archive/daily',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Archive Daily page',
+      'testId': 20,
+    },
+    {
+      'id': 'Functional Test For Primer',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-web',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/crosswords/primer',
+      'responseStatusCode': 404,
+      'scenarioDescription': 'Test hitting Primer page',
+      'testId': 21,
     },
   ];
 
