@@ -2,6 +2,8 @@ sub vcl_recv {
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
         if (req.url.path ~ "^/programs/" ) {
             set req.http.X-PageType = "programs-service";
+            unset req.http.Cookie;
+            unset req.http.X-Cookie;            
         }
     }
 
