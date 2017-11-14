@@ -34,5 +34,11 @@ sub set_programs_web_backend {
     } else if (req.http.x-environment == "stg") {
         set req.backend = programs_svc_stg;
         set bereq.http.host = "ftu-dot-nyt-betaprog-dev.appspot.com";
+    } else {
+        if (req.http.x-nyt-internal-access == "1" || req.http.x-nyt-external-access == "1"){
+          set req.backend = programs_svc_prd;
+          set bereq.http.host = "ftu-dot-nyt-betaprog-prd.appspot.com";
+        }
     }
+
 }

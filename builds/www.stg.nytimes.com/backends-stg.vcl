@@ -237,7 +237,6 @@ backend programs_svc_stg {
     .ssl_sni_hostname = "ftu-dot-nyt-betaprog-dev.appspot.com";
     .ssl_check_cert = always;
     .ssl = true;
-    .host_header = "ftu-dot-nyt-betaprog-dev.appspot.com";
     .connect_timeout = 10s;
     .first_byte_timeout = 10s;
     .between_bytes_timeout = 10s;
@@ -249,6 +248,27 @@ backend programs_svc_stg {
         .threshold = 3;
     }
 }
+
+backend programs_svc_prd {
+    .host = "ftu-dot-nyt-betaprog-prd.appspot.com";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "ftu-dot-nyt-betaprog-prd.appspot.com";
+    .ssl_sni_hostname = "ftu-dot-nyt-betaprog-prd.appspot.com";
+    .ssl_check_cert = always;
+    .ssl = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/programs/status.txt";
+        .timeout = 10s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
+    }
+}
+
 
 backend gae_oembed_content_api_stg {
     .host = "nyt-du-dev.appspot.com";
