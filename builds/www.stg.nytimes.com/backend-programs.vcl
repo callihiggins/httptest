@@ -7,7 +7,8 @@ sub vcl_recv {
         if (req.url.path ~ "^/programs/" ) {
             set req.http.X-PageType = "programs-service";
             unset req.http.Cookie;
-            unset req.http.X-Cookie;            
+            unset req.http.X-Cookie; 
+            return(lookup);           
         }
     }
 }
@@ -37,10 +38,8 @@ sub set_programs_web_backend {
         set req.backend = programs_svc_stg;
         set bereq.http.host = "ftu-dot-nyt-betaprog-dev.appspot.com";
     } else {
-        if (req.http.x-nyt-internal-access == "1" || req.http.x-nyt-external-access == "1"){
-          set req.backend = programs_svc_prd;
-          set bereq.http.host = "ftu-dot-nyt-betaprog-prd.appspot.com";
-        }
+        set req.backend = programs_svc_prd;
+        set bereq.http.host = "ftu-dot-nyt-betaprog-prd.appspot.com";
     }
 
 }
