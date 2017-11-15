@@ -1,5 +1,6 @@
 sub vcl_recv {
     if (req.url.path ~ "^/programs/svc/") {
+        set req.http.X-PageType = "programs-service";
         return(pass);
     }
     
