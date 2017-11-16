@@ -335,40 +335,6 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': true,
-      },
-      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke.collection=0',
-      'requestScheme': 'https://',
-      'requestUri': '/by/a-o-scott',
-      'responseHeaderNotContains': {
-        'Vary': 'X-Collection-Backend',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test Fastly; Collection; Vary header;',
-      'testId': '19',
-    }, 
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': true,
-      },
-      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke.collection=1',
-      'requestScheme': 'https://',
-      'requestUri': '/by/a-o-scott',
-      'responseHeaderNotContains': {
-        'Vary': 'X-Collection-Backend',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test Fastly; Collection; Vary header;',
-      'testId': '20',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
         'prd': true,
         'stg': true,
         'dev': true,
