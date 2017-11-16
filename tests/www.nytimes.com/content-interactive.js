@@ -280,7 +280,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/multimedia/test-interactive-standalone-qa.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-X',
+      'x-api-version': 'F-VI',
     },
     'responseHeadersPresent': [
       'age',
@@ -353,7 +353,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/admin/100000005250034.embedded.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-X',
+      'x-api-version': 'F-VI',
     },
     'responseHeadersPresent': [
       'age',
@@ -390,7 +390,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/admin/100000005194102.embedded.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-X',
+      'x-api-version': 'F-VI',
     },
     'responseHeadersPresent': [
       'age',
