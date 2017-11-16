@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2017/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -37,7 +37,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2016/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -55,7 +55,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2015/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -73,7 +73,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2014/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -91,7 +91,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/slideshow/2013/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -109,7 +109,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/slideshow/2011/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -127,7 +127,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/slideshow/2009/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -149,7 +149,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/slideshow/2007/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GS',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -159,7 +159,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -180,7 +180,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -201,7 +201,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,
@@ -222,7 +222,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': false,
         'sbx': false,

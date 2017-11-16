@@ -16,7 +16,6 @@ include "health-check";
 include "ipauth";
 include "www-redirect";
 include "tips";
-include "slideshow-allocation"
 
 # the following files define the backends themselves
 include "backends-dev";

@@ -450,11 +450,7 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/error-pages.vcl")}"
   }
-  vcl {
-    name    = "slideshow-allocation"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/slideshow-allocation.vcl")}"
-  }
+
   vcl {
     name    = "backend-vi"
     main    = false
