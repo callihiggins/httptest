@@ -243,7 +243,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-X',
+      'x-api-version': 'F-VI',
     },
     'responseHeadersPresent': [
       'age',
