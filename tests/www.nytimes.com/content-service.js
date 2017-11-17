@@ -29,7 +29,6 @@ function getScenarioEvents()
       ],
       'responseHeadersNotPresent': [
         'age',
-        'cache-control',
         'nnCoection',
         'via',
         'x-age',
