@@ -1,4 +1,3 @@
-
 sub vcl_recv {
 #FASTLY recv
 
@@ -16,7 +15,11 @@ sub vcl_recv {
     if (req.http.host ~ "^paidpost([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$"
         && req.url.ext == "html") {
         set req.http.X-PageType = "paidpost";
-        call set_www_paidpost_backend;
+        if ( req.http.X-Migration-Backend == "on-GKE" ) {
+            call set_www_paidpost_backend_gke;
+        } else {
+            call set_www_paidpost_backend;
+        }
     }
 
     // homepages, domestic and international, are NYT5
@@ -25,7 +28,11 @@ sub vcl_recv {
         || req.url ~ "^/index.html"
     ) {
         set req.http.X-PageType = "homepage";
-        call set_www_fe_backend;
+        if ( req.http.X-Migration-Backend == "on-GKE" ) {
+            call set_www_homepage_backend_gke;
+        } else {
+            call set_www_homepage_backend;
+        }
         set req.http.x-skip-glogin = "1";
     }
 
@@ -84,7 +91,7 @@ sub vcl_recv {
         || req.url ~ "^/newsletters$"
     ) {
         set req.http.X-PageType = "newsletter";
-        call set_www_newsletter_backend;
+        call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
 
@@ -121,14 +128,14 @@ sub vcl_recv {
         || req.url ~ "^/trending$"
     ) {
         set req.http.X-PageType = "trending";
-        call set_www_misc_backend;
+        call set_nyt5_misc_backend;
         set req.http.x-skip-glogin = "1";
     }
 
     // podcasts application
     if (req.url ~ "^/podcasts") {
         set req.http.X-PageType = "podcasts";
-        call set_www_misc_backend;
+        call set_nyt5_misc_backend;
     }
 
     // bestseller application
@@ -137,13 +144,13 @@ sub vcl_recv {
         || req.url ~ "^/books/best-sellers$"
     ) {
         set req.http.X-PageType = "bestseller";
-        call set_www_misc_backend;
+        call set_nyt5_misc_backend;
     }
 
     // collection reviews diningmap pattern is part of misc
     if (req.url ~ "^/reviews/dining/map") {
         set req.http.X-PageType = "collection";
-        call set_www_misc_backend;
+        call set_nyt5_misc_backend;
     }
 
     if (req.url ~ "^/404\.html") {
@@ -440,7 +447,15 @@ sub set_www_paidpost_backend {
         set req.backend = www_https_prd;
     }
 }
-
+sub set_www_paidpost_backend_gke {
+    if(req.http.x-environment == "dev") {
+        set req.backend = paidpost_fe_dev;
+    } else if (req.http.x-environment == "stg") {
+        set req.backend = paidpost_fe_stg;
+    } else {
+        set req.backend = paidpost_fe_prd;
+    }
+}
 # set a www_fe backend based on host
 sub set_www_fe_backend {
     if(req.http.x-environment == "dev") {
@@ -457,18 +472,6 @@ sub set_www_fe_backend {
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
-sub set_www_collection_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_fe_stg;
-    } else {
-        set req.backend = www_fe_prd;
-    }
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
-
 sub set_www_collection_backend_gke {
     if(req.http.x-environment == "dev") {
         set req.backend = collection_fe_dev;
@@ -480,7 +483,6 @@ sub set_www_collection_backend_gke {
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
-
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
@@ -511,10 +513,9 @@ sub set_www_slideshow_backend_gke {
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
-
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
-sub set_www_newsletter_backend {
+sub set_www_misc_backend {
     if(req.http.x-environment == "dev") {
         set req.backend = www_fe_dev;
     } else if (req.http.x-environment == "stg") {
@@ -526,16 +527,45 @@ sub set_www_newsletter_backend {
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
+sub set_www_misc_backend_gke {
+    if(req.http.x-environment == "dev") {
+        set req.backend = misc_fe_dev;
+    } else if (req.http.x-environment == "stg") {
+        set req.backend = misc_fe_stg;
+    } else {
+        set req.backend = misc_fe_prd;
+    }
 
-# set backend for each NYT5 app to prepare GKE migration
-# first step is to separate backend per each app
-sub set_www_misc_backend {
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
+}
+sub set_nyt5_misc_backend {
+    if ( req.http.X-Migration-Backend == "on-GKE" ) {
+            call set_www_misc_backend_gke;
+        } else {
+            call set_www_misc_backend;
+        }
+}
+# set backend for nyt5 homepage migration
+sub set_www_homepage_backend {
     if(req.http.x-environment == "dev") {
         set req.backend = www_fe_dev;
     } else if (req.http.x-environment == "stg") {
         set req.backend = www_fe_stg;
     } else {
         set req.backend = www_fe_prd;
+    }
+
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
+}
+sub set_www_homepage_backend_gke {
+    if(req.http.x-environment == "dev") {
+        set req.backend = homepage_fe_dev;
+    } else if (req.http.x-environment == "stg") {
+        set req.backend = homepage_fe_stg;
+    } else {
+        set req.backend = homepage_fe_prd;
     }
 
     # if we needed to switch back to NYT5, unset the vi flag

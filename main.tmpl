@@ -452,6 +452,11 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "migration-allocation"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/migration-allocation.vcl")}"
+  }
+  vcl {
     name    = "backend-vi"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-vi.vcl")}"

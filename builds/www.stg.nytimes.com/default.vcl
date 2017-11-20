@@ -16,6 +16,8 @@ include "health-check";
 include "ipauth";
 include "www-redirect";
 include "tips";
+include "migration-allocation";
+
 
 # the following files define the backends themselves
 include "backends-dev";
@@ -152,21 +154,18 @@ sub vcl_miss {
   // since this was a lookup we were not pass
   remove bereq.http.Cookie;
 
-  // cookie removing for collection
-  if(req.http.X-PageType == "collection"){
+  // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
+  if(    req.http.X-PageType == "article"
+      || req.http.X-PageType == "collection"
+      || req.http.X-PageType == "slideshow"
+      || req.http.X-PageType == "homepage"
+      || req.http.X-PageType == "paidpost"
+      || req.http.X-PageType == "trending" 
+      || req.http.X-PageType == "podcasts"
+      || req.http.X-PageType == "bestseller"
+  ){
     unset bereq.http.X-Cookie;
   }
-
-  // cookie removing for article
-  if(req.http.X-PageType == "article"){
-    unset bereq.http.X-Cookie;
-  }
-
-    // cookie removing for slideshow
-  if(req.http.X-PageType == "slideshow"){
-    unset bereq.http.X-Cookie;
-  }
-
   // cacheable community svc requests are ESI jsonp
   // we can not compress these... yet...
   if(req.http.X-PageType == "community-svc-cacheable"){
@@ -181,18 +180,16 @@ sub vcl_pass {
 #FASTLY pass
   call unset_extraneous_bereq_headers;
 
-  // cookie removing for collection
-  if(req.http.X-PageType == "collection"){
-    unset bereq.http.Cookie;
-    unset bereq.http.X-Cookie;
-  }
-  // cookie removing for article
-  if(req.http.X-PageType == "article"){
-    unset bereq.http.Cookie;
-    unset bereq.http.X-Cookie;
-  }
-  // cookie removing for slideshow
-  if(req.http.X-PageType == "slideshow"){
+  // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
+  if(    req.http.X-PageType == "article"
+      || req.http.X-PageType == "collection"
+      || req.http.X-PageType == "slideshow"
+      || req.http.X-PageType == "homepage"
+      || req.http.X-PageType == "paidpost"
+      || req.http.X-PageType == "trending" 
+      || req.http.X-PageType == "podcasts"
+      || req.http.X-PageType == "bestseller"
+  ){
     unset bereq.http.Cookie;
     unset bereq.http.X-Cookie;
   }

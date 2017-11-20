@@ -26,6 +26,25 @@ function getScenarioEvents()
       'scenarioDescription': 'Test homepage',
       'testId': 1,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke=1',
+      'requestScheme': 'https://',
+      'requestUri': '/?abra=WP_ProjectVi_www_hp=0',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-GH',
+        'x-pagetype': 'homepage',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test homepage',
+      'testId': 101,
+    },
   ];
 
   return scenarios;

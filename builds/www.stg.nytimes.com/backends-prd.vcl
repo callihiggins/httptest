@@ -541,6 +541,63 @@ backend slideshow_fe_prd {
         .threshold = 3;
     }
 }
+backend paidpost_fe_prd {
+    .host = "nyt5-app-paidpost.prd.oma1.nyt.net";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "nyt5-app-paidpost.prd.oma1.nyt.net";
+    .ssl_sni_hostname = "nyt5-app-paidpost.prd.oma1.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = always;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+    }
+}
+backend misc_fe_prd {
+    .host = "nyt5-app-misc.prd.oma1.nyt.net";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "nyt5-app-misc.prd.oma1.nyt.net";
+    .ssl_sni_hostname = "nyt5-app-misc.prd.oma1.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = always;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+    }
+}
+backend homepage_fe_prd {
+    .host = "nyt5-app-homepage.prd.oma1.nyt.net";
+    .port = "443";
+    .dynamic = true;
+    .ssl_cert_hostname = "nyt5-app-homepage.prd.oma1.nyt.net";
+    .ssl_sni_hostname = "nyt5-app-homepage.prd.oma1.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = always;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 30s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 5s;
+        .interval = 20s;
+        .window = 4;
+        .threshold = 3;
+    }
+}
 
 backend vp_prd {
     .host = "vp.nyt.com";
