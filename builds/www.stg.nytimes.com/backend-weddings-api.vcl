@@ -1,3 +1,4 @@
+// Weddings has it's own VCL because it needs a longer timeout than the other DU content APIs.
 sub vcl_recv {
 
     if (req.http.x-environment != "dev") {

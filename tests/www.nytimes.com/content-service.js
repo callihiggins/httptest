@@ -316,6 +316,44 @@ function getScenarioEvents()
       'testId': 8,
     },
     {
+      'id': 'FunctionalTestScenarioDefinitionForSvcTopics',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/topics/v2/markets/us,intl.json',
+      'responseHeaderMatches': {
+        'x-api-version': 'F-CA',
+        'x-frame-options': 'DENY',
+        'x-pagetype': 'content-api',
+      },
+      'responseHeadersPresent': [
+        'x-served-by',
+      ],
+      'responseHeadersNotPresent': [
+        'cache-control',
+        'nnCoection',
+        'via',
+        'x-age',
+        'x-backend',
+        'x-detectedruntimeconfigflag',
+        'x-esi-status',
+        'x-hash',
+        'x-origin-server',
+        'x-powered-by',
+        'x-servername',
+        'x-servername2',
+        'x-varnish',
+        'x-varnishcacheduration',
+      ],
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test service; topics',
+      'testId': 9,
+    },
+    {
       'id': 'FunctionalTestScenarioDefinitionForWeather',
       'isDeployedInEnv': {
         'prd': true,
@@ -350,7 +388,7 @@ function getScenarioEvents()
       ],
       'responseStatusCode': [200],
       'scenarioDescription': 'Test service; weather',
-      'testId': 9,
+      'testId': 10,
     },
   ];
 

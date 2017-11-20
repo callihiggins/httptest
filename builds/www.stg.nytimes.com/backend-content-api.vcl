@@ -3,6 +3,7 @@ sub vcl_recv {
         || req.url.path ~ "^/svc/dining/"
         || req.url.path ~ "^/svc/location/"
         || req.url.path ~ "^/svc/mostpopular/"
+        || req.url.path ~ "^/svc/topics/"
         || req.url.path ~ "^/svc/news/"
         || req.url.path ~ "^/svc/weather/"
     ) {
