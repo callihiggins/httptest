@@ -211,6 +211,25 @@ backend newsdev_gcs_prd {
     }
 }
 
+backend video_api_prd {
+    .host = "cherry-api.prd.nyt.net";
+    .port = "443";
+    .ssl_cert_hostname = "cherry-api.prd.nyt.net";
+    .ssl_sni_hostname = "cherry-api.prd.nyt.net";
+    .ssl = true;
+    .ssl_check_cert = always;
+    .dynamic = true;
+    .connect_timeout = 10s;
+    .first_byte_timeout = 10s;
+    .between_bytes_timeout = 10s;
+    .probe = {
+        .url = "/.status";
+        .timeout = 10s;
+        .interval = 30s;
+        .window = 10;
+        .threshold = 8;
+    }
+}
 
 backend beta_guides_prd {
     .host = "guides.prd.nyt.net";
@@ -510,6 +529,16 @@ backend article_fe_prd {
         .window = 4;
         .threshold = 3;
     }
+}
+
+director video_api_director_prd random {
+  {
+    .backend = www_fe_prd;
+    .weight  = 95;
+  }{
+    .backend = video_api_prd;
+    .weight  = 5;
+  }
 }
 
 director nyt5_article_director_prd random {

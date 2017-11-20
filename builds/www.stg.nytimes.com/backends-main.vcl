@@ -411,7 +411,7 @@ sub set_video_api_backend {
     } else if (req.http.x-environment == "stg") {
         set req.backend = video_api_stg;
     } else {
-        set req.backend = www_fe_prd;
+        set req.backend = video_api_director_prd;
     }
 }
 
