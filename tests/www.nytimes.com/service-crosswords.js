@@ -318,7 +318,7 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',
-      'responseStatusCode': 200,
+      'responseStatusCode': [403,200],
       'scenarioDescription': 'Test hitting Archive Daily page',
       'testId': 16,
     },
