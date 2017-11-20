@@ -40,7 +40,7 @@ function getScenarioEvents()
         'Host': suite.servername,
       },
       'requestScheme': 'https://',
-      'requestUri': '/elections',
+      'requestUri': '/elections/results',
       'responseHeaderMatches': {
         'x-api-version': 'F-I',
         'location': 'https://' + suite.servername + '/elections/results/president'
