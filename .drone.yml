@@ -32,12 +32,12 @@ pipeline:
     when:
       event: pull_request
 
-  # Run tests against dev service
-  dev-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www.dev.nytimes.com
-    when:
-      event: pull_request
+  # # Run tests against dev service
+  # dev-test:
+  #   image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+  #   servername: www.dev.nytimes.com
+  #   when:
+  #     event: pull_request
 
   stg-template:
     image: hairyhenderson/gomplate
