@@ -1,7 +1,8 @@
 # use keys in x-fastly-stg header for staging access from non-whitelisted IPs
 table staging_access_tokens {
   # "app-<random>" : "<issue date>"
-  "watching-2gk6" : "20170614"
+  "watching-2gk6" : "20170614",
+  "drone-fastly-test-4er7" : "20171016", //the item for drone-fastly-test to access dev or stg with drone
 }
 
 sub vcl_recv {

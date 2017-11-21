@@ -34,7 +34,7 @@ pipeline:
 
   # # Run tests against dev service
   # dev-test:
-  #   image: us.gcr.io/nyt-bsre-prd/drone-fastly-test
+  #   image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
   #   servername: www.dev.nytimes.com
   #   when:
   #     event: pull_request
@@ -62,12 +62,12 @@ pipeline:
       event: push
       branch: master
 
-  # stg-test:
-  #   image: us.gcr.io/nyt-bsre-prd/drone-fastly-test
-  #   servername: www.stg.nytimes.com
-  #   when:
-  #     event: push
-  #     branch: master
+  stg-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www.stg.nytimes.com
+    when:
+      event: push
+      branch: master
 
   # -----
   prd-template:
@@ -90,11 +90,11 @@ pipeline:
     when:
       event: tag
 
-  # prd-test:
-  #   image: us.gcr.io/nyt-bsre-prd/drone-fastly-test
-  #   servername: www.nytimes.com
-  #   when:
-  #     event: tag
+  prd-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www.nytimes.com
+    when:
+      event: tag
 
   slack:
     image: plugins/slack
