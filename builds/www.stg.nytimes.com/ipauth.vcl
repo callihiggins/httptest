@@ -7,9 +7,7 @@ sub vcl_recv {
 
     // block everyone but the internal ACL to dev service
     
-    // This req.http.x-nyt-external-access header is sharing with both watching app and the drone's access to 
-    // fastly tests image, is this fine to add this? will this cause any error on the watching side?
-    if (req.http.x-environment == "dev" && !req.http.x-nyt-internal-access && !req.http.x-nyt-external-access) { 
+    if (req.http.x-environment == "dev" && !req.http.x-nyt-internal-access) { 
       error 403 "Forbidden";
     }
 

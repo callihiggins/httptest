@@ -2,6 +2,9 @@
 table staging_access_tokens {
   # "app-<random>" : "<issue date>"
   "watching-2gk6" : "20170614",
+}
+
+table internal_access_tokens {
   "drone-fastly-test-4er7" : "20171016", //the item for drone-fastly-test to access dev or stg with drone
 }
 
@@ -11,7 +14,7 @@ sub vcl_recv {
     unset req.http.x-nyt-internal-access;
     unset req.http.x-nyt-external-access;
 
-    if (client.ip ~ internal || client.ip ~ vpc_nat_gateway) {
+    if (client.ip ~ internal || client.ip ~ vpc_nat_gateway || table.lookup(internal_access_tokens, req.http.x-fastly-stg) ~ "^[0-9]{8}$") {
       set req.http.x-nyt-internal-access = "1";
     }
 
