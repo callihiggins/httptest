@@ -2,10 +2,15 @@
 
 ## How has this been tested?
 
-## Have tests been added that cover this change?
+## Have tests been added that cover this change? If not why?
 
 - [ ] yes
-- [ ] no - blocker for merge
+- [ ] no - potential blocker for merge
+
+## Did you `git rebase -i origin/master`? If not why?
+
+- [ ] yes
+- [ ] no - potential blocker for merge
 
 ## Add link to [Documentation Guide](https://github.com/nytm/dv-fastly-guide) PR
 

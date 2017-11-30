@@ -10,6 +10,9 @@
 1. Push the branch to origin `git push origin <branch_name>`
     1. this will deploy to dev using Drone
     1. If it's broken, fix it and push again.
+1. Rebase from origin/master `git rebase -i origin/master`
+    1. be kind and squash all but the first commit if you have many. Rewrite to a nice descriptive commit.
+    1. you can continue to do this after opening the PR if you need to make many changes based on reviews or ongoing work
 1. Open a PR in the GitHub Web interface.
     1. Reviewers will automatically be selected from `CODEOWNERS`
     1. Fill out all applicable parts of the template that is automatically populated in the PR description
@@ -33,8 +36,6 @@
 * Push early and often, so your colleagues can see what you're working on.
 * Rebase and force push as often as you like. It's your branch.
 * Avoid long running branches
-
-
 
 
 [dv]:  https://github.com/orgs/nytm/teams/delivery-engineering
