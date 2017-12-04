@@ -6,11 +6,10 @@ sub vcl_recv {
             ||  req.url ~ "^/subscription/"
             ) {
 
-
             set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
-            set req.http.X-PageType = "subscription";
-            set req.http.x-nyt-backend = "subscription";
-            call set_subscription_backend;
+            set req.http.X-PageType = "mwcm";
+            set req.http.x-nyt-backend = "mwcm";
+            set req.backend = F_mwcm;
             set req.grace = 24h;
             set req.http.x-skip-glogin = "1";
             unset req.http.x-nyt-edition;
@@ -19,18 +18,37 @@ sub vcl_recv {
             set req.url = querystring.remove(req.url);
             return(lookup);
         }
+
+        # Enables only in dev environment. checks for req.http.x-environment == "dev"
+        if (    (   req.url == "/marketing" ||  
+                    req.url ~ "^/marketing/" ||  
+                    req.url == "/services/mobile" ||  
+                    req.url ~ "^/services/mobile/"
+                ) && req.http.x-environment == "dev"
+            ) {
+            set req.http.X-PageType = "mwcm";
+            set req.http.x-nyt-backend = "mwcm";
+            set req.backend = F_mwcm;
+            set req.grace = 24h;
+            set req.http.x-skip-glogin = "1";
+            unset req.http.x-nyt-edition;
+            unset req.http.x-nyt-s;
+            unset req.http.x-nyt-wpab;
+            set req.url = querystring.remove(req.url);
+            return(lookup);
+        }    
     }
 }
 
 sub vcl_hash {
-    if (req.http.X-PageType == "subscription") {
+    if (req.http.X-PageType == "mwcm") {
         unset req.http.X-Cookie;
         unset req.http.Cookie;
     }
 }
 
 sub vcl_fetch {
-    if (req.http.X-PageType == "subscription") {
+    if (req.http.X-PageType == "mwcm") {
 
         /* handle 5XX (or any other unwanted status code) */
         if (beresp.status >= 500 && beresp.status < 600) {
@@ -60,7 +78,7 @@ sub vcl_fetch {
 }
 
 sub vcl_deliver {
-    if (req.http.X-PageType == "subscription") {
+    if (req.http.X-PageType == "mwcm") {
 
         set resp.http.X-API-Version = "WCM";
 
@@ -72,9 +90,4 @@ sub vcl_deliver {
             set resp.http.Location = resp.http.Location + req.http.x-orig-querystring;
         }
     }
-}
-
-
-sub set_subscription_backend {
-    set req.backend = F_subscription;
 }

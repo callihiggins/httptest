@@ -534,7 +534,7 @@ backends:
       timeout: "5000"
       window: "4"
 
-  - name: "subscription"
+  - name: "mwcm"
     address: "mwcm-pub-est-prd-iad1-121757-1072184006.us-east-1.elb.amazonaws.com"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"

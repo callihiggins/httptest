@@ -44,7 +44,7 @@ include "backend-watching";
 include "backend-games";
 include "backend-programs";
 include "backend-weddings-api";
-include "backend-subscription";
+include "backend-mwcm";
 include "backend-content-api";
 include "backend-times-journeys";
 include "backend-video";

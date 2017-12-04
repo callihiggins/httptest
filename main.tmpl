@@ -259,9 +259,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-subscription"
+    name    = "backend-mwcm"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-subscription.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-mwcm.vcl")}"
   }
 
   vcl {
