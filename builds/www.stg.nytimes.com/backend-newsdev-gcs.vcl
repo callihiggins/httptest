@@ -76,14 +76,15 @@ sub vcl_error {
 }
 
 sub set_newsdev_gcs_backend {
+
+  set req.backend = F_newsdev_gcs;
+  set req.http.x-nyt-backend = "newsdev_gcs";
+
   if (req.http.x-environment == "dev") {
-    set req.backend = newsdev_gcs_stg;
     set req.http.x-gcs-bucket = "nytint-stg-www";
   } else if (req.http.x-environment == "stg") {
-    set req.backend = newsdev_gcs_stg;
     set req.http.x-gcs-bucket = "nytint-stg-www";
   } else {
-    set req.backend = newsdev_gcs_prd;
     set req.http.x-gcs-bucket = "nytint-prd-www";
   }
 }

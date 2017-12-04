@@ -8,6 +8,7 @@ sub vcl_recv {
         || req.url.path ~ "^/svc/weather/"
     ) {
         set req.http.X-PageType = "content-api";
+        set req.http.x-nyt-backend = "content_api";
         call set_content_api_backend;
         set req.grace = 24h;
 
@@ -20,6 +21,7 @@ sub vcl_recv {
     } 
     if (req.url.path ~ "^/svc/oembed/"){
         set req.http.X-PageType = "content-api-gae";
+        set req.http.x-nyt-backend = "gae_oembed_content_api";
         set req.grace = 24h;
 
         unset req.http.X-Cookie;
@@ -58,13 +60,7 @@ sub vcl_deliver {
 }
 
 sub set_content_api_backend {
-    if (req.http.x-environment == "dev") {
-
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = content_api_stg;
-    } else {
-        set req.backend = content_api_prd;
-    }
+    set req.backend = F_content_api;
 }
 
 sub vcl_pass {
@@ -77,14 +73,12 @@ sub vcl_miss {
 
 sub set_gae_content_api_backend {
     if (req.http.X-PageType == "content-api-gae") {
-        if (req.http.x-environment == "dev") {
-            # no dev yet
-        } else if (req.http.x-environment == "stg") {
-            set req.backend = gae_oembed_content_api_stg;
-            set bereq.http.host = "nyt-du-dev.appspot.com";
-        } else {
-            set req.backend = gae_oembed_content_api_prd;
+        set req.backend = F_gae_oembed_content_api;
+
+        if (req.http.x-environment == "prd") {
             set bereq.http.host = "nyt-du-prd.appspot.com";
+        } else {
+            set bereq.http.host = "nyt-du-dev.appspot.com";
         }
     }
 }

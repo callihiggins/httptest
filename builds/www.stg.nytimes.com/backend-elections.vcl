@@ -80,26 +80,28 @@ sub vcl_error {
 
 sub set_newsdev_elections_backend {
     if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
+
+        set req.backend = F_newsdev_elections_s3;
+        set req.http.x-nyt-backend = "newsdev_elections_s3";
+
         if (req.http.x-environment == "dev") {
-            set req.backend = newsdev_elections_s3_stg;
             set req.http.x-bucket = "nytint-stg-elections";
         } else if (req.http.x-environment == "stg") {
-            set req.backend = newsdev_elections_s3_stg;
             set req.http.x-bucket = "nytint-stg-elections";
         } else {
-            set req.backend = newsdev_elections_s3_prd;
             set req.http.x-bucket = "nytint-prd-elections";
         }
 
     } else {
+
+        set req.backend = F_newsdev_elections;
+        set req.http.x-nyt-backend = "newsdev_elections";
+
         if (req.http.x-environment == "dev") {
-            set req.backend = newsdev_elections_stg;
             set req.http.x-bucket = "nytint-stg-elections";
         } else if (req.http.x-environment == "stg") {
-            set req.backend = newsdev_elections_stg;
             set req.http.x-bucket = "nytint-stg-elections";
         } else {
-            set req.backend = newsdev_elections_prd;
             set req.http.x-bucket = "nytint-prd-elections";
         }
     }

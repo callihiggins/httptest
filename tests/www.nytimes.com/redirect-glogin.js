@@ -13,7 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -37,7 +37,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -61,7 +61,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -79,7 +79,7 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
       },
-      'responseStatusCode': 200,
+      'responseStatusCode': [200,404],
       'scenarioDescription': 'glogin down valid GLS paramter does NOT redirect to /glogin',
       'testId': 3,
     },
@@ -88,7 +88,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -102,7 +102,9 @@ function getScenarioEvents()
       'requestUri': '/2015/08/02/education/edlife/four-steps-to-choosing-a-career-path.html?_r=0&GLS=159084393%7Cz1fxF9cXL5SqGJTUwaFuYdcYQNVR53n9%2BN95mIcjRNM%3D&abra=WP_ProjectVi_www_hp=0',
       'responseHeaderMatches': {
         'x-api-version': 'F-0',
-        'location': 'https://' + suite.hosts.glogin + '/glogin?URI=' + encodeURIComponent('https://' + suite.servername + '/2015/08/02/education/edlife/four-steps-to-choosing-a-career-path.html?_r=1&GLS=159084393%7Cz1fxF9cXL5SqGJTUwaFuYdcYQNVR53n9%2BN95mIcjRNM%3D&abra=WP_ProjectVi_www_hp=0'),
+      },
+      'responseHeaderPattern': {
+        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/glogin\?URI\=.*/,
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'glogin down invalid GLS parameter DOES redirect to /glogin',
@@ -161,7 +163,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -185,7 +187,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -209,7 +211,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [

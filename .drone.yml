@@ -3,8 +3,9 @@ pipeline:
     image: hairyhenderson/gomplate
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-dev.yml
+      - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-dev.yml
     when:
-      event: [push, pull_request]
+      event: push
 
   # Used to verify TF syntax
   syntax_check:
@@ -30,7 +31,7 @@ pipeline:
       env: dev
     secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
     when:
-      event: pull_request
+      event: push
 
   # # Run tests against dev service
   # dev-test:
@@ -43,6 +44,7 @@ pipeline:
     image: hairyhenderson/gomplate
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-stg.yml
+      - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-stg.yml
     when:
       event: push
       branch: master
@@ -74,6 +76,7 @@ pipeline:
     image: hairyhenderson/gomplate
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-prd.yml
+      - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-prd.yml
     when:
       event: tag
 

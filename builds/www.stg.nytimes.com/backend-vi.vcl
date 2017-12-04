@@ -21,9 +21,11 @@ sub vcl_recv {
           # to be Incompatible then we don't send to VI again
           if (req.http.x-pre-restart-status == "Incompatible") {
             set req.http.X-PageType = "article";
+            set req.http.x-nyt-backend = "nyt5_article_director";
             call set_www_article_backend;
           } else {
             set req.http.X-PageType = "vi-story";
+            set req.http.x-nyt-backend = "projectvi_fe";
             call set_projectvi_fe_backend;
             call check_vi_unhealthy;
           }
@@ -32,10 +34,12 @@ sub vcl_recv {
           # to be an OAK article don't send to NYT5 again
           if (req.http.x-pre-restart-cms-format == "oak") {
             set req.http.X-PageType = "vi-story";
+            set req.http.x-nyt-backend = "projectvi_fe";
             call set_projectvi_fe_backend;
             call check_vi_unhealthy;
           } else {
             set req.http.X-PageType = "article";
+            set req.http.x-nyt-backend = "nyt5_article_director";
             call set_www_article_backend;
           }
       }
@@ -47,9 +51,11 @@ sub vcl_recv {
     if (req.http.x-environment == "prd"
     &&  req.url.path ~ "\.(embedded|mobile|app)\.html$") {
       set req.http.X-PageType = "interactive";
+      set req.http.x-nyt-backend = "www_fe";
       call set_www_fe_backend;
     } else {
         set req.http.X-PageType = "vi-interactive";
+        set req.http.x-nyt-backend = "projectvi_fe";
         call set_projectvi_fe_backend;
         call check_vi_unhealthy;
     }
@@ -58,6 +64,7 @@ sub vcl_recv {
   # Home
   # Resources hosted by Vi must go to Vi, dead or alive:
   if (req.url.path ~ "^/((0_vendor-|main-|[0-9]+-).+|fonts).js$") {
+      set req.http.x-nyt-backend = "projectvi_fe";
       call set_projectvi_fe_backend;
   } else {
       # For other resources:
@@ -67,18 +74,26 @@ sub vcl_recv {
             && ((req.http.x--fastly-vi-test-group ~ "^[ab]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")
               ) {
               # homepage, in a test group getting Vi homepage
+              set req.http.x-nyt-backend = "projectvi_fe";
               call set_projectvi_fe_backend;
               call check_vi_unhealthy;
           } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))"
                      && req.url.path !~ "\.amp\.html$" && req.http.x--fastly-vi-test-group ~ "^[ac]") {
               # story page, in a test group getting Vi story pages
+              set req.http.x-nyt-backend = "projectvi_fe";
               call set_projectvi_fe_backend;
               call check_vi_unhealthy;
           }
       }
   }
 
-  call handle_viasset_request;
+
+  # A request for assets from VI
+  if (req.url ~ "^/vi-assets/") {
+    set req.http.X-PageType = "vi-asset";
+    set req.http.x-nyt-backend = "projectvi_asset";
+    set req.backend = F_projectvi_asset;
+  }
 }
 
 sub vcl_deliver {
@@ -128,48 +143,39 @@ sub vcl_hash {
 }
 
 sub vcl_miss {
-  call handle_viasset_request;
+  if (req.http.x-nyt-backend == "projectvi_asset") {
+    call handle_viasset_request;
+  }
 }
 
 sub vcl_pass {
-  call handle_viasset_request;
+  if (req.http.x-nyt-backend == "projectvi_asset") {
+    call handle_viasset_request;
+  }
 }
 
 sub handle_viasset_request {
-  // A request for assets from VI
-  if (req.url ~ "^/vi-assets/") {
-    set req.http.X-PageType = "vi-asset";
-    set req.http.host = "storage.googleapis.com";
-    call set_projectvi_asset_backend;
-  }
+    set bereq.http.host = "storage.googleapis.com";
 }
 
 # set a vi backend based on host
 sub set_projectvi_fe_backend {
+
+    set req.backend = F_projectvi_fe;
+
     if (req.http.x-environment == "dev") {
         set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
-        set req.backend = projectvi_fe_stg;
     } else if (req.http.x-environment == "stg") {
         set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
-        set req.backend = projectvi_fe_stg;
     } else {
         set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_prd");
-        set req.backend = projectvi_fe_prd;
     }
     # must set this for hashing and saint mode in default.vcl:
     set req.http.x--fastly-project-vi = "1";
 }
 
-# set a vi asset backend based on host
-sub set_projectvi_asset_backend {
-    set req.backend = projectvi_asset_prd;
-}
-
 sub check_vi_unhealthy {
-  if (
-      (req.backend == projectvi_fe_prd || req.backend == projectvi_fe_stg)
-      && !req.backend.healthy
-  ) {
+  if (req.backend == F_projectvi_fe && !req.backend.healthy) {
       # using this full string becasue we do not want this
       # consuming log volume unless it was unhealthy
       set req.http.x-vi-health = "vihealth=[0]";

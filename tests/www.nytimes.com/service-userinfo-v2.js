@@ -35,7 +35,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': '',
@@ -59,7 +59,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': 'NYT-S=' + suite.cookies.nyt_s,

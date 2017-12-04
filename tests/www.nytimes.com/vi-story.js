@@ -106,7 +106,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -410,7 +410,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {

@@ -6,7 +6,8 @@ sub vcl_recv {
             set req.http.X-PageType = "video-media";
 
     	    set req.url = regsub(req.url, "^/video-media", "/video");
-            set req.backend = vp_prd;
+            set req.http.x-nyt-backend = "vp";
+            set req.backend = F_vp;
             set req.http.host = "vp.nyt.com";
 	        set req.grace = 24h;
 

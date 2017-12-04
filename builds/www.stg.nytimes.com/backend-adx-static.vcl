@@ -23,6 +23,7 @@ sub vcl_recv {
         }
 
         set req.http.X-PageType = "adx-static";
+        set req.http.x-nyt-backend = "adx_static";
         unset req.http.Cookie;
         unset req.http.X-Cookie;
         unset req.http.x-nyt-edition;
@@ -56,6 +57,7 @@ sub vcl_pass {
 }
 
 sub set_adx_static_backend {
-    set req.backend = adx_static_prd;
+
+    set req.backend = F_adx_static;
     set bereq.http.host = "nyt-adx-static.storage.googleapis.com";
 }

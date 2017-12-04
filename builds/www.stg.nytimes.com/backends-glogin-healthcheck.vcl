@@ -4,7 +4,7 @@
 #    set a signed param to cause skip when redirecting back to the content
 
 sub vcl_recv {
-  call set_glogin_healthcheck_backend;
+  set req.backend = F_glogin_healthcheck;
 
   if(!req.backend.healthy) {
      set req.http.x-skip-glogin = "1";
@@ -46,15 +46,5 @@ sub vcl_error {
       set obj.status = 302;
       set obj.response = "Moved Temporarily";
       return(deliver);
-  }
-}
-
-sub set_glogin_healthcheck_backend {
-  if (req.http.x-environment == "dev") {
-      set req.backend = glogin_healthcheck_dev;
-  } else if (req.http.x-environment == "stg") {
-      set req.backend = glogin_healthcheck_stg;
-  } else {
-      set req.backend = glogin_healthcheck_prd;
   }
 }

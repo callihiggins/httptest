@@ -2,6 +2,7 @@ sub vcl_recv {
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
         if (req.url.path ~ "^/games/prototype/" || req.url.path ~ "^/svc/crosswords/" || req.url.path ~ "^/svc/games/(sudoku|set)/") {
             set req.http.X-PageType = "games-service";
+            set req.http.x-nyt-backend = "games_svc";
             set req.http.x-skip-glogin = "1";
             return(pass);
         }
@@ -10,6 +11,7 @@ sub vcl_recv {
             req.url.qs !~ "nyt-games=legacy") {
 
             set req.http.X-PageType = "games-web";
+            set req.http.x-nyt-backend = "games_web";
             set req.http.x-skip-glogin = "1";
 
             // Since we're returning early, we need to do this here for now
@@ -25,6 +27,7 @@ sub vcl_recv {
         // We can treat the games assets as everything else and cache those (no cookies needed there)
         if (req.url.path ~ "^/games-assets/") {
             set req.http.X-PageType = "games-assets";
+            set req.http.x-nyt-backend = "games_assets";
             set req.http.x-skip-glogin = "1";
 
             if (!req.http.Fastly-SSL) {
@@ -42,6 +45,7 @@ sub vcl_recv {
         // submissions page
         if (req.url.path ~ "^/crosswords/submissions$") {
             set req.http.X-PageType = "games-web";
+            set req.http.x-nyt-backend = "games_web";
             set req.http.x-skip-glogin = "1";
 
             if (!req.http.Fastly-SSL) {
@@ -79,35 +83,34 @@ sub vcl_deliver {
 }
 
 sub set_games_svc_backend {
+
+    set req.backend = F_games_svc;
+
     if (req.http.x-environment == "dev") {
-        //set req.backend = ???;
+        set bereq.http.host = "nyt-games-dev.appspot.com";
     } else if (req.http.x-environment == "stg") {
-        set req.backend = games_svc_stg;
         set bereq.http.host = "nyt-games-dev.appspot.com";
     } else {
-        set req.backend = games_svc_prd;
         set bereq.http.host = "nyt-games-prd.appspot.com";
     }
 }
 
 sub set_games_web_backend {
+
+    set req.backend = F_games_web;
+
     if (req.http.x-environment == "dev") {
-        // No dev
+        set bereq.http.host = "puzzles.dev.nyt.net";
     } else if (req.http.x-environment == "stg") {
-        set req.backend = games_web_stg;
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else {
-        set req.backend = games_web_prd;
         set bereq.http.host = "puzzles.prd.nyt.net";
     }
 }
 
 sub set_games_assets_backend {
-    if (req.http.x-environment == "dev") {
-        // No dev
-    } else {
-        // one asset bucket for stg and prd
-        set req.backend = games_assets_prd;
-        set bereq.http.host = "storage.googleapis.com";
-    }
+
+    set req.backend = F_games_assets;
+    set bereq.http.host = "storage.googleapis.com";
+
 }

@@ -9,6 +9,7 @@ sub vcl_recv {
 
             set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
             set req.http.X-PageType = "subscription";
+            set req.http.x-nyt-backend = "subscription";
             call set_subscription_backend;
             set req.grace = 24h;
             set req.http.x-skip-glogin = "1";
@@ -75,11 +76,5 @@ sub vcl_deliver {
 
 
 sub set_subscription_backend {
-    if (req.http.x-environment == "dev") {
-        //set req.backend = ???;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = subscription_stg;
-    } else {
-        set req.backend = subscription_prd;
-    }
+    set req.backend = F_subscription;
 }

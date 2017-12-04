@@ -4,7 +4,6 @@
 # too many backend routes are defining their own vcl_fetch right now
 
 sub vcl_fetch {
-  set beresp.http.X-NYT-Backend = beresp.backend.name;
 
   # using a string here due to conditionals not differentiating false and null
   # need three states for this value

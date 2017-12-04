@@ -13,7 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -31,7 +31,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -49,7 +49,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -70,7 +70,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -88,7 +88,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -106,7 +106,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -124,7 +124,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',

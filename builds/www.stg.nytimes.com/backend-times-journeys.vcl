@@ -3,10 +3,12 @@ sub vcl_recv {
     	// The order of these two checks is important since the second one is a sub path of the first one
         if (req.url.path ~ "^/times-journeys") {
             set req.http.X-PageType = "times-journeys";
+            set req.http.x-nyt-backend = "times_journeys";
         }
 
         if (req.url.path ~ "^/times-journeys/students") {
             set req.http.X-PageType = "times-journeys-students";
+            set req.http.x-nyt-backend = "times_journeys_students";
         }
     }
 }
@@ -27,7 +29,7 @@ sub set_backend_request {
             } else {
                 set bereq.url = regsub(req.url, "^/times-journeys", "");
             }
-            set req.backend = times_journeys_prd;
+            set req.backend = F_times_journeys;
             set bereq.http.host = "timesjourneys.nytimes.com";
         }
 
@@ -38,7 +40,7 @@ sub set_backend_request {
                 set bereq.url = regsub(req.url, "^/times-journeys/students", "");
             }
 
-            set req.backend = times_journeys_students_prd;
+            set req.backend = F_times_journeys_students;
             set bereq.http.host = "timesjourneysstudents.nytimes.com";
         }
 

@@ -20,7 +20,6 @@ sub vcl_deliver {
 
     # make sure these are available for vcl_log as we might remove it
     set req.http.x-nyt-backend-health = resp.http.x-nyt-backend-health;
-    set req.http.X-NYT-Backend = resp.http.X-NYT-Backend;
 
     # lets return some headers to internal clients for debugging
     if (!req.http.x-nyt-internal-access){
@@ -28,7 +27,7 @@ sub vcl_deliver {
         unset resp.http.X-VarnishCacheDuration;
         unset resp.http.X-Origin-Server;
         unset resp.http.x-nyt-backend-health;
-        unset resp.http.X-NYT-Backend;
+        unset resp.http.x-nyt-backend;
     } else {
         # set these headers for internal requests
         set resp.http.x-nyt-continent = req.http.x-nyt-continent;
@@ -38,6 +37,7 @@ sub vcl_deliver {
         set resp.http.x-nyt-timezone = req.http.x-nyt-timezone;
         set resp.http.x-nyt-gmt-offset = req.http.x-nyt-gmt-offset;
         set resp.http.device_type = req.http.device_type;
+        set resp.http.x-nyt-backend = req.http.x-nyt-backend;
     }
 
     if (resp.http.X-API-Version) {

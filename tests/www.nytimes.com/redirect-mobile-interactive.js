@@ -12,7 +12,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -31,7 +31,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -50,7 +50,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -69,7 +69,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -88,7 +88,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -107,7 +107,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -126,7 +126,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -145,7 +145,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -164,7 +164,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {

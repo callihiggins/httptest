@@ -13,15 +13,16 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/fashion/runway/season/spring-2014-rtw',
       'responseHeaderMatches': {
         'x-pagetype': 'newsdev-gke',
+        'x-nyt-backend': 'newsdev_k8s_gke',
       },
-      'responseStatusCode': [200],
+      'responseStatusCode': [200,404],
       'scenarioDescription': 'Test fashion runway pages',
       'testId': 1,
     },
@@ -30,15 +31,16 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/int/dialects',
       'responseHeaderMatches': {
         'x-pagetype': 'newsdev-gke',
+        'x-nyt-backend': 'newsdev_k8s_gke',
       },
-      'responseStatusCode': [200],
+      'responseStatusCode': [200,404],
       'scenarioDescription': 'Test response from dynamic newsdev-gke app on /svc/int',
       'testId': 2,
     },
@@ -47,7 +49,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -71,7 +73,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -81,8 +83,9 @@ function getScenarioEvents()
       'requestUri': '/interactive/projects/guantanamo',
       'responseHeaderMatches': {
         'x-pagetype': 'newsdev-gke',
+        'x-nyt-backend': 'newsdev_k8s_gke',
       },
-      'responseStatusCode': [200],
+      'responseStatusCode': [200,404],
       'scenarioDescription': 'Guantanamo routing',
       'testId': 6,
     },

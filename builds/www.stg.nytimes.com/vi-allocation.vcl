@@ -105,7 +105,7 @@ sub vcl_recv {
         }
 
         # override with 1/3 each in staging:
-        if (req.http.x-environment == "stg") {
+        if (req.http.x-environment != "prd") {
             if (var.dart < 1431655765) { # 1/3 * 0x100000000
                 set var.test_group = "b2"; # HP only, reported
 

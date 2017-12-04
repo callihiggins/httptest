@@ -7,6 +7,7 @@ sub vcl_recv {
     }
 
     // default is NYT4
+    set req.http.x-nyt-backend = "www";
     call set_www_backend;
 
     set req.http.X-PageType = "legacy";
@@ -16,8 +17,10 @@ sub vcl_recv {
         && req.url.ext == "html") {
         set req.http.X-PageType = "paidpost";
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
+            set req.http.x-nyt-backend = "paidpost_fe";
             call set_www_paidpost_backend_gke;
         } else {
+            set req.http.x-nyt-backend = "www_https";
             call set_www_paidpost_backend;
         }
     }
@@ -29,8 +32,10 @@ sub vcl_recv {
     ) {
         set req.http.X-PageType = "homepage";
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
+            set req.http.x-nyt-backend = "homepage_fe";
             call set_www_homepage_backend_gke;
         } else {
+            set req.http.x-nyt-backend = "www_fe";
             call set_www_homepage_backend;
         }
         set req.http.x-skip-glogin = "1";
@@ -55,6 +60,7 @@ sub vcl_recv {
 
     ) {
         set req.http.x-PageType = "legacy";
+        set req.http.x-nyt-backend = "www_https";
         call set_www_https_backend;
         set req.http.x-skip-glogin = "1";
     }
@@ -81,6 +87,7 @@ sub vcl_recv {
         || req.url ~ "^/upshot"
     ) {
         set req.http.X-PageType = "collection";
+        set req.http.x-nyt-backend = "collection_fe";
         call set_www_collection_backend_gke;
         set req.http.x-skip-glogin = "1";
     }
@@ -91,6 +98,7 @@ sub vcl_recv {
         || req.url ~ "^/newsletters$"
     ) {
         set req.http.X-PageType = "newsletter";
+        set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
@@ -98,15 +106,17 @@ sub vcl_recv {
     // slideshow application
     if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
         || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
-        || (req.url ~ "^/slideshow/" && req.http.x-environment == "stg")
+        || (req.url ~ "^/slideshow/" && req.http.x-environment != "prd")
     ) {
         set req.http.X-PageType = "slideshow";
+        set req.http.x-nyt-backend = "slideshow_fe";
         call set_www_slideshow_backend_gke;
     }
 
     // slideshow JSON files
     if (req.url ~ "\.slideshow\.json$") {
         set req.http.X-PageType = "slideshow-legacy";
+        set req.http.x-nyt-backend = "www";
         call set_www_backend;
     }
 
@@ -118,6 +128,7 @@ sub vcl_recv {
     ) {
         set req.http.X-PageType = "real-estate";
         # set this to www instead of www_fe_vert so that it will PASS for now
+        set req.http.x-nyt-backend = "www";
         call set_www_backend;
         set req.http.x-skip-glogin = "1";
     }
@@ -155,6 +166,7 @@ sub vcl_recv {
 
     if (req.url ~ "^/404\.html") {
         set req.http.X-PageType = "miscellany";
+        set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
     }
 
@@ -164,6 +176,7 @@ sub vcl_recv {
             && req.url !~ "^/svc/web-products/userinfo")
     ) {
         set req.http.X-PageType = "service";
+        set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
@@ -176,6 +189,7 @@ sub vcl_recv {
         && req.http.host !~ "^paidpost([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$"
     ) {
         set req.http.X-PageType = "legacy-override";
+        set req.http.x-nyt-backend = "www";
         call set_www_backend;
     }
 
@@ -195,20 +209,24 @@ sub vcl_recv {
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
     ) {
         set req.http.X-PageType = "article";
+        set req.http.x-nyt-backend = "nyt5_article_director";
         call set_www_article_backend;
     }
 
     // Send to GCP
     if ( req.url ~ "^/svc/int/qa" ) {
+        set req.http.x-nyt-backend = "ask_well";
         call set_ask_well_backend;
     } else if ( req.url ~ "^/svc/int/attribute/projects/" ) {
-      call set_www_newsdev_attribute_gclod_function_backend;
+        set req.http.x-nyt-backend = "newsdev_attribute_gclod_function";
+        call set_www_newsdev_attribute_gclod_function_backend;
     } else if (    req.url ~ "^/svc/int/"
         || (req.url ~ "^/interactive/projects/(notable-deaths|guantanamo)")
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
     ) {
         set req.http.X-PageType = "newsdev-gke";
         set req.http.x-skip-glogin = "1";
+        set req.http.x-nyt-backend = "newsdev_k8s_gke";
         call set_www_newsdev_gke_backend;
     }
 
@@ -216,6 +234,7 @@ sub vcl_recv {
         || (req.url == "/global") || (req.url ~ "^/global/")) {
         set req.http.X-PageType = "intl";
         set req.http.x-skip-glogin = "1";
+        set req.http.x-nyt-backend = "intl_gcp";
         call set_www_intl_backend;
     }
 
@@ -232,6 +251,7 @@ sub vcl_recv {
         || req.http.host ~  "(www\.)?nytco\.com$"
     ) {
         set req.http.X-PageType = "blog";
+        set req.http.x-nyt-backend = "blogs_fe";
         call set_blogs_fe_backend;
     }
     // vanity hostnames for blogs
@@ -249,6 +269,7 @@ sub vcl_recv {
         || req.http.host ~  "jobs\.nytco\.com$"
     ) {
         set req.http.X-PageType = "blog2";
+        set req.http.x-nyt-backend = "blogs_fe";
         call set_blogs_fe_backend;
     }
     // blogs under WWW hostname
@@ -264,6 +285,7 @@ sub vcl_recv {
             || req.url ~  "^/live$"
         ) {
             set req.http.X-PageType = "blog";
+            set req.http.x-nyt-backend = "www_fe";
             call set_www_fe_backend;
         }
     }
@@ -299,6 +321,7 @@ sub vcl_recv {
                 ||  req.url ~ "^/svc/int/qa"
             )
         ) {
+            set req.http.x-nyt-backend = "ask_well";
             call set_ask_well_backend;
         // Pass those paths to newsdev gke without caching
         } else if ( req.url ~ "^/projects"
@@ -306,6 +329,7 @@ sub vcl_recv {
         ) {
            set req.http.X-PageType = "newsdev-gke";
            set req.http.x-skip-glogin = "1";
+           set req.http.x-nyt-backend = "newsdev_k8s_gke";
            call set_www_newsdev_gke_backend;
         }
     }
@@ -329,6 +353,7 @@ sub vcl_recv {
     if (req.url ~ "^/svc/message/v1/list/global.json") {
         set req.http.X-PageType = "messaging-api";
         set req.http.x-skip-glogin = "1";
+        set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
     }
 
@@ -344,6 +369,7 @@ sub vcl_recv {
 
             set req.http.X-PageType = "community-svc-cacheable";
             set req.http.x-skip-glogin = "1";
+            set req.http.x-nyt-backend = "www_fe";
             call set_www_fe_backend;
 
             # sub in "/esi/jsonp-callback" as the callback parameter
@@ -351,6 +377,7 @@ sub vcl_recv {
                 "([\?&])callback=[a-zA-Z0-9_][^&]+",
                 "\1callback=%3Cesi%3Ainclude%2520src%3D%22%2Fesi%2Fjsonp-callback%22%2F%3E");
         } else {
+            set req.http.x-nyt-backend = "www_https";
             call set_www_https_backend;
             set req.http.x-PageType = "legacy";
             set req.http.x-skip-glogin = "1";
@@ -360,11 +387,13 @@ sub vcl_recv {
     // AB Test Config
     if ( req.url == "/appconfig/abtests/nyt-abconfig.json" ) {
         set req.http.X-PageType = "service";
+        set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
     }
 
     if ( req.url == "/js/nyt5/ab/abconfig.json" ) {
         set req.http.X-PageType = "static";
+        set req.http.x-nyt-backend = "www_static";
         call set_www_static_backend;
     }
 
@@ -375,12 +404,14 @@ sub vcl_recv {
          || req.url ~ "^/svc/comscore/"
          || req.url ~ "^/services/xml/"){
         set req.http.X-PageType = "legacy-cacheable";
+        set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
 
     if( req.url ~ "^/svc/collections"){
         set req.http.X-PageType = "collections-svc";
+        set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
         set req.http.x-skip-glogin = "1";
     }
@@ -389,82 +420,53 @@ sub vcl_recv {
         set req.url = req.http.X-OriginalUri;
         set req.http.cookie = req.http.X-Cookie;
         set req.http.X-PageType = "legacy";
+        set req.http.x-nyt-backend = "www";
         call set_www_backend;
     }
 }
 
 # set a video library backend based on env
 sub set_video_library_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = video_library_stg;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = video_library_stg;
+    if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
+        set req.http.x-nyt-backend = "video_library";
+        set req.backend = F_video_library;
     } else {
-        set req.backend = www_fe_prd;
+        set req.http.x-nyt-backend = "video_library_director";
+        set req.backend = video_library_director_prd;
     }
 }
 
 # set a video api backend based on env
 sub set_video_api_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = video_api_stg;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = video_api_stg;
+    if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
+        set req.http.x-nyt-backend = "video_api";
+        set req.backend = F_video_api;
     } else {
+        set req.http.x-nyt-backend = "video_api_director";
         set req.backend = video_api_director_prd;
     }
 }
 
-# set a www backend based on host
+
 sub set_www_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_stg;
-    } else {
-        set req.backend = www_prd;
-    }
+    set req.backend = F_www;
 }
 
-# set a www backend based on host
 sub set_www_https_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_https_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_https_stg;
-    } else {
-        set req.backend = www_https_prd;
-    }
+    set req.backend = F_www_https;
 }
 
 # set paidpost backend to prepare for migration
 sub set_www_paidpost_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_https_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_https_stg;
-    } else {
-        set req.backend = www_https_prd;
-    }
+    set req.backend = F_www_https;
 }
+
 sub set_www_paidpost_backend_gke {
-    if(req.http.x-environment == "dev") {
-        set req.backend = paidpost_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = paidpost_fe_stg;
-    } else {
-        set req.backend = paidpost_fe_prd;
-    }
+    set req.backend = F_paidpost_fe;
 }
-# set a www_fe backend based on host
+
 sub set_www_fe_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_fe_stg;
-    } else {
-        set req.backend = www_fe_prd;
-    }
+    set req.backend = F_www_fe;
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
@@ -473,13 +475,7 @@ sub set_www_fe_backend {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_collection_backend_gke {
-    if(req.http.x-environment == "dev") {
-        set req.backend = collection_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = collection_fe_stg;
-    } else {
-        set req.backend = collection_fe_prd;
-    }
+    set req.backend = F_collection_fe;
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
@@ -487,6 +483,7 @@ sub set_www_collection_backend_gke {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_article_backend {
+
     if(req.http.x-environment == "dev") {
         set req.backend = nyt5_article_director_dev;
     } else if (req.http.x-environment == "stg") {
@@ -502,27 +499,14 @@ sub set_www_article_backend {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_slideshow_backend_gke {
-    if(req.http.x-environment == "dev") {
-        set req.backend = slideshow_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = slideshow_fe_stg;
-    } else {
-        set req.backend = slideshow_fe_prd;
-    }
-
+    set req.backend = F_slideshow_fe;
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_misc_backend_gke {
-    if(req.http.x-environment == "dev") {
-        set req.backend = misc_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = misc_fe_stg;
-    } else {
-        set req.backend = misc_fe_prd;
-    }
+    set req.backend = F_misc_fe;
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
@@ -533,89 +517,50 @@ sub set_nyt5_misc_backend {
 
 # set backend for nyt5 homepage migration
 sub set_www_homepage_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_fe_stg;
-    } else {
-        set req.backend = www_fe_prd;
-    }
+
+    set req.backend = F_www_fe;
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
 sub set_www_homepage_backend_gke {
-    if(req.http.x-environment == "dev") {
-        set req.backend = homepage_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = homepage_fe_stg;
-    } else {
-        set req.backend = homepage_fe_prd;
-    }
+
+    set req.backend = F_homepage_fe;
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
 
 sub set_www_static_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_static_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_static_stg;
-    } else {
-        set req.backend = www_static_prd;
-    }
+    set req.backend = F_www_static;
 }
 
 sub set_blogs_fe_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = blogs_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = blogs_fe_stg;
-    } else {
-        set req.backend = blogs_fe_prd;
-    }
+    set req.backend = F_blogs_fe;
 }
 
 sub set_www_intl_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = intl_gcp_stg;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = intl_gcp_stg;
-    } else {
-        set req.backend = intl_gcp_prd;
-    }
+    set req.backend = F_intl_gcp;
 }
 
 sub set_www_newsdev_gke_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = newsdev_k8s_gke_stg;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = newsdev_k8s_gke_stg;
-    } else {
-        set req.backend = newsdev_k8s_gke_prd;
-    }
+    set req.backend = F_newsdev_k8s_gke;
 }
 
 sub set_www_newsdev_attribute_gclod_function_backend {
+
+    set req.backend = F_newsdev_attribute_gclod_function;
+
     if(req.http.x-environment == "dev" || req.http.x-environment == "stg") {
       set req.http.x-cf-host = "us-central1-nytint-stg.cloudfunctions.net";
-      set req.backend = newsdev_attribute_gclod_function_stg;
     } else {
       set req.http.x-cf-host = "us-central1-nytint-prd.cloudfunctions.net";
-      set req.backend = newsdev_attribute_gclod_function_prd;
     }
 }
 
 sub set_ask_well_backend {
-    if(req.http.x-environment == "dev") {
-      // no dev
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = ask_well_stg;
-    } else {
-        set req.backend = ask_well_prd;
-    }
 
+    set req.backend = F_ask_well;
     set req.http.X-PageType = "askwell";
     set req.http.x-skip-glogin = "1";
 

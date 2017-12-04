@@ -32,7 +32,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -57,7 +57,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/1981/01/03/nyregion/uso-in-times-square.html',
       'responseHeaderMatches': {
-        'x-api-version': '5-5',
+        'x-api-version': 'F-5-5',
         'x-frame-options': 'DENY',
         'x-pagetype': 'article',
       },
@@ -93,7 +93,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -118,9 +118,9 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/2013/06/16/travel/travel-guide-new-york-for-kids.html',
       'responseHeaderMatches': {
-        'x-api-version': '5-5',
+        'x-api-version': 'F-5-4',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'article',
+        'x-pagetype': 'legacy',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; archive article, 2013 travel',
@@ -154,7 +154,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -179,9 +179,9 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/2013/09/08/movies/the-coen-brothers-look-wryly-at-their-films.html',
       'responseHeaderMatches': {
-        'x-api-version': '5-5',
+        'x-api-version': 'F-5-4',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'article',
+        'x-pagetype': 'legacy',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; archive article, 2013 movies',
@@ -215,7 +215,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -240,9 +240,9 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
       'responseHeaderMatches': {
-        'x-api-version': '5-5',
+        'x-api-version': 'F-5-4',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'article',
+        'x-pagetype': 'legacy',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; archive article, 2013 theater',
@@ -253,7 +253,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -282,7 +282,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/crosswords/index.html',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-GW',
       },
       'responseStatusCode': [301, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; crosswords; landing page',
@@ -296,10 +296,14 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-GW',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; crosswords; archive',
@@ -324,7 +328,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -341,26 +345,9 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
-      'requestUri': '/events',
-      'responseHeaderMatches': {
-        'x-api-version': '4a',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test legacy; www-apps cluster; events; landing page',
-      'testId': '8d',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -377,26 +364,9 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
-      'requestUri': '/events/theater/broadway/fiddler-on-the-roof-28978.html',
-      'responseHeaderMatches': {
-        'x-api-version': '4a',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test legacy; www-apps cluster; events; event',
-      'testId': '9d',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -413,26 +383,9 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
-      'requestUri': '/events/venues/joyce-theater-221.html',
-      'responseHeaderMatches': {
-        'x-api-version': '4a',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test legacy; www-apps cluster; events; venue',
-      'testId': '10d',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -457,7 +410,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/gift-guide/holiday-2010/categories.html',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-4a',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; gift guide; 2010 holiday',
@@ -472,45 +425,9 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'http://',
-      'requestUri': '/health/guides/symptoms/rashes/overview.html',
-      'responseHeaderMatches': {
-        'x-api-version': '4a',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test legacy; www-apps cluster; health; guide',
-      'testId': '12d',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
       'requestUri': '/services/xml/rss/',
       'responseHeaderMatches': {
         'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy-cacheable',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test legacy; www-apps cluster; service; RSS XML',
-      'testId': '13p',
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
-      'requestUri': '/services/xml/rss/',
-      'responseHeaderMatches': {
-        'x-api-version': '4a',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; service; RSS XML',
@@ -521,7 +438,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -546,7 +463,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/websvc/user/data.json',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-4a',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; service; user data',
@@ -557,7 +474,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -582,7 +499,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/technology/personaltech/desktops/overview.html',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-4a',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; technology',
@@ -593,7 +510,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'http://',
@@ -618,7 +535,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/timeswire',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-4a',
       },
       'responseStatusCode': [200, 404, 503],
       'scenarioDescription': 'Test legacy; www-apps cluster; timeswire',
@@ -629,7 +546,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -655,10 +572,14 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
       'requestScheme': 'http://',
       'requestUri': '/style/weddings/announcements',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-4a',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; weddings; announcement',
@@ -669,7 +590,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -695,10 +616,14 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'NYT-BCET=' + suite.cookies.nyt_bcet,
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
       'requestScheme': 'http://',
       'requestUri': '/mem/email-this.html',
       'responseHeaderMatches': {
-        'x-api-version': '4a',
+        'x-api-version': 'F-4a',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test legacy; www-apps cluster; email this form',
@@ -709,7 +634,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [

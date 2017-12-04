@@ -23,7 +23,6 @@ include "migration-allocation";
 include "backends-dev";
 include "backends-stg";
 include "backends-prd";
-include "backends-deadend";
 # end defining backends
 
 # this adds vcl_fetch logic for logging purposes
@@ -79,13 +78,9 @@ sub vcl_recv {
     return(pass);
   }
 
-  if ( req.backend == www_dev
-    || req.backend == www_stg
-    || req.backend == www_prd
-    || req.backend == www_https_dev
-    || req.backend == www_https_stg
-    || req.backend == www_https_prd
-    ) {
+  # this block assumes default legacy backend
+  # we cannot cache legacy by default
+  if (req.backend == F_www || req.backend == F_www_https) {
     return(pass);
   }
 
@@ -367,7 +362,7 @@ sub vcl_log {
       {" "} regsub(resp.body_bytes_written, "^0$", {""-""})
       {" ""} cstr_escape(req.http.referer) {"""}
       {"" ""} cstr_escape(req.http.user-agent) {"""}
-      {" backend=["} if(req.http.X-NYT-Backend,req.http.X-NYT-Backend,"-") {"]"}
+      {" backend=["} if(req.http.x-nyt-backend,req.http.x-nyt-backend,"-") {"]"}
       {" pagetype=["} if(resp.http.X-PageType,resp.http.X-PageType,"-") {"]"}
       {" apiversion=["} if(resp.http.X-API-Version,resp.http.X-API-Version,"-") {"]"}
       {" cachetype=["} if(fastly_info.state,fastly_info.state,"-") {"]"}

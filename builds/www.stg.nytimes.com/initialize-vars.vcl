@@ -26,6 +26,7 @@ sub vcl_recv {
     if (!req.http.x-nyt-internal-access) {
       unset req.http.x-skip-glogin;
       unset req.http.x-nyt-backend-health;
+      unset req.http.x-nyt-backend;
     }
 
     /*

@@ -9,12 +9,8 @@ sub vcl_recv {
      * Do not do this for (NYT4) www backend (this means pass right now)
      * and only do this remap if this is not a restarted request.
      */
-    if (   req.backend != www_dev
-        && req.backend != www_stg
-        && req.backend != www_prd
-        && req.backend != www_https_dev
-        && req.backend != www_https_stg
-        && req.backend != www_https_prd
+    if (   req.backend != F_www
+        && req.backend != F_www_https
         && req.restarts == 0
         && ( req.request == "HEAD"
           || req.request == "GET"

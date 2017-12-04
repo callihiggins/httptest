@@ -1,0 +1,110 @@
+sub vcl_pass {
+  call process_backend_health_req;
+}
+
+sub vcl_miss {
+  call process_backend_health_req;
+}
+
+sub process_backend_health_req {
+  if (req.url.path ~ "^/backendhealth\.(json|html)$" && req.http.x-nyt-internal-access) {
+
+    # this does not use query strings
+    set req.url = querystring.remove(req.url);
+
+    # initalize the headers to hold the synth response parts
+    unset req.http.x-nyt-behealth-response-head;
+    unset req.http.x-nyt-behealth-response-tail;
+    set req.http.x-nyt-behealth-response-body = "";
+
+    unset req.http.x-nyt-appended-status;
+
+    # create json structure head
+    call create_response_head;
+
+
+    # template the backend health rows based on configured backends
+    {{ $backends := (datasource "config").backends }}
+    {{range $backends -}}
+    set req.backend = F_{{.name}};
+    set req.http.x-nyt-temp-backend-name = "{{.name}}";
+    call append_backend_status;
+    set req.http.x-nyt-appended-status = "true";
+
+    {{end}}
+
+    # create json structure tail
+    call create_response_tail;
+
+    error 995;
+  }
+}
+
+sub vcl_error {
+  if (obj.status == 995) {
+
+    set obj.status = 200;
+    set obj.response = "OK";
+
+    if(req.url.ext == "json") {
+      set obj.http.Content-Type = "application/json";
+    } else {
+      set obj.http.Content-Type = "text/html";
+    }
+
+    set obj.http.X-API-Version = "0";
+
+    synthetic req.http.x-nyt-behealth-response-head +
+              req.http.x-nyt-behealth-response-body + 
+              req.http.x-nyt-behealth-response-tail;
+
+    unset req.http.x-nyt-behealth-response-head;
+    unset req.http.x-nyt-behealth-response-body;
+    unset req.http.x-nyt-behealth-response-tail;
+
+    return(deliver);
+  }
+}
+
+sub create_response_head {
+
+  if (req.url.ext == "json") {
+    set req.http.x-nyt-behealth-response-head = {" {
+    "HealthData": [
+      {
+        "backend": { "};
+  } else {
+    set req.http.x-nyt-behealth-response-head = {"<!DOCTYPE html><title>Backend Health</title><style>.dt{width:784px;display:block;height:30px!important;border:1px solid #000;padding:0;background-color:transparent;margin:0;line-Height:30px}.dc{width:100%;background-color:transparent;position:relative;font-size:30px;color:#2293ff;text-align:center;line-height:30px;font-family:arial,helvetica,sans-serif;font-weight:700;border:1px solid #f2f2f2}.dhr{width:100%;position:relative}.dhc{border:1px solid #000;width:49.5%;position:relative;font-family:arial,helvetica,sans-serif;font-size:24px;font-style:bold;background-color:#c1c4c9;float:left}.dr{width:100%;display:table;position:relative;color:#000}.dc-h{border:1px solid #000;width:49.5%;display:block;position:relative;background-color:#64c46f;color:#000;font-size:24px;float:left;font-family:arial,helvetica,sans-serif;text-align:center;vertical-align:middle;font-weight:700;letter-spacing:0;word-spacing:0}.dc-u{border:1px solid #000;width:49.5%;display:block;position:relative;background-color:#d12b25;color:#000;font-size:24px;float:left;font-family:arial,helvetica,sans-serif;text-align:center;vertical-align:middle;font-weight:700;letter-spacing:0;word-spacing:0}.dcb{border:1px solid #000;width:49.5%;display:block;position:relative;background-color:#fff;color:#000;font-size:24px;float:left;font-family:arial,helvetica,sans-serif;text-align:left;vertical-align:middle;font-weight:700;letter-spacing:0;word-spacing:0}</style><div class=dt id=dt><div class=dc id=dc>Backend Health</div></div>"};
+  }
+
+}
+
+sub create_response_tail {
+
+  if (req.url.ext == "json") {
+    set req.http.x-nyt-behealth-response-tail = {"
+        }
+      }
+    ]
+  } "};
+  } else {
+    set req.http.x-nyt-behealth-response-tail = {"</div></body></html>"};
+  }
+}
+
+sub append_backend_status {
+  if (req.url.ext == "json") {
+    if(req.http.x-nyt-appended-status == "true"){
+      set req.http.x-nyt-behealth-response-body = req.http.x-nyt-behealth-response-body + ",";
+    }
+
+    set req.http.x-nyt-behealth-response-body = req.http.x-nyt-behealth-response-body + {"
+          ""} + req.http.x-nyt-temp-backend-name + {"": {
+            "health": ""} + if(req.backend.healthy,"healthy","unhealthy") + {""
+          }"};
+  } else {
+    # markup is larger, minifying
+    set req.http.x-nyt-behealth-response-body = req.http.x-nyt-behealth-response-body + {"<div id="dr1" class="dr"></div><div class="dc-"} + if(req.backend.healthy,"h","u") +  {"">"}+req.http.x-nyt-temp-backend-name+{"</div>"};
+  }
+
+}

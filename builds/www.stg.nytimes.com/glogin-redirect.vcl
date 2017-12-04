@@ -167,16 +167,10 @@ sub check_skip_glogin {
     }
 
     # some backends that should skip glogin
-    if (req.backend == www_dev
-        || req.backend == www_stg
-        || req.backend == www_prd
-        || req.backend == www_https_dev
-        || req.backend == www_https_stg
-        || req.backend == www_https_prd
-        || req.backend == intl_gcp_stg
-        || req.backend == intl_gcp_prd
-        || req.backend == newsdev_k8s_gke_stg
-        || req.backend == newsdev_k8s_gke_prd) {
+    if (req.backend == F_www
+        || req.backend == F_www_https
+        || req.backend == F_intl_gcp
+        || req.backend == F_newsdev_k8s_gke) {
 
         set req.http.x-skip-glogin = "1";
     }

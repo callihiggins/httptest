@@ -5,17 +5,12 @@ sub vcl_recv {
         || req.url.path == "/guides"
     ) {
         set req.http.X-PageType = "well";
-        call set_beta_well_backend;
+        set req.http.x-nyt-backend = "beta_guides";
+        set req.backend = F_beta_guides;
         set req.grace = 24h;
-        # XXX -- Consider unsetting this header at the top of recv so the client can't set it and bypass your auth -- stephen
         set req.http.x-skip-glogin = "1";
     }
 
-    if (req.http.magicmarker-well == "fake") {
-        unset req.http.magicmarker-well;
-        set req.backend = beta_deadend;
-        return(lookup);
-    }
 }
 
 sub vcl_fetch {
@@ -25,10 +20,18 @@ sub vcl_fetch {
             set beresp.ttl = 3s;
         }
 
-        // use saint mode for HTTP 5XXs
         if (beresp.status >= 500) {
-            set beresp.saintmode = 60s;
-            restart;
+            /* deliver stale if the object is available */
+            if (stale.exists) {
+                return(deliver_stale);
+            }
+
+            # if the object was not in cache and we have not restarted, try one more time
+            if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
+                restart;
+            }
+
+            set req.http.Fastly-Cachetype = "ERROR";
         }
     }
 }
@@ -36,22 +39,5 @@ sub vcl_fetch {
 sub vcl_deliver {
     if (req.http.X-PageType == "well") {
         set resp.http.X-API-Version = "W";
-    }
-}
-
-sub vcl_error {
-    if (req.http.X-PageType == "well" && obj.status >= 500 && obj.status < 600) {
-        set req.http.magicmarker-well = "fake";
-        restart;
-    }
-}
-
-sub set_beta_well_backend {
-    if (req.http.x-environment == "dev") {
-        set req.backend = beta_guides_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = beta_guides_stg;
-    } else {
-        set req.backend = beta_guides_prd;
     }
 }

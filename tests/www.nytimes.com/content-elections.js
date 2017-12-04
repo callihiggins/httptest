@@ -13,7 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -33,7 +33,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -42,8 +42,10 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/elections/results',
       'responseHeaderMatches': {
-        'x-api-version': 'F-I',
-        'location': 'https://' + suite.servername + '/elections/results/president'
+        'x-api-version': 'F-I'
+      },
+      'responseHeaderPattern': {
+        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/elections\/results\/president/
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test elections; obey redirects configured by x-amz-meta-website-redirect-location header',
@@ -54,7 +56,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -71,7 +73,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -88,7 +90,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',

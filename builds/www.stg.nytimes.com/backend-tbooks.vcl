@@ -4,6 +4,7 @@ sub vcl_recv {
         // https://jira.nyt.net/browse/DV-273
         if (req.url ~ "^/tbooks") {
             set req.http.X-PageType = "tbooks";
+            set req.http.x-nyt-backend = "tbooks";
 
             // If it's a request to the tbooks homepage we need to leave the / at the end so that
             // the path "exists". Otherwise, we should remove the whole /tbooks from the path.
@@ -14,7 +15,7 @@ sub vcl_recv {
             } else {
                 set req.url = regsub(req.url, "^/tbooks", "");
             }
-            set req.backend = tbooks_prd;
+            set req.backend = F_tbooks;
             set req.http.host = "nytinsider.wordpress.com";
 
             set req.grace = 24h;

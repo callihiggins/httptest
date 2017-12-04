@@ -14,7 +14,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -32,7 +32,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -53,7 +53,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -74,7 +74,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -99,7 +99,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -124,7 +124,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -134,7 +134,7 @@ function getScenarioEvents()
       'requestUri': '/',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=b2',
-        'x-nyt-backend': 'projectvi_fe_',
+        'x-nyt-backend': 'projectvi_fe',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Custom onion header sets backend to vi',
@@ -146,7 +146,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -159,7 +159,7 @@ function getScenarioEvents()
       'requestUri': '/',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=a2',
-        'x-nyt-backend': 'projectvi_fe_',
+        'x-nyt-backend': 'projectvi_fe',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'ab7 => vi/vi/mw; homepage',
@@ -171,7 +171,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -196,7 +196,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -209,7 +209,7 @@ function getScenarioEvents()
       'requestUri': '/',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=b2',
-        'x-nyt-backend': 'projectvi_fe_',
+        'x-nyt-backend': 'projectvi_fe',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'ab7 => vi/mw/mw; homepage',
@@ -221,7 +221,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -245,7 +245,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -269,7 +269,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestHeaders': {
@@ -281,7 +281,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderContains': {
-        'x-nyt-backend': 'projectvi_fe_',
+        'x-nyt-backend': 'projectvi_fe',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'vi_www_hp_opt = 1',
@@ -293,7 +293,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -310,7 +310,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -323,7 +323,7 @@ function getScenarioEvents()
       ],
       'responseHeaderContains': {
         'device_type': 'desktop',
-        'x-nyt-backend': 'projectvi_fe_',
+        'x-nyt-backend': 'projectvi_fe',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Static Asset Backend for project vi',
@@ -334,7 +334,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -347,7 +347,7 @@ function getScenarioEvents()
       ],
       'responseHeaderContains': {
         'device_type': 'tablet',
-        'x-nyt-backend': 'projectvi_fe_',
+        'x-nyt-backend': 'projectvi_fe',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Static Asset Backend for project vi',
@@ -358,7 +358,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
+        'dev': true,
         'sbx': false,
       },
       'requestScheme': 'https://',
