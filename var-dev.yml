@@ -506,10 +506,10 @@ backends:
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "www.stg.nytimes.com"
-    ssl_sni_hostname: "www.stg.nytimes.com"
+    ssl_cert_hostname: "www.dev.nytimes.com"
+    ssl_sni_hostname: "www.dev.nytimes.com"
     healthcheck:
-      host: "www.stg.nytimes.com"
+      host: "www.dev.nytimes.com"
       path: "/.status"
       check_interval: "5000"
       expected_response: "200"
