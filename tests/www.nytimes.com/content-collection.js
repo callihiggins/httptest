@@ -127,7 +127,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/reviews/dining/map/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GM',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200],
