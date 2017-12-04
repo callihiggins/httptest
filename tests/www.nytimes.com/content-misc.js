@@ -19,8 +19,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/books/best-sellers/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
-        'x-pagetype': 'bestsellers',
+        'x-api-version': 'F-GM',
+        'x-pagetype': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers /books/best-sellers/',
@@ -37,8 +37,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/books/best-sellers/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
-        'x-pagetype': 'bestsellers',
+        'x-api-version': 'F-GM',
+        'x-pagetype': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers  /books/best-sellers/combined-print-and-e-book-fiction/',
@@ -55,8 +55,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
-        'x-pagetype': 'bestsellers',
+        'x-api-version': 'F-GM',
+        'x-pagetype': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers on /books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
@@ -73,7 +73,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/trending/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GM',
         'x-pagetype': 'trending',
       },
       'responseStatusCode': [200],
@@ -91,7 +91,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/podcasts/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GM',
         'x-pagetype': 'podcasts',
       },
       'responseStatusCode': [200],
@@ -109,7 +109,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/podcasts/modern-love',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GM',
         'x-pagetype': 'podcasts',
       },
       'responseStatusCode': [200],
@@ -127,7 +127,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/reviews/dining/map/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-5',
+        'x-api-version': 'F-GM',
         'x-pagetype': 'collection',
       },
       'responseStatusCode': [200],
@@ -137,8 +137,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },
@@ -147,7 +147,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestsellers',
+        'x-pagetype': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers /books/best-sellers/',
@@ -156,8 +156,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },
@@ -166,7 +166,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestsellers',
+        'x-pagetype': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers  /books/best-sellers/combined-print-and-e-book-fiction/',
@@ -175,8 +175,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },
@@ -185,7 +185,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestsellers',
+        'x-pagetype': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers on /books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
@@ -194,8 +194,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },
@@ -213,8 +213,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },
@@ -232,8 +232,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },
@@ -251,8 +251,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },

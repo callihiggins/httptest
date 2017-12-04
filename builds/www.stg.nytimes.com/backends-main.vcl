@@ -515,18 +515,6 @@ sub set_www_slideshow_backend_gke {
 }
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
-sub set_www_misc_backend {
-    if(req.http.x-environment == "dev") {
-        set req.backend = www_fe_dev;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = www_fe_stg;
-    } else {
-        set req.backend = www_fe_prd;
-    }
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
 sub set_www_misc_backend_gke {
     if(req.http.x-environment == "dev") {
         set req.backend = misc_fe_dev;
@@ -540,12 +528,9 @@ sub set_www_misc_backend_gke {
     unset req.http.x--fastly-project-vi;
 }
 sub set_nyt5_misc_backend {
-    if ( req.http.X-Migration-Backend == "on-GKE" ) {
-            call set_www_misc_backend_gke;
-        } else {
-            call set_www_misc_backend;
-        }
+    call set_www_misc_backend_gke;
 }
+
 # set backend for nyt5 homepage migration
 sub set_www_homepage_backend {
     if(req.http.x-environment == "dev") {
