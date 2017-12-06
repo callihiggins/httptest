@@ -16,13 +16,8 @@ sub vcl_recv {
     if (req.http.host ~ "^paidpost([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$"
         && req.url.ext == "html") {
         set req.http.X-PageType = "paidpost";
-        if ( req.http.X-Migration-Backend == "on-GKE" ) {
-            set req.http.x-nyt-backend = "paidpost_fe";
-            call set_www_paidpost_backend_gke;
-        } else {
-            set req.http.x-nyt-backend = "www_https";
-            call set_www_paidpost_backend;
-        }
+        set req.http.x-nyt-backend = "paidpost_fe";
+        set req.backend = F_paidpost_fe;
     }
 
     // homepages, domestic and international, are NYT5
@@ -454,15 +449,6 @@ sub set_www_backend {
 
 sub set_www_https_backend {
     set req.backend = F_www_https;
-}
-
-# set paidpost backend to prepare for migration
-sub set_www_paidpost_backend {
-    set req.backend = F_www_https;
-}
-
-sub set_www_paidpost_backend_gke {
-    set req.backend = F_paidpost_fe;
 }
 
 sub set_www_fe_backend {
