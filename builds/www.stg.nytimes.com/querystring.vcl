@@ -20,7 +20,9 @@ sub vcl_recv {
         && req.http.X-PageType != "collections-svc"
         && req.http.X-PageType != "watching"
         # except from NYT4 requests
-        && (req.backend != F_www && req.backend != F_www_https)
+        && (   req.backend != F_www
+            && req.backend != F_www_https
+            && req.backend != F_www_legacy_gke)
     ) {
         set req.url = querystring.remove(req.url);
     } else {

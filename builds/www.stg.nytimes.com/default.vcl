@@ -80,7 +80,9 @@ sub vcl_recv {
 
   # this block assumes default legacy backend
   # we cannot cache legacy by default
-  if (req.backend == F_www || req.backend == F_www_https) {
+  if (   req.backend == F_www
+      || req.backend == F_www_https
+      || req.backend == F_www_legacy_gke) {
     return(pass);
   }
 
@@ -155,7 +157,7 @@ sub vcl_miss {
       || req.http.X-PageType == "slideshow"
       || req.http.X-PageType == "homepage"
       || req.http.X-PageType == "paidpost"
-      || req.http.X-PageType == "trending" 
+      || req.http.X-PageType == "trending"
       || req.http.X-PageType == "podcasts"
       || req.http.X-PageType == "bestseller"
   ){
@@ -181,7 +183,7 @@ sub vcl_pass {
       || req.http.X-PageType == "slideshow"
       || req.http.X-PageType == "homepage"
       || req.http.X-PageType == "paidpost"
-      || req.http.X-PageType == "trending" 
+      || req.http.X-PageType == "trending"
       || req.http.X-PageType == "podcasts"
       || req.http.X-PageType == "bestseller"
   ){

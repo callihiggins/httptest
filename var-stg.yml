@@ -36,7 +36,7 @@ healthcheck_defaults:
 #       key: "value"
 #
 # each backend must provide a healthcheck for itself!
-# Add a blank line between each one for readability. 
+# Add a blank line between each one for readability.
 # Pay attention to the above define defaults!
 # each backend must be named uniquely! (do a find befotr naming)
 # name your backend descriptivley for what app it is: don't use "web_app", do use "worldcup_fe"
@@ -658,6 +658,23 @@ backends:
       threshold: "8"
       timeout: "10000"
       window: "10"
+
+  - name: "www_legacy_gke"
+    address: "wf-legacy-www.stg.oma1.nyt.net"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "wf-legacy-www.stg.oma1.nyt.net"
+    ssl_sni_hostname: "wf-legacy-www.stg.oma1.nyt.net"
+    healthcheck:
+      host: "wf-legacy-www.stg.oma1.nyt.net"
+      path: "/.status"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "3"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
 
   - name: "www_static"
     address: "static.stg.gtm.nytimes.com"

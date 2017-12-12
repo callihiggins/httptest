@@ -444,11 +444,21 @@ sub set_video_api_backend {
 
 
 sub set_www_backend {
-    set req.backend = F_www;
+    if (req.http.X-Migration-Backend == "on-GKE"
+        && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
+        set req.backend = F_www_legacy_gke;
+    }  else {
+        set req.backend = F_www;
+    }
 }
 
 sub set_www_https_backend {
-    set req.backend = F_www_https;
+    if (req.http.X-Migration-Backend == "on-GKE"
+        && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
+        set req.backend = F_www_legacy_gke;
+    }  else {
+        set req.backend = F_www_https;
+    }
 }
 
 sub set_www_fe_backend {

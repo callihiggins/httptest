@@ -169,6 +169,7 @@ sub check_skip_glogin {
     # some backends that should skip glogin
     if (req.backend == F_www
         || req.backend == F_www_https
+        || req.backend == F_www_legacy_gke
         || req.backend == F_intl_gcp
         || req.backend == F_newsdev_k8s_gke) {
 
