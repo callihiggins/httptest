@@ -447,6 +447,9 @@ sub set_www_backend {
     if (req.http.X-Migration-Backend == "on-GKE"
         && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
         set req.backend = F_www_legacy_gke;
+
+        # if we needed to switch back to NYT4, unset the vi flag
+        unset req.http.x--fastly-project-vi;
     }  else {
         set req.backend = F_www;
     }
@@ -456,6 +459,9 @@ sub set_www_https_backend {
     if (req.http.X-Migration-Backend == "on-GKE"
         && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
         set req.backend = F_www_legacy_gke;
+
+        # if we needed to switch back to NYT4, unset the vi flag
+        unset req.http.x--fastly-project-vi;
     }  else {
         set req.backend = F_www_https;
     }
