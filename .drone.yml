@@ -1,13 +1,22 @@
 pipeline:
+
+  # This step runs the template engine for sandbox and dev services
+  # notice we are setting an env for dev that will trigger
+  # dev specific domain templating (dev + sandboxes)
+  # someday if .sbx.nytimes.com is not Vi alpha service only we will iterate
   dev-template:
     image: hairyhenderson/gomplate
+    environment:
+      - env=dev
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-dev.yml
       - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-dev.yml
     when:
       event: push
 
-  # Used to verify TF syntax
+  # this step is used to validate the Terraform syntax before attempting apply
+  # the terraform configuration to the service, it essentially runs: terraform plan
+  # it's ok that this uses dev service for everything, just a plan to validate tf
   syntax_check:
     image: jmccann/drone-terraform:4.0-0.10.7 
     plan: true
@@ -16,11 +25,77 @@ pipeline:
         - "path=fastly/fastly-www/dev/terraform.tfstate"
     vars:
       env: dev
+      service_name: dev
     secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
     when:
       event: push
 
-  # Deploys to dev service  to validate if Fastly can generate the final VCL
+
+  # SANDBOX: uses branch sandbox01 to deploy to www.sandbox01
+  sandbox01:
+    image: jmccann/drone-terraform:4.0-0.10.7
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/sandbox01/terraform.tfstate"
+    vars:
+      env: dev
+      service_name: sandbox01
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: push
+      branch:
+        include: [ sandbox01 ]
+
+  # SANDBOX: uses branch sandbox02 to deploy to www.sandbox02
+  sandbox02:
+    image: jmccann/drone-terraform:4.0-0.10.7
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/sandbox02/terraform.tfstate"
+    vars:
+      env: dev
+      service_name: sandbox02
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: push
+      branch:
+        include: [ sandbox02 ]
+
+  # SANDBOX: uses branch sandbox03 to deploy to www.sandbox03
+  sandbox03:
+    image: jmccann/drone-terraform:4.0-0.10.7
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/sandbox03/terraform.tfstate"
+    vars:
+      env: dev
+      service_name: sandbox03
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: push
+      branch:
+        include: [ sandbox03 ]
+
+  # SANDBOX: uses branch sandbox04 to deploy to www.sandbox04
+  sandbox04:
+    image: jmccann/drone-terraform:4.0-0.10.7
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/sandbox04/terraform.tfstate"
+    vars:
+      env: dev
+      service_name: sandbox04
+    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    when:
+      event: push
+      branch:
+        include: [ sandbox04 ]
+
+  # DEV: Deploy to www.dev service
   dev:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
@@ -29,9 +104,12 @@ pipeline:
         - "path=fastly/fastly-www/dev/terraform.tfstate"
     vars:
       env: dev
+      service_name: dev
     secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
     when:
       event: push
+      branch:
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04 ]
 
   # # Run tests against dev service
   # dev-test:
@@ -59,6 +137,7 @@ pipeline:
         - "path=fastly/fastly-www/stg/terraform.tfstate"
     vars:
       env: stg
+      service_name: stg
     secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
     when:
       event: push
@@ -89,6 +168,7 @@ pipeline:
         - "path=fastly/fastly-www/prd/terraform.tfstate"
     vars:
       env: prd
+      service_name: prd
     secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
     when:
       event: tag

@@ -14,7 +14,7 @@ Please use the following template for PRs: [PULL_REQUEST_TEMPLATE.md](https://gi
 
 ## Sandboxes
 
-If you need help with a sandbox for testing your feature, ask in #fastly.
+The sandbox policy and documentation can be found [here](https://github.com/nytm/dv-fastly-guide/tree/master/Topics/www_sandboxes.md)
 
 ## Office hours
 

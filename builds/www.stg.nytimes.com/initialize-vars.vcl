@@ -89,11 +89,7 @@ sub vcl_recv {
       set req.http.x-environment = "prd";
     }
 
-    if (req.http.x-environment == "prd") {
-      set req.http.x-nyt-logger-name = "webprd-www";
-    } else {
-      set req.http.x-nyt-logger-name = "webstg-www";
-    }
+    set req.http.x-nyt-logger-name = "web" + req.http.x-environment + "-www";
 
     // set the original protocol to let downstream systems know what it was
     if (req.http.Fastly-SSL) {

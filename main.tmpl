@@ -9,6 +9,10 @@ variable "env" {
   type = "string"
 }
 
+variable "service_name" {
+  type = "string"
+}
+
 variable "sumologic_endpoint" {
   type = "map"
 
@@ -20,16 +24,47 @@ variable "sumologic_endpoint" {
 }
 
 resource "fastly_service_v1" "www" {
-  name = "www.${var.env}"
+  name = "www.${var.service_name}"
 
   {{ $domains := (datasource "config").domains }}
-  {{range $domains -}}
 
-  domain {
-    name = "{{.name}}"
-  }
+  {{/*
+    for DEV, we will range over the domains for sandboxes
+    if the branch exists as a scalar (sandoxes are branch based)
+    if there are no domains for the branch, range over .dev env base domains
+  */}}
 
-  {{end -}}
+  {{if eq (env.Getenv "env") "dev"}}
+
+    {{ $domain_service := env.Getenv "DRONE_BRANCH"}}
+    {{if (has $domains $domain_service)}}
+      {{range (index $domains $domain_service) -}}
+      domain {
+        name = "{{.name}}"
+      }
+      {{end -}}
+    {{else}}
+      {{range $domains.dev -}}
+      domain {
+        name = "{{.name}}"
+      }
+      {{end -}}
+    {{end}}
+
+  {{else}}
+
+  {{/*
+    if we are in stg or prd, just range over the domains configured
+    as there are no env/branch scalars under stg/prd configured domains
+  */}}
+
+    {{range $domains -}}
+    domain {
+      name = "{{.name}}"
+    }
+    {{end -}}
+
+  {{end}}
 
   {{ $backends := (datasource "config").backends }}
   {{ $backend_defaults := (datasource "config").backend_defaults }}

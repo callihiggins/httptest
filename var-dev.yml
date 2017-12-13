@@ -1,9 +1,22 @@
 # define the domains this service should respond to requests for
 # one per line using name: in a sequence under the domain scalar
 # use name: as key for each item in sequence
+# DEV use case is different than other services as we manage not
+# only dev here, but sandboxes as well (for now)
+
 domains:
-  - name: "*.dev.nytimes.com"
-  - name: "www.dev.nytimes.com"
+  dev:
+    - name: "*.dev.nytimes.com"
+    - name: "www.dev.nytimes.com"
+  sandbox01:
+    - name: "www-sandbox01.dev.nytimes.com"
+  sandbox02:
+    - name: "www-sandbox02.dev.nytimes.com"
+  sandbox03:
+    - name: "www-sandbox03.dev.nytimes.com"
+  sandbox04:
+    - name: "www-sandbox04.dev.nytimes.com"
+
 
 # these are the default values for backend config keys if not specified
 # some are only here for documentation purposes, some you can override
