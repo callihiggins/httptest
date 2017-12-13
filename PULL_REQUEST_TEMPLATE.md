@@ -7,7 +7,7 @@
 - [ ] yes
 - [ ] no - potential blocker for merge
 
-## Did you `git rebase -i origin/master`? If not why?
+## Did you merge origin/master into your feature branch? If not why?
 
 - [ ] yes
 - [ ] no - potential blocker for merge
