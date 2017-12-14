@@ -65,16 +65,30 @@ sub vcl_recv {
       set req.http.x-nyt-a = req.http.Cookie:nyt-a;
     }
 
-    if (!req.http.x-nyt-a) {
+    if (req.http.x-nyt-a !~ ".") { # if nyt-a doesn't match any character, it's either empty string or NULL
       # we didn't get a uuid, generate and set one
-      set req.http.x-nyt-a = digest.hash_sha256(
-          now.sec+
-          randomstr(64)+
-          req.http.host+
-          req.url+
-          client.ip+
-          client.port+
-          server.identity);
+      set req.http.x-nyt-a = digest.hmac_sha256_base64(
+          # key doesn't really matter for our purposes, but here's 256 bits entropy anyway:
+          "1pCPYoPsNtx1aDpv8EUZ9azYZ3szwSeKFXnmHAojc3s",
+          now.sec +
+          randomstr(64) +
+          req.http.host +
+          req.http.user-agent +
+          req.http.cookie +
+          req.url +
+          client.ip +
+          req.http.Fastly-Client-IP +
+          time.start.usec +
+          time.elapsed.usec +
+          client.port +
+          server.identity
+      );
+
+      // we only need 22 base64 chars to reach 128 bits entropy (22 * 6 = 132):
+      set req.http.x-nyt-a = regsub(req.http.x-nyt-a, "^(.{22}).*$", "\1");
+      // replace '+' and '/' with cookie-safe '-' and '_':
+      set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\+", "-");
+      set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\/", "_");
     }
 
     if (req.http.Cookie:nyt-bcet){
