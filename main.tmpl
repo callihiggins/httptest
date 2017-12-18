@@ -82,13 +82,17 @@ resource "fastly_service_v1" "www" {
     {{else}}
     port = "{{$backend_defaults.port}}"
     {{end}}
-    {{if (has . "use_tls")}}
-    {{if eq .use_tls "true"}}
+    {{if (has . "use_ssl")}}
+    {{if eq .use_ssl "true"}}
+    use_ssl = "{{.use_ssl}}"
     ssl_check_cert = "{{$backend_defaults.ssl_check_cert}}"
     ssl_cert_hostname = "{{.ssl_cert_hostname}}"
     ssl_sni_hostname = "{{.ssl_sni_hostname}}"
+    {{else}}
+    use_ssl = "false"
     {{end}}
     {{else}}
+    use_ssl = "{{$backend_defaults.use_ssl}}"
     ssl_check_cert = "{{$backend_defaults.ssl_check_cert}}"
     ssl_cert_hostname = "{{.ssl_cert_hostname}}"
     ssl_sni_hostname = "{{.ssl_sni_hostname}}"

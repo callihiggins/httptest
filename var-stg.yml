@@ -10,7 +10,7 @@ domains:
 # these are the default values for backend config keys if not specified
 # some are only here for documentation purposes, some you can override
 backend_defaults:
-  use_tls: "true" # can override, you must providfe ssl_cert_hostname if true
+  use_ssl: "true" # can override, you must providfe ssl_cert_hostname if true
   port: "443" # can override this, default behaviour is TLS on port 443
   ssl_check_cert: "true" # cannot be overridden, must use this value if TLS enabled
   auto_loadbalance: "false" # cannot be overidden, we cannot use this in this service
@@ -85,7 +85,7 @@ backends:
     connect_timeout: "5000"
     first_byte_timeout: "150000"
     port: "80"
-    use_tls: "false"
+    use_ssl: "false"
     healthcheck:
       host: "ask-well.stg.nyt.com"
       path: "/health"
@@ -119,7 +119,7 @@ backends:
     connect_timeout: "5000"
     first_byte_timeout: "5000"
     port: "80"
-    use_tls: "false"
+    use_ssl: "false"
     healthcheck:
       host: "np-watching-stg-public-668029006.us-east-1.elb.amazonaws.com"
       path: "/api/health"
@@ -136,7 +136,7 @@ backends:
     connect_timeout: "10000"
     first_byte_timeout: "60000"
     port: "80"
-    use_tls: "false"
+    use_ssl: "false"
     ssl_cert_hostname: ""
     ssl_sni_hostname: ""
     healthcheck:
@@ -189,7 +189,7 @@ backends:
     connect_timeout: "120000"
     first_byte_timeout: "120000"
     port: "80"
-    use_tls: "false"
+    use_ssl: "false"
     healthcheck:
       host: "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com"
       path: "/version.json"
@@ -614,7 +614,7 @@ backends:
     connect_timeout: "10000"
     first_byte_timeout: "10000"
     port: "80"
-    use_tls: "false"
+    use_ssl: "false"
     healthcheck:
       host: "www.stg.gtm.nytimes.com"
       path: "/.status-for-fastly"
@@ -648,7 +648,7 @@ backends:
     connect_timeout: "10000"
     first_byte_timeout: "10000"
     port: "80"
-    use_tls: "false"
+    use_ssl: "false"
     healthcheck:
       host: "www.stg.gtm.nytimes.com"
       path: "/.status-for-fastly"
@@ -682,7 +682,7 @@ backends:
     connect_timeout: "10000"
     first_byte_timeout: "10000"
     port: "80"
-    use_tls: "false"
+    use_ssl: "false"
     healthcheck:
       host: "static.stg.gtm.nytimes.com"
       path: "/.status"
