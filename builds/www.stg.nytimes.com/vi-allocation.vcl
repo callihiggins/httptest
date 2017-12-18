@@ -10,12 +10,15 @@
 #   ctrl (unreported):          Abra 98%  }      => "z0"    nyt5/nyt5/nyt5  -
 #   HP only:            (no use case yet)        => "b0"    nyt5/vi/nyt5    -
 #   Story only:         (no use case yet)        => "c0"    nyt5/vi/nyt5    -
-#
+#                                                               (^ not sure if these allocations affect
+#                                                                  any routes other than home anymore)
 #   `vi_www_hp` cookie meaning:
-#       z = nyt5/nyt5/nyt5  1 = report for WP_ProjectVi     [0-9] = last digit of year in
-#       a = vi/vi/nyt5      2 = report for WP_ProjectVi_www_hp      which cookie will expire
-#       b = vi/nyt5/nyt5    0 = don't report
-#       c = nyt5/vi/nyt5
+#       z = nyt5            1 = report for WP_ProjectVi     [0-9] = last digit of year in
+#       a = vi              2 = report for WP_ProjectVi_www_hp      which cookie will expire
+#       b = vi              0 = don't report
+#       c = nyt5
+#       d = vi (added Dec. 2017)
+#       y = nyt5 (added Dec. 2017)
 #
 #   `vi_www_hp_opt` cookie meaning:
 #       1 = force vi homepage
@@ -99,6 +102,12 @@ sub vcl_recv {
 
         } else if (var.dart < 85899346) { # 2% * 0x100000000
             set var.test_group = "z2"; # control, reported
+
+        } else if (var.dart < 128849018) { # 3% * 0x100000000
+            set var.test_group = "d2"; # HP only (added Dec. 2017), reported
+
+        } else if (var.dart < 171798691) { # 4% * 0x100000000
+            set var.test_group = "y2"; # control (added Dec. 2017), reported
 
         } else { # var.dart < 0x100000000
             set var.test_group = "z0"; # control, unreported
