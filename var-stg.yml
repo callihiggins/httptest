@@ -2,7 +2,9 @@
 # one per line using name: in a sequence under the domain scalar
 # use name: as key for each item in sequence
 domains:
-  - name: "*.blogs.stg.nytimes.com"
+  - name: "well.blogs.stg.nytimes.com"
+  - name: "lens.blogs.stg.nytimes.com"
+  - name: "douthat.blogs.stg.nytimes.com"
   - name: "*.stg.nytimes.com"
   - name: "www.stg.nytimes.com"
 
