@@ -23,7 +23,9 @@ sub vcl_recv {
         if (    (   req.url == "/marketing" ||  
                     req.url ~ "^/marketing/" ||  
                     req.url == "/services/mobile" ||  
-                    req.url ~ "^/services/mobile/"
+                    req.url ~ "^/services/mobile/" ||
+                    req.url == "/subscriptions" ||
+                    req.url ~ "^/subscriptions/"
                 ) && req.http.x-environment == "dev"
             ) {
             set req.http.X-PageType = "mwcm";
