@@ -15,7 +15,7 @@ sub vcl_deliver {
             if (req.http.user-agent !~ "NYTimes") {
     	        set resp.http.X-Frame-Options = "DENY";
             }
-	    } elseif (req.http.Referer !~ "^https?://(?:[^?/]+\.)?(?:localhost|(?:nytimes|nytco|nytlabs|stumbleupon|starbucks|insightexpress|optimizely)\.com|(?:newsdev\.net))(?:\:[1-9][0-9]*)?/") {
+	    } elseif (req.http.Referer !~ "^https?://(?:[^?/]+\.)?(?:localhost|(?:nytimes|nytco|nytlabs|stumbleupon|starbucks|insightexpress|optimizely)\.com|(?:(nyt|newsdev)\.net))(?:\:[1-9][0-9]*)?/") {
 	        set resp.http.X-Frame-Options = "DENY";
 	    }
 	} else {

@@ -102,6 +102,26 @@ function getScenarioEvents()
       'scenarioDescription': 'Test elections served by GCS, not S3',
       'testId': 5,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForFrameBustingInScoop',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/elections/2017/widget/mobile/2017-12-12',
+      'requestHeaders': {
+        'Referer': 'https://scoop.nyt.net',
+      },
+      'responseHeadersNotPresent': [
+        'x-frame-options'
+      ],
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Do not framebust requests from Scoop',
+      'testId': 5,
+    },
   ];
 
   return scenarios;
