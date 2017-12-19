@@ -25,7 +25,7 @@ include "backends-stg";
 include "backends-prd";
 # end defining backends
 
-# this adds vcl_fetch logic for logging purposes
+# this adds vcl_error logic for logging purposes
 include "backend-init-vars";
 
 # this backend route logic needs to come before all others

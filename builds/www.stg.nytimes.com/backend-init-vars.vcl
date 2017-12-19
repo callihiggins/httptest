@@ -1,15 +1,16 @@
-# this should execute before any other vcl_fetch logic
-# need to capture backend state info for logging
-# TODO: put in a custom sub during upcoming refactor
-# too many backend routes are defining their own vcl_fetch right now
+# this should execute before any other backend route vcl_error logic
+# need to capture backend health state info for logging
+# too many backend routes are defining their own vcl_error right now
 
-sub vcl_fetch {
+sub vcl_error {
 
-  # using a string here due to conditionals not differentiating false and null
-  # need three states for this value
-  if (req.backend.healthy) {
-    set beresp.http.x-nyt-backend-health = "1";
+  # based on some fastly documentation it looks like 
+  # the response always has the string "healthy" when
+  # we entered vcl_error because the backend was unhealthy
+  # lets set a header var we can capture and log / return
+  if(std.tolower(obj.response) ~ "healthy"){
+    set obj.http.x-nyt-backend-health = "0";
   } else {
-    set beresp.http.x-nyt-backend-health = "0";
+    set obj.http.x-nyt-backend-health = "1";
   }
 }
