@@ -57,8 +57,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/timesjourneys/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-TJ',
-        'x-pagetype': 'timesjourneys',
+        'x-nyt-backend': "blogs_gcs",
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 2',
@@ -76,8 +75,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/timesjourneys',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-TJ',
-        'x-pagetype': 'timesjourneys',
+        'x-nyt-backend': "blogs_gcs",
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 3',

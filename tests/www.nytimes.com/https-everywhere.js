@@ -389,7 +389,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/guides/well/how-to-start-running',
+      'requestUri': '/spotlight/guides',
       'responseStatusCode': 200,
       'scenarioDescription': 'Test HTTPS Everywhere; well guide (phase 3); secure; opt-out cookie not set',
       'testId': 31,
