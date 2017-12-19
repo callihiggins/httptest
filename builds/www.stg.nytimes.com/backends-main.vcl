@@ -241,8 +241,8 @@ sub vcl_recv {
     // blogs
     if (   req.http.host == "dealbook.nytimes.com"
         || req.http.host == "developers.nytimes.com"
-        || req.http.host ~  "(blogs|blogs5)\.(dev\.|stg\.|)?nytimes\.com$"
-        || req.http.host ~  "(blogs|blogs5)\.ewr1.nytimes\.com$"
+        || req.http.host ~  "blogs\.(dev\.|stg\.|)?nytimes\.com$"
+        || req.http.host ~  "blogs\.ewr1.nytimes\.com$"
         || req.http.host ~  "(www\.)?nytco\.com$"
     ) {
         set req.http.X-PageType = "blog";
@@ -253,19 +253,13 @@ sub vcl_recv {
     // skip glogin check
     if (   req.http.host == "beta620.nytimes.com"
         || req.http.host == "bits.nytimes.com"
-        || req.http.host == "lessonplans.nytimes.com"
-        || req.http.host == "open.nytimes.com"
         || req.http.host ~  "(www\.)?dealbook\.com$"
         || req.http.host ~  "(www\.)?dealbook\.me$"
-        || req.http.host ~  "(www\.)?nytimesjourneys\.com$"
-        || req.http.host ~  "(www\.)?nytjourneys\.com$"
-        || req.http.host ~  "(www\.)?timesjourneys\.com$"
-        || req.http.host ~  "(www\.)?newyorktimesjourneys\.com$"
         || req.http.host ~  "jobs\.nytco\.com$"
     ) {
         set req.http.X-PageType = "blog2";
-        set req.http.x-nyt-backend = "blogs_fe";
-        call set_blogs_fe_backend;
+        set req.http.x-nyt-backend = "blogs_gcs";
+        set req.backend = F_blogs_gcs;
     }
     // blogs under WWW hostname
     if (   req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"
@@ -280,8 +274,8 @@ sub vcl_recv {
             || req.url ~  "^/live$"
         ) {
             set req.http.X-PageType = "blog";
-            set req.http.x-nyt-backend = "www_fe";
-            call set_www_fe_backend;
+            set req.http.x-nyt-backend = "blogs_gcs";
+            set req.backend = F_blogs_gcs;
         }
     }
     // blog URLs that do not get glogin redirection
