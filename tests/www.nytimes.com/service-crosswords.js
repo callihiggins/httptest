@@ -442,6 +442,26 @@ function getScenarioEvents()
       'scenarioDescription': 'Test hitting Primer page',
       'testId': 21,
     },
+    {
+      'id': 'Functional Test For Spelling Bee',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'games-phoenix',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/puzzles/spelling-bee',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Spelling Bee page',
+      'testId': 22,
+    },
   ];
 
   return scenarios;

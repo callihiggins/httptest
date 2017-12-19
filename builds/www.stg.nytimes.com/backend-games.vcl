@@ -7,6 +7,22 @@ sub vcl_recv {
             return(pass);
         }
 
+        if ((req.http.x-environment == "stg" || req.http.x-environment == "dev") &&
+             req.url.path ~ "^/puzzles") {
+
+              set req.http.X-PageType = "games-phoenix";
+              set req.http.x-skip-glogin = "1";
+
+              // Since we're returning early, we need to do this here for now
+              if (!req.http.Fastly-SSL) {
+                  call redirect_to_https;
+              }
+
+              // Games need cookies and until we sort out our mess with cookies we need to pass requests
+              // to the apps
+              return(pass);
+        }
+
         if (req.url.path ~ "^/crosswords" &&
             req.url.qs !~ "nyt-games=legacy") {
 
@@ -71,13 +87,16 @@ sub set_games_backend_request {
       call set_games_web_backend;
     } else if (req.http.X-PageType == "games-assets") {
       call set_games_assets_backend;
+    } else if (req.http.X-PageType == "games-phoenix") {
+      call set_games_phoenix_backend;
     }
 }
 
 sub vcl_deliver {
     if (req.http.X-PageType == "games-service") {
         set resp.http.X-API-Version = "GS";
-    } else if (req.http.X-PageType == "games-web") {
+    } else if (req.http.X-PageType == "games-web" ||
+               req.http.X-PageType == "games-phoenix") {
         set resp.http.X-API-Version = "GW";
     }
 }
@@ -113,4 +132,13 @@ sub set_games_assets_backend {
     set req.backend = F_games_assets;
     set bereq.http.host = "storage.googleapis.com";
 
+}
+
+sub set_games_phoenix_backend {
+    set req.backend = F_games_phoenix;
+
+    if (req.http.x-environment == "dev" ||
+        req.http.x-environment == "stg") {
+        set bereq.http.host = "phoenix.games.dev.nyt.net";
+    }
 }
