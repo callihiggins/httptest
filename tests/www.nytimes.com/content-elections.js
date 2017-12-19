@@ -113,7 +113,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/elections/2017/widget/mobile/2017-12-12',
       'requestHeaders': {
-        'Referer': 'https://scoop.nyt.net',
+        'Referer': 'https://scoop.nyt.net/',
       },
       'responseHeadersNotPresent': [
         'x-frame-options'
