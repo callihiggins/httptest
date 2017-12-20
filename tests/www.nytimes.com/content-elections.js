@@ -45,7 +45,7 @@ function getScenarioEvents()
         'x-api-version': 'F-I'
       },
       'responseHeaderPattern': {
-        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/elections\/results\/president/
+        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/elections\/results\/.+/
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test elections; obey redirects configured by x-amz-meta-website-redirect-location header',
