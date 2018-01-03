@@ -122,10 +122,18 @@ sub vcl_recv {
         || req.url ~ "^/section/realestate/commercial"
     ) {
         set req.http.X-PageType = "real-estate";
-        # set this to www instead of www_fe_vert so that it will PASS for now
-        set req.http.x-nyt-backend = "www";
-        call set_www_backend;
-        set req.http.x-skip-glogin = "1";
+        
+        if ( req.http.X-Migration-Backend == "on-GKE" ) {
+            set req.http.x-nyt-backend = "realestate_fe";
+            call set_www_realestate_backend_gke;
+            set req.http.x-skip-glogin = "1";
+        } else {
+            # set this to www instead of www_fe_vert so that it will PASS for now
+            set req.http.x-nyt-backend = "www";
+            call set_www_backend;
+            set req.http.x-skip-glogin = "1";
+        }        
+        
     }
 
     // trending application
@@ -522,6 +530,14 @@ sub set_www_homepage_backend {
 sub set_www_homepage_backend_gke {
 
     set req.backend = F_homepage_fe;
+
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
+}
+
+sub set_www_realestate_backend_gke {
+
+    set req.backend = F_realestate_fe;
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
