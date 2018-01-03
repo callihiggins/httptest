@@ -17,7 +17,6 @@ domains:
   - name: "www.business.nytimes.com"
   - name: "well.blogs.nytimes.com"
   - name: "lens.blogs.nytimes.com"
-  - name: "douthat.blogs.nytimes.com"
   - name: "www.nytimesontheweb.com"
   - name: "www.nythealthfortomorrow.com"
   - name: "www.thenewyorktimes.com"

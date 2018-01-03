@@ -4,7 +4,6 @@
 domains:
   - name: "well.blogs.stg.nytimes.com"
   - name: "lens.blogs.stg.nytimes.com"
-  - name: "douthat.blogs.stg.nytimes.com"
   - name: "*.stg.nytimes.com"
   - name: "www.stg.nytimes.com"
 
