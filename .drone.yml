@@ -183,8 +183,6 @@ pipeline:
     image: plugins/slack
     channel: fastly-builds
     username: fastly-www
-    secrets:
-      - source: SLACK_WEBHOOK_URL
-        target: SLACK_WEBHOOK
+    secrets: [SLACK_WEBHOOK]
     when: 
       status: [success, failure, blocked]
