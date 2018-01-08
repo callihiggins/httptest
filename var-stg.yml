@@ -7,7 +7,6 @@ domains:
   - name: "*.stg.nytimes.com"
   - name: "www.stg.nytimes.com"
 
-
 # these are the default values for backend config keys if not specified
 # some are only here for documentation purposes, some you can override
 backend_defaults:
@@ -61,7 +60,6 @@ backends:
       threshold: "3"
       timeout: "2000"
       window: "5"
-
 
   - name: "article_fe"
     address: "nyt5-app-article.stg.oma1.nyt.net"
@@ -471,6 +469,23 @@ backends:
       initial: "5"
       threshold: "3"
       timeout: "10000"
+      window: "5"
+
+  - name: "programs_gcs"
+    address: "storage.googleapis.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "storage.googleapis.com"
+    ssl_sni_hostname: "storage.googleapis.com"
+    healthcheck:
+      host: "nyt-betaprog-dev-assets.storage.googleapis.com"
+      path: "/healthcheck.txt"
+      check_interval: "5000"
+      expected_response: "200"
+      initial: "5"
+      threshold: "3"
+      timeout: "2000"
       window: "5"
 
   - name: "projectvi_asset"
