@@ -6,10 +6,7 @@ sub vcl_recv {
       # to be extended in the future to include older articles and the code will
       # be updated accordingly.
       if (
-        (    req.url ~ "^/(aponline/|reuters/)?2017/10/[123]"
-          || req.url ~ "^/(aponline/|reuters/)?2017/1[12]"
-          || req.url ~ "^/(aponline/|reuters/)?201[8-9]"
-        ) // 2017/10/10+
+           req.url ~ "^/(aponline/|reuters/)?201[7-9]"
         && req.url.path !~ "\.amp\.html$" // exclude amp
         && (
             req.http.x--fastly-vi-test-group-story ~ "^[a]"
@@ -120,11 +117,7 @@ sub vcl_hash {
     if (req.url.path == "/"){
       set req.hash += req.http.x-nyt-geo-hash;
       set req.hash += req.http.device_type;
-    } else if (
-      req.url ~ "^/(aponline/|reuters/)?2017/10/[123]"
-      || req.url ~ "^/(aponline/|reuters/)?2017/1[12]"
-      || req.url ~ "^/(aponline/|reuters/)?201[8-9]"
-    ) {
+    } else if (req.url ~ "^/(aponline/|reuters/)?201[7-9]") {
       set req.hash += req.http.x--fastly-vi-test-group-story;
     }
   }
