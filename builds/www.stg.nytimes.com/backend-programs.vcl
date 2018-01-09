@@ -1,13 +1,7 @@
 sub vcl_recv {
-    if (req.url.path ~ "^/programs/.*/public/") {
+    if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/") {
         set req.http.X-PageType = "programs-gcs";
         call set_programs_gcs_backend;
-
-        # Redirect to https before updating req.http.host header
-        # TODO is this necessary here?
-        if ( !req.http.Fastly-SSL ) {
-          call redirect_to_https;
-        }
 
         unset req.http.Cookie;
         unset req.http.X-Cookie;
@@ -19,7 +13,7 @@ sub vcl_recv {
         set req.http.Date = now;
         set req.http.host = req.http.x-gcs-bucket ".storage.googleapis.com";
 
-        return(lookup)
+        return(lookup);
     }
 
     if (req.url.path ~ "^/programs/svc/") {
