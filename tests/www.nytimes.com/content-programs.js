@@ -94,10 +94,13 @@ function getScenarioEvents() {
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
+        "cookie",
         "nnCoection",
+        "set-cookie",
         "via",
         "x-age",
         "x-backend",
+        "x-cookie"
         "x-detectedruntimeconfigflag",
         "x-esi-status",
         "x-hash",
