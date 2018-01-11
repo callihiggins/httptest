@@ -48,6 +48,9 @@ sub vcl_deliver {
     if (req.http.X-PageType == "programs-service") {
         set resp.http.X-API-Version = "PS";
     }
+    if (req.http.X-PageType == "programs-gcs") {
+        set resp.http.X-API-Version = "PGCS";
+    }
 }
 
 sub set_programs_web_backend {

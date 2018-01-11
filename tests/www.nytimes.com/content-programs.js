@@ -88,7 +88,7 @@ function getScenarioEvents() {
       requestScheme: "https://",
       requestUri: "/programs/ftu/public/healthcheck.txt",
       responseHeaderMatches: {
-        "x-api-version": "F-PS",
+        "x-api-version": "F-PGCS",
         "x-frame-options": "DENY",
         "x-pagetype": "programs-gcs"
       },
@@ -100,9 +100,10 @@ function getScenarioEvents() {
         "via",
         "x-age",
         "x-backend",
-        "x-cookie"
+        "x-cookie",
         "x-detectedruntimeconfigflag",
         "x-esi-status",
+        "x-gcs-bucket",
         "x-hash",
         "x-origin-server",
         "x-powered-by",
@@ -113,7 +114,7 @@ function getScenarioEvents() {
       ],
       responseStatusCode: [200],
       scenarioDescription: "Programs asset CDN; GCS is responding OK",
-      testId: 3
+      testId: "3"
     },
   ];
 
