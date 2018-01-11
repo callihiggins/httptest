@@ -21,6 +21,9 @@ function getScenarioEvents()
     },
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
+    'responseHeaderMatches': {
+      'X-PageType': 'vi-interactive'
+    },
     'responseHeadersPresent': [
       'age',
       'x-cache',
@@ -55,6 +58,9 @@ function getScenarioEvents()
     },
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
+    'responseHeaderMatches': {
+      'X-PageType': 'vi-interactive'
+    },
     'responseHeadersPresent': [
       'age',
       'x-cache',
@@ -318,6 +324,7 @@ function getScenarioEvents()
     'requestUri': '/interactive/2016/01/12/us/100000004069963.embedded.html',
     'responseHeaderMatches': {
       'x-api-version': 'F-5-5',
+      'X-PageType': 'vi-interactive'
     },
     'responseHeadersPresent': [
       'age',
@@ -354,6 +361,7 @@ function getScenarioEvents()
     'requestUri': '/interactive/2017/admin/100000005250034.embedded.html',
     'responseHeaderMatches': {
       'x-api-version': 'F-VI',
+      'X-PageType': 'vi-interactive'
     },
     'responseHeadersPresent': [
       'age',
@@ -391,6 +399,7 @@ function getScenarioEvents()
     'requestUri': '/interactive/2017/admin/100000005194102.embedded.html',
     'responseHeaderMatches': {
       'x-api-version': 'F-VI',
+      'X-PageType': 'vi-interactive'
     },
     'responseHeadersPresent': [
       'age',

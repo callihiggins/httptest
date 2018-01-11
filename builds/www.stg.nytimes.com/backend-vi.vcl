@@ -50,20 +50,13 @@ sub vcl_recv {
       }
   }
 
-  // interactive years 2014-forever are NYT5/Vi
+  // interactive years 2014-forever are served by Vi
+  // including all variants, canonical and .(embedded|mobile|app)\.html
   if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
-    // keep .embedded/mobile/app.html on NYT5 in production
-    if (req.http.x-environment == "prd"
-    &&  req.url.path ~ "\.(embedded|mobile|app)\.html$") {
-      set req.http.X-PageType = "interactive";
-      set req.http.x-nyt-backend = "www_fe";
-      call set_www_fe_backend;
-    } else {
-        set req.http.X-PageType = "vi-interactive";
-        set req.http.x-nyt-backend = "projectvi_fe";
-        call set_projectvi_fe_backend;
-        call check_vi_unhealthy;
-    }
+    set req.http.X-PageType = "vi-interactive";
+    set req.http.x-nyt-backend = "projectvi_fe";
+    call set_projectvi_fe_backend;
+    call check_vi_unhealthy;
   }
 
   # Home
