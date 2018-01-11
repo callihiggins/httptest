@@ -2,8 +2,10 @@ include "subscription-currency-map-table";
 
 sub vcl_recv {
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
-        if (    req.url == "/subscription"
-            ||  req.url ~ "^/subscription/"
+        if (    req.url == "/subscription"  ||  
+                req.url ~ "^/subscription/"  ||
+                req.url == "/marketing/surveys"  ||
+                req.url ~ "/marketing/surveys/"
             ) {
 
             set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
