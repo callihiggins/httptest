@@ -40,6 +40,7 @@ sub vcl_recv {
         || req.http.X-PageType == "askwell"
         || req.http.X-PageType == "vi-asset"
         || req.http.X-PageType == "vi-story"
+        || req.http.X-PageType == "vi-search"
         || req.http.X-PageType == "vi-interactive"
         || req.url ~ "^/ads/RE/"
         || req.url ~ "^/elections"

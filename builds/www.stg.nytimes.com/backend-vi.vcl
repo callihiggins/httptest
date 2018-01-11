@@ -1,4 +1,12 @@
 sub vcl_recv {
+
+  // search
+  if (req.http.x-environment != "prd" && req.url ~ "^/search") {
+      set req.http.X-PageType = "vi-search";
+      call set_projectvi_fe_backend;
+      call check_vi_unhealthy;
+  }
+
   // article
   if ( req.http.X-PageType == "article" ) {
       # The articles that are potentially served by the publishing pipeline
