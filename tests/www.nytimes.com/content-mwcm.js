@@ -337,7 +337,6 @@ function getScenarioEvents()
         'x-nyt-currency': 'USD',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
-        'x-nyt-region': 'NY',
         'x-api-version': 'F-WCM',
       },
       'responseHeadersPresent': [
@@ -349,6 +348,7 @@ function getScenarioEvents()
         'x-origin-server',
         'x-pagetype',
         'x-served-by',
+        'x-nyt-region',
       ],
       'responseHeadersNotPresent': [
         'nnCoection',
