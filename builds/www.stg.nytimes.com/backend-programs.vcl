@@ -10,7 +10,6 @@ sub vcl_recv {
         unset req.http.x-nyt-wpab;
 
         # Configure access to Cloud Storage
-        set req.http.Date = now;
         set req.http.host = req.http.x-gcs-bucket ".storage.googleapis.com";
 
         return(lookup);
