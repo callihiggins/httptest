@@ -54,7 +54,7 @@ function getScenarioEvents() {
       requestUri: "/programs/svc/shaq/v1/healthcheck",
       responseHeaderMatches: {
         "x-frame-options": "DENY",
-        "x-cache": "MISS",        
+        "x-cache": "MISS",
         "x-pagetype": "programs-service"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
@@ -76,7 +76,46 @@ function getScenarioEvents() {
       responseStatusCode: [200],
       scenarioDescription: "Programs shaq web app; status server is responding OK",
       testId: 2
-    }    
+    },
+    {
+      id: "FunctionalTestScenarioDefinitionForGCS",
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true,
+        sbx: false
+      },
+      requestScheme: "https://",
+      requestUri: "/programs/ftu/public/healthcheck.txt",
+      responseHeaderMatches: {
+        "x-api-version": "F-PGCS",
+        "x-frame-options": "DENY",
+        "x-pagetype": "programs-gcs"
+      },
+      responseHeadersPresent: ["x-cache", "x-served-by"],
+      responseHeadersNotPresent: [
+        "cookie",
+        "nnCoection",
+        "set-cookie",
+        "via",
+        "x-age",
+        "x-backend",
+        "x-cookie",
+        "x-detectedruntimeconfigflag",
+        "x-esi-status",
+        "x-gcs-bucket",
+        "x-hash",
+        "x-origin-server",
+        "x-powered-by",
+        "x-servername",
+        "x-servername2",
+        "x-varnish",
+        "x-varnishcacheduration"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "Programs asset CDN; GCS is responding OK",
+      testId: "3"
+    },
   ];
 
   return scenarios;
