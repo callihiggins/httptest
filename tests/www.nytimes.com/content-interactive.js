@@ -323,7 +323,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2016/01/12/us/100000004069963.embedded.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-5-5',
+      'x-api-version': 'F-VI',
       'X-PageType': 'vi-interactive'
     },
     'responseHeadersPresent': [
