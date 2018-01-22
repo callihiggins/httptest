@@ -72,7 +72,7 @@ backends:
       window: "5"
 
 backends:
-  - name: "ads_static"
+  - name: "ads_static_assets"
     address: "storage.googleapis.com"
     between_bytes_timeout: "5000"
     connect_timeout: "5000"
