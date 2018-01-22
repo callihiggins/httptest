@@ -561,6 +561,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "backend-ads-static-assets"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-ads-static-assets.vcl")}"
+  }
+
+  vcl {
     name    = "backend-adx-static"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-adx-static.vcl")}"

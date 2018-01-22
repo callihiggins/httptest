@@ -50,6 +50,7 @@ include "backend-times-journeys";
 include "backend-video";
 include "backend-tbooks";
 include "backend-adx-static";
+include "backend-ads-static-assets";
 
 # vi allocation and routing
 # intentionally after other backend logic
