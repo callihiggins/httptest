@@ -24,7 +24,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/07/06/automobiles/trump-in-poland-urges-west-to-defend-our-civilization.html',
+      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
@@ -50,7 +50,7 @@ function getScenarioEvents()
         'vistory=',
       ],
       'requestScheme': 'https://',
-      'requestUri': '/2017/07/06/automobiles/trump-in-poland-urges-west-to-defend-our-civilization.html',
+      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
@@ -73,7 +73,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/07/06/automobiles/trump-in-poland-urges-west-to-defend-our-civilization.html?abra=WP_ProjectVi_Story=st',
+      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html?abra=WP_ProjectVi_Story=st',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[a][012][0-9];/,
       },
@@ -93,7 +93,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/07/06/automobiles/trump-in-poland-urges-west-to-defend-our-civilization.html?abra=WP_ProjectVi_Story=horse',
+      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html?abra=WP_ProjectVi_Story=horse',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[z][012][0-9];/,
       },
@@ -255,8 +255,8 @@ function getScenarioEvents()
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
-      'requestScheme': 'https://',
-      'requestUri': '/2016/01/04/science/year-of-the-horse-or-year-of-the-horse-seeker.html?abra=WP_ProjectVi_Story=st',
+      'requestScheme': 'http://',
+      'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html?abra=WP_ProjectVi_Story=st',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
@@ -278,8 +278,8 @@ function getScenarioEvents()
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
-      'requestScheme': 'https://',
-      'requestUri': '/2016/01/04/science/year-of-the-horse-or-year-of-the-horse-seeker.html?abra=WP_ProjectVi_Story=horse',
+      'requestScheme': 'http://',
+      'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html?abra=WP_ProjectVi_Story=horse',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
@@ -289,52 +289,6 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
       'testId': 12,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2016/07/28/automobiles/tim-kaines-dad-style-makes-a-statement-in-philadelphia.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Allocated',
-      'testId': 13,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2016/07/28/automobiles/tim-kaines-dad-style-makes-a-statement-in-philadelphia.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Not Allocated',
-      'testId': 14,
     },
 
     // Production
@@ -571,7 +525,7 @@ function getScenarioEvents()
       'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Not Allocated',
       'testId': 1000,
     },
-        {
+    {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
@@ -582,8 +536,8 @@ function getScenarioEvents()
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
-      'requestScheme': 'https://',
-      'requestUri': '/2015/01/16/science/earth/study-raises-alarm-for-health-of-ocean-life.html?abra=WP_ProjectVi_Story=st',
+      'requestScheme': 'http://',
+      'requestUri': '/2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html?abra=WP_ProjectVi_Story=st',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
@@ -605,8 +559,8 @@ function getScenarioEvents()
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
-      'requestScheme': 'https://',
-      'requestUri': '/2015/01/16/science/earth/study-raises-alarm-for-health-of-ocean-life.html?abra=WP_ProjectVi_Story=horse',
+      'requestScheme': 'http://',
+      'requestUri': '/2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html?abra=WP_ProjectVi_Story=horse',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
@@ -616,52 +570,6 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
       'testId': 1200,
-    },
-        {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2016/09/25/opinion/sunday/hillary-clinton-for-president.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Allocated',
-      'testId': 1300,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2016/09/25/opinion/sunday/hillary-clinton-for-president.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with a fancy header. Not Allocated',
-      'testId': 1400,
     },
   ];
 
