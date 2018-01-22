@@ -71,7 +71,6 @@ backends:
       timeout: "2000"
       window: "5"
 
-backends:
   - name: "ads_static_assets"
     address: "storage.googleapis.com"
     between_bytes_timeout: "5000"
