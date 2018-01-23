@@ -1,7 +1,7 @@
 sub vcl_recv {
 
   // search
-  if (req.http.x-environment != "prd" && req.url ~ "^/search") {
+  if (req.url ~ "^/search") {
       set req.http.X-PageType = "vi-search";
       call set_projectvi_fe_backend;
       call check_vi_unhealthy;
