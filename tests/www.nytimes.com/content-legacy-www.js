@@ -16,10 +16,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'http://',
       'requestUri': '/1961/09/17/books/updike-by-salinger.html',
       'responseHeaderMatches': {
@@ -138,10 +134,6 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'http://',
       'requestUri': '/export_html/common/new_login_iframe.html',
       'responseHeaderMatches': {
@@ -502,10 +494,6 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'http://',
       'requestUri': '/interactive/2013/12/19/us/politics/19nsa-review.html',
       'responseHeaderMatches': {

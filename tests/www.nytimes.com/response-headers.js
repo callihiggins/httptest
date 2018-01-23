@@ -16,10 +16,6 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-      ],
       'requestScheme': 'https://',
       'requestUri': '/2016/01/01/us/slug.html',
       'responseHeaderMatches': {

@@ -13,7 +13,6 @@ sub vcl_recv {
             set req.http.x-nyt-backend = "mwcm";
             set req.backend = F_mwcm;
             set req.grace = 24h;
-            set req.http.x-skip-glogin = "1";
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;
@@ -34,7 +33,6 @@ sub vcl_recv {
             set req.http.x-nyt-backend = "mwcm";
             set req.backend = F_mwcm;
             set req.grace = 24h;
-            set req.http.x-skip-glogin = "1";
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;

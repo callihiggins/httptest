@@ -28,8 +28,6 @@ include "backends-prd";
 # this adds vcl_error logic for logging purposes
 include "backend-init-vars";
 
-# this backend route logic needs to come before all others
-include "backends-glogin-healthcheck";
 
 # the following files contain routes for the backends defined above
 include "backend-health-service"; # service that reports health of defined backends
@@ -65,7 +63,6 @@ include "userinfo";
 include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
-include "glogin-redirect";
 include "uuid";
 include "response-headers";
 
@@ -387,6 +384,4 @@ sub unset_extraneous_bereq_headers {
   unset bereq.http.x-nyt-wpab;
   unset bereq.http.x-nyt-s;
   unset bereq.http.x-nyt-d;
-  unset bereq.http.x-bcet-secret-key;
-  unset bereq.http.x-nyt-glogin-error-skip-key;
 }

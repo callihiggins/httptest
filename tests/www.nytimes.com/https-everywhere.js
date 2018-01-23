@@ -434,7 +434,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'http://',
@@ -455,7 +454,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
         'nyt.np.internal-https-opt-out=1',
       ],
@@ -474,7 +472,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'https://',
@@ -493,7 +490,6 @@ function getScenarioEvents()
       },
       'requestHeaderCookie': 'nyt.np.internal-https-opt-out=1',
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
         'nyt.np.internal-https-opt-out=1',
       ],

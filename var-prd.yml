@@ -314,23 +314,6 @@ backends:
       timeout: "10000"
       window: "5"
 
-  - name: "glogin_healthcheck"
-    address: "www.gtm.nytimes.com"
-    between_bytes_timeout: "10000"
-    connect_timeout: "10000"
-    first_byte_timeout: "30000"
-    ssl_cert_hostname: "www.nytimes.com"
-    ssl_sni_hostname: "www.nytimes.com"
-    healthcheck:
-      host: "www.nytimes.com"
-      path: "/glogin"
-      check_interval: "3000"
-      expected_response: "302"
-      initial: "15"
-      threshold: "1"
-      timeout: "3000"
-      window: "15"
-
   - name: "homepage_fe"
     address: "nyt5-app-homepage.prd.oma1.nyt.net"
     between_bytes_timeout: "10000"

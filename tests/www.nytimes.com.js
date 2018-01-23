@@ -24,7 +24,6 @@ require("./www.nytimes.com/content-well-known.js");
 require("./www.nytimes.com/https-everywhere.js");
 require("./www.nytimes.com/geoip-library-response.js");
 require("./www.nytimes.com/geoip-hash-headers.js");
-require("./www.nytimes.com/redirect-glogin.js");
 require("./www.nytimes.com/content-timesjourneysstudents.js");
 require("./www.nytimes.com/content-timesjourneys.js");
 require("./www.nytimes.com/vi-allocation.js");

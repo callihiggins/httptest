@@ -50,35 +50,6 @@ sub vcl_deliver {
         set resp.http.X-PageType = req.http.X-PageType;
     }
 
-    // if we found two NYT-S cookies, try to expire the possible non-canonical versions
-    // only dev/stg for now
-    if (req.http.x-environment != "prd"){
-        if (req.http.x-nyt-s2){
-
-            // delete a docroot cookie under www.nytimes.com
-            add resp.http.Set-Cookie =
-                "NYT-S=; "+
-                "Expires=" + time.sub(now, 365d) + "; "+
-                "Path=/; "+
-                "Domain=www.nytimes.com";
-
-            // delete dir path cookies if we are not rendering the homepage
-            if (req.http.X-PageType != "homepage") {
-                add resp.http.Set-Cookie =
-                    "NYT-S=" + req.http.x-nyt-a + "; "+
-                    "Expires=" + time.sub(now, 365d) + "; "+
-                    "Path=" + req.url.dirname + "; " +
-                    "Domain=www.nytimes.com";
-
-                add resp.http.Set-Cookie =
-                    "NYT-S=" + req.http.x-nyt-a + "; "+
-                    "Expires=" + time.sub(now, 365d) + "; "+
-                    "Path=" + req.url.dirname + "; " +
-                    "Domain=.nytimes.com";
-            }
-        }
-    }
-
     // remove deprecated internal https cookie
     if (req.http.x-nyt-internal-access && req.http.Cookie:nyt.np.https-everywhere) {
         add resp.http.Set-Cookie =

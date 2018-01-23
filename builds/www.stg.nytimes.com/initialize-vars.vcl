@@ -24,7 +24,6 @@ sub vcl_recv {
 
     # unset anything that we shouldn't trust from the user request
     if (!req.http.x-nyt-internal-access) {
-      unset req.http.x-skip-glogin;
       unset req.http.x-nyt-backend-health;
       unset req.http.x-nyt-backend;
     }
@@ -34,18 +33,6 @@ sub vcl_recv {
      */
     if (req.http.Cookie:NYT-S) {
       set req.http.x-nyt-s = urldecode(req.http.Cookie:NYT-S);
-    }
-
-    // detect if there are at least two NYT-S cookies
-    if (req.http.x-nyt-s){
-      set req.http.x-nyt-s2 = regsub(req.http.Cookie, ".*?NYT-S=.*NYT-S=([^;]*).*", "\1");
-      if(req.http.x-nyt-s2 == req.http.Cookie) {
-        // unset this req var if we didn't find one
-        unset req.http.x-nyt-s2;
-      } else {
-        // apparently we did find one, skip glogin for this request to fail open
-        set req.http.x-skip-glogin = "1";
-      }
     }
 
     if (req.http.Cookie:NYT-Edition) {
@@ -91,10 +78,6 @@ sub vcl_recv {
       set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\/", "_");
     }
 
-    if (req.http.Cookie:nyt-bcet){
-      set req.http.x-nyt-bcet = req.http.Cookie:nyt-bcet;
-    }
-
     if (req.http.host ~ "\.dev\."){
       set req.http.x-environment = "dev";
     } else if (req.http.host ~ "\.stg\."){
@@ -134,11 +117,4 @@ sub vcl_recv {
             set req.http.x-orig-querystring = "";
         }
     }
-
-    /*
-     * salt for BCET, we'll put this in drone secrets when we refactor
-     */
-    set req.http.x-bcet-secret-key = "75b798658d2f43bc1caadb0260d175524ad3c874ab76a15c9aeef3cec11096597f068faca3133285a004fa2106799246dc050ec66c3e75c134d26b8d163b6086";
-
-    set req.http.x-nyt-glogin-error-skip-key = "43697263756974427265616b474c4f47494e5468697352657175657374";
 }

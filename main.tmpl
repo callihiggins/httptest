@@ -339,12 +339,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "glogin-killswitch"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/glogin-killswitch.vcl")}"
-  }
-
-  vcl {
     name    = "backend-newsdev-gke"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-gke.vcl")}"
@@ -495,12 +489,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backends-glogin-healthcheck"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-glogin-healthcheck.vcl")}"
-  }
-
-  vcl {
     name    = "geoip-service"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-service.vcl")}"
@@ -522,12 +510,6 @@ resource "fastly_service_v1" "www" {
     name    = "backends-main"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-main.vcl")}"
-  }
-
-  vcl {
-    name    = "glogin-redirect"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/glogin-redirect.vcl")}"
   }
 
   vcl {

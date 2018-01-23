@@ -142,10 +142,6 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'http://',
       'requestUri': '/slideshow/2007/01/01/us/slug.html',
       'responseHeaderMatches': {
@@ -313,8 +309,6 @@ function getScenarioEvents()
       },
       'requestHeaderCookie': [
         'nyt.dv.nyt5-on-gke.slideshow=1',
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'http://',
       'requestUri': '/slideshow/2007/10/10/nytfrontpage/20071010POD_7.html',

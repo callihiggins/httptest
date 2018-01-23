@@ -89,10 +89,6 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-      ],
       'requestQueryString': '',
       'requestScheme': 'https://',
       'requestUri': '/times-journeys/students/',
@@ -112,8 +108,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'foo=' + suite.cookies.is_16k,
       ],
       'requestQueryString': '',
@@ -134,10 +128,6 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-      ],
       'requestQueryString': '',
       'requestScheme': 'https://',
       'requestUri': '/times-journeys/students?queryparam=123',

@@ -44,7 +44,6 @@ sub set_backend_request {
             set bereq.http.host = "timesjourneysstudents.nytimes.com";
         }
 
-        set bereq.http.x-skip-glogin = "1";
         unset bereq.http.x-nyt-edition;
         unset bereq.http.x-nyt-s;
         unset bereq.http.x-nyt-wpab;

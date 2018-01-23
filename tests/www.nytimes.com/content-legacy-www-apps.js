@@ -73,10 +73,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2013/06/16/travel/travel-guide-new-york-for-kids.html',
       'responseHeaderMatches': {
@@ -134,10 +130,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2013/09/08/movies/the-coen-brothers-look-wryly-at-their-films.html',
       'responseHeaderMatches': {
@@ -195,10 +187,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'http://',
       'requestUri': '/2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
       'responseHeaderMatches': {
@@ -257,7 +245,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'https://',
@@ -297,7 +284,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'https://',
@@ -550,7 +536,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'http://',
@@ -573,7 +558,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'http://',
@@ -594,7 +578,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'http://',
@@ -617,7 +600,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'http://',
@@ -638,7 +620,6 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'requestScheme': 'https://',

@@ -8,7 +8,6 @@ sub vcl_recv {
         set req.http.x-nyt-backend = "beta_guides";
         set req.backend = F_beta_guides;
         set req.grace = 24h;
-        set req.http.x-skip-glogin = "1";
     }
 
 }

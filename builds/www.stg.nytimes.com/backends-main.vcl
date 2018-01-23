@@ -33,7 +33,6 @@ sub vcl_recv {
             set req.http.x-nyt-backend = "www_fe";
             call set_www_homepage_backend;
         }
-        set req.http.x-skip-glogin = "1";
     }
 
     // set the https backend for routes that require it
@@ -57,7 +56,6 @@ sub vcl_recv {
         set req.http.x-PageType = "legacy";
         set req.http.x-nyt-backend = "www_https";
         call set_www_https_backend;
-        set req.http.x-skip-glogin = "1";
     }
 
     // collection application
@@ -84,7 +82,6 @@ sub vcl_recv {
         set req.http.X-PageType = "collection";
         set req.http.x-nyt-backend = "collection_fe";
         call set_www_collection_backend_gke;
-        set req.http.x-skip-glogin = "1";
     }
 
     // newsletter application
@@ -95,7 +92,6 @@ sub vcl_recv {
         set req.http.X-PageType = "newsletter";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
-        set req.http.x-skip-glogin = "1";
     }
 
     // slideshow application
@@ -126,12 +122,10 @@ sub vcl_recv {
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
             set req.http.x-nyt-backend = "realestate_fe";
             call set_www_realestate_backend_gke;
-            set req.http.x-skip-glogin = "1";
         } else {
             # set this to www instead of www_fe_vert so that it will PASS for now
             set req.http.x-nyt-backend = "www";
             call set_www_backend;
-            set req.http.x-skip-glogin = "1";
         }        
         
     }
@@ -143,7 +137,6 @@ sub vcl_recv {
     ) {
         set req.http.X-PageType = "trending";
         call set_nyt5_misc_backend;
-        set req.http.x-skip-glogin = "1";
     }
 
     // podcasts application
@@ -181,7 +174,6 @@ sub vcl_recv {
         set req.http.X-PageType = "service";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
-        set req.http.x-skip-glogin = "1";
     }
 
     // hostnames fastly doesn't serve go to www backend for a pass
@@ -228,7 +220,6 @@ sub vcl_recv {
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
     ) {
         set req.http.X-PageType = "newsdev-gke";
-        set req.http.x-skip-glogin = "1";
         set req.http.x-nyt-backend = "newsdev_k8s_gke";
         call set_www_newsdev_gke_backend;
     }
@@ -236,14 +227,8 @@ sub vcl_recv {
     if ((req.url == "/es") || (req.url ~ "^/es/")
         || (req.url == "/global") || (req.url ~ "^/global/")) {
         set req.http.X-PageType = "intl";
-        set req.http.x-skip-glogin = "1";
         set req.http.x-nyt-backend = "intl_gcp";
         call set_www_intl_backend;
-    }
-
-    // embedded or standalone interactives on mobile should not go to glogin
-    if (req.url ~ "^/interactive/.*([0-9]+).(embedded|app).html") {
-        set req.http.x-skip-glogin = "1";
     }
 
     // blogs
@@ -309,7 +294,6 @@ sub vcl_recv {
             || req.http.host ~ "(www\.)?nytco\.com$"
         ) {
             set req.http.X-PageType = "blog2";
-            set req.http.x-skip-glogin = "1";
         }
 
         // Send to GCP
@@ -325,7 +309,6 @@ sub vcl_recv {
                  || req.url ~ "^/svc/int"
         ) {
            set req.http.X-PageType = "newsdev-gke";
-           set req.http.x-skip-glogin = "1";
            set req.http.x-nyt-backend = "newsdev_k8s_gke";
            call set_www_newsdev_gke_backend;
         }
@@ -336,20 +319,17 @@ sub vcl_recv {
     // TODO: new backend someday for it's own origin
     if ( req.url.path == "/video" || req.url.path ~ "^/video/") {
         set req.http.X-PageType = "video-library";
-        set req.http.x-skip-glogin = "1";
         call set_video_library_backend;
     }
 
     if ( req.url ~ "^/svc/video" ) {
         set req.http.X-PageType = "video-api";
-        set req.http.x-skip-glogin = "1";
         call set_video_api_backend;
     }
 
     // send global messaging API to the backend that caches
     if (req.url ~ "^/svc/message/v1/list/global.json") {
         set req.http.X-PageType = "messaging-api";
-        set req.http.x-skip-glogin = "1";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
     }
@@ -365,7 +345,6 @@ sub vcl_recv {
             unset req.http.x-community-callback;
 
             set req.http.X-PageType = "community-svc-cacheable";
-            set req.http.x-skip-glogin = "1";
             set req.http.x-nyt-backend = "www_fe";
             call set_www_fe_backend;
 
@@ -377,7 +356,6 @@ sub vcl_recv {
             set req.http.x-nyt-backend = "www_https";
             call set_www_https_backend;
             set req.http.x-PageType = "legacy";
-            set req.http.x-skip-glogin = "1";
         }
     }
 
@@ -403,14 +381,12 @@ sub vcl_recv {
         set req.http.X-PageType = "legacy-cacheable";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
-        set req.http.x-skip-glogin = "1";
     }
 
     if( req.url ~ "^/svc/collections"){
         set req.http.X-PageType = "collections-svc";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
-        set req.http.x-skip-glogin = "1";
     }
 
     if (req.http.X-Is-NYT4 == "1") {
@@ -574,7 +550,6 @@ sub set_ask_well_backend {
 
     set req.backend = F_ask_well;
     set req.http.X-PageType = "askwell";
-    set req.http.x-skip-glogin = "1";
 
     if (req.url ~ "^(/svc/int/qa/questions/[a-z0-9\-]*/votes|/svc/int/qa/questions/[a-z0-9\-]*/submit|/ask/well/questions/yours)") {
         # we have to pass directly here, so that req.http.Cookie passes through

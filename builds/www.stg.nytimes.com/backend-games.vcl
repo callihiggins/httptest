@@ -3,7 +3,6 @@ sub vcl_recv {
         if (req.url.path ~ "^/games/prototype/" || req.url.path ~ "^/svc/crosswords/" || req.url.path ~ "^/svc/games/(sudoku|set)/") {
             set req.http.X-PageType = "games-service";
             set req.http.x-nyt-backend = "games_svc";
-            set req.http.x-skip-glogin = "1";
             return(pass);
         }
 
@@ -11,7 +10,6 @@ sub vcl_recv {
              req.url.path ~ "^/puzzles") {
 
               set req.http.X-PageType = "games-phoenix";
-              set req.http.x-skip-glogin = "1";
 
               // Since we're returning early, we need to do this here for now
               if (!req.http.Fastly-SSL) {
@@ -28,7 +26,6 @@ sub vcl_recv {
 
             set req.http.X-PageType = "games-web";
             set req.http.x-nyt-backend = "games_web";
-            set req.http.x-skip-glogin = "1";
 
             // Since we're returning early, we need to do this here for now
             if (!req.http.Fastly-SSL) {
@@ -44,7 +41,6 @@ sub vcl_recv {
         if (req.url.path ~ "^/games-assets/") {
             set req.http.X-PageType = "games-assets";
             set req.http.x-nyt-backend = "games_assets";
-            set req.http.x-skip-glogin = "1";
 
             if (!req.http.Fastly-SSL) {
                 call redirect_to_https;
@@ -62,7 +58,6 @@ sub vcl_recv {
         if (req.url.path ~ "^/crosswords/submissions$") {
             set req.http.X-PageType = "games-web";
             set req.http.x-nyt-backend = "games_web";
-            set req.http.x-skip-glogin = "1";
 
             if (!req.http.Fastly-SSL) {
                 call redirect_to_https;

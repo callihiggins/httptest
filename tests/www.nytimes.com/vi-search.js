@@ -16,10 +16,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'https://',
       'requestUri': '/search',
       'responseHeaderMatches': {
@@ -37,10 +33,6 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': [
-        'NYT-BCET=' + suite.cookies.nyt_bcet,
-        'NYT-S=' + suite.cookies.nyt_s,
-      ],
       'requestScheme': 'https://',
       'requestUri': '/search/apple/best',
       'responseHeaderMatches': {
