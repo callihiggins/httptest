@@ -11,6 +11,7 @@ sub vcl_recv {
         && req.http.X-PageType != "video-api" # except from video libarary
         && req.http.X-PageType != "article" # except from article requests
         && req.http.X-PageType != "vi-story" # except from vi-story requests
+        && req.http.X-PageType != "vi-search" # except from vi-search requests
         && req.http.X-PageType != "bestsellers" # except from bestseller requests
         && req.http.X-PageType != "interactive" # except from interactive requests
         && req.http.X-PageType != "newsdev-gke" #except from newsdev
@@ -171,6 +172,8 @@ sub vcl_recv {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.X-PageType == "vi-story") {
             set req.url = querystring.filter_except(req.url, "nytapp");
+        } else if (req.http.X-PageType == "vi-search") {
+            set req.url = querystring.filter_except(req.url, "query");
         } else if (req.http.X-PageType == "interactive") {
             set req.url = querystring.filter_except(req.url, "isHybrid");
         } else if (req.http.X-PageType == "community-svc-cacheable"){
