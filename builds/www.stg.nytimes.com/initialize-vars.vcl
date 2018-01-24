@@ -2,6 +2,7 @@
 table staging_access_tokens {
   # "app-<random>" : "<issue date>"
   "watching-2gk6" : "20170614",
+  "cms-scoop-9v5q" : "20180105",
 }
 
 table internal_access_tokens {
