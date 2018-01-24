@@ -12,7 +12,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': true,
         'sbx': false,
       },
@@ -30,7 +30,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': true,
         'sbx': false,
       },
@@ -48,7 +48,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': true,
         'sbx': false,
       },
@@ -120,7 +120,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': true,
         'sbx': false,
       },
@@ -138,7 +138,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': false,
         'sbx': false,
       },
@@ -157,7 +157,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': false,
         'sbx': false,
       },
@@ -176,7 +176,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': false,
         'sbx': false,
       },
@@ -252,7 +252,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
+        'stg': false,
         'dev': false,
         'sbx': false,
       },
