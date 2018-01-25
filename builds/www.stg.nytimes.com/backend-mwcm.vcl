@@ -5,7 +5,9 @@ sub vcl_recv {
         if (    req.url == "/subscription"  ||  
                 req.url ~ "^/subscription/"  ||
                 req.url == "/marketing/surveys"  ||
-                req.url ~ "/marketing/surveys/"
+                req.url ~ "^/marketing/surveys/"  ||
+                req.url == "/services/mobile" ||  
+                req.url ~ "^/services/mobile/"
             ) {
 
             set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
@@ -22,9 +24,7 @@ sub vcl_recv {
 
         # Enables only in dev environment. checks for req.http.x-environment == "dev"
         if (    (   req.url == "/marketing" ||  
-                    req.url ~ "^/marketing/" ||  
-                    req.url == "/services/mobile" ||  
-                    req.url ~ "^/services/mobile/" ||
+                    req.url ~ "^/marketing/" ||
                     req.url == "/subscriptions" ||
                     req.url ~ "^/subscriptions/"
                 ) && req.http.x-environment == "dev"
