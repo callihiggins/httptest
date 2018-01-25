@@ -256,6 +256,48 @@ function getScenarioEvents()
       'scenarioDescription': 'Test routing; article; NYT5; blogpost as article; /blog/2000/01/01/us/slug.html',
       'testId': 12,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/1850/01/01/us/slug.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'article',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; /1850/01/01/us/slug.html',
+      'testId': 13,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/1920/01/01/us/slug.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'article',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; /1920/01/01/us/slug.html',
+      'testId': 14,
+    },
   ];
 
   return scenarios;
