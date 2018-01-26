@@ -14,13 +14,13 @@ sub vcl_recv {
 sub vcl_miss {
   if (req.http.X-PageType == "ads-static-assets") {
     set req.backend = F_adx_static; #reusing another gcs backend, TODO: consolidate all gcs backends
-    set bereq.http.host = req.x-nyt-gcs-private-bucket ".storage.googleapis.com";
+    set bereq.http.host = req.http.x-nyt-gcs-private-bucket ".storage.googleapis.com";
   }
 }
 
 sub vcl_pass {
   if (req.http.X-PageType == "ads-static-assets") {
     set req.backend = F_adx_static; #reusing another gcs backend, see todo above
-    set bereq.http.host = req.x-nyt-gcs-private-bucket ".storage.googleapis.com";
+    set bereq.http.host = req.http.x-nyt-gcs-private-bucket ".storage.googleapis.com";
   }
 }
