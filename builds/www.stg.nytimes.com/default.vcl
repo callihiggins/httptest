@@ -48,6 +48,7 @@ include "backend-times-journeys";
 include "backend-video";
 include "backend-tbooks";
 include "backend-adx-static";
+include "backend-ads-static-assets";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -65,6 +66,7 @@ include "mobile-redirect";
 include "homepage-redirect";
 include "uuid";
 include "response-headers";
+include "gcs-bucket-headers";
 
 sub vcl_recv {
 
@@ -141,7 +143,7 @@ sub vcl_hit {
 
 sub vcl_miss {
 #FASTLY miss
-
+  call miss_pass_set_gcs_aws_auth_headers;
   call unset_extraneous_bereq_headers;
 
   // this should be removed already, but lets be sure
@@ -172,6 +174,7 @@ sub vcl_miss {
 
 sub vcl_pass {
 #FASTLY pass
+  call miss_pass_set_gcs_aws_auth_headers;
   call unset_extraneous_bereq_headers;
 
   // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
