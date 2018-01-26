@@ -71,23 +71,6 @@ backends:
       timeout: "2000"
       window: "5"
 
-  - name: "ads_static_assets"
-    address: "storage.googleapis.com"
-    between_bytes_timeout: "5000"
-    connect_timeout: "5000"
-    first_byte_timeout: "5000"
-    ssl_cert_hostname: "storage.googleapis.com"
-    ssl_sni_hostname: "storage.googleapis.com"
-    healthcheck:
-      host: "storage.googleapis.com"
-      path: "/"
-      check_interval: "5000"
-      expected_response: "400"
-      initial: "2"
-      threshold: "3"
-      timeout: "2000"
-      window: "5"
-
   - name: "article_fe"
     address: "nyt5-app-article.dev.oma1.nyt.net"
     between_bytes_timeout: "10000"

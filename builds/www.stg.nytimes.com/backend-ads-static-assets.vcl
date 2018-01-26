@@ -8,20 +8,19 @@ sub vcl_recv {
     unset req.http.x-nyt-edition;
     unset req.http.x-nyt-s;
     unset req.http.x-nyt-wpab;
-    unset req.http.Authorization;
   }
 }
 
 sub vcl_miss {
   if (req.http.X-PageType == "ads-static-assets") {
-    set req.backend = F_ads_static_assets;
-    set bereq.http.host = "nyt-ads-static-assets.storage.googleapis.com";
+    set req.backend = F_adx_static; #reusing another gcs backend, TODO: consolidate all gcs backends
+    set bereq.http.host = req.x-nyt-gcs-private-bucket ".storage.googleapis.com";
   }
 }
 
 sub vcl_pass {
   if (req.http.X-PageType == "ads-static-assets") {
-    set req.backend = F_ads_static_assets;
-    set bereq.http.host = "nyt-ads-static-assets.storage.googleapis.com";
+    set req.backend = F_adx_static; #reusing another gcs backend, see todo above
+    set bereq.http.host = req.x-nyt-gcs-private-bucket ".storage.googleapis.com";
   }
 }
