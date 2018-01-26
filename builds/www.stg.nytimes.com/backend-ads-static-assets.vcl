@@ -2,7 +2,7 @@ sub vcl_recv {
   if (req.url.path ~ "^/ads/" && req.http.x-environment == "dev") {
     set req.http.X-PageType = "ads-static-assets";
     set req.http.x-nyt-backend = "ads-static-assets";
-    set req.x-nyt-gcs-private-bucket = "nyt-ads-static-assets";
+    set req.http.x-nyt-gcs-private-bucket = "nyt-ads-static-assets";
     unset req.http.Cookie;
     unset req.http.X-Cookie;
     unset req.http.x-nyt-edition;
