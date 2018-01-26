@@ -69,9 +69,11 @@ include "homepage-redirect";
 include "glogin-redirect";
 include "uuid";
 include "response-headers";
+include "gcs-bucket-headers";
 
 sub vcl_recv {
 
+  call recv_set_gcs_aws_auth_headers;
   # Set the edge req header
   set req.http.X-NYT-Edge-CDN = "Fastly";
 

@@ -567,6 +567,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "gcs-bucket-headers"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/gcs-bucket-headers.vcl")}"
+  }
+
+  vcl {
     name    = "backend-adx-static"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-adx-static.vcl")}"
