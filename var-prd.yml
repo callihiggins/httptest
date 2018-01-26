@@ -110,6 +110,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "ads_static_assets"
+    address: "storage.googleapis.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "storage.googleapis.com"
+    ssl_sni_hostname: "storage.googleapis.com"
+    healthcheck:
+      host: "nyt-ads-static-assets.storage.googleapis.com"
+      path: "/ads/healthcheck.txt"
+      check_interval: "5000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "2000"
+      window: "5"
+
   - name: "ask_well"
     address: "ask-well.nyt.com"
     between_bytes_timeout: "5000"
