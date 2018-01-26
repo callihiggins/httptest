@@ -9,6 +9,12 @@ function getScenarioEvents() {
   var scenarios = [
     {
       id: "FunctionalTestScenarioDefinitionForAdsGCSBucket",
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': false,
+        'dev': true,
+        'sbx': false,
+      },
       requestScheme: "https://",
       requestUri: "/ads/emailads/twitter.jpg",
       responseHeaderMatches: {
