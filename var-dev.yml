@@ -79,10 +79,10 @@ backends:
     ssl_cert_hostname: "storage.googleapis.com"
     ssl_sni_hostname: "storage.googleapis.com"
     healthcheck:
-      host: "nyt-ads-static-assets.storage.googleapis.com"
-      path: "/ads/healthcheck.txt"
+      host: "storage.googleapis.com"
+      path: "/"
       check_interval: "5000"
-      expected_response: "200"
+      expected_response: "400"
       initial: "2"
       threshold: "3"
       timeout: "2000"
