@@ -18,6 +18,7 @@ sub vcl_recv {
         set req.http.X-PageType = "paidpost";
         set req.http.x-nyt-backend = "paidpost_fe";
         set req.backend = F_paidpost_fe;
+        call vi_ce_auth;
     }
 
     // homepages, domestic and international, are NYT5
@@ -460,6 +461,7 @@ sub set_www_fe_backend {
 # first step is to separate backend per each app
 sub set_www_collection_backend_gke {
     set req.backend = F_collection_fe;
+    call vi_ce_auth;
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
@@ -469,11 +471,19 @@ sub set_www_collection_backend_gke {
 sub set_www_article_backend {
 
     if(req.http.x-environment == "dev") {
-        set req.backend = nyt5_article_director_dev;
+        set req.backend = F_article_fe;
+        call vi_ce_auth;
     } else if (req.http.x-environment == "stg") {
-        set req.backend = nyt5_article_director_stg;
+        set req.backend = F_article_fe;
+        call vi_ce_auth;
     } else {
-        set req.backend = nyt5_article_director_prd;
+        # send random 50/50 split of traffic to ESX/GKE
+        if (randombool(1, 2)) {
+            set req.backend = F_www_fe;
+        } else {
+            set req.backend = F_article_fe;
+            call vi_ce_auth;
+        }
     }
 
     # if we needed to switch back to NYT5, unset the vi flag
@@ -484,6 +494,7 @@ sub set_www_article_backend {
 # first step is to separate backend per each app
 sub set_www_slideshow_backend_gke {
     set req.backend = F_slideshow_fe;
+    call vi_ce_auth;
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
@@ -491,6 +502,8 @@ sub set_www_slideshow_backend_gke {
 # first step is to separate backend per each app
 sub set_www_misc_backend_gke {
     set req.backend = F_misc_fe;
+
+    call vi_ce_auth;
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
@@ -511,6 +524,8 @@ sub set_www_homepage_backend_gke {
 
     set req.backend = F_homepage_fe;
 
+    call vi_ce_auth;
+
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
@@ -518,6 +533,8 @@ sub set_www_homepage_backend_gke {
 sub set_www_realestate_backend_gke {
 
     set req.backend = F_realestate_fe;
+
+    call vi_ce_auth;
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
@@ -533,6 +550,7 @@ sub set_blogs_fe_backend {
 
 sub set_www_intl_backend {
     set req.backend = F_intl_gcp;
+    call vi_ce_auth;
 }
 
 sub set_www_newsdev_gke_backend {
@@ -568,5 +586,13 @@ sub set_ask_well_backend {
       set req.url = querystring.sort(req.url);
     } else {
       set req.url = querystring.remove(req.url);
+    }
+}
+
+sub vi_ce_auth {
+    if(req.http.x-environment == "prd") {
+        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_prd");
+    } else {
+        set req.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
     }
 }
