@@ -27,6 +27,7 @@ sub vcl_recv {
     if (!req.http.x-nyt-internal-access) {
       unset req.http.x-nyt-backend-health;
       unset req.http.x-nyt-backend;
+      unset req.http.x-nyt-ttl-override;
     }
 
     /*

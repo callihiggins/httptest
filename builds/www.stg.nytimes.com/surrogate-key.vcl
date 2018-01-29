@@ -1,4 +1,6 @@
-sub vcl_fetch {
+# handle surrogate key headers from non-standard origins
+
+sub fetch_surrogate_key_handler {
 
     # Use custom GCS metadata header as value of surrogate key, if set
     if (beresp.http.x-goog-meta-Surrogate-Key) {

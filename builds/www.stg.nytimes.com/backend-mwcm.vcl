@@ -14,7 +14,6 @@ sub vcl_recv {
             set req.http.X-PageType = "mwcm";
             set req.http.x-nyt-backend = "mwcm";
             set req.backend = F_mwcm;
-            set req.grace = 24h;
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;
@@ -32,7 +31,6 @@ sub vcl_recv {
             set req.http.X-PageType = "mwcm";
             set req.http.x-nyt-backend = "mwcm";
             set req.backend = F_mwcm;
-            set req.grace = 24h;
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;
@@ -49,35 +47,6 @@ sub vcl_hash {
     }
 }
 
-sub vcl_fetch {
-    if (req.http.X-PageType == "mwcm") {
-
-        /* handle 5XX (or any other unwanted status code) */
-        if (beresp.status >= 500 && beresp.status < 600) {
-
-            /* deliver stale if the object is available */
-            if (stale.exists) {
-              return(deliver_stale);
-            }
-
-            if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
-              restart;
-            }
-
-        }
-
-        if (beresp.status < 500) {
-            /* set stale_if_error and stale_while_revalidate (customize these values) */
-            set beresp.stale_if_error = 86400s;
-            set beresp.stale_while_revalidate = 60s;
-        }
-
-        // use very short cache TTL for HTTP 4XXs
-        if (beresp.status >= 400 && beresp.status < 500) {
-            set beresp.ttl = 3s;
-        }
-    }
-}
 
 sub vcl_deliver {
     if (req.http.X-PageType == "mwcm") {

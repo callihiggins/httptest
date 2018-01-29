@@ -3,7 +3,6 @@ sub vcl_recv {
         set req.http.X-PageType = "elections";
         call set_newsdev_elections_backend;
 
-        set req.grace = 24h;
         unset req.http.Cookie;
         unset req.http.X-Cookie;
         unset req.http.x-nyt-edition;
@@ -31,31 +30,15 @@ sub vcl_pass {
 
 sub vcl_fetch {
     if (req.http.X-PageType == "elections") {
+
+        # redirect
         if (beresp.http.x-amz-meta-website-redirect-location) {
           set req.http.Location = beresp.http.x-amz-meta-website-redirect-location;
           error 760 "Moved Permanently";
         }
 
-        // use very short cache TTL for HTTP 4XXs
-        if (beresp.status >= 400 && beresp.status < 500) {
-            set beresp.ttl = 3s;
-            unset beresp.http.cache-control;
-        }
-
-        if (beresp.status >= 500 || beresp.status == 403) {
-            /* deliver stale if the object is available */
-            if (stale.exists) {
-                return(deliver_stale);
-            }
-        }
-
-        if (req.restarts < 1 && beresp.status >= 500) {
-            return(restart);
-        }
-
-        # set beresp.grace = 86400s; # equivalent to next line
-        set beresp.stale_if_error = 86400s;
-        set beresp.stale_while_revalidate = 30s;
+        # stale-while-revalidate override
+        set beresp.http.x-nyt-stale-while-revalidate = "30";
     }
 }
 

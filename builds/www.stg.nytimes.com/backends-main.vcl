@@ -326,12 +326,14 @@ sub vcl_recv {
 
     if ( req.url ~ "^/svc/video" ) {
         set req.http.X-PageType = "video-api";
+        set req.http.x-nyt-ttl-override = "30";
         call set_video_api_backend;
     }
 
     // send global messaging API to the backend that caches
     if (req.url ~ "^/svc/message/v1/list/global.json") {
         set req.http.X-PageType = "messaging-api";
+        set req.http.x-nyt-ttl-override = "5";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
     }

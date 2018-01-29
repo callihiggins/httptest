@@ -4,7 +4,6 @@ include "acl-external-staging-access";
 include "acl-crawlers";
 include "acl-blacklist";
 include "error-pages";
-include "surrogate-key";
 include "sanitize-url";
 include "normalize-url";
 include "initialize-vars";
@@ -55,6 +54,11 @@ include "backend-ads-static-assets";
 include "vi-allocation";
 include "backend-vi";
 
+# backend response processing
+include "surrogate-key";
+include "origin-response-handler";
+include "set-cache-object-ttl";
+
 # begin other logic
 include "community-esi";
 include "https-redirect";
@@ -92,12 +96,6 @@ sub vcl_recv {
       || req.url ~ "^/phpinfo/"
   ) {
       set req.url = "/404.html";
-  }
-
-  if (req.backend.healthy) {
-      set req.grace = 15s;
-  } else {
-      set req.grace = 24h;
   }
 
   // remove the Authorization header for video-api calls
@@ -194,47 +192,14 @@ sub vcl_pass {
 
 sub vcl_fetch {
 
-  # This logic will handle serving stale content if we got an error from the backend
-  if (beresp.status >= 500 && beresp.status < 600) {
+  # set surrogate key header properly
+  call fetch_surrogate_key_handler;
 
-      # Deliver stale if the object is avilable
-      if (stale.exists) {
-        return(deliver_stale);
-      }
+  # handle 5xx errors from the backend
+  call fetch_deliver_stale_on_error;
 
-      # if the object was not in cache and we have not restarted, try one more time
-      if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
-        restart;
-      }
-
-      set req.http.Fastly-Cachetype = "ERROR";
-
-      /*
-        we got an error and we already restarted at least once, time to bail
-        return a pretty error page if the requested page was an html page
-        assuming ending in .html or "/" is good enough here.
-        otherwise lets just return the default Fastly page
-        Doing this to limit what gets a large error page download
-      */
-
-      if ( (req.url.path ~ ".html$" || req.url.path ~ "/$")
-           && (req.url.path !~ "^/svc" && req.url.path !~ "^/adx")
-          ) {
-        error 503;
-      }
-
-  }
-
-  # if we did not get an error from the backend, set stale content handling headers
-  # per https://tools.ietf.org/html/rfc5861
-  if (beresp.status < 500) {
-      if (beresp.http.Cache-Control !~ "stale-if-error") {
-        set beresp.stale_if_error = 86400s;
-      }
-      if (beresp.http.Cache-Control !~ "stale-while-revalidate") {
-        set beresp.stale_while_revalidate = 60s;
-      }
-  }
+  # set serve stale content cache object parameters
+  call fetch_set_stale_content_controls;
 
   # DO NOT REMOVE THE NEXT LINE - FASTY SPECIFIC MACRO
 #FASTLY fetch
@@ -263,7 +228,7 @@ sub vcl_fetch {
 
   # hacky, TODO: fix the backends
   # legacy cacheable content should not be private
-  if(req.http.X-PageType == "legacy-cacheable"){
+  if(req.http.X-PageType == "legacy-cacheable" && beresp.http.Cache-Control ~ "private"){
     unset beresp.http.Cache-Control;
   }
 
@@ -293,32 +258,8 @@ sub vcl_fetch {
     return(pass);
   }
 
-  set beresp.grace = 24h;
-
-  if (beresp.http.X-VarnishCacheDuration) {
-    # NYT custom header
-    # TODO: DEPRECATED - DO NOT USE THIS FOR NEW IMPLEMENTATIONS
-    set beresp.ttl = std.atoi(beresp.http.X-VarnishCacheDuration);
-  } else if (beresp.http.Expires || beresp.http.Surrogate-Control ~ "max-age" || beresp.http.Cache-Control ~ "(s-maxage|max-age)") {
-    #    These are the OFFICIAL STANDARD
-    #    Fastly honors these in the following priority order
-    # 1. Surrogate-Control header max-age (this will be removed from client response)
-    # 2. Cache-Control header s-maxage (Only Fastly honors, is not removed from client response)
-    # 3. Cache-Control header max-age (Browser and downstream cache will also honor this)
-    # 4. Expires header
-  } else {
-    # pagetype defaults
-    # TODO: remove these conditionals when origins implement one of the above OFFICIAL standrds
-    if(req.http.X-PageType == "video-api"){
-      set beresp.ttl = 30s;
-    } else if (req.http.X-PageType == "messaging-api") {
-      set beresp.ttl = 5s;
-    } else {
-
-      # this is the catch-all default TTL if the object is cacheable and does none of the above
-      set beresp.ttl = 60s;
-    }
-  }
+  # set the cache TTL of the object
+  call fetch_set_cache_object_ttl;
 
   return(deliver);
 }
@@ -331,7 +272,7 @@ sub vcl_deliver {
 sub vcl_error {
 #FASTLY error
 
-  # handle 50x errors if the error handler was called
+  # handle 5xx errors if the error handler was called
   # with a 500-599 code
   if (obj.status >= 500 && obj.status < 600) {
 

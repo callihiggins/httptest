@@ -559,4 +559,16 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-adx-static.vcl")}"
   }
+
+  vcl {
+    name    = "set-cache-object-ttl"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/set-cache-object-ttl.vcl")}"
+  }
+
+  vcl {
+    name    = "origin-response-handler"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/origin-response-handler.vcl")}"
+  }
 }

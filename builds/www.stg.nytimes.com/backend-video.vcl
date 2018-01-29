@@ -9,7 +9,6 @@ sub vcl_recv {
             set req.http.x-nyt-backend = "vp";
             set req.backend = F_vp;
             set req.http.host = "vp.nyt.com";
-	        set req.grace = 24h;
 
 	        unset req.http.x-nyt-edition;
 	        unset req.http.x-nyt-s;
@@ -19,27 +18,6 @@ sub vcl_recv {
 
             return(lookup);
         }
-    }
-}
-
-sub vcl_fetch {
-    if (req.http.X-PageType == "video-media") {
-        // use very short cache TTL for HTTP 4XXs
-        if (beresp.status >= 400 && beresp.status < 500) {
-            set beresp.ttl = 3s;
-        }
-
-        // use saint mode for HTTP 5XXs
-        if (beresp.status >= 500) {
-            /* deliver stale if the object is available */
-            if (stale.exists) {
-                return(deliver_stale);
-            }
-            return(restart);
-        }
-
-        set beresp.stale_if_error = 86400s;
-        set beresp.stale_while_revalidate = 60s;
     }
 }
 
