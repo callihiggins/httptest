@@ -11,7 +11,7 @@ function getScenarioEvents() {
       id: "FunctionalTestScenarioDefinitionForAdsGCSBucket",
       'isDeployedInEnv': {
         'prd': false,
-        'stg': false,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
