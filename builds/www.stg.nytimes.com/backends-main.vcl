@@ -207,7 +207,7 @@ sub vcl_recv {
             && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|2[0-9][0-9][0-9])/") // 1850-future
     ) {
         set req.http.X-PageType = "article";
-        set req.http.x-nyt-backend = "nyt5_article_director";
+        set req.http.x-nyt-backend = "article_fe";
         call set_www_article_backend;
     }
 

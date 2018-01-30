@@ -26,7 +26,7 @@ sub vcl_recv {
           # to be Incompatible then we don't send to VI again
           if (req.http.x-pre-restart-status == "Incompatible") {
             set req.http.X-PageType = "article";
-            set req.http.x-nyt-backend = "nyt5_article_director";
+            set req.http.x-nyt-backend = "article_fe";
             call set_www_article_backend;
           } else {
             set req.http.X-PageType = "vi-story";
@@ -44,7 +44,7 @@ sub vcl_recv {
             call check_vi_unhealthy;
           } else {
             set req.http.X-PageType = "article";
-            set req.http.x-nyt-backend = "nyt5_article_director";
+            set req.http.x-nyt-backend = "article_fe";
             call set_www_article_backend;
           }
       }

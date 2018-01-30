@@ -40,7 +40,7 @@ function getScenarioEvents()
       'requestUri': '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -61,7 +61,7 @@ function getScenarioEvents()
       'requestUri': '/2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -82,7 +82,7 @@ function getScenarioEvents()
       'requestUri': '/1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -123,7 +123,7 @@ function getScenarioEvents()
       'requestUri': '/1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -144,7 +144,7 @@ function getScenarioEvents()
       'requestUri': '/2001/01/20/technology/20ANNIVERSARY.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -165,7 +165,7 @@ function getScenarioEvents()
       'requestUri': '/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -186,7 +186,7 @@ function getScenarioEvents()
       'requestUri': '/2006/01/29/fashion/sundaystyles/29LOVE.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -207,7 +207,7 @@ function getScenarioEvents()
       'requestUri': '/2006/02/26/fashion/sundaystyles/26LOVE.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -268,7 +268,7 @@ function getScenarioEvents()
       'requestUri': '/1850/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
@@ -289,7 +289,7 @@ function getScenarioEvents()
       'requestUri': '/1920/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
-        'x-nyt-backend': /(article_fe|www_fe|nyt5_article_director)/
+        'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
