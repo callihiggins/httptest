@@ -444,10 +444,10 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-          'prd': false,
+          'prd': true,
           'stg': true,
-          'dev': true,
-          'sbx': false,
+        'dev': true,
+        'sbx': false,
       },
       'requestScheme': 'http://',
       'requestUri': '/marketing/hd/welcome/index.html',
@@ -488,10 +488,10 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-          'prd': false,
-          'stg': true,
-          'dev': true,
-          'sbx': false,
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/marketing/hd/welcome/index.html',
@@ -505,8 +505,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-          'prd': true,
-          'stg': true,
+        'prd': true,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },

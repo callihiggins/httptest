@@ -4,8 +4,8 @@ sub vcl_recv {
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
         if (    req.url == "/subscription"  ||  
                 req.url ~ "^/subscription/"  ||
-                req.url == "/marketing/surveys"  ||
-                req.url ~ "^/marketing/surveys/"  ||
+                req.url == "/marketing"  ||
+                req.url ~ "^/marketing/"  ||
                 req.url == "/services/mobile" ||  
                 req.url ~ "^/services/mobile/"
             ) {
@@ -30,16 +30,9 @@ sub vcl_recv {
 
         # Enables only in dev environment. checks for req.http.x-environment == "dev"
         if (    
-                (
-                    (   req.url == "/subscriptions" ||
-                        req.url ~ "^/subscriptions/"
-                     ) && req.http.x-environment == "dev"
-                ) ||
-                (
-                    (   req.url == "/marketing" ||
-                        req.url ~ "^/marketing/"
-                     ) && req.http.x-environment == "stg"
-                )
+                (   req.url == "/subscriptions" ||
+                    req.url ~ "^/subscriptions/"
+                ) && req.http.x-environment == "dev"
             ) {
 
             set req.http.X-PageType = "mwcm";
