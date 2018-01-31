@@ -469,23 +469,12 @@ sub set_www_collection_backend_gke {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_article_backend {
-
-    if(req.http.x-environment == "dev") {
-        set req.backend = F_article_fe;
-        call vi_ce_auth;
-    } else if (req.http.x-environment == "stg") {
-        set req.backend = F_article_fe;
-        call vi_ce_auth;
-    } else {
-        # send random 50/50 split of traffic to ESX/GKE
-        if (randombool(1, 2)) {
-            set req.backend = F_www_fe;
-        } else {
-            set req.backend = F_article_fe;
-            call vi_ce_auth;
-        }
+    # 100pct article on gke and fallback to esx if not healthy
+    set req.backend = F_article_fe;
+    call vi_ce_auth;
+    if (!req.backend.healthy) {
+        set req.backend = F_www_fe;
     }
-
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
