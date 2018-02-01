@@ -416,12 +416,11 @@ sub set_video_library_backend {
 
 # set a video api backend based on env
 sub set_video_api_backend {
-    if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
-        set req.http.x-nyt-backend = "video_api";
-        set req.backend = F_video_api;
-    } else {
-        set req.http.x-nyt-backend = "video_api_director";
-        set req.backend = video_api_director_prd;
+    set req.http.x-nyt-backend = "video_api";
+    set req.backend = F_video_api;
+    if (!req.backend.healthy) {
+        set req.http.x-nyt-backend = "www_fe";
+        set req.backend = F_www_fe;
     }
 }
 
