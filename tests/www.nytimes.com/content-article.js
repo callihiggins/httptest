@@ -375,6 +375,7 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+      },
       'responseHeaderPattern': {
         'x-pagetype': /article|legacy/,
       },
@@ -405,6 +406,7 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+      },
       'responseHeaderPattern': {
         'x-pagetype': /article|legacy/,
       },
