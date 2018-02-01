@@ -16,6 +16,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'https://',
       'requestUri': '/2016/11/04/homepage/new-york-times-open-access-election-2016.html',
       'responseHeaderPattern': {
@@ -23,9 +30,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200, 404],
-      'scenarioDescription': 'Test routing; article; NYT5; /2016/11/04/homepage/new-york-times-open-access-election-2016.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2016/11/04/homepage/new-york-times-open-access-election-2016.html',
       'testId': 1,
     },
     {
@@ -36,6 +44,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       'responseHeaderPattern': {
@@ -44,9 +59,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       'testId': 2,
     },
     {
@@ -57,6 +73,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
       'responseHeaderPattern': {
@@ -65,9 +88,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Test routing; article; NYT5; /2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
       'testId': 3,
     },
     {
@@ -78,6 +102,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
       'responseHeaderPattern': {
@@ -86,9 +117,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; /1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
       'testId': 4,
     },
     {
@@ -99,6 +131,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
       'responseHeaderPattern': {
@@ -106,9 +145,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Test routing; article; NYT5; /1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
       'testId': 5,
     },
     {
@@ -119,6 +159,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
       'responseHeaderPattern': {
@@ -127,9 +174,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; /1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
       'testId': 6,
     },
     {
@@ -140,6 +188,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/2001/01/20/technology/20ANNIVERSARY.html',
       'responseHeaderPattern': {
@@ -148,9 +203,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [301,404],
-      'scenarioDescription': 'Test routing; article; NYT5; redirect; /2001/01/20/technology/20ANNIVERSARY.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; redirect; /2001/01/20/technology/20ANNIVERSARY.html',
       'testId': 7,
     },
     {
@@ -161,6 +217,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
       'responseHeaderPattern': {
@@ -169,9 +232,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; /2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
       'testId': 8,
     },
     {
@@ -182,6 +246,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/2006/01/29/fashion/sundaystyles/29LOVE.html',
       'responseHeaderPattern': {
@@ -190,9 +261,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200,404,301],
-      'scenarioDescription': 'Test routing; article; NYT5; /2006/01/29/fashion/sundaystyles/29LOVE.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2006/01/29/fashion/sundaystyles/29LOVE.html',
       'testId': 9,
     },
     {
@@ -203,6 +275,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/2006/02/26/fashion/sundaystyles/26LOVE.html',
       'responseHeaderPattern': {
@@ -211,9 +290,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200,404,301],
-      'scenarioDescription': 'Test routing; article; NYT5; /2006/02/26/fashion/sundaystyles/26LOVE.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2006/02/26/fashion/sundaystyles/26LOVE.html',
       'testId': 10,
     },
     {
@@ -224,6 +304,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/2006/11/12/fashion/12love.html',
       'responseHeaderPattern': {
@@ -231,9 +318,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Test routing; article; NYT5; /2006/11/12/fashion/12love.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2006/11/12/fashion/12love.html',
       'testId': 11,
     },
     {
@@ -244,6 +332,13 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/blog/2000/01/01/us/slug.html',
       'responseHeaderPattern': {
@@ -251,9 +346,10 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-pagetype': 'article',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': [404],
-      'scenarioDescription': 'Test routing; article; NYT5; blogpost as article; /blog/2000/01/01/us/slug.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; blogpost as article; /blog/2000/01/01/us/slug.html',
       'testId': 12,
     },
     {
@@ -264,17 +360,26 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/1850/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5|5-4)/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
       'responseHeaderPattern': {
         'x-pagetype': /article|legacy/,
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; /1850/01/01/us/slug.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1850/01/01/us/slug.html',
       'testId': 13,
     },
     {
@@ -285,17 +390,26 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
       'requestScheme': 'http://',
       'requestUri': '/1920/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5|5-4)/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
       'responseHeaderPattern': {
         'x-pagetype': /article|legacy/,
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; /1920/01/01/us/slug.html',
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1920/01/01/us/slug.html',
       'testId': 14,
     },
   ];
