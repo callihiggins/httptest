@@ -28,11 +28,12 @@ sub vcl_recv {
             return(lookup);
         }
 
-        # Enables only in dev environment. checks for req.http.x-environment == "dev"
+        # Applies only for dev,stg. Not applies to "prd". 
+        # Checks for req.http.x-environment != "prd"
         if (    
                 (   req.url == "/subscriptions" ||
                     req.url ~ "^/subscriptions/"
-                ) && req.http.x-environment == "dev"
+                ) && req.http.x-environment != "prd"
             ) {
 
             set req.http.X-PageType = "mwcm";

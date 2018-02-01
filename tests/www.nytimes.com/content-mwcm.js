@@ -506,7 +506,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,
-        'stg': false,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
@@ -551,7 +551,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,
-        'stg': false,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
@@ -568,7 +568,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,
-        'stg': false,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
@@ -585,7 +585,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,
-        'stg': false,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
@@ -602,7 +602,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,
-        'stg': false,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
