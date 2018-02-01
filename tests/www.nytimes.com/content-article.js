@@ -267,11 +267,11 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/1850/01/01/us/slug.html',
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|5-4)/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
-      'responseHeaderMatches': {
-        'x-pagetype': 'article',
+      'responseHeaderPattern': {
+        'x-pagetype': /article|legacy/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test routing; article; NYT5; /1850/01/01/us/slug.html',
@@ -288,11 +288,11 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/1920/01/01/us/slug.html',
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|5-4)/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
-      'responseHeaderMatches': {
-        'x-pagetype': 'article',
+      'responseHeaderPattern': {
+        'x-pagetype': /article|legacy/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test routing; article; NYT5; /1920/01/01/us/slug.html',

@@ -206,9 +206,9 @@ sub vcl_recv {
         || (req.http.x-environment != "prd"
             && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|2[0-9][0-9][0-9])/") // 1850-future
     ) {
-        set req.http.X-PageType = "article";
-        set req.http.x-nyt-backend = "article_fe";
-        call set_www_article_backend;
+        # route article traffic to gke only with opt-in cookie
+        call set_article_backend_optin;
+
     }
 
     // Send to GCP
@@ -469,14 +469,29 @@ sub set_www_collection_backend_gke {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_article_backend {
-    # 100pct article on gke and fallback to esx if not healthy
-    set req.backend = F_article_fe;
-    call vi_ce_auth;
-    if (!req.backend.healthy) {
-        set req.backend = F_www_fe;
-    }
+
+    set req.backend = F_www_fe;
+
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
+}
+sub set_www_article_backend_gke {
+
+    set req.backend = F_article_fe;
+    call vi_ce_auth;
+
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
+}
+sub set_article_backend_optin {
+    set req.http.X-PageType = "article";
+        if ( req.http.X-Migration-Backend == "on-GKE" ) {
+            set req.http.x-nyt-backend = "article_fe";
+            call set_www_article_backend_gke;
+        } else {
+            set req.http.x-nyt-backend = "www_fe";
+            call set_www_article_backend;
+        }
 }
 
 # set backend for each NYT5 app to prepare GKE migration
