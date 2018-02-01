@@ -505,7 +505,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -550,7 +550,7 @@ function getScenarioEvents()
 	{
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -558,7 +558,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=verizon',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscriptions/promotions/verizon.html?ptr=verizon',
+        'location': 'http://' + suite.servername + '/subscription/promotions/verizon.html?ptr=verizon',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for verizon',
@@ -567,7 +567,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -575,7 +575,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=sharethetimes',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscriptions/promotions/sharethetimes.html?ptr=sharethetimes',
+        'location': 'http://' + suite.servername + '/subscription/promotions/sharethetimes.html?ptr=sharethetimes',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for sharethetimes',
@@ -584,7 +584,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -592,7 +592,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=marathon',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscriptions/promotions/marathon.html?ptr=marathon',
+        'location': 'http://' + suite.servername + '/subscription/promotions/marathon.html?ptr=marathon',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for marathon',
@@ -601,7 +601,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -609,7 +609,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=newsindia',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscriptions/promotions/newsindia.html?ptr=newsindia',
+        'location': 'http://' + suite.servername + '/subscription/promotions/newsindia.html?ptr=newsindia',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for newsindia',

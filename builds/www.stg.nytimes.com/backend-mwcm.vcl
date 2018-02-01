@@ -7,14 +7,15 @@ sub vcl_recv {
                 req.url == "/marketing"  ||
                 req.url ~ "^/marketing/"  ||
                 req.url == "/services/mobile" ||  
-                req.url ~ "^/services/mobile/"
+                req.url ~ "^/services/mobile/" ||
+                req.url == "/subscriptions" ||
+                req.url ~ "^/subscriptions/"
             ) {
 
             set req.http.X-NYT-Currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
             set req.http.X-PageType = "mwcm";
             set req.http.x-nyt-backend = "mwcm";
             set req.backend = F_mwcm;
-
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;
@@ -27,31 +28,6 @@ sub vcl_recv {
 
             return(lookup);
         }
-
-        # Applies only for dev,stg. Not applies to "prd". 
-        # Checks for req.http.x-environment != "prd"
-        if (    
-                (   req.url == "/subscriptions" ||
-                    req.url ~ "^/subscriptions/"
-                ) && req.http.x-environment != "prd"
-            ) {
-
-            set req.http.X-PageType = "mwcm";
-            set req.http.x-nyt-backend = "mwcm";
-            set req.backend = F_mwcm;
-
-            unset req.http.x-nyt-edition;
-            unset req.http.x-nyt-s;
-            unset req.http.x-nyt-wpab;
-
-            if (req.url == "/subscriptions" || req.url ~ "^/subscriptions/") {
-                set req.url = querystring.filter_except(req.url, "ptr");
-            } else {
-                set req.url = querystring.remove(req.url);
-            }
-
-            return(lookup);
-        }    
     }
 }
 
