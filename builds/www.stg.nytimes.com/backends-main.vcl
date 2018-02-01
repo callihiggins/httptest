@@ -128,6 +128,10 @@ sub vcl_recv {
             if (   req.url ~ "^/real-estate/api/mail"
                 || req.url ~ "^/real-estate/api/personalization"
             ) {
+                // We want to pass the NYT-S cookie only to the realestate backend
+                // becasue of the 8k headers size limit
+                set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
+
                 return(pass);
             }
 
