@@ -1,5 +1,5 @@
 sub vcl_recv {
-  if (req.url.path ~ "^/ads/" && req.http.x-environment ~ "(dev|stg)") {
+  if (req.url.path ~ "^/ads/") {
     set req.http.X-PageType = "ads-static-assets";
     set req.http.x-nyt-backend = "ads-static-assets";
     set req.http.x-nyt-gcs-private-bucket = "nyt-ads-static-assets";
