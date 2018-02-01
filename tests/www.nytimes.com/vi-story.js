@@ -218,7 +218,7 @@ function getScenarioEvents()
         'fastly-restarts': /1/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Allocated',
       'testId': 9,
     },
     {
@@ -241,7 +241,7 @@ function getScenarioEvents()
         'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Not Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Not Allocated',
       'testId': 10,
     },
     {
@@ -490,7 +490,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/10/11/theater/denise-gough-st-anns-warehouse-angels-in-america.html?abra=WP_ProjectVi_Story=st',
+      'requestUri': '/2018/01/30/us/politics/trump-state-of-the-union.html?abra=WP_ProjectVi_Story=st',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
@@ -499,7 +499,7 @@ function getScenarioEvents()
         'fastly-restarts': /1/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Allocated',
       'testId': 900,
     },
     {
@@ -522,7 +522,7 @@ function getScenarioEvents()
         'x-api-version': /F-(GA|5-5)/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with a fancy header. Not Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Not Allocated',
       'testId': 1000,
     },
     {
