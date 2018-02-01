@@ -15,7 +15,7 @@ function getScenarioEvents() {
         'dev': true,
         'sbx': false,
       },
-      requestScheme: "https://",
+      requestScheme: "http://",
       requestUri: "/ads/emailads/twitter.jpg",
       responseHeaderMatches: {
         "x-pagetype": "ads-static-assets"
