@@ -3,7 +3,6 @@
 # use name: as key for each item in sequence
 domains:
   - name: "well.blogs.stg.nytimes.com"
-  - name: "lens.blogs.stg.nytimes.com"
   - name: "*.stg.nytimes.com"
   - name: "www.stg.nytimes.com"
 
