@@ -30,7 +30,7 @@ require("./www.nytimes.com/content-timesjourneys.js");
 require("./www.nytimes.com/vi-allocation.js");
 require("./www.nytimes.com/vi-assets.js");
 require('./www.nytimes.com/vi-story.js');
-require('./www.nytimes.com/vi-search.js');
+require('./www.nytimes.com/vi-apps.js');
 require("./www.nytimes.com/content-programs.js");
 require("./www.nytimes.com/service-adx.js");
 require("./www.nytimes.com/service-video.js");
