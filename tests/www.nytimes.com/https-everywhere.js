@@ -825,8 +825,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'http://',
       'requestUri': '/real-estate/api/personalization/saved-items-status?itemIds=123',
@@ -842,8 +841,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/real-estate/api/personalization/saved-items-status?itemIds=123',
