@@ -8,7 +8,7 @@ sub vcl_recv {
   }
 
   // timeswire
-  if (req.url ~ "^/timeswire" && req.http.x-environment != "prd") {
+  if (req.url ~ "^/timeswire") {
       set req.http.X-PageType = "vi-timeswire";
       call set_projectvi_fe_backend;
       call check_vi_unhealthy;

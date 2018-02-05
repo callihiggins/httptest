@@ -44,15 +44,15 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: false,
         sbx: false
       },
       requestScheme: 'https://',
-      requestUri: '/search/apple/best',
+      requestUri: '/timeswire',
       responseHeaderMatches: {
-        'x-pagetype': 'vi-search'
+        'x-pagetype': 'vi-timeswire'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page',
