@@ -355,7 +355,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -386,7 +386,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -399,7 +399,7 @@ function getScenarioEvents()
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
       'requestScheme': 'http://',
-      'requestUri': '/1920/01/01/us/slug.html',
+      'requestUri': '/1979/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5|5-4)/,
         'x-nyt-backend': /(article_fe|www_fe)/

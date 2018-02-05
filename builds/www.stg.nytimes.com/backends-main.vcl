@@ -220,8 +220,8 @@ sub vcl_recv {
         || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
         || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
-        || (req.http.x-environment != "prd"
-            && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|2[0-9][0-9][0-9])/") // 1850-future
+        || (req.http.x-nyt-internal-access
+            && req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/") // Route 1850-1979 articles internally to NYT5
     ) {
         # route article traffic to gke only with opt-in cookie
         call set_article_backend_optin;
