@@ -3,6 +3,7 @@ sub vcl_recv {
   // search
   if (req.url ~ "^/search") {
       set req.http.X-PageType = "vi-search";
+      set req.http.x-nyt-backend = "projectvi_fe";
       call set_projectvi_fe_backend;
       call check_vi_unhealthy;
   }
@@ -10,6 +11,7 @@ sub vcl_recv {
   // timeswire
   if (req.url ~ "^/timeswire") {
       set req.http.X-PageType = "vi-timeswire";
+      set req.http.x-nyt-backend = "projectvi_fe";
       call set_projectvi_fe_backend;
       call check_vi_unhealthy;
   }
