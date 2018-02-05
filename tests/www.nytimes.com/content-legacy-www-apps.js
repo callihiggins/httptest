@@ -499,7 +499,7 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/timeswire',
       'responseHeaderMatches': {
         'x-api-version': 'F-4a',

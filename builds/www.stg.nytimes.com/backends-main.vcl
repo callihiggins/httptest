@@ -150,12 +150,14 @@ sub vcl_recv {
         || req.url ~ "^/trending$"
     ) {
         set req.http.X-PageType = "trending";
+        set req.http.x-nyt-backend = "misc_fe";
         call set_nyt5_misc_backend;
     }
 
     // podcasts application
     if (req.url ~ "^/podcasts") {
         set req.http.X-PageType = "podcasts";
+        set req.http.x-nyt-backend = "misc_fe";
         call set_nyt5_misc_backend;
     }
 
@@ -165,12 +167,14 @@ sub vcl_recv {
         || req.url ~ "^/books/best-sellers$"
     ) {
         set req.http.X-PageType = "bestseller";
+        set req.http.x-nyt-backend = "misc_fe";
         call set_nyt5_misc_backend;
     }
 
     // collection reviews diningmap pattern is part of misc
     if (req.url ~ "^/reviews/dining/map") {
         set req.http.X-PageType = "collection";
+        set req.http.x-nyt-backend = "misc_fe";
         call set_nyt5_misc_backend;
     }
 
@@ -441,6 +445,7 @@ sub set_video_api_backend {
 sub set_www_backend {
     if (req.http.X-Migration-Backend == "on-GKE"
         && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
+        set req.http.x-nyt-backend = "www_legacy_gke";
         set req.backend = F_www_legacy_gke;
 
         # if we needed to switch back to NYT4, unset the vi flag
@@ -453,6 +458,7 @@ sub set_www_backend {
 sub set_www_https_backend {
     if (req.http.X-Migration-Backend == "on-GKE"
         && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
+        set req.http.x-nyt-backend = "www_legacy_gke";
         set req.backend = F_www_legacy_gke;
 
         # if we needed to switch back to NYT4, unset the vi flag

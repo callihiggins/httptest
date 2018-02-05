@@ -69,23 +69,6 @@ function getScenarioEvents()
       'testId': 3,
     },
     {
-      'id': 'FunctionalTestScenarioDefinitionFor404Cache',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/elections/page-that-does-not-exist',
-      'responseHeadersNotPresent': [
-        'cache-control'
-      ],
-      'responseStatusCode': 404,
-      'scenarioDescription': 'Test elections 404 cache',
-      'testId': 4,
-    },
-    {
       'id': 'FunctionalTestScenarioDefinitionForBackendFailover',
       'isDeployedInEnv': {
         'prd': true,
