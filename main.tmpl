@@ -133,6 +133,90 @@ resource "fastly_service_v1" "www" {
   {{end -}}
 
 
+
+  {{ $cloud_storage_buckets := (datasource "config").cloud_storage_buckets }}
+  {{ $cloud_storage_bucket_defaults := (datasource "config").cloud_storage_bucket_defaults }}
+  {{range $cloud_storage_buckets -}}
+
+  condition = {
+    name = "{{.pagetype}}_bucket"
+    statement = "req.http.x-pagetype == \"{{.pagetype}}\""
+    type = "REQUEST"
+    priority = "500"
+  }
+
+  header {
+    action      = "set"
+    name        = "{{.pagetype}}"
+    priority    = "400"
+    source      = "\"{{.bucket_name}}\""
+    destination = "http.x-nyt-bucket-name"
+    type        = "request"
+    request_condition   = "{{.pagetype}}_bucket"
+  }
+
+  {{if eq .auth "true"}}
+  header {
+    action      = "set"
+    name        = "{{.pagetype}}_auth"
+    priority    = "401"
+    source      = "\"true\""
+    destination = "http.x-nyt-bucket-auth"
+    type        = "request"
+    request_condition   = "{{.pagetype}}_bucket"
+  }
+
+
+  header {
+    action      = "set"
+    name        = "{{.pagetype}}_bucket_provider"
+    priority    = "401"
+    source      = "\"{{.bucket_provider}}\""
+    destination = "http.x-nyt-bucket-provider"
+    type        = "request"
+    request_condition   = "{{.pagetype}}_bucket"
+  }
+
+  header {
+    action      = "set"
+    name        = "{{.pagetype}}_token"
+    priority    = "401"
+    {{if (has . "auth_key")}} 
+    source      = "\"{{.auth_key}}\""
+    {{else}}
+    {{if eq .bucket_provider "gcs"}}
+    source      = "\"{{$cloud_storage_bucket_defaults.gcs_auth_key}}\""
+    {{else}}
+    source      = "\"{{$cloud_storage_bucket_defaults.s3_auth_key}}\""
+    {{end}}
+    {{end}}
+    destination = "http.x-nyt-bucket-token"
+    type        = "request"
+    request_condition   = "{{.pagetype}}_bucket"
+  }
+
+  header {
+    action      = "set"
+    name        = "{{.pagetype}}_secret"
+    priority    = "401"
+    {{if (has . "auth_secret")}}
+    source      = "\"{{.auth_secret}}\""
+    {{else}}
+    {{if eq .bucket_provider "gcs"}}
+    source      = "\"{{$cloud_storage_bucket_defaults.gcs_auth_secret}}\""
+    {{else}}
+    source      = "\"{{$cloud_storage_bucket_defaults.s3_auth_secret}}\""
+    {{end}}
+    {{end}}
+    destination = "http.x-nyt-bucket-secret"
+    type        = "request"
+    request_condition   = "{{.pagetype}}_bucket"
+  }
+
+  {{end}}
+
+  {{end -}}
+
   # this is set in init-vars.vcl
   header {
     action      = "set"
@@ -543,15 +627,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-ads-static-assets"
+    name    = "cloud-storage-bucket-headers"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-ads-static-assets.vcl")}"
-  }
-
-  vcl {
-    name    = "gcs-bucket-headers"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/gcs-bucket-headers.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/cloud-storage-bucket-headers.vcl")}"
   }
 
   vcl {
@@ -571,4 +649,17 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/origin-response-handler.vcl")}"
   }
+
+  vcl {
+    name    = "route-cms-static-assets"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-cms-static-assets.vcl")}"
+  }
+
+  vcl {
+    name    = "route-ads-static-assets"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-ads-static-assets.vcl")}"
+  }
+
 }

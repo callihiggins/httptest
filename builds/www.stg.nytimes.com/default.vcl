@@ -16,9 +16,10 @@ include "ipauth";
 include "www-redirect";
 include "tips";
 include "migration-allocation";
-
+include "cloud-storage-bucket-headers";
 
 # the following files define the backends themselves
+# these are almost obsolete, nearly all backends are in terraform now
 include "backends-dev";
 include "backends-stg";
 include "backends-prd";
@@ -47,7 +48,11 @@ include "backend-times-journeys";
 include "backend-video";
 include "backend-tbooks";
 include "backend-adx-static";
-include "backend-ads-static-assets";
+
+# new style routing includes
+# TODO: replace all of the above with these during refactor
+include "route-cms-static-assets";
+include "route-ads-static-assets";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -70,9 +75,34 @@ include "mobile-redirect";
 include "homepage-redirect";
 include "uuid";
 include "response-headers";
-include "gcs-bucket-headers";
 
 sub vcl_recv {
+
+  # initialize common functionalities here
+  # TODO: move more things into this that are vcl_recv in intialize-vars.vcl
+  call initialize_global_variable_headers;
+
+
+  # begin routing logic
+  # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
+  call recv_route_cms_static_assets;
+  call recv_route_ads_static_assets;
+
+/* any recv/request functionality defined in terraform
+ * as well as anything Fastly needs to do magically
+ * will be inserted by the below macro
+ * be aware of this for the above functionality that is executed
+ * make sure all backends in terraform have backend-name conditionals!
+ * backends will be set WITHIN THIS MACRO
+ *
+ * WARNING, we are mid refactor the above is not 100% true yet
+ * There be dragons here. Pay close attention to the test suite
+ * There are tons of routes in vcl files with their own vcl_rev in the includes!!
+ * Lets migrate them to route subs iteratively!
+ */
+
+# DO NOT REMOVE THIS LINE, FASTLY MACRO
+#FASTLY recv
 
   # Set the edge req header
   set req.http.X-NYT-Edge-CDN = "Fastly";
@@ -141,8 +171,6 @@ sub vcl_hit {
 
 sub vcl_miss {
 #FASTLY miss
-  call miss_pass_set_gcs_aws_auth_headers;
-  call unset_extraneous_bereq_headers;
 
   // this should be removed already, but lets be sure
   // since this was a lookup we were not pass
@@ -167,13 +195,21 @@ sub vcl_miss {
     unset req.http.Accept-Encoding;
   }
 
+  # route specific miss logic goes here
+  # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
+  call miss_pass_route_cms_static_assets;
+  call miss_pass_route_ads_static_assets;
+
+  # unset headers to the origin that we use for vars
+  # definitely need to do this last incase they are used above
+  call unset_extraneous_bereq_headers;
+
   return(fetch);
 }
 
+
 sub vcl_pass {
 #FASTLY pass
-  call miss_pass_set_gcs_aws_auth_headers;
-  call unset_extraneous_bereq_headers;
 
   // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
   if(    req.http.X-PageType == "article"
@@ -188,7 +224,17 @@ sub vcl_pass {
     unset bereq.http.Cookie;
     unset bereq.http.X-Cookie;
   }
+
+  # route specific pass logic goes here
+  # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
+  call miss_pass_route_cms_static_assets;
+  call miss_pass_route_ads_static_assets;
+
+  # unset headers to the origin that we use for vars
+  # definitely need to do this last incase they are used above
+  call unset_extraneous_bereq_headers;
 }
+
 
 sub vcl_fetch {
 
@@ -321,11 +367,16 @@ sub vcl_log {
   }
 
 sub unset_extraneous_bereq_headers {
-  // remove headers used as variables for logic
-  // backend definitely does not need these
+  # remove headers used as variables for logic
+  # backend definitely does not need these
+  # in some cases it could be a security concern
   unset bereq.http.x-nyt-edition;
   unset bereq.http.x-nyt-a;
   unset bereq.http.x-nyt-wpab;
   unset bereq.http.x-nyt-s;
   unset bereq.http.x-nyt-d;
+  unset bereq.http.x-nyt-bucket-token;
+  unset bereq.http.x-nyt-bucket-secret;
+  unset bereq.http.x-nyt-bucket-name;
+  unset bereq.http.x-nyt-bucket-provider;
 }

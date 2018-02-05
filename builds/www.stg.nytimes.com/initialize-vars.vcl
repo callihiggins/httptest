@@ -9,6 +9,18 @@ table internal_access_tokens {
   "drone-fastly-test-4er7" : "20171016", //the item for drone-fastly-test to access dev or stg with drone
 }
 
+# this subroutine is for the new routing logic created in recfactor
+# we will migrate things into this sub as needed
+sub initialize_global_variable_headers {
+
+  # set a var to denote if this domain is canonical www request
+  if (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$") {
+    set req.http.x-nyt-canonical-www-host = "true";
+  } else {
+    set req.http.x-nyt-canonical-www-host = "false";
+  }
+}
+
 sub vcl_recv {
 
     // Reset access levels before setting them

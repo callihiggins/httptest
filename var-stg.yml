@@ -60,23 +60,6 @@ backends:
       timeout: "2000"
       window: "5"
 
-  - name: "ads_static_assets"
-    address: "storage.googleapis.com"
-    between_bytes_timeout: "5000"
-    connect_timeout: "5000"
-    first_byte_timeout: "5000"
-    ssl_cert_hostname: "storage.googleapis.com"
-    ssl_sni_hostname: "storage.googleapis.com"
-    healthcheck:
-      host: "nyt-ads-static-assets.storage.googleapis.com"
-      path: "/ads/healthcheck.txt"
-      check_interval: "5000"
-      expected_response: "200"
-      initial: "2"
-      threshold: "3"
-      timeout: "2000"
-      window: "5"
-
   - name: "article_fe"
     address: "nyt5-app-article.stg.oma1.nyt.net"
     between_bytes_timeout: "10000"
@@ -775,3 +758,49 @@ backends:
       threshold: "3"
       timeout: "10000"
       window: "5"
+
+  - name: "gcs_origin"
+    address: "storage.googleapis.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "storage.googleapis.com"
+    ssl_sni_hostname: "storage.googleapis.com"
+    healthcheck:
+      host: "nyt-fastly-healthcheck-0000.storage.googleapis.com"
+      path: "/healthcheck.txt"
+      check_interval: "5000"
+      expected_response: "200"
+      initial: "5"
+      threshold: "3"
+      timeout: "2000"
+      window: "5"
+
+# defaults for cloud storage bucket configs
+# these are overridable in per bucket configs below
+#   auth_key:     the dictionary key for the bucket access token
+#   auth_secret:  the dictionary key for the bucket access secret
+#   s3_auth_key:     the dictionary key for the s3 bucket access token
+#   s3_auth_secret:  the dictionary key for the s3 bucket access secret
+# if you share your bucket with DV's google accounts you can use these defaults
+# dictionary name for all keys is origin_auth_keys
+cloud_storage_bucket_defaults:
+  gcs_auth_key: "gcs_key"
+  gcs_auth_secret: "gcs_secret"
+  s3_auth_key: "s3_key"
+  s3_auth_key: "s3_secret"
+
+# these configurations are to map buckets for the routes that
+# use cloud storage to their respective env specific storage bucket config
+# pay attention to the defaults above in the case you need to override those
+# be mindful that the pagetype you use here must be used in your route for this bucket!
+# bucket_provider is one of: gcs, s3
+cloud_storage_buckets:
+  - pagetype: "cms-static-assets"
+    auth: "true"
+    bucket_name: "cms-gke-stg-publish-images-storage"
+    bucket_provider: "gcs"
+  - pagetype: "ads-static-assets"
+    auth: "true"
+    bucket_name: "nyt-ads-static-assets"
+    bucket_provider: "gcs"
