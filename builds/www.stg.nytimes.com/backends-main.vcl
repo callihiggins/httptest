@@ -118,7 +118,7 @@ sub vcl_recv {
         || req.url ~ "^/section/realestate/commercial"
     ) {
         set req.http.X-PageType = "real-estate";
-        
+
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
             set req.http.x-nyt-backend = "realestate_fe";
             
@@ -140,8 +140,8 @@ sub vcl_recv {
             # set this to www instead of www_fe_vert so that it will PASS for now
             set req.http.x-nyt-backend = "www";
             call set_www_backend;
-        }        
-        
+        }
+
     }
 
     // trending application
@@ -313,7 +313,8 @@ sub vcl_recv {
         }
 
         // Send to GCP
-        if (    req.http.host ~ "^well\.blogs\.(dev\.|stg\.)?nytimes\.com"
+        // Only handle ask well in prd
+        if (    req.http.host ~ "^well\.blogs\.nytimes\.com"
             && (    req.url ~ "^/ask/well/"
                 ||  req.url ~ "^/svc/int/qa"
             )
@@ -436,7 +437,6 @@ sub set_video_api_backend {
         set req.backend = F_www_fe;
     }
 }
-
 
 sub set_www_backend {
     if (req.http.X-Migration-Backend == "on-GKE"
