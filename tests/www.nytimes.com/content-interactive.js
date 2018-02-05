@@ -174,7 +174,6 @@ function getScenarioEvents()
     'responseHeadersPresent': [
       'x-cache',
       'x-served-by',
-      'x-timer',
     ],
     'responseHeadersNotPresent': [
       'age',
