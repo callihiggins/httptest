@@ -571,10 +571,4 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/origin-response-handler.vcl")}"
   }
-
-  vcl {
-    name    = "backend-profile-fe"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-profile-fe.vcl")}"
-  }
 }
