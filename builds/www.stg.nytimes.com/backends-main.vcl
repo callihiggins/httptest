@@ -37,7 +37,7 @@ sub vcl_recv {
     }
 
     // set the https backend for routes that require it
-    if (   req.url ~ "^/svc/"
+    if (  (req.url ~ "^/svc/" && req.url.path !~ "^/svc/(user|profile)")
         || req.url ~ "^/content/help/itunes/privacy-policy.html"
         || req.url ~ "^/content/help/rights/privacy/policy/privacy-policy.html"
         || req.url ~ "^/apple-app-site-association"
