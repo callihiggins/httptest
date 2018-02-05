@@ -16,7 +16,7 @@ function getScenarioEvents() {
         'sbx': false,
       },
       requestScheme: "https://",
-      requestUri: "images/2017/12/20/arts/testtestmerlindec19/testtestmerlindec19-videoSmall.jpg",
+      requestUri: "/images/2017/12/20/arts/testtestmerlindec19/testtestmerlindec19-videoSmall.jpg",
       responseHeaderMatches: {
         "x-pagetype": "cms-static-assets"
       },
@@ -34,7 +34,7 @@ function getScenarioEvents() {
         'sbx': false,
       },
       requestScheme: "https://",
-      requestUri: "images/2018/01/10/watching/getOUT/getOUT-videoSmall.jpg",
+      requestUri: "/images/2018/01/10/watching/getOUT/getOUT-videoSmall.jpg",
       responseHeaderMatches: {
         "x-pagetype": "cms-static-assets",
       },
