@@ -121,6 +121,7 @@ sub vcl_recv {
 
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
             set req.http.x-nyt-backend = "realestate_fe";
+            call set_www_realestate_backend_gke;
             
             # we have to pass directly here 
             # so that we don't return users data.
@@ -134,7 +135,6 @@ sub vcl_recv {
                 return(pass);
             }
 
-            call set_www_realestate_backend_gke;
 
         } else {
             # set this to www instead of www_fe_vert so that it will PASS for now
