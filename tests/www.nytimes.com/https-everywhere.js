@@ -843,6 +843,9 @@ function getScenarioEvents()
         'stg': true,
         'dev': true
       },
+      'requestHeaders': {
+        'cookie': 'nyt.dv.nyt5-on-gke=1;',
+      },      
       'requestScheme': 'https://',
       'requestUri': '/real-estate/api/personalization/saved-items-status?itemIds=123',
       'responseHeaderMatches': {
