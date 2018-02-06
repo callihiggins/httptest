@@ -105,7 +105,7 @@ sub vcl_recv {
             elsif (var.dart < 128849018) { set var.test_group = "d2"; } #  1%   HP only (added Dec. 2017), reported
             elsif (var.dart < 171798691) { set var.test_group = "y2"; } #  1%   control (added Dec. 2017), reported
             elsif (var.dart < 193273528) { set var.test_group = "e2"; } #  0.5% vi-server-render-hp (added Feb. 2018), reported
-            elsif (var.dart < 214748365) { set var.test_group = "f2"; } #  0.5% vi-client-render-hp (added Feb. 2017), reported
+            elsif (var.dart < 214748365) { set var.test_group = "f2"; } #  0.5% vi-client-render-hp (added Feb. 2018), reported
             else /*    dart < 2^32    */ { set var.test_group = "z0"; } # 95%   control, unreported
 
         } else { # in staging or dev, use equal weights:
@@ -114,7 +114,7 @@ sub vcl_recv {
             elsif (var.dart < 1840700270) { set var.test_group = "d2"; } # 1/7 HP only (added Dec. 2017), reported
             elsif (var.dart < 2454267026) { set var.test_group = "y2"; } # 1/7 control (added Dec. 2017), reported
             elsif (var.dart < 3067833783) { set var.test_group = "e2"; } # 1/7 vi-server-render-hp (added Feb. 2018), reported
-            elsif (var.dart < 3681400539) { set var.test_group = "f2"; } # 1/7 vi-client-render-hp (added Feb. 2017), reported
+            elsif (var.dart < 3681400539) { set var.test_group = "f2"; } # 1/7 vi-client-render-hp (added Feb. 2018), reported
             else /*    dart < 2^32     */ { set var.test_group = "z0"; } # 1/7 control, unreported
         }
     }
