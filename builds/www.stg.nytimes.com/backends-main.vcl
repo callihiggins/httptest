@@ -118,10 +118,10 @@ sub vcl_recv {
         || req.url ~ "^/section/realestate/commercial"
     ) {
         set req.http.X-PageType = "real-estate";
-        call set_www_realestate_backend_gke;
 
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
             set req.http.x-nyt-backend = "realestate_fe";
+            call set_www_realestate_backend_gke;
             
             # we have to pass directly here 
             # so that we don't return users data.
