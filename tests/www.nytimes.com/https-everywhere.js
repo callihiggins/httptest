@@ -849,7 +849,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/real-estate/api/personalization/saved-items-status?itemIds=123',
       'responseHeaderMatches': {
-        'X-Cache': 'MISS',
+        'x-cache': 'MISS',
       },
       'responseStatusCode': 401,
       'scenarioDescription': 'Test HTTPS Auth is working for real-estate',
