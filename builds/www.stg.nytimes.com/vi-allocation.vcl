@@ -19,6 +19,8 @@
 #       c = nyt5
 #       d = vi (added Dec. 2017)
 #       y = nyt5 (added Dec. 2017)
+#       e = vi with server-rendered homepage
+#       f = vi
 #
 #   `vi_www_hp_opt` cookie meaning:
 #       1 = force vi homepage
@@ -97,34 +99,33 @@ sub vcl_recv {
         set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
         set var.dart = std.strtol(var.hash, 16);
 
-        if (var.dart < 42949673) { # 1% * 0x100000000
-            set var.test_group = "b2"; # HP only, reported
+        if (req.http.x-environment == "prd") {
+            if    (var.dart <  42949673) { set var.test_group = "b2"; } #  1%   HP only, reported
+            elsif (var.dart <  85899346) { set var.test_group = "z2"; } #  1%   control, reported
+            elsif (var.dart < 128849018) { set var.test_group = "d2"; } #  1%   HP only (added Dec. 2017), reported
+            elsif (var.dart < 171798691) { set var.test_group = "y2"; } #  1%   control (added Dec. 2017), reported
+            elsif (var.dart < 193273528) { set var.test_group = "e2"; } #  0.5% vi-server-render-hp (added Feb. 2018), reported
+            elsif (var.dart < 214748365) { set var.test_group = "f2"; } #  0.5% vi-client-render-hp (added Feb. 2017), reported
+            else /*    dart < 2^32    */ { set var.test_group = "z0"; } # 95%   control, unreported
 
-        } else if (var.dart < 85899346) { # 2% * 0x100000000
-            set var.test_group = "z2"; # control, reported
-
-        } else if (var.dart < 128849018) { # 3% * 0x100000000
-            set var.test_group = "d2"; # HP only (added Dec. 2017), reported
-
-        } else if (var.dart < 171798691) { # 4% * 0x100000000
-            set var.test_group = "y2"; # control (added Dec. 2017), reported
-
-        } else { # var.dart < 0x100000000
-            set var.test_group = "z0"; # control, unreported
+        } else { # in staging or dev, use equal weights:
+            if    (var.dart <  613566757) { set var.test_group = "b2"; } # 1/7 HP only, reported
+            elsif (var.dart < 1227133513) { set var.test_group = "z2"; } # 1/7 control, reported
+            elsif (var.dart < 1840700270) { set var.test_group = "d2"; } # 1/7 HP only (added Dec. 2017), reported
+            elsif (var.dart < 2454267026) { set var.test_group = "y2"; } # 1/7 control (added Dec. 2017), reported
+            elsif (var.dart < 3067833783) { set var.test_group = "e2"; } # 1/7 vi-server-render-hp (added Feb. 2018), reported
+            elsif (var.dart < 3681400539) { set var.test_group = "f2"; } # 1/7 vi-client-render-hp (added Feb. 2017), reported
+            else /*    dart < 2^32     */ { set var.test_group = "z0"; } # 1/7 control, unreported
         }
+    }
 
-        # override with 1/3 each in staging:
-        if (req.http.x-environment != "prd") {
-            if (var.dart < 1431655765) { # 1/3 * 0x100000000
-                set var.test_group = "b2"; # HP only, reported
-
-            } else if (var.dart < 2863311531) { # 2/3 * 0x100000000
-                set var.test_group = "z2"; # control, reported
-
-            } else { # var.dart < 0x100000000
-                set var.test_group = "z0"; # control, unreported
-            }
-        }
+    # If we're in the server-render test variation, tell Vi to server-render
+    # the homepage via a header named `x-vi-ssr-www-hp` (which is meaningless
+    # to the other backends and will be ignored):
+    if (req.url.path == "/" && var.test_group ~ "^e") {
+        set req.http.x-vi-ssr-www-hp = "vi-server-render-hp";
+    } else {
+        set req.http.x-vi-ssr-www-hp = "vi-client-render-hp";
     }
 
     #

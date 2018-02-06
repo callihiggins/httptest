@@ -127,6 +127,7 @@ sub vcl_hash {
     if (req.url.path == "/"){
       set req.hash += req.http.x-nyt-geo-hash;
       set req.hash += req.http.device_type;
+      set req.hash += req.http.x-vi-ssr-www-hp;
     } else if (req.url ~ "^/(aponline/|reuters/)?201[4-9]") {
       set req.hash += req.http.x--fastly-vi-test-group-story;
     }
