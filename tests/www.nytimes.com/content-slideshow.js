@@ -88,10 +88,10 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2013/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-GS',
+        'x-api-version': 'F-5-4',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -106,10 +106,10 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2011/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-GS',
+        'x-api-version': 'F-5-4',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -124,10 +124,10 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2009/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-GS',
+       'x-api-version': 'F-5-4',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -142,10 +142,10 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2007/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-GS',
+        'x-api-version': 'F-5-4',
         'x-pagetype': 'slideshow',
       },
       'responseStatusCode': [404],
@@ -247,7 +247,7 @@ function getScenarioEvents()
       'requestHeaderCookie': [
         'nyt.dv.nyt5-on-gke.slideshow=1',
       ],
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2013/12/25/dining/20131225-REST.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GS',
@@ -268,7 +268,7 @@ function getScenarioEvents()
       'requestHeaderCookie': [
         'nyt.dv.nyt5-on-gke.slideshow=1',
       ],
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2011/07/10/world/africa/10sudan.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GS',
@@ -289,7 +289,7 @@ function getScenarioEvents()
       'requestHeaderCookie': [
         'nyt.dv.nyt5-on-gke.slideshow=1',
       ],
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2009/04/27/science/042809-Ants_index.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GS',
@@ -310,7 +310,7 @@ function getScenarioEvents()
       'requestHeaderCookie': [
         'nyt.dv.nyt5-on-gke.slideshow=1',
       ],
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/slideshow/2007/10/10/nytfrontpage/20071010POD_7.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GS',

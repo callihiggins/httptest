@@ -97,7 +97,7 @@ sub vcl_recv {
     // slideshow application
     if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
         || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
-        || (req.url ~ "^/slideshow/" && req.http.x-environment != "prd")
+        || (req.url ~ "^/slideshow/" && !req.http.x-slideshow-compatibility && req.http.x-environment != "prd") // ESX fallback logic
     ) {
         set req.http.X-PageType = "slideshow";
         set req.http.x-nyt-backend = "slideshow_fe";
