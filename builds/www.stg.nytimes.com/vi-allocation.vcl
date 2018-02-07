@@ -249,6 +249,11 @@ sub vcl_deliver {
     #     set resp.http.X-Debug-dart = "dart --> '" + req.http.x--fastly-dart + "'";
     #     set resp.http.X-Debug-vi_story_opt = "here --> '" + req.http.x--fastly-vi-story-opt + "'";
     }
+
+    # for debugging and automated tests:
+    if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-internal-access || req.http.x-nyt-external-access)) {
+        set resp.http.x-nyt-debug-req-http-x-vi-ssr-www-hp = req.http.x-vi-ssr-www-hp;
+    }
 }
 
 sub clear_vi_group_vars {
