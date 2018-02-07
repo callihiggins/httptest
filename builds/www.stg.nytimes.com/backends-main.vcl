@@ -431,12 +431,11 @@ sub vcl_recv {
 
 # set a video library backend based on env
 sub set_video_library_backend {
-    if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
-        set req.http.x-nyt-backend = "video_library";
-        set req.backend = F_video_library;
-    } else {
-        set req.http.x-nyt-backend = "video_library_director";
-        set req.backend = video_library_director_prd;
+    set req.http.x-nyt-backend = "video_library";
+    set req.backend = F_video_library;
+    if (!req.backend.healthy) {
+        set req.http.x-nyt-backend = "www_fe";
+        set req.backend = F_www_fe;
     }
 }
 
