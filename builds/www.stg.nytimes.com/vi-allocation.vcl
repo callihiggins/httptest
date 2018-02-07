@@ -19,8 +19,8 @@
 #       c = nyt5
 #       d = vi (added Dec. 2017)
 #       y = nyt5 (added Dec. 2017)
-#       e = vi with server-rendered homepage
-#       f = vi
+#       e = vi with server-rendered homepage (added Feb. 2018)
+#       f = vi (added Feb. 2018)
 #
 #   `vi_www_hp_opt` cookie meaning:
 #       1 = force vi homepage
@@ -104,8 +104,8 @@ sub vcl_recv {
             elsif (var.dart <  85899346) { set var.test_group = "z2"; } #  1%   control, reported
             elsif (var.dart < 128849018) { set var.test_group = "d2"; } #  1%   HP only (added Dec. 2017), reported
             elsif (var.dart < 171798691) { set var.test_group = "y2"; } #  1%   control (added Dec. 2017), reported
-            elsif (var.dart < 193273528) { set var.test_group = "e2"; } #  0.5% vi-hp-server-render (added Feb. 2018), reported
-            elsif (var.dart < 214748365) { set var.test_group = "f2"; } #  0.5% vi-hp-client-render (added Feb. 2018), reported
+            elsif (var.dart < 193273528) { set var.test_group = "e2"; } #  0.5% hp-serv (added Feb. 2018), reported
+            elsif (var.dart < 214748365) { set var.test_group = "f2"; } #  0.5% hp-orig (added Feb. 2018), reported
             else /*    dart < 2^32    */ { set var.test_group = "z0"; } # 95%   control, unreported
 
         } else { # in staging or dev, use equal weights:
@@ -113,8 +113,8 @@ sub vcl_recv {
             elsif (var.dart < 1227133513) { set var.test_group = "z2"; } # 1/7 control, reported
             elsif (var.dart < 1840700270) { set var.test_group = "d2"; } # 1/7 HP only (added Dec. 2017), reported
             elsif (var.dart < 2454267026) { set var.test_group = "y2"; } # 1/7 control (added Dec. 2017), reported
-            elsif (var.dart < 3067833783) { set var.test_group = "e2"; } # 1/7 vi-hp-server-render (added Feb. 2018), reported
-            elsif (var.dart < 3681400539) { set var.test_group = "f2"; } # 1/7 vi-hp-client-render (added Feb. 2018), reported
+            elsif (var.dart < 3067833783) { set var.test_group = "e2"; } # 1/7 hp-serv (added Feb. 2018), reported
+            elsif (var.dart < 3681400539) { set var.test_group = "f2"; } # 1/7 hp-orig (added Feb. 2018), reported
             else /*    dart < 2^32     */ { set var.test_group = "z0"; } # 1/7 control, unreported
         }
     }
@@ -123,9 +123,9 @@ sub vcl_recv {
     # the homepage via a header named `x-vi-ssr-www-hp` (which is meaningless
     # to the other backends and will be ignored):
     if (req.url.path == "/" && var.test_group ~ "^e") {
-        set req.http.x-vi-ssr-www-hp = "vi-hp-server-render";
+        set req.http.x-vi-ssr-www-hp = "hp-serv";
     } else {
-        set req.http.x-vi-ssr-www-hp = "vi-hp-client-render";
+        set req.http.x-vi-ssr-www-hp = "hp-orig";
     }
 
     #

@@ -377,7 +377,7 @@ function getScenarioEvents()
     // for i in {1..1000}; do a="$(base64 /dev/random | head -c22 | tr /+ -_)"; s="$a WP_ProjectVi_www_hp"; printf '%s %010d\n' "$s" $((0x"$(printf %s "$s" | openssl dgst -sha256 | cut -c1-8)")); done
 
     {
-      'scenarioDescription': 'Request with nyt-a mapping to vi-hp-server-render (in non-prd)',
+      'scenarioDescription': 'Request with nyt-a mapping to hp-serv (in non-prd)',
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
@@ -388,12 +388,12 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=sJ50prL_8s36390EzUdhZ6', // in NON-PRODUCTION envs, this results in variation `vi-hp-server-render`
+        'nyt-a=sJ50prL_8s36390EzUdhZ6', // in NON-PRODUCTION envs, this results in variation `hp-serv`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderContains': {
-        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'vi-hp-server-render',
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-serv',
       },
       'responseHeaderPattern': {
         'set-cookie': /\bvi_www_hp=e[012][0-9];/,
@@ -403,7 +403,7 @@ function getScenarioEvents()
     },
 
     {
-      'scenarioDescription': 'Request with nyt-a mapping to vi-hp-client-render (in non-prd)',
+      'scenarioDescription': 'Request with nyt-a mapping to hp-orig (in non-prd)',
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
@@ -414,12 +414,12 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=VY-be0W--laBW4oZMjs2cA', // in NON-PRODUCTION envs, this results in variation `vi-hp-client-render`
+        'nyt-a=VY-be0W--laBW4oZMjs2cA', // in NON-PRODUCTION envs, this results in variation `hp-orig`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderContains': {
-        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'vi-hp-client-render',
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-orig',
       },
       'responseHeaderPattern': {
         'set-cookie': /\bvi_www_hp=f[012][0-9];/,
@@ -429,7 +429,7 @@ function getScenarioEvents()
     },
 
     {
-      'scenarioDescription': 'Request with nyt-a mapping to vi-hp-server-render (in prd)',
+      'scenarioDescription': 'Request with nyt-a mapping to hp-serv (in prd)',
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
@@ -440,12 +440,12 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=hhgKlZP8DGMN9hoVgbYClP', // in PRODUCTION env, this results in variation `vi-hp-server-render`
+        'nyt-a=hhgKlZP8DGMN9hoVgbYClP', // in PRODUCTION env, this results in variation `hp-serv`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderContains': {
-        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'vi-hp-server-render',
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-serv',
       },
       'responseHeaderPattern': {
         'set-cookie': /\bvi_www_hp=e[012][0-9];/,
@@ -455,7 +455,7 @@ function getScenarioEvents()
     },
 
     {
-      'scenarioDescription': 'Request with nyt-a mapping to vi-hp-client-render (in prd)',
+      'scenarioDescription': 'Request with nyt-a mapping to hp-orig (in prd)',
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
@@ -466,12 +466,12 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=U5CAXSqCivvSAByuDZur2k', // in PRODUCTION env, this results in variation `vi-hp-client-render`
+        'nyt-a=U5CAXSqCivvSAByuDZur2k', // in PRODUCTION env, this results in variation `hp-orig`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderContains': {
-        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'vi-hp-client-render',
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-orig',
       },
       'responseHeaderPattern': {
         'set-cookie': /\bvi_www_hp=f[012][0-9];/,
