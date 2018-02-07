@@ -384,6 +384,23 @@ backends:
       timeout: "2000"
       window: "5"
 
+  - name: "packages_gcs"
+    address: "storage.googleapis.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "storage.googleapis.com"
+    ssl_sni_hostname: "storage.googleapis.com"
+    healthcheck:
+      host: "nyt-packages-dev.storage.googleapis.com"
+      path: "/healthcheck.txt"
+      check_interval: "5000"
+      expected_response: "200"
+      initial: "5"
+      threshold: "3"
+      timeout: "2000"
+      window: "5"
+
   - name: "newsdev_gcs"
     address: "storage.googleapis.com"
     between_bytes_timeout: "5000"

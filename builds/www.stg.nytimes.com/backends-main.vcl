@@ -122,8 +122,8 @@ sub vcl_recv {
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
             set req.http.x-nyt-backend = "realestate_fe";
             call set_www_realestate_backend_gke;
-            
-            # we have to pass directly here 
+
+            # we have to pass directly here
             # so that we don't return users data.
             if (   req.url ~ "^/real-estate/api/mail"
                 || req.url ~ "^/real-estate/api/personalization"
@@ -243,6 +243,13 @@ sub vcl_recv {
         set req.http.X-PageType = "newsdev-gke";
         set req.http.x-nyt-backend = "newsdev_k8s_gke";
         call set_www_newsdev_gke_backend;
+    }
+
+    if ( req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"
+          && req.url ~ "^/packages/files" ) {
+      set req.http.X-PageType = "packages-gcs";
+      set req.http.x-nyt-backend = "packages_gcs";
+      call set_www_packages_gcs_backend;
     }
 
     if ((req.url == "/es") || (req.url ~ "^/es/")
