@@ -97,7 +97,7 @@ sub vcl_recv {
     // slideshow application
     if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
         || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
-        || (req.url ~ "^/slideshow/" && !req.http.x-slideshow-compatibility && req.http.x-environment != "prd") // ESX fallback logic
+        || (req.url ~ "^/slideshow/" && !req.http.x-slideshow-compatibility && req.http.x-nyt-internal-access) // ESX fallback logic
     ) {
         set req.http.X-PageType = "slideshow";
         set req.http.x-nyt-backend = "slideshow_fe";
@@ -122,8 +122,8 @@ sub vcl_recv {
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
             set req.http.x-nyt-backend = "realestate_fe";
             call set_www_realestate_backend_gke;
-            
-            # we have to pass directly here 
+
+            # we have to pass directly here
             # so that we don't return users data.
             if (   req.url ~ "^/real-estate/api/mail"
                 || req.url ~ "^/real-estate/api/personalization"
