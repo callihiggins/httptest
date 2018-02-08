@@ -135,7 +135,6 @@ sub vcl_recv {
                 return(pass);
             }
 
-
         } else {
             # set this to www instead of www_fe_vert so that it will PASS for now
             set req.http.x-nyt-backend = "www";
@@ -230,10 +229,7 @@ sub vcl_recv {
     }
 
     // Send to GCP
-    if ( req.url ~ "^/svc/int/qa" ) {
-        set req.http.x-nyt-backend = "ask_well";
-        call set_ask_well_backend;
-    } else if ( req.url ~ "^/svc/int/attribute/projects/" ) {
+    if ( req.url ~ "^/svc/int/attribute/projects/" ) {
         set req.http.x-nyt-backend = "newsdev_attribute_gclod_function";
         call set_www_newsdev_attribute_gclod_function_backend;
     } else if (    req.url ~ "^/svc/int/"
@@ -318,16 +314,8 @@ sub vcl_recv {
         }
 
         // Send to GCP
-        // Only handle ask well in prd
-        if (    req.http.host ~ "^well\.blogs\.nytimes\.com"
-            && (    req.url ~ "^/ask/well/"
-                ||  req.url ~ "^/svc/int/qa"
-            )
-        ) {
-            set req.http.x-nyt-backend = "ask_well";
-            call set_ask_well_backend;
         // Pass those paths to newsdev gke without caching
-        } else if ( req.url ~ "^/projects"
+        if ( req.url ~ "^/projects"
                  || req.url ~ "^/svc/int"
         ) {
            set req.http.X-PageType = "newsdev-gke";
@@ -572,27 +560,6 @@ sub set_www_newsdev_attribute_gclod_function_backend {
       set req.http.x-cf-host = "us-central1-nytint-stg.cloudfunctions.net";
     } else {
       set req.http.x-cf-host = "us-central1-nytint-prd.cloudfunctions.net";
-    }
-}
-
-sub set_ask_well_backend {
-
-    set req.backend = F_ask_well;
-    set req.http.X-PageType = "askwell";
-
-    if (req.url ~ "^(/svc/int/qa/questions/[a-z0-9\-]*/votes|/svc/int/qa/questions/[a-z0-9\-]*/submit|/ask/well/questions/yours)") {
-        # we have to pass directly here, so that req.http.Cookie passes through
-        return (pass);
-    }
-
-    if (req.url ~ "^/ask/well/questions") {
-      set req.url = querystring.regfilter(req.url, "^(?!limit|offset|partial)");
-      set req.url = querystring.sort(req.url);
-    } elsif (req.url ~ "^/svc/int/qa/questions") {
-      set req.url = querystring.regfilter(req.url, "^(?!limit|offset|sort)");
-      set req.url = querystring.sort(req.url);
-    } else {
-      set req.url = querystring.remove(req.url);
     }
 }
 
