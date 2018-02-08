@@ -19,8 +19,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2017/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'x-api-version': 'F-GS',
-        'x-pagetype': 'slideshow',
+        'x-api-version': 'F-5-4',
+        'x-pagetype': 'legacy',
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test slideshow; Internal HTTPS enabled',
@@ -156,8 +156,8 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -177,8 +177,8 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -198,8 +198,8 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
