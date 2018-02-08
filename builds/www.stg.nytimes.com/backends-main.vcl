@@ -206,12 +206,8 @@ sub vcl_recv {
     }
 
     // article
-    if (   //req.url ~ "^/2(00[7-9]|(0[1-9][0-9])|([1-9][0-9][0-9]))/" // 2007-future
-            req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" // 2014-future
+    if (   req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" // 2014-future
         || req.url ~ "^/200[4-5]/" // 2004-2005
-        || req.url ~ "^/197[0-9]/" // 1970-1979
-        || req.url ~ "^/1964/" // 1964
-        || req.url ~ "^/1959/" // 1959
         || req.url ~ "^/(aponline|reuters)/" // wire sources
         || req.url ~ "^/blog/" // all blogposts
         || req.url ~ "^/2001/01/20/technology/20ANNIVERSARY.html" // WP-16051
@@ -219,8 +215,7 @@ sub vcl_recv {
         || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
         || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
-        || (req.http.x-nyt-internal-access
-            && req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/") // Route 1850-1979 articles internally to NYT5
+        || req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/" // Route 1850-1979
     ) {
         # route article traffic to gke only fallback to esx
         set req.http.X-PageType = "article";

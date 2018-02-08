@@ -370,7 +370,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/1850/01/01/us/slug.html',
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|5-4)/,
+        'x-api-version': /F-(GA|5-5)/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
@@ -401,7 +401,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/1979/01/01/us/slug.html',
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|5-4)/,
+        'x-api-version': /F-(GA|5-5)/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
