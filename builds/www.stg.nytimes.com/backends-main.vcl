@@ -94,11 +94,11 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    // slideshow application
-    if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
-        || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
-        || (req.url ~ "^/slideshow/" && !req.http.x-slideshow-compatibility && req.http.x-nyt-internal-access) // ESX fallback logic
-    ) {
+    // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
+    // If slideshow-compatibility is set, fallback to NYT4 ESX.
+    if (    req.url ~ "^/slideshow/"
+        && !req.http.x-nyt-slideshow-compatibility)
+    {
         set req.http.X-PageType = "slideshow";
         set req.http.x-nyt-backend = "slideshow_fe";
         call set_www_slideshow_backend_gke;
