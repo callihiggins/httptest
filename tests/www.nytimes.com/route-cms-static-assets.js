@@ -43,6 +43,24 @@ function getScenarioEvents() {
       scenarioDescription: "route-cms-static-assets: 200 response from GCS",
       testId: 2
     },
+    {
+      id: "FunctionalTestScenarioDefinitionForCMSGCSBucket",
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      requestScheme: "https://",
+      requestUri: "/images/2018/02/07/arts/07fieldguide/05fieldguide-blogSmallThumb.jpg",
+      responseHeaderMatches: {
+        "x-pagetype": "cms-static-assets",
+      },
+      responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
+      responseStatusCode: [200],
+      scenarioDescription: "route-cms-static-assets: 200 response from GCS",
+      testId: 3
+    },
   ];
 
   return scenarios;
