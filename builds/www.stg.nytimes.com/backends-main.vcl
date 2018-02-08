@@ -95,10 +95,9 @@ sub vcl_recv {
     }
 
     // slideshow application
-    if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
-        || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
-        || (req.url ~ "^/slideshow/" && !req.http.x-slideshow-compatibility && req.http.x-nyt-internal-access) // ESX fallback logic
-    ) {
+    if (    req.url ~ "^/slideshow/"
+        && !req.http.x-nyt-slideshow-compatibility)
+    {
         set req.http.X-PageType = "slideshow";
         set req.http.x-nyt-backend = "slideshow_fe";
         call set_www_slideshow_backend_gke;

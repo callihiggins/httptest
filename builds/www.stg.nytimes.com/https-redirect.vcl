@@ -49,9 +49,7 @@ sub vcl_recv {
         || req.http.X-PageType == "games-web"
         || req.http.X-PageType == "paidpost"
         || req.http.X-PageType == "programs-service"
-        || (  req.http.X-PageType == "slideshow"
-              && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
-        || (req.http.X-PageType == "slideshow" && req.http.x-environment != "prd") // all slideshows
+        || req.http.X-PageType == "slideshow"
         || req.url ~ "^/newsletters"
         || req.url ~ "^/pages/cooking/" // newsletters
         || req.url ~ "^/packages/images/email/" // newsletters
