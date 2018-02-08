@@ -11,7 +11,7 @@ sub vcl_deliver {
         return (restart);
     }
 
-    // expose the slideshow compatilibility header on internal network
+    // expose the slideshow compatibility header on internal network
     if (req.http.x-nyt-internal-access) {
       set resp.http.x-nyt-slideshow-compatibility = req.http.x-nyt-slideshow-compatibility;
     }
