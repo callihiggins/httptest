@@ -94,7 +94,8 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    // slideshow application
+    // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
+    // If slideshow-compatibility is set, fallback to NYT4 ESX.
     if (    req.url ~ "^/slideshow/"
         && !req.http.x-nyt-slideshow-compatibility)
     {
