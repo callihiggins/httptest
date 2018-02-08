@@ -775,6 +775,23 @@ backends:
       timeout: "2000"
       window: "5"
 
+  - name: "profile_fe"
+    address: "profile-fe.stg.nyt.net"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "profile-fe.stg.nyt.net"
+    ssl_sni_hostname: "profile-fe.stg.nyt.net"
+    healthcheck:
+      host: "profile-fe.stg.nyt.net"
+      path: "/status.txt"
+      check_interval: "10000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "5000"
+      window: "5"
+
 # defaults for cloud storage bucket configs
 # these are overridable in per bucket configs below
 #   auth_key:     the dictionary key for the bucket access token
