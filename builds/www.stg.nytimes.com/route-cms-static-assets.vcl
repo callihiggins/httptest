@@ -7,6 +7,8 @@ sub recv_route_cms_static_assets {
         if (req.url.path ~ "^/images/") {
             set req.http.x-pagetype = "cms-static-assets";
             set req.http.x-nyt-backend = "gcs_origin";
+            unset req.http.Cookie;
+            unset req.http.X-Cookie;
         }
     }
 }
