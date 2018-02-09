@@ -8,11 +8,12 @@
 1. Add as many commits as you like
 1. Be sure to add tests to the suite in `/tests` for your changes. Docs exist or are forthcoming in [dv-fastly-guide][dv-fastly-guide].
 1. Push the branch to origin `git push origin <branch_name>`
-    1. this will deploy to dev using Drone
+    1. this will deploy to dev using Drone. You can find Drone’s build status in GitHub’s “commits” view of your branch ([for example](https://github.com/nytm/www-fastly/commits/article))—look for the green √ or red X.
     1. If it's broken, fix it and push again.
 1. Rebase from origin/master `git rebase -i origin/master`
     1. be kind and squash all but the first commit if you have many. Rewrite to a nice descriptive commit.
     1. you can continue to do this after opening the PR if you need to make many changes based on reviews or ongoing work
+1. If it helps, you can test your changes interactively by [deploying your branch to a Fastly sandbox service](https://github.com/nytm/dv-fastly-guide/blob/master/Topics/www_sandboxes.md).
 1. Open a PR in the GitHub Web interface.
     1. Reviewers will automatically be selected from `CODEOWNERS`
     1. Fill out all applicable parts of the template that is automatically populated in the PR description

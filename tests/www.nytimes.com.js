@@ -36,6 +36,7 @@ require("./www.nytimes.com/service-adx.js");
 require("./www.nytimes.com/service-video.js");
 require("./www.nytimes.com/content-video.js");
 require("./www.nytimes.com/route-cms-static-assets.js");
+require("./www.nytimes.com/service-profile-fe.js");
 
 // please leave these tests here and add your includes above
 require("./www.nytimes.com/redirect-mobile-homepage.js");

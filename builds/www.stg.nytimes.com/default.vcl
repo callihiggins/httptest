@@ -54,6 +54,7 @@ include "backend-adx-static";
 # TODO: replace all of the above with these during refactor
 include "route-cms-static-assets";
 include "route-ads-static-assets";
+include "backend-profile-fe";
 
 # vi allocation and routing
 # intentionally after other backend logic

@@ -674,4 +674,9 @@ resource "fastly_service_v1" "www" {
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-packages-gcs.vcl")}"
   }
 
+  vcl {
+    name    = "backend-profile-fe"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-profile-fe.vcl")}"
+  }
 }
