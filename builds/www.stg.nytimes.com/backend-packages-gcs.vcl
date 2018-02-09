@@ -31,7 +31,7 @@ sub vcl_fetch {
     # override it and set ttl to 1 minute
     # otherwise let it go
     if( beresp.http.Cache-Control ~ "private" ){
-      set beresp.http.Cache-Control = "Surrogate-Control: max-age=60"
+      set beresp.http.Cache-Control = "Surrogate-Control: max-age=60";
       set beresp.ttl = 60s;
     }
   }
