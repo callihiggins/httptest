@@ -236,7 +236,7 @@ sub vcl_recv {
         call set_www_newsdev_gke_backend;
     }
 
-    if ( req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"
+    if ( req.http.x-environment ~ "(dev|stg)" && 
           && req.url ~ "^/packages/files" ) {
       set req.http.X-PageType = "packages-gcs";
       set req.http.x-nyt-backend = "gcs_origin";
