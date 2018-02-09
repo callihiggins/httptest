@@ -9,6 +9,27 @@ function getScenarioEvents()
 {
   var scenarios = [
     {
+      'id': 'FunctionalTestScenarioDefinitionForStaticEditorialStandardsPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'Host': suite.servername,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/editorial-standards/ethical-journalism.html',
+      'responseHeaderMatches': {
+        'x-pagetype': 'newsdev-gcs',
+        'content-type': 'text/html; charset=utf-8',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test static html pages hosted on gs://nytint-' + suite.env + '-www',
+      'testId': 1,
+    },
+    {
       'id': 'FunctionalTestScenarioDefinitionForStaticS3Page',
       'isDeployedInEnv': {
         'prd': true,
