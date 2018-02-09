@@ -239,8 +239,7 @@ sub vcl_recv {
     if ( req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"
           && req.url ~ "^/packages/files" ) {
       set req.http.X-PageType = "packages-gcs";
-      set req.http.x-nyt-backend = "packages_gcs";
-      call set_www_packages_gcs_backend;
+      set req.http.x-nyt-backend = "gcs_origin";
     }
 
     if ((req.url == "/es") || (req.url ~ "^/es/")

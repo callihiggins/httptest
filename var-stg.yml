@@ -820,3 +820,7 @@ cloud_storage_buckets:
     auth: "true"
     bucket_name: "nyt-ads-static-assets"
     bucket_provider: "gcs"
+  - pagetype: "packages-gcs"
+    auth: "true"
+    bucket_name: "nyt-packages-dev"
+    bucket_provider: "gcs"

@@ -1,8 +1,5 @@
 sub vcl_recv {
-  if ( req.http.X-PageType == "packages-gcs" ) {
-
-    call set_www_packages_gcs_backend;
-
+  if (req.http.X-PageType == "packages-gcs") {
     unset req.http.Cookie;
     unset req.http.X-Cookie;
     unset req.http.x-nyt-edition;
@@ -13,22 +10,18 @@ sub vcl_recv {
     if ( !req.http.Fastly-SSL ) {
       call redirect_to_https;
     }
-
-    # Configure access to Cloud Storage
-    set req.http.Date = now;
-    set req.http.host = req.http.x-gcs-bucket ".storage.googleapis.com";
   }
 }
 
 sub vcl_miss {
-  if (req.http.X-PageType == "packages-gcs") {
-    set bereq.http.Authorization = "AWS " table.lookup(newsdev_gcs, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_gcs, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
+  if (req.http.x-pagetype == "packages-gcs") {
+    call miss_pass_set_bucket_auth_headers;
   }
 }
 
 sub vcl_pass {
-  if (req.http.X-PageType == "packages-gcs") {
-    set bereq.http.Authorization = "AWS " table.lookup(newsdev_gcs, "access_key") ":" digest.hmac_sha1_base64(table.lookup(newsdev_gcs, "secret"), "GET" LF LF LF req.http.Date LF "/" req.http.x-gcs-bucket req.url.path);
+  if (req.http.x-pagetype == "packages-gcs") {
+    call miss_pass_set_bucket_auth_headers;
   }
 }
 
@@ -41,18 +34,5 @@ sub vcl_fetch {
       set beresp.http.Cache-Control = "Surrogate-Control: max-age=60"
       set beresp.ttl = 60s;
     }
-  }
-}
-
-sub set_www_packages_gcs_backend {
-  set req.backend = F_packages_gcs;
-  set req.http.x-nyt-backend = "packages_gcs";
-
-  if (req.http.x-environment == "dev") {
-    set req.http.x-gcs-bucket = "nyt-packages-dev";
-  } else if (req.http.x-environment == "stg") {
-    set req.http.x-gcs-bucket = "nyt-packages-dev";
-  } else {
-    set req.http.x-gcs-bucket = "nyt-packages-prd";
   }
 }
