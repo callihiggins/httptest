@@ -23,8 +23,8 @@ function getScenarioEvents()
       'requestUri': '/editorial-standards/ethical-journalism.html',
       'responseHeaderMatches': {
         'x-pagetype': 'newsdev-gcs',
-        'content-type': 'text/html; charset=utf-8',
       },
+      'responseHeadersPresent': ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
       'responseStatusCode': [200],
       'scenarioDescription': 'Test static html pages hosted on gs://nytint-' + suite.env + '-www',
       'testId': 1,
