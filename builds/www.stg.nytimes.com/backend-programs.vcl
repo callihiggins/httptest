@@ -15,6 +15,12 @@ sub vcl_recv {
         return(lookup);
     }
 
+    if (req.url.path ~ "^/programs/svc/shaq") {
+        set req.http.X-PageType = "programs-service";
+        set req.http.x-nyt-backend = "shaq_svc";
+        return(pass);
+    }
+
     if (req.url.path ~ "^/programs/svc/") {
         set req.http.X-PageType = "programs-service";
         set req.http.x-nyt-backend = "programs_svc";
