@@ -22,12 +22,6 @@ sub vcl_recv {
         return(pass);
     }
 
-    if (req.url.path ~ "^/programs/svc/") {
-        set req.http.X-PageType = "programs-service";
-        set req.http.x-nyt-backend = "programs_svc";
-        return(pass);
-    }
-
     if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
         if (req.url.path ~ "^/programs/" ) {
             set req.http.X-PageType = "programs-service";
