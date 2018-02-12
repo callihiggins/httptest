@@ -117,8 +117,7 @@ sub vcl_recv {
   # this block assumes default legacy backend
   # we cannot cache legacy by default
   if (   req.backend == F_www
-      || req.backend == F_www_https
-      || req.backend == F_www_legacy_gke) {
+      || req.backend == F_www_https) {
     return(pass);
   }
 
