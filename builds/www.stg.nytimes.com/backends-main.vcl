@@ -193,6 +193,13 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
+    // Route js, js2, css and bi path's to WWW Legacy GKE
+    if ((req.http.x-environment != "prd" && (req.url ~ "^/(js|js2|css|bi)/"))) {
+        set req.http.X-PageType = "legacy-gke";
+        set req.http.x-nyt-backend = "www_legacy_gke";
+        set req.backend = F_www_legacy_gke;
+    }
+
     // hostnames fastly doesn't serve go to www backend for a pass
     if (   req.http.host !~ "^(www\.)?(dev\.|stg\.|)?nytimes.com$"
         && req.http.host !~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$"
