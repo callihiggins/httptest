@@ -78,7 +78,7 @@ sub vcl_recv {
       # check if it is a homepage route, has a a/b test group, and is not opted out.
       if (req.http.host ~ "^(www\.)?(www-[a-z0-9\-]+\.)?(dev\.|stg\.|)?nytimes.com$") {
           if ( req.url.path == "/"
-            && ((req.http.x--fastly-vi-test-group ~ "^[abd]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")
+            && ((req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")
               ) {
               # homepage, in a test group getting Vi homepage
               set req.http.x-nyt-backend = "projectvi_fe";

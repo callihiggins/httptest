@@ -12,6 +12,9 @@
 #   Story only:         (no use case yet)        => "c0"    nyt5/vi/nyt5    -
 #                                                               (^ not sure if these allocations affect
 #                                                                  any routes other than home anymore)
+#   HP only:                    Abra  0.5%       => "e2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-serv"
+#   HP only:                    Abra  0.5%       => "f2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-orig"
+#                                                               (^ Full server side rendered home AB test)
 #   `vi_www_hp` cookie meaning:
 #       z = nyt5            1 = report for WP_ProjectVi     [0-9] = last digit of year in
 #       a = vi              2 = report for WP_ProjectVi_www_hp      which cookie will expire
