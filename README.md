@@ -29,7 +29,7 @@ The functional tests for this service are part of the repo. They should be updat
 
 ### Running tests
 
-Tests can be run locally using the [drone-fastly-tests](https://github.com/nytm/drone-fastly-test) image from the root of the repo with
+Tests can be run locally using the [drone-fastly-tests](https://github.com/nytm/drone-fastly-tests) image from the root of the repo with
 
 ```bash
 docker run -t -i -e PLUGIN_SERVERNAME="www.stg.nytimes.com" -v `pwd`/tests:/tests us.gcr.io/nyt-registry-prd/drone-fastly-tests:latest
