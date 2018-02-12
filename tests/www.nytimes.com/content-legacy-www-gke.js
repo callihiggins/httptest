@@ -99,6 +99,24 @@ function getScenarioEvents() {
         "Test WWW JS served from Legacy GKE Storage",
       testId: 5
     },
+    {
+      id: "FunctionalTestScenarioDefinitionForStaticGKE",
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true,
+      },
+      requestScheme: "https://",
+      requestUri: "/svc/comscore/pvc.html",
+      responseHeaderMatches: {
+        "x-api-version": "F-GL",
+        "x-pagetype": "legacy-gke"
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        "Test comscore html served from Legacy GKE backend",
+      testId: 6
+    },
   ];
 
   return scenarios;

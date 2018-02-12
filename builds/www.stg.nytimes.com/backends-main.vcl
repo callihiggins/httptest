@@ -189,8 +189,10 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    // Route js, js2, css and bi path's to WWW Legacy GKE
-    if (req.url ~ "^/(js|js2|css|bi)/") {
+    // Route comscore, js, js2, css and bi path's to WWW Legacy GKE
+    if (    req.url ~ "^/(js|js2|css|bi)/"
+         || req.url ~ "^/svc/comscore/"
+    ) {
         set req.http.X-PageType = "legacy-gke";
         set req.http.x-nyt-backend = "www_legacy_gke";
         set req.backend = F_www_legacy_gke;
@@ -386,7 +388,6 @@ sub vcl_recv {
     # relying on the netscaler to send it to the correct place for now
     if ( req.url ~ "^/newsgraphics/"
          || req.url ~ "^/regilite"
-         || req.url ~ "^/svc/comscore/"
          || req.url ~ "^/services/xml/"){
         set req.http.X-PageType = "legacy-cacheable";
         set req.http.x-nyt-backend = "www_fe";
