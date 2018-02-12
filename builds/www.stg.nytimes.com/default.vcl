@@ -53,6 +53,7 @@ include "backend-adx-static";
 # TODO: replace all of the above with these during refactor
 include "route-cms-static-assets";
 include "route-ads-static-assets";
+include "backend-profile-fe";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -75,6 +76,8 @@ include "mobile-redirect";
 include "homepage-redirect";
 include "uuid";
 include "response-headers";
+# GKE fallback to NYT4 logic
+include "backend-nyt4-fallback";
 
 sub vcl_recv {
 

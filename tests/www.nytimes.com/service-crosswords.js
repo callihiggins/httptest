@@ -438,7 +438,7 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/primer',
-      'responseStatusCode': 404,
+      'responseStatusCode': 301,
       'scenarioDescription': 'Test hitting Primer page',
       'testId': 21,
     },

@@ -621,6 +621,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "backend-nyt4-fallback"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-nyt4-fallback.vcl")}"
+  }
+
+  vcl {
     name    = "backend-vi"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-vi.vcl")}"
@@ -662,4 +668,9 @@ resource "fastly_service_v1" "www" {
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-ads-static-assets.vcl")}"
   }
 
+  vcl {
+    name    = "backend-profile-fe"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-profile-fe.vcl")}"
+  }
 }

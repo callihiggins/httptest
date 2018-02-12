@@ -56,7 +56,7 @@ sub vcl_recv {
         || req.url ~ "^/packages/images/email/" // newsletters
         || req.url ~ "^/pages/todaysheadlines/" // newsletters
         || req.url.path == "/interactive/us/faces-of-the-dead.html" // special 9/11 interactive
-      ) {
+    ) {
         set req.http.x-https-phase = "live";
     }
 

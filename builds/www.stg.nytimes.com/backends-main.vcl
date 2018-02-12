@@ -36,7 +36,7 @@ sub vcl_recv {
     }
 
     // set the https backend for routes that require it
-    if (   req.url ~ "^/svc/"
+    if (  (req.url ~ "^/svc/" && (req.url.path !~ "^/svc/(user|profile)" || req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address") )
         || req.url ~ "^/content/help/itunes/privacy-policy.html"
         || req.url ~ "^/content/help/rights/privacy/policy/privacy-policy.html"
         || req.url ~ "^/apple-app-site-association"
@@ -94,11 +94,11 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    // slideshow application
-    if (   req.url ~ "^/slideshow/20(1[4-9]|[2-9][0-9])/"
-        || req.url ~ "^/slideshow/20(1[1-9]|[2-9][0-9])/[0-9][0-9]/[0-9][0-9]/fashion/runway-(couture|mens|womens)/"
-        || (req.url ~ "^/slideshow/" && req.http.x-environment != "prd")
-    ) {
+    // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
+    // If slideshow-compatibility is set, fallback to NYT4 ESX.
+    if (    req.url ~ "^/slideshow/"
+        && !req.http.x-nyt-slideshow-compatibility)
+    {
         set req.http.X-PageType = "slideshow";
         set req.http.x-nyt-backend = "slideshow_fe";
         call set_www_slideshow_backend_gke;
@@ -122,8 +122,8 @@ sub vcl_recv {
         if ( req.http.X-Migration-Backend == "on-GKE" ) {
             set req.http.x-nyt-backend = "realestate_fe";
             call set_www_realestate_backend_gke;
-            
-            # we have to pass directly here 
+
+            # we have to pass directly here
             # so that we don't return users data.
             if (   req.url ~ "^/real-estate/api/mail"
                 || req.url ~ "^/real-estate/api/personalization"
@@ -134,7 +134,6 @@ sub vcl_recv {
 
                 return(pass);
             }
-
 
         } else {
             # set this to www instead of www_fe_vert so that it will PASS for now
@@ -207,12 +206,8 @@ sub vcl_recv {
     }
 
     // article
-    if (   //req.url ~ "^/2(00[7-9]|(0[1-9][0-9])|([1-9][0-9][0-9]))/" // 2007-future
-            req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" // 2014-future
+    if (   req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" // 2014-future
         || req.url ~ "^/200[4-5]/" // 2004-2005
-        || req.url ~ "^/197[0-9]/" // 1970-1979
-        || req.url ~ "^/1964/" // 1964
-        || req.url ~ "^/1959/" // 1959
         || req.url ~ "^/(aponline|reuters)/" // wire sources
         || req.url ~ "^/blog/" // all blogposts
         || req.url ~ "^/2001/01/20/technology/20ANNIVERSARY.html" // WP-16051
@@ -220,8 +215,7 @@ sub vcl_recv {
         || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
         || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
-        || (req.http.x-nyt-internal-access
-            && req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/") // Route 1850-1979 articles internally to NYT5
+        || req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/" // Route 1850-1979
     ) {
         # route article traffic to gke only fallback to esx
         set req.http.X-PageType = "article";
@@ -230,10 +224,7 @@ sub vcl_recv {
     }
 
     // Send to GCP
-    if ( req.url ~ "^/svc/int/qa" ) {
-        set req.http.x-nyt-backend = "ask_well";
-        call set_ask_well_backend;
-    } else if ( req.url ~ "^/svc/int/attribute/projects/" ) {
+    if ( req.url ~ "^/svc/int/attribute/projects/" ) {
         set req.http.x-nyt-backend = "newsdev_attribute_gclod_function";
         call set_www_newsdev_attribute_gclod_function_backend;
     } else if (    req.url ~ "^/svc/int/"
@@ -318,16 +309,8 @@ sub vcl_recv {
         }
 
         // Send to GCP
-        // Only handle ask well in prd
-        if (    req.http.host ~ "^well\.blogs\.nytimes\.com"
-            && (    req.url ~ "^/ask/well/"
-                ||  req.url ~ "^/svc/int/qa"
-            )
-        ) {
-            set req.http.x-nyt-backend = "ask_well";
-            call set_ask_well_backend;
         // Pass those paths to newsdev gke without caching
-        } else if ( req.url ~ "^/projects"
+        if ( req.url ~ "^/projects"
                  || req.url ~ "^/svc/int"
         ) {
            set req.http.X-PageType = "newsdev-gke";
@@ -424,12 +407,11 @@ sub vcl_recv {
 
 # set a video library backend based on env
 sub set_video_library_backend {
-    if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
-        set req.http.x-nyt-backend = "video_library";
-        set req.backend = F_video_library;
-    } else {
-        set req.http.x-nyt-backend = "video_library_director";
-        set req.backend = video_library_director_prd;
+    set req.http.x-nyt-backend = "video_library";
+    set req.backend = F_video_library;
+    if (!req.backend.healthy) {
+        set req.http.x-nyt-backend = "www_fe";
+        set req.backend = F_www_fe;
     }
 }
 
@@ -573,27 +555,6 @@ sub set_www_newsdev_attribute_gclod_function_backend {
       set req.http.x-cf-host = "us-central1-nytint-stg.cloudfunctions.net";
     } else {
       set req.http.x-cf-host = "us-central1-nytint-prd.cloudfunctions.net";
-    }
-}
-
-sub set_ask_well_backend {
-
-    set req.backend = F_ask_well;
-    set req.http.X-PageType = "askwell";
-
-    if (req.url ~ "^(/svc/int/qa/questions/[a-z0-9\-]*/votes|/svc/int/qa/questions/[a-z0-9\-]*/submit|/ask/well/questions/yours)") {
-        # we have to pass directly here, so that req.http.Cookie passes through
-        return (pass);
-    }
-
-    if (req.url ~ "^/ask/well/questions") {
-      set req.url = querystring.regfilter(req.url, "^(?!limit|offset|partial)");
-      set req.url = querystring.sort(req.url);
-    } elsif (req.url ~ "^/svc/int/qa/questions") {
-      set req.url = querystring.regfilter(req.url, "^(?!limit|offset|sort)");
-      set req.url = querystring.sort(req.url);
-    } else {
-      set req.url = querystring.remove(req.url);
     }
 }
 

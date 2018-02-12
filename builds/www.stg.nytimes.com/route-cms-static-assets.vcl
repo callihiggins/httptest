@@ -5,12 +5,10 @@ sub recv_route_cms_static_assets {
     if (req.http.x-nyt-canonical-www-host == "true") {
 
         if (req.url.path ~ "^/images/") {
-
-            # feature flag this route for dev/stg only for now
-            if (req.http.x-environment != "prd") {
-                set req.http.x-pagetype = "cms-static-assets";
-                set req.http.x-nyt-backend = "gcs_origin";
-            }
+            set req.http.x-pagetype = "cms-static-assets";
+            set req.http.x-nyt-backend = "gcs_origin";
+            unset req.http.Cookie;
+            unset req.http.X-Cookie;
         }
     }
 }

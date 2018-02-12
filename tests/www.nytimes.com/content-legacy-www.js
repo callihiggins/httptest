@@ -12,26 +12,6 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': false,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
-      'requestUri': '/1961/09/17/books/updike-by-salinger.html',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy',
-      },
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test legacy; www cluster; archive article, 1961',
-      'testId': 1,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
         'stg': true,
         'dev': true,
         'sbx': false,

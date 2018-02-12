@@ -76,23 +76,6 @@ backends:
       timeout: "5000"
       window: "4"
 
-  - name: "ask_well"
-    address: "ask-well.stg.nyt.com"
-    between_bytes_timeout: "5000"
-    connect_timeout: "5000"
-    first_byte_timeout: "150000"
-    port: "80"
-    use_ssl: "false"
-    healthcheck:
-      host: "ask-well.stg.nyt.com"
-      path: "/health"
-      check_interval: "5000"
-      expected_response: "200"
-      initial: "4"
-      threshold: "4"
-      timeout: "3000"
-      window: "5"
-
   - name: "beta_guides"
     address: "guides.stg.nyt.net"
     between_bytes_timeout: "5000"
@@ -773,6 +756,23 @@ backends:
       initial: "5"
       threshold: "3"
       timeout: "2000"
+      window: "5"
+
+  - name: "profile_fe"
+    address: "profile-fe.stg.nyt.net"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "profile-fe.stg.nyt.net"
+    ssl_sni_hostname: "profile-fe.stg.nyt.net"
+    healthcheck:
+      host: "profile-fe.stg.nyt.net"
+      path: "/status.txt"
+      check_interval: "10000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "5000"
       window: "5"
 
 # defaults for cloud storage bucket configs

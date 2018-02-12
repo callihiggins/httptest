@@ -388,20 +388,6 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestScheme': 'https://',
-      'requestUri': '/spotlight/guides',
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test HTTPS Everywhere; well guide (phase 3); secure; opt-out cookie not set',
-      'testId': 31,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
-      },
       'requestScheme': 'http://',
       'requestUri': '/es/',
       'responseHeaderMatches': {
@@ -831,11 +817,11 @@ function getScenarioEvents()
       'requestUri': '/real-estate/api/personalization/saved-items-status?itemIds=123',
       'responseHeaderMatches': {
         'location': 'https://' + suite.servername + '/real-estate/api/personalization/saved-items-status?itemIds=123',
-      },      
+      },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test HTTPS redirect is working for real-estate api',
       'testId': 60,
-    },    
+    },
     {
       'id': 'FunctionalTestScenarioRealEstateAPIAuth',
       'isDeployedInEnv': {
@@ -845,7 +831,7 @@ function getScenarioEvents()
       },
       'requestHeaders': {
         'cookie': 'nyt.dv.nyt5-on-gke=1;',
-      },      
+      },
       'requestScheme': 'https://',
       'requestUri': '/real-estate/api/personalization/saved-items-status?itemIds=123',
       'responseHeaderMatches': {
@@ -854,7 +840,7 @@ function getScenarioEvents()
       'responseStatusCode': 401,
       'scenarioDescription': 'Test HTTPS Auth is working for real-estate',
       'testId': 61,
-    },    
+    },
   ];
   return scenarios;
 }

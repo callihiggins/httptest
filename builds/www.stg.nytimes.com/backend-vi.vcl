@@ -9,7 +9,7 @@ sub vcl_recv {
   }
 
   // timeswire
-  if (req.url ~ "^/timeswire") {
+  if (req.url ~ "^/timeswire" && req.http.x-environment != "prd") {
       set req.http.X-PageType = "vi-timeswire";
       set req.http.x-nyt-backend = "projectvi_fe";
       call set_projectvi_fe_backend;
