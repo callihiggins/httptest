@@ -79,7 +79,7 @@ sub vcl_recv {
         else if (re.group.1 == "st")           { set var.test_group = "c0"; }
         else if (re.group.1 == "hp-st*")       { set var.test_group = "a2"; } # trailing `*` means,
         else if (re.group.1 == "hp-serv")      { set var.test_group = "e2"; } # HP SSR ab test variant
-        else if (re.group.1 == "hp-origin")    { set var.test_group = "f2"; } # HP SSR ab test control
+        else if (re.group.1 == "hp-orig")      { set var.test_group = "f2"; } # HP SSR ab test control
         else if (re.group.1 == "hp*")          { set var.test_group = "b2"; } # make the frontend
         else if (re.group.1 == "st*")          { set var.test_group = "c2"; } # report this to Abra
         else if (re.group.1 ~ "\*$")           { set var.test_group = "z2"; }
