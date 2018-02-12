@@ -26,13 +26,9 @@ sub vcl_recv {
         || req.url ~ "^/index.html"
     ) {
         set req.http.X-PageType = "homepage";
-        if ( req.http.X-Migration-Backend == "on-GKE" ) {
-            set req.http.x-nyt-backend = "homepage_fe";
-            call set_www_homepage_backend_gke;
-        } else {
-            set req.http.x-nyt-backend = "www_fe";
-            call set_www_homepage_backend;
-        }
+        set req.http.x-nyt-backend = "homepage_fe";
+        set req.backend = F_homepage_fe;
+        call set_www_homepage_backend_gke;
     }
 
     // set the https backend for routes that require it
@@ -510,19 +506,13 @@ sub set_nyt5_misc_backend {
 }
 
 # set backend for nyt5 homepage migration
-sub set_www_homepage_backend {
-
-    set req.backend = F_www_fe;
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
 sub set_www_homepage_backend_gke {
-
-    set req.backend = F_homepage_fe;
-
-    call vi_ce_auth;
-
+    if (req.backend.healthy) {
+        call vi_ce_auth;
+    } else {
+        set req.http.x-nyt-backend = "www_fe";
+        set req.backend = F_www_fe;
+    }
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
