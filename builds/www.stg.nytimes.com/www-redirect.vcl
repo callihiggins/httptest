@@ -2,8 +2,9 @@ sub vcl_recv {
 
     // redirect nytimes.com to www.nytimes.com
     if (req.http.host == "nytimes.com") {
-        set req.http.host = "www.nytimes.com";
-        set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
+        // forcing this to https, if the asset does not support https it will be redirected again
+        set req.http.x-Redir-Url = "https://www.nytimes.com" + req.url;
+        set req.http.x-redirect-reason = "redir=[zone-apex]";
         error 750 req.http.x-Redir-Url;
     }
 
@@ -29,6 +30,7 @@ sub vcl_recv {
 sub vcl_error {
     if (obj.status == 750) {
         set obj.http.Location = obj.response;
+        set obj.http.x-api-version = "0";
         set obj.status = 301;
         set obj.response = "Moved Permanently";
         return(deliver);
