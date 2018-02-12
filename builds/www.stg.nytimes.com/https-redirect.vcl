@@ -52,6 +52,7 @@ sub vcl_recv {
         || (  req.http.X-PageType == "slideshow"
               && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || req.url ~ "^/newsletters"
+        || req.url ~ "^/(js|js2|css|bi)/"
         || req.url ~ "^/pages/cooking/" // newsletters
         || req.url ~ "^/packages/images/email/" // newsletters
         || req.url ~ "^/pages/todaysheadlines/" // newsletters

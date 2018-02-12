@@ -26,13 +26,9 @@ sub vcl_recv {
         || req.url ~ "^/index.html"
     ) {
         set req.http.X-PageType = "homepage";
-        if ( req.http.X-Migration-Backend == "on-GKE" ) {
-            set req.http.x-nyt-backend = "homepage_fe";
-            call set_www_homepage_backend_gke;
-        } else {
-            set req.http.x-nyt-backend = "www_fe";
-            call set_www_homepage_backend;
-        }
+        set req.http.x-nyt-backend = "homepage_fe";
+        set req.backend = F_homepage_fe;
+        call set_www_homepage_backend_gke;
     }
 
     // set the https backend for routes that require it
@@ -191,6 +187,17 @@ sub vcl_recv {
         set req.http.X-PageType = "service";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
+    }
+
+    // Route comscore, js, js2, css and bi path's to WWW Legacy GKE
+    if (    req.url ~ "^/(js|js2|css|bi)/"
+         || req.url ~ "^/svc/comscore/"
+    ) {
+        set req.http.X-PageType = "legacy-gke";
+        set req.http.x-nyt-backend = "www_legacy_gke";
+        set req.backend = F_www_legacy_gke;
+        unset req.http.Cookie;
+        unset req.http.X-Cookie;
     }
 
     // hostnames fastly doesn't serve go to www backend for a pass
@@ -388,7 +395,6 @@ sub vcl_recv {
     # relying on the netscaler to send it to the correct place for now
     if ( req.url ~ "^/newsgraphics/"
          || req.url ~ "^/regilite"
-         || req.url ~ "^/svc/comscore/"
          || req.url ~ "^/services/xml/"){
         set req.http.X-PageType = "legacy-cacheable";
         set req.http.x-nyt-backend = "www_fe";
@@ -508,19 +514,13 @@ sub set_nyt5_misc_backend {
 }
 
 # set backend for nyt5 homepage migration
-sub set_www_homepage_backend {
-
-    set req.backend = F_www_fe;
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
 sub set_www_homepage_backend_gke {
-
-    set req.backend = F_homepage_fe;
-
-    call vi_ce_auth;
-
+    if (req.backend.healthy) {
+        call vi_ce_auth;
+    } else {
+        set req.http.x-nyt-backend = "www_fe";
+        set req.backend = F_www_fe;
+    }
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
