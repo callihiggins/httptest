@@ -71,14 +71,16 @@ sub vcl_recv {
     if (req.http.X-From-Onion == "1") {
         set var.test_group = "b2";
     } else if (var.abra_overrides ~ "(?:^|&)WP_ProjectVi_www_hp=([^&]*)") {
-        if      (re.group.1 == "hp-st")   { set var.test_group = "a0"; } # translate to equiv.
-        else if (re.group.1 == "hp")      { set var.test_group = "b0"; } # test_group code
-        else if (re.group.1 == "st")      { set var.test_group = "c0"; }
-        else if (re.group.1 == "hp-st*")  { set var.test_group = "a2"; } # trailing `*` means,
-        else if (re.group.1 == "hp*")     { set var.test_group = "b2"; } # make the frontend
-        else if (re.group.1 == "st*")     { set var.test_group = "c2"; } # report this to Abra
-        else if (re.group.1 ~ "\*$")      { set var.test_group = "z2"; }
-        else                              { set var.test_group = "z0"; } # default to ctrl grp
+        if      (re.group.1 == "hp-st")        { set var.test_group = "a0"; } # translate to equiv.
+        else if (re.group.1 == "hp")           { set var.test_group = "b0"; } # test_group code
+        else if (re.group.1 == "st")           { set var.test_group = "c0"; }
+        else if (re.group.1 == "hp-st*")       { set var.test_group = "a2"; } # trailing `*` means,
+        else if (re.group.1 == "hp-serv")      { set var.test_group = "e2"; } # HP SSR ab test variant
+        else if (re.group.1 == "hp-origin")    { set var.test_group = "f2"; } # HP SSR ab test control
+        else if (re.group.1 == "hp*")          { set var.test_group = "b2"; } # make the frontend
+        else if (re.group.1 == "st*")          { set var.test_group = "c2"; } # report this to Abra
+        else if (re.group.1 ~ "\*$")           { set var.test_group = "z2"; }
+        else                                   { set var.test_group = "z0"; } # default to ctrl grp
 
     } else if (req.http.X-Rigor-Vi-Access == "1") {
         # Special header granting access to Vi for Rigor testing
