@@ -46,7 +46,7 @@ function getScenarioEvents() {
     {
       id: "FunctionalTestScenarioDefinitionForStaticGKE",
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true,
       },
@@ -65,7 +65,7 @@ function getScenarioEvents() {
     {
       id: "FunctionalTestScenarioDefinitionForStaticGKE",
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true,
       },
@@ -83,7 +83,7 @@ function getScenarioEvents() {
     {
       id: "FunctionalTestScenarioDefinitionForStaticGKE",
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true,
       },
