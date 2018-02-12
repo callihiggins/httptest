@@ -24,15 +24,3 @@ sub vcl_pass {
     call miss_pass_set_bucket_auth_headers;
   }
 }
-
-sub vcl_fetch {
-  if ( req.http.X-PageType == "packages-gcs" ) {
-    # If objects in the bucket has set Cache-Control: Private
-    # override it and set ttl to 1 minute
-    # otherwise let it go
-    if( beresp.http.Cache-Control ~ "private" ){
-      set beresp.http.Cache-Control = "Surrogate-Control: max-age=60";
-      set beresp.ttl = 60s;
-    }
-  }
-}
