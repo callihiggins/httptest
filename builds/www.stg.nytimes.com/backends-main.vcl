@@ -196,6 +196,8 @@ sub vcl_recv {
         set req.http.X-PageType = "legacy-gke";
         set req.http.x-nyt-backend = "www_legacy_gke";
         set req.backend = F_www_legacy_gke;
+        unset req.http.Cookie;
+        unset req.http.X-Cookie;
     }
 
     // hostnames fastly doesn't serve go to www backend for a pass
