@@ -17,9 +17,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/.well-known/assetlinks.json',
-      responseHeaderMatches: {
-        'x-api-version': /F-(GL|GL-S|5-4)/,
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4)/,
+        'x-pagetype': /legacy/
       },
       responseStatusCode: 200,
       scenarioDescription: 'Test well-known/assetlinks.json; non-secure',
@@ -35,9 +35,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/.well-known/assetlinks.json',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: 200,
       scenarioDescription: 'Test well-known/assetlinks.json; secure',

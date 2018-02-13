@@ -393,12 +393,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|4a)/,
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test legacy; www-apps cluster; gift guide; 2010 holiday',
       testId: '11p'
