@@ -105,9 +105,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/apple-app-site-association',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -123,11 +123,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/.well-known/apple-app-site-association',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200],
+      responseStatusCode: [200, 404],
       scenarioDescription: 'Test well-known served from WWW Legacy GKE',
       testId: 7
     },
@@ -140,11 +140,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/frommers',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test frommers served from WWW Legacy GKE',
       testId: 8
     },

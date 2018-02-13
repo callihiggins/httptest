@@ -413,9 +413,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
-      responseHeaderMatches: {
-        'x-api-version': /F-(GL|5-4|4a)/,
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4)/,
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:

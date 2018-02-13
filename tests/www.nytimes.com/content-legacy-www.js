@@ -17,9 +17,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/library/film/gravesend-film-review.html',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; archive movie review',
@@ -97,9 +97,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/external/idg/2009/10/08/08idg-how-dangerous-could-a-hacked-robot-possibly-be-72478.html',
-      responseHeaderMatches: {
-        'x-api-version': /F-(GL|4)/,
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4)/,
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
@@ -159,13 +159,11 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/external/readwriteweb/2011/03/31/31readwriteweb-google-ditches-barcodes-for-nfc-36542.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4|4)/,
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test legacy; www cluster; external authorship; ReadWriteWeb',
       testId: 11
@@ -181,13 +179,11 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/external/venturebeat/2011/09/26/26venturebeat-healthtaps-social-network-of-5000-doctors-is-6641.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4|4)/,
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test legacy; www cluster; external authorship; VentureBeat',
       testId: 12
@@ -202,11 +198,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/favicon.ico',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4|4)/,
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; favicon file',
@@ -242,9 +236,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/features/common/moth/homepage.html',
-      responseHeaderMatches: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4|4)/,
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; feature; homepage MOTH',
@@ -281,9 +275,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/features/includes/us/politics/politicsSubNavigation.html',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
@@ -383,9 +377,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/imagepages/2016/11/22/us/23trump7_hp.html',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; imagepages',
@@ -421,13 +415,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/indexes/2001/09/11/',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4)/,
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; indexes homepage',
       testId: '23s'
     },
@@ -481,9 +473,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/learning/general/onthisday/bday/0418.html',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; Learning Network',
@@ -622,11 +614,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/robots.txt',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; robots file',
       testId: 33
     },
@@ -721,9 +713,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/specials/olympics/history/1968-ousted.html',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; special; Olympics',
@@ -740,9 +732,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/fodors/top/features/travel/destinations/asia/china/hongkong/fdrs_feat_74_7.html',
-      responseHeaderMatches: {
+      responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': 'legacy'
+        'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; travel; Fodors',
@@ -759,13 +751,11 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/cwire/2011/10/12/12climatewire-as-anti-climate-groups-activities-rise-so-do-14988.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4|4)/,
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test legacy; www cluster; wire service; Climatewire',
       testId: 47
@@ -781,13 +771,11 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/gwire/2011/10/07/07greenwire-yellowstone-bear-euthanized-after-dna-evidence-52234.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|5-4|4)/,
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; wire service; Greenwire',
       testId: 48
     },
