@@ -26,7 +26,12 @@ sub vcl_recv {
 
     # classic homepage toggle
     if (req.url == "/homescreen") {
-      set req.http.x-Homescreen-Classic = req.http.cookie:vi_www_hp_classic;
+      if (req.http.cookie:vi_www_hp_classic == "1") {
+        set req.http.x-Homescreen-Classic = "0";
+      } else {
+        set req.http.x-Homescreen-Classic = "1";
+      }
+
       error 760 req.http.x-Homescreen-Classic;
     }
 }
