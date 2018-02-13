@@ -35,9 +35,7 @@ sub vcl_recv {
     if (  (req.url ~ "^/svc/" && (req.url.path !~ "^/svc/(user|profile)" || req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address") )
         || req.url ~ "^/content/help/itunes/privacy-policy.html"
         || req.url ~ "^/content/help/rights/privacy/policy/privacy-policy.html"
-        || req.url ~ "^/apple-app-site-association"
         || req.url ~ "^/google34e0037c9fda7c66.html"
-        || (req.url ~ "^/adx/" && req.http.x-environment == "prd")
         || req.url ~ "^/store"
         || req.url ~ "^/auth/hdlogin"
         || req.url ~ "^/membercenter/emailus.html"
@@ -198,6 +196,52 @@ sub vcl_recv {
         set req.backend = F_www_legacy_gke;
         unset req.http.Cookie;
         unset req.http.X-Cookie;
+    }
+
+    // route the path's below between WWW ESX and Legacy WWW GKE
+    if (   req.url ~ "^/favicon.ico"
+        || req.url ~ "^/robots.txt"
+        || req.url ~ "^/crossdomain.xml"
+        || req.url ~ "^/.well-known/"
+        || req.url ~ "^/apple-app-site-association"
+        || req.url ~ "^/ap/"
+        || req.url ~ "^/cfr/"
+        || req.url ~ "^/classifieds/"
+        || req.url ~ "^/college/"
+        || req.url ~ "^/cwire/"
+        || req.url ~ "^/external/"
+        || req.url ~ "^/features/"
+        || req.url ~ "^/fodors/"
+        || req.url ~ "^/frommers/"
+        || req.url ~ "^/gift-guide/"
+        || req.url ~ "^/gwire/"
+        || req.url ~ "^/imagepages/"
+        || req.url ~ "^/indexes/"
+        || req.url ~ "^/learning/"
+        || req.url ~ "^/library/"
+        || req.url ~ "^/pages/"
+        || req.url ~ "^/specials/"
+        || req.url ~ "^/sports/"
+        || req.url ~ "^/top/"
+        || req.url ~ "^/travel/"
+        || req.url ~ "^/webapps/"
+        || req.url ~ "^/your-money/"
+    ) {
+        if (req.http.x-environment != "prd" && randombool(1, 2)) {
+            set req.http.X-PageType = "legacy";
+            set req.backend = F_www_legacy_gke;
+            set req.http.x-nyt-backend = "www_legacy_gke";
+            set req.http.X-Cookie = req.http.Cookie;
+            unset req.http.Cookie;
+
+            // fallback to WWW ESX if GKE is unhealthy
+            if (!req.backend.healthy) {
+                set req.http.x-nyt-backend = "www";
+                set req.backend = F_www;
+                set req.http.Cookie = req.http.X-Cookie;
+            }
+            unset req.http.X-Cookie;
+        }
     }
 
     // hostnames fastly doesn't serve go to www backend for a pass
