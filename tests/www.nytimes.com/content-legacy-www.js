@@ -98,7 +98,7 @@ function getScenarioEvents() {
       requestUri:
         '/external/idg/2009/10/08/08idg-how-dangerous-could-a-hacked-robot-possibly-be-72478.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
+        'x-api-version': /F-(GL|5-4|4)/,
         'x-pagetype': /legacy/
       },
       responseStatusCode: [200, 301, 404],

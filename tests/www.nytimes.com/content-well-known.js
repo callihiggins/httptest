@@ -18,7 +18,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/.well-known/assetlinks.json',
       responseHeaderMatches: {
-        'x-api-version': /F-(GL|5-4)/,
+        'x-api-version': /F-(GL|GL-S|5-4)/,
         'x-pagetype': 'legacy'
       },
       responseStatusCode: 200,

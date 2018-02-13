@@ -770,7 +770,7 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/pages/cooking/cooking-email/index.html',
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test HTTPS Everywhere; newsletters cooking; secure',
       testId: 54
     },
