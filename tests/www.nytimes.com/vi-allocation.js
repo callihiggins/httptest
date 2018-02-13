@@ -370,6 +370,117 @@ function getScenarioEvents()
       'scenarioDescription': 'Test Static Asset Backend for project vi',
       'testId': 230,
     },
+
+
+
+    // generate a bunch of nyt-a's like this (in bash):
+    // for i in {1..1000}; do a="$(base64 /dev/random | head -c22 | tr /+ -_)"; s="$a WP_ProjectVi_www_hp"; printf '%s %010d\n' "$s" $((0x"$(printf %s "$s" | openssl dgst -sha256 | cut -c1-8)")); done
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-serv (in non-prd)',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=sJ50prL_8s36390EzUdhZ6', // in NON-PRODUCTION envs, this results in variation `hp-serv`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-serv',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=e[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 240,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-orig (in non-prd)',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=VY-be0W--laBW4oZMjs2cA', // in NON-PRODUCTION envs, this results in variation `hp-orig`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-orig',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=f[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 250,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-serv (in prd)',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=hhgKlZP8DGMN9hoVgbYClP', // in PRODUCTION env, this results in variation `hp-serv`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-serv',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=e[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 260,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-orig (in prd)',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=U5CAXSqCivvSAByuDZur2k', // in PRODUCTION env, this results in variation `hp-orig`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-orig',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=f[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 270,
+    },
+
+
   ];
 
   return scenarios;
