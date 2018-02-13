@@ -24,15 +24,9 @@ sub vcl_recv {
         error 750 req.http.X-Redir-Url;
     }
 
-    if (req.url == "/classic") {
-      set req.http.x-Redir-Url = "https://www.nytimes.com";
-      if (req.http.cookie:vi_www_hp_classic == "1") {
-        # Classic homepage is on
-        error 760 req.http.x-Redir-Url;
-      } else {
-        # Classic homepage is off
-        error 770 req.http.x-Redir-Url;
-      }
+    if (req.url == "/toggle") {
+      set req.http.x-Classic-Toggle = req.http.cookie:vi_www_hp_classic;
+      error 760 req.http.x-Classic-Toggle;
     }
 }
 
@@ -45,29 +39,11 @@ sub vcl_error {
         return(deliver);
     }
 
-    # Classic homepage is on, turn off
+    # Classic homepage toggle
     if (obj.status == 760) {
         set obj.http.Set-Cookie =
-            "vi_www_hp_classic=0; path=/; domain=.nytimes.com; expires=" +
-            std.time(
-                "Sun, 1 Jan " + var.expire_year + " 00:00:00 GMT", # the "Sun" part doesn't matter
-                time.add(var.now_dt, 730d) # default to 2 years from now if std.time parsing fails
-            );
-        set obj.http.Location = obj.response;
-        set obj.status = 301;
-        set obj.response = "Moved Permanently";
-        return(deliver);
-    }
-
-    # Classic homepage is off, turn on
-    if (obj.status == 770) {
-        set obj.http.Set-Cookie =
-            "vi_www_hp_classic=1; path=/; domain=.nytimes.com; expires=" +
-            std.time(
-                "Sun, 1 Jan " + var.expire_year + " 00:00:00 GMT", # the "Sun" part doesn't matter
-                time.add(var.now_dt, 730d) # default to 2 years from now if std.time parsing fails
-            );
-        set obj.http.Location = obj.response;
+            "vi_www_hp_classic=" + obj.response + "; path=/; domain=.nytimes.com; expires=" + time.add(now, 365d);
+        set obj.http.Location = "https://www.nytimes.com";
         set obj.status = 301;
         set obj.response = "Moved Permanently";
         return(deliver);
