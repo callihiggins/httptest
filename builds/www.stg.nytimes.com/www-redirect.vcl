@@ -24,9 +24,10 @@ sub vcl_recv {
         error 750 req.http.X-Redir-Url;
     }
 
-    if (req.url == "/toggle") {
-      set req.http.x-Classic-Toggle = req.http.cookie:vi_www_hp_classic;
-      error 760 req.http.x-Classic-Toggle;
+    # classic homepage toggle
+    if (req.url == "/homescreen") {
+      set req.http.x-Homescreen-Classic = req.http.cookie:vi_www_hp_classic;
+      error 760 req.http.x-Homescreen-Classic;
     }
 }
 
@@ -39,7 +40,7 @@ sub vcl_error {
         return(deliver);
     }
 
-    # Classic homepage toggle
+    # classic homepage toggle
     if (obj.status == 760) {
         set obj.http.Set-Cookie =
             "vi_www_hp_classic=" + obj.response + "; path=/; domain=.nytimes.com; expires=" + time.add(now, 365d);
