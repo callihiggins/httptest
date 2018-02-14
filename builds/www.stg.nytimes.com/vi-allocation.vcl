@@ -105,13 +105,13 @@ sub vcl_recv {
         set var.dart = std.strtol(var.hash, 16);
 
         if (req.http.x-environment == "prd") {
-            if    (var.dart <  42949673) { set var.test_group = "b2"; } #  1%   HP only, reported
-            elsif (var.dart <  85899346) { set var.test_group = "z2"; } #  1%   control, reported
-            elsif (var.dart < 128849018) { set var.test_group = "d2"; } #  1%   HP only (added Dec. 2017), reported
-            elsif (var.dart < 171798691) { set var.test_group = "y2"; } #  1%   control (added Dec. 2017), reported
-            elsif (var.dart < 193273528) { set var.test_group = "e2"; } #  0.5% hp-serv (added Feb. 2018), reported
-            elsif (var.dart < 214748365) { set var.test_group = "f2"; } #  0.5% hp-orig (added Feb. 2018), reported
-            else /*    dart < 2^32    */ { set var.test_group = "z0"; } # 95%   control, unreported
+            if    (var.dart <   42949673) { set var.test_group = "b2"; } #  1%   HP only, reported
+            elsif (var.dart <   85899346) { set var.test_group = "z2"; } #  1%   control, reported
+            elsif (var.dart <  128849018) { set var.test_group = "d2"; } #  1%   HP only (added Dec. 2017), reported
+            elsif (var.dart <  171798691) { set var.test_group = "y2"; } #  1%   control (added Dec. 2017), reported
+            elsif (var.dart <  193273528) { set var.test_group = "e2"; } #  0.5% hp-serv (added Feb. 2018), reported
+            elsif (var.dart <  214748365) { set var.test_group = "f2"; } #  0.5% hp-orig (added Feb. 2018), reported
+            else /*    dart < 2^32     */ { set var.test_group = "z0"; } # 95%   control, unreported
 
         } else { # in staging or dev, use equal weights:
             if    (var.dart <  613566757) { set var.test_group = "b2"; } # 1/7 HP only, reported

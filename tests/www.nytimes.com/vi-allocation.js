@@ -20,7 +20,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderPattern': {
-        'set-cookie': /\bvi_www_hp=[abcz][012][0-9];/,
+        'set-cookie': /\bvi_www_hp=[abcdefyz][012][0-9];/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'No vi_www_hp cookie',
@@ -41,7 +41,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderPattern': {
-        'set-cookie': /\bvi_www_hp=[abcz][012][0-9];/,
+        'set-cookie': /\bvi_www_hp=[abcdefyz][012][0-9];/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Empty vi_www_hp cookie',
@@ -62,7 +62,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderPattern': {
-        'set-cookie': /\bvi_www_hp=[abcz][012][0-9];/,
+        'set-cookie': /\bvi_www_hp=[abcdefyz][012][0-9];/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Outdated vi_www_hp cookie',
@@ -87,7 +87,7 @@ function getScenarioEvents()
       'requestUri': '/',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=z2',
-        'x-nyt-backend': 'www_',
+        'x-nyt-backend': 'homepage_fe',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'ab7 => mw/mw/mw reported; homepage',
@@ -257,7 +257,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderContains': {
-        'x-nyt-backend': 'www_',
+        'x-nyt-backend': 'homepage_fe',
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'vi_www_hp_opt = 0',
@@ -440,7 +440,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=hhgKlZP8DGMN9hoVgbYClP', // in PRODUCTION env, this results in variation `hp-serv`
+        'nyt-a=PkSCqxV0PdpleISJhYVrx1', // in PRODUCTION env, this results in variation `hp-serv`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -466,7 +466,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=U5CAXSqCivvSAByuDZur2k', // in PRODUCTION env, this results in variation `hp-orig`
+        'nyt-a=nTIWyFEyrbC2ODBXwRv8yw', // in PRODUCTION env, this results in variation `hp-orig`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
