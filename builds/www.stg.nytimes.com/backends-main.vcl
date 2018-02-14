@@ -227,7 +227,11 @@ sub vcl_recv {
         || req.url ~ "^/webapps/"
         || req.url ~ "^/your-money/"
     ) {
-        if (req.http.x-environment != "prd" && randombool(1, 2)) {
+        // For dev and stage, split traffic 50/50 between WWW ESX/GKE
+        // For prod, spilt traffic 5% to WWW GKE, 95% to WWW ESX
+        if (   (req.http.x-environment != "prd" && randombool(1, 2))
+            || (req.http.x-environment == "prd" && randombool(1, 20))
+        ) {
             set req.http.X-PageType = "legacy";
             set req.backend = F_www_legacy_gke;
             set req.http.x-nyt-backend = "www_legacy_gke";
