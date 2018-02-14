@@ -227,10 +227,10 @@ sub vcl_recv {
         || req.url ~ "^/webapps/"
         || req.url ~ "^/your-money/"
     ) {
-        // For dev and stage, split traffic 50/50 between WWW ESX/GKE
-        // For prod, spilt traffic 5% to WWW GKE, 95% to WWW ESX
-        if (   (req.http.x-environment != "prd" && randombool(1, 2))
-            || (req.http.x-environment == "prd" && randombool(1, 20))
+        // For dev and stage, split traffic 25/75 between WWW ESX/GKE
+        // For prod, spilt traffic 50/50 between WWW ESX/GKE
+        if (   (req.http.x-environment != "prd" && randombool(3, 4))
+            || (req.http.x-environment == "prd" && randombool(1, 2))
         ) {
             set req.http.X-PageType = "legacy";
             set req.backend = F_www_legacy_gke;

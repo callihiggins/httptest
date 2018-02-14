@@ -26,6 +26,9 @@ sub vcl_recv {
             && req.backend != F_www_legacy_gke)
     ) {
         set req.url = querystring.remove(req.url);
+    } else if ( req.backend == F_www_legacy_gke
+                && req.url ~ "^/svc/comscore/") {
+        set req.url = querystring.remove(req.url);
     } else {
         if (req.http.X-PageType ~ "^blog") {
             // WP-7352: Don't deal with POST requests
