@@ -220,6 +220,7 @@ sub vcl_recv {
         || req.url ~ "^/learning/"
         || req.url ~ "^/library/"
         || req.url ~ "^/pages/"
+        || req.url ~ "^/packages/"
         || req.url ~ "^/specials/"
         || req.url ~ "^/sports/"
         || req.url ~ "^/top/"
@@ -227,25 +228,19 @@ sub vcl_recv {
         || req.url ~ "^/webapps/"
         || req.url ~ "^/your-money/"
     ) {
-        // For dev and stage, split traffic 25/75 between WWW ESX/GKE
-        // For prod, spilt traffic 50/50 between WWW ESX/GKE
-        if (   (req.http.x-environment != "prd" && randombool(3, 4))
-            || (req.http.x-environment == "prd" && randombool(1, 2))
-        ) {
-            set req.http.X-PageType = "legacy";
-            set req.backend = F_www_legacy_gke;
-            set req.http.x-nyt-backend = "www_legacy_gke";
-            set req.http.X-Cookie = req.http.Cookie;
-            unset req.http.Cookie;
+        set req.http.X-PageType = "legacy";
+        set req.backend = F_www_legacy_gke;
+        set req.http.x-nyt-backend = "www_legacy_gke";
+        set req.http.X-Cookie = req.http.Cookie;
+        unset req.http.Cookie;
 
-            // fallback to WWW ESX if GKE is unhealthy
-            if (!req.backend.healthy) {
-                set req.http.x-nyt-backend = "www";
-                set req.backend = F_www;
-                set req.http.Cookie = req.http.X-Cookie;
-            }
-            unset req.http.X-Cookie;
+        // fallback to WWW ESX if GKE is unhealthy
+        if (!req.backend.healthy) {
+            set req.http.x-nyt-backend = "www";
+            set req.backend = F_www;
+            set req.http.Cookie = req.http.X-Cookie;
         }
+        unset req.http.X-Cookie;
     }
 
     // hostnames fastly doesn't serve go to www backend for a pass
