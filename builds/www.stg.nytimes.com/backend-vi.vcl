@@ -77,14 +77,15 @@ sub vcl_recv {
       # For other resources:
       if (req.http.host ~ "^(www\.)?(www-[a-z0-9\-]+\.)?(dev\.|stg\.|)?nytimes.com$") {
         if (
-          # internal users, not opted out
-          (req.http.x-nyt-internal-access == "1"
-              && req.http.cookie:vi_www_hp_classic != "1")
-          ||
-          # homepage, in a test group getting Vi homepage and not opted out
+          # homepage
+          # - in a test group and not opted out
+          # - or internal traffic and not opted out
           (req.url.path == "/"
-              && ((req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0")
-                  || req.http.cookie:vi_www_hp_opt == "1")
+              && (
+                (req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0")
+                || req.http.cookie:vi_www_hp_opt == "1"
+                || (req.http.x-nyt-internal-access == "1" && req.http.cookie:vi_www_hp_classic != "1")
+              )
           )
           ||
           # story page, in a test group getting Vi story pages
