@@ -733,7 +733,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri:
         '/packages/images/email/special_offers/ss/Sophisticated_Shopper.html',
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test HTTPS Everywhere; newsletters packages; secure',
       testId: 52

@@ -533,13 +533,11 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/packages/html/magazine/2009-inauguration-gallery/index.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL|4)/,
+        'x-pagetype': /legacy/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; packages; HTML',
       testId: 29
     },
