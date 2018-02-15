@@ -26,7 +26,7 @@ sub vcl_recv {
 
     # classic homepage toggle
     if (req.url == "/homescreen") {
-      if (req.http.cookie:vi_www_hp_classic == "1") {
+      if (req.http.cookie:vi_www_hp_opt == "1") {
         set req.http.x-Homescreen-Classic = "0";
       } else {
         set req.http.x-Homescreen-Classic = "1";
@@ -48,7 +48,7 @@ sub vcl_error {
     # classic homepage toggle
     if (obj.status == 760) {
         set obj.http.Set-Cookie =
-            "vi_www_hp_classic=" + obj.response + "; path=/; domain=.nytimes.com; expires=" + time.add(now, 365d);
+            "vi_www_hp_opt=" + obj.response + "; path=/; domain=.nytimes.com; expires=" + time.add(now, 365d);
         set obj.http.Location = "https://www.nytimes.com";
         set obj.status = 301;
         set obj.response = "Moved Permanently";

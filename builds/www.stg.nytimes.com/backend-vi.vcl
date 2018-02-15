@@ -84,7 +84,7 @@ sub vcl_recv {
               && (
                 (req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0")
                 || req.http.cookie:vi_www_hp_opt == "1"
-                || (req.http.x-nyt-internal-access == "1" && req.http.cookie:vi_www_hp_classic != "1")
+                || (req.http.x-nyt-internal-access == "1" && req.http.cookie:vi_www_hp_opt != "0")
               )
           )
           ||
