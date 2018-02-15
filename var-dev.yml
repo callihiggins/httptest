@@ -783,7 +783,7 @@ backends:
       initial: "2"
       threshold: "3"
       timeout: "5000"
-      window: "5"      
+      window: "5"
 
 # defaults for cloud storage bucket configs
 # these are overridable in per bucket configs below
@@ -812,4 +812,8 @@ cloud_storage_buckets:
   - pagetype: "ads-static-assets"
     auth: "true"
     bucket_name: "nyt-ads-static-assets"
+    bucket_provider: "gcs"
+  - pagetype: "packages-gcs"
+    auth: "true"
+    bucket_name: "nyt-packages-dev"
     bucket_provider: "gcs"

@@ -181,7 +181,7 @@ resource "fastly_service_v1" "www" {
     action      = "set"
     name        = "{{.pagetype}}_token"
     priority    = "401"
-    {{if (has . "auth_key")}} 
+    {{if (has . "auth_key")}}
     source      = "\"{{.auth_key}}\""
     {{else}}
     {{if eq .bucket_provider "gcs"}}
@@ -666,6 +666,12 @@ resource "fastly_service_v1" "www" {
     name    = "route-ads-static-assets"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-ads-static-assets.vcl")}"
+  }
+
+  vcl {
+    name    = "backend-packages-gcs"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-packages-gcs.vcl")}"
   }
 
   vcl {
