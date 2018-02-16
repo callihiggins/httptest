@@ -14,7 +14,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -42,7 +41,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -71,7 +69,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -100,7 +97,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -129,7 +125,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -157,7 +152,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -186,7 +180,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -215,7 +208,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -244,7 +236,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -273,7 +264,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -302,7 +292,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -330,7 +319,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -358,7 +346,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -371,13 +358,11 @@ function getScenarioEvents()
       'requestUri': '/1850/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
+        'x-pagetype': /article|legacy/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-      },
-      'responseHeaderPattern': {
-        'x-pagetype': /article|legacy/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1850/01/01/us/slug.html',
@@ -389,7 +374,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -402,17 +386,71 @@ function getScenarioEvents()
       'requestUri': '/1979/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
+        'x-pagetype': /article|legacy/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
       },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/us/slug.html',
+      'testId': 14,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/1981/01/01/us/slug.html',
       'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe)/,
         'x-pagetype': /article|legacy/,
       },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1920/01/01/us/slug.html',
-      'testId': 14,
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1981/01/01/us/slug.html',
+      'testId': 15,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/1995/01/01/us/slug.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1995/01/01/us/slug.html',
+      'testId': 15,
     },
   ];
 
