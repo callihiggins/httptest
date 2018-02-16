@@ -27,13 +27,10 @@ function getScenarioEvents()
       'responseHeadersPresent': [
         'age',
         'cache-control',
-        'x-age',
         'x-api-version',
         'x-cache',
-        'x-origin-server',
         'x-pagetype',
         'x-served-by',
-        'x-varnishcacheduration',
       ],
       'responseHeadersNotPresent': [
         'nnCoection',

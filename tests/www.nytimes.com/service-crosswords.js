@@ -17,7 +17,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-service',
@@ -37,7 +37,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-service',
@@ -52,8 +52,8 @@ function getScenarioEvents()
       'id': 'Functional Test For Crosswords',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -72,8 +72,8 @@ function getScenarioEvents()
       'id': 'Functional Test For Crosswords',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -97,7 +97,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'requestScheme': 'http://',
       'requestUri': '/crosswords/game/mini',
@@ -109,12 +109,12 @@ function getScenarioEvents()
       'id': 'Functional Test For Crosswords',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -151,7 +151,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-service',
@@ -171,7 +171,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-service',
@@ -191,7 +191,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -211,7 +211,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -231,7 +231,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -251,7 +251,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -271,7 +271,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -291,7 +291,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -311,7 +311,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -331,7 +331,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -366,8 +366,8 @@ function getScenarioEvents()
       'id': 'Functional Test Stats Page',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -391,7 +391,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -411,7 +411,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -431,7 +431,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-web',
@@ -446,12 +446,12 @@ function getScenarioEvents()
       'id': 'Functional Test For Spelling Bee',
       'isDeployedInEnv': {
         'prd': false,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s,
+        'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
         'x-pagetype': 'games-phoenix',

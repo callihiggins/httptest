@@ -17,55 +17,17 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/1981/01/03/nyregion/uso-in-times-square.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GA|5-5)/,
       },
-      responseStatusCode: [200, 404],
-      scenarioDescription:
-        'Test legacy; www-apps cluster; archive article, 1981',
-      testId: '1p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: true,
-        dev: true,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/1981/01/03/nyregion/uso-in-times-square.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-5-5',
         'x-frame-options': 'DENY',
         'x-pagetype': 'article'
       },
       responseStatusCode: [200, 404],
       scenarioDescription:
-        'Test legacy; www-apps cluster; archive article, 1981',
-      testId: '1s'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: false,
-        dev: true,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/1981/01/03/nyregion/uso-in-times-square.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-5',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'article'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription:
-        'Test legacy; www-apps cluster; archive article, 1981',
-      testId: '1d'
+        'content-legacy-www-apps: 1981 article',
+      testId: '1'
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
