@@ -23,10 +23,9 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/homescreen',
       'responseStatusCode': [301],
-      'scenarioDescription': 'Redirects to homepage, sets the cookie to 0',
-      'responseHeaderPattern': {
-        'location': /https:\/\/www.nytimes.com/,
-        'Set-Cookie': /\bvi_www_hp_opt=0;/,
+      'scenarioDescription': '/homescreen redirects to homepage, sets the cookie to 0',
+      'responseHeaderMatch': {
+        'location': 'https://www.nytimes.com',
       },
       'testId': 1,
     },
@@ -45,10 +44,9 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/homescreen',
       'responseStatusCode': [301],
-      'scenarioDescription': 'Redirects to homepage, sets the cookie to 0',
-      'responseHeaderPattern': {
-        'location': /https:\/\/www.nytimes.com/,
-        'Set-Cookie': /\bvi_www_hp_opt=0;/,
+      'scenarioDescription': '/homescreen redirects to homepage, sets the cookie to 0',
+      'responseHeaderMatch': {
+        'location': 'https://www.nytimes.com',
       },
       'testId': 2,
     },
@@ -67,11 +65,13 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/homescreen',
       'responseStatusCode': [301],
-      'scenarioDescription': 'Redirects to homepage, sets the cookie to 0',
-      'responseHeaderPattern': {
-        'location': /https:\/\/www.nytimes.com/,
-        'Set-Cookie': /\bvi_www_hp_opt=1;/,
+      'scenarioDescription': '/homescreen redirects to homepage, sets the cookie to 1',
+      'responseHeaderMatch': {
+        'location': 'https://www.nytimes.com',
       },
+      // 'responseHeaderPattern': {
+      //   'Set-Cookie': /^vi_www_hp_opt=1; path=\/; domain=.nytimes.com; expires=(.+)/g,
+      // },
       'testId': 3,
     },
   ];
