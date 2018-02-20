@@ -5,7 +5,7 @@ pipeline:
   # dev specific domain templating (dev + sandboxes)
   # someday if .sbx.nytimes.com is not Vi alpha service only we will iterate
   dev-template:
-    image: hairyhenderson/gomplate
+    image: hairyhenderson/gomplate:v2.2.0
     environment:
       - env=dev
     commands:
