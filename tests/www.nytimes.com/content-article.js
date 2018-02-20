@@ -450,7 +450,91 @@ function getScenarioEvents()
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1995/01/01/us/slug.html',
-      'testId': 15,
+      'testId': 16,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5|5-4)/,
+        'x-nyt-backend': /(article_fe|www_fe|www)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
+      'testId': 17,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2013/06/16/travel/travel-guide-new-york-for-kids.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5|5-4)/,
+        'x-nyt-backend': /(article_fe|www_fe|www)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2013/06/16/travel/travel-guide-new-york-for-kids.html',
+      'testId': 168,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/1981/01/03/nyregion/uso-in-times-square.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1981/01/03/nyregion/uso-in-times-square.html',
+      'testId': 19,
     },
   ];
 

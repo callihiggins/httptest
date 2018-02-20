@@ -13,7 +13,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/',
@@ -31,7 +30,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/',
@@ -45,7 +43,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/2014/01/01/world/test-suite.html',
@@ -64,7 +61,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/2014/01/01/world/test-suite.html',
@@ -79,9 +75,8 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/2013/01/01/world/test-suite.html',
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test HTTPS Everywhere; 2013 article; non-secure',
@@ -93,15 +88,10 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/2013/01/01/world/test-suite.html',
-      responseHeaderMatches: {
-        location:
-          'http://' + suite.servername + '/2013/01/01/world/test-suite.html'
-      },
-      responseStatusCode: 301,
+      responseStatusCode: [200, 404],
       scenarioDescription: 'Test HTTPS Everywhere; 2013 article; secure',
       testId: 6
     },
@@ -111,7 +101,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/section/sports',
@@ -129,7 +118,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/section/sports',
@@ -144,7 +132,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/video',
@@ -161,7 +148,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/video',
@@ -175,7 +161,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaders: {
         Host: 'cityroom.blogs.nytimes.com'
@@ -196,7 +181,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaders: {
         Host: 'cityroom.blogs.nytimes.com'
@@ -214,7 +198,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/watching',
@@ -232,7 +215,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/watching',
@@ -247,7 +229,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/real-estate/find-a-home',
@@ -265,7 +246,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestScheme: 'https://',
@@ -281,7 +261,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/real-estate/find-a-home',
@@ -296,7 +275,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestScheme: 'http://',
@@ -315,7 +293,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/aponline/2014/01/01/world/test-suite.html',
@@ -336,7 +313,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/reuters/2014/01/01/world/test-suite.html',
@@ -351,7 +327,6 @@ function getScenarioEvents() {
         prd: true,
         stg: false,
         dev: false,
-        sbx: false
       },
       requestHeaders: {
         Host: 'lens.blogs.nytimes.com'
@@ -372,7 +347,6 @@ function getScenarioEvents() {
         prd: true,
         stg: false,
         dev: false,
-        sbx: false
       },
       requestHeaders: {
         Host: 'krugman.blogs.nytimes.com'
@@ -390,7 +364,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/guides/well/how-to-start-running',
@@ -409,7 +382,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/es/',
@@ -427,7 +399,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/es/',
@@ -442,7 +413,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
       requestScheme: 'http://',
@@ -461,7 +431,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaderCookie: [
         'NYT-S=' + suite.cookies.nyt_s,
@@ -480,7 +449,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
       requestScheme: 'https://',
@@ -496,7 +464,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestHeaderCookie: [
@@ -519,7 +486,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/tips?test=true',
@@ -537,7 +503,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/tips?test=true',
@@ -554,7 +519,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2016/news-tips/',
@@ -573,7 +537,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2016/news-tips/',
@@ -590,7 +553,6 @@ function getScenarioEvents() {
         prd: false,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri:
@@ -606,7 +568,6 @@ function getScenarioEvents() {
         prd: false,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri:
@@ -628,7 +589,6 @@ function getScenarioEvents() {
         prd: true,
         stg: false,
         dev: false,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri:
@@ -644,7 +604,6 @@ function getScenarioEvents() {
         prd: true,
         stg: false,
         dev: false,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri:
@@ -666,7 +625,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/elections/results/president',
@@ -680,7 +638,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/elections/results/president',
@@ -697,7 +654,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/newsletters/realestate',
@@ -711,7 +667,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/newsletters/realestate',
@@ -728,7 +683,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri:
@@ -744,7 +698,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri:
@@ -766,7 +719,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/pages/cooking/cooking-email/index.html',
@@ -780,7 +732,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/pages/cooking/cooking-email/index.html',
@@ -801,7 +752,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/pages/todaysheadlines/index.html',
@@ -815,7 +765,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/pages/todaysheadlines/index.html',
@@ -834,7 +783,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/interactive/us/faces-of-the-dead.html',
@@ -848,7 +796,6 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/interactive/us/faces-of-the-dead.html',
