@@ -255,7 +255,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html?abra=WP_ProjectVi_Story=st',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
@@ -278,7 +278,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html?abra=WP_ProjectVi_Story=horse',
       'responseHeaderPattern': {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,

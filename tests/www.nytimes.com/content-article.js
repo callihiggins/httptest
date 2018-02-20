@@ -14,7 +14,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -26,10 +25,10 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/2016/11/04/homepage/new-york-times-open-access-election-2016.html',
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
+        'x-pagetype': /(article|vi-story)/,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'article',
         'x-cache': 'MISS',
       },
       'responseStatusCode': [200, 404],
@@ -42,7 +41,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -51,7 +49,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -71,7 +69,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -80,7 +77,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -100,7 +97,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -109,7 +105,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -129,7 +125,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -138,7 +133,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -157,7 +152,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -166,7 +160,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -186,7 +180,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -195,7 +188,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2001/01/20/technology/20ANNIVERSARY.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -205,7 +198,7 @@ function getScenarioEvents()
         'x-pagetype': 'article',
         'x-cache': 'MISS',
       },
-      'responseStatusCode': [301,404],
+      'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; redirect; /2001/01/20/technology/20ANNIVERSARY.html',
       'testId': 7,
     },
@@ -215,7 +208,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -224,7 +216,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -244,7 +236,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -253,7 +244,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2006/01/29/fashion/sundaystyles/29LOVE.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -273,7 +264,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -282,7 +272,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2006/02/26/fashion/sundaystyles/26LOVE.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -302,7 +292,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -311,7 +300,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2006/11/12/fashion/12love.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -330,7 +319,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -358,7 +346,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -367,17 +354,15 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1850/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
+        'x-pagetype': /article|legacy/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-      },
-      'responseHeaderPattern': {
-        'x-pagetype': /article|legacy/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1850/01/01/us/slug.html',
@@ -389,7 +374,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'vi_www_hp=z0',
@@ -398,21 +382,159 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1979/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
+        'x-pagetype': /article|legacy/,
         'x-nyt-backend': /(article_fe|www_fe)/
       },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
       },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/us/slug.html',
+      'testId': 14,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/1981/01/01/us/slug.html',
       'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe)/,
         'x-pagetype': /article|legacy/,
       },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1920/01/01/us/slug.html',
-      'testId': 14,
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1981/01/01/us/slug.html',
+      'testId': 15,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/1995/01/01/us/slug.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1995/01/01/us/slug.html',
+      'testId': 16,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5|5-4)/,
+        'x-nyt-backend': /(article_fe|www_fe|www)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
+      'testId': 17,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2013/06/16/travel/travel-guide-new-york-for-kids.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5|5-4)/,
+        'x-nyt-backend': /(article_fe|www_fe|www)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /2013/06/16/travel/travel-guide-new-york-for-kids.html',
+      'testId': 168,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'vi_www_hp=z0',
+        'vi_www_hp_opt=0'
+      ],
+      'requestHeaders': {
+        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/1981/01/03/nyregion/uso-in-times-square.html',
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': /(article_fe|www_fe)/,
+        'x-pagetype': /article|legacy/,
+      },
+      'responseHeaderMatches': {
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; /1981/01/03/nyregion/uso-in-times-square.html',
+      'testId': 19,
     },
   ];
 

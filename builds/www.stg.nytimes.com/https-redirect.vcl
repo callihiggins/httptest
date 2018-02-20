@@ -13,6 +13,8 @@ sub vcl_recv {
     if (   req.http.X-PageType == "homepage"
         || ( req.http.X-PageType == "article"
                 && req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
+        || (   req.http.x-nyt-internal-access
+            && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/")  // Route 1850-future
         || ( req.http.X-PageType == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources
         || ( req.http.X-PageType == "blog" && req.http.host !~ "^tmagazine\.blogs" ) // all blogs, but not tmag
         || ( req.http.X-PageType == "blog2" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )

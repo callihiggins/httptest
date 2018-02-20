@@ -7,7 +7,7 @@ sub vcl_deliver {
         && resp.http.x-nyt-backend == "slideshow_fe"
         && resp.status == 404) {
         set req.http.x-nyt-slideshow-compatibility = "NYT4";
-
+        set req.url = req.http.X-OriginalUri;
         return (restart);
     }
 

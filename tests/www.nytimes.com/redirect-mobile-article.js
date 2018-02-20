@@ -154,7 +154,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'User-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (NodeJS test suite <falkae@nytimes.com>)',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1996/01/01/us/slug.html?nytmobile=0',
       'responseHeaderMatches': {
       },
@@ -173,7 +173,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'User-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (NodeJS test suite <falkae@nytimes.com>)',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1996/01/01/us/slug.html?nytmobile=1',
       'responseHeaderMatches': {
         'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/1996/01/01/us/slug.html?nytmobile=1&referer='),
@@ -193,14 +193,14 @@ function getScenarioEvents()
       'requestHeaders': {
         'User-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (NodeJS test suite <falkae@nytimes.com>)',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1980/01/01/us/slug.html',
       'responseHeaderMatches': {
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test mobile redirect; article; 1980; iPhone; does not redirect',
       'testId': 9999362,
-    },    
+    },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
@@ -212,7 +212,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'User-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (NodeJS test suite <falkae@nytimes.com>)',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1980/01/01/us/slug.html?nytmobile=1',
       'responseHeaderMatches': {
       },

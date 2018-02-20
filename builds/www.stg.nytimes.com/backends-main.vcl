@@ -266,6 +266,8 @@ sub vcl_recv {
         || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
         || req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/" // Route 1850-1979
+        || (   req.http.x-nyt-internal-access
+            && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/")  // Route 1850-future
     ) {
         # route article traffic to gke only fallback to esx
         set req.http.X-PageType = "article";
