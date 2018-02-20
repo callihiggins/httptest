@@ -26,7 +26,7 @@ function getScenarioEvents()
       'scenarioDescription': 'Redirects to homepage, sets the cookie to 0',
       'responseHeaderPattern': {
         'location': /https:\/\/www.nytimes.com/,
-        'Set-Cookie': /vi_www_hp_opt=0/,
+        'set-cookie': /vi_www_hp_opt=0/,
       },
       'testId': 1,
     },
@@ -48,7 +48,7 @@ function getScenarioEvents()
       'scenarioDescription': 'Redirects to homepage, sets the cookie to 0',
       'responseHeaderPattern': {
         'location': /https:\/\/www.nytimes.com/,
-        'Set-Cookie': /vi_www_hp_opt=0/,
+        'set-cookie': /vi_www_hp_opt=0/,
       },
       'testId': 2,
     },
@@ -70,7 +70,7 @@ function getScenarioEvents()
       'scenarioDescription': 'Redirects to homepage, sets the cookie to 0',
       'responseHeaderPattern': {
         'location': /https:\/\/www.nytimes.com/,
-        'Set-Cookie': /vi_www_hp_opt=1/,
+        'set-cookie': /vi_www_hp_opt=1/,
       },
       'testId': 3,
     },
