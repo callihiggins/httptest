@@ -25,10 +25,10 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/2016/11/04/homepage/new-york-times-open-access-election-2016.html',
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
+        'x-pagetype': /(article|vi-story)/,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'article',
         'x-cache': 'MISS',
       },
       'responseStatusCode': [200, 404],

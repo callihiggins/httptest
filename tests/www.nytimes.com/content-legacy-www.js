@@ -490,27 +490,6 @@ function getScenarioEvents() {
         sbx: false
       },
       requestScheme: 'http://',
-      requestUri: '/marketing/selfservice/audience.html',
-      responseHeaderMatches: {
-        'x-pagetype': 'mwcm',
-        'x-nyt-backend': 'mwcm',
-        'x-nyt-continent': 'NA',
-        'x-nyt-country': 'US',
-        'x-api-version': 'F-WCM'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; marketing',
-      testId: 27
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true,
-        sbx: false
-      },
-      requestScheme: 'http://',
       requestUri: '/newsgraphics/2014/01/05/poverty-map/',
       responseHeadersPresent: ['x-cache'],
       responseHeaderMatches: {
