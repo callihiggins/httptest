@@ -49,7 +49,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -77,7 +77,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -105,7 +105,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -133,7 +133,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -160,7 +160,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -188,7 +188,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2001/01/20/technology/20ANNIVERSARY.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -198,7 +198,7 @@ function getScenarioEvents()
         'x-pagetype': 'article',
         'x-cache': 'MISS',
       },
-      'responseStatusCode': [301,404],
+      'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test routing; article; NYT5; ensure Fastly pass; redirect; /2001/01/20/technology/20ANNIVERSARY.html',
       'testId': 7,
     },
@@ -216,7 +216,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -244,7 +244,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2006/01/29/fashion/sundaystyles/29LOVE.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -272,7 +272,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2006/02/26/fashion/sundaystyles/26LOVE.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -300,7 +300,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/2006/11/12/fashion/12love.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -354,7 +354,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1850/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -382,7 +382,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1979/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -410,7 +410,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1981/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
@@ -438,7 +438,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'authorization': 'Basic ThisShouldCauseAFastlyPass',
       },
-      'requestScheme': 'http://',
+      'requestScheme': 'https://',
       'requestUri': '/1995/01/01/us/slug.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
