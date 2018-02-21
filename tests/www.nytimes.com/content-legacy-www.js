@@ -485,8 +485,8 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: true,
-        dev: true,
+        stg: false,
+        dev: false,
         sbx: false
       },
       requestScheme: 'http://',
