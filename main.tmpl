@@ -669,9 +669,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-packages-gcs"
+    name    = "backend-newsroom-files-gcs"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-packages-gcs.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsroom-files-gcs.vcl")}"
   }
 
   vcl {

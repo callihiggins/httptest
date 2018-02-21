@@ -1,5 +1,5 @@
 sub vcl_recv {
-  if (req.http.X-PageType == "packages-gcs") {
+  if (req.http.X-PageType == "newsroom-files-gcs") {
     unset req.http.Cookie;
     unset req.http.X-Cookie;
     unset req.http.x-nyt-edition;
@@ -14,13 +14,13 @@ sub vcl_recv {
 }
 
 sub vcl_miss {
-  if (req.http.x-pagetype == "packages-gcs") {
+  if (req.http.x-pagetype == "newsroom-files-gcs") {
     call miss_pass_set_bucket_auth_headers;
   }
 }
 
 sub vcl_pass {
-  if (req.http.x-pagetype == "packages-gcs") {
+  if (req.http.x-pagetype == "newsroom-files-gcs") {
     call miss_pass_set_bucket_auth_headers;
   }
 }

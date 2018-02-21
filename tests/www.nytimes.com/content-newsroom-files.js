@@ -8,7 +8,7 @@ suite.run(suite, scenarios);
 function getScenarioEvents() {
   var scenarios = [
     {
-      id: "FunctionalTestScenarioDefinitionForPackagesGCSBucket",
+      id: "FunctionalTestScenarioDefinitionForNewsroomGCSBucket",
       'isDeployedInEnv': {
         'prd': false,
         'stg': false,
@@ -16,9 +16,9 @@ function getScenarioEvents() {
         'sbx': false,
       },
       requestScheme: "https://",
-      requestUri: "/packages/files/healthcheck.txt",
+      requestUri: "/files/healthcheck.txt",
       responseHeaderMatches: {
-        "x-pagetype": "packages-gcs"
+        "x-pagetype": "newsroom-files-gcs"
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
       responseStatusCode: [200],

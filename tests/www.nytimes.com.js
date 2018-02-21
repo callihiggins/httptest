@@ -12,7 +12,7 @@ require("./www.nytimes.com/content-espanol.js");
 require("./www.nytimes.com/content-interactive.js");
 require("./www.nytimes.com/content-newsdev-attribute.js");
 require("./www.nytimes.com/content-newsdev-gke.js");
-require("./www.nytimes.com/content-packages-files.js");
+require("./www.nytimes.com/content-newsroom-files.js");
 require("./www.nytimes.com/content-newsgraphics-gcs.js");
 require("./www.nytimes.com/content-watching.js");
 require("./www.nytimes.com/content-video-media.js");
