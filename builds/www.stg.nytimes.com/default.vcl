@@ -37,6 +37,7 @@ include "backend-elections";
 include "backend-newsdev-gke";
 include "backend-newsdev-gcs";
 include "backend-packages-gcs";
+include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
 include "backend-intl";
 include "backend-watching";

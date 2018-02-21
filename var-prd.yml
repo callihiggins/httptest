@@ -837,3 +837,7 @@ cloud_storage_buckets:
     auth: "true"
     bucket_name: "nyt-packages-prd"
     bucket_provider: "gcs"
+  - pagetype: "newsgraphics-gcs"
+    auth: "true"
+    bucket_name: "nytint-prd-newsgraphics"
+    bucket_provider: "gcs"
