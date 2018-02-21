@@ -5,11 +5,6 @@ sub vcl_recv {
     unset req.http.x-nyt-edition;
     unset req.http.x-nyt-s;
     unset req.http.x-nyt-wpab;
-
-    # Redirect to https before updating req.http.host header
-    if ( !req.http.Fastly-SSL ) {
-      call redirect_to_https;
-    }
   }
 }
 
