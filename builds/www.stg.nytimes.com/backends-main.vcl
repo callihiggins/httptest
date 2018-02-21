@@ -295,7 +295,7 @@ sub vcl_recv {
         call set_www_newsdev_gke_backend;
     }
 
-    if ( req.http.x-environment != "prd" && req.url ~ "^/files/" ) {
+    if ( req.url ~ "^/files/" ) {
       set req.http.X-PageType = "newsroom-files-gcs";
       set req.http.x-nyt-backend = "gcs_origin";
     }
