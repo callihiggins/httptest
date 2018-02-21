@@ -29,8 +29,8 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForProjectsHealthcheck',
       isDeployedInEnv: {
         prd: false,
-        stg: true,
-        dev: true,
+        stg: false,
+        dev: false,
         sbx: false
       },
       requestScheme: 'http://',
