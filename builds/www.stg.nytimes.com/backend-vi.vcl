@@ -1,6 +1,6 @@
 sub vcl_recv {
 
-  // search
+  # search
   if (req.url ~ "^/search") {
       set req.http.X-PageType = "vi-search";
       set req.http.x-nyt-backend = "projectvi_fe";
@@ -8,7 +8,7 @@ sub vcl_recv {
       call check_vi_unhealthy;
   }
 
-  // timeswire
+  # timeswire
   if (req.url ~ "^/timeswire" && req.http.x-environment != "prd") {
       set req.http.X-PageType = "vi-timeswire";
       set req.http.x-nyt-backend = "projectvi_fe";
@@ -16,7 +16,7 @@ sub vcl_recv {
       call check_vi_unhealthy;
   }
 
-  // article
+  # article
   if ( req.http.X-PageType == "article" ) {
       # The articles that are potentially served by the publishing pipeline
       # are limited by a date range of later than 2017/10/09. This date is going
@@ -24,12 +24,12 @@ sub vcl_recv {
       # be updated accordingly.
       if (
            req.url ~ "^/(aponline/|reuters/)?201[4-9]"
-        && req.url.path !~ "\.amp\.html$" // exclude amp
+        && req.url.path !~ "\.amp\.html$" # exclude amp
         && (
             req.http.x--fastly-vi-test-group-story ~ "^[a]"
-            || req.http.x--fastly-vi-story-opt == "1" // always in
+            || req.http.x--fastly-vi-story-opt == "1" # always in
         )
-        && req.http.x--fastly-vi-story-opt != "0" // always out
+        && req.http.x--fastly-vi-story-opt != "0" # always out
       ) {
           # if the request was sent to VI and determined
           # to be Incompatible then we don't send to VI again
@@ -52,15 +52,15 @@ sub vcl_recv {
             call set_projectvi_fe_backend;
             call check_vi_unhealthy;
           } else {
-              set req.http.X-PageType = "article";
-              set req.http.x-nyt-backend = "article_fe";
-              call set_www_article_backend;
+            set req.http.X-PageType = "article";
+            set req.http.x-nyt-backend = "article_fe";
+            call set_www_article_backend;
           }
       }
   }
 
-  // interactive years 2014-forever are served by Vi
-  // including all variants, canonical and .(embedded|mobile|app)\.html
+  # interactive years 2014-forever are served by Vi
+  # including all variants, canonical and .(embedded|mobile|app)\.html
   if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
     set req.http.X-PageType = "vi-interactive";
     set req.http.x-nyt-backend = "projectvi_fe";
@@ -75,22 +75,27 @@ sub vcl_recv {
       call set_projectvi_fe_backend;
   } else {
       # For other resources:
-      # check if it is a homepage route, has a a/b test group, and is not opted out.
       if (req.http.host ~ "^(www\.)?(www-[a-z0-9\-]+\.)?(dev\.|stg\.|)?nytimes.com$") {
-          if ( req.url.path == "/"
-            && ((req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")
-              ) {
-              # homepage, in a test group getting Vi homepage
-              set req.http.x-nyt-backend = "projectvi_fe";
-              call set_projectvi_fe_backend;
-              call check_vi_unhealthy;
-          } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" # only 2014 or later
-                     && req.url.path !~ "\.amp\.html$" && req.http.x--fastly-vi-test-group ~ "^[ac]") {
-              # story page, in a test group getting Vi story pages
-              set req.http.x-nyt-backend = "projectvi_fe";
-              call set_projectvi_fe_backend;
-              call check_vi_unhealthy;
-          }
+        if (
+          # homepage
+          # - in a test group and not opted out
+          # - or internal traffic and not opted out
+          (req.url.path == "/"
+              && (
+                (req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0")
+                || req.http.cookie:vi_www_hp_opt == "1"
+                || (req.http.x-nyt-internal-access == "1" && req.http.cookie:vi_www_hp_opt != "0")
+              )
+          )
+          ||
+          # story page, in a test group getting Vi story pages
+          (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" # only 2014 or later
+              && req.url.path !~ "\.amp\.html$" && req.http.x--fastly-vi-test-group ~ "^[ac]")
+        ) {
+          set req.http.x-nyt-backend = "projectvi_fe";
+          call set_projectvi_fe_backend;
+          call check_vi_unhealthy;
+        }
       }
   }
 

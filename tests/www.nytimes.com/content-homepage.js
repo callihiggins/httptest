@@ -16,6 +16,7 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
+      'requestHeaderCookie': 'vi_www_hp_opt=0',
       'requestScheme': 'https://',
       'requestUri': '/?abra=WP_ProjectVi_www_hp=0',
       'responseHeaderPattern': {
@@ -25,7 +26,7 @@ function getScenarioEvents()
         'x-pagetype': 'homepage',
       },
       'responseStatusCode': 200,
-      'scenarioDescription': 'Test homepage',
+      'scenarioDescription': 'Test homepage abra 0',
       'testId': 1,
     },
     {
@@ -36,7 +37,10 @@ function getScenarioEvents()
         'dev': false,
         'sbx': false,
       },
-      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke=1',
+      'requestHeaderCookie': [
+        'nyt.dv.nyt5-on-gke=1',
+        'vi_www_hp_opt=0'
+      ],
       'requestScheme': 'https://',
       'requestUri': '/?abra=WP_ProjectVi_www_hp=0',
       'responseHeaderPattern': {
@@ -46,7 +50,7 @@ function getScenarioEvents()
         'x-pagetype': 'homepage',
       },
       'responseStatusCode': 200,
-      'scenarioDescription': 'Test homepage',
+      'scenarioDescription': 'Test homepage abra 0 nyt5 on GKE 1',
       'testId': 101,
     },
     {
@@ -57,6 +61,7 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
+      'requestHeaderCookie': 'vi_www_hp_opt=0',
       'requestScheme': 'https://',
       'requestUri': '/?abra=WP_ProjectVi_www_hp=0',
       'responseHeaderPattern': {
@@ -66,7 +71,7 @@ function getScenarioEvents()
         'x-pagetype': 'homepage',
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test homepage',
+      'scenarioDescription': 'Test homepage abra 0 on DEV',
       'testId': 2,
     },
     {
@@ -77,7 +82,10 @@ function getScenarioEvents()
         'dev': true,
         'sbx': false,
       },
-      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke=1',
+      'requestHeaderCookie': [
+        'nyt.dv.nyt5-on-gke=1',
+        'vi_www_hp_opt=0'
+      ],
       'requestScheme': 'https://',
       'requestUri': '/?abra=WP_ProjectVi_www_hp=0',
       'responseHeaderPattern': {
@@ -87,7 +95,7 @@ function getScenarioEvents()
         'x-pagetype': 'homepage',
       },
       'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test homepage',
+      'scenarioDescription': 'Test homepage abra 0 nyt5 on GKE 1 on DEV',
       'testId': 201,
     },
   ];
