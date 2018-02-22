@@ -271,7 +271,6 @@ sub vcl_recv {
     ) {
         # route article traffic to gke only fallback to esx
         set req.http.X-PageType = "article";
-        set req.http.x-nyt-backend = "article_fe";
         call set_www_article_backend;
     }
 
@@ -534,9 +533,11 @@ sub set_www_collection_backend_gke {
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app
 sub set_www_article_backend {
+    set req.http.x-nyt-backend = "article_fe";
     set req.backend = F_article_fe;
-    call vi_ce_auth;
-    if (!req.backend.healthy) {
+    if (req.backend.healthy) {
+        call vi_ce_auth;
+    } else {
         set req.http.x-nyt-backend = "www_fe";
         set req.backend = F_www_fe;
     }
