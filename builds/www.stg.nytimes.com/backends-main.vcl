@@ -177,13 +177,16 @@ sub vcl_recv {
     }
 
     // NYT5 services EXCEPT userinfo
-    if (   req.url ~ "/.status$"
-        || (req.url ~ "^/svc/web-products/"
-            && req.url !~ "^/svc/web-products/userinfo")
-    ) {
+    if (   req.url ~ "/.status$" ) {
         set req.http.X-PageType = "service";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
+    }
+    // userinfo routing (userinfo is the only svc under web-products)
+    if (   (req.url ~ "^/svc/web-products/") && (req.http.x-environment != "prd") ) {
+        set req.http.X-PageType = "service";
+        set req.http.x-nyt-backend = "www_userinfo";
+        call set_www_userinfo_backend;
     }
 
     // Route comscore, js, js2, css and bi path's to WWW Legacy GKE
@@ -520,6 +523,15 @@ sub set_www_fe_backend {
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
+
+## userinfo backend
+sub set_www_userinfo_backend {
+    set req.backend = F_www_userinfo;
+    call vi_ce_auth;
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
+}
+
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app

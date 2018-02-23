@@ -31,9 +31,9 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForService',
       'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
+        'prd': false,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': '',
@@ -54,17 +54,19 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForService',
       'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
+        'prd': false,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': 'NYT-S=' + suite.cookies.nyt_s,
       'requestScheme': 'http://',
       'requestUri': '/svc/web-products/userinfo.json',
       'responseHeaderContains': {},
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GU|5-0)/,
+      },
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-0',
         'x-pagetype': 'service',
       },
       'responseStatusCode': 200,

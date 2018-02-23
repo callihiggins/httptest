@@ -66,8 +66,10 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/svc/web-products/userinfo-v2.json',
       'responseHeaderContains': {},
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GU|5-0)/,
+      },
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-0',
         'x-pagetype': 'service',
       },
       'responseStatusCode': 200,
@@ -77,30 +79,6 @@ function getScenarioEvents()
       'userInfoAuthName': 'qa_fake',
       'userInfoCountry': '(null)',
       'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA', 'XWD'],
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForService',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': false,
-        'sbx': false,
-      },
-      'requestHeaderCookie': 'nyt-d=101.1vD1a2L0lCAI0N0K0s9Iny1/5XWG074Z0t0p8GS00R2pGc0hUYSr0nDo9y1nOoGf0M07yz0i1Xbw031n8M0RV1Sv0pC2ea1/7nuK0A37ae0pApKk1/7nu30A0daU1w0mSI0H6XuD0SV75h1mT6Xs1yOq54@68863438/4ea33cbc',
-      'requestScheme': 'http://',
-      'requestUri': '/svc/web-products/userinfo-v2.json',
-      'responseHeaderContains': {},
-      'responseHeaderMatches': {
-        'x-api-version': 'F-0',
-        'x-pagetype': 'service',
-      },
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test userinfo service, version 2: valid nyt-d cookie; JSON format',
-      'testId': 3,
-      'userInfoAuthId': '0',
-      'userInfoAuthName': '',
-      'userInfoCountry': 'US',
-      'userInfoSubscriptions': [],
     },
   ];
 
