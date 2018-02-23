@@ -75,22 +75,27 @@ sub vcl_recv {
       call set_projectvi_fe_backend;
   } else {
       # For other resources:
-      # check if it is a homepage route, has a a/b test group, and is not opted out.
       if (req.http.host ~ "^(www\.)?(www-[a-z0-9\-]+\.)?(dev\.|stg\.|)?nytimes.com$") {
-          if ( req.url.path == "/"
-            && ((req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0") || req.http.cookie:vi_www_hp_opt == "1")
-              ) {
-              # homepage, in a test group getting Vi homepage
-              set req.http.x-nyt-backend = "projectvi_fe";
-              call set_projectvi_fe_backend;
-              call check_vi_unhealthy;
-          } else if (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" # only 2014 or later
-                     && req.url.path !~ "\.amp\.html$" && req.http.x--fastly-vi-test-group ~ "^[ac]") {
-              # story page, in a test group getting Vi story pages
-              set req.http.x-nyt-backend = "projectvi_fe";
-              call set_projectvi_fe_backend;
-              call check_vi_unhealthy;
-          }
+        if (
+          # homepage
+          # - in a test group and not opted out
+          # - or internal traffic and not opted out
+          (req.url.path == "/"
+              && (
+                (req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0")
+                || req.http.cookie:vi_www_hp_opt == "1"
+                || (req.http.x-nyt-internal-access == "1" && req.http.cookie:vi_www_hp_opt != "0")
+              )
+          )
+          ||
+          # story page, in a test group getting Vi story pages
+          (req.url.path ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" # only 2014 or later
+              && req.url.path !~ "\.amp\.html$" && req.http.x--fastly-vi-test-group ~ "^[ac]")
+        ) {
+          set req.http.x-nyt-backend = "projectvi_fe";
+          call set_projectvi_fe_backend;
+          call check_vi_unhealthy;
+        }
       }
   }
 
