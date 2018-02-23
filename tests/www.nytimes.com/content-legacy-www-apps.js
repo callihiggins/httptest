@@ -185,8 +185,8 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/services/xml/rss/',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a'
+      responseHeaderPattern: {
+         'x-api-version': /F-(GL|4a)/,
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www-apps cluster; service; RSS XML',

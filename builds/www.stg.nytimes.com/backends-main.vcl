@@ -41,7 +41,6 @@ sub vcl_recv {
         || req.url ~ "^/membercenter/emailus.html"
         || req.url ~ "^/gst/emailus.html"
         || req.url ~ "^/subscriptions"
-        || req.url ~ "^/services/xml/rss"
         || req.url ~ "^/tips(/)?(\?.*)?$"
         || req.url == "/securedrop"
         || req.url ~ "^/newsgraphics/2016/news-tips"
@@ -221,6 +220,7 @@ sub vcl_recv {
         || req.url ~ "^/library/"
         || req.url ~ "^/pages/"
         || req.url ~ "^/packages/"
+        || req.url ~ "^/services/xml/rss/"
         || req.url ~ "^/specials/"
         || req.url ~ "^/sports/"
         || req.url ~ "^/top/"
@@ -447,7 +447,7 @@ sub vcl_recv {
     # in dev/stg, /newsgraphics/ path goes to GCS
     if ( ( req.http.x-environment == "prd" && req.url ~ "^/newsgraphics/" )
          || req.url ~ "^/regilite"
-         || req.url ~ "^/services/xml/"){
+         || ( req.url ~ "^/services/xml/" && req.url !~ "^/services/xml/rss/") ){
         set req.http.X-PageType = "legacy-cacheable";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;

@@ -139,7 +139,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/frommers',
+      requestUri: '/frommers/',
       responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4)/,
         'x-pagetype': /legacy/
@@ -164,6 +164,23 @@ function getScenarioEvents() {
       responseStatusCode: [200],
       scenarioDescription: 'Test comscore html served from Legacy GKE backend',
       testId: 10
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForStaticGKE',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/services/xml/rss/nyt/Dealbook.xml',
+      responseHeaderPattern: {
+        'x-api-version': /F-GL/,
+        'x-pagetype': /legacy/
+      },
+      responseStatusCode: [ 301 ],
+      scenarioDescription: 'Test rss xml redirects served from Legacy GKE backend',
+      testId: 11
     }
   ];
 
