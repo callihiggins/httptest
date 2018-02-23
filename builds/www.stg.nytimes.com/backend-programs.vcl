@@ -1,4 +1,3 @@
-
 sub vcl_recv {
     if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/") {
         set req.http.X-PageType = "programs-gcs";
