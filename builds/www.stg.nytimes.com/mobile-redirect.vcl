@@ -96,6 +96,11 @@ sub vcl_deliver {
               set req.http.x-do-mobile-redirect = "0";
             }
 
+            // do not redirect Timeswire to mobile domain
+            if (req.url ~ "^/timeswire(\/?)$") {
+              set req.http.x-do-mobile-redirect = "0";
+            }
+
             if (req.http.x-do-mobile-redirect == "1") {
                 if (   req.url ~ "^/$"
                     || req.url ~ "^/index.html"
