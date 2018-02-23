@@ -40,7 +40,6 @@ require("./www.nytimes.com/content-video.js");
 require("./www.nytimes.com/route-cms-static-assets.js");
 require("./www.nytimes.com/service-profile-fe.js");
 require("./www.nytimes.com/redirect-zone-apex.js");
-require("./www.nytimes.com/www-redirect.js");
 
 // please leave these tests here and add your includes above
 require("./www.nytimes.com/redirect-mobile-homepage.js");
