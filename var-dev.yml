@@ -462,6 +462,23 @@ backends:
       timeout: "10000"
       window: "5"
 
+  - name: "shaq_svc"
+    address: "shaq-dot-nyt-betaprog-dev.appspot.com"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "10000"
+    ssl_cert_hostname: "shaq-dot-nyt-betaprog-dev.appspot.com"
+    ssl_sni_hostname: "shaq-dot-nyt-betaprog-dev.appspot.com"
+    healthcheck:
+      host: "shaq-dot-nyt-betaprog-dev.appspot.com"
+      path: "/svc/shaq/v1/healthcheck"
+      check_interval: "15000"
+      expected_response: "200"
+      initial: "5"
+      threshold: "3"
+      timeout: "10000"
+      window: "5"
+
   - name: "programs_gcs"
     address: "storage.googleapis.com"
     between_bytes_timeout: "5000"

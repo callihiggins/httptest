@@ -48,14 +48,14 @@ function getScenarioEvents() {
         prd: true,
         stg: true,
         dev: true,
-        sbx: false
+        sbx: true
       },
       requestScheme: "https://",
       requestUri: "/programs/svc/shaq/v1/healthcheck",
       responseHeaderMatches: {
         "x-frame-options": "DENY",
         "x-cache": "MISS",
-        "x-pagetype": "programs-service"
+        "x-pagetype": "shaq-service"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [

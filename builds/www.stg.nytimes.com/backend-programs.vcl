@@ -1,3 +1,4 @@
+
 sub vcl_recv {
     if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/") {
         set req.http.X-PageType = "programs-gcs";
@@ -15,9 +16,9 @@ sub vcl_recv {
         return(lookup);
     }
 
-    if (req.url.path ~ "^/programs/svc/") {
-        set req.http.X-PageType = "programs-service";
-        set req.http.x-nyt-backend = "programs_svc";
+    if (req.url.path ~ "^/programs/svc/shaq") {
+        set req.http.X-PageType = "shaq-service";
+        set req.url = regsub(req.url, "^/programs/svc/shaq/(.*)", "/svc/shaq/\1");
         return(pass);
     }
 
@@ -35,6 +36,9 @@ sub vcl_recv {
 sub vcl_pass {
     if (req.http.X-PageType == "programs-service") {
         call set_programs_web_backend;
+    }
+    if (req.http.X-PageType == "shaq-service") {
+        call set_programs_shaq_backend;
     }
 }
 
@@ -78,4 +82,18 @@ sub set_programs_gcs_backend {
   } else {
     set req.http.x-gcs-bucket = "nyt-betaprog-prd-assets";
   }
+}
+
+sub set_programs_shaq_backend {
+    set req.backend = F_shaq_svc;
+    set req.http.x-nyt-backend = "shaq_svc";
+
+    if (req.http.x-environment == "dev") {
+        set bereq.http.host = "shaq-dot-nyt-betaprog-dev.appspot.com";
+    } else if (req.http.x-environment == "stg") {
+        set bereq.http.host = "shaq-dot-nyt-betaprog-dev.appspot.com";
+    } else {
+        set bereq.http.host = "shaq-dot-nyt-betaprog-prd.appspot.com";
+    }
+
 }
