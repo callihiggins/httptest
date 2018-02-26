@@ -57,7 +57,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForService',
       'isDeployedInEnv': {
-        'prd': true,
+        'prd': false,
         'stg': true,
         'dev': true,
         'sbx': false,
@@ -77,8 +77,34 @@ function getScenarioEvents()
       'testId': 2,
       'userInfoAuthId': '37593002',
       'userInfoAuthName': 'qa_fake',
+      'userInfoCountry': 'US',
+      'userInfoSubscriptions': ['SVID', '_UID', 'BTA', 'XWD'],
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForService',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaderCookie': 'NYT-S=' + suite.cookies.nyt_s,
+      'requestScheme': 'http://',
+      'requestUri': '/svc/web-products/userinfo-v2.json',
+      'responseHeaderContains': {},
+      'responseHeaderPattern': {
+        'x-api-version': /F-(GU|5-0)/,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'service',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test userinfo service, version 2: valid NYT-S cookie; JSON format',
+      'testId': 3,
+      'userInfoAuthId': '37593002',
+      'userInfoAuthName': 'qa_fake',
       'userInfoCountry': '(null)',
-      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA', 'XWD'],
+      'userInfoSubscriptions': ['SVID', '_UID', 'BTA', 'XWD'],
     },
   ];
 

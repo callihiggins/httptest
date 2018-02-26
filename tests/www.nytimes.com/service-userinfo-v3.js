@@ -82,7 +82,7 @@ function getScenarioEvents()
       'userInfoAuthId': '37593002',
       'userInfoAuthName': 'qa_fake',
       'userInfoCountry': 'United States',
-      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA', 'XWD'],
+      'userInfoSubscriptions': ['SVID', '_UID', 'BTA', 'XWD'],
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForService',
@@ -112,7 +112,7 @@ function getScenarioEvents()
       'userInfoAuthId': '37593002',
       'userInfoAuthName': 'qa_fake',
       'userInfoCountry': 'United States',
-      'userInfoSubscriptions': ['', 'SVID', '_UID', 'BTA', 'XWD'],
+      'userInfoSubscriptions': ['SVID', '_UID', 'BTA', 'XWD'],
     },
   ];
 
