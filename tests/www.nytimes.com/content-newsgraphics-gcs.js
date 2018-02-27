@@ -54,7 +54,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2012/1220-snow-fall-preview/',
       responseHeaderPattern: {
-        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/newsgraphics\/2012\/1220-snow-fall-preview\/index\.html/
+        'location': /https?:\/\/www(\.dev|\.stg)?\.nytimes\.com\/newsgraphics\/2012\/1220-snow-fall-preview\/index\.html/
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test newsgraphics; obey redirects configured by x-amz-meta-website-redirect-location header',
