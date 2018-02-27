@@ -19,3 +19,13 @@ sub vcl_pass {
     call miss_pass_set_bucket_auth_headers;
   }
 }
+
+sub vcl_fetch {
+  if (req.http.X-PageType == "newsgraphics-gcs") {
+    # Fake behavior of Amazon's WebsiteRedirectLocation
+    if (beresp.http.x-amz-meta-website-redirect-location) {
+      set req.http.Location = beresp.http.x-amz-meta-website-redirect-location;
+      error 761 "Moved Permanently";
+    }
+  }
+}

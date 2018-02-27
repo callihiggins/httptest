@@ -29,8 +29,8 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForProjectsHealthcheck',
       isDeployedInEnv: {
         prd: false,
-        stg: false,
-        dev: false,
+        stg: true,
+        dev: true,
         sbx: false
       },
       requestScheme: 'http://',
@@ -42,6 +42,23 @@ function getScenarioEvents() {
       responseStatusCode: [200],
       scenarioDescription: "Projects path in newsgraphics GCS bucket responds with 200",
       testId: 2
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForRedirect',
+      isDeployedInEnv: {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      requestScheme: 'http://',
+      requestUri: '/newsgraphics/2012/1220-snow-fall-preview/',
+      responseHeaderPattern: {
+        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/newsgraphics\/2012\/1220-snow-fall-preview\/index\.html/
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test newsgraphics; obey redirects configured by x-amz-meta-website-redirect-location header',
+      testId: 3
     },
   ];
 

@@ -278,7 +278,7 @@ sub vcl_recv {
     }
 
     if ( req.http.x-environment != "prd" &&
-          ( req.url ~ "^/newsgraphics/" )
+          ( req.url ~ "^/newsgraphics/" || req.url ~ "^/projects/" )
     ) {
       set req.http.X-PageType = "newsgraphics-gcs";
       set req.http.x-nyt-backend = "gcs_origin";
