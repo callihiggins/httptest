@@ -548,10 +548,12 @@ backends:
       window: "4"
 
   - name: "mwcm"
-    address: "mwcm-pub-est-dev-iad1-121754-38912335.us-east-1.elb.amazonaws.com"
+    address: "mwcm-pub.dev.nytimes.com"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
+    port: "443"
+    use_ssl: "true"
     ssl_cert_hostname: "www.dev.nytimes.com"
     ssl_sni_hostname: "www.dev.nytimes.com"
     healthcheck:
