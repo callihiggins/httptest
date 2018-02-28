@@ -811,26 +811,6 @@ function getScenarioEvents() {
       testId: 59
     },
     {
-      id: 'FunctionalTestScenarioRealEstateAPIRedirect',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'http://',
-      requestUri:
-        '/real-estate/api/personalization/saved-items-status?itemIds=123',
-      responseHeaderMatches: {
-        location:
-          'https://' +
-          suite.servername +
-          '/real-estate/api/personalization/saved-items-status?itemIds=123'
-      },
-      responseStatusCode: 301,
-      scenarioDescription: 'Test HTTPS redirect is working for real-estate api',
-      testId: 60
-    },
-    {
       id: 'FunctionalTestScenarioRealEstateAPIAuth',
       isDeployedInEnv: {
         prd: true,
@@ -845,7 +825,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: 401,
       scenarioDescription: 'Test HTTPS Auth is working for real-estate',
-      testId: 61
+      testId: 60
     }
   ];
   return scenarios;
