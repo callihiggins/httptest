@@ -29,3 +29,14 @@ sub vcl_fetch {
     }
   }
 }
+
+sub vcl_error {
+    if (req.http.X-PageType == "newsgraphics-gcs") {
+        # Fake behavior of Amazon's WebsiteRedirectLocation
+        if (obj.status == 761) {
+          set obj.http.Location = req.http.Location;
+          set obj.status = 301;
+          return(deliver);
+        }
+    }
+}
