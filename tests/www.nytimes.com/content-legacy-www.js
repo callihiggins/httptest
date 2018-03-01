@@ -447,26 +447,6 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/projects/2012/snow-fall/',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; interactive; Snowfall',
-      testId: 25
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
         stg: true,
         dev: true,
         sbx: false
@@ -480,26 +460,6 @@ function getScenarioEvents() {
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; Learning Network',
       testId: 26
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/newsgraphics/2014/01/05/poverty-map/',
-      responseHeadersPresent: ['x-cache'],
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-pagetype': 'legacy-cacheable'
-      },
-      responseHeadersNotPresent: ['x-frame-options'],
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; newsgraphics',
-      testId: 28
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',

@@ -267,8 +267,8 @@ sub vcl_recv {
         call set_www_article_backend;
     }
 
-    if ( req.http.x-environment != "prd" &&
-          ( req.url ~ "^/newsgraphics/" || req.url ~ "^/projects/" )
+    if (   req.url ~ "^/newsgraphics/"
+        || req.url ~ "^/projects/"
     ) {
       set req.http.X-PageType = "newsgraphics-gcs";
       set req.http.x-nyt-backend = "gcs_origin";
@@ -366,8 +366,7 @@ sub vcl_recv {
 
         // Send to GCP
         // Pass those paths to newsdev gke without caching
-        if ( req.url ~ "^/projects"
-                 || req.url ~ "^/svc/int"
+        if ( req.url ~ "^/svc/int"
         ) {
            set req.http.X-PageType = "newsdev-gke";
            set req.http.x-nyt-backend = "newsdev_k8s_gke";
@@ -437,9 +436,7 @@ sub vcl_recv {
 
     # various paths we CAN cache from legacy systems
     # relying on the netscaler to send it to the correct place for now
-    # in dev/stg, /newsgraphics/ path goes to GCS
-    if ( ( req.http.x-environment == "prd" && req.url ~ "^/newsgraphics/" )
-         || req.url ~ "^/regilite"
+    if ( req.url ~ "^/regilite"
          || ( req.url ~ "^/services/xml/" && req.url !~ "^/services/xml/rss/") ){
         set req.http.X-PageType = "legacy-cacheable";
         set req.http.x-nyt-backend = "www_fe";
