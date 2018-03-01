@@ -29,9 +29,9 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForRedirect',
       'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
+        'prd': false,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaders': {
