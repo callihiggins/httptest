@@ -551,14 +551,14 @@ backends:
       window: "4"
 
   - name: "projectvi_fe"
-    address: "alpha.nyt.net"
+    address: "alpha.gtm.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "30000"
     ssl_cert_hostname: "alpha.nyt.net"
     ssl_sni_hostname: "alpha.nyt.net"
     healthcheck:
-      host: "alpha.nyt.net"
+      host: "alpha.gtm.nyt.net"
       path: "/.healthcheck"
       check_interval: "20000"
       expected_response: "200"
