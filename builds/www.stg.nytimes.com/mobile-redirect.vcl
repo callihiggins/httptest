@@ -101,7 +101,9 @@ sub vcl_deliver {
               set req.http.x-do-mobile-redirect = "0";
             }
 
-            if (req.http.x-do-mobile-redirect == "1") {
+            // do not redirect to mobile domain on internal network
+            // for testing/validation before shutting down mobileweb stack.
+            if (req.http.x-do-mobile-redirect == "1" && !req.http.x-nyt-internal-access) {
                 if (   req.url ~ "^/$"
                     || req.url ~ "^/index.html"
                     || req.url ~ "^/19((5|7)[0-9]|9[6-9])/"
