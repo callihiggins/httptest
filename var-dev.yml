@@ -554,8 +554,9 @@ backends:
     first_byte_timeout: "10000"
     port: "443"
     use_ssl: "true"
-    ssl_cert_hostname: "www.dev.nytimes.com"
-    ssl_sni_hostname: "www.dev.nytimes.com"
+    ssl_check_cert: "true"
+    ssl_cert_hostname: "mwcm-pub.dev.nytimes.com"
+    ssl_sni_hostname: "mwcm-pub.dev.nytimes.com"
     healthcheck:
       host: "www.dev.nytimes.com"
       path: "/.status"
