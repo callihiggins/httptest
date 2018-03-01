@@ -548,7 +548,7 @@ backends:
     ssl_cert_hostname: "mwcm-pub.stg.nytimes.com"
     ssl_sni_hostname: "mwcm-pub.stg.nytimes.com"
     healthcheck:
-      host: "www.stg.nytimes.com"
+      host: "mwcm-pub.stg.nytimes.com"
       path: "/.status"
       check_interval: "5000"
       expected_response: "200"
