@@ -101,6 +101,14 @@ sub vcl_deliver {
               set req.http.x-do-mobile-redirect = "0";
             }
 
+            // do not redirect to mobile domain on internal network
+            // for testing mobileweb shutdown.
+            if (req.http.x-nyt-internal-access
+                && req.url.path !~ "\.amp\.html"
+                && req.http.x-nyt-backend != "projectvi_fe") {
+              set req.http.x-do-mobile-redirect = "0";
+            }
+
             if (req.http.x-do-mobile-redirect == "1") {
                 if (   req.url ~ "^/$"
                     || req.url ~ "^/index.html"
@@ -108,7 +116,7 @@ sub vcl_deliver {
                     || req.url ~ "^/2[0-9][0-9][0-9]/"
                     || req.url ~ "^/(aponline|reuters)/20([0-9][7-9]|[1-9][0-9])/"
                     || req.url ~ "^/pages/"
-                    || req.url ~ "^/(recommendations|timeswire)"
+                    || req.url ~ "^/(recommendations)"
                     || req.url ~ "^/best-sellers-books/overview.html"
                     || req.url ~ "^/interactive/blogs/directory.html"
                     || req.url ~ "^/most-popular-emailed"
