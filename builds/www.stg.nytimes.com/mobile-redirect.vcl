@@ -102,7 +102,7 @@ sub vcl_deliver {
             }
 
             // do not redirect to mobile domain on internal network
-            // for testing/validation before shutting down mobileweb stack.
+            // for testing mobileweb shutdown.
             if (req.http.x-nyt-internal-access
                 && req.url.path !~ "\.amp\.html"
                 && req.http.x-nyt-backend != "projectvi_fe") {
