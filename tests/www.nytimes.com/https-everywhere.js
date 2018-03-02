@@ -521,11 +521,11 @@ function getScenarioEvents() {
         dev: true,
       },
       requestScheme: 'http://',
-      requestUri: '/newsgraphics/2016/news-tips/',
+      requestUri: '/newsgraphics/2016/news-tips/index.html',
       responseHeaderMatches: {
         'referrer-policy': 'no-referrer',
         location:
-          'https://' + suite.servername + '/newsgraphics/2016/news-tips/'
+          'https://' + suite.servername + '/newsgraphics/2016/news-tips/index.html'
       },
       responseStatusCode: 301,
       scenarioDescription: 'Test HTTPS Everywhere; news-tips; non-secure',
