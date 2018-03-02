@@ -539,7 +539,7 @@ function getScenarioEvents() {
         dev: true,
       },
       requestScheme: 'https://',
-      requestUri: '/newsgraphics/2016/news-tips/',
+      requestUri: '/newsgraphics/2016/news-tips/index.html',
       responseHeaderMatches: {
         'referrer-policy': 'no-referrer'
       },
