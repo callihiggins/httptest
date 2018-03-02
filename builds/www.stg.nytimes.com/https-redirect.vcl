@@ -48,7 +48,8 @@ sub vcl_recv {
         || req.http.X-PageType == "vi-interactive"
         || req.url ~ "^/ads/RE/"
         || req.url ~ "^/elections"
-        || req.url ~ "^/newsgraphics/2017"
+        || ( req.http.X-PageType == "newsgraphics-gcs"
+                && req.url ~ "^/newsgraphics/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2017 - future
         || req.http.X-PageType == "games-web"
         || req.http.X-PageType == "paidpost"
         || req.http.X-PageType == "programs-service"
