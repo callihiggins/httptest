@@ -11,8 +11,8 @@ acl internal {
   "202.147.18.187"/32;
 
   # Washington DC Users
-  "208.37.145.16/29";
-  "50.234.243.0/29";
+  "208.37.145.16"/29;
+  "50.234.243.0"/29;
 
   # older DC, remove after WAN cutover is complete, DV-1250
   "206.205.234.166"/32;
