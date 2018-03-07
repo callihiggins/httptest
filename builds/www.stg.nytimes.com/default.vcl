@@ -55,6 +55,7 @@ include "backend-adx-static";
 # TODO: replace all of the above with these during refactor
 include "route-cms-static-assets";
 include "route-ads-static-assets";
+include "route-sitemap";
 include "backend-profile-fe";
 
 # vi allocation and routing
@@ -92,6 +93,7 @@ sub vcl_recv {
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
   call recv_route_cms_static_assets;
   call recv_route_ads_static_assets;
+  call recv_route_sitemap;
 
 /* any recv/request functionality defined in terraform
  * as well as anything Fastly needs to do magically
