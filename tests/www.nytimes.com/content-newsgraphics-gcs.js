@@ -69,7 +69,7 @@ function getScenarioEvents() {
         'sbx': false,
       },
       requestScheme: 'https://',
-      requestUri: '/newsgraphics/2018/02/06/sticky.js',
+      requestUri: '/newsgraphics/2018/healthcheck.txt',
       responseHeaderMatches: {
         "x-pagetype": "newsgraphics-gcs"
       },
@@ -86,7 +86,7 @@ function getScenarioEvents() {
         'sbx': false,
       },
       requestScheme: 'https://',
-      requestUri: '/newsgraphics/2017/11/06/star-wars-article/02e8a03df52f881971fd9b79eb6ef2a9fce6604f/sticky.js',
+      requestUri: '/newsgraphics/2017/healthcheck.txt',
       responseHeaderMatches: {
         "x-pagetype": "newsgraphics-gcs"
       },
