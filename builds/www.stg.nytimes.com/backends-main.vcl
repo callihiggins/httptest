@@ -443,7 +443,8 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    if( req.url ~ "^/svc/collections"){
+    if (   req.url  ~ "^/svc/collections"
+        && req.url !~ "^/svc/collections/v1/publish(.*)") {
         set req.http.X-PageType = "collections-svc";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;

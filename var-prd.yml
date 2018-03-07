@@ -193,6 +193,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "collections_svc"
+    address: "ce-collections-prd.dv.nyt.net"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "ce-collections-prd.dv.nyt.net"
+    ssl_sni_hostname: "ce-collections-prd.dv.nyt.net"
+    healthcheck:
+      host: "ce-collections-prd.dv.nyt.net"
+      path: "/svc/collections/v1/publish/scoop/www.nytimes.com/section/sports/hockey?limit=0"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
   - name: "content_api"
     address: "content.api.nytimes.com"
     between_bytes_timeout: "10000"

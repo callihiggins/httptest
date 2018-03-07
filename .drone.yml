@@ -5,7 +5,7 @@ pipeline:
   # dev specific domain templating (dev + sandboxes)
   # someday if .sbx.nytimes.com is not Vi alpha service only we will iterate
   dev-template:
-    image: hairyhenderson/gomplate:v2.2.0
+    image: hairyhenderson/gomplate:v2.3.0
     environment:
       - env=dev
     commands:
@@ -18,7 +18,7 @@ pipeline:
   # the terraform configuration to the service, it essentially runs: terraform plan
   # it's ok that this uses dev service for everything, just a plan to validate tf
   syntax_check:
-    image: jmccann/drone-terraform:4.0-0.10.7 
+    image: jmccann/drone-terraform:4.0-0.10.7
     plan: true
     init_options:
       backend-config:
@@ -119,7 +119,7 @@ pipeline:
   #     event: pull_request
 
   stg-template:
-    image: hairyhenderson/gomplate:v2.2.0
+    image: hairyhenderson/gomplate:v2.3.0
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-stg.yml
       - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-stg.yml
@@ -152,7 +152,7 @@ pipeline:
 
   # -----
   prd-template:
-    image: hairyhenderson/gomplate:v2.2.0
+    image: hairyhenderson/gomplate:v2.3.0
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-prd.yml
       - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-prd.yml
@@ -184,5 +184,5 @@ pipeline:
     channel: fastly-builds
     username: fastly-www
     secrets: [SLACK_WEBHOOK]
-    when: 
+    when:
       status: [success, failure, blocked]
