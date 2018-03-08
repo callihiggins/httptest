@@ -7,7 +7,6 @@ sub recv_route_sitemap {
     } else {
       set req.url = "/stg/mars/pub" req.url;
     }
-    set req.http.x-nyt-sitemap-url = req.url;
   }
 }
 

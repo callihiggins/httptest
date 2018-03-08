@@ -10,8 +10,8 @@ function getScenarioEvents() {
     {
       id: "FunctionalTestScenarioDefinitionForSitemap",
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
