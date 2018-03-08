@@ -191,7 +191,7 @@ sub vcl_recv {
     }
 
     // route the path's below between WWW ESX and Legacy WWW GKE
-    if (   req.url ~ "^/favicon.ico"
+    if ( req.url ~ "^/favicon.ico"
         || req.url ~ "^/robots.txt"
         || req.url ~ "^/crossdomain.xml"
         || req.url ~ "^/.well-known/"
@@ -220,6 +220,19 @@ sub vcl_recv {
         || req.url ~ "^/travel/"
         || req.url ~ "^/webapps/"
         || req.url ~ "^/your-money/"
+        || ((req.url ~ "^/travel"
+            || req.url ~ "^/recipes"
+            || req.url ~ "^/most-popular" # for most-popular, most-popular-emailed, most-popular-viewed
+            || req.url ~ "^/technology/personaltech/"
+            || req.url ~ "^/keyword/"
+            || req.url ~ "^/gst/tmagazine/video"
+            || req.url ~ "^/svc/movies/"
+            || req.url ~ "^/premium/"
+            || req.url ~ "^/events"
+            || req.url ~ "^/theater"
+            )
+            && req.http.x-environment ~ "(dev|stg)"
+           )
     ) {
         set req.http.X-PageType = "legacy";
         set req.backend = F_www_legacy_gke;

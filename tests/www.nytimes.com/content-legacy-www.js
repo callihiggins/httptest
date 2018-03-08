@@ -750,7 +750,211 @@ function getScenarioEvents() {
       responseStatusCode: [200],
       scenarioDescription: 'Test oembed api',
       testId: 50
-    }
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/travel',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /travel served from Legacy GKE Backend',
+      testId: 51
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/recipes/1016392/recipe.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /recipes served from Legacy GKE Backend',
+      testId: 52
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/most-popular',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /most-popular served from Legacy GKE Backend',
+      testId: 53
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/most-popular-emailed?derp=1',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /most-popular-emailed served from Legacy GKE Backend',
+      testId: 54
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/most-popular-viewed?awesome=yup',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /most-popular-viewed served from Legacy GKE Backend',
+      testId: 55
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/technology/personaltech/cellphones/overview.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /technology/personaltech/ served from Legacy GKE Backend',
+      testId: 56
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/gst/tmagazine/video/index.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /gst/tmagazine/video served from Legacy GKE Backend',
+      testId: 57
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/keyword/habitat',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [404],
+      scenarioDescription: 'Test /keyword served from Legacy GKE Backend',
+      testId: 58
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/premium/xword/puzzles.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /premium served from Legacy GKE Backend',
+      testId: 59
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/svc/movies/mymovietimes.html?output_type=html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [403],
+      scenarioDescription: 'Test /svc/movies served from Legacy GKE Backend',
+      testId: 60
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/events/dance/christopher-caines-33623.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /events served from Legacy GKE Backend',
+      testId: 61
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/theater',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /theater served from Legacy GKE Backend',
+      testId: 62
+    },
   ];
 
   return scenarios;
