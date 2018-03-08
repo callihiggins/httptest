@@ -3,11 +3,10 @@ sub recv_route_sitemap {
     set req.http.x-pagetype = "sitemap";
     set req.http.x-nyt-backend = "sitemap";
     if (req.http.x-environment == "prd") {
-      set req.url = regsub(req.url, "^", "/prd/mars/pub");
+      set req.url = regsub(req.url, "^/sitemaps", "/prd/mars/pub/sitemaps");
     } else {
-      set req.url = regsub(req.url, "^", "/stg/mars/pub");
+      set req.url = regsub(req.url, "^/sitemaps", "/stg/mars/pub/sitemaps");
     }
-    set req.http.x-foo-bar = req.url;
   }
 }
 
