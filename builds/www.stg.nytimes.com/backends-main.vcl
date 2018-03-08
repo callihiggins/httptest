@@ -173,7 +173,7 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
     // userinfo routing (userinfo is the only svc under web-products)
-    if (   (req.url ~ "^/svc/web-products/") && (req.http.x-environment != "prd") ) {
+    if ( req.url ~ "^/svc/web-products/") {
         set req.http.X-PageType = "service";
         set req.http.x-nyt-backend = "www_userinfo";
         call set_www_userinfo_backend;
@@ -443,7 +443,8 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    if( req.url ~ "^/svc/collections"){
+    if (   req.url  ~ "^/svc/collections"
+        && req.url !~ "^/svc/collections/v1/publish(.*)") {
         set req.http.X-PageType = "collections-svc";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
