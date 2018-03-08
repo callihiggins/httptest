@@ -600,7 +600,7 @@ backends:
     use_ssl: "false"
     healthcheck:
       host: "search.ec2.nytimes.com.s3.amazonaws.com"
-      path: "/stg/mars/pub/sitemaps/sitemap_news/sitemap.xml.gz"
+      path: "/stg/mars/pub/status.txt"
       check_interval: "10000"
       expected_response: "200"
       initial: "5"

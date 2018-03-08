@@ -207,6 +207,7 @@ sub vcl_miss {
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
+  call miss_pass_route_sitemap;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -237,6 +238,7 @@ sub vcl_pass {
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
+  call miss_pass_route_sitemap;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
