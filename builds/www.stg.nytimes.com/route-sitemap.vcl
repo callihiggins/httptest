@@ -7,6 +7,7 @@ sub recv_route_sitemap {
     } else {
       set req.url = regsub(req.url, "^/sitemaps", "/stg/mars/pub/sitemaps");
     }
+    set req.http.x-nyt-sitemap-url = req.url;
   }
 }
 
