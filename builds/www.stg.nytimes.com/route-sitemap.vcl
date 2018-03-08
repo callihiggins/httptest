@@ -2,6 +2,7 @@ sub recv_route_sitemap {
   if (req.url.path ~ "^/sitemaps/") {
     set req.http.x-pagetype = "sitemap";
     set req.http.x-nyt-backend = "sitemap";
+    set req.http.host = "search.ec2.nytimes.com.s3.amazonaws.com";
     if (req.http.x-environment == "prd") {
       set req.url = "/prd/mars/pub" req.url;
     } else {
