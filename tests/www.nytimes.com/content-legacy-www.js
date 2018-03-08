@@ -955,6 +955,176 @@ function getScenarioEvents() {
       scenarioDescription: 'Test /theater served from Legacy GKE Backend',
       testId: 62
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/mem/theater/treview.html?res=9E04E3D61539F930A25750C0A967948260',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /mem/theater/ served from Legacy GKE Backend',
+      testId: 63
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/gst/theater/tdetails.html?id=1125015367926',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /gst/theater/ served from Legacy GKE Backend',
+      testId: 64
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/tv/show/185421/Four-Extraordinary-Women/overview',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /tv served from Legacy GKE Backend',
+      testId: 65
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/health/guides/disease/stroke-related-to-cocaine-use/overview.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /health/guides served from Legacy GKE Backend',
+      testId: 66
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/RealMedia/ads/adstream_jx.ads',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [404],
+      scenarioDescription: 'Test /RealMedia served from Legacy GKE Backend',
+      testId: 68
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/guests/directory/Social_Sciences/',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /guests/ served from Legacy GKE Backend',
+      testId: 69
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/new/2003/bmw/z4/100191224/roadtestarticle.html?articleId=99257',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /dev/ served from Legacy GKE Backend',
+      testId: 70
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/admin/index.php?login',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [404],
+      scenarioDescription: 'Test /admin/ served from Legacy GKE Backend',
+      testId: 71
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/administrator/components/com_catalog/',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /administrator/ served from Legacy GKE Backend',
+      testId: 72
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/allbusiness/AB4113314_primary.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /allbusiness/ served from Legacy GKE Backend',
+      testId: 73
+    },
   ];
 
   return scenarios;

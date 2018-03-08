@@ -230,6 +230,16 @@ sub vcl_recv {
             || req.url ~ "^/premium/"
             || req.url ~ "^/events"
             || req.url ~ "^/theater"
+            || req.url ~ "^/mem/theater/"
+            || req.url ~ "^/gst/theater/"
+            || req.url ~ "^/tv"
+            || req.url ~ "^/health/guides"
+            || req.url ~ "^/RealMedia"
+            || req.url ~ "^/guests/"
+            || req.url ~ "^/new/"
+            || req.url ~ "^/admin/"
+            || req.url ~ "^/administrator/"
+            || req.url ~ "^/allbusiness/"
             )
             && req.http.x-environment ~ "(dev|stg)"
            )
