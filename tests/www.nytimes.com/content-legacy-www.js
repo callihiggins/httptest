@@ -1125,6 +1125,244 @@ function getScenarioEvents() {
       scenarioDescription: 'Test /allbusiness/ served from Legacy GKE Backend',
       testId: 73
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/books/first/e/ellis-founding.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /books/ served from Legacy GKE Backend',
+      testId: 74
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/rss/asia.xml',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /rss/ served from Legacy GKE Backend',
+      testId: 75
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/nyt/rss/HomePage',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [404],
+      scenarioDescription: 'Test /nyt/rss/HomePage served from Legacy GKE Backend',
+      testId: 76
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/sports',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /sports served from Legacy GKE Backend',
+      testId: 77
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/logout?WT.nav=shell&action=Click&module=LogOut&pgtype=article&region=TopBar',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /logout served from Legacy GKE Backend',
+      testId: 78
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/hdleftnav',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /hdleftnav served from Legacy GKE Backend',
+      testId: 79
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/membercenter/sitehelp.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /membercenter served from Legacy GKE Backend',
+      testId: 80
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/thedailyoffer',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /thedailyoffer served from Legacy GKE Backend',
+      testId: 81
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/ref/health/healthguide/esn-Raynauds-expert.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /ref/ served from Legacy GKE Backend',
+      testId: 82
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/movie/review?res=9C05EEDE1E3BEF3ABC4E51DFB467838C659EDE',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /movie/ served from Legacy GKE Backend',
+      testId: 83
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/export_html/common/new_login_iframe.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [403],
+      scenarioDescription: 'Test /export_html/common/new_login_iframe.html served from Legacy GKE Backend',
+      testId: 84
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/mem/email-this.html?url=http%3A%2F%2Fwww.nytimes.com%2F1995%2F01%2F26%2Fnyregion%2Fwhen-cinderella-is-a-teacher-awards-are-the-glass-slipper-at-the-annual-ball.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /mem/email-this.html served from Legacy GKE Backend',
+      testId: 85
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/gst/movies/msearch.html',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /gst/movies/ served from Legacy GKE Backend',
+      testId: 86
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/websvc/user/data.json?callback=jQuery17105667599483611219',
+      responseHeaderMatches: {
+        'x-api-version': 'F-GL',
+        'x-pagetype': 'legacy',
+      },
+      responseStatusCode: [403],
+      scenarioDescription: 'Test /websvc served from Legacy GKE Backend',
+      testId: 87
+    },
   ];
 
   return scenarios;

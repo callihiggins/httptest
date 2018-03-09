@@ -240,6 +240,20 @@ sub vcl_recv {
             || req.url ~ "^/admin/"
             || req.url ~ "^/administrator/"
             || req.url ~ "^/allbusiness/"
+            || (req.url ~ "^/books/" && req.url !~ "^/books/best-sellers") #books but not best sellers
+            || req.url ~ "^/rss/"
+            || req.url ~ "^/nyt/rss/HomePage"
+            || req.url ~ "^/sports"
+            || req.url ~ "^/logout"
+            || req.url ~ "^/hdleftnav"
+            || (req.url ~ "^/membercenter" && req.url !~ "^/membercenter/emailus.html")
+            || req.url ~ "^/thedailyoffer"
+            || req.url ~ "^/ref/"
+            || req.url ~ "^/movie/"
+            || req.url ~ "^/export_html/common/new_login_iframe.html"
+            || req.url ~ "^/mem/email-this.html"
+            || req.url ~ "^/gst/movies/"
+            || req.url ~ "^/websvc"
             )
             && req.http.x-environment ~ "(dev|stg)"
            )
