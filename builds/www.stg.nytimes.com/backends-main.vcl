@@ -295,7 +295,7 @@ sub vcl_recv {
         || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
         || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
-        || req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/" // Route 1850-1979
+        || req.url ~ "^/(18[5-9][0-9]|19[0-8][0-9]|199[0-5])/" // Route 1850-1995
         || (   req.http.x-nyt-internal-access
             && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/")  // Route 1850-future
     ) {
