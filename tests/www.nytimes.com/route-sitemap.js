@@ -18,6 +18,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/sitemaps/sitemap_news/sitemap.xml.gz',
       responseHeaderMatches: {
+        'x-nyt-backend': 'sitemap',
         'x-pagetype': 'sitemap'
       },
       responseStatusCode: [200],
