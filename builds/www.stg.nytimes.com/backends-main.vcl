@@ -230,6 +230,30 @@ sub vcl_recv {
             || req.url ~ "^/premium/"
             || req.url ~ "^/events"
             || req.url ~ "^/theater"
+            || req.url ~ "^/mem/theater/"
+            || req.url ~ "^/gst/theater/"
+            || req.url ~ "^/tv"
+            || req.url ~ "^/health/guides"
+            || req.url ~ "^/RealMedia"
+            || req.url ~ "^/guests/"
+            || req.url ~ "^/new/"
+            || req.url ~ "^/admin/"
+            || req.url ~ "^/administrator/"
+            || req.url ~ "^/allbusiness/"
+            || (req.url ~ "^/books/" && req.url !~ "^/books/best-sellers") #books but not best sellers
+            || req.url ~ "^/rss/"
+            || req.url ~ "^/nyt/rss/HomePage"
+            || req.url ~ "^/sports"
+            || req.url ~ "^/logout"
+            || req.url ~ "^/hdleftnav"
+            || (req.url ~ "^/membercenter" && req.url !~ "^/membercenter/emailus.html")
+            || req.url ~ "^/thedailyoffer"
+            || req.url ~ "^/ref/"
+            || req.url ~ "^/movie/"
+            || req.url ~ "^/export_html/common/new_login_iframe.html"
+            || req.url ~ "^/mem/email-this.html"
+            || req.url ~ "^/gst/movies/"
+            || req.url ~ "^/websvc"
             )
             && req.http.x-environment ~ "(dev|stg)"
            )
@@ -271,7 +295,7 @@ sub vcl_recv {
         || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
         || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
         || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
-        || req.url ~ "^/(18[5-9][0-9]|19[0-7][0-9])/" // Route 1850-1979
+        || req.url ~ "^/(18[5-9][0-9]|19[0-8][0-9]|199[0-5])/" // Route 1850-1995
         || (   req.http.x-nyt-internal-access
             && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/")  // Route 1850-future
     ) {
