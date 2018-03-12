@@ -859,7 +859,7 @@ backends:
       timeout: "5000"
       window: "5"
 
-    - name: "search_suggest"
+  - name: "search_suggest"
     address: "ce-suggest-prd.dv.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
