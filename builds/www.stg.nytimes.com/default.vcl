@@ -55,6 +55,7 @@ include "backend-adx-static";
 # TODO: replace all of the above with these during refactor
 include "route-cms-static-assets";
 include "route-ads-static-assets";
+include "route-search-suggest-svc";
 include "route-collections-svc";
 include "route-sitemap";
 include "backend-profile-fe";
@@ -94,6 +95,7 @@ sub vcl_recv {
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
   call recv_route_cms_static_assets;
   call recv_route_ads_static_assets;
+  call recv_route_search_suggest_svc;
   call recv_route_collections_svc;
   call recv_route_sitemap;
 
@@ -208,6 +210,7 @@ sub vcl_miss {
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
   call miss_pass_route_sitemap;
+  call miss_pass_route_search_suggest;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -239,6 +242,7 @@ sub vcl_pass {
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
   call miss_pass_route_sitemap;
+  call miss_pass_route_search_suggest;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above

@@ -669,6 +669,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-search-suggest-svc"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-search-suggest-svc.vcl")}"
+    }
+    
+  vcl {
     name    = "route-collections-svc"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-collections-svc.vcl")}"
@@ -697,4 +703,5 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-profile-fe.vcl")}"
   }
+
 }

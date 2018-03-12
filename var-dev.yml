@@ -856,6 +856,23 @@ backends:
       timeout: "5000"
       window: "5"
 
+  - name: "search_suggest"
+    address: "ce-suggest-stg.dv.nyt.net"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "ce-suggest-stg.dv.nyt.net"
+    ssl_sni_hostname: "ce-suggest-stg.dv.nyt.net"
+    healthcheck:
+      host: "ce-suggest-stg.dv.nyt.net"
+      path: "/dv_esp_status"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "3"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
 # defaults for cloud storage bucket configs
 # these are overridable in per bucket configs below
 #   auth_key:     the dictionary key for the bucket access token
