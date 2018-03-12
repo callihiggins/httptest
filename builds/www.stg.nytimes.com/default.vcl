@@ -53,12 +53,10 @@ include "backend-adx-static";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
-include "route-esi-jsonp-callback";
 include "route-cms-static-assets";
 include "route-ads-static-assets";
 include "route-search-suggest-svc";
 include "route-collections-svc";
-include "route-community-svc";
 include "backend-profile-fe";
 
 # vi allocation and routing
@@ -72,6 +70,7 @@ include "origin-response-handler";
 include "set-cache-object-ttl";
 
 # begin other logic
+include "community-esi";
 include "https-redirect";
 include "device-detect";
 include "cookie";
@@ -93,12 +92,10 @@ sub vcl_recv {
 
   # begin routing logic
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
-  call recv_route_esi_jsonp_callback;
   call recv_route_cms_static_assets;
   call recv_route_ads_static_assets;
   call recv_route_search_suggest_svc;
   call recv_route_collections_svc;
-  call recv_route_community_svc;
 
 /* any recv/request functionality defined in terraform
  * as well as anything Fastly needs to do magically
@@ -109,7 +106,7 @@ sub vcl_recv {
  *
  * WARNING, we are mid refactor the above is not 100% true yet
  * There be dragons here. Pay close attention to the test suite
- * There are tons of routes in vcl files with their own vcl_recv in the includes!!
+ * There are tons of routes in vcl files with their own vcl_rev in the includes!!
  * Lets migrate them to route subs iteratively!
  */
 
@@ -155,12 +152,7 @@ sub vcl_recv {
       remove req.http.X-Original-Url;
   }
 
-  # if the route didn't specifically ask for a pass we will do a lookup
-  if (req.http.x-nyt-force-pass == "true") {
-    return(pass);
-  } else {
-    return(lookup);
-  }
+  return(lookup);
 }
 
 sub vcl_hash {
@@ -204,12 +196,17 @@ sub vcl_miss {
   ){
     unset bereq.http.X-Cookie;
   }
+  // cacheable community svc requests are ESI jsonp
+  // we can not compress these... yet...
+  if(req.http.X-PageType == "community-svc-cacheable"){
+    unset bereq.http.Accept-Encoding;
+    unset req.http.Accept-Encoding;
+  }
 
   # route specific miss logic goes here
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
-  call miss_pass_route_community_svc;
   call miss_pass_route_search_suggest;
 
   # unset headers to the origin that we use for vars
@@ -241,7 +238,6 @@ sub vcl_pass {
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
-  call miss_pass_route_community_svc;
   call miss_pass_route_search_suggest;
 
   # unset headers to the origin that we use for vars
@@ -278,7 +274,13 @@ sub vcl_fetch {
     set beresp.http.Vary = "Fastly-SSL";
   }
 
-  call fetch_route_community_svc;
+  # hacky, TODO: fix the backends
+  # unset headers for cacheable community requests
+  if (req.http.X-PageType == "community-svc-cacheable") {
+    esi;
+    unset beresp.http.Cache-Control;
+    unset beresp.http.Pragma;
+  }
 
   # hacky, TODO: fix the backends
   # legacy cacheable content should not be private
@@ -325,8 +327,6 @@ sub vcl_deliver {
 
 sub vcl_error {
 #FASTLY error
-
-  call error_route_esi_jsonp_callback; # CODE 900 HANDLER
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code

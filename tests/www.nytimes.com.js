@@ -38,7 +38,6 @@ require("./www.nytimes.com/service-video.js");
 require("./www.nytimes.com/content-video.js");
 require("./www.nytimes.com/route-cms-static-assets.js");
 require("./www.nytimes.com/route-collections-svc.js");
-require("./www.nytimes.com/route-community-svc.js");
 require("./www.nytimes.com/service-profile-fe.js");
 require("./www.nytimes.com/route-search-suggest-svc.js");
 require("./www.nytimes.com/redirect-zone-apex.js");
