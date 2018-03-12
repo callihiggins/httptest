@@ -537,12 +537,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "community-esi"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/community-esi.vcl")}"
-  }
-
-  vcl {
     name    = "geoip-location-consolidation-map-table"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-location-consolidation-map-table.vcl")}"
@@ -696,6 +690,18 @@ resource "fastly_service_v1" "www" {
     name    = "backend-profile-fe"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-profile-fe.vcl")}"
+  }
+
+  vcl {
+    name    = "route-community-svc"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-community-svc.vcl")}"
+  }
+
+  vcl {
+    name    = "route-esi-jsonp-callback"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-esi-jsonp-callback.vcl")}"
   }
 
 }

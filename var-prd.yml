@@ -67,10 +67,10 @@ healthcheck_defaults:
 #
 # each backend must provide a healthcheck for itself!
 # Add a blank line between each one for readability.
-# Pay attention to the above define defaults!
-# each backend must be named uniquely! (do a find befotr naming)
-# name your backend descriptivley for what app it is: don't use "web_app", do use "worldcup_fe"
-# each backend AUTOMATICALLY gets a condition attached checking req.http.x-nyt-pagetype == "backend_name"
+# Pay attention to the above defined defaults!
+# each backend must be named uniquely! (do a find before naming)
+# name your backend descriptively for what app it is: don't use "web_app", do use "worldcup_fe"
+# each backend AUTOMATICALLY gets a condition attached checking req.http.x-nyt-backend == "backend_name"
 
 # begin backend configuration for this service
 backends:
@@ -852,6 +852,23 @@ backends:
     healthcheck:
       host: "profile-fe.prd.nyt.net"
       path: "/status.txt"
+      check_interval: "5000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "5000"
+      window: "5"
+
+  - name: "community_svc"
+    address: "ugc-phpapi-pub-v1-n2-prd-1561102725.us-east-1.elb.amazonaws.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "www.nytimes.com"
+    ssl_sni_hostname: "www.nytimes.com"
+    healthcheck:
+      host: "www.nytimes.com"
+      path: "/svc/community/V3/requestHandler?cmd=GetBasicInfo"
       check_interval: "5000"
       expected_response: "200"
       initial: "2"
