@@ -49,47 +49,6 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/books/00/01/09/specials/joyce-ulysses.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; books',
-      testId: 6
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/export_html/common/new_login_iframe.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription:
-        'Test legacy; www cluster; export_html; login iframe',
-      testId: 7
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
         stg: true,
         dev: true,
         sbx: false
@@ -504,47 +463,6 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/ref/books/fiction-25-years.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; reference; books',
-      testId: 31
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/ref/movies/1000best.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [301],
-      scenarioDescription:
-        'Test legacy; www cluster; reference; 1000 best movies',
-      testId: 32
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
         stg: true,
         dev: true,
         sbx: false
@@ -754,7 +672,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -771,7 +689,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -788,7 +706,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -805,7 +723,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -822,7 +740,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -839,7 +757,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -856,7 +774,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -873,7 +791,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -890,7 +808,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -907,7 +825,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -924,7 +842,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -941,7 +859,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -958,7 +876,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -975,7 +893,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -992,7 +910,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1009,7 +927,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1026,7 +944,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1043,7 +961,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1060,7 +978,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1077,7 +995,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1094,7 +1012,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1111,7 +1029,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1128,7 +1046,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1145,7 +1063,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1162,7 +1080,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1179,7 +1097,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1196,7 +1114,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1213,7 +1131,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1230,7 +1148,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1247,7 +1165,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1264,7 +1182,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1281,7 +1199,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1298,7 +1216,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1315,7 +1233,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1332,7 +1250,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -1349,7 +1267,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },

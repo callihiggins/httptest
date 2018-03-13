@@ -68,79 +68,6 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/premium/xword/Dec1002.puz',
-      responseStatusCode: [303],
-      scenarioDescription:
-        'Test legacy; www-apps cluster; crosswords; puzzle file',
-      testId: 7
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/events',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [301],
-      scenarioDescription:
-        'Test legacy; www-apps cluster; events; landing page',
-      testId: '8p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/events/theater/broadway/fiddler-on-the-roof-28978.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [301],
-      scenarioDescription: 'Test legacy; www-apps cluster; events; event',
-      testId: '9p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/events/venues/joyce-theater-221.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [301],
-      scenarioDescription: 'Test legacy; www-apps cluster; events; venue',
-      testId: '10p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
         stg: true,
         dev: true,
         sbx: false
@@ -191,78 +118,6 @@ function getScenarioEvents() {
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www-apps cluster; service; RSS XML',
       testId: '13d'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/websvc/user/data.json',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www-apps cluster; service; user data',
-      testId: '14p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/websvc/user/data.json',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www-apps cluster; service; user data',
-      testId: '14d'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/technology/personaltech/desktops/overview.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www-apps cluster; technology',
-      testId: '15p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: false,
-        dev: true,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/technology/personaltech/desktops/overview.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www-apps cluster; technology',
-      testId: '15d'
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -339,44 +194,6 @@ function getScenarioEvents() {
       scenarioDescription:
         'Test legacy; www-apps cluster; weddings; announcement',
       testId: '17d'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
-      requestScheme: 'http://',
-      requestUri: '/mem/email-this.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www-apps cluster; email this form',
-      testId: '18p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: false,
-        dev: true,
-        sbx: false
-      },
-      requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
-      requestScheme: 'http://',
-      requestUri: '/mem/email-this.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4a'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www-apps cluster; email this form',
-      testId: '18d'
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
