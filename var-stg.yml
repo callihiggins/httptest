@@ -591,6 +591,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "sitemap"
+    address: "search.ec2.nytimes.com.s3.amazonaws.com"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "10000"
+    port: "80"
+    use_ssl: "false"
+    healthcheck:
+      host: "search.ec2.nytimes.com.s3.amazonaws.com"
+      path: "/stg/mars/pub/status.txt"
+      check_interval: "10000"
+      expected_response: "200"
+      initial: "5"
+      threshold: "3"
+      timeout: "10000"
+      window: "5"
+
   - name: "tbooks"
     address: "nytinsider.wordpress.com"
     between_bytes_timeout: "10000"

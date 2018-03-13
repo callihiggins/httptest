@@ -57,6 +57,7 @@ include "route-cms-static-assets";
 include "route-ads-static-assets";
 include "route-search-suggest-svc";
 include "route-collections-svc";
+include "route-sitemap";
 include "backend-profile-fe";
 
 # vi allocation and routing
@@ -96,6 +97,7 @@ sub vcl_recv {
   call recv_route_ads_static_assets;
   call recv_route_search_suggest_svc;
   call recv_route_collections_svc;
+  call recv_route_sitemap;
 
 /* any recv/request functionality defined in terraform
  * as well as anything Fastly needs to do magically
@@ -207,6 +209,7 @@ sub vcl_miss {
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
+  call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
 
   # unset headers to the origin that we use for vars
@@ -238,6 +241,7 @@ sub vcl_pass {
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
   call miss_pass_route_ads_static_assets;
+  call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
 
   # unset headers to the origin that we use for vars

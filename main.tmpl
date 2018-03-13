@@ -681,6 +681,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-sitemap"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-sitemap.vcl")}"
+  }
+
+  vcl {
     name    = "backend-newsroom-files-gcs"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsroom-files-gcs.vcl")}"
