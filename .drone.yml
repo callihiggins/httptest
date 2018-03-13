@@ -1,5 +1,13 @@
 pipeline:
 
+  # First step is yml file syntax check for all environment
+  yml_syntax_check:
+    image: inzinger/alpine-ruby:2.3
+    commands:
+      - ruby -r yaml -e 'YAML.parse(File.open("./var-dev.yml"))'
+      - ruby -r yaml -e 'YAML.parse(File.open("./var-stg.yml"))'
+      - ruby -r yaml -e 'YAML.parse(File.open("./var-prd.yml"))'
+
   # This step runs the template engine for sandbox and dev services
   # notice we are setting an env for dev that will trigger
   # dev specific domain templating (dev + sandboxes)
@@ -17,7 +25,7 @@ pipeline:
   # this step is used to validate the Terraform syntax before attempting apply
   # the terraform configuration to the service, it essentially runs: terraform plan
   # it's ok that this uses dev service for everything, just a plan to validate tf
-  syntax_check:
+  tf_syntax_check:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: true
     init_options:
@@ -29,7 +37,6 @@ pipeline:
     secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
     when:
       event: push
-
 
   # SANDBOX: uses branch sandbox01 to deploy to www.sandbox01
   sandbox01:
