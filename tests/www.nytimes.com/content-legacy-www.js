@@ -347,26 +347,6 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: true,
-        stg: false,
-        dev: false,
-        sbx: false
-      },
-      requestScheme: 'http://',
-      requestUri: '/indexes/2001/09/11/',
-      responseHeaderMatches: {
-        'x-api-version': 'F-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; indexes homepage',
-      testId: '23p'
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
         prd: false,
         stg: true,
         dev: true,
