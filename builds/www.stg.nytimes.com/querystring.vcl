@@ -3,6 +3,8 @@ sub vcl_recv {
 
     # remove query string parameters
     if (   req.url             !~ "/svc/web-products/" # except from API requests
+        && req.url             !~ "^/svc/community" # except /svc/community requests
+        && req.url             != "/esi/jsonp-callback" # except esi's for jsonp requests
         && req.http.X-PageType !~ "^blog" # except from blogs requests
         && req.http.X-PageType != "real-estate" # except from real estate requests
         && req.http.X-PageType != "newsletter" # except from newsletter requests
@@ -16,7 +18,6 @@ sub vcl_recv {
         && req.http.X-PageType != "interactive" # except from interactive requests
         && req.http.X-PageType != "newsdev-gke" #except from newsdev
         && req.http.X-PageType != "intl"
-        && req.http.X-PageType != "community-svc-cacheable"
         && req.http.X-PageType != "legacy-cacheable"
         && req.http.X-PageType != "collections-svc"
         && req.http.X-PageType != "watching"
@@ -179,8 +180,6 @@ sub vcl_recv {
             set req.url = querystring.filter_except(req.url, "query");
         } else if (req.http.X-PageType == "interactive") {
             set req.url = querystring.filter_except(req.url, "isHybrid");
-        } else if (req.http.X-PageType == "community-svc-cacheable"){
-            set req.url = querystring.filter(req.url, "_");
         } else if (req.http.X-PageType == "collections-svc"){
             set req.url = querystring.filter_except(req.url,
                 "dom" + querystring.filtersep() +

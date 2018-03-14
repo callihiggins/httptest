@@ -113,7 +113,8 @@ sub vcl_recv {
             || req.url ~ "^/ads/Spongecell/spongecell_iframe_buster.html"
             || req.url ~ "^/ads/Weborama/adrime_burst_2_0_0.htm"
             || req.url ~ "^/glogin"
-            || req.url.path ~ "^/images/" # make sure images is supported by HTTP and HTTPS
+            || req.url.path ~ "^/images/"
+            || req.url.path == "/esi/jsonp-callback"
         ) {
 
         // Urls already live over HTTPS
@@ -174,7 +175,6 @@ sub vcl_recv {
 
         }
     }
-
 }
 
 sub vcl_error {
