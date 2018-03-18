@@ -137,6 +137,7 @@ sub vcl_recv {
       || req.url ~ "^/svc/web-products/shell/"
       || req.url ~ "^/apc-stats/"
       || req.url ~ "^/phpinfo/"
+      || req.url ~ "\.php$"
   ) {
       set req.url = "/404.html";
   }
