@@ -254,6 +254,7 @@ sub vcl_recv {
         || req.url ~ "^/mem/email-this.html"
         || req.url ~ "^/gst/movies/"
         || req.url ~ "^/websvc"
+        || req.url ~ "^/js/nyt5/ab/abconfig.json"
     ) {
         set req.http.X-PageType = "legacy";
         set req.backend = F_www_legacy_gke;
@@ -437,12 +438,6 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    if ( req.url == "/js/nyt5/ab/abconfig.json" ) {
-        set req.http.X-PageType = "static";
-        set req.http.x-nyt-backend = "www_static";
-        call set_www_static_backend;
-    }
-
     # various paths we CAN cache from legacy systems
     # relying on the netscaler to send it to the correct place for now
     if ( req.url ~ "^/regilite"
@@ -596,10 +591,6 @@ sub set_www_realestate_backend_gke {
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
-}
-
-sub set_www_static_backend {
-    set req.backend = F_www_static;
 }
 
 sub set_blogs_fe_backend {

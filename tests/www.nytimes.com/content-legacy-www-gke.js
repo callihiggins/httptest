@@ -181,7 +181,24 @@ function getScenarioEvents() {
       responseStatusCode: [ 301 ],
       scenarioDescription: 'Test rss xml redirects served from Legacy GKE backend',
       testId: 11
-    }
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForStaticGKE',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/js/nyt5/ab/abconfig.json',
+      responseHeaderPattern: {
+        'x-api-version': /F-GL/,
+        'x-pagetype': /legacy/
+      },
+      responseStatusCode: [ 200 ],
+      scenarioDescription: 'Test abconfig.json file serving from Legacy GKE backend',
+      testId: 11
+    },
   ];
 
   return scenarios;

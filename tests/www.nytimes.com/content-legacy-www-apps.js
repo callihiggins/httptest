@@ -105,8 +105,8 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: false,
-        stg: false,
+        prd: true,
+        stg: true,
         dev: true,
         sbx: false
       },
@@ -115,7 +115,7 @@ function getScenarioEvents() {
       responseHeaderPattern: {
          'x-api-version': /F-(GL|4a)/,
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 404, 301],
       scenarioDescription: 'Test legacy; www-apps cluster; service; RSS XML',
       testId: '13d'
     },

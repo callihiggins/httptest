@@ -771,23 +771,6 @@ backends:
       timeout: "5000"
       window: "4"
 
-  - name: "www_static"
-    address: "static.stg.gtm.nytimes.com"
-    between_bytes_timeout: "10000"
-    connect_timeout: "10000"
-    first_byte_timeout: "10000"
-    port: "80"
-    use_ssl: "false"
-    healthcheck:
-      host: "static.stg.gtm.nytimes.com"
-      path: "/.status"
-      check_interval: "30000"
-      expected_response: "200"
-      initial: "10"
-      threshold: "8"
-      timeout: "10000"
-      window: "10"
-
   - name: "video_library"
     address: "times-video.stg.nyt.net"
     between_bytes_timeout: "10000"
