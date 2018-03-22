@@ -84,31 +84,6 @@ function getScenarioEvents()
         'ab7=WP_ProjectVi_www_hp=0*',
       ],
       'requestScheme': 'https://',
-      'requestUri': '/',
-      'responseHeaderContains': {
-        'set-cookie': 'vi_www_hp=z2',
-        'x-nyt-backend': 'homepage_fe',
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'ab7 => mw/mw/mw reported; homepage',
-      'testId': 40,
-    },
-
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestHeaderCookie': [
-        'ab7=WP_ProjectVi_www_hp=0*',
-      ],
-      'requestScheme': 'https://',
       'requestUri': '/section/nyregion',
       'responseHeaderContains': {
         'set-cookie': 'vi_www_hp=z2',

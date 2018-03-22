@@ -220,7 +220,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -241,7 +241,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -262,7 +262,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [
@@ -283,7 +283,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestHeaderCookie': [

@@ -27,8 +27,8 @@ sub vcl_recv {
             set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
 
             unset req.http.X-Cookie;
-
-            return(pass);
+            set req.http.x-nyt-force-pass = "true";
+            #return(pass);
         }
     }
 }

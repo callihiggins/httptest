@@ -10,7 +10,7 @@ sub recv_route_esi_jsonp_callback {
 
 }
 
-sub error_route_esi_jsonp_callback {
+sub error_900_route_esi_jsonp_callback {
 
   # this error code is used for jsonp callback caching
   # it will insert the original callback into the response

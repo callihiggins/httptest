@@ -12,8 +12,8 @@ function getScenarioEvents()
     'id': 'FunctionalTestScenarioDefinitionForEmbeddedInteractiveWithNytimesUA',
     'isDeployedInEnv': {
       'prd': true,
-      'stg': false,
-      'dev': false,
+      'stg': true,
+      'dev': true,
       'sbx': false,
     },
     'requestHeaders': {
@@ -22,7 +22,8 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive'
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
       'age',
@@ -42,7 +43,7 @@ function getScenarioEvents()
       'x-varnish',
       'x-frame-options',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Embedded Interactive with User-Agent',
     'testId': 1,
   },
@@ -50,8 +51,8 @@ function getScenarioEvents()
     'id': 'FunctionalTestScenarioDefinitionForEmbeddedInteractiveWithoutNytimesUA',
     'isDeployedInEnv': {
       'prd': true,
-      'stg': false,
-      'dev': false,
+      'stg': true,
+      'dev': true,
       'sbx': false,
     },
     'requestHeaders': {
@@ -59,7 +60,8 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive'
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
       'age',
@@ -78,7 +80,7 @@ function getScenarioEvents()
       'x-servername2',
       'x-varnish',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Embedded Interactive Without User-Agent',
     'testId': 2,
   },
@@ -86,8 +88,8 @@ function getScenarioEvents()
     'id': 'FunctionalTestScenarioDefinitionForEmbeddedInteractiveWithReferer',
     'isDeployedInEnv': {
       'prd': true,
-      'stg': false,
-      'dev': false,
+      'stg': true,
+      'dev': true,
       'sbx': false,
     },
     'requestHeaders': {
@@ -95,6 +97,10 @@ function getScenarioEvents()
     },
     'requestScheme': 'https://',
     'requestUri': '/interactive/2016/01/12/us/100000004069963.embedded.html?isHybrid=true',
+    'responseHeaderMatches': {
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
+    },
     'responseHeadersPresent': [
       'age',
       'x-cache',
@@ -113,7 +119,7 @@ function getScenarioEvents()
       'x-varnish',
       'x-frame-options',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Embedded Interactive With Query String Param',
     'testId': 3,
   },
@@ -128,9 +134,9 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/projects/modern-love/36-questions/',
     'responseHeaderMatches': {
-      'x-api-version': 'F-X',
       'x-frame-options': 'DENY',
       'x-pagetype': 'newsdev-gcs',
+      'x-nyt-backend': 'newsdev_gcs',
     },
     'responseHeadersPresent': [
       'age',
@@ -152,7 +158,7 @@ function getScenarioEvents()
       'x-varnish',
       'x-varnishcacheduration',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Interactive Modern Love',
     'testId': 4,
   },
@@ -161,15 +167,15 @@ function getScenarioEvents()
     'isDeployedInEnv': {
       'prd': true,
       'stg': true,
-      'dev': false,
+      'dev': true,
       'sbx': false,
     },
     'requestScheme': 'https://',
     'requestUri': '/svc/int/dialects',
     'responseHeaderMatches': {
-      'x-api-version': 'F-X',
       'x-frame-options': 'DENY',
       'x-pagetype': 'newsdev-gke',
+      'x-nyt-backend': 'newsdev_k8s_gke',
     },
     'responseHeadersPresent': [
       'x-cache',
@@ -191,7 +197,7 @@ function getScenarioEvents()
       'x-varnish',
       'x-varnishcacheduration',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Interactive Service Not Cacheable',
     'testId': 5,
   },
@@ -200,15 +206,15 @@ function getScenarioEvents()
     'isDeployedInEnv': {
       'prd': true,
       'stg': true,
-      'dev': false,
+      'dev': true,
       'sbx': false,
     },
     'requestScheme': 'https://',
     'requestUri': '/svc/int/godzown/test/65de670cf7510f4402c442fbd21b141e726f7159',
     'responseHeaderMatches': {
-      'x-api-version': 'F-X',
       'x-frame-options': 'DENY',
       'x-pagetype': 'newsdev-gke',
+      'x-nyt-backend': 'newsdev_k8s_gke',
     },
     'responseHeadersPresent': [
       'age',
@@ -231,7 +237,7 @@ function getScenarioEvents()
       'x-varnish',
       'x-varnishcacheduration',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Interactive Service Cacheable',
     'testId': 6,
   },
@@ -239,8 +245,8 @@ function getScenarioEvents()
     'id': 'FunctionalTestScenarioDefinitionForStandaloneInteractiveOnVi',
     'isDeployedInEnv': {
       'prd': true,
-      'stg': false,
-      'dev': false,
+      'stg': true,
+      'dev': true,
       'sbx': false,
     },
     'requestHeaders': {
@@ -248,7 +254,8 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-VI',
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
       'age',
@@ -268,14 +275,14 @@ function getScenarioEvents()
       'x-servername2',
       'x-varnish',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Interactive served by Vi',
     'testId': 7,
   },
   {
     'id': 'FunctionalTestScenarioDefinitionForStandaloneInteractiveOnVi',
     'isDeployedInEnv': {
-      'prd': false,
+      'prd': true,
       'stg': true,
       'dev': true,
       'sbx': false,
@@ -285,7 +292,8 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/multimedia/test-interactive-standalone-qa.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-VI',
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
       'age',
@@ -305,7 +313,7 @@ function getScenarioEvents()
       'x-servername2',
       'x-varnish',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Interactive served by Vi',
     'testId': 8,
   },
@@ -313,8 +321,8 @@ function getScenarioEvents()
     'id': 'FunctionalTestScenarioDefinitionForEmbeddedInteractiveOnNYT5',
     'isDeployedInEnv': {
       'prd': true,
-      'stg': false,
-      'dev': false,
+      'stg': true,
+      'dev': true,
       'sbx': false,
     },
     'requestHeaders': {
@@ -322,8 +330,8 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2016/01/12/us/100000004069963.embedded.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-VI',
-      'x-pagetype': 'vi-interactive'
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
       'age',
@@ -342,14 +350,14 @@ function getScenarioEvents()
       'x-servername2',
       'x-varnish',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Embedded Interactive served by NYT5',
     'testId': 9,
   },
   {
     'id': 'FunctionalTestScenarioDefinitionForEmbeddedInteractiveOnVi',
     'isDeployedInEnv': {
-      'prd': false,
+      'prd': true,
       'stg': true,
       'dev': true,
       'sbx': false,
@@ -359,8 +367,8 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/admin/100000005250034.embedded.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-VI',
-      'x-pagetype': 'vi-interactive'
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
       'age',
@@ -379,14 +387,14 @@ function getScenarioEvents()
       'x-servername2',
       'x-varnish',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Embedded Interactive served by Vi',
     'testId': 10,
   },
   {
     'id': 'FunctionalTestScenarioDefinitionForEmbeddedInteractiveOnVi',
     'isDeployedInEnv': {
-      'prd': false,
+      'prd': true,
       'stg': true,
       'dev': true,
       'sbx': false,
@@ -397,8 +405,8 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/admin/100000005194102.embedded.html',
     'responseHeaderMatches': {
-      'x-api-version': 'F-VI',
-      'x-pagetype': 'vi-interactive'
+      'x-pagetype': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
       'age',
@@ -418,7 +426,7 @@ function getScenarioEvents()
       'x-varnish',
       'x-frame-options',
     ],
-    'responseStatusCode': [200],
+    'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Embedded Interactive Served By Project Vi',
     'testId': 11,
   }

@@ -9,7 +9,8 @@ sub vcl_recv {
 
     # Bypass cache for logged-in WordPress users, etc.
     if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {
-      return (pass);
+      set req.http.x-nyt-force-pass = "true";
+      #return (pass);
     }
 
     unset req.http.Cookie;

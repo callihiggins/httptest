@@ -38,6 +38,7 @@ sub vcl_deliver {
         set resp.http.x-nyt-gmt-offset = req.http.x-nyt-gmt-offset;
         set resp.http.device_type = req.http.device_type;
         set resp.http.x-nyt-backend = req.http.x-nyt-backend;
+        set resp.http.x-nyt-force-pass = if(req.http.x-nyt-force-pass, req.http.x-nyt-force-pass, "false");
     }
 
     if (resp.http.X-API-Version) {

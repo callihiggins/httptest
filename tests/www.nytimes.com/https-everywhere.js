@@ -1,4 +1,4 @@
-var suite = require('/lib/suite.js');
+  var suite = require('/lib/suite.js');
 var scenarios = getScenarioEvents();
 suite.run(suite, scenarios);
 

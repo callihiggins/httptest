@@ -33,7 +33,7 @@ sub vcl_recv {
 
         # remove query string parameters
         set req.url = querystring.remove(req.url);
-        return(lookup);
+        #return(lookup);
 
     }
 }

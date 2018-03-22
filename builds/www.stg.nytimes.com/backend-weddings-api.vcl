@@ -6,7 +6,8 @@ sub vcl_recv {
             set req.http.x-nyt-backend = "du_weddings_api";
             call set_du_weddings_api_backend;
             set req.http.X-PageType = "weddings-api";
-            return(pass);
+            set req.http.x-nyt-force-pass = "true";
+            #return(pass);
         }
     }
 }

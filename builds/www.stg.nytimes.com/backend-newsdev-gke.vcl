@@ -9,7 +9,8 @@ sub vcl_recv {
       || req.url ~ "^/svc/int/grandmominator"
       || req.url ~ "^/svc/int/attribute"
     ) {
-      return (pass);
+      set req.http.x-nyt-force-pass = "true";
+      #return (pass);
     }
 
     // Querystring parameter filters

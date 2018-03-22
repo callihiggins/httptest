@@ -1,4 +1,4 @@
-sub vcl_recv {
+sub recv_https_redirect {
     /*
      * Items that are HTTPS internally only but not assigned to a phase
      */
@@ -51,8 +51,14 @@ sub vcl_recv {
         || ( req.http.X-PageType == "newsgraphics-gcs"
                 && req.url ~ "^/newsgraphics/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2017 - future
         || req.http.X-PageType == "games-web"
+        || req.http.x-pagetype == "games-assets"
+        || req.http.x-pagetype == "games-service"
         || req.http.X-PageType == "paidpost"
         || req.http.X-PageType == "programs-service"
+        || req.http.x-pagetype == "shaq-service"
+        || req.http.x-pagetype == "programs-gcs"
+        || req.http.x-pagetype == "video-media"
+        || req.http.x-pagetype == "adx-static"
         || (  req.http.X-PageType == "slideshow"
               && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || req.url ~ "^/newsletters"
@@ -115,6 +121,9 @@ sub vcl_recv {
             || req.url ~ "^/glogin"
             || req.url.path ~ "^/images/"
             || req.url.path == "/esi/jsonp-callback"
+            || req.http.x-pagetype == "mwcm"
+            # content that was previously passing early can do both protocols
+            || req.http.x-nyt-force-pass == "true"
         ) {
 
         // Urls already live over HTTPS
@@ -177,8 +186,8 @@ sub vcl_recv {
     }
 }
 
-sub vcl_error {
-    if (obj.status == 443) {
+sub error_770_perform_301_redirect {
+    if (obj.status == 770) {
         set obj.http.Location = obj.response;
         set obj.status = 301;
         set obj.response = "Moved Permanently";
@@ -189,10 +198,10 @@ sub vcl_error {
 
 sub redirect_to_http {
     set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
-    error 443 req.http.x-Redir-Url;
+    error 770 req.http.x-Redir-Url;
 }
 
 sub redirect_to_https {
     set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
-    error 443 req.http.x-Redir-Url;
+    error 770 req.http.x-Redir-Url;
 }

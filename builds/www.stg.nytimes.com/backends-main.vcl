@@ -121,8 +121,8 @@ sub vcl_recv {
             // We want to pass the NYT-S cookie only to the realestate backend
             // becasue of the 8k headers size limit
             set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
-
-            return(pass);
+            set req.http.x-nyt-force-pass = "true";
+            #return(pass);
         }
     }
 
@@ -220,7 +220,7 @@ sub vcl_recv {
         || req.url ~ "^/travel/"
         || req.url ~ "^/webapps/"
         || req.url ~ "^/your-money/"
-        ||  req.url ~ "^/travel"
+        || req.url ~ "^/travel"
         || req.url ~ "^/recipes"
         || req.url ~ "^/most-popular" # for most-popular, most-popular-emailed, most-popular-viewed
         || req.url ~ "^/technology/personaltech/"

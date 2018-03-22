@@ -19,9 +19,9 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/crosswords/index.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GW',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'games-web'
+        'x-pagetype': 'games-web',
+        'x-nyt-backend': 'games_web',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -31,15 +31,16 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: false,
-        stg: false,
+        prd: true,
+        stg: true,
         dev: true,
         sbx: false
       },
       requestScheme: 'https://',
       requestUri: '/crosswords/index.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GW'
+        'x-pagetype': 'games-web',
+        'x-nyt-backend': 'games_web',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -49,8 +50,8 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: false,
-        stg: false,
+        prd: true,
+        stg: true,
         dev: true,
         sbx: false
       },
@@ -58,7 +59,8 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/crosswords/archive/',
       responseHeaderMatches: {
-        'x-api-version': 'F-GW'
+        'x-pagetype': 'games-web',
+        'x-nyt-backend': 'games_web',
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www-apps cluster; crosswords; archive',
@@ -74,9 +76,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|4a)/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-pagetype': 'legacy',
+        'x-nyt-backend': 'www_legacy_gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
@@ -86,16 +88,16 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: false,
-        stg: false,
+        prd: true,
+        stg: true,
         dev: true,
         sbx: false
       },
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|4a)/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-pagetype': 'legacy',
+        'x-nyt-backend': 'www_legacy_gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
@@ -179,8 +181,8 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: false,
-        stg: false,
+        prd: true,
+        stg: true,
         dev: true,
         sbx: false
       },
@@ -198,7 +200,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true,
         sbx: false
@@ -207,9 +209,9 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/crosswords/archive/',
       responseHeaderMatches: {
-        'x-api-version': 'F-GW',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'games-web'
+        'x-pagetype': 'games-web',
+        'x-nyt-backend': 'games_web',
       },
       responseStatusCode: [200, 404, 403],
       scenarioDescription: 'Test legacy; www-apps cluster; crosswords; archive',

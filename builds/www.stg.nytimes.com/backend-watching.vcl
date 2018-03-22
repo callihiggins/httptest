@@ -18,7 +18,8 @@ sub vcl_recv {
             unset req.http.x-nyt-wpab;
 
             if (req.http.X-PageType == "watching-nocache") {
-                return(pass);
+                set req.http.x-nyt-force-pass = "true";
+                #return(pass);
             }
         }
     }

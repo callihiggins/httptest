@@ -333,6 +333,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/marketing/surveys/crs-15101-australia.html',
       'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
         'x-frame-options': 'DENY',
         'x-nyt-currency': 'USD',
         'x-nyt-continent': 'NA',
@@ -362,7 +364,7 @@ function getScenarioEvents()
         'x-servername2',
         'x-varnish',
       ],
-      'responseStatusCode': [200],
+      'responseStatusCode': [200,301],
       'scenarioDescription': 'WCM marketing/surveys header test',
       'testId': 16,
     },
@@ -444,8 +446,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-          'prd': true,
-          'stg': true,
+        'prd': true,
+        'stg': true,
         'dev': true,
         'sbx': false,
       },
@@ -517,7 +519,6 @@ function getScenarioEvents()
         'x-nyt-backend': 'mwcm',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
-        'x-api-version': 'F-WCM',
       },
       'responseHeadersPresent': [
         'age',
@@ -543,16 +544,15 @@ function getScenarioEvents()
         'x-varnish',
       ],
       'responseStatusCode': [200],
-      'scenarioDescription': 'WCM /subscriptions headers test',
+      'scenarioDescription': 'WCM /subscriptions headers test, validate routing',
       'testId': 22,
     },
-
-	{
+    {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -569,7 +569,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -586,7 +586,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestScheme': 'https://',
@@ -603,7 +603,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
+        'dev': false,
         'sbx': false,
       },
       'requestScheme': 'https://',

@@ -18,13 +18,6 @@ include "tips";
 include "migration-allocation";
 include "cloud-storage-bucket-headers";
 
-# the following files define the backends themselves
-# these are almost obsolete, nearly all backends are in terraform now
-include "backends-dev";
-include "backends-stg";
-include "backends-prd";
-# end defining backends
-
 # this adds vcl_error logic for logging purposes
 include "backend-init-vars";
 
@@ -104,6 +97,10 @@ sub vcl_recv {
   call recv_route_community_svc;
   call recv_route_sitemap;
 
+  # at this point all routing decisions should be final
+  # first check to see if we should redirect https<->http
+  call recv_https_redirect;
+
 /* any recv/request functionality defined in terraform
  * as well as anything Fastly needs to do magically
  * will be inserted by the below macro
@@ -124,14 +121,16 @@ sub vcl_recv {
   set req.http.X-NYT-Edge-CDN = "Fastly";
 
   if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
-    return(pass);
+    set req.http.x-nyt-force-pass = "true";
+    #return(pass);
   }
 
   # this block assumes default legacy backend
   # we cannot cache legacy by default
   if (   req.backend == F_www
       || req.backend == F_www_https) {
-    return(pass);
+    set req.http.x-nyt-force-pass = "true";
+    #return(pass);
   }
 
   // URIs not accessible via Varnish VIPs
@@ -152,12 +151,13 @@ sub vcl_recv {
 
   if (req.http.Authorization || req.http.Cookie) {
     /* Not cacheable by default */
-    return(pass);
+    set req.http.x-nyt-force-pass = "true";
+    #return(pass);
   }
 
   // removing because Symfony2 Request object will use this for getUri() if present
   if (req.http.X-Original-Url) {
-      remove req.http.X-Original-Url;
+    remove req.http.X-Original-Url;
   }
 
   # if the route didn't specifically ask for a pass we will do a lookup
@@ -335,7 +335,9 @@ sub vcl_deliver {
 sub vcl_error {
 #FASTLY error
 
-  call error_route_esi_jsonp_callback; # CODE 900 HANDLER
+  call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
+  call error_900_route_esi_jsonp_callback;
+
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code

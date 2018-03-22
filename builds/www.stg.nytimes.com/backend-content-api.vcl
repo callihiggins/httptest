@@ -16,8 +16,10 @@ sub vcl_recv {
         unset req.http.x-nyt-s;
         unset req.http.x-nyt-wpab;
 
-        return(pass);
-    } 
+        set req.http.x-nyt-force-pass = "true";
+        #return(pass);
+    }
+
     if (req.url.path ~ "^/svc/oembed/"){
         set req.http.X-PageType = "content-api-gae";
         set req.http.x-nyt-backend = "gae_oembed_content_api";
@@ -26,7 +28,7 @@ sub vcl_recv {
         unset req.http.x-nyt-edition;
         unset req.http.x-nyt-s;
         unset req.http.x-nyt-wpab;
-        return(lookup);
+        #return(lookup);
     }
 }
 

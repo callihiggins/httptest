@@ -18,7 +18,7 @@ function getScenarioEvents() {
       requestUri: '/amex',
       requestHeaderCookie: 'nyt.dv.nyt5-on-gke=1',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy'
       },
       responseStatusCode: [301],
@@ -36,7 +36,7 @@ function getScenarioEvents() {
       requestUri: '/.remote.txt',
       requestHeaderCookie: 'nyt.dv.nyt5-on-gke=1',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL-S',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy'
       },
       responseStatusCode: [200],
@@ -53,7 +53,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/js/selectWidget.js',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke',
         'content-type': 'application/javascript'
       },
@@ -71,7 +71,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/css/article.css',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200],
@@ -88,7 +88,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/bi/js/analytics/EventTracker.js',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL-S',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke',
         'content-type': 'application/javascript'
       },
@@ -105,9 +105,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/apple-app-site-association',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy',
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -123,9 +123,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/.well-known/apple-app-site-association',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy',
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test well-known served from WWW Legacy GKE',
@@ -140,9 +140,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/frommers/',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test frommers served from WWW Legacy GKE',
@@ -158,8 +158,8 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/svc/comscore/pvc.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy-gke'
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test comscore html served from Legacy GKE backend',
@@ -174,9 +174,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/services/xml/rss/nyt/Dealbook.xml',
-      responseHeaderPattern: {
-        'x-api-version': /F-GL/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy',
       },
       responseStatusCode: [ 301 ],
       scenarioDescription: 'Test rss xml redirects served from Legacy GKE backend',

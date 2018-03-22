@@ -21,6 +21,24 @@ sub vcl_recv {
         && req.http.X-PageType != "legacy-cacheable"
         && req.http.X-PageType != "collections-svc"
         && req.http.X-PageType != "watching"
+        && req.http.x-pagetype != "content-api"
+        && req.http.x-pagetype != "programs-service"
+        && req.http.x-pagetype != "programs-gcs"
+        && req.http.x-pagetype != "shaq-service"
+        && req.http.x-pagetype != "profile-fe"
+        && req.http.x-pagetype != "content-api-gae"
+        && req.http.x-pagetype != "games-service"
+        && req.http.x-pagetype != "games-phoenix"
+        && req.http.x-pagetype != "games-assets"
+        && req.http.x-pagetype != "games-web"
+        && req.http.x-pagetype != "mwcm"
+        && req.http.x-pagetype != "newsdev-gke"
+        && req.http.x-pagetype != "video-media"
+        # early lookups and passes were already skipping this previously
+        # routes will need to do this IN THEIR ROUTE in the future
+        # but for now we will not remove the query params for force passes
+        # TODO: WE REALLY NEED TO MOVE ALL THIS INTO THE ROUTES SPECIFICALLY
+        && req.http.x-nyt-force-pass != "true"
         && req.http.X-PageType != "switchboard"
         # except from NYT4 requests
         && (   req.backend != F_www
@@ -35,7 +53,8 @@ sub vcl_recv {
         if (req.http.X-PageType ~ "^blog") {
             // WP-7352: Don't deal with POST requests
             if (req.request == "POST") {
-                return(pass);
+                set req.http.x-nyt-force-pass = "true";
+                #return(pass);
             }
 
             set req.url = querystring.filter_except(req.url,

@@ -315,12 +315,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backends-dev"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-dev.vcl")}"
-  }
-
-  vcl {
     name    = "backend-newsdev-gcs"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-gcs.vcl")}"
@@ -372,12 +366,6 @@ resource "fastly_service_v1" "www" {
     name    = "https-redirect"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/https-redirect.vcl")}"
-  }
-
-  vcl {
-    name    = "backends-prd"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-prd.vcl")}"
   }
 
   vcl {
@@ -444,12 +432,6 @@ resource "fastly_service_v1" "www" {
     name    = "tips"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/tips.vcl")}"
-  }
-
-  vcl {
-    name    = "backends-stg"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-stg.vcl")}"
   }
 
   vcl {

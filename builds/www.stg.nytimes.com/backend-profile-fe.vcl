@@ -13,7 +13,8 @@ sub vcl_recv {
         unset req.http.x-nyt-wpab;
 
         // This backend need cookies and query params passed, so returning early
-        return(pass);
+        set req.http.x-nyt-force-pass = "true";
+        #return(pass);
     }
 }
 

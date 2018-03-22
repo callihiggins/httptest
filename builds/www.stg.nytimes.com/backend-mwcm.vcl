@@ -26,7 +26,7 @@ sub vcl_recv {
                 set req.url = querystring.remove(req.url);
             }
 
-            return(lookup);
+            #return(lookup);
         }
     }
 }

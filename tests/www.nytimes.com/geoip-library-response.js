@@ -26,7 +26,6 @@ function getScenarioEvents()
       },
       'responseHeadersPresent': [
         'age',
-        'cache-control',
         'x-api-version',
         'x-cache',
         'x-pagetype',

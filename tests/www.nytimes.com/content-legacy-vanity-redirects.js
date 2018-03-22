@@ -19,8 +19,8 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/save75',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-4',
         'x-pagetype': 'legacy',
+        'x-nyt-backend': 'www',
       },
       'responseStatusCode': [301, 404],
       'scenarioDescription': 'Test legacy; vanity redirect; </save75>',
@@ -37,8 +37,8 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/save75today',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-4',
         'x-pagetype': 'legacy',
+        'x-nyt-backend': 'www',
       },
       'responseStatusCode': [301, 404],
       'scenarioDescription': 'Test legacy; vanity redirect; </save75today>',
@@ -55,8 +55,8 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/save75percent',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-4',
         'x-pagetype': 'legacy',
+        'x-nyt-backend': 'www',
       },
       'responseStatusCode': [301, 404],
       'scenarioDescription': 'Test legacy; vanity redirect; </save75percent>',
@@ -73,8 +73,8 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/saveonsunday',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-4',
         'x-pagetype': 'legacy',
+        'x-nyt-backend': 'www',
       },
       'responseStatusCode': [301, 404],
       'scenarioDescription': 'Test legacy; vanity redirect; </saveonsunday>',
@@ -91,8 +91,8 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/savetoday',
       'responseHeaderMatches': {
-        'x-api-version': 'F-5-4',
         'x-pagetype': 'legacy',
+        'x-nyt-backend': 'www',
       },
       'responseStatusCode': [301, 404],
       'scenarioDescription': 'Test legacy; vanity redirect; </savetoday>',

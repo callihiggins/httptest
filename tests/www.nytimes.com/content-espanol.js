@@ -19,9 +19,9 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/es/',
       'responseHeaderMatches': {
-        'x-api-version': 'F-X',
         'x-frame-options': 'DENY',
         'x-pagetype': 'intl',
+        'x-nyt-backend': 'intl_gcp',
       },
       'responseHeadersPresent': [
         'age',
@@ -60,6 +60,10 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'location': /\d{4}\/\d{2}\/\d{2}\/.+?withcomments=true/,
       },
+      'responseHeaderMatches': {
+        'x-pagetype': 'intl',
+        'x-nyt-backend': 'intl_gcp',
+      },
       'scenarioDescription': 'Test WordPress query parameters in vanity URL redirects',
       'testId': 2,
     },
@@ -75,6 +79,10 @@ function getScenarioEvents()
       'requestUri': '/es/al-dia?mccr=ES',
       'responseHeaderPattern': {
         'location': /\d{4}\/\d{2}\/\d{2}\/.+?mccr=ES/,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'intl',
+        'x-nyt-backend': 'intl_gcp',
       },
       'scenarioDescription': 'Test analytics query parameters in vanity URL redirects',
       'testId': 3,

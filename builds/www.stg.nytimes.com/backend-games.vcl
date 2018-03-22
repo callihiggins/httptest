@@ -3,7 +3,8 @@ sub vcl_recv {
         if (req.url.path ~ "^/games/prototype/" || req.url.path ~ "^/svc/crosswords/" || req.url.path ~ "^/svc/games/(sudoku|set)/") {
             set req.http.X-PageType = "games-service";
             set req.http.x-nyt-backend = "games_svc";
-            return(pass);
+            set req.http.x-nyt-force-pass = "true";
+            #return(pass);
         }
 
         if ((req.http.x-environment == "stg" || req.http.x-environment == "dev") &&
@@ -18,7 +19,8 @@ sub vcl_recv {
 
               // Games need cookies and until we sort out our mess with cookies we need to pass requests
               // to the apps
-              return(pass);
+              set req.http.x-nyt-force-pass = "true";
+              #return(pass);
         }
 
         if (req.url.path ~ "^/crosswords" &&
@@ -34,7 +36,8 @@ sub vcl_recv {
 
             // Games need cookies and until we sort out our mess with cookies we need to pass requests
             // to the apps
-            return(pass);
+            set req.http.x-nyt-force-pass = "true";
+            #return(pass);
         }
 
         // We can treat the games assets as everything else and cache those (no cookies needed there)
@@ -51,7 +54,7 @@ sub vcl_recv {
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;
-            return(lookup);
+            #return(lookup);
         }
 
         // submissions page
@@ -62,7 +65,8 @@ sub vcl_recv {
             if (!req.http.Fastly-SSL) {
                 call redirect_to_https;
             }
-            return(pass);
+            set req.http.x-nyt-force-pass = "true";
+            #return(pass);
         }
     }
 }
