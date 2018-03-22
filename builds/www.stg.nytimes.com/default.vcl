@@ -57,6 +57,7 @@ include "route-esi-jsonp-callback";
 include "route-cms-static-assets";
 include "route-ads-static-assets";
 include "route-search-suggest-svc";
+include "route-switchboard";
 include "route-collections-svc";
 include "route-community-svc";
 include "route-sitemap";
@@ -98,6 +99,7 @@ sub vcl_recv {
   call recv_route_cms_static_assets;
   call recv_route_ads_static_assets;
   call recv_route_search_suggest_svc;
+  call recv_route_switchboard;
   call recv_route_collections_svc;
   call recv_route_community_svc;
   call recv_route_sitemap;

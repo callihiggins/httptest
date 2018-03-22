@@ -229,7 +229,6 @@ sub vcl_recv {
         || req.url ~ "^/svc/movies/"
         || req.url ~ "^/premium/"
         || req.url ~ "^/events"
-        || req.url ~ "^/theater"
         || req.url ~ "^/mem/theater/"
         || req.url ~ "^/gst/theater/"
         || req.url ~ "^/tv"

@@ -844,23 +844,6 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/theater',
-      responseHeaderMatches: {
-        'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
-      },
-      responseStatusCode: [301],
-      scenarioDescription: 'Test /theater served from Legacy GKE Backend',
-      testId: 62
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'http://',
       requestUri: '/mem/theater/treview.html?res=9E04E3D61539F930A25750C0A967948260',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
