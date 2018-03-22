@@ -55,30 +55,30 @@ sub vcl_recv {
             if (req.request == "POST") {
                 set req.http.x-nyt-force-pass = "true";
                 #return(pass);
+            } else {
+                set req.url = querystring.filter_except(req.url,
+                    "_jsonp" + querystring.filtersep() +
+                    "apagenum" + querystring.filtersep() +
+                    "apikey" + querystring.filtersep() +
+                    "apitoken" + querystring.filtersep() +
+                    "asset_id" + querystring.filtersep() +
+                    "author" + querystring.filtersep() +
+                    "callback" + querystring.filtersep() +
+                    "category" + querystring.filtersep() +
+                    "chromeless" + querystring.filtersep() +
+                    "entry" + querystring.filtersep() +
+                    "feed_type" + querystring.filtersep() +
+                    "homepage" + querystring.filtersep() +
+                    "nytapp" + querystring.filtersep() +
+                    "offset" + querystring.filtersep() +
+                    "p" + querystring.filtersep() +
+                    "pagewanted" + querystring.filtersep() +
+                    "post_not_in" + querystring.filtersep() +
+                    "post_type" + querystring.filtersep() +
+                    "posts_per_page" + querystring.filtersep() +
+                    "s" + querystring.filtersep() +
+                    "tag");
             }
-
-            set req.url = querystring.filter_except(req.url,
-                "_jsonp" + querystring.filtersep() +
-                "apagenum" + querystring.filtersep() +
-                "apikey" + querystring.filtersep() +
-                "apitoken" + querystring.filtersep() +
-                "asset_id" + querystring.filtersep() +
-                "author" + querystring.filtersep() +
-                "callback" + querystring.filtersep() +
-                "category" + querystring.filtersep() +
-                "chromeless" + querystring.filtersep() +
-                "entry" + querystring.filtersep() +
-                "feed_type" + querystring.filtersep() +
-                "homepage" + querystring.filtersep() +
-                "nytapp" + querystring.filtersep() +
-                "offset" + querystring.filtersep() +
-                "p" + querystring.filtersep() +
-                "pagewanted" + querystring.filtersep() +
-                "post_not_in" + querystring.filtersep() +
-                "post_type" + querystring.filtersep() +
-                "posts_per_page" + querystring.filtersep() +
-                "s" + querystring.filtersep() +
-                "tag");
         } else if (req.http.X-PageType == "real-estate") {
             set req.url = querystring.filter_except(req.url,
                 "agents" + querystring.filtersep() +

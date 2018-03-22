@@ -11,13 +11,13 @@ sub vcl_recv {
     if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {
       set req.http.x-nyt-force-pass = "true";
       #return (pass);
+    } else {
+      unset req.http.Cookie;
+      unset req.http.X-Cookie;
+      unset req.http.x-nyt-edition;
+      unset req.http.x-nyt-s;
+      unset req.http.x-nyt-wpab;
     }
-
-    unset req.http.Cookie;
-    unset req.http.X-Cookie;
-    unset req.http.x-nyt-edition;
-    unset req.http.x-nyt-s;
-    unset req.http.x-nyt-wpab;
   }
 }
 

@@ -11,27 +11,11 @@ sub vcl_recv {
     ) {
       set req.http.x-nyt-force-pass = "true";
       #return (pass);
-    }
-
-    // Querystring parameter filters
-    if ( req.url ~ "^/svc/int/balloteer" ) {
+    } else if ( req.url ~ "^/svc/int/balloteer" ) {
       set req.url = querystring.regfilter(req.url, "^(?!callback)");
     } else if ( req.url ~ "^/svc/int/dialects" ) {
       set req.url = querystring.regfilter(req.url, "^(?!a)");
     }
-
-    // Strip Cookie from GET and HEAD requests where it is not needed,
-    // to avoid passing unnecessarily large headers through to the backend.
-    if ( req.request == "GET" || req.request == "HEAD" ) {
-      unset req.http.Cookie;
-    }
-
-    // These are internal VCL headers and should not be sent to
-    // the backend for any type of request.
-    unset req.http.X-Cookie;
-    unset req.http.x-nyt-edition;
-    unset req.http.x-nyt-s;
-    unset req.http.x-nyt-wpab;
   }
 }
 

@@ -12,6 +12,7 @@ sub vcl_recv {
     if (   req.backend != F_www
         && req.backend != F_www_https
         && req.backend != F_www_userinfo
+        && req.http.x-nyt-force-pass != "true"
         && req.restarts == 0
         && ( req.request == "HEAD"
           || req.request == "GET"
