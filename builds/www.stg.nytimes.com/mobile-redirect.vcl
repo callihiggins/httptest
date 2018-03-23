@@ -101,14 +101,6 @@ sub vcl_deliver {
               set req.http.x-do-mobile-redirect = "0";
             }
 
-            // do not redirect to mobile domain on internal network
-            // for testing mobileweb shutdown.
-            if (req.http.x-nyt-internal-access
-                && req.url.path !~ "\.amp\.html"
-                && req.http.x-nyt-backend != "projectvi_fe") {
-              set req.http.x-do-mobile-redirect = "0";
-            }
-
             if (req.http.x-do-mobile-redirect == "1") {
                 if (   req.url ~ "^/$"
                     || req.url ~ "^/index.html"
