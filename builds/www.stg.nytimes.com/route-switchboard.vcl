@@ -1,6 +1,5 @@
 sub recv_route_switchboard {
-  if ( req.http.x-environment != "prd" &&
-    (req.url.path ~ "^/movies"
+  if ( req.url.path ~ "^/movies"
     || req.url.path ~ "^/best-sellers"
     || req.url.path ~ "^/theater"
     || req.url.path ~ "^/restaurants/"
