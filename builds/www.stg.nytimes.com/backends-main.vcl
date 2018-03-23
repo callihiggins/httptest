@@ -283,18 +283,9 @@ sub vcl_recv {
     }
 
     // article
-    if (   req.url ~ "^/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" // 2014-future
-        || req.url ~ "^/200[4-5]/" // 2004-2005
+    if (   req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
         || req.url ~ "^/(aponline|reuters)/" // wire sources
         || req.url ~ "^/blog/" // all blogposts
-        || req.url ~ "^/2001/01/20/technology/20ANNIVERSARY.html" // WP-16051
-        || req.url ~ "^/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html" // WP-16051
-        || req.url ~ "^/2006/01/29/fashion/sundaystyles/29LOVE.html" // WP-16010
-        || req.url ~ "^/2006/02/26/fashion/sundaystyles/26LOVE.html" // WP-16010
-        || req.url ~ "^/2006/11/12/fashion/12love.html" //WP-18092
-        || req.url ~ "^/(18[5-9][0-9]|19[0-8][0-9]|199[0-5])/" // Route 1850-1995
-        || (   req.http.x-nyt-internal-access
-            && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/")  // Route 1850-future
     ) {
         # route article traffic to gke only fallback to esx
         set req.http.X-PageType = "article";
