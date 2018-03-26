@@ -45,10 +45,10 @@ function getScenarioEvents() {
         dev: true,
       },
       requestScheme: 'http://',
-      requestUri: '/2014/01/01/world/test-suite.html',
+      requestUri: '/2014/01/01/world/test-suite.html?testqparam=foo',
       responseHeaderMatches: {
         location:
-          'https://' + suite.servername + '/2014/01/01/world/test-suite.html'
+          'https://' + suite.servername + '/2014/01/01/world/test-suite.html?testqparam=foo'
       },
       responseStatusCode: 301,
       scenarioDescription:

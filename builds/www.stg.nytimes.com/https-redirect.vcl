@@ -195,11 +195,11 @@ sub error_770_perform_301_redirect {
 }
 
 sub redirect_to_http {
-    set req.http.x-Redir-Url = "http://" + req.http.host + req.url;
+    set req.http.x-Redir-Url = "http://" + req.http.host + req.url.path + req.http.x-orig-querystring;
     error 770 req.http.x-Redir-Url;
 }
 
 sub redirect_to_https {
-    set req.http.x-Redir-Url = "https://" + req.http.host + req.url;
+    set req.http.x-Redir-Url = "https://" + req.http.host + req.url.path + req.http.x-orig-querystring;
     error 770 req.http.x-Redir-Url;
 }
