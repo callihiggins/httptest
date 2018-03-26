@@ -73,7 +73,7 @@ sub vcl_deliver {
                 set req.http.x-do-mobile-redirect = "0";
             }
             // homepage & sectionfronts specific logic
-            if (req.http.X-PageType == "homepage" || req.http.X-PageType == "sectionfront") {
+            if (req.http.X-PageType == "homepage") {
                 // cookie override
                 if (req.http.X-Cookie ~ "nyt-mobile=0") {
                     set req.http.x-do-mobile-redirect = "0";
@@ -123,6 +123,10 @@ sub vcl_deliver {
 
 sub do_redirect {
 
+    declare local var.orig_url STRING;
+
+    set var.orig_url = req.url.path + req.http.x-orig-querystring;
+
     // pick mobile host based on the Fastly service we're in
     if (req.http.x-environment == "dev") {
         set req.http.mobile-host = "mobile.dev.nytimes.com";
@@ -132,15 +136,7 @@ sub do_redirect {
         set req.http.mobile-host = "mobile.nytimes.com";
     }
 
-    if (req.http.X-OriginalUri ~ "\?") {
-        set resp.http.Location =
-              "https://" + req.http.mobile-host + "/redirect?to-mobile="
-            + urlencode("https://" + req.http.host + req.http.X-OriginalUri + "&referer=" + req.http.referer);
-    } else {
-        set resp.http.Location =
-              "https://" + req.http.mobile-host + "/redirect?to-mobile="
-            + urlencode("https://" + req.http.host + req.http.X-OriginalUri + "?referer=" + req.http.referer);
-    }
+    set resp.http.Location = "https://" + req.http.mobile-host + querystring.filter(var.orig_url, "nytmobile");
     set resp.status = 303;
     set resp.response = "See Other";
     set resp.http.x-device-type = req.http.device_type;

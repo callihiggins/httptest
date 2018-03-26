@@ -40,7 +40,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; iPhone; does redirect',
@@ -97,7 +97,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; querystring "nytmobile=1"; desktop; does redirect',
@@ -118,7 +118,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; querystring "nytmobile=1"; iPhone; does redirect',
@@ -247,7 +247,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; cookie "nyt-mobile=1"; desktop; does redirect',
@@ -268,7 +268,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; cookie "nyt-mobile=1"; iPhone; does redirect',
@@ -289,7 +289,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=0',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?nytmobile=0&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; querystring "nytmobile=0"; cookie "nyt-mobile=1"; desktop; does redirect',
@@ -310,7 +310,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=0',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?nytmobile=0&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; querystring "nytmobile=0"; cookie "nyt-mobile=1"; iPhone; does redirect',
@@ -331,7 +331,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; querystring "nytmobile=1"; cookie "nyt-mobile=1"; desktop; does redirect',
@@ -352,7 +352,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; querystring "nytmobile=1"; cookie "nyt-mobile=1"; iPhone; does redirect',
@@ -373,7 +373,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; valid NYT-S cookie; iPhone; does redirect',
@@ -394,7 +394,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; cookie "nyt-mobile=1"; valid NYT-S cookie; desktop; does redirect',
@@ -415,7 +415,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; cookie "nyt-mobile=1"; valid NYT-S cookie; iPhone; does redirect',
@@ -436,7 +436,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=0',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/?nytmobile=0&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; homepage; querystring "nytmobile=0"; cookie "nyt-mobile=1"; valid NYT-S cookie; iPhone; does redirect',

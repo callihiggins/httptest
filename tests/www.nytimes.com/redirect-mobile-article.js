@@ -40,7 +40,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/2016/01/01/us/slug.html',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/2016/01/01/us/slug.html?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/2016/01/01/us/slug.html',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; article; 2016; iPhone; does redirect',
@@ -98,7 +98,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/2016/01/01/us/slug.html?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/2016/01/01/us/slug.html?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/2016/01/01/us/slug.html',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; article; 2016; querystring "nytmobile=1"; desktop; does redirect',
@@ -118,7 +118,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/2016/01/01/us/slug.html?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/2016/01/01/us/slug.html?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/2016/01/01/us/slug.html',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; article; 2016; querystring "nytmobile=1"; iPhone; does redirect',
@@ -176,7 +176,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/1996/01/01/us/slug.html?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/1996/01/01/us/slug.html?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/1996/01/01/us/slug.html',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; article; 1996; querystring "nytmobile=1"; valid NYT-S cookie; iPhone; does redirect',

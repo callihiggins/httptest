@@ -40,7 +40,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html?referer='),
+        'location': 'https://' + suite.hosts.mobile + '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; slideshow; 2015; iPhone; does redirect',
@@ -98,7 +98,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; slideshow; 2015; querystring "nytmobile=1"; desktop; does redirect',
@@ -118,7 +118,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html?nytmobile=1',
       'responseHeaderMatches': {
-        'location': 'https://' + suite.hosts.mobile + '/redirect?to-mobile=' + encodeURIComponent('https://' + suite.servername + '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html?nytmobile=1&referer='),
+        'location': 'https://' + suite.hosts.mobile + '/slideshow/2015/06/22/dining/headline-for-chipotle-slide-show-goes-here/s/Haner-Chipotle-Feature-slide-9YN6.html',
       },
       'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect; slideshow; 2015; querystring "nytmobile=1"; iPhone; does redirect',
