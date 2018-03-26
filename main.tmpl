@@ -663,6 +663,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-add-svc"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-add-svc.vcl")}"
+  }
+
+  vcl {
     name    = "route-sitemap"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-sitemap.vcl")}"

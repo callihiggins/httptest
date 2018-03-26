@@ -57,6 +57,7 @@ sub recv_https_redirect {
         || req.http.x-pagetype == "programs-gcs"
         || req.http.x-pagetype == "video-media"
         || req.http.x-pagetype == "adx-static"
+        || req.http.x-pagetype == "add-svc"
         || (  req.http.X-PageType == "slideshow"
               && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || req.url ~ "^/newsletters"

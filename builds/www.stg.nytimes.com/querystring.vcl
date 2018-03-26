@@ -20,6 +20,7 @@ sub vcl_recv {
         && req.http.X-PageType != "intl"
         && req.http.X-PageType != "legacy-cacheable"
         && req.http.X-PageType != "collections-svc"
+        && req.http.X-PageType != "add-svc"
         && req.http.X-PageType != "watching"
         && req.http.x-pagetype != "content-api"
         && req.http.x-pagetype != "programs-service"

@@ -52,6 +52,7 @@ include "route-ads-static-assets";
 include "route-search-suggest-svc";
 include "route-switchboard";
 include "route-collections-svc";
+include "route-add-svc";
 include "route-community-svc";
 include "route-sitemap";
 include "route-recommendations";
@@ -97,6 +98,7 @@ sub vcl_recv {
   call recv_route_switchboard;
   call recv_route_collections_svc;
   call recv_route_community_svc;
+  call recv_route_add_svc;
   call recv_route_sitemap;
   call recv_route_recommendations;
 
