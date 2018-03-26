@@ -1,5 +1,6 @@
 require("./www.nytimes.com/response-headers.js");
 require("./www.nytimes.com/nyt-a.js");
+require("./www.nytimes.com/nyt-gdpr.js");
 require("./www.nytimes.com/content-homepage.js");
 require("./www.nytimes.com/content-article.js");
 require("./www.nytimes.com/content-collection.js");

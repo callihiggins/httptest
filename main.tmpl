@@ -585,6 +585,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "gdpr"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/gdpr.vcl")}"
+  }
+
+  vcl {
     name    = "error-pages"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/error-pages.vcl")}"

@@ -41,6 +41,13 @@ sub vcl_deliver {
         set resp.http.x-nyt-force-pass = if(req.http.x-nyt-force-pass, req.http.x-nyt-force-pass, "false");
     }
 
+    # set a GDPR header for folks in Europe
+    if (req.http.x-nyt-continent == "EU") {
+        set resp.http.X-GDPR = "1";
+    } else {
+        set resp.http.X-GDPR = "0";
+    }
+
     if (resp.http.X-API-Version) {
         set resp.http.X-API-Version = "F-" + resp.http.X-API-Version;
     } else {
@@ -63,7 +70,7 @@ sub vcl_deliver {
     // Content Security Policy for HTTPS
     if (req.http.Fastly-SSL) {
         declare local var.csp STRING;
-        
+
         set var.csp = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
         set resp.http.Content-Security-Policy = var.csp;
     }

@@ -75,6 +75,7 @@ include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
 include "uuid";
+include "gdpr";
 include "response-headers";
 # GKE fallback to NYT4 logic
 include "backend-nyt4-fallback";

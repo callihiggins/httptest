@@ -29,6 +29,7 @@ function getScenarioEvents()
         'x-pagetype',
         'x-served-by',
         'x-varnishcacheduration',
+        'x-gdpr',
       ],
       'responseHeadersNotPresent': [
         'nnCoection',
