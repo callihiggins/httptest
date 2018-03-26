@@ -35,7 +35,7 @@ sub recv_https_redirect {
         || req.url ~ "^/pages/(politics|opinion|world|dining)"        // NYT4 sectionfronts
         || req.http.X-PageType == "real-estate"
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
-        || req.url.path == "/recommendations"
+        || req.http.X-PageType == "recommendations"
         || req.http.X-PageType == "times-journeys"
         || req.http.X-PageType == "times-journeys-students"
         || req.http.X-PageType == "askwell"

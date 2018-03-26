@@ -54,6 +54,7 @@ include "route-switchboard";
 include "route-collections-svc";
 include "route-community-svc";
 include "route-sitemap";
+include "route-recommendations";
 include "backend-profile-fe";
 
 # vi allocation and routing
@@ -97,6 +98,7 @@ sub vcl_recv {
   call recv_route_collections_svc;
   call recv_route_community_svc;
   call recv_route_sitemap;
+  call recv_route_recommendations;
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http

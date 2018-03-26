@@ -704,4 +704,10 @@ resource "fastly_service_v1" "www" {
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-esi-jsonp-callback.vcl")}"
   }
 
+  vcl {
+    name    = "route-recommendations"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-recommendations.vcl")}"
+  }
+
 }

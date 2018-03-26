@@ -893,6 +893,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "recommendations"
+    address: "per-rec-page-prd-iad1-108516-2-540381815.us-east-1.elb.amazonaws.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "recommendations.nytimes.com"
+    ssl_sni_hostname: "recommendations.nytimes.com"
+    healthcheck:
+      host: "per-rec-page-prd-iad1-108516-2-540381815.us-east-1.elb.amazonaws.com"
+      path: "/healthcheck"
+      check_interval: "10000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "10000"
+      window: "5"
+      
   - name: "switchboard"
     address: "54.163.240.77"
     between_bytes_timeout: "10000"

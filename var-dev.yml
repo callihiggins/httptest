@@ -873,6 +873,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "recommendations"
+    address: "per-rec-page-dev-iad2-108513-2-931132799.us-east-1.elb.amazonaws.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "recommendations.dev.iad2.nyt.net"
+    ssl_sni_hostname: "recommendations.dev.iad2.nyt.net"
+    healthcheck:
+      host: "per-rec-page-dev-iad2-108513-2-931132799.us-east-1.elb.amazonaws.com"
+      path: "/healthcheck"
+      check_interval: "10000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "5000"
+      window: "5"
+      
   - name: "switchboard"
     address: "ec2-54-162-129-148.compute-1.amazonaws.com"
     between_bytes_timeout: "10000"
