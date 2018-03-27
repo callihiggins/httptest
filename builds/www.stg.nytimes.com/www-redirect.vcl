@@ -21,7 +21,7 @@ sub vcl_recv {
         && (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" 
             || req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"))
     {
-        set req.http.x-Redir-Url = "https://www.nytimes.com" + regsub(req.url, "\.amp\.html","\.html");
+        set req.http.x-Redir-Url = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
         error 750 req.http.x-Redir-Url;
     }
 
