@@ -17,6 +17,13 @@ sub vcl_recv {
         error 750 req.http.x-Redir-Url;
     }
 
+    if (req.url ~ "\.amp\.html"
+        && (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" 
+            || req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"))
+    {
+        set req.http.x-Redir-Url = "https://www.nytimes.com" + regsub(req.url, "\.amp\.html","\.html");
+        error 750 req.http.x-Redir-Url;
+    }
 
     # remove query strings like login-email, login-password etc.
     if (req.url ~ "[?&]login-[^=&]+") {
