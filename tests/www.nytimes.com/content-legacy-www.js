@@ -288,7 +288,7 @@ function getScenarioEvents() {
         'x-api-version': /F-(GL)/,
         'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [301, 404],
+      responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; humans file',
       testId: 20
     },

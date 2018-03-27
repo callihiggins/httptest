@@ -1,4 +1,4 @@
-  var suite = require('/lib/suite.js');
+var suite = require('/lib/suite.js');
 var scenarios = getScenarioEvents();
 suite.run(suite, scenarios);
 
@@ -12,7 +12,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/',
@@ -29,7 +29,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/',
@@ -42,13 +42,15 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/2014/01/01/world/test-suite.html?testqparam=foo',
       responseHeaderMatches: {
         location:
-          'https://' + suite.servername + '/2014/01/01/world/test-suite.html?testqparam=foo'
+          'https://' +
+          suite.servername +
+          '/2014/01/01/world/test-suite.html?testqparam=foo'
       },
       responseStatusCode: 301,
       scenarioDescription:
@@ -60,7 +62,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/2014/01/01/world/test-suite.html',
@@ -74,7 +76,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/2013/01/01/world/test-suite.html',
@@ -87,7 +89,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/2013/01/01/world/test-suite.html',
@@ -100,7 +102,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/section/sports',
@@ -117,7 +119,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/section/sports',
@@ -131,7 +133,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/video',
@@ -147,7 +149,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/video',
@@ -160,7 +162,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaders: {
         Host: 'cityroom.blogs.nytimes.com'
@@ -180,7 +182,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaders: {
         Host: 'cityroom.blogs.nytimes.com'
@@ -197,7 +199,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/watching',
@@ -214,7 +216,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/watching',
@@ -228,7 +230,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/real-estate/find-a-home',
@@ -245,7 +247,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestScheme: 'https://',
@@ -260,7 +262,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/real-estate/find-a-home',
@@ -274,7 +276,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestScheme: 'http://',
@@ -292,7 +294,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/aponline/2014/01/01/world/test-suite.html',
@@ -312,7 +314,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/reuters/2014/01/01/world/test-suite.html',
@@ -326,7 +328,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
+        dev: false
       },
       requestHeaders: {
         Host: 'lens.blogs.nytimes.com'
@@ -346,7 +348,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
+        dev: false
       },
       requestHeaders: {
         Host: 'krugman.blogs.nytimes.com'
@@ -363,7 +365,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/guides/well/how-to-start-running',
@@ -381,7 +383,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/es/',
@@ -398,7 +400,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/es/',
@@ -412,7 +414,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
       requestScheme: 'http://',
@@ -430,7 +432,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaderCookie: [
         'NYT-S=' + suite.cookies.nyt_s,
@@ -448,7 +450,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
       requestScheme: 'https://',
@@ -463,7 +465,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestHeaderCookie: [
@@ -485,7 +487,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/tips?test=true',
@@ -502,7 +504,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/tips?test=true',
@@ -518,14 +520,16 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2016/news-tips/index.html',
       responseHeaderMatches: {
         'referrer-policy': 'no-referrer',
         location:
-          'https://' + suite.servername + '/newsgraphics/2016/news-tips/index.html'
+          'https://' +
+          suite.servername +
+          '/newsgraphics/2016/news-tips/index.html'
       },
       responseStatusCode: 301,
       scenarioDescription: 'Test HTTPS Everywhere; news-tips; non-secure',
@@ -536,7 +540,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2016/news-tips/index.html',
@@ -552,7 +556,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: false,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri:
@@ -567,7 +571,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: false,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri:
@@ -588,7 +592,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
+        dev: false
       },
       requestScheme: 'https://',
       requestUri:
@@ -603,7 +607,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
+        dev: false
       },
       requestScheme: 'http://',
       requestUri:
@@ -624,7 +628,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/elections/results/president',
@@ -637,7 +641,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/elections/results/president',
@@ -653,7 +657,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/newsletters/realestate',
@@ -666,7 +670,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/newsletters/realestate',
@@ -682,7 +686,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri:
@@ -697,7 +701,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri:
@@ -718,7 +722,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/pages/cooking/cooking-email/index.html',
@@ -731,7 +735,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/pages/cooking/cooking-email/index.html',
@@ -751,7 +755,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/pages/todaysheadlines/index.html',
@@ -764,7 +768,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/pages/todaysheadlines/index.html',
@@ -782,11 +786,11 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/interactive/us/faces-of-the-dead.html',
-      responseStatusCode: 200,
+      responseStatusCode: 301,
       scenarioDescription: 'Test HTTPS Everywhere; 9/11 interactive; secure',
       testId: 58
     },
@@ -795,7 +799,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/interactive/us/faces-of-the-dead.html',
