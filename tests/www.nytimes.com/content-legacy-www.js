@@ -18,8 +18,8 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/library/film/gravesend-film-review.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; archive movie review',
@@ -37,8 +37,6 @@ function getScenarioEvents() {
       requestUri: '/autos',
       responseHeaderMatches: {
         'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
         'x-pagetype': 'legacy'
       },
       responseStatusCode: [200, 404],
@@ -57,10 +55,10 @@ function getScenarioEvents() {
       requestUri:
         '/external/idg/2009/10/08/08idg-how-dangerous-could-a-hacked-robot-possibly-be-72478.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; external authorship; IDG, variant 1 of 2',
       testId: 8
@@ -75,13 +73,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/idg/IDG_852573C4006938800025748D0064C292.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; external authorship; IDG, variant 2 of 2',
       testId: 9
@@ -96,13 +92,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/inc_com/feature_inc1176120030123_legal.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; external authorship; Inc.com',
       testId: 10
@@ -119,10 +113,10 @@ function getScenarioEvents() {
       requestUri:
         '/external/readwriteweb/2011/03/31/31readwriteweb-google-ditches-barcodes-for-nfc-36542.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; external authorship; ReadWriteWeb',
       testId: 11
@@ -139,10 +133,10 @@ function getScenarioEvents() {
       requestUri:
         '/external/venturebeat/2011/09/26/26venturebeat-healthtaps-social-network-of-5000-doctors-is-6641.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; external authorship; VentureBeat',
       testId: 12
@@ -158,8 +152,8 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/favicon.ico',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; favicon file',
@@ -175,11 +169,10 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/googleglass',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-frame-options': /DENY/,
+        'x-pagetype': /legacy-gke/
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; Google glass',
@@ -196,10 +189,10 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/features/common/moth/homepage.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; feature; homepage MOTH',
       testId: 15
     },
@@ -213,13 +206,12 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/guantanamo-files/',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-frame-options': /DENY/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; feature; Guantanamo files',
       testId: 16
@@ -235,10 +227,10 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/features/includes/us/politics/politicsSubNavigation.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; feature; subnavigation file',
       testId: 17
@@ -253,14 +245,12 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/content/help/account/account.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy',
-        location: 'https://help.nytimes.com'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/,
+        location: /https:\/\/help.nytimes.com/
       },
-      responseStatusCode: [301],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; help pages, variant 1 of 2',
       testId: 18
@@ -275,13 +265,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/info/help/letters.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; help pages, variant 2 of 2',
       testId: 19
@@ -296,13 +284,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/humans.txt',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; humans file',
       testId: 20
     },
@@ -316,13 +302,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/iht/2007/08/12/opinion/IHT-12edcohen.1.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; IHT opinion page',
       testId: 21
     },
@@ -337,10 +321,10 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/imagepages/2016/11/22/us/23trump7_hp.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; imagepages',
       testId: 22
     },
@@ -355,10 +339,10 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/indexes/2001/09/11/',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; indexes homepage',
       testId: '23s'
     },
@@ -372,13 +356,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/interactive/2013/12/19/us/politics/19nsa-review.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; interactive; default',
       testId: 24
     },
@@ -393,10 +375,10 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/learning/general/onthisday/bday/0418.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; Learning Network',
       testId: 26
     },
@@ -412,10 +394,10 @@ function getScenarioEvents() {
       requestUri:
         '/packages/html/magazine/2009-inauguration-gallery/index.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; packages; HTML',
       testId: 29
     },
@@ -429,13 +411,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/redesign/',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; redesign page',
       testId: 30
     },
@@ -450,10 +430,10 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/robots.txt',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 301, 404],
+      responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; robots file',
       testId: 33
     },
@@ -469,8 +449,6 @@ function getScenarioEvents() {
       requestUri: '/svc/web/localstorage.html',
       responseHeaderMatches: {
         'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
         'x-pagetype': 'legacy'
       },
       responseStatusCode: [200, 404],
@@ -489,8 +467,6 @@ function getScenarioEvents() {
       requestUri: '/svc/most-popular/getdata.json',
       responseHeaderMatches: {
         'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
         'x-pagetype': 'legacy'
       },
       responseStatusCode: [200, 404],
@@ -507,13 +483,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/services/json/sectionfronts/upshot/index.json',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www cluster; service; section front JSON',
       testId: 38
@@ -528,13 +502,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/sitemap_news.xml.gz',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; sitemap; news',
       testId: 39
     },
@@ -550,7 +522,7 @@ function getScenarioEvents() {
       requestUri: '/specials/olympics/history/1968-ousted.html',
       responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-pagetype': /legacy-gke/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; special; Olympics',
@@ -569,7 +541,7 @@ function getScenarioEvents() {
         '/fodors/top/features/travel/destinations/asia/china/hongkong/fdrs_feat_74_7.html',
       responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-pagetype': /legacy-gke/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; travel; Fodors',
@@ -588,7 +560,7 @@ function getScenarioEvents() {
         '/cwire/2011/10/12/12climatewire-as-anti-climate-groups-activities-rise-so-do-14988.html',
       responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-pagetype': /legacy-gke/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
@@ -608,7 +580,7 @@ function getScenarioEvents() {
         '/gwire/2011/10/07/07greenwire-yellowstone-bear-euthanized-after-dna-evidence-52234.html',
       responseHeaderPattern: {
         'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy/
+        'x-pagetype': /legacy-gke/
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; wire service; Greenwire',
@@ -624,13 +596,11 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/uwire/uwire_HOQZ080120051652566.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-cache': 'MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'legacy'
+      responseHeaderPattern: {
+        'x-api-version': /F-(GL)/,
+        'x-pagetype': /legacy-gke/
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; wire service; uwire',
       testId: 49
     },
@@ -660,7 +630,7 @@ function getScenarioEvents() {
       requestUri: '/travel',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /travel served from Legacy GKE Backend',
@@ -677,7 +647,7 @@ function getScenarioEvents() {
       requestUri: '/recipes/1016392/recipe.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /recipes served from Legacy GKE Backend',
@@ -694,7 +664,7 @@ function getScenarioEvents() {
       requestUri: '/most-popular',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /most-popular served from Legacy GKE Backend',
@@ -711,10 +681,11 @@ function getScenarioEvents() {
       requestUri: '/most-popular-emailed?derp=1',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /most-popular-emailed served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /most-popular-emailed served from Legacy GKE Backend',
       testId: 54
     },
     {
@@ -728,10 +699,11 @@ function getScenarioEvents() {
       requestUri: '/most-popular-viewed?awesome=yup',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /most-popular-viewed served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /most-popular-viewed served from Legacy GKE Backend',
       testId: 55
     },
     {
@@ -745,10 +717,11 @@ function getScenarioEvents() {
       requestUri: '/technology/personaltech/cellphones/overview.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /technology/personaltech/ served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /technology/personaltech/ served from Legacy GKE Backend',
       testId: 56
     },
     {
@@ -762,10 +735,11 @@ function getScenarioEvents() {
       requestUri: '/gst/tmagazine/video/index.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /gst/tmagazine/video served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /gst/tmagazine/video served from Legacy GKE Backend',
       testId: 57
     },
     {
@@ -779,7 +753,7 @@ function getScenarioEvents() {
       requestUri: '/keyword/habitat',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
       scenarioDescription: 'Test /keyword served from Legacy GKE Backend',
@@ -796,7 +770,7 @@ function getScenarioEvents() {
       requestUri: '/premium/xword/puzzles.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /premium served from Legacy GKE Backend',
@@ -813,7 +787,7 @@ function getScenarioEvents() {
       requestUri: '/svc/movies/mymovietimes.html?output_type=html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [403],
       scenarioDescription: 'Test /svc/movies served from Legacy GKE Backend',
@@ -830,7 +804,7 @@ function getScenarioEvents() {
       requestUri: '/events/dance/christopher-caines-33623.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /events served from Legacy GKE Backend',
@@ -844,10 +818,11 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/mem/theater/treview.html?res=9E04E3D61539F930A25750C0A967948260',
+      requestUri:
+        '/mem/theater/treview.html?res=9E04E3D61539F930A25750C0A967948260',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /mem/theater/ served from Legacy GKE Backend',
@@ -864,7 +839,7 @@ function getScenarioEvents() {
       requestUri: '/gst/theater/tdetails.html?id=1125015367926',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /gst/theater/ served from Legacy GKE Backend',
@@ -881,7 +856,7 @@ function getScenarioEvents() {
       requestUri: '/tv/show/185421/Four-Extraordinary-Women/overview',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /tv served from Legacy GKE Backend',
@@ -895,10 +870,11 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/health/guides/disease/stroke-related-to-cocaine-use/overview.html',
+      requestUri:
+        '/health/guides/disease/stroke-related-to-cocaine-use/overview.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /health/guides served from Legacy GKE Backend',
@@ -915,7 +891,7 @@ function getScenarioEvents() {
       requestUri: '/RealMedia/ads/adstream_jx.ads',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
       scenarioDescription: 'Test /RealMedia served from Legacy GKE Backend',
@@ -932,7 +908,7 @@ function getScenarioEvents() {
       requestUri: '/guests/directory/Social_Sciences/',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /guests/ served from Legacy GKE Backend',
@@ -946,10 +922,11 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/new/2003/bmw/z4/100191224/roadtestarticle.html?articleId=99257',
+      requestUri:
+        '/new/2003/bmw/z4/100191224/roadtestarticle.html?articleId=99257',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /dev/ served from Legacy GKE Backend',
@@ -966,7 +943,7 @@ function getScenarioEvents() {
       requestUri: '/admin/index.php?login',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
       scenarioDescription: 'Test /admin/ served from Legacy GKE Backend',
@@ -983,10 +960,11 @@ function getScenarioEvents() {
       requestUri: '/administrator/components/com_catalog/',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /administrator/ served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /administrator/ served from Legacy GKE Backend',
       testId: 72
     },
     {
@@ -1000,7 +978,7 @@ function getScenarioEvents() {
       requestUri: '/allbusiness/AB4113314_primary.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /allbusiness/ served from Legacy GKE Backend',
@@ -1017,7 +995,7 @@ function getScenarioEvents() {
       requestUri: '/books/first/e/ellis-founding.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /books/ served from Legacy GKE Backend',
@@ -1034,7 +1012,7 @@ function getScenarioEvents() {
       requestUri: '/rss/asia.xml',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /rss/ served from Legacy GKE Backend',
@@ -1051,10 +1029,11 @@ function getScenarioEvents() {
       requestUri: '/nyt/rss/HomePage',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
-      scenarioDescription: 'Test /nyt/rss/HomePage served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /nyt/rss/HomePage served from Legacy GKE Backend',
       testId: 76
     },
     {
@@ -1068,7 +1047,7 @@ function getScenarioEvents() {
       requestUri: '/sports',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /sports served from Legacy GKE Backend',
@@ -1082,10 +1061,11 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/logout?WT.nav=shell&action=Click&module=LogOut&pgtype=article&region=TopBar',
+      requestUri:
+        '/logout?WT.nav=shell&action=Click&module=LogOut&pgtype=article&region=TopBar',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /logout served from Legacy GKE Backend',
@@ -1102,7 +1082,7 @@ function getScenarioEvents() {
       requestUri: '/hdleftnav',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /hdleftnav served from Legacy GKE Backend',
@@ -1119,7 +1099,7 @@ function getScenarioEvents() {
       requestUri: '/membercenter/sitehelp.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /membercenter served from Legacy GKE Backend',
@@ -1136,7 +1116,7 @@ function getScenarioEvents() {
       requestUri: '/thedailyoffer',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /thedailyoffer served from Legacy GKE Backend',
@@ -1153,7 +1133,7 @@ function getScenarioEvents() {
       requestUri: '/ref/health/healthguide/esn-Raynauds-expert.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /ref/ served from Legacy GKE Backend',
@@ -1170,7 +1150,7 @@ function getScenarioEvents() {
       requestUri: '/movie/review?res=9C05EEDE1E3BEF3ABC4E51DFB467838C659EDE',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /movie/ served from Legacy GKE Backend',
@@ -1187,10 +1167,11 @@ function getScenarioEvents() {
       requestUri: '/export_html/common/new_login_iframe.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [403],
-      scenarioDescription: 'Test /export_html/common/new_login_iframe.html served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /export_html/common/new_login_iframe.html served from Legacy GKE Backend',
       testId: 84
     },
     {
@@ -1201,13 +1182,15 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/mem/email-this.html?url=http%3A%2F%2Fwww.nytimes.com%2F1995%2F01%2F26%2Fnyregion%2Fwhen-cinderella-is-a-teacher-awards-are-the-glass-slipper-at-the-annual-ball.html',
+      requestUri:
+        '/mem/email-this.html?url=http%3A%2F%2Fwww.nytimes.com%2F1995%2F01%2F26%2Fnyregion%2Fwhen-cinderella-is-a-teacher-awards-are-the-glass-slipper-at-the-annual-ball.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /mem/email-this.html served from Legacy GKE Backend',
+      scenarioDescription:
+        'Test /mem/email-this.html served from Legacy GKE Backend',
       testId: 85
     },
     {
@@ -1221,7 +1204,7 @@ function getScenarioEvents() {
       requestUri: '/gst/movies/msearch.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /gst/movies/ served from Legacy GKE Backend',
@@ -1238,12 +1221,12 @@ function getScenarioEvents() {
       requestUri: '/websvc/user/data.json?callback=jQuery17105667599483611219',
       responseHeaderMatches: {
         'x-api-version': 'F-GL',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [403],
       scenarioDescription: 'Test /websvc served from Legacy GKE Backend',
       testId: 87
-    },
+    }
   ];
 
   return scenarios;

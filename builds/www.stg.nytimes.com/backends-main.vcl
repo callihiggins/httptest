@@ -5,11 +5,11 @@ sub vcl_recv {
         set req.http.host = req.http.X-Host;
     }
 
-    // default is NYT4
-    set req.http.x-nyt-backend = "www";
-    call set_www_backend;
+    // default is WWW Legacy GKE
+    set req.http.x-nyt-backend = "www_legacy_gke";
+    call set_legacy_gke_backend;
 
-    set req.http.X-PageType = "legacy";
+    set req.http.X-PageType = "legacy-gke";
 
     // entire paidpost hostname is NYT5
     if (req.http.host ~ "^paidpost([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$"
@@ -33,14 +33,9 @@ sub vcl_recv {
 
     // set the https backend for routes that require it
     if (  (req.url ~ "^/svc/" && (req.url.path !~ "^/svc/(user|profile|suggest)" || req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address") )
-        || req.url ~ "^/content/help/itunes/privacy-policy.html"
-        || req.url ~ "^/content/help/rights/privacy/policy/privacy-policy.html"
         || req.url ~ "^/google34e0037c9fda7c66.html"
         || req.url ~ "^/store"
         || req.url ~ "^/auth/hdlogin"
-        || req.url ~ "^/membercenter/emailus.html"
-        || req.url ~ "^/gst/emailus.html"
-        || req.url ~ "^/subscriptions"
         || req.url ~ "^/tips(/)?(\?.*)?$"
         || req.url == "/securedrop"
         || req.url ~ "^/newsgraphics/2016/news-tips"
@@ -77,6 +72,14 @@ sub vcl_recv {
         call set_www_collection_backend_gke;
     }
 
+    // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
+    // If slideshow-compatibility is set, fallback to Legacy GKE.
+    if (req.url ~ "^/slideshow/" && !req.http.x-nyt-slideshow-compatibility) {
+        set req.http.X-PageType = "slideshow";
+        set req.http.x-nyt-backend = "slideshow_fe";
+        call set_www_slideshow_backend_gke;
+    }
+
     // newsletter application
     if (   req.url ~ "^/newsletters/"
         || req.url ~ "^/newsletters?"
@@ -87,21 +90,9 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
-    // If slideshow-compatibility is set, fallback to NYT4 ESX.
-    if (    req.url ~ "^/slideshow/"
-        && !req.http.x-nyt-slideshow-compatibility)
-    {
-        set req.http.X-PageType = "slideshow";
-        set req.http.x-nyt-backend = "slideshow_fe";
-        call set_www_slideshow_backend_gke;
-    }
-
     // slideshow JSON files
     if (req.url ~ "\.slideshow\.json$") {
-        set req.http.X-PageType = "slideshow-legacy";
-        set req.http.x-nyt-backend = "www";
-        call set_www_backend;
+        call set_legacy_gke_backend;
     }
 
     // realestate application
@@ -160,18 +151,6 @@ sub vcl_recv {
         call set_nyt5_misc_backend;
     }
 
-    if (req.url ~ "^/404\.html") {
-        set req.http.X-PageType = "miscellany";
-        set req.http.x-nyt-backend = "www_fe";
-        call set_www_fe_backend;
-    }
-
-    // NYT5 services EXCEPT userinfo
-    if (   req.url ~ "/.status$" ) {
-        set req.http.X-PageType = "service";
-        set req.http.x-nyt-backend = "www_fe";
-        call set_www_fe_backend;
-    }
     // userinfo routing (userinfo is the only svc under web-products)
     if ( req.url ~ "^/svc/web-products/") {
         set req.http.X-PageType = "service";
@@ -179,19 +158,10 @@ sub vcl_recv {
         call set_www_userinfo_backend;
     }
 
-    // Route comscore, js, js2, css and bi path's to WWW Legacy GKE
-    if (    req.url ~ "^/(js|js2|css|bi)/"
-         || req.url ~ "^/svc/comscore/"
-    ) {
-        set req.http.X-PageType = "legacy-gke";
-        set req.http.x-nyt-backend = "www_legacy_gke";
-        set req.backend = F_www_legacy_gke;
-        unset req.http.Cookie;
-        unset req.http.X-Cookie;
-    }
-
-    // route the path's below between WWW ESX and Legacy WWW GKE
+    // route the path's below to Legacy WWW GKE
     if ( req.url ~ "^/favicon.ico"
+        || req.url ~ "^/(js|js2|css|bi)/"
+        || req.url ~ "^/svc/comscore/"
         || req.url ~ "^/robots.txt"
         || req.url ~ "^/crossdomain.xml"
         || req.url ~ "^/.well-known/"
@@ -255,18 +225,8 @@ sub vcl_recv {
         || req.url ~ "^/websvc"
         || req.url ~ "^/js/nyt5/ab/abconfig.json"
     ) {
-        set req.http.X-PageType = "legacy";
-        set req.backend = F_www_legacy_gke;
-        set req.http.x-nyt-backend = "www_legacy_gke";
-        set req.http.X-Cookie = req.http.Cookie;
+        call set_legacy_gke_backend;
         unset req.http.Cookie;
-
-        // fallback to WWW ESX if GKE is unhealthy
-        if (!req.backend.healthy) {
-            set req.http.x-nyt-backend = "www";
-            set req.backend = F_www;
-            set req.http.Cookie = req.http.X-Cookie;
-        }
         unset req.http.X-Cookie;
     }
 
@@ -277,9 +237,7 @@ sub vcl_recv {
         && req.http.host !~ "^feeds1?\.(dev\.|stg\.|)?nytimes.com$"
         && req.http.host !~ "^paidpost([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$"
     ) {
-        set req.http.X-PageType = "legacy-override";
-        set req.http.x-nyt-backend = "www";
-        call set_www_backend;
+        call set_legacy_gke_backend;
     }
 
     // article
@@ -287,7 +245,6 @@ sub vcl_recv {
         || req.url ~ "^/(aponline|reuters)/" // wire sources
         || req.url ~ "^/blog/" // all blogposts
     ) {
-        # route article traffic to gke only fallback to esx
         set req.http.X-PageType = "article";
         call set_www_article_backend;
     }
@@ -421,35 +378,12 @@ sub vcl_recv {
         call set_www_fe_backend;
     }
 
-    // AB Test Config
-    if ( req.url == "/appconfig/abtests/nyt-abconfig.json" ) {
-        set req.http.X-PageType = "service";
-        set req.http.x-nyt-backend = "www_fe";
-        call set_www_fe_backend;
-    }
-
     # various paths we CAN cache from legacy systems
     # relying on the netscaler to send it to the correct place for now
-    if ( req.url ~ "^/regilite"
-         || ( req.url ~ "^/services/xml/" && req.url !~ "^/services/xml/rss/") ){
+    if ( req.url ~ "^/regilite") {
         set req.http.X-PageType = "legacy-cacheable";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
-    }
-
-    if (   req.url  ~ "^/svc/collections"
-        && req.url !~ "^/svc/collections/v1/publish(.*)") {
-        set req.http.X-PageType = "collections-svc";
-        set req.http.x-nyt-backend = "www_fe";
-        call set_www_fe_backend;
-    }
-
-    if (req.http.X-Is-NYT4 == "1") {
-        set req.url = req.http.X-OriginalUri;
-        set req.http.cookie = req.http.X-Cookie;
-        set req.http.X-PageType = "legacy";
-        set req.http.x-nyt-backend = "www";
-        call set_www_backend;
     }
 }
 
@@ -457,46 +391,22 @@ sub vcl_recv {
 sub set_video_library_backend {
     set req.http.x-nyt-backend = "video_library";
     set req.backend = F_video_library;
-    if (!req.backend.healthy) {
-        set req.http.x-nyt-backend = "www_fe";
-        set req.backend = F_www_fe;
-    }
 }
 
 # set a video api backend based on env
 sub set_video_api_backend {
     set req.http.x-nyt-backend = "video_api";
     set req.backend = F_video_api;
-    if (!req.backend.healthy) {
-        set req.http.x-nyt-backend = "www_fe";
-        set req.backend = F_www_fe;
-    }
-}
-
-sub set_www_backend {
-    if (req.http.X-Migration-Backend == "on-GKE"
-        && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
-        set req.http.x-nyt-backend = "www_legacy_gke";
-        set req.backend = F_www_legacy_gke;
-
-        # if we needed to switch back to NYT4, unset the vi flag
-        unset req.http.x--fastly-project-vi;
-    }  else {
-        set req.backend = F_www;
-    }
 }
 
 sub set_www_https_backend {
-    if (req.http.X-Migration-Backend == "on-GKE"
-        && (req.http.x-environment == "dev" || req.http.x-environment == "stg")) {
-        set req.http.x-nyt-backend = "www_legacy_gke";
-        set req.backend = F_www_legacy_gke;
+    set req.backend = F_www_https;
+}
 
-        # if we needed to switch back to NYT4, unset the vi flag
-        unset req.http.x--fastly-project-vi;
-    }  else {
-        set req.backend = F_www_https;
-    }
+sub set_legacy_gke_backend {
+    set req.http.X-PageType = "legacy-gke";
+    set req.http.x-nyt-backend = "www_legacy_gke";
+    set req.backend = F_www_legacy_gke;
 }
 
 sub set_www_fe_backend {
@@ -529,12 +439,8 @@ sub set_www_collection_backend_gke {
 sub set_www_article_backend {
     set req.http.x-nyt-backend = "article_fe";
     set req.backend = F_article_fe;
-    if (req.backend.healthy) {
-        call vi_ce_auth;
-    } else {
-        set req.http.x-nyt-backend = "www_fe";
-        set req.backend = F_www_fe;
-    }
+    call vi_ce_auth;
+
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
@@ -563,18 +469,13 @@ sub set_nyt5_misc_backend {
 
 # set backend for nyt5 homepage migration
 sub set_www_homepage_backend_gke {
-    if (req.backend.healthy) {
-        call vi_ce_auth;
-    } else {
-        set req.http.x-nyt-backend = "www_fe";
-        set req.backend = F_www_fe;
-    }
+    call vi_ce_auth;
+
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
 
 sub set_www_realestate_backend_gke {
-
     set req.backend = F_realestate_fe;
 
     call vi_ce_auth;

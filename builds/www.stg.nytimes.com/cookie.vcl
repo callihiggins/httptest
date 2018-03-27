@@ -9,8 +9,7 @@ sub vcl_recv {
      * Do not do this for (NYT4) www backend (this means pass right now)
      * and only do this remap if this is not a restarted request.
      */
-    if (   req.backend != F_www
-        && req.backend != F_www_https
+    if (   req.backend != F_www_https
         && req.backend != F_www_userinfo
         && req.http.x-nyt-force-pass != "true"
         && req.restarts == 0

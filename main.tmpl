@@ -603,9 +603,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-nyt4-fallback"
+    name    = "backend-slideshow-fallback"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-nyt4-fallback.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-slideshow-fallback.vcl")}"
   }
 
   vcl {

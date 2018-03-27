@@ -1,8 +1,7 @@
 sub vcl_deliver {
 
     # Route all slideshows to NYT5 GKE and if the slideshow returns 404,
-    # fallback to WWW ESX to serve the NYT4 version of the slideshow.
-    # This is a short term solution until slideshows missing data in PAPI are fixed or archived.
+    # fallback to Legacy GKE to redirect to archive slideshow.
     if (resp.http.X-PageType == "slideshow"
         && resp.http.x-nyt-backend == "slideshow_fe"
         && resp.status == 404) {

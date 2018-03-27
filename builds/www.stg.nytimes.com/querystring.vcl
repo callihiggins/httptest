@@ -42,8 +42,7 @@ sub vcl_recv {
         && req.http.x-nyt-force-pass != "true"
         && req.http.X-PageType != "switchboard"
         # except from NYT4 requests
-        && (   req.backend != F_www
-            && req.backend != F_www_https
+        && (   req.backend != F_www_https
             && req.backend != F_www_legacy_gke)
     ) {
         set req.url = querystring.remove(req.url);

@@ -79,8 +79,9 @@ include "homepage-redirect";
 include "uuid";
 include "gdpr";
 include "response-headers";
-# GKE fallback to NYT4 logic
-include "backend-nyt4-fallback";
+# Slideshow fallback to legacy backend logic
+include "backend-slideshow-fallback";
+
 
 sub vcl_recv {
 
@@ -132,8 +133,7 @@ sub vcl_recv {
 
   # this block assumes default legacy backend
   # we cannot cache legacy by default
-  if (   req.backend == F_www
-      || req.backend == F_www_https) {
+  if (req.backend == F_www_https) {
     set req.http.x-nyt-force-pass = "true";
     #return(pass);
   }

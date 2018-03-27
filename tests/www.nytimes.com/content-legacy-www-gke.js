@@ -19,7 +19,7 @@ function getScenarioEvents() {
       requestHeaderCookie: 'nyt.dv.nyt5-on-gke=1',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-pagetype': 'legacy'
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test 301 redirect on WWW Legacy GKE /amex',
@@ -37,7 +37,7 @@ function getScenarioEvents() {
       requestHeaderCookie: 'nyt.dv.nyt5-on-gke=1',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-pagetype': 'legacy'
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test GCS file on WWW Legacy GKE /.remote.txt ',
@@ -107,7 +107,7 @@ function getScenarioEvents() {
       requestUri: '/apple-app-site-association',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -125,7 +125,7 @@ function getScenarioEvents() {
       requestUri: '/.well-known/apple-app-site-association',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test well-known served from WWW Legacy GKE',
@@ -142,7 +142,7 @@ function getScenarioEvents() {
       requestUri: '/frommers/',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test frommers served from WWW Legacy GKE',
@@ -159,7 +159,7 @@ function getScenarioEvents() {
       requestUri: '/svc/comscore/pvc.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-pagetype': 'legacy-gke',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test comscore html served from Legacy GKE backend',
@@ -176,10 +176,11 @@ function getScenarioEvents() {
       requestUri: '/services/xml/rss/nyt/Dealbook.xml',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-pagetype': 'legacy',
+        'x-pagetype': 'legacy-gke'
       },
-      responseStatusCode: [ 301 ],
-      scenarioDescription: 'Test rss xml redirects served from Legacy GKE backend',
+      responseStatusCode: [301],
+      scenarioDescription:
+        'Test rss xml redirects served from Legacy GKE backend',
       testId: 11
     },
     {
@@ -195,10 +196,11 @@ function getScenarioEvents() {
         'x-api-version': /F-GL/,
         'x-pagetype': /legacy/
       },
-      responseStatusCode: [ 200 ],
-      scenarioDescription: 'Test abconfig.json file serving from Legacy GKE backend',
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Test abconfig.json file serving from Legacy GKE backend',
       testId: 11
-    },
+    }
   ];
 
   return scenarios;
