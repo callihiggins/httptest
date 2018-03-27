@@ -334,6 +334,7 @@ sub vcl_fetch {
 
 sub vcl_deliver {
 #FASTLY deliver
+  call deliver_add_svc_access_control;
   return(deliver);
 }
 
