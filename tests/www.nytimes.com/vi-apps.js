@@ -19,7 +19,7 @@ function getScenarioEvents() {
       requestUri: '/search',
       responseHeaderMatches: {
         'x-pagetype': 'vi-search',
-        'x-nyt-backend':'projectvi_fe',
+        'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Search Homepage',
@@ -30,13 +30,13 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/search/apple/best',
       responseHeaderMatches: {
         'x-pagetype': 'vi-search',
-        'x-nyt-backend':'projectvi_fe',
+        'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Search term - apple',
@@ -47,13 +47,13 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
       responseHeaderMatches: {
         'x-pagetype': 'vi-timeswire',
-        'x-nyt-backend':'projectvi_fe',
+        'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; /timeswire',
@@ -64,13 +64,13 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/timeswire/',
       responseHeaderMatches: {
         'x-pagetype': 'vi-timeswire',
-        'x-nyt-backend':'projectvi_fe',
+        'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; /timeswire/',
@@ -81,21 +81,38 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
+        dev: true
       },
-      'requestHeaders': {
-        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      requestHeaders: {
+        'User-agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
       responseHeaderMatches: {
         'x-pagetype': 'vi-timeswire',
-        'x-nyt-backend':'projectvi_fe',
+        'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; does not redirect to mobile',
       testId: 5
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/style/weddings/announcements',
+      responseHeaderMatches: {
+        'x-pagetype': 'vi-weddings'
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Vi Weddings Announcement Page',
+      testId: 6
+    }
   ];
 
   return scenarios;
