@@ -73,7 +73,7 @@ function getScenarioEvents() {
       requestUri: '/2017/09/24/theater/slug.amp.html',
       responseStatusCode: [301],
       scenarioDescription: '301 redirect WWW AMP to WWW Canonical',
-      responseHeaderPattern: {
+      responseHeaderMatches: {
         location: 'https://' + suite.hosts.www + '/2017/09/24/theater/slug.html'
       },
       testId: 4
