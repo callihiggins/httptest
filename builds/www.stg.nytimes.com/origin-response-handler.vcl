@@ -10,7 +10,7 @@ sub fetch_deliver_stale_on_error {
 
       # if the object was not in cache and we have not restarted, try one more time
       if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
-        restart;
+        set beresp.http.x-nyt-restart-reason = beresp.status + " retry";
       }
 
       set req.http.Fastly-Cachetype = "ERROR";
@@ -23,7 +23,8 @@ sub fetch_deliver_stale_on_error {
         Doing this to limit what gets a large error page download
       */
 
-      if ( (req.url.path ~ ".html$" || req.url.path ~ "/$")
+      if ( req.restarts >= 1
+           && (req.url.path ~ ".html$" || req.url.path ~ "/$")
            && (req.url.path !~ "^/svc" && req.url.path !~ "^/adx")
           ) {
         error 503;

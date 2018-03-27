@@ -8,6 +8,7 @@ sub vcl_deliver {
         && resp.status == 404) {
         set req.http.x-nyt-slideshow-compatibility = "NYT4";
         set req.url = req.http.X-OriginalUri;
+        set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " NYT4 slideshow", "NYT4 slideshow");
         return (restart);
     }
 

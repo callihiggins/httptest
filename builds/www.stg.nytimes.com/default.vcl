@@ -283,8 +283,7 @@ sub vcl_fetch {
   # moved the next two blocks up the chain
   # these running earlier is faster
   if (beresp.http.X-Is-NYT4) {
-    set req.http.X-Is-NYT4 = "1";
-    return(restart);
+    set beresp.http.x-nyt-restart-reason = "X-Is-NYT4";
   }
 
   # Vary on this header for HTTPS version, so we can purge both versions at the same time
@@ -334,7 +333,14 @@ sub vcl_fetch {
 
 sub vcl_deliver {
 #FASTLY deliver
+
+  if (resp.http.x-nyt-restart-reason) {
+    set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " " + resp.http.x-nyt-restart-reason, resp.http.x-nyt-restart-reason);
+    return(restart);
+  }
+
   call deliver_add_svc_access_control;
+
   return(deliver);
 }
 
@@ -387,7 +393,8 @@ sub vcl_log {
       {" protocol=["} if(req.http.Fastly-SSL,"https","http") {"]"}
       {" behealth=["} if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,"-") {"]"}
       {" vialloc=["} if(req.http.x--fastly-project-vi,"1","0") {"]"}
-      {" restarts=["} req.restarts {"]"}
+      {" restarts=["} resp.http.Fastly-Restarts {"]"}
+      {" restart_reason=["} req.http.x-nyt-restart-reason {"]"}
       if(req.http.x-redirect-reason, {" "} + req.http.x-redirect-reason, "")
       if(req.http.x-vi-health, {" "} + req.http.x-vi-health, "");
     }

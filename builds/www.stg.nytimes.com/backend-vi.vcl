@@ -114,6 +114,7 @@ sub vcl_deliver {
     if (resp.http.x-vi-compatibility == "Incompatible") {
         set req.http.x-pre-restart-status = "Incompatible";
         unset resp.http.x-vi-compatibility;
+        set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " vi-Incompatible", "vi-Incompatible");
         return (restart);
     }
 
@@ -122,6 +123,7 @@ sub vcl_deliver {
     if (resp.http.x-cms-format == "oak") {
         set req.http.x-pre-restart-cms-format = "oak";
         unset resp.http.x-cms-format;
+        set req.http.x-nyt-restart-reason = if (req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " Oak-content", "Oak-content");
         return (restart);
     }
 }
