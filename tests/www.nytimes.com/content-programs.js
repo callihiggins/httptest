@@ -116,6 +116,45 @@ function getScenarioEvents() {
       scenarioDescription: "Programs asset CDN; GCS is responding OK",
       testId: "3"
     },
+    {
+      id: "FunctionalTestScenarioDefinitionForGCSUpdate",
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true,
+        sbx: false
+      },
+      requestScheme: "https://",
+      requestUri: "/programs/public/healthcheck.txt",
+      responseHeaderMatches: {
+        "x-api-version": "F-PGCS",
+        "x-frame-options": "DENY",
+        "x-pagetype": "programs-gcs"
+      },
+      responseHeadersPresent: ["x-cache", "x-served-by"],
+      responseHeadersNotPresent: [
+        "cookie",
+        "nnCoection",
+        "set-cookie",
+        "via",
+        "x-age",
+        "x-backend",
+        "x-cookie",
+        "x-detectedruntimeconfigflag",
+        "x-esi-status",
+        "x-gcs-bucket",
+        "x-hash",
+        "x-origin-server",
+        "x-powered-by",
+        "x-servername",
+        "x-servername2",
+        "x-varnish",
+        "x-varnishcacheduration"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "Programs asset CDN; GCS is responding OK",
+      testId: "4"
+    },
   ];
 
   return scenarios;

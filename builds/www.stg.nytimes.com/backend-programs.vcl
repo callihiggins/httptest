@@ -1,7 +1,7 @@
 sub vcl_recv {
     if (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" || req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$") {
 
-        if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/") {
+        if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/" || req.url.path ~ "^/programs/public/") {
 
             set req.http.X-PageType = "programs-gcs";
             set req.http.x-nyt-backend = "programs_gcs";
