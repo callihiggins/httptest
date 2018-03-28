@@ -54,6 +54,7 @@ include "route-switchboard";
 include "route-collections-svc";
 include "route-add-svc";
 include "route-community-svc";
+include "route-messaging";
 include "route-sitemap";
 include "route-recommendations";
 include "backend-profile-fe";
@@ -99,6 +100,7 @@ sub vcl_recv {
   call recv_route_switchboard;
   call recv_route_collections_svc;
   call recv_route_community_svc;
+  call recv_route_messaging;
   call recv_route_add_svc;
   call recv_route_sitemap;
   call recv_route_recommendations;
@@ -371,9 +373,15 @@ sub vcl_error {
 sub vcl_log {
 #FASTLY log
 
-    # sumologic log
-    # do not log services and adx requests unless they are a 5xx response, also always log in staging
-    if ( (req.url !~ "^(/svc/web-products|/svc/comscore)" && req.url !~ "^/adx/") || resp.status >= 500 || req.http.x-environment != "prd") {
+    # selectively log some services
+    # log 5xx status ALWAYS
+    # log everything in dev and stg
+    if ( 
+           (req.url !~ "^/svc/(web-products|comscore)" && req.url !~ "^/adx/")
+        || resp.status >= 500 
+        || req.http.x-environment != "prd"
+       ) {
+
       log {"syslog "} + req.service_id + {" "} + req.http.x-nyt-logger-name + {" :: "}
       req.http.Fastly-Client-IP
       {" "-" "-" "}

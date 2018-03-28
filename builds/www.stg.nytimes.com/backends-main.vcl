@@ -368,13 +368,6 @@ sub vcl_recv {
         call set_video_api_backend;
     }
 
-    // send global messaging API to the backend that caches
-    if (req.url ~ "^/svc/message/v1/list/global.json") {
-        set req.http.X-PageType = "messaging-api";
-        set req.http.x-nyt-ttl-override = "5";
-        set req.http.x-nyt-backend = "www_fe";
-        call set_www_fe_backend;
-    }
 }
 
 # set a video library backend based on env

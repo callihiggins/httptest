@@ -446,24 +446,6 @@ function getScenarioEvents() {
         sbx: false
       },
       requestScheme: 'http://',
-      requestUri: '/svc/web/localstorage.html',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; service; local storage',
-      testId: 35
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true,
-        sbx: false
-      },
-      requestScheme: 'http://',
       requestUri: '/svc/most-popular/getdata.json',
       responseHeaderMatches: {
         'x-api-version': 'F-5-4',

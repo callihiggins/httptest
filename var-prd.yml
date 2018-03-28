@@ -927,6 +927,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "messaging"
+    address: "messaging-notifications.api.nytimes.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "messaging-notifications.api.nytimes.com"
+    ssl_sni_hostname: "messaging-notifications.api.nytimes.com"
+    healthcheck:
+      host: "messaging-notifications.api.nytimes.com"
+      path: "/svc/message/v1/list/global.json"
+      check_interval: "10000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "5000"
+      window: "5"
+
 # defaults for cloud storage bucket configs
 # these are overridable in per bucket configs below
 #   auth_key:     the dictionary key for the bucket access token

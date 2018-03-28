@@ -705,6 +705,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-messaging"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-messaging.vcl")}"
+  }
+
+  vcl {
     name    = "route-esi-jsonp-callback"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-esi-jsonp-callback.vcl")}"

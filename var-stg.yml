@@ -862,7 +862,7 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
-  
+
    # The configuration is same as dev since they are sharing the same public elb
   - name: "recommendations"
     address: "per-rec-page-dev-iad2-108513-2-931132799.us-east-1.elb.amazonaws.com"
@@ -897,6 +897,23 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
+
+  - name: "messaging"
+    address: "messaging-hermes-edge-st-50964-2-72819608.us-east-1.elb.amazonaws.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "messaging-notifications.api.stg.nytimes.com"
+    ssl_sni_hostname: "messaging-notifications.api.stg.nytimes.com"
+    healthcheck:
+      host: "messaging-hermes-edge-st-50964-2-72819608.us-east-1.elb.amazonaws.com"
+      path: "/svc/message/v1/list/global.json"
+      check_interval: "10000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "5000"
+      window: "5"
 
 # defaults for cloud storage bucket configs
 # these are overridable in per bucket configs below

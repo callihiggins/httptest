@@ -42,6 +42,7 @@ require("./www.nytimes.com/route-collections-svc.js");
 require("./www.nytimes.com/route-add-svc.js");
 require("./www.nytimes.com/route-newsletters.js");
 require("./www.nytimes.com/route-community-svc.js");
+require("./www.nytimes.com/route-messaging.js");
 require("./www.nytimes.com/route-sitemap.js");
 require("./www.nytimes.com/route-recommendations.js");
 require("./www.nytimes.com/service-profile-fe.js");
