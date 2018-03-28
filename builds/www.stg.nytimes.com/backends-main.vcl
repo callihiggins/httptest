@@ -32,14 +32,11 @@ sub vcl_recv {
     }
 
     // set the https backend for routes that require it
-    if (  (req.url ~ "^/svc/" && (req.url.path !~ "^/svc/(user|profile|suggest)" || req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address") )
-        || req.url ~ "^/google34e0037c9fda7c66.html"
-        || req.url ~ "^/store"
-        || req.url ~ "^/auth/hdlogin"
-        || req.url ~ "^/tips(/)?(\?.*)?$"
-        || req.url == "/securedrop"
-        || req.url ~ "^/newsgraphics/2016/news-tips"
-
+    if (
+        req.url ~ "^/svc/" &&
+            (   req.url.path !~ "^/svc/(user|profile|suggest)" ||
+                req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address"
+            )
     ) {
         set req.http.x-PageType = "legacy";
         set req.http.x-nyt-backend = "www_https";
@@ -374,14 +371,6 @@ sub vcl_recv {
     if (req.url ~ "^/svc/message/v1/list/global.json") {
         set req.http.X-PageType = "messaging-api";
         set req.http.x-nyt-ttl-override = "5";
-        set req.http.x-nyt-backend = "www_fe";
-        call set_www_fe_backend;
-    }
-
-    # various paths we CAN cache from legacy systems
-    # relying on the netscaler to send it to the correct place for now
-    if ( req.url ~ "^/regilite") {
-        set req.http.X-PageType = "legacy-cacheable";
         set req.http.x-nyt-backend = "www_fe";
         call set_www_fe_backend;
     }
