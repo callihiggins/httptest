@@ -83,8 +83,8 @@ sub vcl_recv {
         || req.url ~ "^/newsletters$"
     ) {
         set req.http.X-PageType = "newsletter";
-        set req.http.x-nyt-backend = "www_fe";
-        call set_www_fe_backend;
+        set req.http.x-nyt-backend = "projectvi_fe";
+        call set_projectvi_fe_backend;
     }
 
     // slideshow JSON files
