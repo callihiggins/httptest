@@ -34,7 +34,7 @@ sub vcl_recv {
     // set the https backend for routes that require it
     if (
         req.url ~ "^/svc/" &&
-            (   req.url.path !~ "^/svc/(user|profile|suggest)" ||
+            (   req.url.path !~ "^/svc/(user|profile|suggest|web/)" ||
                 req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address"
             )
     ) {
@@ -159,6 +159,7 @@ sub vcl_recv {
     if ( req.url ~ "^/favicon.ico"
         || req.url ~ "^/(js|js2|css|bi)/"
         || req.url ~ "^/svc/comscore/"
+        || req.url ~ "^/svc/web/"
         || req.url ~ "^/robots.txt"
         || req.url ~ "^/crossdomain.xml"
         || req.url ~ "^/.well-known/"

@@ -199,8 +199,25 @@ function getScenarioEvents() {
       responseStatusCode: [200],
       scenarioDescription:
         'Test abconfig.json file serving from Legacy GKE backend',
-      testId: 11
-    }
+      testId: 12
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForStaticGKE',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/svc/web/localstorage.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke'
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Test localstorage html served from Legacy GKE backend',
+      testId: 13
+    },
   ];
 
   return scenarios;
