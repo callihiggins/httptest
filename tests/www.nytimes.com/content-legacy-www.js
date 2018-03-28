@@ -36,10 +36,10 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/autos',
       responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-pagetype': 'legacy'
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke'
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [301],
       scenarioDescription: 'Test legacy; www cluster; autos',
       testId: 5
     },
