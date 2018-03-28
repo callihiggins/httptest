@@ -118,7 +118,7 @@ function getScenarioEvents()
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderContains': {
-        'x-api-version': 'F-VI',
+        'x-nyt-backend': 'projectvi_fe',
         'x-pagetype': 'vi-story',
       },
       'responseStatusCode': [200],
@@ -165,7 +165,7 @@ function getScenarioEvents()
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderContains': {
-        'x-api-version': 'F-VI',
+        'x-nyt-backend': 'projectvi_fe',
         'x-pagetype': 'vi-story',
       },
       'responseStatusCode': [200],
@@ -189,7 +189,7 @@ function getScenarioEvents()
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderContains': {
-        'x-api-version': 'F-VI',
+        'x-nyt-backend': 'projectvi_fe',
         'x-pagetype': 'vi-story',
         'fastly-restarts': '1',
       },
@@ -289,6 +289,46 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
       'testId': 12,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2017/02/16/opinion/paul-krugman-with-column-assignment.html?abra=WP_ProjectVi_Story=st',
+      'responseHeaderContains': {
+        'x-nyt-backend': 'projectvi_fe',
+        'x-pagetype': 'vi-story',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Allocated',
+      'testId': 13,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2017/02/16/opinion/paul-krugman-with-column-assignment.html?abra=WP_ProjectVi_Story=horse',
+      'responseHeaderContains': {
+        'x-nyt-backend': 'projectvi_fe',
+        'x-pagetype': 'vi-story',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Not Allocated',
+      'testId': 14,
     },
 
     // Production
@@ -399,7 +439,7 @@ function getScenarioEvents()
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderContains': {
-        'x-api-version': 'F-VI',
+        'x-nyt-backend': 'projectvi_fe',
         'x-pagetype': 'vi-story',
       },
       'responseStatusCode': [200],
@@ -446,7 +486,7 @@ function getScenarioEvents()
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderContains': {
-        'x-api-version': 'F-VI',
+        'x-nyt-backend': 'projectvi_fe',
         'x-pagetype': 'vi-story',
       },
       'responseStatusCode': [200],
@@ -470,7 +510,7 @@ function getScenarioEvents()
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderContains': {
-        'x-api-version': 'F-VI',
+        'x-nyt-backend': 'projectvi_fe',
         'x-pagetype': 'vi-story',
         'fastly-restarts': '1',
       },
@@ -570,6 +610,46 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
       'testId': 1200,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/03/02/opinion/dicks-guns-walmart.html?abra=WP_ProjectVi_Story=st',
+      'responseHeaderContains': {
+        'x-nyt-backend': 'projectvi_fe',
+        'x-pagetype': 'vi-story',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Allocated',
+      'testId': 1300,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/03/02/opinion/dicks-guns-walmart.html?abra=WP_ProjectVi_Story=horse',
+      'responseHeaderContains': {
+        'x-nyt-backend': 'projectvi_fe',
+        'x-pagetype': 'vi-story',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Not Allocated',
+      'testId': 1400,
     },
   ];
 

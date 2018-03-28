@@ -35,6 +35,7 @@ sub vcl_recv {
         && (
             req.http.x--fastly-vi-test-group-story ~ "^[a]"
             || req.http.x--fastly-vi-story-opt == "1" // always in
+            || req.url ~ "^/20[1-9][4-9]/\d+/\d+/opinion/" // 2014-future and opinion
         )
         && req.http.x--fastly-vi-story-opt != "0" // always out
       ) {
