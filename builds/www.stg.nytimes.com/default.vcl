@@ -373,7 +373,7 @@ sub vcl_log {
 
     # sumologic log
     # do not log services and adx requests unless they are a 5xx response, also always log in staging
-    if ( (req.url !~ "^/svc/web-products" && req.url !~ "^/adx/") || resp.status >= 500 || req.http.x-environment != "prd") {
+    if ( (req.url !~ "^(/svc/web-products|/svc/comscore)" && req.url !~ "^/adx/") || resp.status >= 500 || req.http.x-environment != "prd") {
       log {"syslog "} + req.service_id + {" "} + req.http.x-nyt-logger-name + {" :: "}
       req.http.Fastly-Client-IP
       {" "-" "-" "}
