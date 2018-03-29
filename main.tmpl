@@ -381,12 +381,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-weddings-api"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-weddings-api.vcl")}"
-  }
-
-  vcl {
     name    = "backend-content-api"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-content-api.vcl")}"

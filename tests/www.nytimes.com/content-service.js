@@ -9,46 +9,6 @@ function getScenarioEvents()
 {
   var scenarios = [
     {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'http://',
-      'requestUri': '/svc/weddings',
-      'responseHeaderMatches': {
-        'age': '0',
-        'x-api-version': 'F-DUW',
-        'x-cache': 'MISS, MISS',
-        'x-frame-options': 'DENY',
-        'x-pagetype': 'weddings-api',
-      },
-      'responseHeadersPresent': [
-        'x-served-by',
-      ],
-      'responseHeadersNotPresent': [
-        'cache-control',
-        'nnCoection',
-        'via',
-        'x-age',
-        'x-backend',
-        'x-detectedruntimeconfigflag',
-        'x-esi-status',
-        'x-hash',
-        'x-origin-server',
-        'x-powered-by',
-        'x-servername',
-        'x-servername2',
-        'x-varnish',
-        'x-varnishcacheduration',
-      ],
-      'responseStatusCode': [400],
-      'scenarioDescription': 'Test service; weddings',
-      'testId': 3,
-    },
-    {
       'id': 'FunctionalTestScenarioDefinitionForSvcBitly',
       'isDeployedInEnv': {
         'prd': true,

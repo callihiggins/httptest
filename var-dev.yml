@@ -224,23 +224,6 @@ backends:
       timeout: "3000"
       window: "5"
 
-  - name: "du_weddings_api"
-    address: "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com"
-    between_bytes_timeout: "120000"
-    connect_timeout: "120000"
-    first_byte_timeout: "120000"
-    port: "80"
-    use_ssl: "false"
-    healthcheck:
-      host: "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com"
-      path: "/version.json"
-      check_interval: "5000"
-      expected_response: "200"
-      initial: "4"
-      threshold: "4"
-      timeout: "3000"
-      window: "5"
-
   - name: "gae_oembed_content_api"
     address: "nyt-du-dev.appspot.com"
     between_bytes_timeout: "10000"
