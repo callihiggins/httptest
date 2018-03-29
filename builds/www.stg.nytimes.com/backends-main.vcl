@@ -392,13 +392,6 @@ sub set_legacy_gke_backend {
     set req.backend = F_www_legacy_gke;
 }
 
-sub set_www_fe_backend {
-    set req.backend = F_www_fe;
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
-
 ## userinfo backend
 sub set_www_userinfo_backend {
     set req.backend = F_www_userinfo;
@@ -406,7 +399,6 @@ sub set_www_userinfo_backend {
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }
-
 
 # set backend for each NYT5 app to prepare GKE migration
 # first step is to separate backend per each app

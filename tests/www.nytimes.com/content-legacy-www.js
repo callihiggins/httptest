@@ -446,24 +446,6 @@ function getScenarioEvents() {
         sbx: false
       },
       requestScheme: 'http://',
-      requestUri: '/svc/most-popular/getdata.json',
-      responseHeaderMatches: {
-        'x-api-version': 'F-5-4',
-        'x-pagetype': 'legacy'
-      },
-      responseStatusCode: [200, 404],
-      scenarioDescription: 'Test legacy; www cluster; service; most popular',
-      testId: 37
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true,
-        sbx: false
-      },
-      requestScheme: 'http://',
       requestUri: '/services/json/sectionfronts/upshot/index.json',
       responseHeaderPattern: {
         'x-api-version': /F-(GL)/,

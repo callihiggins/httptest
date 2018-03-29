@@ -740,23 +740,6 @@ backends:
       timeout: "10000"
       window: "10"
 
-  - name: "www_fe"
-    address: "www.gtm.nytimes.com"
-    between_bytes_timeout: "10000"
-    connect_timeout: "10000"
-    first_byte_timeout: "10000"
-    port: "80"
-    use_ssl: "false"
-    healthcheck:
-      host: "www.nytimes.com"
-      path: "/.status-for-fastly"
-      check_interval: "30000"
-      expected_response: "200"
-      initial: "10"
-      threshold: "8"
-      timeout: "10000"
-      window: "10"
-
   - name: "www_https"
     address: "www.gtm.nytimes.com"
     between_bytes_timeout: "10000"
