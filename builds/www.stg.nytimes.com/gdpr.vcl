@@ -1,6 +1,6 @@
 sub vcl_recv {
-    if (!req.http.x-nyt-gdpr && req.http.X-Cookie:nyt-gdpr) {
-        set req.http.x-nyt-gdpr = req.http.X-Cookie:nyt-gdpr;
+    if (!req.http.x-nyt-gdpr && req.http.Cookie:nyt-gdpr) {
+        set req.http.x-nyt-gdpr = req.http.Cookie:nyt-gdpr;
     }
 
     # check to see if we got an nyt-gdpr cookie in the request
