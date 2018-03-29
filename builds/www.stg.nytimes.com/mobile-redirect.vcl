@@ -21,10 +21,10 @@ sub vcl_deliver {
             }
 
             // cookie override
-            if (req.http.Cookie ~ "nyt-mobile=0") {
+            if (req.http.x-nyt-mobile == "0") {
                 set req.http.x-do-mobile-redirect = "0";
             }
-            if (req.http.Cookie ~ "nyt-mobile=1") {
+            if (req.http.x-nyt-mobile == "1") {
                 set req.http.x-do-mobile-redirect = "1";
             }
 
@@ -75,15 +75,11 @@ sub vcl_deliver {
             // homepage & sectionfronts specific logic
             if (req.http.X-PageType == "homepage") {
                 // cookie override
-                if (req.http.Cookie ~ "nyt-mobile=0") {
+                if (req.http.x-nyt-mobile == "0") {
                     set req.http.x-do-mobile-redirect = "0";
-                    // set header for abtopstories mobile redirect logic
-                    set req.http.x-abtopstories-redirect = "0";
                 }
-                if (req.http.Cookie ~ "nyt-mobile=1") {
+                if (req.http.x-nyt-mobile == "1") {
                     set req.http.x-do-mobile-redirect = "1";
-                    // set header for abtopstories mobile redirect logic
-                    set req.http.x-abtopstories-redirect = "1";
                 }
             }
             // interactive & service specific logic

@@ -423,4 +423,5 @@ sub unset_extraneous_bereq_headers {
   unset bereq.http.x-nyt-bucket-secret;
   unset bereq.http.x-nyt-bucket-name;
   unset bereq.http.x-nyt-bucket-provider;
+  unset bereq.http.x-nyt-mobile;
 }

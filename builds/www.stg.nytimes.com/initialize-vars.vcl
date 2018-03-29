@@ -41,6 +41,7 @@ sub vcl_recv {
       unset req.http.x-nyt-backend;
       unset req.http.x-nyt-ttl-override;
       unset req.http.x-nyt-force-pass;
+      unset req.http.x-nyt-mobile;
     }
 
     /*
@@ -60,6 +61,10 @@ sub vcl_recv {
 
     if (req.http.Cookie:NYT-wpAB) {
       set req.http.x-nyt-wpab = urldecode(req.http.Cookie:NYT-wpAB);
+    }
+
+    if (req.http.Cookie:nyt-mobile) {
+      set req.http.x-nyt-mobile = urldecode(req.http.Cookie:nyt-mobile);
     }
 
     # handle the nyt-a cookie in a restart safe manner
