@@ -31,13 +31,8 @@ sub vcl_recv {
         call set_www_homepage_backend_gke;
     }
 
-    // set the https backend for routes that require it
-    if (
-        req.url ~ "^/svc/" &&
-            (   req.url.path !~ "^/svc/(user|profile|suggest|web/)" ||
-                req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address"
-            )
-    ) {
+    # this is the last route remaining for netscaler
+    if (req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address") {
         set req.http.x-PageType = "legacy";
         set req.http.x-nyt-backend = "www_https";
         call set_www_https_backend;

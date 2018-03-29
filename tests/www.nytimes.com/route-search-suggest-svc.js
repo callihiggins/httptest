@@ -20,12 +20,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/suggest/v1/timestags?query=foo',
-      'responseHeaderPattern': {
-        'x-pagetype': /(search-suggest|legacy)/,
-        'x-nyt-backend': /(search_suggest|www_https)/,
-      },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+        'x-pagetype': "search-suggest",
+        'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=foo',
@@ -43,12 +41,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/suggest/v1/timestags?query=obama',
-      'responseHeaderPattern': {
-        'x-pagetype': /(search-suggest|legacy)/,
-        'x-nyt-backend': /(search_suggest|www_https)/,
-      },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+        'x-pagetype': "search-suggest",
+        'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=obama',
@@ -66,12 +62,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/suggest/v1/timestags?query=fart',
-      'responseHeaderPattern': {
-        'x-pagetype': /(search-suggest|legacy)/,
-        'x-nyt-backend': /(search_suggest|www_https)/,
-      },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+        'x-pagetype': "search-suggest",
+        'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=fart',
@@ -89,12 +83,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/suggest/v1/timestags?query=foo',
-      'responseHeaderPattern': {
-        'x-pagetype': /(search-suggest)/,
-        'x-nyt-backend': /(search_suggest)/,
-      },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+        'x-pagetype': "search-suggest",
+        'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=foo',
@@ -112,12 +104,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/suggest/v1/timestags?query=obama',
-      'responseHeaderPattern': {
-        'x-pagetype': /(search-suggest)/,
-        'x-nyt-backend': /(search_suggest)/,
-      },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+        'x-pagetype': "search-suggest",
+        'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=obama',
@@ -135,12 +125,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/suggest/v1/timestags?query=fart',
-      'responseHeaderPattern': {
-        'x-pagetype': /(search-suggest)/,
-        'x-nyt-backend': /(search_suggest)/,
-      },
       'responseHeaderMatches': {
         'x-cache': 'MISS',
+        'x-pagetype': "search-suggest",
+        'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=fart',
