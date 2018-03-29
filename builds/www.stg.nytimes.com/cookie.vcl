@@ -1,4 +1,4 @@
-sub vcl_recv {
+sub recv_remove_cookie_check {
 
     # This is not necessary but it's not hurting anything. -- stephen
     /*

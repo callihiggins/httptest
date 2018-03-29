@@ -124,6 +124,9 @@ sub vcl_recv {
 # DO NOT REMOVE THIS LINE, FASTLY MACRO
 #FASTLY recv
 
+  # check to see if we need to remove the cookie header
+  call recv_remove_cookie_check;
+
   # Set the edge req header
   set req.http.X-NYT-Edge-CDN = "Fastly";
 
