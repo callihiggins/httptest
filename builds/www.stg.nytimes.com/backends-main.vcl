@@ -253,7 +253,8 @@ sub vcl_recv {
     if ( req.url ~ "^/svc/int/attribute/projects/" ) {
         set req.http.x-nyt-backend = "newsdev_attribute_gclod_function";
         call set_www_newsdev_attribute_gclod_function_backend;
-    } else if (    req.url ~ "^/svc/int/"
+    } else if (
+           (req.url ~ "^/svc/int/" && !(req.url ~ "^/svc/int/functions/"))
         || (req.url ~ "^/interactive/projects/(notable-deaths|guantanamo)")
         || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
     ) {

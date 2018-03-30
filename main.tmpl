@@ -669,6 +669,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-newsdev-cloud-functions"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-cloud-functions.vcl")}"
+  }
+
+  vcl {
     name    = "backend-newsroom-files-gcs"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsroom-files-gcs.vcl")}"

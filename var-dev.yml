@@ -377,6 +377,23 @@ backends:
       timeout: "300000"
       window: "5"
 
+  - name: "newsdev_cloud_functions_us_central1"
+    address: "us-central1-nytint-stg.cloudfunctions.net"
+    between_bytes_timeout: "300000"
+    connect_timeout: "300000"
+    first_byte_timeout: "300000"
+    ssl_cert_hostname: "us-central1-nytint-stg.cloudfunctions.net"
+    ssl_sni_hostname: "us-central1-nytint-stg.cloudfunctions.net"
+    healthcheck:
+      host: "us-central1-nytint-stg.cloudfunctions.net"
+      path: "/healthcheck"
+      check_interval: "60000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "4"
+      timeout: "10000"
+      window: "5"
+
   - name: "newsdev_elections"
     address: "storage.googleapis.com"
     between_bytes_timeout: "5000"

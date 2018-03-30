@@ -56,6 +56,7 @@ include "route-community-svc";
 include "route-messaging";
 include "route-sitemap";
 include "route-recommendations";
+include "route-newsdev-cloud-functions";
 include "backend-profile-fe";
 
 # vi allocation and routing
@@ -103,6 +104,7 @@ sub vcl_recv {
   call recv_route_add_svc;
   call recv_route_sitemap;
   call recv_route_recommendations;
+  call recv_route_newsdev_cloud_functions;
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
@@ -226,6 +228,7 @@ sub vcl_miss {
   call miss_pass_route_community_svc;
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
+  call miss_pass_route_newsdev_cloud_functions;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -259,6 +262,7 @@ sub vcl_pass {
   call miss_pass_route_community_svc;
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
+  call miss_pass_route_newsdev_cloud_functions;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -344,6 +348,7 @@ sub vcl_deliver {
   }
 
   call deliver_add_svc_access_control;
+  call deliver_route_newsdev_cloud_functions_access_control;
 
   return(deliver);
 }
