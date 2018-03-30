@@ -305,10 +305,8 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/1850/01/01/us/slug.html',
-      responseHeaderPattern: {
-        'x-pagetype': /(article|legacy)/,
-      },
       responseHeaderMatches: {
+        'x-pagetype': 'article',
         'x-cache': 'MISS',
         'x-nyt-backend': "article_fe",
       },
@@ -330,10 +328,8 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/1979/01/01/us/slug.html',
-      responseHeaderPattern: {
-        'x-pagetype': /(article|legacy)/,
-      },
       responseHeaderMatches: {
+        'x-pagetype': 'article',
         'x-cache': 'MISS',
         'x-nyt-backend': "article_fe",
       },
@@ -355,10 +351,8 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/1981/01/01/us/slug.html',
-      responseHeaderPattern: {
-        'x-pagetype': /(article|legacy)/,
-      },
       responseHeaderMatches: {
+        'x-pagetype': 'article',
         'x-cache': 'MISS',
         'x-nyt-backend': "article_fe",
       },

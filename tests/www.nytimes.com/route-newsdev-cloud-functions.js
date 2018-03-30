@@ -15,7 +15,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'https://',
-      requestUri: 'svc/int/functions/contact-reporter',
+      requestUri: '/svc/int/functions/contact-reporter',
       responseHeaderMatches: {
         'x-pagetype': 'newsdev-cloud-functions',
         'access-control-allow-origin': '*',

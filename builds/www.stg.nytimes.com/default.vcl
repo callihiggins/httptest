@@ -137,13 +137,6 @@ sub vcl_recv {
     #return(pass);
   }
 
-  # this block assumes default legacy backend
-  # we cannot cache legacy by default
-  if (req.backend == F_www_https) {
-    set req.http.x-nyt-force-pass = "true";
-    #return(pass);
-  }
-
   // URIs not accessible via Varnish VIPs
   if (   req.url ~ "^/svc/web-shell/"
       || req.url ~ "^/svc/web-products/shell/"

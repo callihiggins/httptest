@@ -41,9 +41,8 @@ sub vcl_recv {
         # TODO: WE REALLY NEED TO MOVE ALL THIS INTO THE ROUTES SPECIFICALLY
         && req.http.x-nyt-force-pass != "true"
         && req.http.X-PageType != "switchboard"
-        # except from NYT4 requests
-        && (   req.backend != F_www_https
-            && req.backend != F_www_legacy_gke)
+        # except from legacy requests
+        && req.backend != F_www_legacy_gke
     ) {
         set req.url = querystring.remove(req.url);
     } else if ( req.backend == F_www_legacy_gke

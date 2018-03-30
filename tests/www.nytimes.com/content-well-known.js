@@ -17,9 +17,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/.well-known/assetlinks.json',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: 200,
       scenarioDescription: 'Test well-known/assetlinks.json; non-secure',
@@ -35,9 +35,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/.well-known/assetlinks.json',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4)/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: 200,
       scenarioDescription: 'Test well-known/assetlinks.json; secure',

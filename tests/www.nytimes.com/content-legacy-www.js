@@ -17,9 +17,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/library/film/gravesend-film-review.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; archive movie review',
@@ -54,9 +54,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/external/idg/2009/10/08/08idg-how-dangerous-could-a-hacked-robot-possibly-be-72478.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -73,9 +73,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/idg/IDG_852573C4006938800025748D0064C292.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -92,9 +92,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/inc_com/feature_inc1176120030123_legal.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -112,9 +112,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/external/readwriteweb/2011/03/31/31readwriteweb-google-ditches-barcodes-for-nfc-36542.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -132,9 +132,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/external/venturebeat/2011/09/26/26venturebeat-healthtaps-social-network-of-5000-doctors-is-6641.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -151,9 +151,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/favicon.ico',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; favicon file',
@@ -169,10 +169,10 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/googleglass',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-frame-options': /DENY/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
+        'x-frame-options': 'DENY',
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; Google glass',
@@ -188,9 +188,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/features/common/moth/homepage.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; feature; homepage MOTH',
@@ -206,10 +206,10 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/guantanamo-files/',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-frame-options': /DENY/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
+        'x-frame-options': 'DENY',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -226,9 +226,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/features/includes/us/politics/politicsSubNavigation.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -246,9 +246,11 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/content/help/account/account.html',
       responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/,
         location: /https:\/\/help.nytimes.com/
+      },
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -265,9 +267,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/info/help/letters.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -284,9 +286,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/humans.txt',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; humans file',
@@ -302,9 +304,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/iht/2007/08/12/opinion/IHT-12edcohen.1.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; IHT opinion page',
@@ -320,9 +322,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/imagepages/2016/11/22/us/23trump7_hp.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; imagepages',
@@ -338,9 +340,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/indexes/2001/09/11/',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; indexes homepage',
@@ -356,9 +358,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/interactive/2013/12/19/us/politics/19nsa-review.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; interactive; default',
@@ -374,9 +376,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/learning/general/onthisday/bday/0418.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; Learning Network',
@@ -393,9 +395,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/packages/html/magazine/2009-inauguration-gallery/index.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; packages; HTML',
@@ -411,9 +413,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/redesign/',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; redesign page',
@@ -429,9 +431,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/robots.txt',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test legacy; www cluster; robots file',
@@ -447,9 +449,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/services/json/sectionfronts/upshot/index.json',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription:
@@ -466,9 +468,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/sitemap_news.xml.gz',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; sitemap; news',
@@ -484,9 +486,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/specials/olympics/history/1968-ousted.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; special; Olympics',
@@ -503,9 +505,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/fodors/top/features/travel/destinations/asia/china/hongkong/fdrs_feat_74_7.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; travel; Fodors',
@@ -522,9 +524,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/cwire/2011/10/12/12climatewire-as-anti-climate-groups-activities-rise-so-do-14988.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
@@ -542,9 +544,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri:
         '/gwire/2011/10/07/07greenwire-yellowstone-bear-euthanized-after-dna-evidence-52234.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL|5-4|4)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription: 'Test legacy; www cluster; wire service; Greenwire',
@@ -560,9 +562,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/uwire/uwire_HOQZ080120051652566.html',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/,
-        'x-pagetype': /legacy-gke/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke',
       },
       responseStatusCode: [301, 404],
       scenarioDescription: 'Test legacy; www cluster; wire service; uwire',
@@ -593,7 +595,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/travel',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -610,7 +612,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/recipes/1016392/recipe.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -627,7 +629,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/most-popular',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -644,7 +646,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/most-popular-emailed?derp=1',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -662,7 +664,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/most-popular-viewed?awesome=yup',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -680,7 +682,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/technology/personaltech/cellphones/overview.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+         'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -698,7 +700,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/gst/tmagazine/video/index.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -716,7 +718,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/keyword/habitat',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
@@ -733,7 +735,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/premium/xword/puzzles.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -750,7 +752,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/svc/movies/mymovietimes.html?output_type=html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [403],
@@ -767,7 +769,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/events/dance/christopher-caines-33623.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -785,7 +787,7 @@ function getScenarioEvents() {
       requestUri:
         '/mem/theater/treview.html?res=9E04E3D61539F930A25750C0A967948260',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -802,7 +804,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/gst/theater/tdetails.html?id=1125015367926',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -819,7 +821,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/tv/show/185421/Four-Extraordinary-Women/overview',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -837,7 +839,7 @@ function getScenarioEvents() {
       requestUri:
         '/health/guides/disease/stroke-related-to-cocaine-use/overview.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+           'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -854,7 +856,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/RealMedia/ads/adstream_jx.ads',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
@@ -871,7 +873,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/guests/directory/Social_Sciences/',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -889,7 +891,7 @@ function getScenarioEvents() {
       requestUri:
         '/new/2003/bmw/z4/100191224/roadtestarticle.html?articleId=99257',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -906,7 +908,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/admin/index.php?login',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
@@ -923,7 +925,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/administrator/components/com_catalog/',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -941,7 +943,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/allbusiness/AB4113314_primary.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -958,7 +960,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/books/first/e/ellis-founding.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -975,7 +977,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/rss/asia.xml',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -992,7 +994,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/nyt/rss/HomePage',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [404],
@@ -1010,7 +1012,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/sports',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1028,7 +1030,7 @@ function getScenarioEvents() {
       requestUri:
         '/logout?WT.nav=shell&action=Click&module=LogOut&pgtype=article&region=TopBar',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1045,7 +1047,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/hdleftnav',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1062,7 +1064,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/membercenter/sitehelp.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1079,7 +1081,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/thedailyoffer',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1096,7 +1098,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/ref/health/healthguide/esn-Raynauds-expert.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1113,7 +1115,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/movie/review?res=9C05EEDE1E3BEF3ABC4E51DFB467838C659EDE',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1130,7 +1132,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/export_html/common/new_login_iframe.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [403],
@@ -1149,7 +1151,7 @@ function getScenarioEvents() {
       requestUri:
         '/mem/email-this.html?url=http%3A%2F%2Fwww.nytimes.com%2F1995%2F01%2F26%2Fnyregion%2Fwhen-cinderella-is-a-teacher-awards-are-the-glass-slipper-at-the-annual-ball.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1167,7 +1169,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/gst/movies/msearch.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -1184,7 +1186,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/websvc/user/data.json?callback=jQuery17105667599483611219',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [403],

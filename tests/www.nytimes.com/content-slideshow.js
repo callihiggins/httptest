@@ -18,7 +18,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/slideshow/2017/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -36,7 +36,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/slideshow/2017/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -54,7 +54,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/slideshow/2016/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -72,7 +72,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/slideshow/2015/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -90,7 +90,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/slideshow/2014/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -108,7 +108,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/slideshow/2013/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -126,7 +126,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/slideshow/2001/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -144,7 +144,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/slideshow/2005/01/01/us/slug.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [301],
@@ -307,7 +307,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/slideshow/2007/10/10/nytfrontpage/20071010POD_7.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GL',
+        'x-nyt-backend': 'www_legacy_gke',
         'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200, 301],

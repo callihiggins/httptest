@@ -192,9 +192,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/js/nyt5/ab/abconfig.json',
-      responseHeaderPattern: {
-        'x-api-version': /F-GL/,
-        'x-pagetype': /legacy/
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-pagetype': 'legacy-gke'
       },
       responseStatusCode: [200],
       scenarioDescription:

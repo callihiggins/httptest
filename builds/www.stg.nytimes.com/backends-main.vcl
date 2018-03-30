@@ -31,13 +31,6 @@ sub vcl_recv {
         call set_www_homepage_backend_gke;
     }
 
-    # this is the last route remaining for netscaler
-    if (req.url.path ~ "^/svc/profile/v2/email/verified-product-subscriptions-address") {
-        set req.http.x-PageType = "legacy";
-        set req.http.x-nyt-backend = "www_https";
-        call set_www_https_backend;
-    }
-
     // collection application
     if (   req.url ~ "^/by/"
         || req.url ~ "^/column/"
@@ -376,10 +369,6 @@ sub set_video_library_backend {
 sub set_video_api_backend {
     set req.http.x-nyt-backend = "video_api";
     set req.backend = F_video_api;
-}
-
-sub set_www_https_backend {
-    set req.backend = F_www_https;
 }
 
 sub set_legacy_gke_backend {

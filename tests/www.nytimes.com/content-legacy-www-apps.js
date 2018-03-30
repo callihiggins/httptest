@@ -114,8 +114,9 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/services/xml/rss/',
-      responseHeaderPattern: {
-        'x-api-version': /F-(GL)/
+      responseHeaderMatches: {
+        'x-pagetype': 'legacy-gke',
+        'x-nyt-backend': 'www_legacy_gke'
       },
       responseStatusCode: [200, 404, 301],
       scenarioDescription: 'Test legacy; www-apps cluster; service; RSS XML',
