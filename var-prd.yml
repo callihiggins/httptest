@@ -686,7 +686,7 @@ backends:
       expected_response: "200"
       initial: "2"
       threshold: "1"
-      timeout: "5000"
+      timeout: "10000"
       window: "2"
 
   - name: "times_journeys_students"
@@ -703,7 +703,7 @@ backends:
       expected_response: "200"
       initial: "2"
       threshold: "1"
-      timeout: "5000"
+      timeout: "10000"
       window: "2"
 
   - name: "vp"
