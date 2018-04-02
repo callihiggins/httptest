@@ -34,7 +34,12 @@ pipeline:
     vars:
       env: dev
       service_name: dev
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: push
 
@@ -48,7 +53,12 @@ pipeline:
     vars:
       env: dev
       service_name: sandbox01
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: push
       branch:
@@ -64,7 +74,12 @@ pipeline:
     vars:
       env: dev
       service_name: sandbox02
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: push
       branch:
@@ -80,7 +95,12 @@ pipeline:
     vars:
       env: dev
       service_name: sandbox03
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: push
       branch:
@@ -96,7 +116,12 @@ pipeline:
     vars:
       env: dev
       service_name: sandbox04
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: push
       branch:
@@ -112,7 +137,12 @@ pipeline:
     vars:
       env: dev
       service_name: dev
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: push
       branch:
@@ -145,7 +175,12 @@ pipeline:
     vars:
       env: stg
       service_name: stg
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_stg
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: push
       branch: master
@@ -177,7 +212,12 @@ pipeline:
     vars:
       env: prd
       service_name: prd
-    secrets: [FASTLY_API_KEY, GOOGLE_CREDENTIALS]
+    secrets:
+      - source: fastly_api_key_prd
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
     when:
       event: tag
 
