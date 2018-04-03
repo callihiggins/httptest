@@ -409,8 +409,8 @@ sub vcl_log {
       {" protocol=["} if(req.http.Fastly-SSL,"https","http") {"]"}
       {" behealth=["} if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,"-") {"]"}
       {" vialloc=["} if(req.http.x--fastly-project-vi,"1","0") {"]"}
-      {" restarts=["} resp.http.Fastly-Restarts {"]"}
-      {" restart_reason=["} req.http.x-nyt-restart-reason {"]"}
+      if(resp.http.Fastly-Restarts, {" restarts=["} resp.http.Fastly-Restarts {"]"},"")
+      if(req.http.x-nyt-restart-reason,{" restart_reason=["} req.http.x-nyt-restart-reason {"]"}, "")
       if(req.http.x-redirect-reason, {" "} + req.http.x-redirect-reason, "")
       if(req.http.x-vi-health, {" "} + req.http.x-vi-health, "");
     }
