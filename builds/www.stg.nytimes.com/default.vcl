@@ -41,6 +41,7 @@ include "backend-content-api";
 include "backend-times-journeys";
 include "backend-video";
 include "backend-tbooks";
+include "backend-adx-static";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
@@ -57,7 +58,6 @@ include "route-sitemap";
 include "route-recommendations";
 include "route-newsdev-cloud-functions";
 include "backend-profile-fe";
-include "route-adx";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -105,7 +105,6 @@ sub vcl_recv {
   call recv_route_sitemap;
   call recv_route_recommendations;
   call recv_route_newsdev_cloud_functions;
-  call recv_route_adx;
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
@@ -223,7 +222,6 @@ sub vcl_miss {
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
   call miss_pass_route_newsdev_cloud_functions;
-  call miss_pass_route_adx;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -258,7 +256,6 @@ sub vcl_pass {
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
   call miss_pass_route_newsdev_cloud_functions;
-  call miss_pass_route_adx;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -345,7 +342,6 @@ sub vcl_deliver {
 
   call deliver_add_svc_access_control;
   call deliver_route_newsdev_cloud_functions_access_control;
-  call deliver_adx_static_api_version;
 
   return(deliver);
 }
@@ -380,9 +376,9 @@ sub vcl_log {
     # selectively log some services
     # log 5xx status ALWAYS
     # log everything in dev and stg
-    if (
+    if ( 
            (req.url !~ "^/svc/(web-products|comscore)" && req.url !~ "^/adx/")
-        || resp.status >= 500
+        || resp.status >= 500 
         || req.http.x-environment != "prd"
        ) {
 

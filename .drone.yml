@@ -152,9 +152,8 @@ pipeline:
   # dev-test:
   #   image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
   #   servername: www.dev.nytimes.com
-  #   print_failures_only: true
   #   when:
-  #     event: push
+  #     event: pull_request
 
   stg-template:
     image: hairyhenderson/gomplate:v2.3.0

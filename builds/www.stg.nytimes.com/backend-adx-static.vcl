@@ -1,4 +1,4 @@
-sub recv_route_adx {
+sub vcl_recv {
 
     # various ADX related path patterns that we will send to a GCS bucket
     if ( req.url.path ~ "^/adx" ||
@@ -38,15 +38,26 @@ sub recv_route_adx {
     }
 }
 
-sub miss_pass_route_adx {
-    if (req.http.X-PageType == "adx-static") {
-      set req.backend = F_adx_static;
-      set bereq.http.host = "nyt-adx-static.storage.googleapis.com";
-    }
-}
-
-sub deliver_adx_static_api_version {
+sub vcl_deliver {
     if (req.http.X-PageType == "adx-static") {
         set resp.http.X-API-Version = "AS";
     }
+}
+
+sub vcl_miss {
+    if (req.http.X-PageType == "adx-static") {
+        call set_adx_static_backend;
+    }
+}
+
+sub vcl_pass {
+    if (req.http.X-PageType == "adx-static") {
+        call set_adx_static_backend;
+    }
+}
+
+sub set_adx_static_backend {
+
+    set req.backend = F_adx_static;
+    set bereq.http.host = "nyt-adx-static.storage.googleapis.com";
 }
