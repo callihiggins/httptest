@@ -615,9 +615,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-adx-static"
+    name    = "route-adx"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-adx-static.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-adx.vcl")}"
   }
 
   vcl {
