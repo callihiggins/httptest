@@ -34,7 +34,7 @@ require("./www.nytimes.com/vi-assets.js");
 require('./www.nytimes.com/vi-story.js');
 require('./www.nytimes.com/vi-apps.js');
 require("./www.nytimes.com/content-programs.js");
-require("./www.nytimes.com/service-adx.js");
+require("./www.nytimes.com/route-adx.js");
 require("./www.nytimes.com/service-video.js");
 require("./www.nytimes.com/content-video.js");
 require("./www.nytimes.com/route-cms-static-assets.js");

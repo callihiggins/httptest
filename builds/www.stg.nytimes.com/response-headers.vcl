@@ -1,4 +1,4 @@
-sub vcl_deliver {
+sub deliver_response_headers {
 
     # remove extraneous response headers
     unset resp.http.nnCoection;

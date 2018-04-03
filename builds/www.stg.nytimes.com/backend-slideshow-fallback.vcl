@@ -1,4 +1,4 @@
-sub vcl_deliver {
+sub deliver_slideshow_fallback {
 
     # Route all slideshows to NYT5 GKE and if the slideshow returns 404,
     # fallback to Legacy GKE to redirect to archive slideshow.
