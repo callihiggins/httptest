@@ -1,5 +1,10 @@
-sub vcl_recv {
-  if (req.http.X-PageType == "intl") {
+sub recv_route_intl {
+  if ((req.url == "/es") || (req.url ~ "^/es/")
+      || (req.url == "/global") || (req.url ~ "^/global/")) {
+      set req.http.X-PageType = "intl";
+      set req.http.x-nyt-backend = "intl_gcp";
+      call vi_ce_auth;
+
     if (req.request != "GET" &&
         req.request != "HEAD" &&
         req.request != "FASTLYPURGE"
@@ -10,7 +15,6 @@ sub vcl_recv {
     # Bypass cache for logged-in WordPress users, etc.
     if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {
       set req.http.x-nyt-force-pass = "true";
-      #return (pass);
     } else {
       unset req.http.Cookie;
       unset req.http.X-Cookie;
@@ -21,9 +25,8 @@ sub vcl_recv {
   }
 }
 
-sub vcl_fetch {
+sub fetch_route_intl_headers {
   if (req.http.X-PageType == "intl") {
-
     # don't return this header in prd
     if (!req.http.x-nyt-internal-access && req.http.x-environment == "prd") {
       unset beresp.http.X-Kubernetes-Url;

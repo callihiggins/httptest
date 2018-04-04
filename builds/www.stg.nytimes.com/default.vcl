@@ -31,7 +31,6 @@ include "backend-newsdev-gcs";
 include "backend-newsroom-files-gcs";
 include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
-include "backend-intl";
 include "backend-watching";
 include "backend-programs";
 include "backend-mwcm";
@@ -56,6 +55,7 @@ include "route-newsdev-cloud-functions";
 include "route-games";
 include "route-profile-fe";
 include "route-adx";
+include "route-intl";
 include "route-elections";
 include "route-tbooks";
 
@@ -108,6 +108,7 @@ sub vcl_recv {
   call recv_route_games;
   call recv_route_profile_fe;
   call recv_route_adx;
+  call recv_route_intl;
   call recv_route_elections;
   call recv_route_tbooks;
   call recv_gdpr;
@@ -299,6 +300,8 @@ sub vcl_fetch {
 
   # DO NOT REMOVE THE NEXT LINE - FASTY SPECIFIC MACRO
 #FASTLY fetch
+
+  call fetch_route_intl_headers;
 
   # moved the next two blocks up the chain
   # these running earlier is faster

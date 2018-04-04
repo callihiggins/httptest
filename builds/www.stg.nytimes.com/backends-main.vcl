@@ -261,13 +261,6 @@ sub vcl_recv {
       set req.http.x-nyt-backend = "gcs_origin";
     }
 
-    if ((req.url == "/es") || (req.url ~ "^/es/")
-        || (req.url == "/global") || (req.url ~ "^/global/")) {
-        set req.http.X-PageType = "intl";
-        set req.http.x-nyt-backend = "intl_gcp";
-        call set_www_intl_backend;
-    }
-
     // blogs
     if (   req.http.host == "dealbook.nytimes.com"
         || req.http.host == "developers.nytimes.com"
@@ -446,11 +439,6 @@ sub set_www_realestate_backend_gke {
 
 sub set_blogs_fe_backend {
     set req.backend = F_blogs_fe;
-}
-
-sub set_www_intl_backend {
-    set req.backend = F_intl_gcp;
-    call vi_ce_auth;
 }
 
 sub set_www_newsdev_gke_backend {
