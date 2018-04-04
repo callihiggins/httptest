@@ -38,7 +38,6 @@ include "backend-mwcm";
 include "backend-content-api";
 include "backend-times-journeys";
 include "backend-video";
-include "backend-tbooks";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
@@ -58,6 +57,7 @@ include "route-games";
 include "route-profile-fe";
 include "route-adx";
 include "route-elections";
+include "route-tbooks";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -109,8 +109,9 @@ sub vcl_recv {
   call recv_route_profile_fe;
   call recv_route_adx;
   call recv_route_elections;
-
+  call recv_route_tbooks;
   call recv_gdpr;
+
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
@@ -232,6 +233,8 @@ sub vcl_miss {
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
   call miss_pass_route_elections;
+  call miss_pass_route_tbooks;
+
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
   call unset_extraneous_bereq_headers;
@@ -269,6 +272,7 @@ sub vcl_pass {
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
   call miss_pass_route_elections;
+  call miss_pass_route_tbooks;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -361,6 +365,7 @@ sub vcl_deliver {
   call deliver_profile_fe_api_version;
   call deliver_adx_static_api_version;
   call deliver_elections_api_version;
+  call deliver_tbooks_api_version;
 
   # set response headers
   call deliver_gdpr;

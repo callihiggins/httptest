@@ -22,7 +22,7 @@ require("./www.nytimes.com/content-ads.js");
 require("./www.nytimes.com/service-userinfo-v2.js");
 require("./www.nytimes.com/service-userinfo-v3.js");
 require("./www.nytimes.com/route-games.js");
-require("./www.nytimes.com/content-tbooks.js");
+require("./www.nytimes.com/route-tbooks.js");
 require("./www.nytimes.com/content-well-known.js");
 require("./www.nytimes.com/https-everywhere.js");
 require("./www.nytimes.com/geoip-library-response.js");
