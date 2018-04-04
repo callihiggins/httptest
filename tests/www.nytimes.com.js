@@ -45,7 +45,7 @@ require("./www.nytimes.com/route-community-svc.js");
 require("./www.nytimes.com/route-messaging.js");
 require("./www.nytimes.com/route-sitemap.js");
 require("./www.nytimes.com/route-recommendations.js");
-require("./www.nytimes.com/service-profile-fe.js");
+require("./www.nytimes.com/route-profile-fe.js");
 require("./www.nytimes.com/route-search-suggest-svc.js");
 require("./www.nytimes.com/route-switchboard.js");
 require("./www.nytimes.com/route-newsdev-cloud-functions.js");

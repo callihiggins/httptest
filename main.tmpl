@@ -687,9 +687,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-profile-fe"
+    name    = "route-profile-fe"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-profile-fe.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-profile-fe.vcl")}"
   }
 
   vcl {

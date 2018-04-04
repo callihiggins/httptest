@@ -1,4 +1,4 @@
-sub vcl_recv {
+sub recv_route_profile_fe {
     // /svc/profile/v2/email/verified-product-subscriptions-address is a special content switch rule that
     // goes to paperboy-profileapi backend on netscaler. We need to filter it out from reqeusts to
     // profile_fe. This endpoint will soon not be accessible through www with messaging team migrating
@@ -18,33 +18,21 @@ sub vcl_recv {
     }
 }
 
-sub vcl_pass {
+sub miss_pass_route_profile_fe {
     if (req.http.X-PageType == "profile-fe") {
-        call set_profile_fe_backend;
+
+        if (req.http.x-environment == "dev") {
+            set bereq.http.host = "profile-fe.dev.nyt.net";
+        } else if (req.http.x-environment == "stg") {
+            set bereq.http.host = "profile-fe.stg.nyt.net";
+        } else {
+            set bereq.http.host = "profile-fe.prd.nyt.net";
+        }
     }
 }
 
-sub vcl_miss {
-    if (req.http.X-PageType == "profile-fe") {
-        call set_profile_fe_backend;
-    }
-}
-
-sub vcl_deliver {
+sub deliver_profile_fe_api_version {
     if (req.http.X-PageType == "profile-fe") {
         set resp.http.X-API-Version = "PFE";
-    }
-}
-
-sub set_profile_fe_backend {
-
-    set req.backend = F_profile_fe;
-
-    if (req.http.x-environment == "dev") {
-        set bereq.http.host = "profile-fe.dev.nyt.net";
-    } else if (req.http.x-environment == "stg") {
-        set bereq.http.host = "profile-fe.stg.nyt.net";
-    } else {
-        set bereq.http.host = "profile-fe.prd.nyt.net";
     }
 }

@@ -56,7 +56,7 @@ include "route-messaging";
 include "route-sitemap";
 include "route-recommendations";
 include "route-newsdev-cloud-functions";
-include "backend-profile-fe";
+include "route-profile-fe";
 include "route-adx";
 
 # vi allocation and routing
@@ -105,6 +105,7 @@ sub vcl_recv {
   call recv_route_sitemap;
   call recv_route_recommendations;
   call recv_route_newsdev_cloud_functions;
+  call recv_route_profile_fe;
   call recv_route_adx;
 
   # at this point all routing decisions should be final
@@ -223,6 +224,7 @@ sub vcl_miss {
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
   call miss_pass_route_newsdev_cloud_functions;
+  call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
 
   # unset headers to the origin that we use for vars
@@ -258,6 +260,7 @@ sub vcl_pass {
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
   call miss_pass_route_newsdev_cloud_functions;
+  call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
 
   # unset headers to the origin that we use for vars
@@ -345,6 +348,7 @@ sub vcl_deliver {
 
   call deliver_add_svc_access_control;
   call deliver_route_newsdev_cloud_functions_access_control;
+  call deliver_profile_fe_api_version;
   call deliver_adx_static_api_version;
 
   # set response headers

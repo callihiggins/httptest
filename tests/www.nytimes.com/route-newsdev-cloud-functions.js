@@ -20,7 +20,7 @@ function getScenarioEvents() {
         'x-pagetype': 'newsdev-cloud-functions',
         'access-control-allow-origin': '*',
       },
-      responseStatusCode: [200],
+      responseStatusCode: [302],
       scenarioDescription: 'Test /svc/int/functions is served from newsdev cloud functions backend',
       testId: 1
     },
