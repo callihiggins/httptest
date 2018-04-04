@@ -1,16 +1,15 @@
-sub vcl_recv {
-    if (req.http.host ~ "^www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
+sub recv_route_games {
+    if (req.http.x-nyt-canonical-www-host) {
         if (req.url.path ~ "^/games/prototype/" || req.url.path ~ "^/svc/crosswords/" || req.url.path ~ "^/svc/games/(sudoku|set)/") {
             set req.http.X-PageType = "games-service";
             set req.http.x-nyt-backend = "games_svc";
             set req.http.x-nyt-force-pass = "true";
-            #return(pass);
         }
 
         if ((req.http.x-environment == "stg" || req.http.x-environment == "dev") &&
              req.url.path ~ "^/puzzles") {
-
               set req.http.X-PageType = "games-phoenix";
+              set req.http.x-nyt-backend = "games_phoenix";
 
               // Since we're returning early, we need to do this here for now
               if (!req.http.Fastly-SSL) {
@@ -20,7 +19,6 @@ sub vcl_recv {
               // Games need cookies and until we sort out our mess with cookies we need to pass requests
               // to the apps
               set req.http.x-nyt-force-pass = "true";
-              #return(pass);
         }
 
         if (req.url.path ~ "^/crosswords" &&
@@ -37,7 +35,6 @@ sub vcl_recv {
             // Games need cookies and until we sort out our mess with cookies we need to pass requests
             // to the apps
             set req.http.x-nyt-force-pass = "true";
-            #return(pass);
         }
 
         // We can treat the games assets as everything else and cache those (no cookies needed there)
@@ -54,7 +51,6 @@ sub vcl_recv {
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;
-            #return(lookup);
         }
 
         // submissions page
@@ -66,32 +62,23 @@ sub vcl_recv {
                 call redirect_to_https;
             }
             set req.http.x-nyt-force-pass = "true";
-            #return(pass);
         }
     }
 }
 
-sub vcl_pass {
-    call set_games_backend_request;
+sub miss_pass_route_games {
+  if (req.http.X-PageType == "games-service") {
+    call set_games_svc_host;
+  } else if (req.http.X-PageType == "games-web") {
+    call set_games_web_host;
+  } else if (req.http.X-PageType == "games-assets") {
+    call set_games_assets_host;
+  } else if (req.http.X-PageType == "games-phoenix") {
+    call set_games_phoenix_host;
+  }
 }
 
-sub vcl_miss {
-    call set_games_backend_request;
-}
-
-sub set_games_backend_request {
-    if (req.http.X-PageType == "games-service") {
-      call set_games_svc_backend;
-    } else if (req.http.X-PageType == "games-web") {
-      call set_games_web_backend;
-    } else if (req.http.X-PageType == "games-assets") {
-      call set_games_assets_backend;
-    } else if (req.http.X-PageType == "games-phoenix") {
-      call set_games_phoenix_backend;
-    }
-}
-
-sub vcl_deliver {
+sub deliver_games_api_version {
     if (req.http.X-PageType == "games-service") {
         set resp.http.X-API-Version = "GS";
     } else if (req.http.X-PageType == "games-web" ||
@@ -100,10 +87,7 @@ sub vcl_deliver {
     }
 }
 
-sub set_games_svc_backend {
-
-    set req.backend = F_games_svc;
-
+sub set_games_svc_host {
     if (req.http.x-environment == "dev") {
         set bereq.http.host = "nyt-games-dev.appspot.com";
     } else if (req.http.x-environment == "stg") {
@@ -113,10 +97,7 @@ sub set_games_svc_backend {
     }
 }
 
-sub set_games_web_backend {
-
-    set req.backend = F_games_web;
-
+sub set_games_web_host {
     if (req.http.x-environment == "dev") {
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else if (req.http.x-environment == "stg") {
@@ -126,16 +107,12 @@ sub set_games_web_backend {
     }
 }
 
-sub set_games_assets_backend {
-
-    set req.backend = F_games_assets;
+sub set_games_assets_host {
     set bereq.http.host = "storage.googleapis.com";
 
 }
 
-sub set_games_phoenix_backend {
-    set req.backend = F_games_phoenix;
-
+sub set_games_phoenix_host {
     if (req.http.x-environment == "dev" ||
         req.http.x-environment == "stg") {
         set bereq.http.host = "phoenix.games.dev.nyt.net";

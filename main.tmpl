@@ -417,9 +417,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-games"
+    name    = "route-games"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-games.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-games.vcl")}"
   }
 
   vcl {

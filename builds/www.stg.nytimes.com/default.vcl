@@ -34,7 +34,6 @@ include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
 include "backend-intl";
 include "backend-watching";
-include "backend-games";
 include "backend-programs";
 include "backend-mwcm";
 include "backend-content-api";
@@ -56,6 +55,7 @@ include "route-messaging";
 include "route-sitemap";
 include "route-recommendations";
 include "route-newsdev-cloud-functions";
+include "route-games";
 include "route-profile-fe";
 include "route-adx";
 
@@ -105,6 +105,7 @@ sub vcl_recv {
   call recv_route_sitemap;
   call recv_route_recommendations;
   call recv_route_newsdev_cloud_functions;
+  call recv_route_games;
   call recv_route_profile_fe;
   call recv_route_adx;
 
@@ -224,6 +225,7 @@ sub vcl_miss {
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
   call miss_pass_route_newsdev_cloud_functions;
+  call miss_pass_route_games;
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
 
@@ -260,6 +262,7 @@ sub vcl_pass {
   call miss_pass_route_sitemap;
   call miss_pass_route_search_suggest;
   call miss_pass_route_newsdev_cloud_functions;
+  call miss_pass_route_games;
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
 
@@ -348,6 +351,7 @@ sub vcl_deliver {
 
   call deliver_add_svc_access_control;
   call deliver_route_newsdev_cloud_functions_access_control;
+  call deliver_games_api_version;
   call deliver_profile_fe_api_version;
   call deliver_adx_static_api_version;
 
