@@ -1,4 +1,4 @@
-sub vcl_recv {
+sub recv_gdpr {
     if (!req.http.x-nyt-gdpr && req.http.Cookie:nyt-gdpr) {
         set req.http.x-nyt-gdpr = req.http.Cookie:nyt-gdpr;
     }
@@ -17,7 +17,7 @@ sub vcl_recv {
     }
 }
 
-sub vcl_deliver {
+sub deliver_gdpr {
 
     # set the header
     # this will either set a new cookie

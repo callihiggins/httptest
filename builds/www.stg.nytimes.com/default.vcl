@@ -26,7 +26,6 @@ include "backend-init-vars";
 include "backend-health-service"; # service that reports health of defined backends
 include "backends-main";
 include "backend-well";
-include "backend-elections";
 include "backend-newsdev-gke";
 include "backend-newsdev-gcs";
 include "backend-newsroom-files-gcs";
@@ -58,6 +57,7 @@ include "route-newsdev-cloud-functions";
 include "route-games";
 include "route-profile-fe";
 include "route-adx";
+include "route-elections";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -108,6 +108,9 @@ sub vcl_recv {
   call recv_route_games;
   call recv_route_profile_fe;
   call recv_route_adx;
+  call recv_route_elections;
+
+  call recv_gdpr;
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
@@ -228,7 +231,7 @@ sub vcl_miss {
   call miss_pass_route_games;
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
-
+  call miss_pass_route_elections;
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
   call unset_extraneous_bereq_headers;
@@ -265,6 +268,7 @@ sub vcl_pass {
   call miss_pass_route_games;
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
+  call miss_pass_route_elections;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -273,6 +277,8 @@ sub vcl_pass {
 
 
 sub vcl_fetch {
+
+  call fetch_elections_redirect;
 
   # set surrogate key header properly
   call fetch_surrogate_key_handler;
@@ -354,8 +360,10 @@ sub vcl_deliver {
   call deliver_games_api_version;
   call deliver_profile_fe_api_version;
   call deliver_adx_static_api_version;
+  call deliver_elections_api_version;
 
   # set response headers
+  call deliver_gdpr;
   call deliver_response_headers;
   call deliver_slideshow_fallback;
 
@@ -365,6 +373,7 @@ sub vcl_deliver {
 sub vcl_error {
 #FASTLY error
 
+  call error_760_elections_redirect;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_900_route_esi_jsonp_callback;
 

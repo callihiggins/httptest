@@ -345,9 +345,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-elections"
+    name    = "route-elections"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-elections.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-elections.vcl")}"
   }
 
   vcl {
