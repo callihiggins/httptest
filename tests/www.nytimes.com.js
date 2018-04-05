@@ -8,7 +8,7 @@ require("./www.nytimes.com/content-slideshow.js");
 require("./www.nytimes.com/content-misc.js");
 require("./www.nytimes.com/route-elections.js");
 require("./www.nytimes.com/content-legacy.js");
-require("./www.nytimes.com/content-service.js");
+require("./www.nytimes.com/route-content-api.js");
 require("./www.nytimes.com/route-intl.js");
 require("./www.nytimes.com/content-interactive.js");
 require("./www.nytimes.com/content-newsdev-attribute.js");

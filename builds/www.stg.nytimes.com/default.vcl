@@ -34,7 +34,6 @@ include "backend-newsdev-attribute";
 include "backend-watching";
 include "backend-programs";
 include "backend-mwcm";
-include "backend-content-api";
 include "backend-times-journeys";
 include "backend-video";
 
@@ -57,6 +56,7 @@ include "route-profile-fe";
 include "route-adx";
 include "route-intl";
 include "route-elections";
+include "route-content-api"
 include "route-tbooks";
 
 # vi allocation and routing
@@ -111,6 +111,8 @@ sub vcl_recv {
   call recv_route_intl;
   call recv_route_elections;
   call recv_route_tbooks;
+  call recv_route_content_api;
+
   call recv_gdpr;
 
 
@@ -235,6 +237,7 @@ sub vcl_miss {
   call miss_pass_route_adx;
   call miss_pass_route_elections;
   call miss_pass_route_tbooks;
+  call miss_pass_route_content_api;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -274,6 +277,7 @@ sub vcl_pass {
   call miss_pass_route_adx;
   call miss_pass_route_elections;
   call miss_pass_route_tbooks;
+  call miss_pass_route_content_api;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -297,6 +301,8 @@ sub vcl_fetch {
   # remove accept-encoding headers from community requests
   # this needs to happen before the fastly macro
   call fetch_route_community_svc;
+
+  call fetch_route_content_api;
 
   # DO NOT REMOVE THE NEXT LINE - FASTY SPECIFIC MACRO
 #FASTLY fetch
@@ -369,6 +375,7 @@ sub vcl_deliver {
   call deliver_adx_static_api_version;
   call deliver_elections_api_version;
   call deliver_tbooks_api_version;
+  call deliver_content_api_version;
 
   # set response headers
   call deliver_gdpr;

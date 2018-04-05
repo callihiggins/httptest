@@ -381,9 +381,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-content-api"
+    name    = "route-content-api"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-content-api.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-content-api.vcl")}"
   }
 
   vcl {
