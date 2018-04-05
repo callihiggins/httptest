@@ -72,14 +72,14 @@ backends:
       window: "5"
 
   - name: "article_fe"
-    address: "nyt5-app-article.stg.oma1.nyt.net"
+    address: "nyt5-app-article.dev.oma1.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "30000"
-    ssl_cert_hostname: "nyt5-app-article.stg.oma1.nyt.net"
-    ssl_sni_hostname: "nyt5-app-article.stg.oma1.nyt.net"
+    ssl_cert_hostname: "nyt5-app-article.dev.oma1.nyt.net"
+    ssl_sni_hostname: "nyt5-app-article.dev.oma1.nyt.net"
     healthcheck:
-      host: "nyt5-app-article.stg.oma1.nyt.net"
+      host: "nyt5-app-article.dev.oma1.nyt.net"
       path: "/.status"
       check_interval: "20000"
       expected_response: "200"
