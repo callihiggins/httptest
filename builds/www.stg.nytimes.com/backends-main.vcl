@@ -261,17 +261,6 @@ sub vcl_recv {
       set req.http.x-nyt-backend = "gcs_origin";
     }
 
-    // blogs
-    if (   req.http.host == "dealbook.nytimes.com"
-        || req.http.host == "developers.nytimes.com"
-        || req.http.host ~  "blogs\.(dev\.|stg\.|)?nytimes\.com$"
-        || req.http.host ~  "blogs\.ewr1.nytimes\.com$"
-        || req.http.host ~  "(www\.)?nytco\.com$"
-    ) {
-        set req.http.X-PageType = "blog";
-        set req.http.x-nyt-backend = "blogs_fe";
-        call set_blogs_fe_backend;
-    }
     // vanity hostnames for blogs
     // skip glogin check
     if (   req.http.host == "beta620.nytimes.com"
@@ -435,10 +424,6 @@ sub set_www_realestate_backend_gke {
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
-}
-
-sub set_blogs_fe_backend {
-    set req.backend = F_blogs_fe;
 }
 
 sub set_www_newsdev_gke_backend {
