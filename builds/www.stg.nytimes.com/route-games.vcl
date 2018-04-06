@@ -6,8 +6,7 @@ sub recv_route_games {
             set req.http.x-nyt-force-pass = "true";
         }
 
-        if ((req.http.x-environment == "stg" || req.http.x-environment == "dev") &&
-             req.url.path ~ "^/puzzles") {
+        if (req.url.path ~ "^/puzzles") {
               set req.http.X-PageType = "games-phoenix";
               set req.http.x-nyt-backend = "games_phoenix";
 
@@ -116,5 +115,7 @@ sub set_games_phoenix_host {
     if (req.http.x-environment == "dev" ||
         req.http.x-environment == "stg") {
         set bereq.http.host = "phoenix.games.dev.nyt.net";
+    } else {
+        set bereq.http.host = "phoenix.games.prd.nyt.net";
     }
 }

@@ -445,8 +445,8 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For Spelling Bee',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': false,
         'sbx': false,
       },
