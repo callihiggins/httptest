@@ -1,5 +1,5 @@
-sub vcl_recv {
-    if (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" || req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$") {
+sub recv_route_programs {
+    if (req.http.x-nyt-canonical-www-host) {
 
         if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/" || req.url.path ~ "^/programs/public/") {
 
@@ -10,52 +10,34 @@ sub vcl_recv {
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;
             unset req.http.x-nyt-wpab;
-            #return(lookup);
         } else if (req.url.path ~ "^/programs/svc/shaq") {
             set req.http.X-PageType = "shaq-service";
             set req.http.x-nyt-backend = "shaq_svc";
             set req.http.x-nyt-force-pass = "true";
-            #return(pass);
         } else if (req.url.path ~ "^/programs/" ) {
             set req.http.X-PageType = "programs-service";
             set req.http.x-nyt-backend = "programs_svc";
             unset req.http.Cookie;
             unset req.http.X-Cookie;
-            #return(lookup);
         }
     }
 }
 
-sub vcl_pass {
+sub miss_pass_route_programs {
     if (req.http.X-PageType == "programs-service") {
-        call set_programs_web_backend;
+        call set_programs_web_host;
     }
 
     if (req.http.X-PageType == "shaq-service") {
-        call set_programs_shaq_backend;
+        call set_programs_shaq_host;
     }
 
     if (req.http.X-PageType == "programs-gcs") {
-        call set_programs_gcs_backend;
-    }
-
-}
-
-sub vcl_miss {
-    if (req.http.X-PageType == "programs-service") {
-        call set_programs_web_backend;
-    }
-
-    if (req.http.X-PageType == "shaq-service") {
-        call set_programs_shaq_backend;
-    }
-
-    if (req.http.X-PageType == "programs-gcs") {
-        call set_programs_gcs_backend;
+        call set_programs_gcs_host;
     }
 }
 
-sub vcl_deliver {
+sub deliver_programs_api_version {
     if (req.http.X-PageType == "programs-service") {
         set resp.http.X-API-Version = "PS";
     }
@@ -64,7 +46,7 @@ sub vcl_deliver {
     }
 }
 
-sub set_programs_web_backend {
+sub set_programs_web_host {
 
     if (req.http.x-environment == "dev") {
         set bereq.http.host = "ftu-dot-nyt-betaprog-dev.appspot.com";
@@ -76,7 +58,7 @@ sub set_programs_web_backend {
 
 }
 
-sub set_programs_gcs_backend {
+sub set_programs_gcs_host {
   # Configure access to Cloud Storage
   if (req.http.x-environment == "dev") {
     set bereq.http.host = "nyt-betaprog-dev-assets.storage.googleapis.com";
@@ -88,7 +70,7 @@ sub set_programs_gcs_backend {
 
 }
 
-sub set_programs_shaq_backend {
+sub set_programs_shaq_host {
 
     if (req.http.x-environment == "dev") {
         set bereq.http.host = "shaq-dot-nyt-betaprog-dev.appspot.com";

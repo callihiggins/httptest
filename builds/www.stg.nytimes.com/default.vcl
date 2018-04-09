@@ -32,7 +32,6 @@ include "backend-newsroom-files-gcs";
 include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
 include "backend-watching";
-include "backend-programs";
 include "backend-mwcm";
 include "backend-times-journeys";
 include "backend-video";
@@ -58,6 +57,7 @@ include "route-intl";
 include "route-elections";
 include "route-content-api"
 include "route-tbooks";
+include "route-programs";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -112,7 +112,9 @@ sub vcl_recv {
   call recv_route_elections;
   call recv_route_tbooks;
   call recv_route_content_api;
+  call recv_route_programs;
 
+  call recv_querystring;
   call recv_gdpr;
 
 
@@ -236,6 +238,7 @@ sub vcl_miss {
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
   call miss_pass_route_elections;
+  call miss_pass_route_programs;
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
 
@@ -276,6 +279,7 @@ sub vcl_pass {
   call miss_pass_route_profile_fe;
   call miss_pass_route_adx;
   call miss_pass_route_elections;
+  call miss_pass_route_programs;
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
 
@@ -376,6 +380,7 @@ sub vcl_deliver {
   call deliver_elections_api_version;
   call deliver_tbooks_api_version;
   call deliver_content_api_version;
+  call deliver_programs_api_version;
 
   # set response headers
   call deliver_gdpr;

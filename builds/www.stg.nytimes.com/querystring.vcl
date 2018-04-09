@@ -1,4 +1,4 @@
-sub vcl_recv {
+sub recv_querystring {
     set req.http.X-OriginalUri = req.url;
 
     # remove query string parameters
