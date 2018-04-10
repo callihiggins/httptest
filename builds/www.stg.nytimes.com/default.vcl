@@ -33,7 +33,6 @@ include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
 include "backend-watching";
 include "backend-mwcm";
-include "backend-times-journeys";
 include "backend-video";
 
 # new style routing includes
@@ -58,6 +57,7 @@ include "route-elections";
 include "route-content-api"
 include "route-tbooks";
 include "route-programs";
+include "route-times-journeys";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -113,6 +113,7 @@ sub vcl_recv {
   call recv_route_tbooks;
   call recv_route_content_api;
   call recv_route_programs;
+  call recv_route_times_journeys;
 
   call recv_querystring;
   call recv_gdpr;
@@ -241,6 +242,7 @@ sub vcl_miss {
   call miss_pass_route_programs;
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
+  call miss_pass_route_times_journeys;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -282,6 +284,7 @@ sub vcl_pass {
   call miss_pass_route_programs;
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
+  call miss_pass_route_times_journeys;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -381,6 +384,7 @@ sub vcl_deliver {
   call deliver_tbooks_api_version;
   call deliver_content_api_version;
   call deliver_programs_api_version;
+  call deliver_times_journeys_api_version;
 
   # set response headers
   call deliver_gdpr;

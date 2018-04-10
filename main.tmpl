@@ -495,9 +495,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-times-journeys"
+    name    = "route-times-journeys"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-times-journeys.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-times-journeys.vcl")}"
   }
 
   vcl {
