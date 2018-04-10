@@ -41,7 +41,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/video?param=1',
       'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting the library homepage with a query string at the end',
+      'scenarioDescription': 'Test hitting the video library homepage with a query string at the end',
       'testId': 2,
     }
   ];

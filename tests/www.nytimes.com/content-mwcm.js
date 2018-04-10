@@ -379,7 +379,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/marketing/surveys/survey-not-found.html',
       'responseStatusCode': 404,
-      'scenarioDescription': 'WCM subscription: 404 status code test',
+      'scenarioDescription': 'WCM Marketing Surveys: 404 status code test',
       'testId': 17,
     },
     {
