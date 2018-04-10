@@ -459,6 +459,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "acl-fastly"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-fastly.vcl")}"
+  }
+
+  vcl {
     name    = "backend-well"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-well.vcl")}"
@@ -722,4 +728,9 @@ resource "fastly_service_v1" "www" {
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-recommendations.vcl")}"
   }
 
+  vcl {
+    name    = "access-level-authorization"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/access-level-authorization.vcl")}"
+  }
 }

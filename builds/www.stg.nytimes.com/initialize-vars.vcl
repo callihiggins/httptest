@@ -1,17 +1,15 @@
-# use keys in x-fastly-stg header for staging access from non-whitelisted IPs
-table staging_access_tokens {
-  # "app-<random>" : "<issue date>"
-  "watching-2gk6" : "20170614",
-  "cms-scoop-9v5q" : "20180105",
-}
-
-table internal_access_tokens {
-  "drone-fastly-test-4er7" : "20171016", //the item for drone-fastly-test to access dev or stg with drone
-}
-
 # this subroutine is for the new routing logic created in recfactor
 # we will migrate things into this sub as needed
 sub initialize_global_variable_headers {
+
+  # set the environment class variable
+  if (req.http.host ~ "\.dev\."){
+    set req.http.x-environment = "dev";
+  } else if (req.http.host ~ "\.stg\."){
+    set req.http.x-environment = "stg";
+  } else {
+    set req.http.x-environment = "prd";
+  }
 
   # set a var to denote if this domain is canonical www request
   if (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" || req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$") {
@@ -23,17 +21,18 @@ sub initialize_global_variable_headers {
 
 sub vcl_recv {
 
-    // Reset access levels before setting them
-    unset req.http.x-nyt-internal-access;
-    unset req.http.x-nyt-external-access;
+    # nearly everything in here eventually needs to be put in default.vcl
+    # in a sub call..
+    # cannot until all the other logic is moved there due to order of ops
 
-    if (client.ip ~ internal || client.ip ~ vpc_nat_gateway || table.lookup(internal_access_tokens, req.http.x-fastly-stg) ~ "^[0-9]{8}$") {
-      set req.http.x-nyt-internal-access = "1";
-    }
+    # initialize header vars that are used throughout logic here
+    call initialize_global_variable_headers;
 
-    if (client.ip ~ external_staging_access || table.lookup(staging_access_tokens, req.http.x-fastly-stg) ~ "^[0-9]{8}$") {
-      set req.http.x-nyt-external-access = "1";
-    }
+    # what level of access does this user have based on ACL and/or auth headers
+    call recv_set_access_level;
+
+    # block the request if the user does not have access to the environment
+    call recv_restrict_access;
 
     # unset anything that we shouldn't trust from the user request
     if (!req.http.x-nyt-internal-access) {
@@ -96,14 +95,6 @@ sub vcl_recv {
       // replace '+' and '/' with cookie-safe '-' and '_':
       set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\+", "-");
       set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\/", "_");
-    }
-
-    if (req.http.host ~ "\.dev\."){
-      set req.http.x-environment = "dev";
-    } else if (req.http.host ~ "\.stg\."){
-      set req.http.x-environment = "stg";
-    } else {
-      set req.http.x-environment = "prd";
     }
 
     set req.http.x-nyt-logger-name = "web" + req.http.x-environment + "-www";

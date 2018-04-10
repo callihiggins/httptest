@@ -3,9 +3,11 @@ include "acl-vpc-gateway";
 include "acl-external-staging-access";
 include "acl-crawlers";
 include "acl-blacklist";
+include "acl-fastly";
 include "error-pages";
 include "sanitize-url";
 include "normalize-url";
+include "access-level-authorization";
 include "initialize-vars";
 include "geoip-timezone-map-table";
 include "geoip-location-consolidation-map-table";
@@ -85,11 +87,6 @@ include "backend-slideshow-fallback";
 
 
 sub vcl_recv {
-
-  # initialize common functionalities here
-  # TODO: move more things into this that are vcl_recv in intialize-vars.vcl
-  call initialize_global_variable_headers;
-
 
   # begin routing logic
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
