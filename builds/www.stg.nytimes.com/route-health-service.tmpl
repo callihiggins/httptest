@@ -1,12 +1,4 @@
-sub vcl_pass {
-  call process_backend_health_req;
-}
-
-sub vcl_miss {
-  call process_backend_health_req;
-}
-
-sub process_backend_health_req {
+sub miss_pass_route_health_service {
   if (req.url.path ~ "^/backendhealth\.(json|html)$" && req.http.x-nyt-internal-access) {
 
     # this does not use query strings
@@ -40,7 +32,7 @@ sub process_backend_health_req {
   }
 }
 
-sub vcl_error {
+sub error_995_route_health_service {
   if (obj.status == 995) {
 
     set obj.status = 200;
@@ -55,7 +47,7 @@ sub vcl_error {
     set obj.http.X-API-Version = "0";
 
     synthetic req.http.x-nyt-behealth-response-head +
-              req.http.x-nyt-behealth-response-body + 
+              req.http.x-nyt-behealth-response-body +
               req.http.x-nyt-behealth-response-tail;
 
     unset req.http.x-nyt-behealth-response-head;

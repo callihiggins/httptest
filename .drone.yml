@@ -18,7 +18,7 @@ pipeline:
       - env=dev
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-dev.yml
-      - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-dev.yml
+      - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-dev.yml
     when:
       event: push
 
@@ -160,7 +160,7 @@ pipeline:
     image: hairyhenderson/gomplate:v2.3.0
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-stg.yml
-      - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-stg.yml
+      - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-stg.yml
     when:
       event: push
       branch: master
@@ -199,7 +199,7 @@ pipeline:
     image: hairyhenderson/gomplate:v2.3.0
     commands:
       - /gomplate -f main.tmpl -o main.tf -d config=var-prd.yml
-      - /gomplate -f builds/www.stg.nytimes.com/backend-health-service.tmpl -o builds/www.stg.nytimes.com/backend-health-service.vcl -d config=var-prd.yml
+      - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-prd.yml
     when:
       event: tag
 

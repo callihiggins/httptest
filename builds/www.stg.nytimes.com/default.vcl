@@ -25,7 +25,7 @@ include "backend-init-vars";
 
 
 # the following files contain routes for the backends defined above
-include "backend-health-service"; # service that reports health of defined backends
+include "route-health-service"; # service that reports health of defined backends
 include "backends-main";
 include "backend-well";
 include "backend-newsdev-gke";
@@ -240,6 +240,7 @@ sub vcl_miss {
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
   call miss_pass_route_times_journeys;
+  call miss_pass_route_health_service;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -282,6 +283,7 @@ sub vcl_pass {
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
   call miss_pass_route_times_journeys;
+  call miss_pass_route_health_service;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -397,6 +399,7 @@ sub vcl_error {
   call error_760_elections_redirect;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_900_route_esi_jsonp_callback;
+  call error_995_route_health_service;
 
 
   # handle 5xx errors if the error handler was called

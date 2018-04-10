@@ -543,9 +543,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-health-service"
+    name    = "route-health-service"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-health-service.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-health-service.vcl")}"
   }
 
   vcl {
