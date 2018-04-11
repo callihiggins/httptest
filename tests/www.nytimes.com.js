@@ -36,6 +36,7 @@ require("./www.nytimes.com/route-programs.js");
 require("./www.nytimes.com/route-adx.js");
 require("./www.nytimes.com/service-video.js");
 require("./www.nytimes.com/content-video.js");
+require("./www.nytimes.com/route-newsdev-gcs.js");
 require("./www.nytimes.com/route-cms-static-assets.js");
 require("./www.nytimes.com/route-collections-svc.js");
 require("./www.nytimes.com/route-add-svc.js");

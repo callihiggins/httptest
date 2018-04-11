@@ -315,9 +315,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-newsdev-gcs"
+    name    = "route-newsdev-gcs"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-gcs.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-gcs.vcl")}"
   }
 
   vcl {

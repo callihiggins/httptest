@@ -57,8 +57,7 @@ sub fetch_elections_redirect {
 
         # redirect
         if (beresp.http.x-amz-meta-website-redirect-location) {
-          set req.http.Location = beresp.http.x-amz-meta-website-redirect-location;
-          error 760 "Moved Permanently";
+          error 770 beresp.http.x-amz-meta-website-redirect-location;
         }
 
         # stale-while-revalidate override
@@ -69,16 +68,5 @@ sub fetch_elections_redirect {
 sub deliver_elections_api_version {
     if (req.http.X-PageType == "elections") {
         set resp.http.X-API-Version = "I";
-    }
-}
-
-sub error_760_elections_redirect {
-    if (req.http.X-PageType == "elections") {
-        # Fake behavior of Amazon's WebsiteRedirectLocation
-        if (obj.status == 760) {
-          set obj.http.Location = req.http.Location;
-          set obj.status = 301;
-          return(deliver);
-        }
     }
 }

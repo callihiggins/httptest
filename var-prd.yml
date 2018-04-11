@@ -929,3 +929,7 @@ cloud_storage_buckets:
     auth: "true"
     bucket_name: "nytint-prd-newsgraphics"
     bucket_provider: "gcs"
+  - pagetype: "newsdev-gcs"
+    auth: "true"
+    bucket_name: "nytint-prd-www"
+    bucket_provider: "gcs"

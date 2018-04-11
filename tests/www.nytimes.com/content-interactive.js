@@ -136,7 +136,7 @@ function getScenarioEvents()
     'responseHeaderMatches': {
       'x-frame-options': 'DENY',
       'x-pagetype': 'newsdev-gcs',
-      'x-nyt-backend': 'newsdev_gcs',
+      'x-nyt-backend': 'gcs_origin',
     },
     'responseHeadersPresent': [
       'age',

@@ -29,7 +29,6 @@ include "route-health-service"; # service that reports health of defined backend
 include "backends-main";
 include "backend-well";
 include "backend-newsdev-gke";
-include "backend-newsdev-gcs";
 include "backend-newsroom-files-gcs";
 include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
@@ -57,6 +56,7 @@ include "route-intl";
 include "route-elections";
 include "route-content-api"
 include "route-tbooks";
+include "route-newsdev-gcs";
 include "route-mwcm";
 include "route-programs";
 include "route-times-journeys";
@@ -109,6 +109,7 @@ sub vcl_recv {
   call recv_route_elections;
   call recv_route_tbooks;
   call recv_route_content_api;
+  call recv_route_newsdev_gcs; # this needs to come AFTER route-newsdev-gke when we get to it
   call recv_route_mwcm;
   call recv_route_programs;
   call recv_route_times_journeys;
@@ -145,7 +146,6 @@ sub vcl_recv {
 
   if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
     set req.http.x-nyt-force-pass = "true";
-    #return(pass);
   }
 
   // URIs not accessible via Varnish VIPs
@@ -240,6 +240,7 @@ sub vcl_miss {
   call miss_pass_route_programs;
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
+  call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
   call miss_pass_route_health_service;
 
@@ -283,6 +284,7 @@ sub vcl_pass {
   call miss_pass_route_programs;
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
+  call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
   call miss_pass_route_health_service;
 
@@ -294,27 +296,28 @@ sub vcl_pass {
 
 sub vcl_fetch {
 
-  call fetch_elections_redirect;
-
-  # set surrogate key header properly
-  call fetch_surrogate_key_handler;
 
   # handle 5xx errors from the backend
   call fetch_deliver_stale_on_error;
 
+  # it's probably best to put route specific fetch logic here
+  # for instance fetch_route_newsdev_gcs overrides stale-while-revalidate
+  # in which the override is checked in fetch_set_stale_content_controls
+  # also fetch_route_community_svc needs to run before the fastly fetch macro
+  call fetch_elections_redirect;
+  call fetch_route_newsdev_gcs;
+  call fetch_route_content_api;
+  call fetch_route_community_svc;
+  call fetch_route_intl_headers;
+
+  # set surrogate key header properly
+  call fetch_surrogate_key_handler;
+
   # set serve stale content cache object parameters
   call fetch_set_stale_content_controls;
 
-  # remove accept-encoding headers from community requests
-  # this needs to happen before the fastly macro
-  call fetch_route_community_svc;
-
-  call fetch_route_content_api;
-
   # DO NOT REMOVE THE NEXT LINE - FASTY SPECIFIC MACRO
 #FASTLY fetch
-
-  call fetch_route_intl_headers;
 
   # moved the next two blocks up the chain
   # these running earlier is faster
@@ -335,7 +338,7 @@ sub vcl_fetch {
     unset beresp.http.Cache-Control;
   }
 
-  set beresp.http.X-Origin-Time = strftime({"%F %T EDT"}, time.sub(now,4h));
+  set beresp.http.X-Origin-Time = strftime({"%F %T UTC"}, now);
 
   # Fastly is now controlling nyt-a, if anyone else tries to set it, stop them
   # we are also going to remove set-cookie if RMID is there, no one is using it anymore
@@ -398,7 +401,6 @@ sub vcl_deliver {
 sub vcl_error {
 #FASTLY error
 
-  call error_760_elections_redirect;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_900_route_esi_jsonp_callback;
   call error_995_route_health_service;
