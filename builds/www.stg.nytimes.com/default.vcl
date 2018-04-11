@@ -34,7 +34,6 @@ include "backend-newsroom-files-gcs";
 include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
 include "backend-watching";
-include "backend-mwcm";
 include "backend-video";
 
 # new style routing includes
@@ -58,6 +57,7 @@ include "route-intl";
 include "route-elections";
 include "route-content-api"
 include "route-tbooks";
+include "route-mwcm";
 include "route-programs";
 include "route-times-journeys";
 
@@ -109,6 +109,7 @@ sub vcl_recv {
   call recv_route_elections;
   call recv_route_tbooks;
   call recv_route_content_api;
+  call recv_route_mwcm;
   call recv_route_programs;
   call recv_route_times_journeys;
 
@@ -382,6 +383,7 @@ sub vcl_deliver {
   call deliver_elections_api_version;
   call deliver_tbooks_api_version;
   call deliver_content_api_version;
+  call deliver_route_mwcm;
   call deliver_programs_api_version;
   call deliver_times_journeys_api_version;
 

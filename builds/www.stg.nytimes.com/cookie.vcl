@@ -1,6 +1,5 @@
 sub recv_remove_cookie_check {
 
-    # This is not necessary but it's not hurting anything. -- stephen
     /*
      * If we have restarted the transaction, req.http.Cookie will be empty
      * and we will lose the NYT-S cookie value.

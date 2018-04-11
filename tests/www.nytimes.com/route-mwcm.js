@@ -17,6 +17,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': 200,
       'scenarioDescription': 'WCM subscription: 200 status code test',
       'testId': 1,
@@ -31,6 +35,10 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/notfound.html',
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': 404,
       'scenarioDescription': 'WCM subscription: 404 status code test',
       'testId': 1,
@@ -48,6 +56,10 @@ function getScenarioEvents()
       'responseHeaderPattern' : {
         'location' : /testQueryString=test/,
       },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': 302,
       'scenarioDescription': 'WCM subscription redirect [302] with preserving query string test',
       'testId': 2,
@@ -64,6 +76,10 @@ function getScenarioEvents()
       'requestUri': '/subscription/hd/1041.html',
       'responseHeaderContains' : {
         'location': 'https://' + suite.servername + '/subscription/hd/1041.html',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'WCM subscription protocol upgrade [http => https] test',
@@ -85,7 +101,8 @@ function getScenarioEvents()
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
         'x-nyt-region': 'NY',
-        'x-api-version': 'F-WCM',
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseHeadersPresent': [
         'age',
@@ -129,31 +146,14 @@ function getScenarioEvents()
       'responseHeadersPresent': [
         'surrogate-key',
       ],
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "surrogate-key" header presence test',
       'testId': 5,
     },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/subscription/hd/1041.html',
-      'requestHeaders': {
-        'Fastly-Debug': 1
-      },
-      'responseHeadersPresent': [
-        'x-varnishcacheduration', // TODO: surrogate-cache-control
-      ],
-      'responseStatusCode': [200],
-      'scenarioDescription': 'WCM subscription "x-varnishcacheduration" header presence test',
-      'testId': 6,
-    },
-    
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
@@ -170,6 +170,10 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'vary': /Accept-Encoding/,
         'vary': /X-NYT-Currency/,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "vary" header presence test',
@@ -192,6 +196,10 @@ function getScenarioEvents()
         'x-nyt-currency': 'USD',
         'x-nyt-country': 'AD',
       },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 91.187.91.187',
       'testId': 8,
@@ -209,6 +217,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-currency': 'EUR',
         'x-nyt-country': 'AT',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 91.118.126.194',
@@ -228,6 +240,10 @@ function getScenarioEvents()
         'x-nyt-currency': 'AUD',
         'x-nyt-country': 'AU',
       },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 170.157.174.185',
       'testId': 10,
@@ -245,6 +261,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-currency': 'CAD',
         'x-nyt-country': 'CA',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 129.128.1.199',
@@ -264,6 +284,10 @@ function getScenarioEvents()
         'x-nyt-currency': 'GBP',
         'x-nyt-country': 'GB',
       },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 85.90.227.224',
       'testId': 12,
@@ -281,6 +305,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-currency': 'GBP',
         'x-nyt-country': 'GB',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 195.43.49.101',
@@ -300,6 +328,10 @@ function getScenarioEvents()
         'x-nyt-currency': 'INR',
         'x-nyt-country': 'IN',
       },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 115.187.34.211',
       'testId': 14,
@@ -317,6 +349,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-currency': 'USD',
         'x-nyt-country': 'US',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP 66.220.253.41',
@@ -339,7 +375,6 @@ function getScenarioEvents()
         'x-nyt-currency': 'USD',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
-        'x-api-version': 'F-WCM',
       },
       'responseHeadersPresent': [
         'age',
@@ -397,7 +432,6 @@ function getScenarioEvents()
         'x-nyt-backend': 'mwcm',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
-        'x-api-version': 'F-WCM',
       },
       'responseHeadersPresent': [
         'age',
@@ -458,7 +492,6 @@ function getScenarioEvents()
         'x-nyt-backend': 'mwcm',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
-        'x-api-version': 'F-WCM',
       },
       'responseHeadersPresent': [
         'age',
@@ -499,6 +532,10 @@ function getScenarioEvents()
       'requestUri': '/marketing/hd/welcome/index.html',
       'responseHeaderContains' : {
         'location': 'http://' + suite.servername + '/marketing/hd/welcome/index.html',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /marketing force https to http test',
@@ -560,6 +597,10 @@ function getScenarioEvents()
       'responseHeaderContains' : {
         'location': 'http://' + suite.servername + '/subscription/promotions/verizon.html?ptr=verizon',
       },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for verizon',
       'testId': 23,
@@ -576,6 +617,10 @@ function getScenarioEvents()
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=sharethetimes',
       'responseHeaderContains' : {
         'location': 'http://' + suite.servername + '/subscription/promotions/sharethetimes.html?ptr=sharethetimes',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for sharethetimes',
@@ -595,6 +640,10 @@ function getScenarioEvents()
         'location': 'http://' + suite.servername + '/subscription/promotions/marathon.html?ptr=marathon',
       },
       'responseStatusCode': [301],
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for marathon',
       'testId': 25,
     },
@@ -610,6 +659,10 @@ function getScenarioEvents()
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=newsindia',
       'responseHeaderContains' : {
         'location': 'http://' + suite.servername + '/subscription/promotions/newsindia.html?ptr=newsindia',
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'mwcm',
+        'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for newsindia',

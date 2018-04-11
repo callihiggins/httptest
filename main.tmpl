@@ -375,9 +375,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-mwcm"
+    name    = "route-mwcm"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-mwcm.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-mwcm.vcl")}"
   }
 
   vcl {
