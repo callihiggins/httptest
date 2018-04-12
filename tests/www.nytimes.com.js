@@ -15,7 +15,7 @@ require("./www.nytimes.com/content-newsdev-attribute.js");
 require("./www.nytimes.com/content-newsdev-gke.js");
 require("./www.nytimes.com/content-newsroom-files.js");
 require("./www.nytimes.com/content-newsgraphics-gcs.js");
-require("./www.nytimes.com/content-watching.js");
+require("./www.nytimes.com/route-watching.js");
 require("./www.nytimes.com/content-video-media.js");
 require("./www.nytimes.com/route-mwcm.js");
 require("./www.nytimes.com/content-ads.js");

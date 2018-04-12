@@ -32,7 +32,6 @@ include "backend-newsdev-gke";
 include "backend-newsroom-files-gcs";
 include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
-include "backend-watching";
 include "backend-video";
 
 # new style routing includes
@@ -60,6 +59,7 @@ include "route-newsdev-gcs";
 include "route-mwcm";
 include "route-programs";
 include "route-times-journeys";
+include "route-watching";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -113,6 +113,7 @@ sub vcl_recv {
   call recv_route_mwcm;
   call recv_route_programs;
   call recv_route_times_journeys;
+  call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
 
   call recv_querystring;
   call recv_gdpr;
@@ -192,6 +193,8 @@ sub vcl_hash {
   if(req.http.X-PageType == "video-library"){
     set req.hash += req.http.device_type;
   }
+
+  call hash_route_watching;
 
   return(hash);
 }
@@ -389,6 +392,7 @@ sub vcl_deliver {
   call deliver_route_mwcm;
   call deliver_programs_api_version;
   call deliver_times_journeys_api_version;
+  call deliver_watching_api_version;
 
   # set response headers
   call deliver_gdpr;
