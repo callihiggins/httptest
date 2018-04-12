@@ -784,7 +784,7 @@ backends:
     ssl_cert_hostname: "ugc-phpapi-pub-v1.stg.iad1.nyt.net"
     ssl_sni_hostname: "ugc-phpapi-pub-v1.stg.iad1.nyt.net"
     healthcheck:
-      host: "www.stg.ytimes.com"
+      host: "www.stg.nytimes.com"
       path: "/svc/community/V3/requestHandler?cmd=GetBasicInfo"
       check_interval: "10000"
       expected_response: "200"
