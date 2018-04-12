@@ -435,9 +435,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-video"
+    name    = "route-video"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-video.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-video.vcl")}"
   }
 
   vcl {

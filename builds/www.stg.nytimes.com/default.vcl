@@ -32,7 +32,6 @@ include "backend-newsdev-gke";
 include "backend-newsroom-files-gcs";
 include "backend-newsgraphics-gcs";
 include "backend-newsdev-attribute";
-include "backend-video";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
@@ -60,6 +59,7 @@ include "route-mwcm";
 include "route-programs";
 include "route-times-journeys";
 include "route-watching";
+include "route-video";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -114,6 +114,7 @@ sub vcl_recv {
   call recv_route_programs;
   call recv_route_times_journeys;
   call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
+  call recv_route_video;
 
   call recv_querystring;
   call recv_gdpr;
@@ -159,12 +160,6 @@ sub vcl_recv {
       set req.url = "/404.html";
   }
 
-  // remove the Authorization header for video-api calls
-  // it is diabled and we will implement it in Fastly soon
-  if(req.http.X-PageType == "video-api"){
-    unset req.http.Authorization;
-  }
-
   if (req.http.Authorization || req.http.Cookie) {
     /* Not cacheable by default */
     set req.http.x-nyt-force-pass = "true";
@@ -189,10 +184,7 @@ sub vcl_hash {
   set req.hash += req.url;
   set req.hash += req.http.host;
 
-  // video library needs to pivot on device type
-  if(req.http.X-PageType == "video-library"){
-    set req.hash += req.http.device_type;
-  }
+  call hash_route_video;
 
   call hash_route_watching;
 
@@ -246,6 +238,7 @@ sub vcl_miss {
   call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
   call miss_pass_route_health_service;
+  call miss_pass_route_video;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -290,6 +283,7 @@ sub vcl_pass {
   call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
   call miss_pass_route_health_service;
+  call miss_pass_route_video;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -393,6 +387,7 @@ sub vcl_deliver {
   call deliver_programs_api_version;
   call deliver_times_journeys_api_version;
   call deliver_watching_api_version;
+  call deliver_video_api_version;
 
   # set response headers
   call deliver_gdpr;

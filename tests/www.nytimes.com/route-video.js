@@ -9,6 +9,57 @@ function getScenarioEvents()
 {
   var scenarios = [
     {
+      'id':  'Functional Test For Video Library',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'video-library',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/video/sciencetake',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a video library page',
+      'testId': 1,
+    },
+    {
+      'id':  'Functional Test For Video Library Homepage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'video-library',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/video?param=1',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting the video library homepage with a query string at the end',
+      'testId': 2,
+    },
+    {
+      'id':  'Functional Test For Video API',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'responseHeaderMatches': {
+        'x-pagetype': 'video-api',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/video/api/v3/video/100000002883899',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting a /svc/video endpoint',
+      'testId': 3,
+    },
+    {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
@@ -42,8 +93,7 @@ function getScenarioEvents()
       ],
       'responseStatusCode': 200,
       'scenarioDescription': 'Test /video-media routing',
-      'timestamp': 1,
-      'testId': 1,
+      'testId': 4,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -80,10 +130,8 @@ function getScenarioEvents()
       ],
       'responseStatusCode': 200,
       'scenarioDescription': 'Test /video-media routing',
-      'timestamp': 1,
-      'testId': 2,
+      'testId': 5,
     },
   ];
-
   return scenarios;
 }

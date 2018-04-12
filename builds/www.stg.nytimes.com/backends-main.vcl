@@ -325,32 +325,6 @@ sub vcl_recv {
         }
     }
 
-    // Lets cache some video library in fastly
-    // The netscaler will send this to video at origin
-    // TODO: new backend someday for it's own origin
-    if ( req.url.path == "/video" || req.url.path ~ "^/video/") {
-        set req.http.X-PageType = "video-library";
-        call set_video_library_backend;
-    }
-
-    if ( req.url ~ "^/svc/video" ) {
-        set req.http.X-PageType = "video-api";
-        set req.http.x-nyt-ttl-override = "30";
-        call set_video_api_backend;
-    }
-
-}
-
-# set a video library backend based on env
-sub set_video_library_backend {
-    set req.http.x-nyt-backend = "video_library";
-    set req.backend = F_video_library;
-}
-
-# set a video api backend based on env
-sub set_video_api_backend {
-    set req.http.x-nyt-backend = "video_api";
-    set req.backend = F_video_api;
 }
 
 sub set_legacy_gke_backend {
