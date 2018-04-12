@@ -820,7 +820,7 @@ backends:
       path: "/svc/community/V3/requestHandler?cmd=GetBasicInfo"
       check_interval: "5000"
       expected_response: "200"
-      initial: "2"
+      initial: "5"
       threshold: "3"
       timeout: "5000"
       window: "5"
