@@ -62,6 +62,7 @@ function getScenarioEvents()
       'requestUri': '/svc/int/godzown/u/2017-01-26-opinion-sleep-assesment-adventure-production',
       'responseHeaderMatches': {
         'x-pagetype': 'newsdev-gke',
+        'x-nyt-backend': 'newsdev_k8s_gke',
         'x-cache': 'MISS',
       },
       'responseStatusCode': [404],

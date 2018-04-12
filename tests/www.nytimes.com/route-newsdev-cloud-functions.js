@@ -18,6 +18,7 @@ function getScenarioEvents() {
       requestUri: '/svc/int/functions/contact-reporter',
       responseHeaderMatches: {
         'x-pagetype': 'newsdev-cloud-functions',
+        'x-nyt-backend': 'newsdev_cloud_functions_us_central1',
         'access-control-allow-origin': '*',
       },
       responseStatusCode: [302],

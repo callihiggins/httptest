@@ -28,10 +28,8 @@ include "backend-init-vars";
 include "route-health-service"; # service that reports health of defined backends
 include "backends-main";
 include "backend-well";
-include "backend-newsdev-gke";
 include "backend-newsroom-files-gcs";
 include "backend-newsgraphics-gcs";
-include "backend-newsdev-attribute";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
@@ -58,6 +56,8 @@ include "route-newsdev-gcs";
 include "route-mwcm";
 include "route-programs";
 include "route-times-journeys";
+include "route-newsdev-attribute";
+include "route-newsdev-gke";
 include "route-watching";
 include "route-video";
 
@@ -101,7 +101,6 @@ sub vcl_recv {
   call recv_route_add_svc;
   call recv_route_sitemap;
   call recv_route_recommendations;
-  call recv_route_newsdev_cloud_functions;
   call recv_route_games;
   call recv_route_profile_fe;
   call recv_route_adx;
@@ -109,12 +108,18 @@ sub vcl_recv {
   call recv_route_elections;
   call recv_route_tbooks;
   call recv_route_content_api;
-  call recv_route_newsdev_gcs; # this needs to come AFTER route-newsdev-gke when we get to it
   call recv_route_mwcm;
   call recv_route_programs;
   call recv_route_times_journeys;
   call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
   call recv_route_video;
+
+  # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
+  call recv_route_newsdev_gcs;
+  call recv_route_newsdev_gke;              # contains sub route of recv_route_newsdev_gcs
+  call recv_route_newsdev_cloud_functions;  # contains sub route of recv_route_newsdev_gke
+  call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
+  # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
 
   call recv_querystring;
   call recv_gdpr;
@@ -238,6 +243,7 @@ sub vcl_miss {
   call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
   call miss_pass_route_health_service;
+  call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
 
   # unset headers to the origin that we use for vars
@@ -283,6 +289,7 @@ sub vcl_pass {
   call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
   call miss_pass_route_health_service;
+  call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
 
   # unset headers to the origin that we use for vars
@@ -302,6 +309,7 @@ sub vcl_fetch {
   # in which the override is checked in fetch_set_stale_content_controls
   # also fetch_route_community_svc needs to run before the fastly fetch macro
   call fetch_elections_redirect;
+  call fetch_route_newsdev_gke;
   call fetch_route_newsdev_gcs;
   call fetch_route_content_api;
   call fetch_route_community_svc;

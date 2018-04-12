@@ -1,8 +1,7 @@
 sub recv_route_newsdev_gcs {
-  if ( req.http.x-pagetype != "newsdev-gke" && (
-       req.url ~ "^/interactive/projects/"
-    || req.url ~ "^/roomfordebate"
-    || req.url ~ "^/editorial-standards" )) {
+  if (     req.url ~ "^/interactive/projects/"
+        || req.url ~ "^/roomfordebate"
+        || req.url ~ "^/editorial-standards" ) {
 
     set req.http.x-pagetype = "newsdev-gcs";
     set req.http.x-nyt-backend = "gcs_origin";

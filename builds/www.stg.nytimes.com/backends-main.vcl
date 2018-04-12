@@ -242,20 +242,6 @@ sub vcl_recv {
       set req.http.x-nyt-backend = "gcs_origin";
     }
 
-    // Send to GCP
-    if ( req.url ~ "^/svc/int/attribute/projects/" ) {
-        set req.http.x-nyt-backend = "newsdev_attribute_gclod_function";
-        call set_www_newsdev_attribute_gclod_function_backend;
-    } else if (
-           (req.url ~ "^/svc/int/" && !(req.url ~ "^/svc/int/functions/"))
-        || (req.url ~ "^/interactive/projects/(notable-deaths|guantanamo)")
-        || (req.url == "/fashion/runway" || req.url ~ "^/fashion/runway")
-    ) {
-        set req.http.X-PageType = "newsdev-gke";
-        set req.http.x-nyt-backend = "newsdev_k8s_gke";
-        call set_www_newsdev_gke_backend;
-    }
-
     if ( req.url ~ "^/files/" ) {
       set req.http.X-PageType = "newsroom-files-gcs";
       set req.http.x-nyt-backend = "gcs_origin";
@@ -292,9 +278,7 @@ sub vcl_recv {
     }
     // blog URLs that do not get glogin redirection
     if (req.http.X-PageType == "blog") {
-        if (   req.url ~ "^/svc"
-            || req.url ~ "^/timesjourneys"
-            || req.url ~ "^/robots\.txt"
+        if (   req.url ~ "^/timesjourneys"
             || req.url ~ "/live-updates/(json|text)/"
             || req.url ~ "/renderstyle/(phone|tablet)/"
             || req.url ~ "/wp-content/"
@@ -305,23 +289,9 @@ sub vcl_recv {
             || req.url ~ "/blogs\.json"
             || req.url ~ "/glassjson/"
             || req.url ~ "/papijson/"
-            || req.url ~ "^/premier/"
-            || req.url ~ "^/premier$"
-            || req.url ~ "^/live/"
-            || req.url ~ "^/live$"
             || req.http.X-QueryString ~ "nytapp=(.*)"
-            || req.http.host ~ "(www\.)?nytco\.com$"
         ) {
             set req.http.X-PageType = "blog2";
-        }
-
-        // Send to GCP
-        // Pass those paths to newsdev gke without caching
-        if ( req.url ~ "^/svc/int"
-        ) {
-           set req.http.X-PageType = "newsdev-gke";
-           set req.http.x-nyt-backend = "newsdev_k8s_gke";
-           call set_www_newsdev_gke_backend;
         }
     }
 
@@ -398,21 +368,6 @@ sub set_www_realestate_backend_gke {
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
-}
-
-sub set_www_newsdev_gke_backend {
-    set req.backend = F_newsdev_k8s_gke;
-}
-
-sub set_www_newsdev_attribute_gclod_function_backend {
-
-    set req.backend = F_newsdev_attribute_gclod_function;
-
-    if(req.http.x-environment == "dev" || req.http.x-environment == "stg") {
-      set req.http.x-cf-host = "us-central1-nytint-stg.cloudfunctions.net";
-    } else {
-      set req.http.x-cf-host = "us-central1-nytint-prd.cloudfunctions.net";
-    }
 }
 
 sub vi_ce_auth {

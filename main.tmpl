@@ -303,9 +303,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-newsdev-attribute"
+    name    = "route-newsdev-attribute"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-attribute.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-attribute.vcl")}"
   }
 
   vcl {
@@ -405,9 +405,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-newsdev-gke"
+    name    = "route-newsdev-gke"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-newsdev-gke.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-gke.vcl")}"
   }
 
   vcl {
