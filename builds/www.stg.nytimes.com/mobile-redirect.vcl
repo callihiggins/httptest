@@ -111,6 +111,8 @@ sub vcl_deliver {
                     || req.url ~ "^/slideshow/20(1[5-9]|[2-9][0-9])/"
                 ) {
                     call do_redirect;
+                } else if ( req.url ~ "^/real-estate/" ) {
+                    call do_realestate_redirect;
                 }
             }
         }
@@ -135,6 +137,28 @@ sub do_redirect {
     set resp.http.Location = "https://" + req.http.mobile-host + querystring.filter(var.orig_url, "nytmobile");
     set resp.status = 303;
     set resp.response = "See Other";
+    set resp.http.x-device-type = req.http.device_type;
+    set req.http.x-redirect-reason = "redir=[mobile]";
+}
+
+sub do_realestate_redirect {
+    if (  req.url ~ "^/real-estate/find-a-home" ) {
+        set req.http.X-NewUri = "";
+    } else if ( req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ) {
+        set req.http.X-NewUri = regsub(req.url, "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)","listing/\4");        
+    } else if ( req.url ~ "^/real-estate/(.*)?homes-for-sale" ) {
+        set req.http.X-NewUri = "?channel=sales";
+    } else if ( req.url ~ "^/real-estate/(.*)?homes-for-rent" ) {
+        set req.http.X-NewUri = "?channel=rentals";
+    } else if ( req.url ~ "^/real-estate/(.*)/building/" ) {
+        set req.http.X-NewUri = "";
+    } else if ( req.url ~ "^/real-estate/my-real-estate$" ) {
+        set req.http.X-NewUri = "savedlistings";
+    }
+
+    set resp.http.Location = "http://m.realestatelistings.nytimes.com/" + req.http.X-NewUri;
+    set resp.status = 302;
+    set resp.response = "FOUND";
     set resp.http.x-device-type = req.http.device_type;
     set req.http.x-redirect-reason = "redir=[mobile]";
 }

@@ -49,6 +49,7 @@ require("./www.nytimes.com/route-switchboard.js");
 require("./www.nytimes.com/route-newsdev-cloud-functions.js");
 require("./www.nytimes.com/redirect-zone-apex.js");
 require("./www.nytimes.com/www-redirect.js");
+require("./www.nytimes.com/redirect-mobile-realestate.js");
 
 // please leave these tests here and add your includes above
 require("./www.nytimes.com/redirect-mobile-homepage.js");
