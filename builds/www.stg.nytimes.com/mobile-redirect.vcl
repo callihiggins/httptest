@@ -156,7 +156,7 @@ sub do_realestate_redirect {
         set req.http.X-NewUri = "savedlistings";
     }
 
-    set resp.http.Location = "http://m.realestatelistings.nytimes.com/" + req.http.X-NewUri;
+    set resp.http.Location = "https://m.realestatelistings.nytimes.com/" + req.http.X-NewUri;
     set resp.status = 302;
     set resp.response = "FOUND";
     set resp.http.x-device-type = req.http.device_type;
