@@ -507,9 +507,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "userinfo"
+    name    = "route-userinfo"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/userinfo.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-userinfo.vcl")}"
   }
 
   vcl {

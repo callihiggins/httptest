@@ -136,13 +136,6 @@ sub vcl_recv {
         call set_nyt5_misc_backend;
     }
 
-    // userinfo routing (userinfo is the only svc under web-products)
-    if ( req.url ~ "^/svc/web-products/") {
-        set req.http.X-PageType = "service";
-        set req.http.x-nyt-backend = "www_userinfo";
-        call set_www_userinfo_backend;
-    }
-
     // route the path's below to Legacy WWW GKE
     if ( req.url ~ "^/favicon.ico"
         || req.url ~ "^/(js|js2|css|bi)/"
@@ -301,14 +294,6 @@ sub set_legacy_gke_backend {
     set req.http.X-PageType = "legacy-gke";
     set req.http.x-nyt-backend = "www_legacy_gke";
     set req.backend = F_www_legacy_gke;
-}
-
-## userinfo backend
-sub set_www_userinfo_backend {
-    set req.backend = F_www_userinfo;
-    call vi_ce_auth;
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
 }
 
 # set backend for each NYT5 app to prepare GKE migration

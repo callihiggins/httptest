@@ -60,6 +60,7 @@ include "route-newsdev-attribute";
 include "route-newsdev-gke";
 include "route-watching";
 include "route-video";
+include "route-userinfo";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -75,7 +76,6 @@ include "set-cache-object-ttl";
 include "https-redirect";
 include "device-detect";
 include "cookie";
-include "userinfo";
 include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
@@ -113,6 +113,7 @@ sub vcl_recv {
   call recv_route_times_journeys;
   call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
   call recv_route_video;
+  call recv_route_userinfo;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
   call recv_route_newsdev_gcs;
@@ -411,7 +412,7 @@ sub vcl_error {
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_900_route_esi_jsonp_callback;
   call error_995_route_health_service;
-
+  call error_901_to_906_route_userinfo;
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code

@@ -1,12 +1,9 @@
-sub vcl_recv {
-  
-  // For right now, we're only going to deal with
-  // useers that are NOT logged in
+sub recv_route_userinfo {
+  // This deals with useers that are not logged in
   // if the cookie does not start with "0" we will
   // fall through this and it will be a backend hit
   // to the API on the origin
-
-  if (req.http.x-nyt-s ~ "^0" || !req.http.x-nyt-s){ 
+  if (req.http.x-nyt-s ~ "^0" || !req.http.x-nyt-s){
     if (req.url ~ "^/svc/web-products/userinfo.jsonp") {
       set req.http.X-PageType = "service";
       error 901;
@@ -33,43 +30,53 @@ sub vcl_recv {
     }
   }
 
+  // Logged in users (userinfo is the only svc under web-products)
+  if (req.url ~ "^/svc/web-products/") {
+    set req.http.X-PageType = "service";
+    set req.http.x-nyt-backend = "www_userinfo";
+    set req.http.x-nyt-force-pass = "true";
+
+    call vi_ce_auth;
+
+    # if we needed to switch back to NYT5, unset the vi flag
+    unset req.http.x--fastly-project-vi;
+  }
 }
 
-sub vcl_error {
+sub error_901_to_906_route_userinfo {
   // "/svc/web-products/userinfo.jsonp" requests
   if (obj.status == 901) {
-    call deliver_v1_jsonp_string;
+    call route_userinfo_deliver_v1_jsonp_string;
   }
 
   // "/svc/web-products/userinfo.json" requests
   if (obj.status == 902) {
-    call deliver_v1_json_string;
+    call route_userinfo_deliver_v1_json_string;
   }
 
   // "/svc/web-products/userinfo-v2.jsonp" requests
   if (obj.status == 903) {
-    call deliver_v2_jsonp_string;
+    call route_userinfo_deliver_v2_jsonp_string;
   }
 
   // "/svc/web-products/userinfo-v2.json" requests
   if (obj.status == 904) {
-    call deliver_v2_json_string;
+    call route_userinfo_deliver_v2_json_string;
   }
 
   // "/svc/web-products/userinfo-v3.jsonp" requests
   if (obj.status == 905) {
-    call deliver_v3_jsonp_string;
+    call route_userinfo_deliver_v3_jsonp_string;
   }
 
   // "/svc/web-products/userinfo-v3.json" requests
   if (obj.status == 906) {
-    call deliver_v3_json_string;
+    call route_userinfo_deliver_v3_json_string;
   }
 }
 
 
-sub deliver_v1_json_string {
-
+sub route_userinfo_deliver_v1_json_string {
   set obj.status = 200;
   set obj.response = "OK";
   set obj.http.Content-Type = "application/json";
@@ -93,9 +100,9 @@ sub deliver_v1_json_string {
 }
 
 
-sub deliver_v1_jsonp_string {
-  
-  call set_callback_querystring_param;
+sub route_userinfo_deliver_v1_jsonp_string {
+
+  call route_userinfo_set_callback_querystring_param;
 
   set obj.status = 200;
   set obj.response = "OK";
@@ -120,7 +127,7 @@ sub deliver_v1_jsonp_string {
 }
 
 
-sub deliver_v2_json_string {
+sub route_userinfo_deliver_v2_json_string {
 
   set obj.status = 200;
   set obj.response = "OK";
@@ -144,9 +151,9 @@ sub deliver_v2_json_string {
   return (deliver);
 }
 
-sub deliver_v2_jsonp_string {
-  
-  call set_callback_querystring_param;
+sub route_userinfo_deliver_v2_jsonp_string {
+
+  call route_userinfo_set_callback_querystring_param;
 
   set obj.status = 200;
   set obj.response = "OK";
@@ -170,7 +177,7 @@ sub deliver_v2_jsonp_string {
   return (deliver);
 }
 
-sub deliver_v3_json_string {
+sub route_userinfo_deliver_v3_json_string {
 
   set obj.status = 200;
   set obj.response = "OK";
@@ -190,10 +197,8 @@ sub deliver_v3_json_string {
   return (deliver);
 }
 
-sub deliver_v3_jsonp_string {
-
-  call set_callback_querystring_param;
-
+sub route_userinfo_deliver_v3_jsonp_string {
+  call route_userinfo_set_callback_querystring_param;
 
   set obj.status = 200;
   set obj.response = "OK";
@@ -213,15 +218,11 @@ sub deliver_v3_jsonp_string {
   return (deliver);
 }
 
-
-
-sub set_callback_querystring_param {
-
+sub route_userinfo_set_callback_querystring_param {
   // use "callback" querystring param for javascript callback function name
   // if not set, default to "userInfoCallback"
   set req.http.x-callback-param = regsub(req.url, ".*[\?&]callback=([\.A-Za-z0-9_]+).*", "\1");
   if (req.http.x-callback-param == req.url) {
     set req.http.x-callback-param = "userInfoCallback";
   }
-
 }
