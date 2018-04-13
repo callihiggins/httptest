@@ -871,7 +871,7 @@ cloud_storage_buckets:
     bucket_provider: "gcs"
   - pagetype: "ads-static-assets"
     auth: "true"
-    bucket_name: "nyt-ads-static-assets"
+    bucket_name: "nyt-ads-static-assets-stg"
     bucket_provider: "gcs"
   - pagetype: "newsroom-files-gcs"
     auth: "true"

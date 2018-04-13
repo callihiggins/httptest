@@ -1,5 +1,5 @@
 sub recv_route_ads_static_assets {
-  if (req.url.path ~ "^/ads/") {
+  if (req.url.path ~ "^/ads/" || req.url.path ~ "^/safeads") {
     set req.http.x-pagetype = "ads-static-assets";
     set req.http.x-nyt-backend = "gcs_origin";
     unset req.http.Cookie;

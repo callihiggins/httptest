@@ -46,6 +46,7 @@ sub recv_https_redirect {
         || req.http.X-PageType == "vi-weddings"
         || req.http.X-PageType == "vi-interactive"
         || req.url ~ "^/ads/RE/"
+        || req.url ~ "^/safeads/"
         || req.url ~ "^/elections"
         || ( req.http.X-PageType == "newsgraphics-gcs"
                 && req.url ~ "^/newsgraphics/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2017 - future

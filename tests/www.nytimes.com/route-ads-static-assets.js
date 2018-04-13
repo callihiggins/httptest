@@ -23,8 +23,27 @@ function getScenarioEvents() {
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
       responseStatusCode: [200,404],
-      scenarioDescription: "Ads GCS bucket responds with 200",
+      scenarioDescription: "route: /ads; 200 or 404 from GCS on correct backend/pagetype",
       testId: 1
+    },
+    {
+      id: "FunctionalTestScenarioDefinitionForAdsGCSBucket",
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      requestScheme: "https://",
+      requestUri: "/safeads/index.html",
+      responseHeaderMatches: {
+        "x-pagetype": "ads-static-assets",
+        "x-nyt-backend": "gcs_origin"
+      },
+      responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
+      responseStatusCode: [200,404],
+      scenarioDescription: "route /safeads; 200 or 404 from GCS on correct backend/pagetype",
+      testId: 2
     },
   ];
 
