@@ -65,7 +65,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/real-estate/homes-for-rent',
       'responseHeaderMatches': {
-        'location': 'https://m.realestatelistings.nytimes.com/?channel=sales',
+        'location': 'https://m.realestatelistings.nytimes.com/?channel=rentals',
       },
       'responseStatusCode': 302,
       'scenarioDescription': 'Test mobile realestate rental channel redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
