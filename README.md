@@ -18,7 +18,7 @@ The sandbox policy and documentation can be found [here](https://github.com/nytm
 
 ## Office hours
 
-We host office hours daily at 14:30. Since we've moved floors (we're on 6 now) ask in #fastly if you would like to take advantage of these working sessions.
+We host office hours every Tuesday and Thursday at 14:30 on the 5th Floor, West. Ask in [#fastly](https://nytimes.slack.com/messages/C1WFYD7FF/) Slack channel if you would like to take advantage of these working sessions.
 
 Thanks for contributing!
 
