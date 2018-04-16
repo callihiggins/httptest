@@ -29,7 +29,6 @@ include "route-health-service"; # service that reports health of defined backend
 include "backends-main";
 include "backend-well";
 include "backend-newsroom-files-gcs";
-include "backend-newsgraphics-gcs";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
@@ -61,6 +60,7 @@ include "route-newsdev-gke";
 include "route-watching";
 include "route-video";
 include "route-userinfo";
+include "route-newsgraphics-gcs";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -114,6 +114,7 @@ sub vcl_recv {
   call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
   call recv_route_video;
   call recv_route_userinfo;
+  call recv_route_newsgraphics_gcs;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
   call recv_route_newsdev_gcs;
@@ -246,6 +247,7 @@ sub vcl_miss {
   call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
+  call miss_pass_route_newsgraphics_gcs;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -292,6 +294,7 @@ sub vcl_pass {
   call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
+  call miss_pass_route_newsgraphics_gcs;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -315,6 +318,7 @@ sub vcl_fetch {
   call fetch_route_content_api;
   call fetch_route_community_svc;
   call fetch_route_intl_headers;
+  call fetch_route_newsgraphics_gcs;
 
   # set surrogate key header properly
   call fetch_surrogate_key_handler;

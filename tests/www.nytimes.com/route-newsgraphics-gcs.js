@@ -18,7 +18,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2014/01/05/poverty-map/index.html',
       responseHeaderMatches: {
-        "x-pagetype": "newsgraphics-gcs"
+        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-backend': 'gcs_origin',
+
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
       responseStatusCode: [200],
@@ -36,7 +38,9 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/projects/healthcheck.txt',
       responseHeaderMatches: {
-        "x-pagetype": "newsgraphics-gcs"
+        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-backend': 'gcs_origin',
+
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
       responseStatusCode: [200],
@@ -53,6 +57,10 @@ function getScenarioEvents() {
       },
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2012/1220-snow-fall-preview/',
+      responseHeaderMatches: {
+        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-backend': 'gcs_origin',
+      },
       responseHeaderPattern: {
         'location': /https?:\/\/www(\.dev|\.stg)?\.nytimes\.com\/newsgraphics\/2012\/1220-snow-fall-preview\/index\.html/
       },
@@ -71,7 +79,8 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2018/healthcheck.txt',
       responseHeaderMatches: {
-        "x-pagetype": "newsgraphics-gcs"
+        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-backend': 'gcs_origin',
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test newsgraphics; 2018 should work on https',
@@ -88,7 +97,8 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2017/healthcheck.txt',
       responseHeaderMatches: {
-        "x-pagetype": "newsgraphics-gcs"
+        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-backend': 'gcs_origin',
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test newsgraphics; 2017 should work on https',
