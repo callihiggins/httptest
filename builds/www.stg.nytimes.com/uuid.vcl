@@ -19,7 +19,7 @@ sub vcl_deliver {
         || req.http.X-PageType == "trending"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "watching"
-        || req.http.X-PageType == "well"
+        || req.http.X-PageType == "guides"
         || req.http.X-PageType == "mwcm" /* marketing */) {
             add resp.http.Set-Cookie =
                 "nyt-a=" + req.http.x-nyt-a + "; "+

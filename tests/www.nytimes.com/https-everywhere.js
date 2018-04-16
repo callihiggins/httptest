@@ -368,10 +368,10 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/guides/well/how-to-start-running',
+      requestUri: '/guides/culture/guide-to-the-metropolitan-museum-of-art',
       responseHeaderMatches: {
         location:
-          'https://' + suite.servername + '/guides/well/how-to-start-running'
+          'https://' + suite.servername + '/guides/culture/guide-to-the-metropolitan-museum-of-art'
       },
       responseStatusCode: 301,
       scenarioDescription:

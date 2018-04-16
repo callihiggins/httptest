@@ -29,7 +29,7 @@ sub recv_https_redirect {
         || req.http.X-PageType == "newsdev-gcs"   // interative news
         || req.http.X-PageType == "newsdev-attribute"   // interative news
         || req.http.X-PageType == "newsroom-files-gcs"   // newsroom digital transition
-        || req.http.X-PageType == "well"          // beta - well guides
+        || req.http.X-PageType == "guides"          // beta - well guides
         || req.http.X-PageType == "trending"
         || req.http.X-PageType == "bestseller"
         || req.url ~ "^/pages/(politics|opinion|world|dining)"        // NYT4 sectionfronts

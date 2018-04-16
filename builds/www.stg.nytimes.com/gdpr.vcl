@@ -38,7 +38,7 @@ sub deliver_gdpr {
         || req.http.X-PageType == "trending"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "watching"
-        || req.http.X-PageType == "well"
+        || req.http.X-PageType == "guides"
         || req.http.X-PageType == "mwcm" /* marketing */) {
             add resp.http.Set-Cookie =
                 "nyt-gdpr=" + req.http.x-nyt-gdpr + "; "+

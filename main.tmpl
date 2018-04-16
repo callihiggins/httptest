@@ -465,9 +465,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-well"
+    name    = "route-guides"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-well.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-guides.vcl")}"
   }
 
   vcl {

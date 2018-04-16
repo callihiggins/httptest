@@ -27,7 +27,6 @@ include "backend-init-vars";
 # the following files contain routes for the backends defined above
 include "route-health-service"; # service that reports health of defined backends
 include "backends-main";
-include "backend-well";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
@@ -54,6 +53,7 @@ include "route-newsdev-gcs";
 include "route-mwcm";
 include "route-programs";
 include "route-times-journeys";
+include "route-guides";
 include "route-newsdev-attribute";
 include "route-newsdev-gke";
 include "route-watching";
@@ -111,6 +111,7 @@ sub vcl_recv {
   call recv_route_mwcm;
   call recv_route_programs;
   call recv_route_times_journeys;
+  call recv_route_guides;
   call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
   call recv_route_video;
   call recv_route_userinfo;
