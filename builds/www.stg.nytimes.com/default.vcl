@@ -62,6 +62,9 @@ include "route-nyt5-misc";
 include "route-userinfo";
 include "route-newsroom-files-gcs";
 include "route-newsgraphics-gcs";
+include "route-weddings";
+include "route-search";
+include "route-timeswire";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -122,6 +125,9 @@ sub vcl_recv {
   call recv_route_userinfo;
   call recv_route_newsroom_files_gcs;
   call recv_route_newsgraphics_gcs;
+  call recv_route_weddings;
+  call recv_route_search;
+  call recv_route_timeswire;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
   call recv_route_newsdev_gcs;

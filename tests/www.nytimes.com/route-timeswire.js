@@ -12,41 +12,6 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
-      },
-      requestScheme: 'https://',
-      requestUri: '/search',
-      responseHeaderMatches: {
-        'x-pagetype': 'vi-search',
-        'x-nyt-backend': 'projectvi_fe'
-      },
-      responseStatusCode: [200],
-      scenarioDescription: 'Vi Search Homepage',
-      testId: 1
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'https://',
-      requestUri: '/search/apple/best',
-      responseHeaderMatches: {
-        'x-pagetype': 'vi-search',
-        'x-nyt-backend': 'projectvi_fe'
-      },
-      responseStatusCode: [200],
-      scenarioDescription: 'Vi Search term - apple',
-      testId: 2
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
         dev: true
       },
       requestScheme: 'https://',
@@ -57,7 +22,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; /timeswire',
-      testId: 3
+      testId: 1
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -74,7 +39,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; /timeswire/',
-      testId: 4
+      testId: 2
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -95,23 +60,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; does not redirect to mobile',
-      testId: 5
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'https://',
-      requestUri: '/style/weddings/announcements',
-      responseHeaderMatches: {
-        'x-pagetype': 'vi-weddings'
-      },
-      responseStatusCode: [200],
-      scenarioDescription: 'Vi Weddings Announcement Page',
-      testId: 6
+      testId: 3
     }
   ];
 

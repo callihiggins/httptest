@@ -735,6 +735,23 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-weddings"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-weddings.vcl")}"
+  }
+
+  vcl {
+    name    = "route-search"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-search.vcl")}"
+  }
+
+  vcl {
+    name    = "route-timeswire"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-timeswire.vcl")}"
+  }
+  vcl {
     name    = "access-level-authorization"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/access-level-authorization.vcl")}"
