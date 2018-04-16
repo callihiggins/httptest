@@ -11,11 +11,11 @@ function getScenarioEvents() {
       id: "FunctionalTestScenarioDefinitionForAdsGCSBucket",
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
+        'stg': false,
+        'dev': false,
         'sbx': false,
       },
-      requestScheme: "http://",
+      requestScheme: "https://",
       requestUri: "/ads/emailads/twitter.jpg",
       responseHeaderMatches: {
         "x-pagetype": "ads-static-assets",
@@ -35,14 +35,14 @@ function getScenarioEvents() {
         'sbx': false,
       },
       requestScheme: "https://",
-      requestUri: "/safeads/index.html",
+      requestUri: "/ads/safeads/index.html",
       responseHeaderMatches: {
         "x-pagetype": "ads-static-assets",
         "x-nyt-backend": "gcs_origin"
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
       responseStatusCode: [200,404],
-      scenarioDescription: "route /safeads; 200 or 404 from GCS on correct backend/pagetype",
+      scenarioDescription: "route dev/stg bucket has different assets; 200 or 404 from GCS on correct backend/pagetype",
       testId: 2
     },
   ];
