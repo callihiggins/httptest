@@ -28,7 +28,6 @@ include "backend-init-vars";
 include "route-health-service"; # service that reports health of defined backends
 include "backends-main";
 include "backend-well";
-include "backend-newsroom-files-gcs";
 
 # new style routing includes
 # TODO: replace all of the above with these during refactor
@@ -60,6 +59,7 @@ include "route-newsdev-gke";
 include "route-watching";
 include "route-video";
 include "route-userinfo";
+include "route-newsroom-files-gcs";
 include "route-newsgraphics-gcs";
 
 # vi allocation and routing
@@ -114,6 +114,7 @@ sub vcl_recv {
   call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
   call recv_route_video;
   call recv_route_userinfo;
+  call recv_route_newsroom_files_gcs;
   call recv_route_newsgraphics_gcs;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
@@ -247,6 +248,7 @@ sub vcl_miss {
   call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
+  call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
 
   # unset headers to the origin that we use for vars
@@ -294,6 +296,7 @@ sub vcl_pass {
   call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
+  call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
 
   # unset headers to the origin that we use for vars

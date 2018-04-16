@@ -235,11 +235,6 @@ sub vcl_recv {
       set req.http.x-nyt-backend = "gcs_origin";
     }
 
-    if ( req.url ~ "^/files/" ) {
-      set req.http.X-PageType = "newsroom-files-gcs";
-      set req.http.x-nyt-backend = "gcs_origin";
-    }
-
     // vanity hostnames for blogs
     // skip glogin check
     if (   req.http.host == "beta620.nytimes.com"
