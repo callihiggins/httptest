@@ -102,40 +102,6 @@ sub vcl_recv {
         }
     }
 
-    // trending application
-    if (   req.url ~ "^/trending/"
-        || req.url ~ "^/trending?"
-        || req.url ~ "^/trending$"
-    ) {
-        set req.http.X-PageType = "trending";
-        set req.http.x-nyt-backend = "misc_fe";
-        call set_nyt5_misc_backend;
-    }
-
-    // podcasts application
-    if (req.url ~ "^/podcasts") {
-        set req.http.X-PageType = "podcasts";
-        set req.http.x-nyt-backend = "misc_fe";
-        call set_nyt5_misc_backend;
-    }
-
-    // bestseller application
-    if (   req.url ~ "^/books/best-sellers/"
-        || req.url ~ "^/books/best-sellers?"
-        || req.url ~ "^/books/best-sellers$"
-    ) {
-        set req.http.X-PageType = "bestseller";
-        set req.http.x-nyt-backend = "misc_fe";
-        call set_nyt5_misc_backend;
-    }
-
-    // collection reviews diningmap pattern is part of misc
-    if (req.url ~ "^/reviews/dining/map") {
-        set req.http.X-PageType = "collection";
-        set req.http.x-nyt-backend = "misc_fe";
-        call set_nyt5_misc_backend;
-    }
-
     // route the path's below to Legacy WWW GKE
     if ( req.url ~ "^/favicon.ico"
         || req.url ~ "^/(js|js2|css|bi)/"
@@ -318,19 +284,6 @@ sub set_www_slideshow_backend_gke {
     call vi_ce_auth;
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
-}
-# set backend for each NYT5 app to prepare GKE migration
-# first step is to separate backend per each app
-sub set_www_misc_backend_gke {
-    set req.backend = F_misc_fe;
-
-    call vi_ce_auth;
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
-sub set_nyt5_misc_backend {
-    call set_www_misc_backend_gke;
 }
 
 # set backend for nyt5 homepage migration

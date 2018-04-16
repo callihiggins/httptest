@@ -17,3 +17,13 @@ sub miss_pass_set_bucket_auth_headers {
     }
   }
 }
+
+sub miss_pass_wf_auth_headers {
+  if (req.http.x-nyt-wf-auth == "true") {
+      if (req.http.x-environment == "prd") {
+          set bereq.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_prd");
+      } else {
+          set bereq.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
+      }
+  }
+}

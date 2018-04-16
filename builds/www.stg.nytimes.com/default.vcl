@@ -18,7 +18,7 @@ include "ipauth";
 include "www-redirect";
 include "tips";
 include "migration-allocation";
-include "cloud-storage-bucket-headers";
+include "auth-headers";
 
 # this adds vcl_error logic for logging purposes
 include "backend-init-vars";
@@ -58,6 +58,7 @@ include "route-newsdev-attribute";
 include "route-newsdev-gke";
 include "route-watching";
 include "route-video";
+include "route-nyt5-misc";
 include "route-userinfo";
 include "route-newsroom-files-gcs";
 include "route-newsgraphics-gcs";
@@ -114,6 +115,10 @@ sub vcl_recv {
   call recv_route_guides;
   call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
   call recv_route_video;
+  call recv_route_trending;
+  call recv_route_podcasts;
+  call recv_route_best_sellers;
+  call recv_route_diningmap;
   call recv_route_userinfo;
   call recv_route_newsroom_files_gcs;
   call recv_route_newsgraphics_gcs;
@@ -249,6 +254,7 @@ sub vcl_miss {
   call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
+  call miss_pass_wf_auth_headers;
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
 
@@ -297,6 +303,7 @@ sub vcl_pass {
   call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
+  call miss_pass_wf_auth_headers;
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
 
