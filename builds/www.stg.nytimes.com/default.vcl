@@ -66,6 +66,7 @@ include "route-newsgraphics-gcs";
 include "route-weddings";
 include "route-search";
 include "route-timeswire";
+include "route-vi-assets";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -130,6 +131,7 @@ sub vcl_recv {
   call recv_route_weddings;
   call recv_route_search;
   call recv_route_timeswire;
+  call recv_route_vi_assets;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
   call recv_route_newsdev_gcs;
@@ -265,6 +267,7 @@ sub vcl_miss {
   call miss_pass_wf_auth_headers;
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
+  call miss_pass_route_vi_assets;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -314,6 +317,7 @@ sub vcl_pass {
   call miss_pass_wf_auth_headers;
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
+  call miss_pass_route_vi_assets;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above

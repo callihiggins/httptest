@@ -28,7 +28,7 @@ require("./www.nytimes.com/geoip-library-response.js");
 require("./www.nytimes.com/geoip-hash-headers.js");
 require("./www.nytimes.com/route-times-journeys.js");
 require("./www.nytimes.com/vi-allocation.js");
-require("./www.nytimes.com/vi-assets.js");
+require("./www.nytimes.com/route-vi-assets.js");
 require('./www.nytimes.com/vi-story.js');
 require("./www.nytimes.com/route-programs.js");
 require("./www.nytimes.com/route-adx.js");

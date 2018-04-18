@@ -18,8 +18,11 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/vi-assets/up.txt',
+      'responseHeadersPresent': [
+        'x-goog-storage-class',
+      ],
       'responseHeaderMatches': {
-        'x-pagetype': 'vi-asset',
+        'x-pagetype': 'vi-assets',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test fetching a vi asset',

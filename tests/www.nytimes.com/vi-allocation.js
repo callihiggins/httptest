@@ -262,24 +262,6 @@ function getScenarioEvents()
       'scenarioDescription': 'vi_www_hp_opt = 1',
       'testId': 140,
     },
-
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/vi-assets/up.txt',
-      'responseHeadersPresent': [
-        'x-goog-storage-class',
-      ],
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test Static Asset Backend for project vi',
-      'testId': 200,
-    },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage', // ?
       'isDeployedInEnv': {

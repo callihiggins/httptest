@@ -39,7 +39,7 @@ sub recv_https_redirect {
         || req.http.X-PageType == "times-journeys"
         || req.http.X-PageType == "times-journeys-students"
         || req.http.X-PageType == "askwell"
-        || req.http.X-PageType == "vi-asset"
+        || req.http.X-PageType == "vi-assets"
         || req.http.X-PageType == "vi-story"
         || req.http.X-PageType == "vi-search"
         || req.http.X-PageType == "vi-timeswire"

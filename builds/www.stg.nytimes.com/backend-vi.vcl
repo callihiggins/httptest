@@ -84,13 +84,6 @@ sub vcl_recv {
       }
   }
 
-
-  # A request for assets from VI
-  if (req.url ~ "^/vi-assets/") {
-    set req.http.X-PageType = "vi-asset";
-    set req.http.x-nyt-backend = "projectvi_asset";
-    set req.backend = F_projectvi_asset;
-  }
 }
 
 sub vcl_deliver {
@@ -136,22 +129,6 @@ sub vcl_hash {
   if (req.http.x-pre-restart-cms-format){
     set req.hash += req.http.x-pre-restart-cms-format;
   }
-}
-
-sub vcl_miss {
-  if (req.http.x-nyt-backend == "projectvi_asset") {
-    call handle_viasset_request;
-  }
-}
-
-sub vcl_pass {
-  if (req.http.x-nyt-backend == "projectvi_asset") {
-    call handle_viasset_request;
-  }
-}
-
-sub handle_viasset_request {
-    set bereq.http.host = "storage.googleapis.com";
 }
 
 # set a vi backend based on host

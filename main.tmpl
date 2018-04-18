@@ -155,6 +155,16 @@ resource "fastly_service_v1" "www" {
     request_condition   = "{{.pagetype}}_bucket"
   }
 
+  header {
+    action      = "set"
+    name        = "{{.pagetype}}_bucket_provider"
+    priority    = "401"
+    source      = "\"{{.bucket_provider}}\""
+    destination = "http.x-nyt-bucket-provider"
+    type        = "request"
+    request_condition   = "{{.pagetype}}_bucket"
+  }
+
   {{if eq .auth "true"}}
   header {
     action      = "set"
@@ -162,17 +172,6 @@ resource "fastly_service_v1" "www" {
     priority    = "401"
     source      = "\"true\""
     destination = "http.x-nyt-bucket-auth"
-    type        = "request"
-    request_condition   = "{{.pagetype}}_bucket"
-  }
-
-
-  header {
-    action      = "set"
-    name        = "{{.pagetype}}_bucket_provider"
-    priority    = "401"
-    source      = "\"{{.bucket_provider}}\""
-    destination = "http.x-nyt-bucket-provider"
     type        = "request"
     request_condition   = "{{.pagetype}}_bucket"
   }
@@ -756,6 +755,12 @@ resource "fastly_service_v1" "www" {
     name    = "route-timeswire"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-timeswire.vcl")}"
+  }
+
+  vcl {
+    name    = "route-vi-assets"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-vi-assets.vcl")}"
   }
   vcl {
 

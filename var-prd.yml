@@ -516,23 +516,6 @@ backends:
       timeout: "2000"
       window: "5"
 
-  - name: "projectvi_asset"
-    address: "storage.googleapis.com"
-    between_bytes_timeout: "5000"
-    connect_timeout: "5000"
-    first_byte_timeout: "5000"
-    ssl_cert_hostname: "storage.googleapis.com"
-    ssl_sni_hostname: "storage.googleapis.com"
-    healthcheck:
-      host: "storage.googleapis.com"
-      path: "/vi-assets/up.txt"
-      check_interval: "20000"
-      expected_response: "200"
-      initial: "4"
-      threshold: "3"
-      timeout: "5000"
-      window: "4"
-
   - name: "slideshow_fe"
     address: "nyt5-app-slideshow.prd.oma1.nyt.net"
     between_bytes_timeout: "10000"
@@ -841,7 +824,7 @@ backends:
       threshold: "3"
       timeout: "10000"
       window: "5"
-      
+
   - name: "switchboard"
     address: "54.163.240.77"
     between_bytes_timeout: "10000"
@@ -915,4 +898,8 @@ cloud_storage_buckets:
   - pagetype: "newsdev-gcs"
     auth: "true"
     bucket_name: "nytint-prd-www"
+    bucket_provider: "gcs"
+  - pagetype: "vi-assets"
+    auth: "false"
+    bucket_name: "vi-assets"
     bucket_provider: "gcs"
