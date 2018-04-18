@@ -65,16 +65,6 @@ sub vcl_recv {
         call set_www_slideshow_backend_gke;
     }
 
-    // newsletter application
-    if (   req.url ~ "^/newsletters/"
-        || req.url ~ "^/newsletters?"
-        || req.url ~ "^/newsletters$"
-    ) {
-        set req.http.X-PageType = "newsletter";
-        set req.http.x-nyt-backend = "projectvi_fe";
-        call set_projectvi_fe_backend;
-    }
-
     // slideshow JSON files
     if (req.url ~ "\.slideshow\.json$") {
         call set_legacy_gke_backend;
