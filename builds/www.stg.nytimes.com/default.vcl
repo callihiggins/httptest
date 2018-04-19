@@ -90,7 +90,7 @@ include "uuid";
 include "gdpr";
 include "response-headers";
 # Slideshow fallback to legacy backend logic
-include "backend-slideshow-fallback";
+include "route-slideshow";
 
 
 sub vcl_recv {
@@ -134,6 +134,7 @@ sub vcl_recv {
   call recv_route_search;
   call recv_route_timeswire;
   call recv_route_vi_assets;
+  call recv_route_slideshow;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
   call recv_route_newsdev_gcs;
@@ -211,7 +212,7 @@ sub vcl_hash {
   set req.hash += req.http.host;
 
   call hash_route_video;
-
+  call hash_route_slideshow;
   call hash_route_watching;
 
   return(hash);

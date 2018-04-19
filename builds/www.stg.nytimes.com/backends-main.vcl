@@ -57,19 +57,6 @@ sub vcl_recv {
         call set_www_collection_backend_gke;
     }
 
-    // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
-    // If slideshow-compatibility is set, fallback to Legacy GKE.
-    if (req.url ~ "^/slideshow/" && !req.http.x-nyt-slideshow-compatibility) {
-        set req.http.X-PageType = "slideshow";
-        set req.http.x-nyt-backend = "slideshow_fe";
-        call set_www_slideshow_backend_gke;
-    }
-
-    // slideshow JSON files
-    if (req.url ~ "\.slideshow\.json$") {
-        call set_legacy_gke_backend;
-    }
-
     // route the path's below to Legacy WWW GKE
     if ( req.url ~ "^/favicon.ico"
         || req.url ~ "^/(js|js2|css|bi)/"
@@ -241,15 +228,6 @@ sub set_www_article_backend {
     set req.backend = F_article_fe;
     call vi_ce_auth;
 
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
-
-# set backend for each NYT5 app to prepare GKE migration
-# first step is to separate backend per each app
-sub set_www_slideshow_backend_gke {
-    set req.backend = F_slideshow_fe;
-    call vi_ce_auth;
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;
 }

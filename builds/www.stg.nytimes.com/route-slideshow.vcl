@@ -1,3 +1,22 @@
+sub recv_route_slideshow {
+  // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
+  // If slideshow-compatibility is set, fallback to Legacy GKE.
+  if (req.url ~ "^/slideshow/" && !req.http.x-nyt-slideshow-compatibility) {
+      set req.http.X-PageType = "slideshow";
+      set req.http.x-nyt-backend = "slideshow_fe";
+      set req.http.x-nyt-wf-auth = "true";
+
+      # if we needed to switch back to NYT5, unset the vi flag
+      unset req.http.x--fastly-project-vi;
+  }
+
+  // slideshow JSON files
+  if (req.url ~ "\.slideshow\.json$") {
+    set req.http.X-PageType = "legacy-gke";
+    set req.http.x-nyt-backend = "www_legacy_gke";
+  }
+}
+
 sub deliver_slideshow_fallback {
 
     # Route all slideshows to NYT5 GKE and if the slideshow returns 404,
@@ -18,7 +37,7 @@ sub deliver_slideshow_fallback {
 
 }
 
-sub vcl_hash {
+sub hash_route_slideshow {
 
   # incase of slideshow fallback to NYT4, update the hash key for restart
   if (req.http.x-nyt-slideshow-compatibility) {

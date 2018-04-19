@@ -602,9 +602,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-slideshow-fallback"
+    name    = "route-slideshow"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-slideshow-fallback.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-slideshow.vcl")}"
   }
 
   vcl {
