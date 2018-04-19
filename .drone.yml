@@ -202,6 +202,7 @@ pipeline:
       - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-prd.yml
     when:
       event: tag
+      branch: [ master, hotfix* ]
 
  # Deployment to production service
   production:
@@ -221,6 +222,7 @@ pipeline:
         target: GOOGLE_CREDENTIALS
     when:
       event: tag
+      branch: [ master, hotfix* ]
 
   prd-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
@@ -228,6 +230,7 @@ pipeline:
     print_failures_only: true
     when:
       event: tag
+      branch: [ master, hotfix* ]
 
   slack:
     image: plugins/slack
