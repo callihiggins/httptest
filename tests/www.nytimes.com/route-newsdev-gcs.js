@@ -218,6 +218,45 @@ function getScenarioEvents()
       'scenarioDescription': 'Room for debate detail',
       'testId': 9,
     },
+{
+    'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+    'isDeployedInEnv': {
+      'prd': true,
+      'stg': true,
+      'dev': true,
+      'sbx': false,
+    },
+    'requestScheme': 'https://',
+    'requestUri': '/interactive/projects/modern-love/36-questions/',
+    'responseHeaderMatches': {
+      'x-frame-options': 'DENY',
+      'x-pagetype': 'newsdev-gcs',
+      'x-nyt-backend': 'gcs_origin',
+    },
+    'responseHeadersPresent': [
+      'age',
+      'x-cache',
+      'x-served-by',
+    ],
+    'responseHeadersNotPresent': [
+      'nnCoection',
+      'via',
+      'x-age',
+      'x-backend',
+      'x-detectedruntimeconfigflag',
+      'x-esi-status',
+      'x-hash',
+      'x-origin-server',
+      'x-powered-by',
+      'x-servername',
+      'x-servername2',
+      'x-varnish',
+      'x-varnishcacheduration',
+    ],
+    'responseStatusCode': [200,404],
+    'scenarioDescription': 'Test NYTimes Interactive Modern Love',
+    'testId': 10,
+  },
   ];
 
   return scenarios;

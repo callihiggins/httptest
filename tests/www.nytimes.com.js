@@ -10,7 +10,7 @@ require("./www.nytimes.com/route-elections.js");
 require("./www.nytimes.com/content-legacy.js");
 require("./www.nytimes.com/route-content-api.js");
 require("./www.nytimes.com/route-intl.js");
-require("./www.nytimes.com/content-interactive.js");
+require("./www.nytimes.com/route-interactive.js");
 require("./www.nytimes.com/route-newsdev-attribute.js");
 require("./www.nytimes.com/route-newsdev-gke.js");
 require("./www.nytimes.com/route-newsroom-files-gcs.js");

@@ -768,10 +768,17 @@ resource "fastly_service_v1" "www" {
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-vi-assets.vcl")}"
   }
+
   vcl {
 
     name    = "access-level-authorization"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/access-level-authorization.vcl")}"
+  }
+
+  vcl {
+    name    = "route-interactive"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-interactive.vcl")}"
   }
 }

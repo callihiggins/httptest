@@ -44,15 +44,6 @@ sub vcl_recv {
       }
   }
 
-  // interactive years 2014-forever are served by Vi
-  // including all variants, canonical and .(embedded|mobile|app)\.html
-  if (req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
-    set req.http.X-PageType = "vi-interactive";
-    set req.http.x-nyt-backend = "projectvi_fe";
-    call set_projectvi_fe_backend;
-    call check_vi_unhealthy;
-  }
-
   # Home
   # Resources hosted by Vi must go to Vi, dead or alive:
   if (req.url.path ~ "^/((0_vendor-|main-|[0-9]+-).+|fonts).js$") {

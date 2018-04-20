@@ -19,8 +19,6 @@ sub recv_https_redirect {
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
         || req.http.X-PageType == "podcasts"
-        || ( req.http.X-PageType == "interactive"
-                && req.url ~ "^/interactive/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2014 - future
         || req.url ~ "^/projects/2020-report/"
         || req.url ~ "^/content/help"             // help pages
         || req.http.X-PageType ~ "^watching"

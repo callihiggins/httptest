@@ -11,7 +11,7 @@ sub vcl_deliver {
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "elections"
         || req.http.X-PageType == "homepage"
-        || req.http.X-PageType == "interactive"
+        || req.http.X-PageType == "vi-interactive"
         || req.http.X-PageType == "newsletter"
         || req.http.X-PageType == "paidpost"
         || req.http.X-PageType == "real-estate"

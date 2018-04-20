@@ -67,6 +67,7 @@ include "route-newsletters";
 include "route-weddings";
 include "route-search";
 include "route-timeswire";
+include "route-interactive";
 include "route-vi-assets";
 
 # vi allocation and routing
@@ -133,6 +134,7 @@ sub vcl_recv {
   call recv_route_weddings;
   call recv_route_search;
   call recv_route_timeswire;
+  call recv_route_interactive;
   call recv_route_vi_assets;
   call recv_route_slideshow;
 
