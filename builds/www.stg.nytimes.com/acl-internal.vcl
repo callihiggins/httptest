@@ -20,6 +20,7 @@ acl internal {
 
   # London Users
   "78.25.224.254"/32;
+  "80.4.179.80"/28;
 
   # Paris Users (La defense)
   "84.14.214.162"/32;
