@@ -78,7 +78,7 @@ function getScenarioEvents()
     },
 
     {
-      'scenarioDescription': 'refreshes nyt-gdpr when provided in request',
+      'scenarioDescription': 'suppresses nyt-gdpr when provided in request',
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
@@ -91,15 +91,15 @@ function getScenarioEvents()
         'nyt-gdpr=1',
       ],
       'requestUri': '/',
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=1;/,
-      },
+      'responseHeadersNotPresent': [
+        'x-gdpr',
+      ],
       'responseStatusCode': 200,
       'testId': 4,
     },
 
     {
-      'scenarioDescription': 'refreshes nyt-gdpr when provided among other cookies in request',
+      'scenarioDescription': 'suppresses nyt-gdpr when provided among other cookies in request',
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
@@ -114,13 +114,63 @@ function getScenarioEvents()
         'argh=blargh',
       ],
       'requestUri': '/',
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=0;/,
-      },
+      'responseHeadersNotPresent': [
+        'x-gdpr',
+      ],
       'responseStatusCode': 200,
       'testId': 5,
     },
-
+    {
+      'scenarioDescription': 'force gdpr by query param',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/?gdpr=1',
+      'responseHeaderPattern': {
+        'x-gdpr': /1/,
+      },
+      'responseStatusCode': 200,
+      'testId': 6,
+    },
+    {
+      'scenarioDescription': 'force gdpr by query param',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/?gdpr=0',
+      'responseHeaderPattern': {
+        'x-gdpr': /0/,
+      },
+      'responseStatusCode': 200,
+      'testId': 7,
+    },
+    {
+      'scenarioDescription': 'GDPR service endpoint',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/gdpr.json',
+      'responseHeaderPattern': {
+        'x-gdpr': /(0|1)/,
+      },
+      'responseStatusCode': 200,
+      'testId': 7,
+    },
   ];
 
   return scenarios;

@@ -145,9 +145,9 @@ sub vcl_recv {
   call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
 
-  call recv_querystring;
   call recv_gdpr;
-
+  call recv_route_svc_gdpr;
+  call recv_querystring;
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
@@ -445,6 +445,7 @@ sub vcl_error {
   call error_900_route_esi_jsonp_callback;
   call error_995_route_health_service;
   call error_901_to_906_route_userinfo;
+  call error_919_gdpr;
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code

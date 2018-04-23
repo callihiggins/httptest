@@ -1,6 +1,7 @@
 sub recv_route_elections {
     if (req.url ~ "^/elections?(?:/|\?|$)") {
         set req.http.X-PageType = "elections";
+        set req.http.X-SendGDPR = "true";
         ## set elections backend
         if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
             set req.http.x-nyt-backend = "newsdev_elections_s3";

@@ -41,13 +41,6 @@ sub deliver_response_headers {
         set resp.http.x-nyt-force-pass = if(req.http.x-nyt-force-pass, req.http.x-nyt-force-pass, "false");
     }
 
-    # set a GDPR header for folks in Europe
-    if (req.http.x-nyt-continent == "EU") {
-        set resp.http.X-GDPR = "1";
-    } else {
-        set resp.http.X-GDPR = "0";
-    }
-
     if (resp.http.X-API-Version) {
         set resp.http.X-API-Version = "F-" + resp.http.X-API-Version;
     } else {

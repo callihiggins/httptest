@@ -17,6 +17,7 @@ sub recv_route_video {
     if ( req.url.path == "/video" || req.url.path ~ "^/video/") {
         set req.http.X-PageType = "video-library";
         set req.http.x-nyt-backend = "video_library";
+        set req.http.X-SendGDPR = "true";
     }
 
     if ( req.url ~ "^/svc/video" ) {

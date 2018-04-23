@@ -2,6 +2,7 @@ sub vcl_recv {
 
   // article
   if ( req.http.X-PageType == "article" ) {
+      set req.http.X-SendGDPR = "true";
       # The articles that are potentially served by the publishing pipeline
       # are limited by a date range of later than 2017/10/09. This date is going
       # to be extended in the future to include older articles and the code will

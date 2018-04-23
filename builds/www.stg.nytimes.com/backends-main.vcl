@@ -25,6 +25,7 @@ sub vcl_recv {
         || req.url ~ "^/\?"
         || req.url ~ "^/index.html"
     ) {
+        set req.http.X-SendGDPR = "true";
         set req.http.X-PageType = "homepage";
         set req.http.x-nyt-backend = "homepage_fe";
         set req.backend = F_homepage_fe;

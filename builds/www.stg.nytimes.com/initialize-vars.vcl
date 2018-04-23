@@ -17,6 +17,8 @@ sub initialize_global_variable_headers {
   } else {
     set req.http.x-nyt-canonical-www-host = "false";
   }
+
+  set req.http.X-SendGDPR = "false";
 }
 
 sub vcl_recv {

@@ -5,6 +5,7 @@ sub recv_route_interactive {
     set req.http.x-pagetype = "vi-interactive";
     set req.http.x-nyt-wf-auth = "true";
     set req.http.x--fastly-project-vi = "1";
+    set req.http.X-SendGDPR = "true";
     set req.http.x-nyt-backend = "projectvi_fe";
   }
 }

@@ -2,11 +2,11 @@ include "subscription-currency-map-table";
 
 sub recv_route_mwcm {
     if (req.http.x-nyt-canonical-www-host == "true") {
-        if (    req.url == "/subscription"  ||  
+        if (    req.url == "/subscription"  ||
                 req.url ~ "^/subscription/"  ||
                 req.url == "/marketing"  ||
                 req.url ~ "^/marketing/"  ||
-                req.url == "/services/mobile" ||  
+                req.url == "/services/mobile" ||
                 req.url ~ "^/services/mobile/" ||
                 req.url == "/subscriptions" ||
                 req.url ~ "^/subscriptions/"
@@ -15,6 +15,7 @@ sub recv_route_mwcm {
             set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
             set req.http.x-pagetype = "mwcm";
             set req.http.x-nyt-backend = "mwcm";
+            set req.http.X-SendGDPR = "true";
 
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;

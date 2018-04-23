@@ -10,6 +10,7 @@ sub recv_route_switchboard {
   ) {
     set req.http.x-pagetype = "switchboard";
     set req.http.x-nyt-backend = "switchboard";
+    set req.http.X-SendGDPR = "true";
     unset req.http.Cookie;
     unset req.http.X-Cookie;
   }
