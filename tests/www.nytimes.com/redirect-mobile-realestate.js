@@ -25,7 +25,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         location: 'https://m.realestatelistings.nytimes.com/',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile redirect; realestate; cookie "nyt-mobile=1"; iPhone; does redirect',
       testId: 1,
@@ -47,7 +47,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         location: 'https://m.realestatelistings.nytimes.com/?channel=sales',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate sales channel redirect; realestate; cookie "nyt-mobile=1";  mobile; does redirect',
       testId: 2,
@@ -69,7 +69,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         location: 'https://m.realestatelistings.nytimes.com/?channel=rentals',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate rental channel redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 3,
@@ -92,7 +92,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         location: 'https://m.realestatelistings.nytimes.com/listing/185-18332621',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate rental channel redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 4,
@@ -114,7 +114,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         location: 'https://m.realestatelistings.nytimes.com/',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate buildings redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 5,
@@ -136,7 +136,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         location: 'https://m.realestatelistings.nytimes.com/savedlistings',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate saved listings redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 6,
@@ -159,7 +159,7 @@ function getScenarioEvents() {
         location:
           'https://m.realestatelistings.nytimes.com/search?channel=rentals&search=See+Available+Homes&location=upper-east-side-new-york-ny-usa',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate saved listings redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 7,
@@ -183,7 +183,7 @@ function getScenarioEvents() {
         location:
           'https://m.realestatelistings.nytimes.com/search?channel=sales&location=upper-west-side-new-york-ny-usa&search=See+Available+Homes&redirect=find-a-home',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate saved listings redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 8,
@@ -207,7 +207,7 @@ function getScenarioEvents() {
         location:
           'https://m.realestatelistings.nytimes.com/search?channel=rentals&location=upper-west-side-new-york-ny-usa&search=See+Available+Homes&redirect=find-a-home',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate saved listings redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 9,
@@ -230,7 +230,7 @@ function getScenarioEvents() {
         location:
           'https://m.realestatelistings.nytimes.com/search?channel=sales&search=See+Available+Homes&location=upper-east-side-new-york-ny-usa',
       },
-      responseStatusCode: 302,
+      responseStatusCode: 301,
       scenarioDescription:
         'Test mobile realestate saved listings redirect; realestate; mobile; cookie "nyt-mobile=1"; does redirect',
       testId: 10,

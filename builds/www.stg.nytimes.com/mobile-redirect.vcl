@@ -176,7 +176,7 @@ sub do_realestate_redirect {
     }
 
     set resp.http.Location = "https://m.realestatelistings.nytimes.com/" + req.http.X-NewUri;
-    set resp.status = 302;
+    set resp.status = 301;
     set resp.response = "FOUND";
     set resp.http.x-device-type = req.http.device_type;
     set req.http.x-redirect-reason = "redir=[mobile]";
