@@ -76,7 +76,7 @@ function getScenarioEvents()
       'scenarioDescription': 'Test userinfo service, version 2: valid NYT-S cookie; JSON format',
       'testId': 2,
       'userInfoAuthId': '37593002',
-      'userInfoAuthName': 'qa_fake',
+      'userInfoAuthName': 'My account',
       'userInfoCountry': 'US',
       'userInfoSubscriptions': ['SVID', '_UID', 'BTA', 'XWD'],
     },

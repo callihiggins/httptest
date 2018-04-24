@@ -1,5 +1,5 @@
-sub vcl_recv {
-    set req.http.x-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
+sub recv_mobile_redirect_capture_qparam {
+    set req.http.x-nyt-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
 }
 
 sub vcl_deliver {
@@ -13,10 +13,10 @@ sub vcl_deliver {
 
         if (req.http.X-PageType ~ "^blog") {
             // query string override
-            if (req.http.x-mobile-param ~ "nytmobile=1") {
+            if (req.http.x-nyt-mobile-param ~ "nytmobile=1") {
                 set req.http.x-do-mobile-redirect = "1";
             }
-            if (req.http.x-mobile-param ~ "nytmobile=0") {
+            if (req.http.x-nyt-mobile-param ~ "nytmobile=0") {
                 set req.http.x-do-mobile-redirect = "0";
             }
 
@@ -66,14 +66,14 @@ sub vcl_deliver {
             }
         } else {
             // query string override
-            if (req.http.x-mobile-param ~ "nytmobile=1") {
+            if (req.http.x-nyt-mobile-param ~ "nytmobile=1") {
                 set req.http.x-do-mobile-redirect = "1";
             }
-            if (req.http.x-mobile-param ~ "nytmobile=0") {
+            if (req.http.x-nyt-mobile-param ~ "nytmobile=0") {
                 set req.http.x-do-mobile-redirect = "0";
             }
             // homepage & sectionfronts specific logic
-            if (req.http.X-PageType == "homepage") {
+            if (req.http.x-pagetype == "homepage" || req.http.x-pagetype == "vi-homepage") {
                 // cookie override
                 if (req.http.x-nyt-mobile == "0") {
                     set req.http.x-do-mobile-redirect = "0";

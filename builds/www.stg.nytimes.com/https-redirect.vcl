@@ -10,7 +10,8 @@ sub recv_https_redirect {
     /*
      * Items permanently on HTTPS
      */
-    if (   req.http.X-PageType == "homepage"
+    if (   req.http.x-pagetype == "homepage"
+        || req.http.x-pagetype == "vi-homepage"
         || ( req.http.X-PageType == "article"
             && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/") // Route 1850-future
         || ( req.http.X-PageType == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources

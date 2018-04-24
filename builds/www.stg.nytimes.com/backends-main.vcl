@@ -20,19 +20,6 @@ sub vcl_recv {
         call vi_ce_auth;
     }
 
-    // homepages, domestic and international, are NYT5
-    if (   req.url ~ "^/$"
-        || req.url ~ "^/\?"
-        || req.url ~ "^/index.html"
-    ) {
-        set req.http.X-SendGDPR = "true";
-        set req.http.X-PageType = "homepage";
-        set req.http.x-nyt-backend = "homepage_fe";
-        set req.backend = F_homepage_fe;
-        call set_www_homepage_backend_gke;
-    }
-
-
     // route the path's below to Legacy WWW GKE
     if ( req.url ~ "^/favicon.ico"
         || req.url ~ "^/(js|js2|css|bi)/"
@@ -115,48 +102,12 @@ sub vcl_recv {
     ) {
         call set_legacy_gke_backend;
     }
-
-    // article
-    if (   req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
-        || req.url ~ "^/(aponline|reuters)/" // wire sources
-        || req.url ~ "^/blog/" // all blogposts
-    ) {
-        set req.http.X-PageType = "article";
-        call set_www_article_backend;
-    }
-
-    if (   req.url ~ "^/newsgraphics/"
-        || req.url ~ "^/projects/"
-    ) {
-      set req.http.X-PageType = "newsgraphics-gcs";
-      set req.http.x-nyt-backend = "gcs_origin";
-    }
-
 }
 
 sub set_legacy_gke_backend {
     set req.http.X-PageType = "legacy-gke";
     set req.http.x-nyt-backend = "www_legacy_gke";
     set req.backend = F_www_legacy_gke;
-}
-
-# set backend for each NYT5 app to prepare GKE migration
-# first step is to separate backend per each app
-sub set_www_article_backend {
-    set req.http.x-nyt-backend = "article_fe";
-    set req.backend = F_article_fe;
-    call vi_ce_auth;
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
-}
-
-# set backend for nyt5 homepage migration
-sub set_www_homepage_backend_gke {
-    call vi_ce_auth;
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
 }
 
 sub vi_ce_auth {

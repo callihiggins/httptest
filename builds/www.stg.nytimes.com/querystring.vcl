@@ -2,7 +2,7 @@ sub recv_querystring {
     set req.http.X-OriginalUri = req.url;
 
     # remove query string parameters
-    if (   req.url             !~ "/svc/web-products/" # except from API requests
+    if (   req.url             !~ "^/svc/web-products/" # except from API requests
         && req.url             !~ "^/svc/community" # except /svc/community requests
         && req.url             != "/esi/jsonp-callback" # except esi's for jsonp requests
         && req.http.X-PageType !~ "^blog" # except from blogs requests

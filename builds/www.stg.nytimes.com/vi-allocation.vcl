@@ -33,7 +33,7 @@
 #       1 = force vi stories
 #       0 = opt out vi stories
 
-sub vcl_recv {
+sub recv_vi_allocation_init {
     declare local var.hash STRING;
     declare local var.dart INTEGER;
     declare local var.test_group STRING;
@@ -173,7 +173,7 @@ sub vcl_recv {
     set req.http.x--fastly-dart = var.dart;
 }
 
-sub vcl_deliver {
+sub deliver_vi_allocation_set_cookie {
     declare local var.now_dt TIME;
     declare local var.now_year INTEGER;
     declare local var.expire_year STRING;
@@ -261,22 +261,14 @@ sub vcl_deliver {
     }
 }
 
-sub clear_vi_group_vars {
+# the backend doesn't need the private vars we've stashed on the request,
+# so zap them from the backend request using vcl_miss and vcl_pass:
+sub miss_pass_remove_vialloc_headers {
     unset bereq.http.x--fastly-req-cookie-vi;
     unset bereq.http.x--fastly-vi-test-group;
     unset bereq.http.x--fastly-req-cookie-vi-story;
     unset bereq.http.x--fastly-vi-test-group-story;
     unset bereq.http.x--fastly-project-vi;
-}
-
-# the backend doesn't need the private vars we've stashed on the request,
-# so zap them from the backend request using vcl_miss and vcl_pass:
-sub vcl_miss {
-    call clear_vi_group_vars;
-}
-
-sub vcl_pass {
-    call clear_vi_group_vars;
 }
 
 # SAVE EITAN

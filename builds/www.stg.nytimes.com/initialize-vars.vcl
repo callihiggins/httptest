@@ -130,4 +130,7 @@ sub vcl_recv {
             set req.http.x-orig-querystring = "";
         }
     }
+
+    # catpure mobile redirect qparam
+    call recv_mobile_redirect_capture_qparam;
 }

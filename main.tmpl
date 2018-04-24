@@ -608,9 +608,15 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-vi"
+    name    = "route-story"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-vi.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-story.vcl")}"
+  }
+
+  vcl {
+    name    = "route-homepage"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-homepage.vcl")}"
   }
 
   vcl {

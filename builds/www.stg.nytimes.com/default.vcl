@@ -19,6 +19,7 @@ include "www-redirect";
 include "tips";
 include "migration-allocation";
 include "auth-headers";
+include "vi-allocation";
 
 # this adds vcl_error logic for logging purposes
 include "backend-init-vars";
@@ -69,13 +70,10 @@ include "route-search";
 include "route-timeswire";
 include "route-interactive";
 include "route-vi-assets";
+include "route-homepage";
+include "route-story";
 include "route-collection";
 include "route-blogs";
-
-# vi allocation and routing
-# intentionally after other backend logic
-include "vi-allocation";
-include "backend-vi";
 
 # backend response processing
 include "surrogate-key";
@@ -97,6 +95,9 @@ include "route-slideshow";
 
 
 sub vcl_recv {
+
+  # before routing calls lets set up the vi allocation vars
+  call recv_vi_allocation_init;
 
   # begin routing logic
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
@@ -122,7 +123,6 @@ sub vcl_recv {
   call recv_route_programs;
   call recv_route_times_journeys;
   call recv_route_guides;
-  call recv_route_watching; # this needs to come AFTER article routing since it uses year/mo/day
   call recv_route_video;
   call recv_route_real_estate;
   call recv_route_trending;
@@ -141,6 +141,11 @@ sub vcl_recv {
   call recv_route_collection;
   call recv_route_diningmap;
   call recv_route_slideshow;
+  call recv_route_homepage;
+
+  # order matters for these routes that are all using ^/year/mo/day
+  call recv_route_story;
+  call recv_route_watching; # this needs to come AFTER article routing since it uses ^/year/mo/day
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
   call recv_route_newsdev_gcs;
@@ -151,7 +156,6 @@ sub vcl_recv {
 
   call recv_gdpr;
   call recv_route_svc_gdpr;
-  call recv_querystring;
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
@@ -172,6 +176,9 @@ sub vcl_recv {
 
 # DO NOT REMOVE THIS LINE, FASTLY MACRO
 #FASTLY recv
+
+  # this has a backend check, put it AFTER the macro to set backends.
+  call recv_querystring;
 
   # check to see if we need to remove the cookie header
   call recv_remove_cookie_check;
@@ -220,6 +227,8 @@ sub vcl_hash {
   call hash_route_video;
   call hash_route_slideshow;
   call hash_route_watching;
+  call hash_route_homepage;
+  call hash_route_story;
 
   return(hash);
 }
@@ -277,6 +286,7 @@ sub vcl_miss {
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
   call miss_pass_route_vi_assets;
+  call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -327,6 +337,7 @@ sub vcl_pass {
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
   call miss_pass_route_vi_assets;
+  call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -419,6 +430,9 @@ sub vcl_deliver {
     set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " " + resp.http.x-nyt-restart-reason, resp.http.x-nyt-restart-reason);
     return(restart);
   }
+
+  call deliver_route_story_restart_indicators;
+  call deliver_vi_allocation_set_cookie;
 
   call deliver_add_svc_access_control;
   call deliver_route_newsdev_cloud_functions_access_control;

@@ -107,7 +107,7 @@ function getScenarioEvents()
         'Fastly-Debug': '1',
       },
       'requestScheme': 'https://',
-      'requestUri': '/video-media/2017/03/27/38483_1_arconic-fiction-video_v1_wg_hls/segment-2-f2-v1-a1.ts',
+      'requestUri': '/video-media/hls/2017/03/27/38483_1_arconic-fiction-video_v1_wg/segment-2-f2-v1-a1.ts',
       'responseHeaderMatches': {
         'x-frame-options': 'DENY',
         'content-type': 'video/MP2T',
