@@ -3,7 +3,7 @@ require("./www.nytimes.com/nyt-a.js");
 require("./www.nytimes.com/nyt-gdpr.js");
 require("./www.nytimes.com/content-homepage.js");
 require("./www.nytimes.com/content-article.js");
-require("./www.nytimes.com/content-collection.js");
+require("./www.nytimes.com/route-collection.js");
 require("./www.nytimes.com/route-slideshow.js");
 require("./www.nytimes.com/route-nyt5-misc.js");
 require("./www.nytimes.com/route-elections.js");

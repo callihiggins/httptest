@@ -32,31 +32,6 @@ sub vcl_recv {
         call set_www_homepage_backend_gke;
     }
 
-    // collection application
-    if (   req.url ~ "^/by/"
-        || req.url ~ "^/column/"
-        || req.url ~ "^/issue/"
-        || req.url ~ "^/series/"
-        || req.url ~ "^/news-event/"
-        || req.url ~ "^/reviews/"
-        || req.url ~ "^/reviews?"
-        || req.url ~ "^/reviews$"
-        || req.url ~ "^/saved/"
-        || req.url ~ "^/saved\?"
-        || req.url ~ "^/saved$"
-        || req.url ~ "^/section/"
-        || req.url ~ "^/spotlight/"
-        || req.url ~ "^/topic/person/"
-        || req.url ~ "^/topic/company/"
-        || req.url ~ "^/topic/destination/"
-        || req.url ~ "^/topic/organization/"
-        || req.url ~ "^/topic/subject/"
-        || req.url ~ "^/upshot"
-    ) {
-        set req.http.X-PageType = "collection";
-        set req.http.x-nyt-backend = "collection_fe";
-        call set_www_collection_backend_gke;
-    }
 
     // route the path's below to Legacy WWW GKE
     if ( req.url ~ "^/favicon.ico"
@@ -211,15 +186,6 @@ sub set_legacy_gke_backend {
     set req.http.X-PageType = "legacy-gke";
     set req.http.x-nyt-backend = "www_legacy_gke";
     set req.backend = F_www_legacy_gke;
-}
-
-# set backend for each NYT5 app to prepare GKE migration
-# first step is to separate backend per each app
-sub set_www_collection_backend_gke {
-    set req.backend = F_collection_fe;
-    call vi_ce_auth;
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
 }
 
 # set backend for each NYT5 app to prepare GKE migration

@@ -69,6 +69,7 @@ include "route-search";
 include "route-timeswire";
 include "route-interactive";
 include "route-vi-assets";
+include "route-collection";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -126,7 +127,6 @@ sub vcl_recv {
   call recv_route_trending;
   call recv_route_podcasts;
   call recv_route_best_sellers;
-  call recv_route_diningmap;
   call recv_route_userinfo;
   call recv_route_newsroom_files_gcs;
   call recv_route_newsgraphics_gcs;
@@ -136,6 +136,8 @@ sub vcl_recv {
   call recv_route_timeswire;
   call recv_route_interactive;
   call recv_route_vi_assets;
+  call recv_route_collection;
+  call recv_route_diningmap;
   call recv_route_slideshow;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES

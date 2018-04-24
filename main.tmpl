@@ -770,6 +770,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-collection"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-collection.vcl")}"
+  }
+
+  vcl {
 
     name    = "access-level-authorization"
     main    = false
