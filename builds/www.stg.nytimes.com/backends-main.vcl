@@ -132,54 +132,6 @@ sub vcl_recv {
       set req.http.x-nyt-backend = "gcs_origin";
     }
 
-    // vanity hostnames for blogs
-    // skip glogin check
-    if (   req.http.host == "beta620.nytimes.com"
-        || req.http.host == "bits.nytimes.com"
-        || req.http.host ~  "(www\.)?dealbook\.com$"
-        || req.http.host ~  "(www\.)?dealbook\.me$"
-        || req.http.host ~  "jobs\.nytco\.com$"
-    ) {
-        set req.http.X-PageType = "blog2";
-        set req.http.x-nyt-backend = "blogs_gcs";
-        set req.backend = F_blogs_gcs;
-    }
-    // blogs under WWW hostname
-    if (   req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"
-        || req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$"
-    ) {
-        if (   req.url ~  "^/news/"
-            || req.url ~  "^/news$"
-            || req.url ~  "^/politics/first-draft"
-            || req.url ~  "^/times-insider"
-            || req.url ~  "^/timesjourneys"
-            || req.url ~  "^/live/"
-            || req.url ~  "^/live$"
-        ) {
-            set req.http.X-PageType = "blog";
-            set req.http.x-nyt-backend = "blogs_gcs";
-            set req.backend = F_blogs_gcs;
-        }
-    }
-    // blog URLs that do not get glogin redirection
-    if (req.http.X-PageType == "blog") {
-        if (   req.url ~ "^/timesjourneys"
-            || req.url ~ "/live-updates/(json|text)/"
-            || req.url ~ "/renderstyle/(phone|tablet)/"
-            || req.url ~ "/wp-content/"
-            || req.url ~ "/feed/"
-            || req.url ~ "/xml"
-            || req.url ~ "\.xml"
-            || req.url ~ "/json/posts"
-            || req.url ~ "/blogs\.json"
-            || req.url ~ "/glassjson/"
-            || req.url ~ "/papijson/"
-            || req.http.X-QueryString ~ "nytapp=(.*)"
-        ) {
-            set req.http.X-PageType = "blog2";
-        }
-    }
-
 }
 
 sub set_legacy_gke_backend {

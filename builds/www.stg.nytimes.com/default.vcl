@@ -70,6 +70,7 @@ include "route-timeswire";
 include "route-interactive";
 include "route-vi-assets";
 include "route-collection";
+include "route-blogs";
 
 # vi allocation and routing
 # intentionally after other backend logic
@@ -135,6 +136,7 @@ sub vcl_recv {
   call recv_route_search;
   call recv_route_timeswire;
   call recv_route_interactive;
+  call recv_route_blogs;
   call recv_route_vi_assets;
   call recv_route_collection;
   call recv_route_diningmap;

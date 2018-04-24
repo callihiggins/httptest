@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/politics/first-draft/2015/05/21/republicans-plan-to-replace-health-law-is-shrug-senator-says/',
       'responseHeaderMatches': {
-        'x-nyt-backend': 'blogs_gcs',
+        'x-nyt-backend': 'blogs',
         'x-pagetype': 'blog',
       },
       'responseStatusCode': [200,301,404],
@@ -37,7 +37,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/news/affordable-care-act/2014/03/06/more-than-one-way-to-buy-a-plan/',
       'responseHeaderMatches': {
-        'x-nyt-backend': 'blogs_gcs',
+        'x-nyt-backend': 'blogs',
         'x-pagetype': 'blog',
       },
       'responseStatusCode': [200,301,404],
@@ -55,7 +55,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/times-insider/2014/04/01/dangerous-roads-constant-crises-adam-nossiter-on-central-africa/',
       'responseHeaderMatches': {
-        'x-nyt-backend': 'blogs_gcs',
+        'x-nyt-backend': 'blogs',
         'x-pagetype': 'blog',
       },
       'responseStatusCode': [200,301,404],
@@ -73,8 +73,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/live/2016-golden-globes/',
       'responseHeaderMatches': {
-        'x-nyt-backend': 'blogs_gcs',
-        'x-pagetype': 'blog2',
+        'x-nyt-backend': 'blogs',
+        'x-pagetype': 'blog',
       },
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test routing; /live; blogs; /live/2016-golden-globes/',

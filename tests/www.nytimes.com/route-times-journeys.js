@@ -57,7 +57,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/timesjourneys/',
       'responseHeaderMatches': {
-        'x-nyt-backend': "blogs_gcs",
+        'x-nyt-backend': "blogs",
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 2',
@@ -75,7 +75,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/timesjourneys',
       'responseHeaderMatches': {
-        'x-nyt-backend': "blogs_gcs",
+        'x-nyt-backend': "blogs",
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 3',
@@ -187,7 +187,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/timesjourneys/students/',
       'responseHeaderMatches': {
-        'x-nyt-backend': "blogs_gcs",
+        'x-nyt-backend': "blogs",
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys Students; landing page, non-canonical variant 2',
@@ -205,7 +205,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/timesjourneys/students',
       'responseHeaderMatches': {
-        'x-nyt-backend': "blogs_gcs",
+        'x-nyt-backend': "blogs",
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys Students; landing page, non-canonical variant 3',

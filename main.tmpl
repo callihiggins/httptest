@@ -764,6 +764,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-blogs"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-blogs.vcl")}"
+  }
+
+  vcl {
     name    = "route-vi-assets"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-vi-assets.vcl")}"

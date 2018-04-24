@@ -36,8 +36,8 @@ sub vcl_deliver {
                 set req.http.x-do-mobile-redirect = "0";
             }
 
-            // URLs for PageType blog2 never redirect
-            if ( req.http.X-PageType == "blog2") {
+            // URLs for PageType blog-legacy never redirect
+            if ( req.http.X-PageType == "blog-legacy") {
                 set req.http.x-do-mobile-redirect = "0";
             }
 
