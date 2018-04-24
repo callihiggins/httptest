@@ -142,21 +142,21 @@ sub vcl_recv {
         else                      { set var.test_group_story = "z0"; } # default to ctrl grp
     } else {
         # use Abra-style allocation, like so:
-        # 0..10%:       "a0" (Story on VI except incompatible)
-        # 10..50%:      "b0" (nyt5 bucketed for reporting)
-        # 50..60%:     "c0" (nyt5 bucketed for reporting)
-        # 60..100%:    "z0" (nyt5 bucketed for reporting)
+        # 0..25%:       "a0" (Story on VI except incompatible)
+        # 25..50%:      "b0" (nyt5 bucketed for reporting)
+        # 50..75%:     "c0" (nyt5 bucketed for reporting)
+        # 75..100%:    "z0" (nyt5 bucketed for reporting)
 
         set var.hash = digest.hash_sha256(req.http.x-nyt-a + " WP_ProjectVi_Story");
         set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
         set var.dart = std.strtol(var.hash, 16);
 
         # at launch the values will be updated to match comments
-        if (var.dart < 429496730) { # 10% * 0x100000000
+        if (var.dart < 1073741824) { # 25% * 0x100000000
             set var.test_group_story = "a0"; # Getting VI response
         } else if (var.dart < 2147483648) { # 50% * 0x100000000
             set var.test_group_story = "b0"; # Not getting VI response
-        } else if (var.dart < 2576980378) { # 60% * 0x100000000
+        } else if (var.dart < 3221225472) { # 75% * 0x100000000
             set var.test_group_story = "c0"; # Not getting VI response
         } else { # var.dart < 0x100000000
             set var.test_group_story = "z0"; # Not getting VI response
