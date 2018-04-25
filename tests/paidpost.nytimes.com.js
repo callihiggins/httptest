@@ -1,2 +1,1 @@
-require("./paidpost.nytimes.com/content-paidpost.js");
-
+require("./paidpost.nytimes.com/route-paidpost.js");

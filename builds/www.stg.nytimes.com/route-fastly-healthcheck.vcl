@@ -1,5 +1,5 @@
-sub vcl_recv {
-    
+sub recv_route_fastly_healthcheck {
+
     # changing this so it just returns 200 all the time on Fastly
     # this is still needed for monitoring not to cry
     # TODO: make a real healthcheck to return backend health status dynamically?
@@ -9,7 +9,7 @@ sub vcl_recv {
     }
 }
 
-sub vcl_error {
+sub error_800_fastly_healthcheck {
     if (obj.status == 800) {
         set obj.http.X-API-Version = "0";
         set obj.status = 200;

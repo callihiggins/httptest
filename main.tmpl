@@ -392,9 +392,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backend-init-vars"
+    name    = "route-invalid-requests"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backend-init-vars.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-invalid-requests.vcl")}"
   }
 
   vcl {
@@ -488,9 +488,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "health-check"
+    name    = "route-fastly-healthcheck"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/health-check.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-fastly-healthcheck.vcl")}"
   }
 
   vcl {
@@ -566,9 +566,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "backends-main"
+    name    = "route-paidpost"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/backends-main.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-paidpost.vcl")}"
   }
 
   vcl {
@@ -623,6 +623,12 @@ resource "fastly_service_v1" "www" {
     name    = "auth-headers"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/auth-headers.vcl")}"
+  }
+
+  vcl {
+    name    = "route-default"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-default.vcl")}"
   }
 
   vcl {

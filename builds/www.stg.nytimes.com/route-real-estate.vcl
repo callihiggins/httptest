@@ -6,7 +6,7 @@ sub recv_route_real_estate {
     ) {
         set req.http.X-PageType = "real-estate";
         set req.http.x-nyt-backend = "realestate_fe";
-        call vi_ce_auth;
+        set req.http.x-nyt-wf-auth = "true";
         # if we needed to switch back to NYT5, unset the vi flag
         unset req.http.x--fastly-project-vi;
 

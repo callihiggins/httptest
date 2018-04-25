@@ -147,7 +147,7 @@ pipeline:
       event: push
       branch:
         exclude: [ sandbox01, sandbox02, sandbox03, sandbox04 ]
-  
+
   dev-sleep:
     image: alpine
     commands:
@@ -162,6 +162,16 @@ pipeline:
     print_failures_only: true
     when:
       event: push
+
+  # Run tests against dev service
+  dev-paidpost-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: paidpost.dev.nytimes.com
+    print_failures_only: true
+    when:
+      event: push
+      branch:
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04 ]
 
   stg-template:
     image: hairyhenderson/gomplate:v2.3.0
@@ -192,7 +202,7 @@ pipeline:
     when:
       event: push
       branch: master
-  
+
   stg-sleep:
     image: alpine
     commands:
@@ -204,6 +214,14 @@ pipeline:
   stg-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
     servername: www.stg.nytimes.com
+    print_failures_only: true
+    when:
+      event: push
+      branch: master
+
+  stg-paidpost-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: paidpost.stg.nytimes.com
     print_failures_only: true
     when:
       event: push
@@ -249,6 +267,14 @@ pipeline:
   prd-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
     servername: www.nytimes.com
+    print_failures_only: true
+    when:
+      event: tag
+      branch: [ master, hotfix* ]
+
+  prd-paidpost-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: paidpost.nytimes.com
     print_failures_only: true
     when:
       event: tag

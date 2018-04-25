@@ -13,7 +13,6 @@ include "geoip-timezone-map-table";
 include "geoip-location-consolidation-map-table";
 include "geoip-service";
 include "frame-buster";
-include "health-check";
 include "ipauth";
 include "www-redirect";
 include "tips";
@@ -21,16 +20,11 @@ include "migration-allocation";
 include "auth-headers";
 include "vi-allocation";
 
-# this adds vcl_error logic for logging purposes
-include "backend-init-vars";
-
-
 # the following files contain routes for the backends defined above
 include "route-health-service"; # service that reports health of defined backends
-include "backends-main";
+include "route-default";
 
-# new style routing includes
-# TODO: replace all of the above with these during refactor
+include "route-fastly-healthcheck";
 include "route-esi-jsonp-callback";
 include "route-cms-static-assets";
 include "route-ads-static-assets";
@@ -73,7 +67,10 @@ include "route-vi-assets";
 include "route-homepage";
 include "route-story";
 include "route-collection";
+include "route-paidpost";
 include "route-blogs";
+include "route-slideshow";
+include "route-invalid-requests";
 
 # backend response processing
 include "surrogate-key";
@@ -90,9 +87,6 @@ include "homepage-redirect";
 include "uuid";
 include "gdpr";
 include "response-headers";
-# Slideshow fallback to legacy backend logic
-include "route-slideshow";
-
 
 sub vcl_recv {
 
@@ -100,7 +94,10 @@ sub vcl_recv {
   call recv_vi_allocation_init;
 
   # begin routing logic
+  # SET DEFAULT BACKEND FIRST
+  call recv_set_default_backend;
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
+  call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
   call recv_route_cms_static_assets;
   call recv_route_ads_static_assets;
@@ -132,6 +129,7 @@ sub vcl_recv {
   call recv_route_newsroom_files_gcs;
   call recv_route_newsgraphics_gcs;
   call recv_route_newsletters;
+  call recv_route_paidpost;
   call recv_route_weddings;
   call recv_route_search;
   call recv_route_timeswire;
@@ -182,23 +180,12 @@ sub vcl_recv {
 
   # check to see if we need to remove the cookie header
   call recv_remove_cookie_check;
-
+  call recv_route_default_remove_cookie;
   # Set the edge req header
   set req.http.X-NYT-Edge-CDN = "Fastly";
 
-  if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
-    set req.http.x-nyt-force-pass = "true";
-  }
-
-  // URIs not accessible via Varnish VIPs
-  if (   req.url ~ "^/svc/web-shell/"
-      || req.url ~ "^/svc/web-products/shell/"
-      || req.url ~ "^/apc-stats/"
-      || req.url ~ "^/phpinfo/"
-      || req.url ~ "\.php$"
-  ) {
-      set req.url = "/404.html";
-  }
+  call recv_route_uncachable_methods;
+  call recv_route_invalid_urls;
 
   if (req.http.Authorization || req.http.Cookie) {
     /* Not cacheable by default */
@@ -457,8 +444,10 @@ sub vcl_deliver {
 }
 
 sub vcl_error {
+  # this should execute before any other backend route vcl_error logic
+  call error_init_health_vars;
 #FASTLY error
-
+  call error_800_fastly_healthcheck;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_900_route_esi_jsonp_callback;
   call error_995_route_health_service;

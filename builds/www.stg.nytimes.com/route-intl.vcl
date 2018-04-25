@@ -3,7 +3,7 @@ sub recv_route_intl {
       || (req.url == "/global") || (req.url ~ "^/global/")) {
       set req.http.X-PageType = "intl";
       set req.http.x-nyt-backend = "intl_gcp";
-      call vi_ce_auth;
+      set req.http.x-nyt-wf-auth = "true";
 
     if (req.request != "GET" &&
         req.request != "HEAD" &&
