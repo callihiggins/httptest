@@ -132,23 +132,6 @@ function getScenarioEvents()
       'scenarioDescription': 'Test /video-media routing',
       'testId': 5,
     },
-    {
-      'id':  'Functional Test For Video Offsite Player',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
-      },
-      'responseHeaderMatches': {
-        'x-pagetype': 'video-offsite-player',
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/video/players/offsite/index.html?videoId=100000003586257',
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting the video offsite player',
-      'testId': 6,
-    },
   ];
   return scenarios;
 }

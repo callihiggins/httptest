@@ -903,7 +903,3 @@ cloud_storage_buckets:
     auth: "false"
     bucket_name: "vi-assets"
     bucket_provider: "gcs"
-  - pagetype: "video-offsite-player"
-    auth: "false"
-    bucket_name: "nyt-video-prd"
-    bucket_provider: "gcs"
