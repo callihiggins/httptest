@@ -14,7 +14,6 @@ function getScenarioEvents()
         'prd': false,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -36,7 +35,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -58,7 +56,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/london2012/schedule',
@@ -77,7 +74,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -96,10 +92,9 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForStaticS3PageRedirect',
       'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-        'sbx': false,
+        'prd': false,
+        'stg': false,
+        'dev': false,
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -121,7 +116,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -143,7 +137,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/page-that-does-not-exist',
@@ -164,7 +157,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/cp/awards-season/emmys-2015/uzo-aduba-thanks-those-who-let-her-be-herself',
@@ -182,7 +174,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -203,7 +194,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -224,7 +214,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestScheme': 'https://',
     'requestUri': '/interactive/projects/modern-love/36-questions/',
