@@ -19,6 +19,7 @@ sub recv_https_redirect {
         || ( req.http.X-PageType == "blog-legacy" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )
         || req.http.X-PageType == "collection"
         || req.http.X-PageType == "video-library"
+        || req.http.X-PageType == "video-offsite-player"
         || req.http.X-PageType == "podcasts"
         || req.url ~ "^/projects/2020-report/"
         || req.url ~ "^/content/help"             // help pages
