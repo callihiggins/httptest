@@ -43,7 +43,7 @@ function getScenarioEvents()
         'x-pagetype': 'games-service',
       },
       'requestScheme': 'https://',
-      'requestUri': '/svc/crosswords/v2/puzzle/daily.json',
+      'requestUri': '/svc/crosswords/v2/puzzle/1.json',
       'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /svc/crosswords endpoint',
       'testId': 2,
