@@ -210,7 +210,7 @@ pipeline:
     when:
       event: push
     branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
+      exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
 
   # Run tests against dev service
   dev-paidpost-test:
