@@ -21,6 +21,8 @@ pipeline:
       - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-dev.yml
     when:
       event: push
+      branch:
+        exclude: [ master ]
 
   # this step is used to validate the Terraform syntax before attempting apply
   # the terraform configuration to the service, it essentially runs: terraform plan
@@ -42,6 +44,8 @@ pipeline:
         target: GOOGLE_CREDENTIALS
     when:
       event: push
+      branch:
+        exclude: [ master ]
 
   # SANDBOX: uses branch sandbox01 to deploy to www.sandbox01
   sandbox01:
@@ -59,6 +63,16 @@ pipeline:
 
       - source: google_credentials
         target: GOOGLE_CREDENTIALS
+    when:
+      event: push
+      branch:
+        include: [ sandbox01 ]
+    
+  # Run tests against dev service in sandbox01
+  sandbox01-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www-sandbox01.dev.nytimes.com
+    print_failures_only: true
     when:
       event: push
       branch:
@@ -84,6 +98,16 @@ pipeline:
       event: push
       branch:
         include: [ sandbox02 ]
+    
+  # Run tests against dev service in sandbox02
+  sandbox02-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www-sandbox02.dev.nytimes.com
+    print_failures_only: true
+    when:
+      event: push
+      branch:
+        include: [ sandbox02 ]
 
   # SANDBOX: uses branch sandbox03 to deploy to www.sandbox03
   sandbox03:
@@ -105,6 +129,17 @@ pipeline:
       event: push
       branch:
         include: [ sandbox03 ]
+  
+  # Run tests against dev service in sandbox03
+  sandbox03-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www-sandbox03.dev.nytimes.com
+    print_failures_only: true
+    when:
+      event: push
+      branch:
+        include: [ sandbox03 ]
+
 
   # SANDBOX: uses branch sandbox04 to deploy to www.sandbox04
   sandbox04:
@@ -122,6 +157,16 @@ pipeline:
 
       - source: google_credentials
         target: GOOGLE_CREDENTIALS
+    when:
+      event: push
+      branch:
+        include: [ sandbox04 ]
+
+  # Run tests against dev service in sandbox04
+  sandbox04-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www-sandbox04.dev.nytimes.com
+    print_failures_only: true
     when:
       event: push
       branch:
@@ -146,7 +191,7 @@ pipeline:
     when:
       event: push
       branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04 ]
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
 
   dev-sleep:
     image: alpine
@@ -154,6 +199,8 @@ pipeline:
       - sleep 10
     when:
       event: push
+      branch:
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
 
   # Run tests against dev service
   dev-test:
@@ -162,6 +209,8 @@ pipeline:
     print_failures_only: true
     when:
       event: push
+    branch:
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
 
   # Run tests against dev service
   dev-paidpost-test:
@@ -171,7 +220,8 @@ pipeline:
     when:
       event: push
       branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04 ]
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]  
+      status: [success, failure]  
 
   stg-template:
     image: hairyhenderson/gomplate:v2.3.0
@@ -226,6 +276,7 @@ pipeline:
     when:
       event: push
       branch: master
+      status: [success, failure]
 
   # -----
   prd-template:
@@ -279,6 +330,7 @@ pipeline:
     when:
       event: tag
       branch: [ master, hotfix* ]
+      status: [success, failure]
 
   slack:
     image: plugins/slack
