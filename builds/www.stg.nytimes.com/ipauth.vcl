@@ -1,20 +1,6 @@
 sub vcl_recv {
 
-    // IPs that are blocked from all environments
-    if (client.ip ~ blacklist) {
-        error 403 "Forbidden";
-    }
-
-    // block everyone but the internal ACL to dev service
-    
-    if (req.http.x-environment == "dev" && !req.http.x-nyt-internal-access) { 
-      error 403 "Forbidden";
-    }
-
-    // block everyone but internal acl, aws vpc acl, staging access acl, and whitelisted header to staging service
-    if (req.http.x-environment == "stg" && !req.http.x-nyt-internal-access && !req.http.x-nyt-external-access) {
-        error 403 "Forbidden";
-    }
+    # TODO: I don't think we care about crawlers any longer, audit it with origin app teams
 
     if (req.http.user-agent ~ "(?i)googlebot|mediapartners-google|adsbot-google|amphtml|developers\.google\.com/\+/web/snippet/") {
         # Googlebot user-agents: https://support.google.com/webmasters/answer/1061943

@@ -19,6 +19,7 @@ include "tips";
 include "migration-allocation";
 include "auth-headers";
 include "vi-allocation";
+include "test-suite-force-miss";
 
 # the following files contain routes for the backends defined above
 include "route-health-service"; # service that reports health of defined backends
@@ -180,6 +181,11 @@ sub vcl_recv {
 
   # check to see if we need to remove the cookie header
   call recv_remove_cookie_check;
+
+  # check to see if the client asked for a cache miss
+  # the test suite does this
+  call recv_test_suite_force_miss;
+
   call recv_route_default_remove_cookie;
   # Set the edge req header
   set req.http.X-NYT-Edge-CDN = "Fastly";
@@ -187,13 +193,14 @@ sub vcl_recv {
   call recv_route_uncachable_methods;
   call recv_route_invalid_urls;
 
+  # We do not yet allow cache if there is an Authorization header
+  # or if the Cookie still exists in the request
+  # TODO: the cookie shouldn't matter!!! Refactor that.
   if (req.http.Authorization || req.http.Cookie) {
-    /* Not cacheable by default */
     set req.http.x-nyt-force-pass = "true";
-    #return(pass);
   }
 
-  // removing because Symfony2 Request object will use this for getUri() if present
+  # removing because Symfony2 (PHP framework) Request object will use this for getUri() if present
   if (req.http.X-Original-Url) {
     remove req.http.X-Original-Url;
   }
