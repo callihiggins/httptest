@@ -209,8 +209,8 @@ pipeline:
     print_failures_only: true
     when:
       event: push
-    branch:
-      exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
+      branch:
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
 
   # Run tests against dev service
   dev-paidpost-test:
