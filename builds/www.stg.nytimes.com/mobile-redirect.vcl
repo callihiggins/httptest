@@ -111,8 +111,6 @@ sub vcl_deliver {
                     || req.url ~ "^/slideshow/20(1[5-9]|[2-9][0-9])/"
                 ) {
                     call do_redirect;
-                } else if ( req.url ~ "^/real-estate/" ) {
-                    call do_realestate_redirect;
                 }
             }
         }
@@ -141,43 +139,3 @@ sub do_redirect {
     set req.http.x-redirect-reason = "redir=[mobile]";
 }
 
-sub do_realestate_redirect {
-    if (  req.url ~ "^/real-estate/find-a-home" ) {
-        set req.http.X-NewUri = "";
-        // matches patterns like:
-        // https://www.nytimes.com/real-estate/usa/ny/brooklyn/clinton-hill/homes-for-rent/333-washington-avenue/46-3257305
-    } else if ( req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ) {
-        set req.http.X-NewUri = regsub(req.url, "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)","listing/\4");
-        // matches patterns like:
-        // https://www.nytimes.com/real-estate/usa/ny/new-york/upper-east-side/homes-for-sale
-    } else if ( req.url ~ "^/real-estate/([^\/]+)/([^\/]+)/([^\/]+)/([^\/]+)/homes-for-sale" ) {
-        set req.http.X-NewUri = regsub(req.url, "^/real-estate/([^\/]+)/([^\/]+)/([^\/]+)/([^\/]+)/homes-for-sale", "search?channel=sales&search=See+Available+Homes&location=\4-\3-\2-\1");
-        // matches patterns like:
-        // https://www.nytimes.com/real-estate/usa/ny/new-york/upper-east-side/homes-for-rent
-    } else if ( req.url ~ "^/real-estate/([^\/]+)/([^\/]+)/([^\/]+)/([^\/]+)/homes-for-rent" ) {
-        set req.http.X-NewUri = regsub(req.url, "^/real-estate/([^\/]+)/([^\/]+)/([^\/]+)/([^\/]+)/homes-for-rent", "search?channel=rentals&search=See+Available+Homes&location=\4-\3-\2-\1");
-        // https://www.nytimes.com/real-estate/homes-for-sale/?locations%5B%5D=upper-west-side-new-york-ny-usa&locations%5B%5D=lower-east-side-new-york-ny-usa&redirect=find-a-home
-    } else if ( req.url ~ "^/real-estate/homes-for-sale\/?\?locations[^=]+=([^\&]+)" ) {
-        set req.http.X-NewUri = regsub(req.url, "^/real-estate/homes-for-sale\/?\?locations[^=]+=([^\&]+)","search?channel=sales&location=\1&search=See+Available+Homes");
-        // https://www.nytimes.com/real-estate/homes-for-rent/?locations%5B%5D=upper-west-side-new-york-ny-usa&locations%5B%5D=lower-east-side-new-york-ny-usa&redirect=find-a-home
-    } else if ( req.url ~ "^/real-estate/homes-for-rent\/?\?locations[^=]+=([^\&]+)" ) {
-        set req.http.X-NewUri = regsub(req.url, "^/real-estate/homes-for-rent\/?\?locations[^=]+=([^\&]+)","search?channel=rentals&location=\1&search=See+Available+Homes");
-    } else if ( req.url ~ "^/real-estate/(.*)?homes-for-sale" ) {
-        set req.http.X-NewUri = "?channel=sales";
-    } else if ( req.url ~ "^/real-estate/(.*)?homes-for-rent" ) {
-        set req.http.X-NewUri = "?channel=rentals";
-    } else if ( req.url ~ "^/real-estate/(.*)/building/" ) {
-        // matches patterns like:
-        // https://www.nytimes.com/real-estate/usa/ny/new-york/upper-east-side/building/880-fifth-avenue/5096
-        set req.http.X-NewUri = "";
-    } else if ( req.url ~ "^/real-estate/my-real-estate$" ) {
-        // https://www.nytimes.com/real-estate/my-real-estate
-        set req.http.X-NewUri = "savedlistings";
-    }
-
-    set resp.http.Location = "https://m.realestatelistings.nytimes.com/" + req.http.X-NewUri;
-    set resp.status = 301;
-    set resp.response = "FOUND";
-    set resp.http.x-device-type = req.http.device_type;
-    set req.http.x-redirect-reason = "redir=[mobile]";
-}
