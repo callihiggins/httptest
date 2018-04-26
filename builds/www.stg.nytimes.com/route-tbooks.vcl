@@ -1,7 +1,7 @@
 sub recv_route_tbooks {
     if (req.http.x-nyt-canonical-www-host) {
         if (req.url ~ "^/tbooks") {
-            set req.http.X-PageType = "tbooks";
+            set req.http.x-nyt-route = "tbooks";
             set req.http.x-nyt-backend = "tbooks";
 
             unset req.http.x-nyt-edition;
@@ -23,7 +23,7 @@ sub miss_pass_route_tbooks {
   // the path "exists". Otherwise, we should remove the whole /tbooks from the path.
   // Removing the whole path is causing errors on the wordpress side where they state
   // they could not read the request
-  if(req.http.X-PageType == "tbooks") {
+  if(req.http.x-nyt-route == "tbooks") {
     if (bereq.url.path == "/tbooks") {
         set bereq.url = regsub(bereq.url, "^/tbooks", "/");
     } else {
@@ -34,7 +34,7 @@ sub miss_pass_route_tbooks {
 }
 
 sub deliver_tbooks_api_version {
-    if (req.http.X-PageType == "tbooks") {
+    if (req.http.x-nyt-route == "tbooks") {
         set resp.http.X-API-Version = "TB";
     }
 }

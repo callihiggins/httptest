@@ -21,7 +21,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/editorial-standards/ethical-journalism.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       'responseHeadersPresent': ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
@@ -42,7 +42,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/london2012',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
         'content-type': 'text/html; charset=utf-8',
       },
@@ -60,7 +60,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/london2012/schedule',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
         'content-type': 'text/html; charset=utf-8',
       },
@@ -81,7 +81,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/london2012/navigation.json',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
         'content-type': 'application/json',
       },
@@ -102,7 +102,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/crime',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
         'location': 'https://www.nytimes.com/interactive/projects/crime/homicides/map'
       },
@@ -125,7 +125,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'cache-control': 'public, max-age=86400',
         'x-nyt-backend': 'gcs_origin',
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test gcs cache response',
@@ -145,7 +145,7 @@ function getScenarioEvents()
       ],
       'responseHeaderMatches': {
         'x-nyt-backend': 'gcs_origin',
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
       },
       'responseStatusCode': 404,
       'scenarioDescription': 'Test gcs 404 cache',
@@ -161,7 +161,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/cp/awards-season/emmys-2015/uzo-aduba-thanks-those-who-let-her-be-herself',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       'responseStatusCode': [200],
@@ -181,7 +181,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/roomfordebate',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       'responseStatusCode': [200],
@@ -201,7 +201,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/roomfordebate/2017/01/17/can-western-states-afford-a-federal-land-transfer/state-management-of-federal-lands-would-advance-corporate-profits-over-public-benefit',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gcs',
+        'x-nyt-route': 'newsdev-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       'responseStatusCode': [200],
@@ -219,7 +219,7 @@ function getScenarioEvents()
     'requestUri': '/interactive/projects/modern-love/36-questions/',
     'responseHeaderMatches': {
       'x-frame-options': 'DENY',
-      'x-pagetype': 'newsdev-gcs',
+      'x-nyt-route': 'newsdev-gcs',
       'x-nyt-backend': 'gcs_origin',
     },
     'responseHeadersPresent': [

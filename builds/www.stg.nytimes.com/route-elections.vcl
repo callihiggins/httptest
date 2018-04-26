@@ -1,6 +1,6 @@
 sub recv_route_elections {
     if (req.url ~ "^/elections?(?:/|\?|$)") {
-        set req.http.X-PageType = "elections";
+        set req.http.x-nyt-route = "elections";
         set req.http.X-SendGDPR = "true";
         ## set elections backend
         if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
@@ -41,7 +41,7 @@ sub recv_route_elections {
 # Sets backend request headers sent to GCS or S3 used to
 # authenticate the request.
 sub miss_pass_route_elections {
-  if (req.http.X-PageType == "elections") {
+  if (req.http.x-nyt-route == "elections") {
     set bereq.http.date = now;
     if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
         set bereq.http.host = req.http.x-bucket ".s3.amazonaws.com";
@@ -54,7 +54,7 @@ sub miss_pass_route_elections {
 }
 
 sub fetch_elections_redirect {
-    if (req.http.X-PageType == "elections") {
+    if (req.http.x-nyt-route == "elections") {
 
         # redirect
         if (beresp.http.x-amz-meta-website-redirect-location) {
@@ -67,7 +67,7 @@ sub fetch_elections_redirect {
 }
 
 sub deliver_elections_api_version {
-    if (req.http.X-PageType == "elections") {
+    if (req.http.x-nyt-route == "elections") {
         set resp.http.X-API-Version = "I";
     }
 }

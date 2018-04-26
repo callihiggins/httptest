@@ -19,7 +19,7 @@ function getScenarioEvents()
       requestScheme: 'https://',
       requestUri: '/guides/culture/guide-to-the-metropolitan-museum-of-art',
       responseHeaderMatches: {
-        'x-pagetype': 'guides',
+        'x-nyt-route': 'guides',
       },
       responseStatusCode: 200,
       scenarioDescription:

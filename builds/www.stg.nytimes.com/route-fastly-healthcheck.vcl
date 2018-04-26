@@ -4,7 +4,7 @@ sub recv_route_fastly_healthcheck {
     # this is still needed for monitoring not to cry
     # TODO: make a real healthcheck to return backend health status dynamically?
     if (req.url ~ "/.status$") {
-        set req.http.X-PageType = "healthcheck";
+        set req.http.x-nyt-route = "healthcheck";
         error 800;
     }
 }

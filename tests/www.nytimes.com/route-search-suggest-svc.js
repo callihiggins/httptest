@@ -22,7 +22,7 @@ function getScenarioEvents()
       'requestUri': '/svc/suggest/v1/timestags?query=foo',
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-        'x-pagetype': "search-suggest",
+        'x-nyt-route': "search-suggest",
         'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
@@ -43,7 +43,7 @@ function getScenarioEvents()
       'requestUri': '/svc/suggest/v1/timestags?query=obama',
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-        'x-pagetype': "search-suggest",
+        'x-nyt-route': "search-suggest",
         'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
@@ -64,7 +64,7 @@ function getScenarioEvents()
       'requestUri': '/svc/suggest/v1/timestags?query=fart',
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-        'x-pagetype': "search-suggest",
+        'x-nyt-route': "search-suggest",
         'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
@@ -85,7 +85,7 @@ function getScenarioEvents()
       'requestUri': '/svc/suggest/v1/timestags?query=foo',
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-        'x-pagetype': "search-suggest",
+        'x-nyt-route': "search-suggest",
         'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
@@ -106,7 +106,7 @@ function getScenarioEvents()
       'requestUri': '/svc/suggest/v1/timestags?query=obama',
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-        'x-pagetype': "search-suggest",
+        'x-nyt-route': "search-suggest",
         'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],
@@ -127,7 +127,7 @@ function getScenarioEvents()
       'requestUri': '/svc/suggest/v1/timestags?query=fart',
       'responseHeaderMatches': {
         'x-cache': 'MISS',
-        'x-pagetype': "search-suggest",
+        'x-nyt-route': "search-suggest",
         'x-nyt-backend': "search_suggest",
       },
       'responseStatusCode': [200, 404],

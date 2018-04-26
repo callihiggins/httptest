@@ -22,7 +22,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/elections/results',
       'responseHeaderMatches': {
-        'x-pagetype': 'elections',
+        'x-nyt-route': 'elections',
         'x-nyt-backend': 'newsdev_elections',
       },
       'responseHeaderPattern': {
@@ -44,7 +44,7 @@ function getScenarioEvents()
       'requestUri': '/elections/results/president',
       'responseHeaderMatches': {
         'cache-control': 'public, max-age=86400',
-        'x-pagetype': 'elections',
+        'x-nyt-route': 'elections',
         'x-nyt-backend': 'newsdev_elections',
       },
       'responseHeadersPresent': [
@@ -68,7 +68,7 @@ function getScenarioEvents()
         'Referer': 'https://scoop.nyt.net/',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'elections',
+        'x-nyt-route': 'elections',
         'x-nyt-backend': 'newsdev_elections',
       },
       'responseHeadersNotPresent': [

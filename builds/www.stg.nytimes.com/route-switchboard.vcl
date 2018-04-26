@@ -8,7 +8,7 @@ sub recv_route_switchboard {
     || req.url.path ~ "^/ambriefing"
     || (req.url.path ~ "^/thedaily" && req.url.path !~ "^/thedailyoffer")
   ) {
-    set req.http.x-pagetype = "switchboard";
+    set req.http.x-nyt-route = "switchboard";
     set req.http.x-nyt-backend = "switchboard";
     set req.http.X-SendGDPR = "true";
     unset req.http.Cookie;

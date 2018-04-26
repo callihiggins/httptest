@@ -244,14 +244,14 @@ sub vcl_miss {
   remove bereq.http.Cookie;
 
   // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
-  if(    req.http.X-PageType == "article"
-      || req.http.X-PageType == "collection"
-      || req.http.X-PageType == "slideshow"
-      || req.http.X-PageType == "homepage"
-      || req.http.X-PageType == "paidpost"
-      || req.http.X-PageType == "trending"
-      || req.http.X-PageType == "podcasts"
-      || req.http.X-PageType == "bestseller"
+  if(    req.http.x-nyt-route == "article"
+      || req.http.x-nyt-route == "collection"
+      || req.http.x-nyt-route == "slideshow"
+      || req.http.x-nyt-route == "homepage"
+      || req.http.x-nyt-route == "paidpost"
+      || req.http.x-nyt-route == "trending"
+      || req.http.x-nyt-route == "podcasts"
+      || req.http.x-nyt-route == "bestseller"
   ){
     unset bereq.http.X-Cookie;
   }
@@ -294,14 +294,14 @@ sub vcl_pass {
 #FASTLY pass
 
   // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
-  if(    req.http.X-PageType == "article"
-      || req.http.X-PageType == "collection"
-      || req.http.X-PageType == "slideshow"
-      || req.http.X-PageType == "homepage"
-      || req.http.X-PageType == "paidpost"
-      || req.http.X-PageType == "trending"
-      || req.http.X-PageType == "podcasts"
-      || req.http.X-PageType == "bestseller"
+  if(    req.http.x-nyt-route == "article"
+      || req.http.x-nyt-route == "collection"
+      || req.http.x-nyt-route == "slideshow"
+      || req.http.x-nyt-route == "homepage"
+      || req.http.x-nyt-route == "paidpost"
+      || req.http.x-nyt-route == "trending"
+      || req.http.x-nyt-route == "podcasts"
+      || req.http.x-nyt-route == "bestseller"
   ){
     unset bereq.http.Cookie;
     unset bereq.http.X-Cookie;
@@ -381,7 +381,7 @@ sub vcl_fetch {
 
   # hacky, TODO: fix the backends
   # legacy cacheable content should not be private
-  if(req.http.X-PageType == "legacy-cacheable" && beresp.http.Cache-Control ~ "private"){
+  if(req.http.x-nyt-route == "legacy-cacheable" && beresp.http.Cache-Control ~ "private"){
     unset beresp.http.Cache-Control;
   }
 
@@ -501,7 +501,7 @@ sub vcl_log {
       {" ""} cstr_escape(req.http.referer) {"""}
       {"" ""} cstr_escape(req.http.user-agent) {"""}
       {" backend=["} if(req.http.x-nyt-backend,req.http.x-nyt-backend,"-") {"]"}
-      {" pagetype=["} if(resp.http.X-PageType,resp.http.X-PageType,"-") {"]"}
+      {" pagetype=["} if(resp.http.x-nyt-route,resp.http.x-nyt-route,"-") {"]"}
       {" apiversion=["} if(resp.http.X-API-Version,resp.http.X-API-Version,"-") {"]"}
       {" cachetype=["} if(fastly_info.state,fastly_info.state,"-") {"]"}
       {" reqtime=["} time.elapsed {"]"}

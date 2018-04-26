@@ -17,7 +17,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'video-library',
+        'x-nyt-route': 'video-library',
       },
       'requestScheme': 'https://',
       'requestUri': '/video/sciencetake',
@@ -34,7 +34,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'video-library',
+        'x-nyt-route': 'video-library',
       },
       'requestScheme': 'https://',
       'requestUri': '/video?param=1',
@@ -51,7 +51,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'video-api',
+        'x-nyt-route': 'video-api',
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/video/api/v3/video/100000002883899',

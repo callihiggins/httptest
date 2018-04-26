@@ -18,7 +18,7 @@ function getScenarioEvents() {
       requestScheme: "https://",
       requestUri: "/ads/emailads/twitter.jpg",
       responseHeaderMatches: {
-        "x-pagetype": "ads-static-assets",
+        "x-nyt-route": "ads-static-assets",
         "x-nyt-backend": "gcs_origin"
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
@@ -37,7 +37,7 @@ function getScenarioEvents() {
       requestScheme: "https://",
       requestUri: "/ads/safeads/index.html",
       responseHeaderMatches: {
-        "x-pagetype": "ads-static-assets",
+        "x-nyt-route": "ads-static-assets",
         "x-nyt-backend": "gcs_origin"
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],

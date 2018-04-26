@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/int/attribute/projects/healthz/submissions.json',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-attribute',
+        'x-nyt-route': 'newsdev-attribute',
         'x-nyt-backend': 'newsdev_cloud_functions_us_central1',
         'content-type': 'application/json; charset=utf-8',
       },

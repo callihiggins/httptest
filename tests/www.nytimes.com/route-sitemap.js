@@ -19,7 +19,7 @@ function getScenarioEvents() {
       requestUri: '/sitemaps/sitemap_news/sitemap.xml.gz',
       responseHeaderMatches: {
         'x-nyt-backend': 'sitemap',
-        'x-pagetype': 'sitemap'
+        'x-nyt-route': 'sitemap'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test sitemap, migrated from netscaler',

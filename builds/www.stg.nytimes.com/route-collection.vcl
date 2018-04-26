@@ -19,7 +19,7 @@ sub recv_route_collection {
       || req.url ~ "^/topic/subject/"
       || req.url ~ "^/upshot"
   ) {
-      set req.http.X-PageType = "collection";
+      set req.http.x-nyt-route = "collection";
       set req.http.x-nyt-backend = "collection_fe";
       set req.http.x-nyt-wf-auth = "true";
       # if we needed to switch back to NYT5, unset the vi flag

@@ -7,9 +7,9 @@ sub recv_route_watching {
           || req.url ~ "^\/\d{4}\/\d{2}\/\d{2}\/watching\/"
       ) {
           if (req.url ~ "^/watching/api/users/") {
-              set req.http.X-PageType = "watching-nocache";
+              set req.http.x-nyt-route = "watching-nocache";
           } else {
-              set req.http.X-PageType = "watching";
+              set req.http.x-nyt-route = "watching";
           }
           set req.backend = F_beta_watching;
           set req.http.x-nyt-backend = "beta_watching";
@@ -18,7 +18,7 @@ sub recv_route_watching {
           unset req.http.x-nyt-s;
           unset req.http.x-nyt-wpab;
 
-          if (req.http.X-PageType == "watching-nocache") {
+          if (req.http.x-nyt-route == "watching-nocache") {
               set req.http.x-nyt-force-pass = "true";
           }
       }
@@ -26,7 +26,7 @@ sub recv_route_watching {
 }
 
 sub hash_route_watching {
-    if (req.http.X-PageType == "watching-nocache") {
+    if (req.http.x-nyt-route == "watching-nocache") {
         if (! req.http.Cookie && req.http.X-Cookie) {
             set req.http.Cookie = req.http.X-Cookie;
             unset req.http.X-Cookie;
@@ -35,7 +35,7 @@ sub hash_route_watching {
 }
 
 sub deliver_watching_api_version {
-    if (req.http.X-PageType ~ "^watching") {
+    if (req.http.x-nyt-route ~ "^watching") {
         set resp.http.X-API-Version = "W2";
     }
 }

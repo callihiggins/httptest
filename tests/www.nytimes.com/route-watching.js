@@ -20,7 +20,7 @@ function getScenarioEvents()
       'requestUri': '/watching',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
-        'x-pagetype': 'watching',
+        'x-nyt-route': 'watching',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Watching; canonical landing page',
@@ -38,7 +38,7 @@ function getScenarioEvents()
       'requestUri': '/watching',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
-        'x-pagetype': 'watching',
+        'x-nyt-route': 'watching',
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test Watching; redirect from https to http',
@@ -56,7 +56,7 @@ function getScenarioEvents()
       'requestUri': '/watching/',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
-        'x-pagetype': 'watching',
+        'x-nyt-route': 'watching',
       },
       'responseStatusCode': 301,
       'responseHeaderMatches': {
@@ -77,7 +77,7 @@ function getScenarioEvents()
       'requestUri': '/2016/11/11/watching/moonlight-netflix-medicine-for-melancholy.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
-        'x-pagetype': 'watching',
+        'x-nyt-route': 'watching',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Watching; article URL',
@@ -95,7 +95,7 @@ function getScenarioEvents()
       'requestUri': '/watching/recommendations/watching-film-broadcast-news',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
-        'x-pagetype': 'watching',
+        'x-nyt-route': 'watching',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Watching; recommendations URL',
@@ -113,7 +113,7 @@ function getScenarioEvents()
       'requestUri': '/watching/api/recommendations?ids[]=100000004539144',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
-        'x-pagetype': 'watching',
+        'x-nyt-route': 'watching',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Watching; multi-recommendations URL with query param',
@@ -131,7 +131,7 @@ function getScenarioEvents()
       'requestUri': '/watching/api/recommendations',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
-        'x-pagetype': 'watching',
+        'x-nyt-route': 'watching',
       },
       'responseStatusCode': 400,
       'scenarioDescription': 'Test Watching; multi-recommendations URL without query param',

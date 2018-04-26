@@ -4,7 +4,7 @@ sub recv_route_trending {
       || req.url ~ "^/trending?"
       || req.url ~ "^/trending$"
   ) {
-      set req.http.X-PageType = "trending";
+      set req.http.x-nyt-route = "trending";
       set req.http.x-nyt-backend = "misc_fe";
       call set_nyt5_misc_backend;
   }
@@ -13,7 +13,7 @@ sub recv_route_trending {
 sub recv_route_podcasts {
   // podcasts application
   if (req.url ~ "^/podcasts") {
-      set req.http.X-PageType = "podcasts";
+      set req.http.x-nyt-route = "podcasts";
       set req.http.x-nyt-backend = "misc_fe";
       call set_nyt5_misc_backend;
   }
@@ -25,7 +25,7 @@ sub recv_route_best_sellers {
       || req.url ~ "^/books/best-sellers?"
       || req.url ~ "^/books/best-sellers$"
   ) {
-      set req.http.X-PageType = "bestseller";
+      set req.http.x-nyt-route = "bestseller";
       set req.http.x-nyt-backend = "misc_fe";
       call set_nyt5_misc_backend;
   }
@@ -34,7 +34,7 @@ sub recv_route_best_sellers {
 sub recv_route_diningmap {
   // collection reviews diningmap pattern is part of misc
   if (req.url ~ "^/reviews/dining/map") {
-      set req.http.X-PageType = "collection";
+      set req.http.x-nyt-route = "collection";
       set req.http.x-nyt-backend = "misc_fe";
       call set_nyt5_misc_backend;
   }

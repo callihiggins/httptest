@@ -47,8 +47,8 @@ sub deliver_response_headers {
         set resp.http.X-API-Version = "F-X";
     }
 
-    if (!resp.http.X-PageType){
-        set resp.http.X-PageType = req.http.X-PageType;
+    if (!resp.http.x-nyt-route){
+        set resp.http.x-nyt-route = req.http.x-nyt-route;
     }
 
     // remove deprecated internal https cookie

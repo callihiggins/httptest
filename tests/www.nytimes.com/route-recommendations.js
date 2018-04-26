@@ -19,7 +19,7 @@ function getScenarioEvents() {
       requestUri: '/recommendations',
       responseHeaderMatches: {
         'x-nyt-backend': 'recommendations',
-        'x-pagetype': 'recommendations'
+        'x-nyt-route': 'recommendations'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test recommendations, migrated from netscaler',

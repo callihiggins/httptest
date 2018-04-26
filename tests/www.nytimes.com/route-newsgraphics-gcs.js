@@ -18,7 +18,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2014/01/05/poverty-map/index.html',
       responseHeaderMatches: {
-        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-route': 'newsgraphics-gcs',
         'x-nyt-backend': 'gcs_origin',
 
       },
@@ -38,7 +38,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/projects/healthcheck.txt',
       responseHeaderMatches: {
-        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-route': 'newsgraphics-gcs',
         'x-nyt-backend': 'gcs_origin',
 
       },
@@ -58,7 +58,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2012/1220-snow-fall-preview/',
       responseHeaderMatches: {
-        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-route': 'newsgraphics-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       responseHeaderPattern: {
@@ -79,7 +79,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2018/healthcheck.txt',
       responseHeaderMatches: {
-        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-route': 'newsgraphics-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       responseStatusCode: [200],
@@ -97,7 +97,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2017/healthcheck.txt',
       responseHeaderMatches: {
-        'x-pagetype': 'newsgraphics-gcs',
+        'x-nyt-route': 'newsgraphics-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       responseStatusCode: [200],

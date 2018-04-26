@@ -40,7 +40,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'community_svc',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'community-svc',
+        'x-nyt-route': 'community-svc',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'route-community-svc: test GetBasicInfo, contains no ESI',
@@ -58,7 +58,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'community_svc',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'community-svc-cacheable',
+        'x-nyt-route': 'community-svc-cacheable',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'route-community-svc: GetCommentSummary is cacheable if user not logged in, https',
@@ -77,7 +77,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'community_svc',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'community-svc',
+        'x-nyt-route': 'community-svc',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'route-community-svc: GetCommentSummary is not cacheable if user is logged in, https',
@@ -95,7 +95,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'community_svc',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'community-svc-cacheable',
+        'x-nyt-route': 'community-svc-cacheable',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'route-community-svc: GetCommentSummary is cacheable if user not logged in, http',
@@ -114,7 +114,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'community_svc',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'community-svc',
+        'x-nyt-route': 'community-svc',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'route-community-svc: GetCommentSummary is not cacheable if user is logged in, http',

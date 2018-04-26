@@ -1,7 +1,7 @@
 sub recv_route_intl {
   if ((req.url == "/es") || (req.url ~ "^/es/")
       || (req.url == "/global") || (req.url ~ "^/global/")) {
-      set req.http.X-PageType = "intl";
+      set req.http.x-nyt-route = "intl";
       set req.http.x-nyt-backend = "intl_gcp";
       set req.http.x-nyt-wf-auth = "true";
 
@@ -26,7 +26,7 @@ sub recv_route_intl {
 }
 
 sub fetch_route_intl_headers {
-  if (req.http.X-PageType == "intl") {
+  if (req.http.x-nyt-route == "intl") {
     # don't return this header in prd
     if (!req.http.x-nyt-internal-access && req.http.x-environment == "prd") {
       unset beresp.http.X-Kubernetes-Url;

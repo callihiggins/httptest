@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/tbooks',
       'responseHeaderMatches': {
-        'x-pagetype': 'tbooks',
+        'x-nyt-route': 'tbooks',
         'x-nyt-backend':'tbooks',
         'x-nyt-force-pass': 'true',
       },
@@ -38,7 +38,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/tbooks/book/gawkers-bad-awful-year/',
       'responseHeaderMatches': {
-        'x-pagetype': 'tbooks',
+        'x-nyt-route': 'tbooks',
         'x-nyt-backend':'tbooks',
         'x-nyt-force-pass': 'true',
       },
@@ -57,7 +57,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/tbooks?action=click&contentCollection=insider&region=navbar&module=collectionsnav&pagetype=sectionfront&pgtype=sectionfront',
       'responseHeaderMatches': {
-        'x-pagetype': 'tbooks',
+        'x-nyt-route': 'tbooks',
         'x-nyt-backend':'tbooks',
         'x-nyt-force-pass': 'true',
       },

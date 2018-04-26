@@ -140,7 +140,7 @@ resource "fastly_service_v1" "www" {
 
   condition = {
     name = "{{.pagetype}}_bucket"
-    statement = "req.http.x-pagetype == \"{{.pagetype}}\""
+    statement = "req.http.x-nyt-route == \"{{.pagetype}}\""
     type = "REQUEST"
     priority = "500"
   }
@@ -293,7 +293,7 @@ resource "fastly_service_v1" "www" {
 
   # this does not currently log anything, it's only providing the log stream configuration, see the conditional
   sumologic {
-    format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\"-\")}V] pagetype=[%{if(req.http.X-PageType,req.http.X-PageType,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.x-redirect-reason,req.http.x-redirect-reason,\"\")}V"
+    format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\"-\")}V] pagetype=[%{if(req.http.x-nyt-route,req.http.x-nyt-route,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.x-redirect-reason,req.http.x-redirect-reason,\"\")}V"
     format_version     = "2"
     message_type       = "classic"
     name               = "web${var.env}-www"

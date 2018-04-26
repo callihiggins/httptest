@@ -5,34 +5,34 @@ sub recv_route_userinfo {
   // to the API on the origin
   if (req.http.x-nyt-s ~ "^0" || !req.http.x-nyt-s){
     if (req.url ~ "^/svc/web-products/userinfo.jsonp") {
-      set req.http.X-PageType = "service";
+      set req.http.x-nyt-route = "service";
       error 901;
     }
     if (req.url ~ "^/svc/web-products/userinfo.json") {
-      set req.http.X-PageType = "service";
+      set req.http.x-nyt-route = "service";
       error 902;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.jsonp") {
-      set req.http.X-PageType = "service";
+      set req.http.x-nyt-route = "service";
       error 903;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.json") {
-      set req.http.X-PageType = "service";
+      set req.http.x-nyt-route = "service";
       error 904;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v3.jsonp") {
-      set req.http.X-PageType = "service";
+      set req.http.x-nyt-route = "service";
       error 905;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v3.json") {
-      set req.http.X-PageType = "service";
+      set req.http.x-nyt-route = "service";
       error 906;
     }
   }
 
   // Logged in users (userinfo is the only svc under web-products)
   if (req.url ~ "^/svc/web-products/") {
-    set req.http.X-PageType = "service";
+    set req.http.x-nyt-route = "service";
     set req.http.x-nyt-backend = "www_userinfo";
     set req.http.x-nyt-force-pass = "true";
     set req.http.x-nyt-wf-auth = "true";

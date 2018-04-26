@@ -5,7 +5,7 @@ sub recv_route_cms_static_assets {
     if (req.http.x-nyt-canonical-www-host == "true") {
 
         if (req.url.path ~ "^/images/") {
-            set req.http.x-pagetype = "cms-static-assets";
+            set req.http.x-nyt-route = "cms-static-assets";
             set req.http.x-nyt-backend = "gcs_origin";
             unset req.http.Cookie;
             unset req.http.X-Cookie;
@@ -15,7 +15,7 @@ sub recv_route_cms_static_assets {
 
 sub miss_pass_route_cms_static_assets {
 
-  if (req.http.x-pagetype == "cms-static-assets") {
+  if (req.http.x-nyt-route == "cms-static-assets") {
 
     # the bucket does not contain the /images/ prefix
     if(!req.backend.is_shield) {

@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/by/qqq',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [404],
@@ -37,7 +37,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/column/qqq',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [404],
@@ -55,7 +55,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/issue/qqq',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [404],
@@ -73,7 +73,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/news-event/qqq',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [404],
@@ -91,7 +91,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/reviews',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 404],
@@ -109,7 +109,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/reviews/',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 301, 404],
@@ -127,7 +127,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/reviews/dining/map/',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'misc_fe',
       },
       'responseStatusCode': [200,404],
@@ -145,7 +145,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/saved',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 404],
@@ -163,7 +163,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/saved/',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [301],
@@ -181,7 +181,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/section/qqq',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [404],
@@ -199,7 +199,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/spotlight/qqq',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [404],
@@ -217,7 +217,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/company/alphabet-inc',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 404],
@@ -235,7 +235,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/destination/france',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 404],
@@ -253,7 +253,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/organization/new-york-yankees',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 404],
@@ -271,7 +271,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/person/qqq',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [404],
@@ -289,7 +289,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/topic/subject/whistleblowers',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 404],
@@ -307,7 +307,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/section/upshot',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200, 404],
@@ -325,7 +325,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/upshot/',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [301],
@@ -343,7 +343,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/column/modern-love',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200,404],
@@ -361,7 +361,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/column/modern-love',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200,404],
@@ -379,7 +379,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/column/modern-love',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200,404],
@@ -397,7 +397,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/column/modern-love',
       'responseHeaderMatches': {
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
       'responseStatusCode': [200,404],

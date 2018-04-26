@@ -5,41 +5,41 @@ sub recv_querystring {
     if (   req.url             !~ "^/svc/web-products/" # except from API requests
         && req.url             !~ "^/svc/community" # except /svc/community requests
         && req.url             != "/esi/jsonp-callback" # except esi's for jsonp requests
-        && req.http.X-PageType !~ "^blog" # except from blogs requests
-        && req.http.X-PageType != "real-estate" # except from real estate requests
-        && req.http.X-PageType != "newsletter" # except from newsletter requests
-        && req.http.X-PageType != "slideshow" # except from slideshow requests
-        && req.http.X-PageType != "video-library" # except from video libarary
-        && req.http.X-PageType != "video-api" # except from video libarary
-        && req.http.X-PageType != "article" # except from article requests
-        && req.http.X-PageType != "vi-story" # except from vi-story requests
-        && req.http.X-PageType != "vi-search" # except from vi-search requests
-        && req.http.X-PageType != "bestsellers" # except from bestseller requests
-        && req.http.X-PageType != "newsdev-gke" #except from newsdev
-        && req.http.X-PageType != "intl"
-        && req.http.X-PageType != "legacy-cacheable"
-        && req.http.X-PageType != "collections-svc"
-        && req.http.X-PageType != "add-svc"
-        && req.http.X-PageType != "watching"
-        && req.http.x-pagetype != "content-api"
-        && req.http.x-pagetype != "programs-service"
-        && req.http.x-pagetype != "programs-gcs"
-        && req.http.x-pagetype != "shaq-service"
-        && req.http.x-pagetype != "profile-fe"
-        && req.http.x-pagetype != "content-api-gae"
-        && req.http.x-pagetype != "games-service"
-        && req.http.x-pagetype != "games-phoenix"
-        && req.http.x-pagetype != "games-assets"
-        && req.http.x-pagetype != "games-web"
-        && req.http.x-pagetype != "mwcm"
-        && req.http.x-pagetype != "newsdev-gke"
-        && req.http.x-pagetype != "video-media"
+        && req.http.x-nyt-route !~ "^blog" # except from blogs requests
+        && req.http.x-nyt-route != "real-estate" # except from real estate requests
+        && req.http.x-nyt-route != "newsletter" # except from newsletter requests
+        && req.http.x-nyt-route != "slideshow" # except from slideshow requests
+        && req.http.x-nyt-route != "video-library" # except from video libarary
+        && req.http.x-nyt-route != "video-api" # except from video libarary
+        && req.http.x-nyt-route != "article" # except from article requests
+        && req.http.x-nyt-route != "vi-story" # except from vi-story requests
+        && req.http.x-nyt-route != "vi-search" # except from vi-search requests
+        && req.http.x-nyt-route != "bestsellers" # except from bestseller requests
+        && req.http.x-nyt-route != "newsdev-gke" #except from newsdev
+        && req.http.x-nyt-route != "intl"
+        && req.http.x-nyt-route != "legacy-cacheable"
+        && req.http.x-nyt-route != "collections-svc"
+        && req.http.x-nyt-route != "add-svc"
+        && req.http.x-nyt-route != "watching"
+        && req.http.x-nyt-route != "content-api"
+        && req.http.x-nyt-route != "programs-service"
+        && req.http.x-nyt-route != "programs-gcs"
+        && req.http.x-nyt-route != "shaq-service"
+        && req.http.x-nyt-route != "profile-fe"
+        && req.http.x-nyt-route != "content-api-gae"
+        && req.http.x-nyt-route != "games-service"
+        && req.http.x-nyt-route != "games-phoenix"
+        && req.http.x-nyt-route != "games-assets"
+        && req.http.x-nyt-route != "games-web"
+        && req.http.x-nyt-route != "mwcm"
+        && req.http.x-nyt-route != "newsdev-gke"
+        && req.http.x-nyt-route != "video-media"
         # early lookups and passes were already skipping this previously
         # routes will need to do this IN THEIR ROUTE in the future
         # but for now we will not remove the query params for force passes
         # TODO: WE REALLY NEED TO MOVE ALL THIS INTO THE ROUTES SPECIFICALLY
         && req.http.x-nyt-force-pass != "true"
-        && req.http.X-PageType != "switchboard"
+        && req.http.x-nyt-route != "switchboard"
         # except from legacy requests
         && req.backend != F_www_legacy_gke
     ) {
@@ -48,7 +48,7 @@ sub recv_querystring {
                 && req.url ~ "^/svc/comscore/") {
         set req.url = querystring.remove(req.url);
     } else {
-        if (req.http.X-PageType ~ "^blog") {
+        if (req.http.x-nyt-route ~ "^blog") {
             // WP-7352: Don't deal with POST requests
             if (req.request == "POST") {
                 set req.http.x-nyt-force-pass = "true";
@@ -77,7 +77,7 @@ sub recv_querystring {
                     "s" + querystring.filtersep() +
                     "tag");
             }
-        } else if (req.http.X-PageType == "real-estate") {
+        } else if (req.http.x-nyt-route == "real-estate") {
             set req.url = querystring.filter_except(req.url,
                 "agents" + querystring.filtersep() +
                 "agents[]" + querystring.filtersep() +
@@ -151,12 +151,12 @@ sub recv_querystring {
                 "utm_campaign" + querystring.filtersep() +
                 "utm_medium" + querystring.filtersep() +
                 "utm_source");
-        } else if (req.http.X-PageType == "newsletter") {
+        } else if (req.http.x-nyt-route == "newsletter") {
             set req.url = querystring.filter_except(req.url,
                 "precheck" + querystring.filtersep() +
                 "product" + querystring.filtersep() +
                 "title");
-        } else if (req.http.X-PageType == "slideshow") {
+        } else if (req.http.x-nyt-route == "slideshow") {
             set req.url = querystring.filter_except(req.url,
                 "action" + querystring.filtersep() +
                 "contentCollection" + querystring.filtersep() +
@@ -169,9 +169,9 @@ sub recv_querystring {
                 "slideshowTitle" + querystring.filtersep() +
                 "url" + querystring.filtersep() +
                 "version");
-        } else if (req.http.X-PageType == "video-library"){
+        } else if (req.http.x-nyt-route == "video-library"){
             set req.url = querystring.filter_except(req.url, "playlistId");
-        } else if (req.http.X-PageType == "watching") {
+        } else if (req.http.x-nyt-route == "watching") {
             set req.url = querystring.filter_except(req.url,
                 "genre" + querystring.filtersep() +
                 "ids[]" + querystring.filtersep() +
@@ -182,21 +182,21 @@ sub recv_querystring {
                 {"services%5B%5D"} + querystring.filtersep() +
                 "sub_genre" + querystring.filtersep() +
                 "type");
-        } else if (req.http.X-PageType == "well") {
+        } else if (req.http.x-nyt-route == "well") {
             set req.url = querystring.filter_except(req.url,
                 "price" + querystring.filtersep() +
                 "category");
-        } else if (req.http.X-PageType == "bestsellers") {
+        } else if (req.http.x-nyt-route == "bestsellers") {
             set req.url = querystring.filter_except(req.url, "nytapp");
-        } else if (req.http.X-PageType == "collection") {
+        } else if (req.http.x-nyt-route == "collection") {
             set req.url = querystring.filter_except(req.url, "nytapp");
-        } else if (req.http.X-PageType == "article") {
+        } else if (req.http.x-nyt-route == "article") {
             set req.url = querystring.filter_except(req.url, "nytapp");
-        } else if (req.http.X-PageType == "vi-story") {
+        } else if (req.http.x-nyt-route == "vi-story") {
             set req.url = querystring.filter_except(req.url, "nytapp");
-        } else if (req.http.X-PageType == "vi-search") {
+        } else if (req.http.x-nyt-route == "vi-search") {
             set req.url = querystring.filter_except(req.url, "query");
-        } else if (req.http.X-PageType == "collections-svc"){
+        } else if (req.http.x-nyt-route == "collections-svc"){
             set req.url = querystring.filter_except(req.url,
                 "dom" + querystring.filtersep() +
                 "limit" + querystring.filtersep() +
@@ -206,7 +206,7 @@ sub recv_querystring {
                 "type" + querystring.filtersep() +
                 "show_embedded" + querystring.filtersep() +
                 "dedupe_hl");
-        } else if (req.http.X-PageType == "intl"){
+        } else if (req.http.x-nyt-route == "intl"){
             set req.url = querystring.filter_except(req.url,
                 "sort" + querystring.filtersep() +
                 "q" + querystring.filtersep() +

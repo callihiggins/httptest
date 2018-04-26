@@ -18,7 +18,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/search',
       responseHeaderMatches: {
-        'x-pagetype': 'vi-search',
+        'x-nyt-route': 'vi-search',
         'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
@@ -35,7 +35,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/search/apple/best',
       responseHeaderMatches: {
-        'x-pagetype': 'vi-search',
+        'x-nyt-route': 'vi-search',
         'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],

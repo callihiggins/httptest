@@ -26,7 +26,7 @@ function getScenarioEvents()
         'cache-control',
         'x-api-version',
         'x-cache',
-        'x-pagetype',
+        'x-nyt-route',
         'x-served-by',
         'x-varnishcacheduration',
         'x-gdpr',

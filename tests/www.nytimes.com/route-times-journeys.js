@@ -21,7 +21,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys',
+        'x-nyt-route': 'times-journeys',
       },
       'scenarioDescription': 'Test Times Journeys; landing page, canonical',
       'testId': 1,
@@ -39,7 +39,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys',
+        'x-nyt-route': 'times-journeys',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 1',
@@ -94,7 +94,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys',
+        'x-nyt-route': 'times-journeys',
       },
       'scenarioDescription': 'Test Times Journeys; landing page; identity cookies are set',
       'testId': 5,
@@ -115,7 +115,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys',
+        'x-nyt-route': 'times-journeys',
       },
       'scenarioDescription': 'Test Times Journeys; landing page; 16k+ cookie string',
       'testId': 6,
@@ -133,7 +133,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys?queryparam=123',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys',
+        'x-nyt-route': 'times-journeys',
       },
       'scenarioDescription': 'Test Times Journeys; landing page; with query params',
       'testId': 7,
@@ -151,7 +151,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/students/',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys-students',
+        'x-nyt-route': 'times-journeys-students',
       },
       'scenarioDescription': 'Test Times Journeys Students; landing page, canonical',
       'testId': 8,
@@ -169,7 +169,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/students',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys-students',
+        'x-nyt-route': 'times-journeys-students',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Times Journeys Students; landing page, non-canonical variant 1',
@@ -224,7 +224,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/students/',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys-students',
+        'x-nyt-route': 'times-journeys-students',
       },
       'scenarioDescription': 'Test Times Journeys Students; landing page; identity cookies are set',
       'testId': 12,
@@ -245,7 +245,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/students/',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys-students',
+        'x-nyt-route': 'times-journeys-students',
       },
       'scenarioDescription': 'Test Times Journeys Students; landing page; 16k+ cookie string',
       'testId': 13,
@@ -263,7 +263,7 @@ function getScenarioEvents()
       'requestUri': '/times-journeys/students?queryparam=123',
       'responseHeaderMatches': {
         'x-api-version': 'F-TJ',
-        'x-pagetype': 'times-journeys-students',
+        'x-nyt-route': 'times-journeys-students',
       },
       'scenarioDescription': 'Test Times Journeys Students; landing page; with query params',
       'testId': 14,

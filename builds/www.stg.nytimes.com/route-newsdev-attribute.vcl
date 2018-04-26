@@ -1,12 +1,12 @@
 sub recv_route_newsdev_attribute {
    if ( req.url ~ "^/svc/int/attribute/projects/" ) {
-    set req.http.x-pagetype = "newsdev-attribute";
+    set req.http.x-nyt-route = "newsdev-attribute";
     set req.http.x-nyt-backend = "newsdev_cloud_functions_us_central1";
    }
 }
 
 sub miss_pass_route_newsdev_attribute {
-  if (req.http.x-pagetype == "newsdev-attribute") {
+  if (req.http.x-nyt-route == "newsdev-attribute") {
 
     if (!req.backend.is_shield) {
       set bereq.http.host = bereq.http.x-cf-host;

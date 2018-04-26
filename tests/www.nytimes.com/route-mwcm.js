@@ -18,7 +18,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': 200,
@@ -36,7 +36,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/notfound.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': 404,
@@ -57,7 +57,7 @@ function getScenarioEvents()
         'location' : /testQueryString=test/,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': 302,
@@ -78,7 +78,7 @@ function getScenarioEvents()
         'location': 'https://' + suite.servername + '/subscription/hd/1041.html',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': 301,
@@ -101,7 +101,7 @@ function getScenarioEvents()
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
         'x-nyt-region': 'NY',
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseHeadersPresent': [
@@ -111,7 +111,7 @@ function getScenarioEvents()
         'x-cache',
         'x-cache-hits',
         'x-origin-server',
-        'x-pagetype',
+        'x-nyt-route',
         'x-served-by',
       ],
       'responseHeadersNotPresent': [
@@ -147,7 +147,7 @@ function getScenarioEvents()
         'surrogate-key',
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -172,7 +172,7 @@ function getScenarioEvents()
         'vary': /X-NYT-Currency/,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -197,7 +197,7 @@ function getScenarioEvents()
         'x-nyt-country': 'AD',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -219,7 +219,7 @@ function getScenarioEvents()
         'x-nyt-country': 'AT',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -241,7 +241,7 @@ function getScenarioEvents()
         'x-nyt-country': 'AU',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -263,7 +263,7 @@ function getScenarioEvents()
         'x-nyt-country': 'CA',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -285,7 +285,7 @@ function getScenarioEvents()
         'x-nyt-country': 'GB',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -307,7 +307,7 @@ function getScenarioEvents()
         'x-nyt-country': 'GB',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -329,7 +329,7 @@ function getScenarioEvents()
         'x-nyt-country': 'IN',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -351,7 +351,7 @@ function getScenarioEvents()
         'x-nyt-country': 'US',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -369,7 +369,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/marketing/surveys/crs-15101-australia.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
         'x-frame-options': 'DENY',
         'x-nyt-currency': 'USD',
@@ -383,7 +383,7 @@ function getScenarioEvents()
         'x-cache',
         'x-cache-hits',
         'x-origin-server',
-        'x-pagetype',
+        'x-nyt-route',
         'x-served-by',
         'x-nyt-region',
       ],
@@ -428,7 +428,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/services/mobile/index.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
@@ -440,7 +440,7 @@ function getScenarioEvents()
         'x-cache',
         'x-cache-hits',
         'x-origin-server',
-        'x-pagetype',
+        'x-nyt-route',
         'x-served-by',
         'x-nyt-region',
       ],
@@ -488,7 +488,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/marketing/hd/welcome/index.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
@@ -500,7 +500,7 @@ function getScenarioEvents()
         'x-cache',
         'x-cache-hits',
         'x-origin-server',
-        'x-pagetype',
+        'x-nyt-route',
         'x-served-by',
         'x-nyt-region',
       ],
@@ -534,7 +534,7 @@ function getScenarioEvents()
         'location': 'http://' + suite.servername + '/marketing/hd/welcome/index.html',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],
@@ -552,7 +552,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/subscriptions/lp8Y84W.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
@@ -564,7 +564,7 @@ function getScenarioEvents()
         'x-cache',
         'x-cache-hits',
         'x-origin-server',
-        'x-pagetype',
+        'x-nyt-route',
         'x-served-by',
         'x-nyt-region',
       ],
@@ -598,7 +598,7 @@ function getScenarioEvents()
         'location': 'http://' + suite.servername + '/subscription/promotions/verizon.html?ptr=verizon',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],
@@ -619,7 +619,7 @@ function getScenarioEvents()
         'location': 'http://' + suite.servername + '/subscription/promotions/sharethetimes.html?ptr=sharethetimes',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],
@@ -641,7 +641,7 @@ function getScenarioEvents()
       },
       'responseStatusCode': [301],
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for marathon',
@@ -661,7 +661,7 @@ function getScenarioEvents()
         'location': 'http://' + suite.servername + '/subscription/promotions/newsindia.html?ptr=newsindia',
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'mwcm',
+        'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],

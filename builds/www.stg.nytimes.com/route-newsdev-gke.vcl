@@ -7,7 +7,7 @@ sub recv_route_newsdev_gke {
         || req.url == "/fashion/runway"
         || req.url ~ "^/fashion/runway"
     ) {
-        set req.http.X-PageType = "newsdev-gke";
+        set req.http.x-nyt-route = "newsdev-gke";
         set req.http.x-nyt-backend = "newsdev_k8s_gke";
 
         // Bypass cache for certain /svc/int routes
@@ -28,7 +28,7 @@ sub recv_route_newsdev_gke {
 }
 
 sub fetch_route_newsdev_gke {
-  if (req.http.X-PageType == "newsdev-gke") {
+  if (req.http.x-nyt-route == "newsdev-gke") {
     unset beresp.http.X-Amz-Id-2;
     unset beresp.http.X-Amz-Request-Id;
     unset beresp.http.X-Request-Id;

@@ -47,7 +47,7 @@ function getScenarioEvents()
       'responseHeaderContains': {},
       'responseHeaderMatches': {
         'x-api-version': 'F-0',
-        'x-pagetype': 'service',
+        'x-nyt-route': 'service',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test userinfo service, version 3: no cookies; GeoIP of USA; JSON format',
@@ -74,7 +74,7 @@ function getScenarioEvents()
         'x-api-version': /F-(GU|5-0)/,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'service',
+        'x-nyt-route': 'service',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON format',
@@ -104,7 +104,7 @@ function getScenarioEvents()
         'x-api-version': /F-(GU|5-0)/,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'service',
+        'x-nyt-route': 'service',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON format',

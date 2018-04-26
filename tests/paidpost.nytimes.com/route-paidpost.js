@@ -20,7 +20,7 @@ function getScenarioEvents()
       'requestUri': '/mexico-tourism/my-journey-to-mexico.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GP',
-        'x-pagetype': 'paidpost',
+        'x-nyt-route': 'paidpost',
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test HTTPS; paidpost; secure',
@@ -37,7 +37,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/mexico-tourism/my-journey-to-mexico.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'paidpost',
+        'x-nyt-route': 'paidpost',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'Test HTTPS; paidpost; non-secure',
@@ -55,7 +55,7 @@ function getScenarioEvents()
       'requestUri': '/google/plan-your-next-adventure.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GP',
-        'x-pagetype': 'paidpost',
+        'x-nyt-route': 'paidpost',
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test HTTPS; paidpost; secure',
@@ -74,7 +74,7 @@ function getScenarioEvents()
       'requestUri': '/mexico-tourism/my-journey-to-mexico.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GP',
-        'x-pagetype': 'paidpost',
+        'x-nyt-route': 'paidpost',
       },
       'responseStatusCode': [200,404,500],
       'scenarioDescription': 'Test HTTPS; paidpost; secure',
@@ -92,7 +92,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/mexico-tourism/my-journey-to-mexico.html',
       'responseHeaderMatches': {
-        'x-pagetype': 'paidpost',
+        'x-nyt-route': 'paidpost',
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'Test HTTPS; paidpost; non-secure',
@@ -111,7 +111,7 @@ function getScenarioEvents()
       'requestUri': '/google/plan-your-next-adventure.html',
       'responseHeaderMatches': {
         'x-api-version': 'F-GP',
-        'x-pagetype': 'paidpost',
+        'x-nyt-route': 'paidpost',
       },
       'responseStatusCode': [200,404,500],
       'scenarioDescription': 'Test HTTPS; paidpost; secure',

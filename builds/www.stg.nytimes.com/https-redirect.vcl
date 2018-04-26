@@ -2,7 +2,7 @@ sub recv_https_redirect {
     /*
      * Items that are HTTPS internally only but not assigned to a phase
      */
-    if ( req.http.X-PageType == "blog" ) {
+    if ( req.http.x-nyt-route == "blog" ) {
 
         set req.http.x-https-phase = "internal";
     }
@@ -10,55 +10,55 @@ sub recv_https_redirect {
     /*
      * Items permanently on HTTPS
      */
-    if (   req.http.x-pagetype == "homepage"
-        || req.http.x-pagetype == "vi-homepage"
-        || ( req.http.X-PageType == "article"
+    if (   req.http.x-nyt-route == "homepage"
+        || req.http.x-nyt-route == "vi-homepage"
+        || ( req.http.x-nyt-route == "article"
             && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/") // Route 1850-future
-        || ( req.http.X-PageType == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources
-        || ( req.http.X-PageType == "blog" && req.http.host !~ "^tmagazine\.blogs" ) // all blogs, but not tmag
-        || ( req.http.X-PageType == "blog-legacy" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )
-        || req.http.X-PageType == "collection"
-        || req.http.X-PageType == "video-library"
-        || req.http.X-PageType == "podcasts"
+        || ( req.http.x-nyt-route == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources
+        || ( req.http.x-nyt-route == "blog" && req.http.host !~ "^tmagazine\.blogs" ) // all blogs, but not tmag
+        || ( req.http.x-nyt-route == "blog-legacy" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )
+        || req.http.x-nyt-route == "collection"
+        || req.http.x-nyt-route == "video-library"
+        || req.http.x-nyt-route == "podcasts"
         || req.url ~ "^/projects/2020-report/"
         || req.url ~ "^/content/help"             // help pages
-        || req.http.X-PageType ~ "^watching"
-        || req.http.X-PageType == "intl"  // espanol/international
-        || req.http.X-PageType == "newsdev-gke"   // interative news
-        || req.http.X-PageType == "newsdev-gcs"   // interative news
-        || req.http.X-PageType == "newsdev-attribute"   // interative news
-        || req.http.X-PageType == "newsroom-files-gcs"   // newsroom digital transition
-        || req.http.X-PageType == "guides"          // beta - well guides
-        || req.http.X-PageType == "trending"
-        || req.http.X-PageType == "bestseller"
+        || req.http.x-nyt-route ~ "^watching"
+        || req.http.x-nyt-route == "intl"  // espanol/international
+        || req.http.x-nyt-route == "newsdev-gke"   // interative news
+        || req.http.x-nyt-route == "newsdev-gcs"   // interative news
+        || req.http.x-nyt-route == "newsdev-attribute"   // interative news
+        || req.http.x-nyt-route == "newsroom-files-gcs"   // newsroom digital transition
+        || req.http.x-nyt-route == "guides"          // beta - well guides
+        || req.http.x-nyt-route == "trending"
+        || req.http.x-nyt-route == "bestseller"
         || req.url ~ "^/pages/(politics|opinion|world|dining)"        // NYT4 sectionfronts
-        || req.http.X-PageType == "real-estate"
+        || req.http.x-nyt-route == "real-estate"
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
-        || req.http.X-PageType == "recommendations"
-        || req.http.X-PageType == "times-journeys"
-        || req.http.X-PageType == "times-journeys-students"
-        || req.http.X-PageType == "askwell"
-        || req.http.X-PageType == "vi-assets"
-        || req.http.X-PageType == "vi-story"
-        || req.http.X-PageType == "vi-search"
-        || req.http.X-PageType == "vi-timeswire"
-        || req.http.X-PageType == "vi-weddings"
-        || req.http.X-PageType == "vi-interactive"
-        || req.http.x-pagetype == "ads-static-assets"
+        || req.http.x-nyt-route == "recommendations"
+        || req.http.x-nyt-route == "times-journeys"
+        || req.http.x-nyt-route == "times-journeys-students"
+        || req.http.x-nyt-route == "askwell"
+        || req.http.x-nyt-route == "vi-assets"
+        || req.http.x-nyt-route == "vi-story"
+        || req.http.x-nyt-route == "vi-search"
+        || req.http.x-nyt-route == "vi-timeswire"
+        || req.http.x-nyt-route == "vi-weddings"
+        || req.http.x-nyt-route == "vi-interactive"
+        || req.http.x-nyt-route == "ads-static-assets"
         || req.url ~ "^/elections"
-        || ( req.http.X-PageType == "newsgraphics-gcs"
+        || ( req.http.x-nyt-route == "newsgraphics-gcs"
                 && req.url ~ "^/newsgraphics/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2017 - future
-        || req.http.X-PageType == "games-web"
-        || req.http.x-pagetype == "games-assets"
-        || req.http.x-pagetype == "games-service"
-        || req.http.X-PageType == "paidpost"
-        || req.http.X-PageType == "programs-service"
-        || req.http.x-pagetype == "shaq-service"
-        || req.http.x-pagetype == "programs-gcs"
-        || req.http.x-pagetype == "video-media"
-        || req.http.x-pagetype == "adx-static"
-        || req.http.x-pagetype == "add-svc"
-        || (  req.http.X-PageType == "slideshow"
+        || req.http.x-nyt-route == "games-web"
+        || req.http.x-nyt-route == "games-assets"
+        || req.http.x-nyt-route == "games-service"
+        || req.http.x-nyt-route == "paidpost"
+        || req.http.x-nyt-route == "programs-service"
+        || req.http.x-nyt-route == "shaq-service"
+        || req.http.x-nyt-route == "programs-gcs"
+        || req.http.x-nyt-route == "video-media"
+        || req.http.x-nyt-route == "adx-static"
+        || req.http.x-nyt-route == "add-svc"
+        || (  req.http.x-nyt-route == "slideshow"
               && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || req.url ~ "^/newsletters"
         || req.url ~ "^/(js|js2|css|bi)/"
@@ -101,7 +101,7 @@ sub recv_https_redirect {
             || req.url ~ "^/glogin"
             || req.url.path ~ "^/images/"
             || req.url.path == "/esi/jsonp-callback"
-            || req.http.x-pagetype == "mwcm"
+            || req.http.x-nyt-route == "mwcm"
             # content that was previously passing early can do both protocols
             || req.http.x-nyt-force-pass == "true"
         ) {

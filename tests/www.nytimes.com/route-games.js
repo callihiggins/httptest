@@ -20,7 +20,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-service',
+        'x-nyt-route': 'games-service',
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/games/set/v1/puzzles.json',
@@ -40,7 +40,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-service',
+        'x-nyt-route': 'games-service',
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/crosswords/v2/puzzle/1.json',
@@ -60,7 +60,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/daily',
@@ -80,7 +80,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/mini',
@@ -117,7 +117,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/variety',
@@ -134,7 +134,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'responseHeaderMatches': {
-        'x-pagetype': 'games-assets',
+        'x-nyt-route': 'games-assets',
       },
       'requestScheme': 'https://',
       'requestUri': '/games-assets/favicon.ico',
@@ -154,7 +154,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-service',
+        'x-nyt-route': 'games-service',
       },
       'requestScheme': 'https://',
       'requestUri': '/games/prototype/kenken',
@@ -174,7 +174,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-service',
+        'x-nyt-route': 'games-service',
       },
       'requestScheme': 'https://',
       'requestUri': '/games/prototype/kenken',
@@ -194,7 +194,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords',
@@ -214,7 +214,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/submissions',
@@ -234,7 +234,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/submissions',
@@ -254,7 +254,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/sudoku/easy',
@@ -274,7 +274,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/kenken',
@@ -294,7 +294,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/set',
@@ -314,7 +314,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',
@@ -334,7 +334,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/tips-and-tricks',
@@ -354,7 +354,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/acrostic/2017/09/03',
@@ -374,7 +374,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/stats',
@@ -394,7 +394,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',
@@ -414,7 +414,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',
@@ -434,7 +434,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/primer',
@@ -454,7 +454,7 @@ function getScenarioEvents()
         'NYT-S=' + suite.cookies.nyt_s_games,
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'games-phoenix',
+        'x-nyt-route': 'games-phoenix',
       },
       'requestScheme': 'https://',
       'requestUri': '/puzzles/spelling-bee',
@@ -475,7 +475,7 @@ function getScenarioEvents()
       requestUri: '/crosswords/index.html',
       responseHeaderMatches: {
         'x-frame-options': 'DENY',
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
       responseStatusCode: [301, 404],
@@ -494,7 +494,7 @@ function getScenarioEvents()
       requestScheme: 'https://',
       requestUri: '/crosswords/index.html',
       responseHeaderMatches: {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
       responseStatusCode: [301, 404],
@@ -514,7 +514,7 @@ function getScenarioEvents()
       requestScheme: 'https://',
       requestUri: '/crosswords/archive/',
       responseHeaderMatches: {
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
       responseStatusCode: [200, 404],
@@ -532,7 +532,7 @@ function getScenarioEvents()
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
       responseHeaderMatches: {
-        'x-pagetype': 'legacy-gke',
+        'x-nyt-route': 'legacy-gke',
         'x-nyt-backend': 'www_legacy_gke'
       },
       responseStatusCode: [200, 301, 404],
@@ -551,7 +551,7 @@ function getScenarioEvents()
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
       responseHeaderMatches: {
-        'x-pagetype': 'legacy-gke',
+        'x-nyt-route': 'legacy-gke',
         'x-nyt-backend': 'www_legacy_gke'
       },
       responseStatusCode: [200, 301, 404],
@@ -570,7 +570,7 @@ function getScenarioEvents()
       requestScheme: 'http://',
       requestUri: '/services/xml/rss/',
       responseHeaderMatches: {
-        'x-pagetype': 'legacy-gke',
+        'x-nyt-route': 'legacy-gke',
         'x-nyt-backend': 'www_legacy_gke'
       },
       responseStatusCode: [200, 404, 301],
@@ -590,7 +590,7 @@ function getScenarioEvents()
       requestUri: '/crosswords/archive/',
       responseHeaderMatches: {
         'x-frame-options': 'DENY',
-        'x-pagetype': 'games-web',
+        'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
       responseStatusCode: [200, 404, 403],

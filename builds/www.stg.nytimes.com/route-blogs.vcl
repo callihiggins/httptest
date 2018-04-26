@@ -9,7 +9,7 @@ sub recv_route_blogs {
           || req.url ~  "^/live/"
           || req.url ~  "^/live$"
       ) {
-          set req.http.X-PageType = "blog";
+          set req.http.x-nyt-route = "blog";
           set req.http.x-nyt-backend = "blogs";
           // legacy urls
           if (   req.url ~ "^/timesjourneys"
@@ -25,7 +25,7 @@ sub recv_route_blogs {
               || req.url ~ "/papijson/"
               || req.http.X-QueryString ~ "nytapp=(.*)"
           ) {
-              set req.http.X-PageType = "blog-legacy";
+              set req.http.x-nyt-route = "blog-legacy";
           }
       }
   }
@@ -37,7 +37,7 @@ sub recv_route_blogs {
       || req.http.host ~  "(www\.)?dealbook\.me$"
       || req.http.host ~  "jobs\.nytco\.com$"
   ) {
-      set req.http.X-PageType = "blog-legacy";
+      set req.http.x-nyt-route = "blog-legacy";
       set req.http.x-nyt-backend = "blogs";
   }
 }

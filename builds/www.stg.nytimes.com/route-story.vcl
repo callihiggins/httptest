@@ -8,7 +8,7 @@ sub recv_route_story {
           || req.url ~ "^/(aponline|reuters)/" // wire sources
           || req.url ~ "^/blog/" // all blogposts
       ) {
-          set req.http.x-pagetype = "article";
+          set req.http.x-nyt-route = "article";
           set req.http.x-nyt-backend = "article_fe";
           set req.http.x-nyt-wf-auth = "true";
           unset req.http.x--fastly-project-vi;
@@ -36,13 +36,13 @@ sub recv_route_story {
             # if the request was sent to VI and determined
             # to be Incompatible then we don't send to VI again
             if (req.http.x-pre-restart-status == "Incompatible") {
-                set req.http.x-pagetype = "article";
+                set req.http.x-nyt-route = "article";
                 set req.http.x-nyt-backend = "article_fe";
                 set req.http.x-nyt-wf-auth = "true";
                 unset req.http.x--fastly-project-vi;
                 set req.http.X-SendGDPR = "true";
             } else {
-              set req.http.x-pagetype = "vi-story";
+              set req.http.x-nyt-route = "vi-story";
               set req.http.x-nyt-backend = "projectvi_fe";
               set req.http.x-nyt-wf-auth = "true";
               set req.http.x--fastly-project-vi = "1";
@@ -52,13 +52,13 @@ sub recv_route_story {
             # if the request was sent to NYT5 and determined
             # to be an OAK article don't send to NYT5 again
             if (req.http.x-pre-restart-cms-format == "oak") {
-              set req.http.x-pagetype= "vi-story";
+              set req.http.x-nyt-route= "vi-story";
               set req.http.x-nyt-backend = "projectvi_fe";
               set req.http.x-nyt-wf-auth = "true";
               set req.http.x--fastly-project-vi = "1";
               set req.http.X-SendGDPR = "true";
             } else {
-                set req.http.x-pagetype = "article";
+                set req.http.x-nyt-route = "article";
                 set req.http.x-nyt-backend = "article_fe";
                 set req.http.x-nyt-wf-auth = "true";
                 unset req.http.x--fastly-project-vi;
@@ -92,7 +92,7 @@ sub deliver_route_story_restart_indicators {
 sub hash_route_story {
 
   # cache variance for articles allocated to vi
-  if (req.http.x-pagetype == "vi-story") {
+  if (req.http.x-nyt-route == "vi-story") {
     set req.hash += req.http.x--fastly-vi-test-group-story;
   }
 

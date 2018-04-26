@@ -20,7 +20,7 @@ function getScenarioEvents() {
       
       responseHeaderMatches: {
         "x-api-version": "F-PFE",
-        "x-pagetype": "profile-fe",
+        "x-nyt-route": "profile-fe",
         "x-nyt-backend": "profile_fe",
         "cache-control": "private",
       },

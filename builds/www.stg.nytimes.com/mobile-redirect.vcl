@@ -11,7 +11,7 @@ sub vcl_deliver {
             set req.http.x-do-mobile-redirect = "1";
         }
 
-        if (req.http.X-PageType ~ "^blog") {
+        if (req.http.x-nyt-route ~ "^blog") {
             // query string override
             if (req.http.x-nyt-mobile-param ~ "nytmobile=1") {
                 set req.http.x-do-mobile-redirect = "1";
@@ -37,7 +37,7 @@ sub vcl_deliver {
             }
 
             // URLs for PageType blog-legacy never redirect
-            if ( req.http.X-PageType == "blog-legacy") {
+            if ( req.http.x-nyt-route == "blog-legacy") {
                 set req.http.x-do-mobile-redirect = "0";
             }
 
@@ -73,7 +73,7 @@ sub vcl_deliver {
                 set req.http.x-do-mobile-redirect = "0";
             }
             // homepage & sectionfronts specific logic
-            if (req.http.x-pagetype == "homepage" || req.http.x-pagetype == "vi-homepage") {
+            if (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-homepage") {
                 // cookie override
                 if (req.http.x-nyt-mobile == "0") {
                     set req.http.x-do-mobile-redirect = "0";

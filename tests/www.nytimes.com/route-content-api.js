@@ -21,7 +21,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-CA',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'content-api',
+        'x-nyt-route': 'content-api',
       },
       'responseHeadersPresent': [
         'x-served-by',
@@ -59,7 +59,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-CA',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'content-api',
+        'x-nyt-route': 'content-api',
       },
       'responseHeadersPresent': [
         'x-served-by',
@@ -97,7 +97,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-CA',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'content-api',
+        'x-nyt-route': 'content-api',
       },
       'responseHeadersPresent': [
         'x-served-by',
@@ -134,7 +134,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-CA',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'content-api',
+        'x-nyt-route': 'content-api',
       },
       'responseHeadersPresent': [
         'x-served-by',
@@ -172,7 +172,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-CA',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'content-api',
+        'x-nyt-route': 'content-api',
       },
       'responseHeadersPresent': [
         'x-served-by',
@@ -210,7 +210,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-CA',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'content-api',
+        'x-nyt-route': 'content-api',
       },
       'responseHeadersPresent': [
         'x-served-by',
@@ -248,7 +248,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-CA',
         'x-frame-options': 'DENY',
-        'x-pagetype': 'content-api',
+        'x-nyt-route': 'content-api',
       },
       'responseHeadersPresent': [
         'x-served-by',

@@ -1,6 +1,6 @@
 sub vcl_deliver {
     // redirect HP based on edition
-    if (   (req.http.X-PageType == "homepage" || req.http.X-PageType == "vi-homepage")
+    if (   (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-homepage")
         && req.http.x-nyt-canonical-www-host == "true"
         && req.http.x-nyt-edition == "edition|SPANISH"
     ) {

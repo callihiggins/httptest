@@ -17,7 +17,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/style/weddings/announcements',
       responseHeaderMatches: {
-        'x-pagetype': 'vi-weddings',
+        'x-nyt-route': 'vi-weddings',
         'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],

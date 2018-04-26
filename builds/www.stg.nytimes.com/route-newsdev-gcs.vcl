@@ -3,7 +3,7 @@ sub recv_route_newsdev_gcs {
         || req.url ~ "^/roomfordebate"
         || req.url ~ "^/editorial-standards" ) {
 
-    set req.http.x-pagetype = "newsdev-gcs";
+    set req.http.x-nyt-route = "newsdev-gcs";
     set req.http.x-nyt-backend = "gcs_origin";
 
     unset req.http.cookie;
@@ -20,7 +20,7 @@ sub recv_route_newsdev_gcs {
 }
 
 sub fetch_route_newsdev_gcs {
-  if (req.http.X-PageType == "newsdev-gcs") {
+  if (req.http.x-nyt-route == "newsdev-gcs") {
 
     # Fake behavior of Amazon's WebsiteRedirectLocation
     if (beresp.http.x-amz-meta-website-redirect-location) {
@@ -40,7 +40,7 @@ sub fetch_route_newsdev_gcs {
 
 sub miss_pass_route_newsdev_gcs {
 
-  if (req.http.x-pagetype == "newsdev-gcs") {
+  if (req.http.x-nyt-route == "newsdev-gcs") {
     if(!req.backend.is_shield) {
         set bereq.url = regsub(bereq.url, "^/images/", "/");
         call miss_pass_set_bucket_auth_headers;

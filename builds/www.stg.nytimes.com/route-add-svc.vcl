@@ -6,13 +6,13 @@ sub recv_route_add_svc {
     || req.url.path ~ "^/svc/add/v1/related.json"
     || req.url.path ~ "^/svc/add/v1/topics.json"
   ) {
-    set req.http.x-pagetype = "add-svc";
+    set req.http.x-nyt-route = "add-svc";
     set req.http.x-nyt-backend = "add_svc";
     set req.http.X-Api-Key = table.lookup(origin_auth_keys, "svc_add_collections_ce_key");
   }
 }
 sub deliver_add_svc_access_control {
-  if (req.http.x-pagetype == "add-svc") {
+  if (req.http.x-nyt-route == "add-svc") {
     set resp.http.Access-Control-Allow-Origin = "*";
   }
 }

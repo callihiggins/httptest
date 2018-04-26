@@ -20,7 +20,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/?abra=WP_ProjectVi_www_hp=0',
       'responseHeaderMatches': {
-        'x-pagetype': 'homepage',
+        'x-nyt-route': 'homepage',
         'x-nyt-backend': 'homepage_fe',
       },
       'responseStatusCode': 200,

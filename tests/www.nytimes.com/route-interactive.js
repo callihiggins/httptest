@@ -22,7 +22,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
@@ -60,7 +60,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/02/09/upshot/100000004922380.embedded.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
@@ -98,7 +98,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2016/01/12/us/100000004069963.embedded.html?isHybrid=true',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
@@ -136,7 +136,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
@@ -174,7 +174,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/multimedia/test-interactive-standalone-qa.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
@@ -212,7 +212,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2016/01/12/us/100000004069963.embedded.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
@@ -249,7 +249,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/admin/100000005250034.embedded.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [
@@ -287,7 +287,7 @@ function getScenarioEvents()
     'requestScheme': 'https://',
     'requestUri': '/interactive/2017/admin/100000005194102.embedded.html',
     'responseHeaderMatches': {
-      'x-pagetype': 'vi-interactive',
+      'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
     },
     'responseHeadersPresent': [

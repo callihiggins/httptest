@@ -13,7 +13,7 @@ sub recv_route_mwcm {
             ) {
 
             set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
-            set req.http.x-pagetype = "mwcm";
+            set req.http.x-nyt-route = "mwcm";
             set req.http.x-nyt-backend = "mwcm";
             set req.http.X-SendGDPR = "true";
 
@@ -33,7 +33,7 @@ sub recv_route_mwcm {
 }
 
 sub deliver_route_mwcm {
-    if (req.http.X-PageType == "mwcm") {
+    if (req.http.x-nyt-route == "mwcm") {
 
         if (req.http.x-nyt-internal-access) {
             set resp.http.x-nyt-currency = req.http.x-nyt-currency;

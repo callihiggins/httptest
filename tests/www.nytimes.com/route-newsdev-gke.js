@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/fashion/runway/season/spring-2014-rtw',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gke',
+        'x-nyt-route': 'newsdev-gke',
         'x-nyt-backend': 'newsdev_k8s_gke',
       },
       'responseStatusCode': [200,404],
@@ -37,7 +37,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/int/dialects',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gke',
+        'x-nyt-route': 'newsdev-gke',
         'x-nyt-backend': 'newsdev_k8s_gke',
       },
       'responseStatusCode': [200,404],
@@ -61,7 +61,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/int/godzown/u/2017-01-26-opinion-sleep-assesment-adventure-production',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gke',
+        'x-nyt-route': 'newsdev-gke',
         'x-nyt-backend': 'newsdev_k8s_gke',
         'x-cache': 'MISS',
       },
@@ -83,7 +83,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/interactive/projects/guantanamo',
       'responseHeaderMatches': {
-        'x-pagetype': 'newsdev-gke',
+        'x-nyt-route': 'newsdev-gke',
         'x-nyt-backend': 'newsdev_k8s_gke',
       },
       'responseStatusCode': [200,404],
@@ -102,7 +102,7 @@ function getScenarioEvents()
     'requestUri': '/svc/int/dialects',
     'responseHeaderMatches': {
       'x-frame-options': 'DENY',
-      'x-pagetype': 'newsdev-gke',
+      'x-nyt-route': 'newsdev-gke',
       'x-nyt-backend': 'newsdev_k8s_gke',
     },
     'responseHeadersPresent': [
@@ -141,7 +141,7 @@ function getScenarioEvents()
     'requestUri': '/svc/int/godzown/test/65de670cf7510f4402c442fbd21b141e726f7159',
     'responseHeaderMatches': {
       'x-frame-options': 'DENY',
-      'x-pagetype': 'newsdev-gke',
+      'x-nyt-route': 'newsdev-gke',
       'x-nyt-backend': 'newsdev_k8s_gke',
     },
     'responseHeadersPresent': [

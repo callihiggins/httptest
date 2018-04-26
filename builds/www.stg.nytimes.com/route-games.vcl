@@ -1,13 +1,13 @@
 sub recv_route_games {
     if (req.http.x-nyt-canonical-www-host) {
         if (req.url.path ~ "^/games/prototype/" || req.url.path ~ "^/svc/crosswords/" || req.url.path ~ "^/svc/games/(sudoku|set)/") {
-            set req.http.X-PageType = "games-service";
+            set req.http.x-nyt-route = "games-service";
             set req.http.x-nyt-backend = "games_svc";
             set req.http.x-nyt-force-pass = "true";
         }
 
         if (req.url.path ~ "^/puzzles") {
-              set req.http.X-PageType = "games-phoenix";
+              set req.http.x-nyt-route = "games-phoenix";
               set req.http.x-nyt-backend = "games_phoenix";
 
               // Since we're returning early, we need to do this here for now
@@ -23,7 +23,7 @@ sub recv_route_games {
         if (req.url.path ~ "^/crosswords" &&
             req.url.qs !~ "nyt-games=legacy") {
 
-            set req.http.X-PageType = "games-web";
+            set req.http.x-nyt-route = "games-web";
             set req.http.x-nyt-backend = "games_web";
 
             // Since we're returning early, we need to do this here for now
@@ -38,7 +38,7 @@ sub recv_route_games {
 
         // We can treat the games assets as everything else and cache those (no cookies needed there)
         if (req.url.path ~ "^/games-assets/") {
-            set req.http.X-PageType = "games-assets";
+            set req.http.x-nyt-route = "games-assets";
             set req.http.x-nyt-backend = "games_assets";
 
             if (!req.http.Fastly-SSL) {
@@ -54,7 +54,7 @@ sub recv_route_games {
 
         // submissions page
         if (req.url.path ~ "^/crosswords/submissions$") {
-            set req.http.X-PageType = "games-web";
+            set req.http.x-nyt-route = "games-web";
             set req.http.x-nyt-backend = "games_web";
 
             if (!req.http.Fastly-SSL) {
@@ -66,22 +66,22 @@ sub recv_route_games {
 }
 
 sub miss_pass_route_games {
-  if (req.http.X-PageType == "games-service") {
+  if (req.http.x-nyt-route == "games-service") {
     call set_games_svc_host;
-  } else if (req.http.X-PageType == "games-web") {
+  } else if (req.http.x-nyt-route == "games-web") {
     call set_games_web_host;
-  } else if (req.http.X-PageType == "games-assets") {
+  } else if (req.http.x-nyt-route == "games-assets") {
     call set_games_assets_host;
-  } else if (req.http.X-PageType == "games-phoenix") {
+  } else if (req.http.x-nyt-route == "games-phoenix") {
     call set_games_phoenix_host;
   }
 }
 
 sub deliver_games_api_version {
-    if (req.http.X-PageType == "games-service") {
+    if (req.http.x-nyt-route == "games-service") {
         set resp.http.X-API-Version = "GS";
-    } else if (req.http.X-PageType == "games-web" ||
-               req.http.X-PageType == "games-phoenix") {
+    } else if (req.http.x-nyt-route == "games-web" ||
+               req.http.x-nyt-route == "games-phoenix") {
         set resp.http.X-API-Version = "GW";
     }
 }

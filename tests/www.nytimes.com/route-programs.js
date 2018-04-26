@@ -20,7 +20,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         "x-api-version": "F-PS",
         "x-frame-options": "DENY",
-        "x-pagetype": "programs-service"
+        "x-nyt-route": "programs-service"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
@@ -55,7 +55,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         "x-frame-options": "DENY",
         "x-cache": "MISS",
-        "x-pagetype": "shaq-service"
+        "x-nyt-route": "shaq-service"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
@@ -90,7 +90,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         "x-api-version": "F-PGCS",
         "x-frame-options": "DENY",
-        "x-pagetype": "programs-gcs"
+        "x-nyt-route": "programs-gcs"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
@@ -129,7 +129,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         "x-api-version": "F-PGCS",
         "x-frame-options": "DENY",
-        "x-pagetype": "programs-gcs"
+        "x-nyt-route": "programs-gcs"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [

@@ -20,7 +20,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestseller',
+        'x-nyt-route': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers /books/best-sellers/',
@@ -38,7 +38,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestseller',
+        'x-nyt-route': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers  /books/best-sellers/combined-print-and-e-book-fiction/',
@@ -56,7 +56,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestseller',
+        'x-nyt-route': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers on /books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
@@ -74,7 +74,7 @@ function getScenarioEvents()
       'requestUri': '/trending/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'trending',
+        'x-nyt-route': 'trending',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test trending on /trending/',
@@ -92,7 +92,7 @@ function getScenarioEvents()
       'requestUri': '/podcasts/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'podcasts',
+        'x-nyt-route': 'podcasts',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/',
@@ -110,7 +110,7 @@ function getScenarioEvents()
       'requestUri': '/podcasts/modern-love',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'podcasts',
+        'x-nyt-route': 'podcasts',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/modern-love',
@@ -128,7 +128,7 @@ function getScenarioEvents()
       'requestUri': '/reviews/dining/map/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test misc  on /reviews/dining/map/',
@@ -147,7 +147,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestseller',
+        'x-nyt-route': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers /books/best-sellers/',
@@ -166,7 +166,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestseller',
+        'x-nyt-route': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers  /books/best-sellers/combined-print-and-e-book-fiction/',
@@ -185,7 +185,7 @@ function getScenarioEvents()
       'requestUri': '/books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'bestseller',
+        'x-nyt-route': 'bestseller',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers on /books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
@@ -204,7 +204,7 @@ function getScenarioEvents()
       'requestUri': '/trending/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'trending',
+        'x-nyt-route': 'trending',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test trending on /trending/',
@@ -223,7 +223,7 @@ function getScenarioEvents()
       'requestUri': '/podcasts/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'podcasts',
+        'x-nyt-route': 'podcasts',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/',
@@ -242,7 +242,7 @@ function getScenarioEvents()
       'requestUri': '/podcasts/modern-love',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'podcasts',
+        'x-nyt-route': 'podcasts',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/modern-love',
@@ -261,7 +261,7 @@ function getScenarioEvents()
       'requestUri': '/reviews/dining/map/',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
-        'x-pagetype': 'collection',
+        'x-nyt-route': 'collection',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test misc  on /reviews/dining/map/',

@@ -7,7 +7,7 @@ sub recv_route_content_api {
         || req.url.path ~ "^/svc/news/"
         || req.url.path ~ "^/svc/weather/"
     ) {
-        set req.http.X-PageType = "content-api";
+        set req.http.x-nyt-route = "content-api";
         set req.http.x-nyt-backend = "content_api";
 
         unset req.http.X-Cookie;
@@ -20,7 +20,7 @@ sub recv_route_content_api {
     }
 
     if (req.url.path ~ "^/svc/oembed/"){
-        set req.http.X-PageType = "content-api-gae";
+        set req.http.x-nyt-route = "content-api-gae";
         set req.http.x-nyt-backend = "gae_oembed_content_api";
 
         unset req.http.X-Cookie;
@@ -42,14 +42,14 @@ sub miss_pass_route_content_api {
 }
 
 sub fetch_route_content_api {
-    if (req.http.X-PageType == "content-api") {
+    if (req.http.x-nyt-route == "content-api") {
         # stale-while-revalidate override
         set beresp.http.x-nyt-stale-while-revalidate = "30";
     }
 }
 
 sub deliver_content_api_version {
-    if (req.http.X-PageType == "content-api") {
+    if (req.http.x-nyt-route == "content-api") {
         set resp.http.X-API-Version = "CA";
     }
 }

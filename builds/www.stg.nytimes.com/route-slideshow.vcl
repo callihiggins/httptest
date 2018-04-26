@@ -2,7 +2,7 @@ sub recv_route_slideshow {
   // Route slideshow to NYT5 GKE if slideshow-compatibility is not set.
   // If slideshow-compatibility is set, fallback to Legacy GKE.
   if (req.url ~ "^/slideshow/" && !req.http.x-nyt-slideshow-compatibility) {
-      set req.http.X-PageType = "slideshow";
+      set req.http.x-nyt-route = "slideshow";
       set req.http.x-nyt-backend = "slideshow_fe";
       set req.http.x-nyt-wf-auth = "true";
 
@@ -12,7 +12,7 @@ sub recv_route_slideshow {
 
   // slideshow JSON files
   if (req.url ~ "\.slideshow\.json$") {
-    set req.http.X-PageType = "legacy-gke";
+    set req.http.x-nyt-route = "legacy-gke";
     set req.http.x-nyt-backend = "www_legacy_gke";
   }
 }
@@ -21,7 +21,7 @@ sub deliver_slideshow_fallback {
 
     # Route all slideshows to NYT5 GKE and if the slideshow returns 404,
     # fallback to Legacy GKE to redirect to archive slideshow.
-    if (resp.http.X-PageType == "slideshow"
+    if (resp.http.x-nyt-route == "slideshow"
         && resp.http.x-nyt-backend == "slideshow_fe"
         && resp.status == 404) {
         set req.http.x-nyt-slideshow-compatibility = "NYT4";

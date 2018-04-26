@@ -18,7 +18,7 @@ var scenarios = [
     requestScheme: 'http://',
     requestUri: '/save75',
     responseHeaderMatches: {
-      'x-pagetype': 'legacy-gke',
+      'x-nyt-route': 'legacy-gke',
       'x-nyt-backend': 'www_legacy_gke'
     },
     responseStatusCode: [301, 404],
@@ -37,7 +37,7 @@ var scenarios = [
     requestUri: '/js/selectWidget.js',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke',
+      'x-nyt-route': 'legacy-gke',
       'content-type': 'application/javascript'
     },
     responseStatusCode: [200],
@@ -56,7 +56,7 @@ var scenarios = [
     requestUri: '/.well-known/apple-app-site-association',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke'
+      'x-nyt-route': 'legacy-gke'
     },
     responseStatusCode: [200, 404],
     scenarioDescription: 'Test well-known served from WWW Legacy GKE',
@@ -74,7 +74,7 @@ var scenarios = [
     requestUri: '/svc/comscore/pvc.html',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke'
+      'x-nyt-route': 'legacy-gke'
     },
     responseStatusCode: [200],
     scenarioDescription: 'Test comscore html served from Legacy GKE backend',
@@ -92,7 +92,7 @@ var scenarios = [
     requestUri: '/services/xml/rss/nyt/Dealbook.xml',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke'
+      'x-nyt-route': 'legacy-gke'
     },
     responseStatusCode: [301],
     scenarioDescription:
@@ -111,7 +111,7 @@ var scenarios = [
     requestUri: '/favicon.ico',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke',
+      'x-nyt-route': 'legacy-gke',
     },
     responseStatusCode: [200, 404],
     scenarioDescription: 'Test legacy; www cluster; favicon file',
@@ -129,7 +129,7 @@ var scenarios = [
     requestUri: '/humans.txt',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke',
+      'x-nyt-route': 'legacy-gke',
     },
     responseStatusCode: [200, 404],
     scenarioDescription: 'Test legacy; www cluster; humans file',
@@ -147,7 +147,7 @@ var scenarios = [
     requestUri: '/interactive/2013/12/19/us/politics/19nsa-review.html',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke',
+      'x-nyt-route': 'legacy-gke',
     },
     responseStatusCode: [200, 301, 404],
     scenarioDescription: 'Test legacy; www cluster; interactive; default',
@@ -166,7 +166,7 @@ var scenarios = [
       '/packages/html/magazine/2009-inauguration-gallery/index.html',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke',
+      'x-nyt-route': 'legacy-gke',
     },
     responseStatusCode: [301, 404],
     scenarioDescription: 'Test legacy; www cluster; packages; HTML',
@@ -184,7 +184,7 @@ var scenarios = [
     requestUri: '/gst/movies/msearch.html',
     responseHeaderMatches: {
       'x-nyt-backend': 'www_legacy_gke',
-      'x-pagetype': 'legacy-gke'
+      'x-nyt-route': 'legacy-gke'
     },
     responseStatusCode: [301],
     scenarioDescription: 'Test /gst/movies/ served from Legacy GKE Backend',

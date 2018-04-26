@@ -2,20 +2,20 @@ sub recv_route_times_journeys {
     if (req.http.x-nyt-canonical-www-host) {
     	// The order of these two checks is important since the second one is a sub path of the first one
         if (req.url.path ~ "^/times-journeys") {
-            set req.http.X-PageType = "times-journeys";
+            set req.http.x-nyt-route = "times-journeys";
             set req.http.x-nyt-backend = "times_journeys";
         }
 
         if (req.url.path ~ "^/times-journeys/students") {
-            set req.http.X-PageType = "times-journeys-students";
+            set req.http.x-nyt-route = "times-journeys-students";
             set req.http.x-nyt-backend = "times_journeys_students";
         }
     }
 }
 
 sub miss_pass_route_times_journeys {
-  if (req.http.X-PageType ~ "^times-journeys") {
-    if (req.http.X-PageType == "times-journeys") {
+  if (req.http.x-nyt-route ~ "^times-journeys") {
+    if (req.http.x-nyt-route == "times-journeys") {
         if (req.url.path == "/times-journeys") {
             set bereq.url = regsub(req.url, "^/times-journeys", "/");
         } else {
@@ -24,7 +24,7 @@ sub miss_pass_route_times_journeys {
         set bereq.http.host = "timesjourneys.nytimes.com";
     }
 
-    if (req.http.X-PageType == "times-journeys-students") {
+    if (req.http.x-nyt-route == "times-journeys-students") {
         if (req.url.path == "/times-journeys/students") {
             set bereq.url = regsub(req.url, "^/times-journeys/students", "/");
         } else {
@@ -44,7 +44,7 @@ sub miss_pass_route_times_journeys {
 }
 
 sub deliver_times_journeys_api_version {
-    if (req.http.X-PageType ~ "^times-journeys") {
+    if (req.http.x-nyt-route ~ "^times-journeys") {
         set resp.http.X-API-Version = "TJ";
     }
 }

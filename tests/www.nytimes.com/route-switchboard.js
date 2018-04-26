@@ -17,7 +17,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/theater',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /theater is served from switchboard',
@@ -33,7 +33,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/movies',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /movies is served from switchboard',
@@ -49,7 +49,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/best-sellers',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /best-sellers is served from switchboard',
@@ -65,7 +65,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/restaurants/',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /restaurants/ is served from switchboard',
@@ -81,7 +81,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/listings',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /listings is served from switchboard',
@@ -97,7 +97,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/briefing',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [302],
       scenarioDescription: 'Test /briefing is served from switchboard',
@@ -113,7 +113,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/ambriefing',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /ambriefing is served from switchboard',
@@ -129,7 +129,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/thedaily',
       responseHeaderMatches: {
-        'x-pagetype': 'switchboard',
+        'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [302],
       scenarioDescription: 'Test /thedaily is served from switchboard',

@@ -18,7 +18,7 @@ function getScenarioEvents() {
       requestScheme: "https://",
       requestUri: "/files/healthcheck.txt",
       responseHeaderMatches: {
-        'x-pagetype': 'newsroom-files-gcs',
+        'x-nyt-route': 'newsroom-files-gcs',
         'x-nyt-backend': 'gcs_origin',
       },
       responseHeadersPresent: ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],

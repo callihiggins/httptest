@@ -22,7 +22,7 @@ function getScenarioEvents()
         'x-goog-storage-class',
       ],
       'responseHeaderMatches': {
-        'x-pagetype': 'vi-assets',
+        'x-nyt-route': 'vi-assets',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test fetching a vi asset',

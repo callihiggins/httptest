@@ -4,7 +4,7 @@ sub recv_route_profile_fe {
     // profile_fe. This endpoint will soon not be accessible through www with messaging team migrating
     // paperboy to new app called helix in GCP
     if (req.url.path ~ "^/svc/(user|profile)/" && req.url.path !~ "^/svc/profile/v2/email/verified-product-subscriptions-address") {
-        set req.http.X-PageType = "profile-fe";
+        set req.http.x-nyt-route = "profile-fe";
         set req.http.x-nyt-backend = "profile_fe";
 
         unset req.http.x-nyt-edition;
@@ -19,7 +19,7 @@ sub recv_route_profile_fe {
 }
 
 sub miss_pass_route_profile_fe {
-    if (req.http.X-PageType == "profile-fe") {
+    if (req.http.x-nyt-route == "profile-fe") {
 
         if (req.http.x-environment == "dev") {
             set bereq.http.host = "profile-fe.dev.nyt.net";
@@ -32,7 +32,7 @@ sub miss_pass_route_profile_fe {
 }
 
 sub deliver_profile_fe_api_version {
-    if (req.http.X-PageType == "profile-fe") {
+    if (req.http.x-nyt-route == "profile-fe") {
         set resp.http.X-API-Version = "PFE";
     }
 }

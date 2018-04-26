@@ -17,7 +17,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/timeswire',
       responseHeaderMatches: {
-        'x-pagetype': 'vi-timeswire',
+        'x-nyt-route': 'vi-timeswire',
         'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
@@ -34,7 +34,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/timeswire/',
       responseHeaderMatches: {
-        'x-pagetype': 'vi-timeswire',
+        'x-nyt-route': 'vi-timeswire',
         'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],
@@ -55,7 +55,7 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/timeswire',
       responseHeaderMatches: {
-        'x-pagetype': 'vi-timeswire',
+        'x-nyt-route': 'vi-timeswire',
         'x-nyt-backend': 'projectvi_fe'
       },
       responseStatusCode: [200],

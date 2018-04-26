@@ -19,7 +19,7 @@ function getScenarioEvents() {
       requestUri: '/svc/pushmobile/v2/device/newsandroid/systemtest.json',
       responseHeaderMatches: {
         'x-nyt-backend': 'messaging',
-        'x-pagetype': 'messaging'
+        'x-nyt-route': 'messaging'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test messaging, /svc/pushmobile(.*)',
@@ -37,7 +37,7 @@ function getScenarioEvents() {
       requestUri: '/svc/message/v1/list/global.json',
       responseHeaderMatches: {
         'x-nyt-backend': 'messaging',
-        'x-pagetype': 'messaging'
+        'x-nyt-route': 'messaging'
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test messaging, /svc/message/(.*)',

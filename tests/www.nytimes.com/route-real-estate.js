@@ -18,7 +18,7 @@ function getScenarioEvents()
       requestScheme: 'https://',
       requestUri: '/real-estate/find-a-home',
       responseHeaderMatches: {
-        'x-pagetype': 'real-estate',
+        'x-nyt-route': 'real-estate',
         'x-nyt-backend': 'realestate_fe',
       },
       responseStatusCode: 200,
