@@ -48,9 +48,9 @@ sub deliver_programs_api_version {
 
 sub set_programs_web_host {
 
-    if (req.http.x-environment == "dev") {
+    if (req.http.var-nyt-env == "dev") {
         set bereq.http.host = "ftu-dot-nyt-betaprog-dev.appspot.com";
-    } else if (req.http.x-environment == "stg") {
+    } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "ftu-dot-nyt-betaprog-dev.appspot.com";
     } else {
         set bereq.http.host = "ftu-dot-nyt-betaprog-prd.appspot.com";
@@ -60,9 +60,9 @@ sub set_programs_web_host {
 
 sub set_programs_gcs_host {
   # Configure access to Cloud Storage
-  if (req.http.x-environment == "dev") {
+  if (req.http.var-nyt-env == "dev") {
     set bereq.http.host = "nyt-betaprog-dev-assets.storage.googleapis.com";
-  } else if (req.http.x-environment == "stg") {
+  } else if (req.http.var-nyt-env == "stg") {
     set bereq.http.host = "nyt-betaprog-dev-assets.storage.googleapis.com";
   } else {
     set bereq.http.host = "nyt-betaprog-prd-assets.storage.googleapis.com";
@@ -72,9 +72,9 @@ sub set_programs_gcs_host {
 
 sub set_programs_shaq_host {
 
-    if (req.http.x-environment == "dev") {
+    if (req.http.var-nyt-env == "dev") {
         set bereq.http.host = "shaq-dot-nyt-betaprog-dev.appspot.com";
-    } else if (req.http.x-environment == "stg") {
+    } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "shaq-dot-nyt-betaprog-dev.appspot.com";
     } else {
         set bereq.http.host = "shaq-dot-nyt-betaprog-prd.appspot.com";

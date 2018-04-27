@@ -87,9 +87,9 @@ sub deliver_games_api_version {
 }
 
 sub set_games_svc_host {
-    if (req.http.x-environment == "dev") {
+    if (req.http.var-nyt-env == "dev") {
         set bereq.http.host = "nyt-games-dev.appspot.com";
-    } else if (req.http.x-environment == "stg") {
+    } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "nyt-games-dev.appspot.com";
     } else {
         set bereq.http.host = "nyt-games-prd.appspot.com";
@@ -97,9 +97,9 @@ sub set_games_svc_host {
 }
 
 sub set_games_web_host {
-    if (req.http.x-environment == "dev") {
+    if (req.http.var-nyt-env == "dev") {
         set bereq.http.host = "puzzles.dev.nyt.net";
-    } else if (req.http.x-environment == "stg") {
+    } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else {
         set bereq.http.host = "puzzles.prd.nyt.net";
@@ -112,8 +112,8 @@ sub set_games_assets_host {
 }
 
 sub set_games_phoenix_host {
-    if (req.http.x-environment == "dev" ||
-        req.http.x-environment == "stg") {
+    if (req.http.var-nyt-env == "dev" ||
+        req.http.var-nyt-env == "stg") {
         set bereq.http.host = "phoenix.games.dev.nyt.net";
     } else {
         set bereq.http.host = "phoenix.games.prd.nyt.net";

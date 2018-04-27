@@ -47,6 +47,23 @@ function getScenarioEvents()
       'scenarioDescription': 'Test response headers',
       'testId': 1,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2016/01/01/us/slug.html',
+      'responseHeadersPresent': [
+        'debug-var-nyt-env'
+      ],
+      'responseStatusCode': [200, 404],
+      'scenarioDescription': 'Test Debug response headers',
+      'testId': 2,
+    },
   ];
 
   return scenarios;

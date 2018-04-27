@@ -222,7 +222,7 @@ resource "fastly_service_v1" "www" {
     name        = "environment"
     priority    = "1"
     source      = "\"${var.env}\""
-    destination = "http.x-environment"
+    destination = "http.var-nyt-env"
     type        = "request"
   }
 
@@ -653,6 +653,12 @@ resource "fastly_service_v1" "www" {
     name    = "origin-response-handler"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/origin-response-handler.vcl")}"
+  }
+
+  vcl {
+    name    = "origin-request-handler"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/origin-request-handler.vcl")}"
   }
 
   vcl {

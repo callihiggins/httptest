@@ -21,9 +21,9 @@ sub recv_route_profile_fe {
 sub miss_pass_route_profile_fe {
     if (req.http.x-nyt-route == "profile-fe") {
 
-        if (req.http.x-environment == "dev") {
+        if (req.http.var-nyt-env == "dev") {
             set bereq.http.host = "profile-fe.dev.nyt.net";
-        } else if (req.http.x-environment == "stg") {
+        } else if (req.http.var-nyt-env == "stg") {
             set bereq.http.host = "profile-fe.stg.nyt.net";
         } else {
             set bereq.http.host = "profile-fe.prd.nyt.net";

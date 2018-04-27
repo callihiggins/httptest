@@ -33,7 +33,7 @@ sub recv_route_content_api {
 
 sub miss_pass_route_content_api {
     if (req.http.x-nyt-backend == "gae_oembed_content_api") {
-        if (req.http.x-environment == "prd") {
+        if (req.http.var-nyt-env == "prd") {
             set bereq.http.host = "nyt-du-prd.appspot.com";
         } else {
             set bereq.http.host = "nyt-du-dev.appspot.com";

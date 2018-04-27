@@ -124,9 +124,9 @@ sub do_redirect {
     set var.orig_url = req.url.path + req.http.x-orig-querystring;
 
     // pick mobile host based on the Fastly service we're in
-    if (req.http.x-environment == "dev") {
+    if (req.http.var-nyt-env == "dev") {
         set req.http.mobile-host = "mobile.dev.nytimes.com";
-    } else if (req.http.x-environment == "stg") {
+    } else if (req.http.var-nyt-env == "stg") {
         set req.http.mobile-host = "mobile.stg.nytimes.com";
     } else {
         set req.http.mobile-host = "mobile.nytimes.com";

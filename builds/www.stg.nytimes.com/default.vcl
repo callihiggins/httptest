@@ -76,6 +76,7 @@ include "route-invalid-requests";
 # backend response processing
 include "surrogate-key";
 include "origin-response-handler";
+include "origin-request-handler";
 include "set-cache-object-ttl";
 
 # begin other logic
@@ -284,7 +285,7 @@ sub vcl_miss {
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
-  call unset_extraneous_bereq_headers;
+  call miss_pass_unset_bereq_headers;
 
   return(fetch);
 }
@@ -335,7 +336,7 @@ sub vcl_pass {
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
-  call unset_extraneous_bereq_headers;
+  call miss_pass_unset_bereq_headers;
 }
 
 
@@ -445,6 +446,7 @@ sub vcl_deliver {
   # set response headers
   call deliver_gdpr;
   call deliver_response_headers;
+  call deliver_debug_response_headers;
   call deliver_slideshow_fallback;
 
   return(deliver);
@@ -487,7 +489,7 @@ sub vcl_log {
     if (
            (req.url !~ "^/svc/(web-products|comscore)" && req.url !~ "^/adx/")
         || resp.status >= 500
-        || req.http.x-environment != "prd"
+        || req.http.var-nyt-env != "prd"
        ) {
 
       log {"syslog "} + req.service_id + {" "} + req.http.x-nyt-logger-name + {" :: "}
@@ -515,19 +517,3 @@ sub vcl_log {
       if(req.http.x-vi-health, {" "} + req.http.x-vi-health, "");
     }
   }
-
-sub unset_extraneous_bereq_headers {
-  # remove headers used as variables for logic
-  # backend definitely does not need these
-  # in some cases it could be a security concern
-  unset bereq.http.x-nyt-edition;
-  unset bereq.http.x-nyt-a;
-  unset bereq.http.x-nyt-wpab;
-  unset bereq.http.x-nyt-s;
-  unset bereq.http.x-nyt-d;
-  unset bereq.http.x-nyt-bucket-token;
-  unset bereq.http.x-nyt-bucket-secret;
-  unset bereq.http.x-nyt-bucket-name;
-  unset bereq.http.x-nyt-bucket-provider;
-  unset bereq.http.x-nyt-mobile;
-}

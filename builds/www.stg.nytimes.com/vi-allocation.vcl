@@ -104,7 +104,7 @@ sub recv_vi_allocation_init {
         set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
         set var.dart = std.strtol(var.hash, 16);
 
-        if (req.http.x-environment == "prd") {
+        if (req.http.var-nyt-env == "prd") {
             if    (var.dart <   42949673) { set var.test_group = "b2"; } #  1%   HP only, reported
             elsif (var.dart <   85899346) { set var.test_group = "z2"; } #  1%   control, reported
             elsif (var.dart <  128849018) { set var.test_group = "d2"; } #  1%   HP only (added Dec. 2017), reported

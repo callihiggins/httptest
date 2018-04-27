@@ -13,7 +13,7 @@ sub miss_pass_route_newsdev_cloud_functions {
     // set function name
     set bereq.url = regsub(req.url, "^/svc/int/functions/", "/");
 
-    if (req.http.x-environment == "dev" || req.http.x-environment == "stg") {
+    if (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") {
       set bereq.http.host = "us-central1-nytint-stg.cloudfunctions.net";
     } else {
       set bereq.http.host = "us-central1-nytint-prd.cloudfunctions.net";

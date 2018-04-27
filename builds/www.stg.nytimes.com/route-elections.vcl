@@ -6,9 +6,9 @@ sub recv_route_elections {
         if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
             set req.http.x-nyt-backend = "newsdev_elections_s3";
 
-            if (req.http.x-environment == "dev") {
+            if (req.http.var-nyt-env == "dev") {
                 set req.http.x-bucket = "nytint-stg-elections";
-            } else if (req.http.x-environment == "stg") {
+            } else if (req.http.var-nyt-env == "stg") {
                 set req.http.x-bucket = "nytint-stg-elections";
             } else {
                 set req.http.x-bucket = "nytint-prd-elections";
@@ -16,9 +16,9 @@ sub recv_route_elections {
         } else {
             set req.http.x-nyt-backend = "newsdev_elections";
 
-            if (req.http.x-environment == "dev") {
+            if (req.http.var-nyt-env == "dev") {
                 set req.http.x-bucket = "nytint-stg-elections";
-            } else if (req.http.x-environment == "stg") {
+            } else if (req.http.var-nyt-env == "stg") {
                 set req.http.x-bucket = "nytint-stg-elections";
             } else {
                 set req.http.x-bucket = "nytint-prd-elections";

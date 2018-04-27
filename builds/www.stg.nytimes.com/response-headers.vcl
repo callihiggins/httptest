@@ -68,3 +68,11 @@ sub deliver_response_headers {
         set resp.http.Content-Security-Policy = var.csp;
     }
 }
+
+// Post Audit function
+// Return debug headers for internal clients
+sub deliver_debug_response_headers {
+  if (req.http.x-nyt-internal-access) {
+    set resp.http.debug-var-nyt-env = req.http.var-nyt-env;
+  }
+}

@@ -34,7 +34,7 @@ sub fetch_route_newsdev_gke {
     unset beresp.http.X-Request-Id;
 
     # remove this header in prd
-    if (!req.http.x-nyt-internal-access && req.http.x-environment == "prd") {
+    if (!req.http.x-nyt-internal-access && req.http.var-nyt-env == "prd") {
       unset beresp.http.X-Kubernetes-Url;
     }
 

@@ -23,12 +23,12 @@ sub recv_restrict_access {
     error 403 "Forbidden";
   }
 
-  if (req.http.x-environment == "dev" && !req.http.x-nyt-internal-access) { 
+  if (req.http.var-nyt-env == "dev" && !req.http.x-nyt-internal-access) { 
     error 403 "Forbidden";
   }
 
   # block everyone but internal acl, aws vpc acl, and whitelisted header to staging service
-  if (req.http.x-environment == "stg" && !req.http.x-nyt-internal-access && !req.http.x-nyt-external-access) {
+  if (req.http.var-nyt-env == "stg" && !req.http.x-nyt-internal-access && !req.http.x-nyt-external-access) {
     error 403 "Forbidden";
   }
 }

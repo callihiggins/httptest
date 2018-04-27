@@ -4,11 +4,11 @@ sub initialize_global_variable_headers {
 
   # set the environment class variable
   if (req.http.host ~ "\.dev\."){
-    set req.http.x-environment = "dev";
+    set req.http.var-nyt-env = "dev";
   } else if (req.http.host ~ "\.stg\."){
-    set req.http.x-environment = "stg";
+    set req.http.var-nyt-env = "stg";
   } else {
-    set req.http.x-environment = "prd";
+    set req.http.var-nyt-env = "prd";
   }
 
   # set a var to denote if this domain is canonical www request
@@ -99,7 +99,7 @@ sub vcl_recv {
       set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\/", "_");
     }
 
-    set req.http.x-nyt-logger-name = "web" + req.http.x-environment + "-www";
+    set req.http.x-nyt-logger-name = "web" + req.http.var-nyt-env + "-www";
 
     // set the original protocol to let downstream systems know what it was
     if (req.http.Fastly-SSL) {

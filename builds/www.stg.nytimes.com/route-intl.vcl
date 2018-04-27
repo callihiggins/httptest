@@ -28,7 +28,7 @@ sub recv_route_intl {
 sub fetch_route_intl_headers {
   if (req.http.x-nyt-route == "intl") {
     # don't return this header in prd
-    if (!req.http.x-nyt-internal-access && req.http.x-environment == "prd") {
+    if (!req.http.x-nyt-internal-access && req.http.var-nyt-env == "prd") {
       unset beresp.http.X-Kubernetes-Url;
     }
   }
