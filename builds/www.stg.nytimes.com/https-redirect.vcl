@@ -104,7 +104,7 @@ sub recv_https_redirect {
             || req.url.path == "/esi/jsonp-callback"
             || req.http.x-nyt-route == "mwcm"
             # content that was previously passing early can do both protocols
-            || req.http.x-nyt-force-pass == "true"
+            || req.http.var-nyt-force-pass == "true"
         ) {
 
         // Urls already live over HTTPS

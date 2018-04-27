@@ -38,7 +38,7 @@ sub deliver_response_headers {
         set resp.http.x-nyt-gmt-offset = req.http.x-nyt-gmt-offset;
         set resp.http.device_type = req.http.device_type;
         set resp.http.x-nyt-backend = req.http.x-nyt-backend;
-        set resp.http.x-nyt-force-pass = if(req.http.x-nyt-force-pass, req.http.x-nyt-force-pass, "false");
+
     }
 
     if (resp.http.X-API-Version) {
@@ -74,5 +74,6 @@ sub deliver_response_headers {
 sub deliver_debug_response_headers {
   if (req.http.x-nyt-internal-access) {
     set resp.http.debug-var-nyt-env = req.http.var-nyt-env;
+    set resp.http.debug-var-nyt-force-pass = if(req.http.var-nyt-force-pass, req.http.var-nyt-force-pass, "false");
   }
 }

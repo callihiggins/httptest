@@ -13,7 +13,7 @@ sub recv_route_profile_fe {
         unset req.http.x-nyt-wpab;
 
         // This backend need cookies and query params passed, so returning early
-        set req.http.x-nyt-force-pass = "true";
+        set req.http.var-nyt-force-pass = "true";
         #return(pass);
     }
 }

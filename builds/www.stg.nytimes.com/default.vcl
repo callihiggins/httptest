@@ -198,7 +198,7 @@ sub vcl_recv {
   # or if the Cookie still exists in the request
   # TODO: the cookie shouldn't matter!!! Refactor that.
   if (req.http.Authorization || req.http.Cookie) {
-    set req.http.x-nyt-force-pass = "true";
+    set req.http.var-nyt-force-pass = "true";
   }
 
   # removing because Symfony2 (PHP framework) Request object will use this for getUri() if present
@@ -207,7 +207,7 @@ sub vcl_recv {
   }
 
   # if the route didn't specifically ask for a pass we will do a lookup
-  if (req.http.x-nyt-force-pass == "true") {
+  if (req.http.var-nyt-force-pass == "true") {
     return(pass);
   } else {
     return(lookup);

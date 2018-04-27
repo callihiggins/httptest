@@ -15,4 +15,6 @@ sub miss_pass_unset_bereq_headers {
 
   # Denotes headers that have been through the audit
   unset bereq.http.var-nyt-env;
+  unset bereq.http.var-nyt-wf-auth;
+  unset bereq.http.var-nyt-force-pass;
 }

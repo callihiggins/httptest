@@ -13,7 +13,7 @@ sub recv_route_tbooks {
             set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
 
             unset req.http.X-Cookie;
-            set req.http.x-nyt-force-pass = "true";
+            set req.http.var-nyt-force-pass = "true";
         }
     }
 }

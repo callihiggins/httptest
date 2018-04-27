@@ -9,7 +9,7 @@ sub recv_remove_cookie_check {
      * and only do this remap if this is not a restarted request.
      */
     if (   req.backend != F_www_userinfo
-        && req.http.x-nyt-force-pass != "true"
+        && req.http.var-nyt-force-pass != "true"
         && req.restarts == 0
         && ( req.request == "HEAD"
           || req.request == "GET"

@@ -15,7 +15,7 @@ sub recv_route_content_api {
         unset req.http.x-nyt-s;
         unset req.http.x-nyt-wpab;
 
-        set req.http.x-nyt-force-pass = "true";
+        set req.http.var-nyt-force-pass = "true";
         #return(pass);
     }
 

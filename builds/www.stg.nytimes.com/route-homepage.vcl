@@ -9,7 +9,7 @@ sub recv_route_homepage {
         ) {
             set req.http.x-nyt-route = "homepage";
             set req.http.x-nyt-backend = "homepage_fe";
-            set req.http.x-nyt-wf-auth = "true";
+            set req.http.var-nyt-wf-auth = "true";
             unset req.http.x--fastly-project-vi;
             set req.http.X-SendGDPR = "true";
         }
@@ -36,7 +36,7 @@ sub recv_route_homepage {
           ) {
           set req.http.x-nyt-route = "vi-homepage";
           set req.http.x-nyt-backend = "projectvi_fe";
-          set req.http.x-nyt-wf-auth = "true";
+          set req.http.var-nyt-wf-auth = "true";
           set req.http.x--fastly-project-vi = "1";
           set req.http.X-SendGDPR = "true";
         }

@@ -34,8 +34,8 @@ sub recv_route_userinfo {
   if (req.url ~ "^/svc/web-products/") {
     set req.http.x-nyt-route = "service";
     set req.http.x-nyt-backend = "www_userinfo";
-    set req.http.x-nyt-force-pass = "true";
-    set req.http.x-nyt-wf-auth = "true";
+    set req.http.var-nyt-force-pass = "true";
+    set req.http.var-nyt-wf-auth = "true";
 
     # if we needed to switch back to NYT5, unset the vi flag
     unset req.http.x--fastly-project-vi;

@@ -24,7 +24,7 @@ sub recv_route_community_svc {
             set req.http.x-nyt-route = "community-svc";
 
             # these requests MUST NOT be cached, force pass
-            set req.http.x-nyt-force-pass = "true";
+            set req.http.var-nyt-force-pass = "true";
         }
     }
 }

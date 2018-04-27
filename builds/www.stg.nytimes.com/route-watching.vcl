@@ -19,7 +19,7 @@ sub recv_route_watching {
           unset req.http.x-nyt-wpab;
 
           if (req.http.x-nyt-route == "watching-nocache") {
-              set req.http.x-nyt-force-pass = "true";
+              set req.http.var-nyt-force-pass = "true";
           }
       }
   }

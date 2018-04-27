@@ -10,7 +10,7 @@ sub recv_route_story {
       ) {
           set req.http.x-nyt-route = "article";
           set req.http.x-nyt-backend = "article_fe";
-          set req.http.x-nyt-wf-auth = "true";
+          set req.http.var-nyt-wf-auth = "true";
           unset req.http.x--fastly-project-vi;
           set req.http.X-SendGDPR = "true";
 
@@ -38,13 +38,13 @@ sub recv_route_story {
             if (req.http.x-pre-restart-status == "Incompatible") {
                 set req.http.x-nyt-route = "article";
                 set req.http.x-nyt-backend = "article_fe";
-                set req.http.x-nyt-wf-auth = "true";
+                set req.http.var-nyt-wf-auth = "true";
                 unset req.http.x--fastly-project-vi;
                 set req.http.X-SendGDPR = "true";
             } else {
               set req.http.x-nyt-route = "vi-story";
               set req.http.x-nyt-backend = "projectvi_fe";
-              set req.http.x-nyt-wf-auth = "true";
+              set req.http.var-nyt-wf-auth = "true";
               set req.http.x--fastly-project-vi = "1";
               set req.http.X-SendGDPR = "true";
             }
@@ -54,13 +54,13 @@ sub recv_route_story {
             if (req.http.x-pre-restart-cms-format == "oak") {
               set req.http.x-nyt-route= "vi-story";
               set req.http.x-nyt-backend = "projectvi_fe";
-              set req.http.x-nyt-wf-auth = "true";
+              set req.http.var-nyt-wf-auth = "true";
               set req.http.x--fastly-project-vi = "1";
               set req.http.X-SendGDPR = "true";
             } else {
                 set req.http.x-nyt-route = "article";
                 set req.http.x-nyt-backend = "article_fe";
-                set req.http.x-nyt-wf-auth = "true";
+                set req.http.var-nyt-wf-auth = "true";
                 unset req.http.x--fastly-project-vi;
                 set req.http.X-SendGDPR = "true";
             }

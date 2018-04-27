@@ -3,7 +3,7 @@ sub recv_route_intl {
       || (req.url == "/global") || (req.url ~ "^/global/")) {
       set req.http.x-nyt-route = "intl";
       set req.http.x-nyt-backend = "intl_gcp";
-      set req.http.x-nyt-wf-auth = "true";
+      set req.http.var-nyt-wf-auth = "true";
 
     if (req.request != "GET" &&
         req.request != "HEAD" &&
@@ -14,7 +14,7 @@ sub recv_route_intl {
 
     # Bypass cache for logged-in WordPress users, etc.
     if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {
-      set req.http.x-nyt-force-pass = "true";
+      set req.http.var-nyt-force-pass = "true";
     } else {
       unset req.http.Cookie;
       unset req.http.X-Cookie;

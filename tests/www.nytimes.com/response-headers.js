@@ -58,7 +58,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/2016/01/01/us/slug.html',
       'responseHeadersPresent': [
-        'debug-var-nyt-env'
+        'debug-var-nyt-env',
+        'debug-var-nyt-force-pass'
       ],
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test Debug response headers',

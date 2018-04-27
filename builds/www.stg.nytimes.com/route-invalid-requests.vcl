@@ -1,7 +1,7 @@
 sub recv_route_uncachable_methods {
   // Requests types that we shouldnt cache
   if (req.request != "HEAD" && req.request != "GET" && req.request != "FASTLYPURGE") {
-    set req.http.x-nyt-force-pass = "true";
+    set req.http.var-nyt-force-pass = "true";
   }
 }
 

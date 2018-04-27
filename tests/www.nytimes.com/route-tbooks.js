@@ -21,7 +21,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'tbooks',
         'x-nyt-backend':'tbooks',
-        'x-nyt-force-pass': 'true',
+        'debug-var-nyt-force-pass': 'true',
       },
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test /tbooks',
@@ -40,7 +40,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'tbooks',
         'x-nyt-backend':'tbooks',
-        'x-nyt-force-pass': 'true',
+        'debug-var-nyt-force-pass': 'true',
       },
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test /tbooks book URL',
@@ -59,7 +59,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'tbooks',
         'x-nyt-backend':'tbooks',
-        'x-nyt-force-pass': 'true',
+        'debug-var-nyt-force-pass': 'true',
       },
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test /tbooks book URL with query params',

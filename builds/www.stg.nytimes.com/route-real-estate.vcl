@@ -6,7 +6,7 @@ sub recv_route_real_estate {
     ) {
         set req.http.x-nyt-route = "real-estate";
         set req.http.x-nyt-backend = "realestate_fe";
-        set req.http.x-nyt-wf-auth = "true";
+        set req.http.var-nyt-wf-auth = "true";
         # if we needed to switch back to NYT5, unset the vi flag
         unset req.http.x--fastly-project-vi;
 
@@ -18,7 +18,7 @@ sub recv_route_real_estate {
             // We want to pass the NYT-S cookie only to the realestate backend
             // becasue of the 8k headers size limit
             set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
-            set req.http.x-nyt-force-pass = "true";
+            set req.http.var-nyt-force-pass = "true";
             #return(pass);
         }
     }

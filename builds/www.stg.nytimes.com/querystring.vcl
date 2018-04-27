@@ -39,7 +39,7 @@ sub recv_querystring {
         # routes will need to do this IN THEIR ROUTE in the future
         # but for now we will not remove the query params for force passes
         # TODO: WE REALLY NEED TO MOVE ALL THIS INTO THE ROUTES SPECIFICALLY
-        && req.http.x-nyt-force-pass != "true"
+        && req.http.var-nyt-force-pass != "true"
         && req.http.x-nyt-route != "switchboard"
         # except from legacy requests
         && req.backend != F_www_legacy_gke
@@ -52,7 +52,7 @@ sub recv_querystring {
         if (req.http.x-nyt-route ~ "^blog") {
             // WP-7352: Don't deal with POST requests
             if (req.request == "POST") {
-                set req.http.x-nyt-force-pass = "true";
+                set req.http.var-nyt-force-pass = "true";
                 #return(pass);
             } else {
                 set req.url = querystring.filter_except(req.url,

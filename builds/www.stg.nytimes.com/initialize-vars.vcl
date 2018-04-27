@@ -41,7 +41,7 @@ sub vcl_recv {
       unset req.http.x-nyt-backend-health;
       unset req.http.x-nyt-backend;
       unset req.http.x-nyt-ttl-override;
-      unset req.http.x-nyt-force-pass;
+      unset req.http.var-nyt-force-pass;
       unset req.http.x-nyt-mobile;
     }
 

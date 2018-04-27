@@ -13,7 +13,7 @@ sub recv_route_programs {
         } else if (req.url.path ~ "^/programs/svc/shaq") {
             set req.http.x-nyt-route = "shaq-service";
             set req.http.x-nyt-backend = "shaq_svc";
-            set req.http.x-nyt-force-pass = "true";
+            set req.http.var-nyt-force-pass = "true";
         } else if (req.url.path ~ "^/programs/" ) {
             set req.http.x-nyt-route = "programs-service";
             set req.http.x-nyt-backend = "programs_svc";

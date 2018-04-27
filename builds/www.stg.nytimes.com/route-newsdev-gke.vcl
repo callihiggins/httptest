@@ -18,7 +18,7 @@ sub recv_route_newsdev_gke {
           || req.url ~ "^/svc/int/grandmominator"
           || req.url ~ "^/svc/int/attribute"
         ) {
-          set req.http.x-nyt-force-pass = "true";
+          set req.http.var-nyt-force-pass = "true";
         } else if ( req.url ~ "^/svc/int/balloteer" ) {
           set req.url = querystring.regfilter(req.url, "^(?!callback)");
         } else if ( req.url ~ "^/svc/int/dialects" ) {

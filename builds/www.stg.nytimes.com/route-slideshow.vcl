@@ -4,7 +4,7 @@ sub recv_route_slideshow {
   if (req.url ~ "^/slideshow/" && !req.http.x-nyt-slideshow-compatibility) {
       set req.http.x-nyt-route = "slideshow";
       set req.http.x-nyt-backend = "slideshow_fe";
-      set req.http.x-nyt-wf-auth = "true";
+      set req.http.var-nyt-wf-auth = "true";
 
       # if we needed to switch back to NYT5, unset the vi flag
       unset req.http.x--fastly-project-vi;
