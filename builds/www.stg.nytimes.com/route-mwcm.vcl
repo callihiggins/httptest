@@ -15,7 +15,7 @@ sub recv_route_mwcm {
             set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
             set req.http.x-nyt-route = "mwcm";
             set req.http.x-nyt-backend = "mwcm";
-            set req.http.X-SendGDPR = "true";
+            set req.http.var-nyt-send-gdpr = "true";
 
             unset req.http.x-nyt-edition;
             unset req.http.x-nyt-s;

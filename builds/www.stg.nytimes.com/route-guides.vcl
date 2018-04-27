@@ -6,7 +6,7 @@ sub recv_route_guides {
     ) {
         set req.http.x-nyt-route = "guides";
         set req.http.x-nyt-backend = "beta_guides";
-        set req.http.X-SendGDPR = "true";
+        set req.http.var-nyt-send-gdpr = "true";
         set req.backend = F_beta_guides;
     }
 

@@ -1,63 +1,146 @@
 # This is a small library of functions intended to facilitate EEA detection at the Fasly layer
 # and signal to downstream consumers for cookie banner purposes and ad display logic
 #
-# The req.http.X-SendGDPR flag is what drives this funtionality.
-# The headers will appear in the response if req.http.X-SendGDPR == "true" is set prior to execution.
-# For a given Fastly service please update each desired route and include this flag to get the headers returned.
-#
 
+#
+# these functions contain logic that is used to
+#   1. geo-locate a client's IP
+#   2. determine if the client is in a country affected by GDPR
+#   3. set a var header, var-cookie-nyt-gdpr, used to hold a value
+#       a. 0 if the user is not affected by GDPR
+#       b. 1 if the users IS affected by GDPR
+#   4. if gdpr=[0|1] is sent as a query parameter it will force the header/cookie for testing
+#
+#   Your fastly service is expected to `set req.http.var-nyt-send-gdpr = "true"` in order
+#   to signify that the GDPR headers and cookies should be sent in the response
+#   this is usually only desirable for content render routes, your service should set
+#   this header in it's routing decisions appropriately.
+#
+#
+# functions exist in this library for various response needs, please see the below docs
+# for information on using these functions in your service properly
+
+# recv_gdpr: this function will set up the state of the user for the rest of the
+#            functions in this library. This function MUST be called for the rest of
+#            the functions to execute properly.
+#
+# call this function in your vcl_recv chain in your service
+# it performs it's logic based on the current state of the user by using
+#    1. the user's IP address
+#    2. the current value of the user's nyt-gdpr cookie if it was sent in the request
+#    3. `gdpr` query parameter used to force the deliver logic for testing purposes.
+#
 sub recv_gdpr {
-    set req.http.x-has-gdpr = "false";
-    set req.http.x-force-gdpr = "false";
+
+    # initialize vars
+    set req.http.var-nyt-has-gdpr = "false";
+    set req.http.var-nyt-force-gdpr = "false";
 
     # If the incoming request had an `nyt-gdpr` cookie with a valid value (0|1)
-    # then we capture that value in req.http.x-nyt-gdpr and mark the request
+    # then we capture that value in req.http.var-cookie-nyt-gdpr and mark the request
     # as having that cookie.
-    if (!req.http.x-nyt-gdpr
+    if (!req.http.var-cookie-nyt-gdpr
         && req.http.Cookie:nyt-gdpr
         && (req.http.Cookie:nyt-gdpr == "0" || req.http.Cookie:nyt-gdpr == "1")
     ) {
-        set req.http.x-has-gdpr = "true";
-        set req.http.x-nyt-gdpr = req.http.Cookie:nyt-gdpr;
+        set req.http.var-nyt-has-gdpr = "true";
+        set req.http.var-cookie-nyt-gdpr = req.http.Cookie:nyt-gdpr;
     }
 
     # If the request didn't have an `nyt-gdpr` cookie present, then we do geo detection
     # and match against the country list to determine whether headers should be sent back
-    if (req.http.x-has-gdpr == "false") {
+    if (req.http.var-nyt-has-gdpr == "false") {
         # set a GDPR value for folks in the country list
         if (client.geo.country_code ~ "AT|BE|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|NL|PL|PT|RO|SK|SI|ES|SE|GB|IS|LI|NO|CH") {
-            set req.http.x-nyt-gdpr = "1";
+            set req.http.var-cookie-nyt-gdpr = "1";
         } else {
-            set req.http.x-nyt-gdpr = "0";
+            set req.http.var-cookie-nyt-gdpr = "0";
         }
     }
 
     # Request that have a query param of gdpr=0 or gdpr=1 can be
     # used to simulate EEA detection for testing purposes. This block
     # is what will parse the query param.
+    # this was requested by implementors
     if (req.url ~ "(?i)\?(?:|.*&)gdpr=([^&]*)") {
         if (re.group.1 == "0" || re.group.1 == "1") {
-            set req.http.x-force-gdpr = "true";
-            set req.http.x-nyt-gdpr = re.group.1;
+            set req.http.var-nyt-force-gdpr = "true";
+            set req.http.var-cookie-nyt-gdpr = re.group.1;
         }
     }
 }
 
-# This can be called from to vcl_recv to enliven a service that can be used as a standalone
-# EEA detection service.
+# deliver_gdpr: typically used for responses for web content routes
+#
+# it sets the following parameters in the HTTP response
+#    1. nyt-gdpr cookie set to values 0 or 1. Expiry in 6 hours. Right now only .nytimes.com domain.
+#    2. x-gdpr response header set to values 0 or 1.
+#
+# this function should be called in your vcl_deliver chain in your service
+# it depends on recv_gdpr execution in vcl_recv to set up state variables
+#
+sub deliver_gdpr {
+
+    # this will either set a new cookie
+    # or extend the existing one to 6 hours
+    # this is only performed
+
+    if (req.http.var-nyt-force-gdpr == "true"
+        || (req.http.var-nyt-send-gdpr == "true" && req.http.var-nyt-has-gdpr == "false")
+    ) {
+        add resp.http.Set-Cookie =
+            "nyt-gdpr=" + req.http.var-cookie-nyt-gdpr + "; "+
+            "Expires=" + time.add(now, 6h) + "; "+
+            "Path=/; "+
+            "Domain=.nytimes.com";
+
+        # set the appropriate response header
+        set resp.http.x-gdpr = req.http.var-cookie-nyt-gdpr;
+    }
+}
+
+# recv_route_svc_gdpr: typically used in native mobile applications
+#
+# This route function can be called in a service's vcl_recv to enliven
+# a route that can be used as a standalone EEA detection service.
+# Typically used by native mobile applications, but any implementation
+# can use this if it is desired.
+#
+# if you do not need this route in your service, feel free to not call it.
+# clients will typically use www.nytimes.com for this.
+#
+# This route relies on recv_gdpr to intialize state
+#
+# CORS is implemented in the following manner
+#
+#   1. nytimes.com/nyt.net/nyt.com Origin allows `*`
+#   2. lack of origin header (Safari bug) allowa `*`
+#   3. GET and OPTIONS methods are allowed
+#
+# the format of the json response is very simple and is as follows:
+#
+#   {"GDPR":0} # user is not in a GDPR affected country
+#   {"GDPR":1} # user is in a GDPR affected country
+#
 sub recv_route_svc_gdpr {
     if (req.url ~ "/svc/gdpr\.json") {
+        set req.http.x-nyt-route = "gdpr_svc";
         error 919 "GDPR service URL";
     }
 }
 
+# error_919_gdpr: helper function for recv_route_svc_gdpr to send a json response
+#                 fastly can only send synthetic responses using vcl_error
+#
+# if you need the GDPR json service enlivened in your fastly service, add this
+# function call to your `vcl_error` as well as `recv_route_svc_gdpr` to your `vcL_recv`
+#
 sub error_919_gdpr {
     # JSON GDPR response
     if (obj.status == 919) {
         set obj.status = 200;
         set obj.http.Content-Type = "application/json; charset=utf-8";
-        set obj.http.x-gdpr = req.http.x-nyt-gdpr;
-        set obj.http.X-API-Version = "GDPR";
+        set obj.http.x-gdpr = req.http.var-cookie-nyt-gdpr;
         if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com)$") {
             ## only allow nyt.net and nytimes.com domain for hace access control
             set obj.http.Access-Control-Allow-Origin = "*";
@@ -70,27 +153,7 @@ sub error_919_gdpr {
             set obj.http.Access-Control-Allow-Methods = "GET, OPTIONS";
         }
         synthetic
-            {"{"GDPR":"} + req.http.x-nyt-gdpr + {"}"};
+            {"{"GDPR":"} + req.http.var-cookie-nyt-gdpr + {"}"};
         return(deliver);
-    }
-}
-
-sub deliver_gdpr {
-
-    # this will either set a new cookie
-    # or extend the existing one to a 6 hours
-    # we will only do this for content pages
-
-    if (req.http.x-force-gdpr == "true"
-        || (req.http.X-SendGDPR == "true" && req.http.x-has-gdpr == "false")
-    ) {
-        add resp.http.Set-Cookie =
-            "nyt-gdpr=" + req.http.x-nyt-gdpr + "; "+
-            "Expires=" + time.add(now, 6h) + "; "+
-            "Path=/; "+
-            "Domain=.nytimes.com";
-
-        # set the appropriate response header
-        set resp.http.x-gdpr = req.http.x-nyt-gdpr;
     }
 }

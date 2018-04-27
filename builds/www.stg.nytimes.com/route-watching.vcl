@@ -13,7 +13,7 @@ sub recv_route_watching {
           }
           set req.backend = F_beta_watching;
           set req.http.x-nyt-backend = "beta_watching";
-          set req.http.X-SendGDPR = "true";
+          set req.http.var-nyt-send-gdpr = "true";
           unset req.http.x-nyt-edition;
           unset req.http.x-nyt-s;
           unset req.http.x-nyt-wpab;

@@ -10,7 +10,7 @@ sub recv_route_switchboard {
   ) {
     set req.http.x-nyt-route = "switchboard";
     set req.http.x-nyt-backend = "switchboard";
-    set req.http.X-SendGDPR = "true";
+    set req.http.var-nyt-send-gdpr = "true";
     unset req.http.Cookie;
     unset req.http.X-Cookie;
   }
