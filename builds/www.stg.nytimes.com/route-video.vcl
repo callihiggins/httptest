@@ -20,6 +20,12 @@ sub recv_route_video {
         set req.http.X-SendGDPR = "true";
     }
 
+    if ( req.url.path ~ "^/video/players/offsite/" ) {
+        set req.http.x-nyt-route = "video-offsite-player";
+        set req.http.x-nyt-backend = "gcs_origin";
+        set req.http.X-SendGDPR = "true";
+    }
+
     if ( req.url ~ "^/svc/video" ) {
         set req.http.x-nyt-route = "video-api";
         set req.http.x-nyt-ttl-override = "30";
@@ -35,8 +41,12 @@ sub hash_route_video {
 }
 
 sub miss_pass_route_video {
-    if(req.http.x-nyt-route == "video-media") {
+    if(!req.backend.is_shield && req.http.x-nyt-route == "video-media") {
       set bereq.http.host = "vp.nyt.com";
+    }
+
+    if (!req.backend.is_shield && req.http.x-nyt-route == "video-offsite-player") {
+        call miss_pass_set_bucket_auth_headers;
     }
 }
 
