@@ -34,6 +34,7 @@ sub recv_querystring {
         && req.http.x-nyt-route != "mwcm"
         && req.http.x-nyt-route != "newsdev-gke"
         && req.http.x-nyt-route != "video-media"
+        && req.http.x-nyt-route != "search-suggest"
         # early lookups and passes were already skipping this previously
         # routes will need to do this IN THEIR ROUTE in the future
         # but for now we will not remove the query params for force passes
@@ -196,6 +197,11 @@ sub recv_querystring {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.x-nyt-route == "vi-search") {
             set req.url = querystring.filter_except(req.url, "query");
+        } else if (req.http.x-nyt-route == "search-suggest") {
+            set req.url = querystring.filter_except(req.url,
+                "query" + querystring.filtersep() +
+                "filter" + querystring.filtersep() +
+                "max");
         } else if (req.http.x-nyt-route == "collections-svc"){
             set req.url = querystring.filter_except(req.url,
                 "dom" + querystring.filtersep() +
