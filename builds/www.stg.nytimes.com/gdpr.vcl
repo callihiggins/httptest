@@ -10,6 +10,8 @@
 #       a. 0 if the user is not affected by GDPR
 #       b. 1 if the users IS affected by GDPR
 #   4. if gdpr=[0|1] is sent as a query parameter it will force the header/cookie for testing
+#      this query parameter is ONLY used for testing to override the EEA detection by IP
+#      client-side code should always use the cookie or header value
 #
 #   Your fastly service is expected to `set req.http.var-nyt-send-gdpr = "true"` in order
 #   to signify that the GDPR headers and cookies should be sent in the response
@@ -22,13 +24,17 @@
 
 # recv_gdpr: this function will set up the state of the user for the rest of the
 #            functions in this library. This function MUST be called for the rest of
-#            the functions to execute properly.
+#            the functions to execute properly. Also, be sure this function is called
+#            before any query parameter filtering logic so that the override parameter
+#            used for testing can be properly captured.
 #
 # call this function in your vcl_recv chain in your service
 # it performs it's logic based on the current state of the user by using
 #    1. the user's IP address
 #    2. the current value of the user's nyt-gdpr cookie if it was sent in the request
 #    3. `gdpr` query parameter used to force the deliver logic for testing purposes.
+#        only use this for overriding the IP, client-side implementation should use the
+#        cookie or header.
 #
 sub recv_gdpr {
 
