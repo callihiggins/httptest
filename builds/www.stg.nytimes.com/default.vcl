@@ -270,6 +270,7 @@ sub vcl_miss {
   call miss_pass_route_adx;
   call miss_pass_route_elections;
   call miss_pass_route_programs;
+  call miss_pass_route_guides;
   call miss_pass_route_tbooks;
   call miss_pass_route_content_api;
   call miss_pass_route_newsdev_gcs;
@@ -289,7 +290,6 @@ sub vcl_miss {
 
   return(fetch);
 }
-
 
 sub vcl_pass {
 #FASTLY pass
@@ -339,9 +339,7 @@ sub vcl_pass {
   call miss_pass_unset_bereq_headers;
 }
 
-
 sub vcl_fetch {
-
 
   # handle 5xx errors from the backend
   call fetch_deliver_stale_on_error;
@@ -476,7 +474,6 @@ sub vcl_error {
 
     return(deliver);
   }
-
 
 }
 
