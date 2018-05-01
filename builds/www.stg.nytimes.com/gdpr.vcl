@@ -147,7 +147,7 @@ sub error_919_gdpr {
         set obj.status = 200;
         set obj.http.Content-Type = "application/json; charset=utf-8";
         set obj.http.x-gdpr = req.http.var-cookie-nyt-gdpr;
-        if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com)$") {
+        if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com|thewirecutter\.com)$") {
             ## only allow nyt.net and nytimes.com domain for hace access control
             set obj.http.Access-Control-Allow-Origin = "*";
             set obj.http.Access-Control-Expose-Headers = "Content-Type";
