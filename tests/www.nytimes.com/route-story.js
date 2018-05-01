@@ -106,7 +106,7 @@ function getScenarioEvents() {
       testId: 4
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      id: 'FunctionalTestScenarsioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -517,7 +517,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'No vistory cookie',
@@ -543,7 +543,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Empty vistory cookie',
@@ -838,7 +838,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'No vistory cookie',
@@ -864,7 +864,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Empty vistory cookie',
@@ -951,7 +951,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff. Not Allocated',
@@ -1023,7 +1023,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
         'fastly-restarts': /1/,
       },
       'responseStatusCode': [200],
@@ -1047,7 +1047,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Not Allocated',
@@ -1070,7 +1070,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Allocated',
@@ -1093,7 +1093,7 @@ function getScenarioEvents() {
         'set-cookie': /\bvistory=[abcz][012][0-9];/,
       },
       'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-api-version': /F-(GA|5-5|VI)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
