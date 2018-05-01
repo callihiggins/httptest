@@ -61,6 +61,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "add-svc"
         || (  req.http.x-nyt-route == "slideshow"
               && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
+        || req.http.x-nyt-route == "vi-slideshow"
         || req.url ~ "^/newsletters"
         || req.url ~ "^/(js|js2|css|bi)/"
         || req.url ~ "^/pages/cooking/" // newsletters
