@@ -24,6 +24,9 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/games/set/v1/puzzles.json',
+      'responseHeadersPresent': [
+        'x-gdpr',
+      ],
       'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /svc/games endpoint',
       'testId': 1,
@@ -42,6 +45,9 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'games-service',
       },
+      'responseHeadersPresent': [
+        'x-gdpr',
+      ],
       'requestScheme': 'https://',
       'requestUri': '/svc/crosswords/v2/puzzle/1.json',
       'responseStatusCode': 200,
@@ -62,6 +68,9 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'games-web',
       },
+      'responseHeadersPresent': [
+        'x-gdpr',
+      ],
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/daily',
       'responseStatusCode': 200,

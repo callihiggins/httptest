@@ -4,11 +4,13 @@ sub recv_route_games {
             set req.http.x-nyt-route = "games-service";
             set req.http.x-nyt-backend = "games_svc";
             set req.http.var-nyt-force-pass = "true";
+            set req.http.var-nyt-send-gdpr = "true";
         }
 
         if (req.url.path ~ "^/puzzles") {
               set req.http.x-nyt-route = "games-phoenix";
               set req.http.x-nyt-backend = "games_phoenix";
+              set req.http.var-nyt-send-gdpr = "true";
 
               // Since we're returning early, we need to do this here for now
               if (!req.http.Fastly-SSL) {
@@ -25,6 +27,7 @@ sub recv_route_games {
 
             set req.http.x-nyt-route = "games-web";
             set req.http.x-nyt-backend = "games_web";
+            set req.http.var-nyt-send-gdpr = "true";
 
             // Since we're returning early, we need to do this here for now
             if (!req.http.Fastly-SSL) {
