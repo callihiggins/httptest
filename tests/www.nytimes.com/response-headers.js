@@ -28,7 +28,6 @@ function getScenarioEvents()
         'x-cache',
         'x-nyt-route',
         'x-served-by',
-        'x-varnishcacheduration',
         'x-gdpr',
       ],
       'responseHeadersNotPresent': [
