@@ -14,6 +14,7 @@ sub recv_querystring {
         && req.http.x-nyt-route != "article" # except from article requests
         && req.http.x-nyt-route != "vi-story" # except from vi-story requests
         && req.http.x-nyt-route != "vi-search" # except from vi-search requests
+        && req.http.x-nyt-route != "vi-homepage" # except from vi-homepage requests
         && req.http.x-nyt-route != "bestsellers" # except from bestseller requests
         && req.http.x-nyt-route != "newsdev-gke" #except from newsdev
         && req.http.x-nyt-route != "intl"
@@ -197,6 +198,8 @@ sub recv_querystring {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.x-nyt-route == "vi-search") {
             set req.url = querystring.filter_except(req.url, "query");
+        } else if (req.http.x-nyt-route == "vi-homepage") {
+            set req.url = querystring.filter_except(req.url, "alphalayoutB");
         } else if (req.http.x-nyt-route == "search-suggest") {
             set req.url = querystring.filter_except(req.url,
                 "query" + querystring.filtersep() +
