@@ -10,10 +10,18 @@ sub recv_route_slideshow {
       unset req.http.x--fastly-project-vi;
   }
 
+  // Route slideshow 2017 to Project Vi.
+  if (req.url ~ "^/slideshow/2017/") {
+      set req.http.x-nyt-route = "vi-slideshow";
+      set req.http.x-nyt-backend = "projectvi_fe";
+      set req.http.x-nyt-wf-auth = "true";
+      set req.http.x--fastly-project-vi = "1";
+  }
+
   // slideshow JSON files
   if (req.url ~ "\.slideshow\.json$") {
-    set req.http.x-nyt-route = "legacy-gke";
-    set req.http.x-nyt-backend = "www_legacy_gke";
+      set req.http.x-nyt-route = "legacy-gke";
+      set req.http.x-nyt-backend = "www_legacy_gke";
   }
 }
 
