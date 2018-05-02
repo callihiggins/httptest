@@ -16,6 +16,42 @@ function getScenarioEvents() {
         sbx: false
       },
       requestScheme: 'https://',
+      requestUri: '/slideshow/2017/01/01/us/slug.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-nyt-route': 'legacy-gke'
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test slideshow; Internal HTTPS enabled',
+      testId: 1
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true,
+        sbx: false
+      },
+      requestScheme: 'https://',
+      requestUri: '/slideshow/2017/01/01/us/slug.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'www_legacy_gke',
+        'x-nyt-route': 'legacy-gke'
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
+      testId: 1
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true,
+        sbx: false
+      },
+      requestScheme: 'https://',
       requestUri: '/slideshow/2016/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
@@ -123,12 +159,13 @@ function getScenarioEvents() {
         dev: false,
         sbx: false
       },
+      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'https://',
       requestUri:
         '/slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html',
       responseHeaderMatches: {
-        'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-api-version': 'F-GS',
+        'x-nyt-route': 'slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:

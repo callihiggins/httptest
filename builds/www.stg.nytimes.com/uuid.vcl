@@ -13,7 +13,6 @@ sub vcl_deliver {
         || req.http.x-nyt-route == "homepage"
         || req.http.x-nyt-route == "vi-homepage"
         || req.http.x-nyt-route == "vi-interactive"
-        || req.http.x-nyt-route == "vi-slideshow"
         || req.http.x-nyt-route == "newsletter"
         || req.http.x-nyt-route == "paidpost"
         || req.http.x-nyt-route == "real-estate"
