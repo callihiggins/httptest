@@ -282,6 +282,50 @@ function getScenarioEvents() {
       scenarioDescription:
         'Test slideshow2007 slideshow fallback to NYT4 ESX, /slideshow/2007/10/10/nytfrontpage/20071010POD_7.html',
       testId: 108
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
+      },
+      requestHeaders: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'slideshow_fe',
+        'x-nyt-route': 'slideshow'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Test slideshow; HTTPS enabled; Internet Explorer, /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html ',
+      testId: 109
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
+      },
+      requestHeaders: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'slideshow_fe',
+        'x-nyt-route': 'slideshow'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Test slideshow; HTTPS enabled; Internet Explorer, /slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html ',
+      testId: 110
     }
   ];
 
