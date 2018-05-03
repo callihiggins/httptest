@@ -10,8 +10,8 @@ sub recv_route_slideshow {
       unset req.http.x--fastly-project-vi;
   }
 
-  // Route slideshow 2017 to Project Vi.
-  if (req.url ~ "^/slideshow/2017/") {
+  // Route slideshow 2017 onwards to Project Vi.
+  if (req.url ~ "^/slideshow/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/") {
       set req.http.x-nyt-route = "vi-slideshow";
       set req.http.x-nyt-backend = "projectvi_fe";
       set req.http.x-nyt-wf-auth = "true";

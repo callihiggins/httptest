@@ -12,8 +12,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/slideshow/2016/01/01/us/slug.html',
@@ -30,8 +29,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/slideshow/2015/01/01/us/slug.html',
@@ -48,8 +46,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/slideshow/2014/01/01/us/slug.html',
@@ -66,8 +63,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/slideshow/2013/01/01/us/slug.html',
@@ -84,8 +80,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/slideshow/2001/01/01/us/slug.html',
@@ -102,8 +97,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: false,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/slideshow/2005/01/01/us/slug.html',
@@ -120,8 +114,26 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
-        sbx: false
+        dev: false
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Test slideshow; HTTPS enabled, /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html ',
+      testId: 99
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
       },
       requestScheme: 'https://',
       requestUri:
@@ -140,8 +152,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
-        sbx: false
+        dev: false
       },
       requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'https://',
@@ -161,8 +172,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
-        sbx: false
+        dev: false
       },
       requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'https://',
@@ -182,8 +192,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: false,
-        sbx: false
+        dev: false
       },
       requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'https://',
@@ -203,8 +212,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: false,
-        sbx: false
+        dev: false
       },
       requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'http://',
@@ -223,8 +231,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: false,
-        sbx: false
+        dev: false
       },
       requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'http://',
@@ -243,8 +250,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: false,
-        sbx: false
+        dev: false
       },
       requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'http://',
@@ -263,8 +269,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: false,
-        dev: false,
-        sbx: false
+        dev: false
       },
       requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'http://',
