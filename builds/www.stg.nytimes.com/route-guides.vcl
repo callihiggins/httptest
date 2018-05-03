@@ -21,5 +21,7 @@ sub set_guides_frontend_host {
         set bereq.http.host = "frontend.guides.stg.nyt.net";
     } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "frontend.guides.stg.nyt.net";
+    } else {
+        set bereq.http.host = "frontend.guides.prd.nyt.net";
     }
 }

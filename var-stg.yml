@@ -103,7 +103,7 @@ backends:
     healthcheck:
       host: "frontend.guides.stg.nyt.net"
       path: "/api/health"
-      check_interval: "5000"
+      check_interval: "20000"
       expected_response: "200"
       initial: "4"
       threshold: "4"
