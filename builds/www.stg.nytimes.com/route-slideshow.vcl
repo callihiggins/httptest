@@ -10,10 +10,14 @@ sub recv_route_slideshow {
       unset req.http.x--fastly-project-vi;
   }
 
-  // Route slideshow 2017 onwards to Project Vi, but only if it's not IE.
+  // Route slideshow 2017 onwards to Project Vi.
   //
-  // IE users can't have fun.
-  if (req.url ~ "^/slideshow/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" && req.http.User-Agent !~ " Trident/\d") {
+  // Except for realestate slideshows, because of $$$$$$$$$ (or, there's an
+  // ad format that's being used by the realestate team and it's currently
+  // not supported on Vi).
+  //
+  // TODO(fsouza): remove the realestate hack once backend is fixed.
+  if (req.url ~ "^/slideshow/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" && req.url !~ "/realestate/") {
       set req.http.x-nyt-route = "vi-slideshow";
       set req.http.x-nyt-backend = "projectvi_fe";
       set req.http.x-nyt-wf-auth = "true";
