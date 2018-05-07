@@ -98,6 +98,9 @@ sub vcl_recv {
   # begin routing logic
   # SET DEFAULT BACKEND FIRST
   call recv_set_default_backend;
+  # calling the GDPR setup prior to routes to capture cookie and
+  # query params prior to potentially being stripped by a route
+  call recv_gdpr;
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
   call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
@@ -154,7 +157,6 @@ sub vcl_recv {
   call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
 
-  call recv_gdpr;
   call recv_route_svc_gdpr;
 
   # at this point all routing decisions should be final
