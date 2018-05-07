@@ -17,7 +17,8 @@ sub recv_route_slideshow {
   // not supported on Vi).
   //
   // TODO(fsouza): remove the realestate hack once backend is fixed.
-  if (req.url ~ "^/slideshow/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" && req.url !~ "/realestate/") {
+  // TODO(fsouza): remove the IE hack once the backend is fixed.
+  if (req.url ~ "^/slideshow/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))/" && req.url !~ "/realestate/" && req.http.User-Agent !~ " Trident/\d") {
       set req.http.x-nyt-route = "vi-slideshow";
       set req.http.x-nyt-backend = "projectvi_fe";
       set req.http.x-nyt-wf-auth = "true";
@@ -56,6 +57,10 @@ sub hash_route_slideshow {
   # incase of slideshow fallback to NYT4, update the hash key for restart
   if (req.http.x-nyt-slideshow-compatibility) {
     set req.hash += req.http.x-nyt-slideshow-compatibility;
+  }
+
+  if (req.url ~ "^/slideshow/") {
+    set req.hash += req.http.x-nyt-route;
   }
 
 }
