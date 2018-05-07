@@ -1,6 +1,17 @@
 var suite = require('/lib/suite.js');
 var scenarios = getScenarioEvents();
+var scenariosWithBodyHandler = getScenariosWithBodyHandlerEvents();
 suite.run(suite, scenarios);
+suite.run(suite, scenariosWithBodyHandler, bodyHandler);
+
+/**
+ * @return void
+ */
+function bodyHandler(s, t, body, response)
+{
+  t.ok(body.indexOf('<Code>NoSuchKey</Code>') === -1, '404 page is not a GCS "NoSuchCode" error page');
+  t.ok(body.indexOf('<html') > -1, '404 page has an html tag');
+}
 
 /**
  * @return array
@@ -132,26 +143,6 @@ function getScenarioEvents()
       'testId': 5,
     },
     {
-      'id': 'FunctionalTestScenarioDefinitionForGCSPage404Cache',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/interactive/projects/page-that-does-not-exist',
-      'responseHeadersNotPresent': [
-        'cache-control'
-      ],
-      'responseHeaderMatches': {
-        'x-nyt-backend': 'gcs_origin',
-        'x-nyt-route': 'newsdev-gcs',
-      },
-      'responseStatusCode': 404,
-      'scenarioDescription': 'Test gcs 404 cache',
-      'testId': 6,
-    },
-    {
       'id': 'FunctionalTestScenarioDefinitionForGCSPageConversationPiecesRouting',
       'isDeployedInEnv': {
         'prd': true,
@@ -208,44 +199,96 @@ function getScenarioEvents()
       'scenarioDescription': 'Room for debate detail',
       'testId': 9,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/projects/modern-love/36-questions/',
+      'responseHeaderMatches': {
+        'x-frame-options': 'DENY',
+        'x-nyt-route': 'newsdev-gcs',
+        'x-nyt-backend': 'gcs_origin',
+      },
+      'responseHeadersPresent': [
+        'age',
+        'x-cache',
+        'x-served-by',
+      ],
+      'responseHeadersNotPresent': [
+        'nnCoection',
+        'via',
+        'x-age',
+        'x-backend',
+        'x-detectedruntimeconfigflag',
+        'x-esi-status',
+        'x-hash',
+        'x-origin-server',
+        'x-powered-by',
+        'x-servername',
+        'x-servername2',
+        'x-varnish',
+        'x-varnishcacheduration',
+      ],
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test NYTimes Interactive Modern Love',
+      'testId': 10,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForGCS404PageDirect',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/projects/404.html',
+      'responseHeadersPresent': [
+        'cache-control'
+      ],
+      'responseHeaderMatches': {
+        'x-nyt-backend': 'gcs_origin',
+        'x-nyt-route': 'newsdev-gcs',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test gcs "404" page directly',
+      'testId': 11,
+    },
+  ];
+
+  return scenarios;
+}
+
+/**
+ * @return array
+ */
+function getScenariosWithBodyHandlerEvents()
 {
-    'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-    'isDeployedInEnv': {
-      'prd': true,
-      'stg': true,
-      'dev': true,
-    },
-    'requestScheme': 'https://',
-    'requestUri': '/interactive/projects/modern-love/36-questions/',
-    'responseHeaderMatches': {
-      'x-frame-options': 'DENY',
-      'x-nyt-route': 'newsdev-gcs',
-      'x-nyt-backend': 'gcs_origin',
-    },
-    'responseHeadersPresent': [
-      'age',
-      'x-cache',
-      'x-served-by',
-    ],
-    'responseHeadersNotPresent': [
-      'nnCoection',
-      'via',
-      'x-age',
-      'x-backend',
-      'x-detectedruntimeconfigflag',
-      'x-esi-status',
-      'x-hash',
-      'x-origin-server',
-      'x-powered-by',
-      'x-servername',
-      'x-servername2',
-      'x-varnish',
-      'x-varnishcacheduration',
-    ],
-    'responseStatusCode': [200,404],
-    'scenarioDescription': 'Test NYTimes Interactive Modern Love',
-    'testId': 10,
-  },
+  var scenarios = [
+    {
+      'id': 'FunctionalTestScenarioDefinitionForGCSPage404Cache',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/projects/page-that-does-not-exist',
+      'responseHeadersPresent': [
+        'cache-control'
+      ],
+      'responseHeaderMatches': {
+        'x-nyt-backend': 'gcs_origin',
+        'x-nyt-route': 'newsdev-gcs',
+        'fastly-restarts': '1'
+      },
+      'responseStatusCode': 404,
+      'scenarioDescription': 'Test gcs 404 cache',
+      'testId': 6,
+    }
   ];
 
   return scenarios;

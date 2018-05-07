@@ -15,7 +15,7 @@ sub recv_route_newsdev_gcs {
     # Redirect to https before updating req.http.host header
     if ( !req.http.Fastly-SSL ) {
       call redirect_to_https;
-    } 
+    }
   }
 }
 
@@ -29,12 +29,6 @@ sub fetch_route_newsdev_gcs {
 
     # stale-while-revalidate override
     set beresp.http.x-nyt-stale-while-revalidate = "30";
-
-    # GCS 404's are private; max-age=0 override that for this route
-    # so that it uses the default TTL for 404's
-    if(beresp.status == 404){
-      unset beresp.http.cache-control;
-    }
   }
 }
 
@@ -44,6 +38,26 @@ sub miss_pass_route_newsdev_gcs {
     if(!req.backend.is_shield) {
         set bereq.url = regsub(bereq.url, "^/images/", "/");
         call miss_pass_set_bucket_auth_headers;
+    }
+  }
+}
+
+sub deliver_route_newsdev_gcs_error {
+  if (req.http.x-nyt-route == "newsdev-gcs") {
+    # This GCS backend is private so the 404 page cannot be configured
+    # and is xml, so load a custom 404 by restarting the request
+    # By restarting the request with an additional header that is
+    # handled by the receiver
+    if (resp.status == 404 && req.restarts < 1) {
+      set req.http.x-nyt-gcs-404 = "true";
+      set req.url = "/interactive/projects/404.html";
+      restart;
+    }
+
+    # Since the custom 404 page is successfully found,
+    # restore the original status code
+    if (req.http.x-nyt-gcs-404 && req.restarts > 0) {
+      set resp.status = 404;
     }
   }
 }
