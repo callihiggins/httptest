@@ -311,14 +311,14 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri:
-        '/slideshow/2017/08/22/realestate/slides-headline.html',
+        '/slideshow/2017/08/22/realestate/slides-headline/s/22METS-1503371668421.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GS',
         'x-nyt-route': 'slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Test slideshow; HTTPS enabled; realestate, /slideshow/2017/08/22/realestate/slides-headline.html',
+        'Test slideshow; HTTPS enabled; realestate, /slideshow/2017/08/22/realestate/slides-headline/s/22METS-1503371668421.html',
       testId: 110
     }
   ];
