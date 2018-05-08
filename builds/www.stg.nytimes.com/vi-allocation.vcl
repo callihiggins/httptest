@@ -142,8 +142,8 @@ sub recv_vi_allocation_init {
         else                      { set var.test_group_story = "z0"; } # default to ctrl grp
     } else {
         # use Abra-style allocation, like so:
-        # 0..50%:       "a0" (Story on VI except incompatible)
-        # 50..50%:      "b0" (nyt5 bucketed for reporting)
+        # 0..75%:       "a0" (Story on VI except incompatible)
+        # 25..50%:      "b0" (nyt5 bucketed for reporting)
         # 50..100%:     "c0" (nyt5 bucketed for reporting)
         # 100..100%:    "z0" (nyt5 bucketed for reporting)
 
@@ -152,7 +152,7 @@ sub recv_vi_allocation_init {
         set var.dart = std.strtol(var.hash, 16);
 
         # at launch the values will be updated to match comments
-        if (var.dart < 2147483648) { # 50% * 0x100000000
+        if (var.dart < 3221225472) { # 75% * 0x100000000
             set var.test_group_story = "a0"; # Getting VI response
         } else if (var.dart < 2147483648) { # 50% * 0x100000000
             set var.test_group_story = "b0"; # Not getting VI response
