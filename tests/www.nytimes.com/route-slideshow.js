@@ -379,8 +379,8 @@ function getScenarioEvents() {
       requestUri:
         '/slideshow/2018/02/15/dining/the-pool/s/15-slideshow-1.html',
       responseHeaderMatches: {
-        'x-nyt-backend': 'slideshow_fe',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -401,8 +401,8 @@ function getScenarioEvents() {
       requestUri:
         '/slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html',
       responseHeaderMatches: {
-        'x-nyt-backend': 'slideshow_fe',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
