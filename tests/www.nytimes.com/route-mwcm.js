@@ -668,6 +668,23 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for newsindia',
       'testId': 26,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': false,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/marketing/gdpr/tests/fastly.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM /marketing/gdpr headers test',
+      'testId': 27,
+    }
   ];
 
   return scenarios;

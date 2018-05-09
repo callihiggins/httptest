@@ -4,8 +4,12 @@ sub recv_route_mwcm {
     if (req.http.x-nyt-canonical-www-host == "true") {
         if (    req.url == "/subscription"  ||
                 req.url ~ "^/subscription/"  ||
-                req.url == "/marketing"  ||
-                req.url ~ "^/marketing/"  ||
+                (   req.url == "/marketing"  &&
+                    req.url != "/marketing/gdpr"
+                ) ||
+                (   req.url ~ "^/marketing/"  &&
+                    req.url !~ "/marketing/gdpr/"
+                ) ||
                 req.url == "/services/mobile" ||
                 req.url ~ "^/services/mobile/" ||
                 req.url == "/subscriptions" ||
@@ -24,11 +28,25 @@ sub recv_route_mwcm {
             unset req.http.cookie;
 
             if (req.url == "/subscriptions" || req.url ~ "^/subscriptions/") {
+                # excludes "ptr" query string parameter.
                 set req.url = querystring.filter_except(req.url, "ptr");
             } else {
-                set req.url = querystring.remove(req.url);
+                # excludes "exclude_optimizely", "exclude_jsonkidd", "exclude_abra" qs parameters 
+                set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra)$");
             }
         }
+
+        if (    req.url ~ "^/marketing/gdpr/" ||
+                req.url == "/marketing/gdpr"  
+            ) {
+
+            set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
+            set req.http.x-nyt-route = "mwcm";
+            set req.http.x-nyt-backend = "mwcm";
+            set req.http.var-nyt-send-gdpr = "true";
+        }
+        # sorts all the query parameters. 
+        set req.url = querystring.sort(req.url);
     }
 }
 
