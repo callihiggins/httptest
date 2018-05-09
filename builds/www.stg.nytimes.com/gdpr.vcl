@@ -41,6 +41,18 @@ sub recv_gdpr {
     # initialize vars
     set req.http.var-nyt-has-gdpr = "false";
     set req.http.var-nyt-force-gdpr = "false";
+    set req.http.var-nyt-has-nyt-t = "false";
+
+    # If the incoming request had an `nyt-t` cookie with a valid value ("ok"|"out")
+    # then we capture that value in req.http.var-cookie-nyt-t and mark the request
+    # as having that cookie.
+    if (!req.http.var-cookie-nyt-t
+        && req.http.Cookie:NYT-T
+        && (req.http.Cookie:NYT-T == "ok" || req.http.Cookie:NYT-T == "out")
+    ) {
+        set req.http.var-nyt-has-nyt-t = "true";
+        set req.http.var-cookie-nyt-t = req.http.Cookie:NYT-T;
+    }
 
     # If the incoming request had an `nyt-gdpr` cookie with a valid value (0|1)
     # then we capture that value in req.http.var-cookie-nyt-gdpr and mark the request
@@ -119,7 +131,7 @@ sub deliver_gdpr {
 #
 # CORS is implemented in the following manner
 #
-#   1. nytimes.com/nyt.net/nyt.com Origin allows `*`
+#   1. nytimes.com/nyt.net/nyt.com/thewirecutter.com Origin allows `*`
 #   2. lack of origin header (Safari bug) allowa `*`
 #   3. GET and OPTIONS methods are allowed
 #
@@ -160,6 +172,80 @@ sub error_919_gdpr {
         }
         synthetic
             {"{"GDPR":"} + req.http.var-cookie-nyt-gdpr + {"}"};
+        return(deliver);
+    }
+}
+
+# recv_route_svc_amp_gdpr: typically used by AMP articles
+#
+# This route function can be called in a service's vcl_recv to enliven
+# a route that can be used as a standalone EEA detection service.
+# Typically used by AMP articles, but any implementation
+# can use this if it is desired.
+#
+# if you do not need this route in your service, feel free to not call it.
+# clients will typically use www.nytimes.com for this.
+#
+# This route relies on recv_gdpr to intialize state
+#
+# CORS is implemented in the following manner
+#
+#   1. nytimes.com/nyt.net/nyt.com/google.com Origin allows `*`
+#   2. lack of origin header (Safari bug) allowa `*`
+#   3. GET, OPTIONS and POST methods are allowed
+#
+# ref: https://ampbyexample.com/user_consent/basic_user_consent_flow/#basic-usage
+# the format of the json response is very simple and is as follows:
+#
+#   {"promptIfUnknown":false} # user is not in a GDPR affected country
+#   {"promptIfUnknown":true} # user is in a GDPR affected country and
+#   user doesn't have an NYT-T cookie or value is set to "out"
+#
+sub recv_route_svc_amp_gdpr {
+    if (req.url ~ "/svc/amp-consent\.json") {
+        set req.http.x-nyt-route = "amp_consent_gdpr_svc";
+        error 918 "GDPR service URL";
+    }
+}
+
+# error_918_amp_gdpr: helper function for recv_route_svc_gdpr to send a json response
+#                 fastly can only send synthetic responses using vcl_error
+#
+# if you need the GDPR json service enlivened in your fastly service, add this
+# function call to your `vcl_error` as well as `recv_route_svc_gdpr` to your `vcL_recv`
+#
+sub error_918_amp_gdpr {
+    # JSON GDPR response
+    if (obj.status == 918) {
+        set obj.status = 200;
+        set obj.http.Content-Type = "application/json; charset=utf-8";
+        if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com|google\.com)$") {
+            ## only allow nyt.net and nytimes.com domain for hace access control
+            set obj.http.Access-Control-Allow-Origin = "*";
+            set obj.http.Access-Control-Expose-Headers = "Content-Type";
+            set obj.http.Access-Control-Allow-Methods = "GET, OPTIONS, POST";
+        } else if (!req.http.Origin || req.http.Origin == "null" ) {
+            ## this is to support IOS requests. They don't send Header Origin
+            set obj.http.Access-Control-Allow-Origin = "*";
+            set obj.http.Access-Control-Expose-Headers = "Content-Type";
+            set obj.http.Access-Control-Allow-Methods = "GET, OPTIONS, POST";
+        }
+
+        if (req.http.var-cookie-nyt-gdpr == "1") {
+            if (req.http.var-nyt-has-nyt-t == "false") {
+                set req.http.var-amp-gdpr = "true";
+            } else if (req.http.var-nyt-has-nyt-t == "true" && req.http.var-cookie-nyt-t == "out") {
+                set req.http.var-amp-gdpr = "true";
+            } else {
+                set req.http.var-amp-gdpr = "false";
+            }
+        } else {
+            set req.http.var-amp-gdpr = "false";
+        }
+        set obj.http.x-nyt-amp-consent = req.http.var-amp-gdpr;
+
+        synthetic
+            {"{"promptIfUnknown":"} + req.http.var-amp-gdpr + {"}"};
         return(deliver);
     }
 }

@@ -11,8 +11,8 @@ function getScenarioEvents()
   var scenarios = [
 
     /*
-     *  Various nyt-gdpr sanity checks. We try for at least 128 bits entropy in
-     *  the Agent ID, which means 22 chars at 6 bits per char of base64.
+     *  Various nyt-gdpr sanity checks.
+     *  And standalone GDPR service validations.
      */
 
     {
@@ -169,7 +169,114 @@ function getScenarioEvents()
         'x-gdpr': /(0|1)/,
       },
       'responseStatusCode': 200,
-      'testId': 7,
+      'testId': 8,
+    },
+    {
+      'scenarioDescription': 'GDPR AMP service endpoint. No NYT-T cookie. No nyt-gdpr cookie.',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/amp-consent.json',
+      'responseHeaderPattern': {
+        'x-nyt-amp-consent': /false/,
+      },
+      'responseStatusCode': 200,
+      'testId': 9,
+    },
+    {
+      'scenarioDescription': 'GDPR AMP service endpoint. No NYT-T cookie. nyt-gdpr=0 cookie.',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/amp-consent.json?gdpr=0',
+      'requestHeaderCookie': ['nyt-gdpr=0'],
+      'responseHeaderPattern': {
+        'x-nyt-amp-consent': /false/,
+      },
+      'responseStatusCode': 200,
+      'testId': 10,
+    },
+    {
+      'scenarioDescription': 'GDPR AMP service endpoint. No NYT-T cookie. nyt-gdpr=1 cookie.',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/amp-consent.json?gdpr=1',
+      'requestHeaderCookie': ['nyt-gdpr=1'],
+      'responseHeaderPattern': {
+        'x-nyt-amp-consent': /true/,
+      },
+      'responseStatusCode': 200,
+      'testId': 11,
+    },
+    {
+      'scenarioDescription': 'GDPR AMP service endpoint. NYT-T=ok cookie. nyt-gdpr=0 cookie.',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/amp-consent.json?gdpr=0',
+      'requestHeaderCookie': ['NYT-T=ok', 'nyt-gdpr=0'],
+      'responseHeaderPattern': {
+        'x-nyt-amp-consent': /false/,
+      },
+      'responseStatusCode': 200,
+      'testId': 12,
+    },
+    {
+      'scenarioDescription': 'GDPR AMP service endpoint. NYT-T=ok cookie. nyt-gdpr=1 cookie.',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/amp-consent.json?gdpr=1',
+      'requestHeaderCookie': ['NYT-T=ok', 'nyt-gdpr=1'],
+      'responseHeaderPattern': {
+        'x-nyt-amp-consent': /false/,
+      },
+      'responseStatusCode': 200,
+      'testId': 13,
+    },
+    {
+      'scenarioDescription': 'GDPR AMP service endpoint. NYT-T=out cookie. nyt-gdpr=1 cookie.',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/svc/amp-consent.json?gdpr=1',
+      'requestHeaderCookie': ['NYT-T=out', 'nyt-gdpr=1'],
+      'responseHeaderPattern': {
+        'x-nyt-amp-consent': /true/,
+      },
+      'responseStatusCode': 200,
+      'testId': 14,
     },
   ];
 

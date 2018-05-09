@@ -101,6 +101,8 @@ sub vcl_recv {
   # calling the GDPR setup prior to routes to capture cookie and
   # query params prior to potentially being stripped by a route
   call recv_gdpr;
+  call recv_route_svc_gdpr;
+  call recv_route_svc_amp_gdpr;
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
   call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
@@ -156,8 +158,6 @@ sub vcl_recv {
   call recv_route_newsdev_cloud_functions;  # contains sub route of recv_route_newsdev_gke
   call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
-
-  call recv_route_svc_gdpr;
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
@@ -462,6 +462,7 @@ sub vcl_error {
   call error_900_route_esi_jsonp_callback;
   call error_995_route_health_service;
   call error_901_to_906_route_userinfo;
+  call error_918_amp_gdpr;
   call error_919_gdpr;
 
   # handle 5xx errors if the error handler was called
