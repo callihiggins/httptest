@@ -335,8 +335,8 @@ function getScenarioEvents() {
       requestUri:
         '/slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html',
       responseHeaderMatches: {
-        'x-nyt-backend': 'slideshow_fe',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -357,8 +357,8 @@ function getScenarioEvents() {
       requestUri:
         '/slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html',
       responseHeaderMatches: {
-        'x-nyt-backend': 'slideshow_fe',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
