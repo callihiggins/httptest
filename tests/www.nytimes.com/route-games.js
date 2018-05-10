@@ -526,7 +526,7 @@ function getScenarioEvents()
         'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
-      responseStatusCode: [200, 404],
+      responseStatusCode: [200, 403, 404],
       scenarioDescription: 'Test legacy; www-apps cluster; crosswords; archive',
       testId: '6d'
     },
