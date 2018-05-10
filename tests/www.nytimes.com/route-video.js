@@ -143,6 +143,9 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'video-offsite-player',
       },
+      'responseHeadersNotPresent': [
+        'x-frame-options',
+      ],
       'requestScheme': 'https://',
       'requestUri': '/video/players/offsite/index.html?videoId=100000003586257',
       'responseStatusCode': 200,

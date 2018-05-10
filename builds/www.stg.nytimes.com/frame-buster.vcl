@@ -8,6 +8,7 @@ sub vcl_deliver {
     	&& 	req.url !~ "^/ads/"
 	&&  	req.url !~ "^/newsletters/regilite/"
 	&&	req.url !~ "^/newsgraphics/"
+	&&	req.url !~ "^/video/players/offsite/"
     	){
 
     	# not in the whitelist, check the Referer
