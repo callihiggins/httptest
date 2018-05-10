@@ -15,7 +15,8 @@
 #   HP only:                    Abra  0.5%       => "e2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-serv"
 #   HP only:                    Abra  0.5%       => "f2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-orig"
 #                                                               (^ Full server side rendered home AB test)
-#   `vi_www_hp` cookie meaning:
+#
+#   `vi_www_hp` cookie (not read; used ONLY to signal to frontend JavaScript):
 #       z = nyt5            1 = report for WP_ProjectVi     [0-9] = last digit of year in
 #       a = vi              2 = report for WP_ProjectVi_www_hp      which cookie will expire
 #       b = vi              0 = don't report
@@ -25,13 +26,19 @@
 #       e = vi with server-rendered homepage (added Feb. 2018)
 #       f = vi (added Feb. 2018)
 #
-#   `vi_www_hp_opt` cookie meaning:
+#   `vi_www_hp_opt` cookie meaning (handled elsewhere):
 #       1 = force vi homepage
 #       0 = opt out vi homepage
 #
-#   `vi_story_opt` cookie meaning:
+#   `vi_story_opt` cookie meaning (handled elsewhere):
 #       1 = force vi stories
 #       0 = opt out vi stories
+#
+#   `ab7` cookie can also be used to override ABRA allocation into any
+#   variation of homepage and story tests, consistent with other ABRA
+#   implementations, but can only be used by clients with internal NYT IPs
+#   (unlike `vi_www_hp_opt` and `vi_story_opt`, which do not appear to be
+#   IP-restricted).
 
 sub recv_vi_allocation_init {
     declare local var.hash STRING;
@@ -141,11 +148,11 @@ sub recv_vi_allocation_init {
         if (re.group.1 == "st")   { set var.test_group_story = "a0"; } # translate to equiv.
         else                      { set var.test_group_story = "z0"; } # default to ctrl grp
     } else {
-        # use Abra-style allocation, like so:
-        # 0..100%:      "a0" (Story on VI except incompatible)
-        # 100..0%:      "b0" (nyt5 bucketed for reporting)
-        # 50..100%:     "c0" (nyt5 bucketed for reporting)
-        # 100..100%:    "z0" (nyt5 bucketed for reporting)
+        # use Abra-style allocation, like so:                                           <https://github.com/nytm/vi-rollout-abra-reporting-js>
+        # 0..100%:      "a0" - Vi test group, receives Vi story (except incompatble)    WP_ProjectVi_story_desktop=sd
+        # 100..100%:    "b0" - Vi holdout, receives NYT5 (except Vi-only)               WP_ProjectVi_story_desktop=sdh
+        # 100..100%:    "c0" - NYT5 test group, receives NYT5 (except Vi-only)          WP_ProjectVi_story_desktop=nyt5
+        # 100..100%:    "z0" - NYT5 holdout, receives NYT5 (except Vi-only)             WP_ProjectVi_story_desktop=nyt5h
 
         set var.hash = digest.hash_sha256(req.http.x-nyt-a + " WP_ProjectVi_Story");
         set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
@@ -154,12 +161,12 @@ sub recv_vi_allocation_init {
         # at launch the values will be updated to match comments
         if (var.dart < 4294967296) { # 100% * 0x100000000
             set var.test_group_story = "a0"; # Getting VI response
-        } else if (var.dart < 2147483648) { # 50% * 0x100000000
-            set var.test_group_story = "b0"; # Not getting VI response
-        } else if (var.dart < 4294967296) { # 100% * 0x100000000
-            set var.test_group_story = "c0"; # Not getting VI response
-        } else { # var.dart < 0x100000000
-            set var.test_group_story = "z0"; # Not getting VI response
+        # } else if (var.dart < 4294967296) { # 100% * 0x100000000
+        #     set var.test_group_story = "b0"; # Not getting VI response
+        # } else if (var.dart < 4294967296) { # 100% * 0x100000000
+        #     set var.test_group_story = "c0"; # Not getting VI response
+        # } else { # var.dart < 0x100000000
+        #     set var.test_group_story = "z0"; # Not getting VI response
         }
     }
 
