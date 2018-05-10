@@ -20,6 +20,8 @@ sub recv_route_games {
               // Games need cookies and until we sort out our mess with cookies we need to pass requests
               // to the apps
               set req.http.var-nyt-force-pass = "true";
+              // Send x-gdpr header value to backend server
+              set req.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
         }
 
         if (req.url.path ~ "^/crosswords" &&
@@ -37,6 +39,8 @@ sub recv_route_games {
             // Games need cookies and until we sort out our mess with cookies we need to pass requests
             // to the apps
             set req.http.var-nyt-force-pass = "true";
+            // Send x-gdpr header value to backend server
+            set req.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
         }
 
         // We can treat the games assets as everything else and cache those (no cookies needed there)
@@ -64,6 +68,8 @@ sub recv_route_games {
                 call redirect_to_https;
             }
             set req.http.var-nyt-force-pass = "true";
+            // Send x-gdpr header value to backend server
+            set req.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
         }
     }
 }
