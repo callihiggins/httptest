@@ -197,7 +197,11 @@ sub recv_querystring {
         } else if (req.http.x-nyt-route == "vi-story") {
             set req.url = querystring.filter_except(req.url, "nytapp");
         } else if (req.http.x-nyt-route == "vi-search") {
-            set req.url = querystring.filter_except(req.url, "query");
+            set req.url = querystring.filter_except(req.url,
+                "query" + querystring.filtersep() +
+                "startDate" + querystring.filtersep() +
+                "endDate" + querystring.filtersep() +
+                "sort");
         } else if (req.http.x-nyt-route == "vi-homepage") {
             set req.url = querystring.filter_except(req.url, "alphalayoutB");
         } else if (req.http.x-nyt-route == "search-suggest") {
