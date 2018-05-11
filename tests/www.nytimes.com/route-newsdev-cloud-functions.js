@@ -28,7 +28,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForUnsubscribeNewsdevCloudFunctions',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
