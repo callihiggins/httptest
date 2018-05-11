@@ -2,7 +2,9 @@ sub recv_route_newsdev_cloud_functions {
   // For now, whitelist only the contact-reporter function.
   // In future, could possibly manage a whitelist of functions to let through
   // with an edge dictionary.
-  if ( req.url.path ~ "^/svc/int/functions/contact-reporter" ) {
+  if (
+      req.url.path ~ "^/svc/int/functions/contact-reporter" ||
+      req.url.path ~ "^/svc/int/functions/sources-unsubscribe" ) {
     set req.http.x-nyt-route = "newsdev-cloud-functions";
     set req.http.x-nyt-backend = "newsdev_cloud_functions_us_central1";
   }
