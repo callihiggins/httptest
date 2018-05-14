@@ -1,5 +1,8 @@
 sub recv_mobile_redirect_capture_qparam {
-    set req.http.x-nyt-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
+    # edge will send this header to the shield, don't capture this if we're a shield
+    if (!req.http.x-nyt-shield-auth) {
+        set req.http.x-nyt-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
+    }
 }
 
 sub vcl_deliver {

@@ -50,7 +50,7 @@ sub fetch_set_cache_object_ttl {
 
     # overrides only hold true for any response code less than 400
     if (beresp.http.x-nyt-ttl-override && beresp.status < 400) {
-      set beresp.ttl = std.atoi(req.http.x-nyt-ttl-override);
+      set beresp.ttl = std.atoi(beresp.http.x-nyt-ttl-override);
     } else {
       # this is the catch-all default TTL if the object is cacheable and does none of the above
       # we do this to protect the origins from themselves if they don't do anything to control cache

@@ -19,11 +19,31 @@ sub miss_pass_set_bucket_auth_headers {
 }
 
 sub miss_pass_wf_auth_headers {
-  if (req.http.var-nyt-wf-auth == "true") {
+  if (req.http.var-nyt-wf-auth == "true" && !req.backend.is_shield) {
       if (req.http.var-nyt-env == "prd") {
           set bereq.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_prd");
       } else {
           set bereq.http.X-Api-Key = table.lookup(origin_auth_keys, "projectvi_fe_stg");
       }
   }
+}
+
+
+# functions to validate a request came from an edge pop of the same service_id
+# this is useful for controlling logic we may not want executed on the shield pop
+
+# validate the signed header if this request came from a fastly pop
+sub recv_shield_request_authorization {
+
+    set req.http.var-nyt-shield-auth = digest.hmac_sha256(table.lookup(shield_auth_secrets, "secret"), req.service_id);
+    if (req.http.x-nyt-shield-auth != req.http.var-nyt-shield-auth) {
+      unset req.http.x-nyt-shield-auth;
+    }
+}
+
+# create the auth header if the origin is a shield
+sub miss_pass_shield_request_signing {
+    if (req.backend.is_shield) {
+        set bereq.http.x-nyt-shield-auth = req.http.var-nyt-shield-auth;
+    }
 }

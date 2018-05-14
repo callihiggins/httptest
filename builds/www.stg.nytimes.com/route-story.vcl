@@ -29,7 +29,9 @@ sub recv_route_story {
           && (
               req.http.x--fastly-vi-test-group-story ~ "^[a]"
               || req.http.x--fastly-vi-story-opt == "1" // always in
-              || req.url ~ "^/20[1-9][4-9]/\d+/\d+/opinion/" // 2014-future and opinion
+              || req.url ~ "^/20[1-9][4-9]/\d+/\d+/opinion/"
+              # this is set if this is a shield pop and the edge allocated vi
+              || (req.http.x-nyt-shield-auth && req.http.x-nyt-vi-alloc-edge == "true")
           )
           && req.http.x--fastly-vi-story-opt != "0" // always out
         ) {
@@ -70,11 +72,13 @@ sub recv_route_story {
 }
 
 sub deliver_route_story_restart_indicators {
+
     # if the response was not compatible with VI we
     # restart the request and signal that this happened
     if (resp.http.x-vi-compatibility == "Incompatible") {
         set req.http.x-pre-restart-status = "Incompatible";
         unset resp.http.x-vi-compatibility;
+        set req.url = req.http.X-OriginalUri;
         set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " vi-Incompatible", "vi-Incompatible");
         return (restart);
     }
@@ -84,6 +88,7 @@ sub deliver_route_story_restart_indicators {
     if (resp.http.x-cms-format == "oak") {
         set req.http.x-pre-restart-cms-format = "oak";
         unset resp.http.x-cms-format;
+        set req.url = req.http.X-OriginalUri;
         set req.http.x-nyt-restart-reason = if (req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " Oak-content", "Oak-content");
         return (restart);
     }
@@ -91,23 +96,38 @@ sub deliver_route_story_restart_indicators {
 
 sub hash_route_story {
 
-  # cache variance for articles allocated to vi
-  if (req.http.x-nyt-route == "vi-story") {
+  # if an article was allocated to vi or incompatible or even oak
+  # the content the end user sees for the URL does not vary based on any vi alloc
+  # so we will ALWAYS use the same cache hash for those URLs as there is no variance
+  # for these forced situations
+  # we need to keep the hash in sync between the shield and edge for hit ratio
+
+  if (   req.http.x-nyt-route == "vi-story"              # allocated to vi
+      || req.http.x-nyt-vi-alloc-edge == "true"          # allocated to vi at the edge in a shielding scenario
+      || req.http.x-pre-restart-cms-format == "oak"      # restarted due to oak content
+      || req.http.x-pre-restart-status == "Incompatible" # restarted due to vi incompatibility
+      ) {
+
     set req.hash += req.http.x--fastly-vi-test-group-story;
   }
-
-
-  # TODO: questioning if these two below hash mods need to exist..
 
   # if a request was restarted from VI due to Incompatiblity
   # append to the hash to keep a separate key
   if (req.http.x-pre-restart-status){
-    set req.hash += req.http.x-pre-restart-status;
+   set req.hash += req.http.x-pre-restart-status;
   }
 
   # if a request was restarted from NYT5 due to being an OAK Article
   # append to the hash to keep a separate key
   if (req.http.x-pre-restart-cms-format){
-    set req.hash += req.http.x-pre-restart-cms-format;
+   set req.hash += req.http.x-pre-restart-cms-format;
+  }
+}
+
+sub fetch_route_story {
+  # remove x-varnishcacheduriation from non-2xx responses from NYT5
+  # 404's were being cached for 900 seconds
+  if (req.http.x-nyt-route == "article" && beresp.status > 299) {
+    unset beresp.http.x-varnishcacheduration;
   }
 }

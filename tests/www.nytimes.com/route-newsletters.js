@@ -17,8 +17,8 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/newsletters/louder',
       responseHeaderMatches: {
-        'x-api-version': 'F-VI',
         'x-nyt-route': 'newsletter',
+        'x-nyt-backend': 'projectvi_fe',
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test /newsletters/ is served from vi',

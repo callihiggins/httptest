@@ -520,6 +520,7 @@ backends:
     first_byte_timeout: "30000"
     ssl_cert_hostname: "alpha-test.stg.nyt.net"
     ssl_sni_hostname: "alpha-test.stg.nyt.net"
+    shield: "atl-ga-us"
     healthcheck:
       host: "alpha-test.stg.nyt.net"
       path: "/.healthcheck"

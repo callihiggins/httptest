@@ -11,10 +11,12 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.x-nyt-bucket-secret;
   unset bereq.http.x-nyt-bucket-name;
   unset bereq.http.x-nyt-bucket-provider;
-  unset bereq.http.x-nyt-mobile;
+  #unset bereq.http.x-nyt-mobile;
 
   # Denotes headers that have been through the audit
   unset bereq.http.var-nyt-env;
   unset bereq.http.var-nyt-wf-auth;
   unset bereq.http.var-nyt-force-pass;
+  unset bereq.http.var-nyt-shield-auth;
+  unset bereq.http.var-nyt-is-shielded;
 }

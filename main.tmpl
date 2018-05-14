@@ -104,6 +104,10 @@ resource "fastly_service_v1" "www" {
     {{end}}
     healthcheck = "{{.name}}_healthcheck"
     request_condition = "{{.name}}_backend"
+    {{if (has . "shield")}}
+    shield = "{{.shield}}"
+    {{end}}
+
   }
 
   healthcheck = {
@@ -458,12 +462,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "acl-fastly"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-fastly.vcl")}"
-  }
-
-  vcl {
     name    = "route-guides"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-guides.vcl")}"
@@ -593,12 +591,6 @@ resource "fastly_service_v1" "www" {
     name    = "error-pages"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/error-pages.vcl")}"
-  }
-
-  vcl {
-    name    = "migration-allocation"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/migration-allocation.vcl")}"
   }
 
   vcl {

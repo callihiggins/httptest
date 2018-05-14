@@ -3,7 +3,6 @@ include "acl-vpc-gateway";
 include "acl-external-staging-access";
 include "acl-crawlers";
 include "acl-blacklist";
-include "acl-fastly";
 include "error-pages";
 include "sanitize-url";
 include "normalize-url";
@@ -16,7 +15,6 @@ include "frame-buster";
 include "ipauth";
 include "www-redirect";
 include "tips";
-include "migration-allocation";
 include "auth-headers";
 include "vi-allocation";
 include "test-suite-force-miss";
@@ -98,11 +96,16 @@ sub vcl_recv {
   # begin routing logic
   # SET DEFAULT BACKEND FIRST
   call recv_set_default_backend;
+
   # calling the GDPR setup prior to routes to capture cookie and
   # query params prior to potentially being stripped by a route
-  call recv_gdpr;
+  # do not perform gdpr logic on the shield
+  if (!req.http.x-nyt-shield-auth) {
+    call recv_gdpr;
+  }
   call recv_route_svc_gdpr;
   call recv_route_svc_amp_gdpr;
+
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
   call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
@@ -161,7 +164,10 @@ sub vcl_recv {
 
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
-  call recv_https_redirect;
+  # do not perform https redirects on the shield
+  if (!req.http.x-nyt-shield-auth) {
+    call recv_https_redirect;
+  }
 
 /* any recv/request functionality defined in terraform
  * as well as anything Fastly needs to do magically
@@ -172,8 +178,8 @@ sub vcl_recv {
  *
  * WARNING, we are mid refactor the above is not 100% true yet
  * There be dragons here. Pay close attention to the test suite
- * There are tons of routes in vcl files with their own vcl_recv in the includes!!
- * Lets migrate them to route subs iteratively!
+ * There are tons of routes & logic in vcl files with their own vcl_recv in the includes!!
+ * Lets migrate them to custom subs iteratively!
  */
 
 # DO NOT REMOVE THIS LINE, FASTLY MACRO
@@ -190,6 +196,7 @@ sub vcl_recv {
   call recv_test_suite_force_miss;
 
   call recv_route_default_remove_cookie;
+
   # Set the edge req header
   set req.http.X-NYT-Edge-CDN = "Fastly";
 
@@ -208,6 +215,18 @@ sub vcl_recv {
     remove req.http.X-Original-Url;
   }
 
+  # on the shield pop, do not honor stale-while-revalidate
+  if (req.http.x-nyt-shield-auth) {
+    set req.max_stale_while_revalidate = 0s;
+  }
+
+  # set a tracking var to denote if this req is going to a shield
+  if (req.backend.is_shield) {
+    set req.http.var-nyt-is-shielded = "true";
+  } else {
+    unset req.http.var-nyt-is-shielded;
+  }
+
   # if the route didn't specifically ask for a pass we will do a lookup
   if (req.http.var-nyt-force-pass == "true") {
     return(pass);
@@ -218,12 +237,12 @@ sub vcl_recv {
 
 sub vcl_hash {
 #FASTLY hash
+
   set req.hash += req.url;
   set req.hash += req.http.host;
 
   call hash_route_video;
   call hash_route_slideshow;
-  call hash_route_watching;
   call hash_route_homepage;
   call hash_route_story;
 
@@ -259,6 +278,9 @@ sub vcl_miss {
     unset bereq.http.X-Cookie;
   }
 
+  # send signed requests to shield pops
+  call miss_pass_shield_request_signing;
+
   # route specific miss logic goes here
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
@@ -284,6 +306,8 @@ sub vcl_miss {
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
   call miss_pass_route_vi_assets;
+  call miss_pass_route_switchboard;
+  call miss_pass_route_blogs;
   call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
@@ -310,6 +334,9 @@ sub vcl_pass {
     unset bereq.http.X-Cookie;
   }
 
+  # send signed requests to shield pops
+  call miss_pass_shield_request_signing;
+
   # route specific pass logic goes here
   # contained in route-<semantic-name>.vcl, named miss_pass_route_<semantic_name>
   call miss_pass_route_cms_static_assets;
@@ -334,6 +361,8 @@ sub vcl_pass {
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
   call miss_pass_route_vi_assets;
+  call miss_pass_route_switchboard;
+  call miss_pass_route_blogs;
   call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
@@ -357,6 +386,7 @@ sub vcl_fetch {
   call fetch_route_community_svc;
   call fetch_route_intl_headers;
   call fetch_route_newsgraphics_gcs;
+  call fetch_route_story;
 
   # set surrogate key header properly
   call fetch_surrogate_key_handler;
@@ -374,9 +404,9 @@ sub vcl_fetch {
   }
 
   # Vary on this header for HTTPS version, so we can purge both versions at the same time
-  if (beresp.http.Vary) {
+  if (beresp.http.Vary && beresp.http.Vary !~ "Fastly-SSL") {
     set beresp.http.Vary = beresp.http.Vary ", Fastly-SSL";
-  } else {
+  } else if (!beresp.http.Vary) {
     set beresp.http.Vary = "Fastly-SSL";
   }
 
@@ -445,7 +475,12 @@ sub vcl_deliver {
   call deliver_route_newsdev_gcs_error;
 
   # set response headers
-  call deliver_gdpr;
+  
+  # only execute gdpr logic on the edge in a shielding scenario
+  if (!req.http.x-nyt-shield-auth) {
+    call deliver_gdpr;
+  }
+
   call deliver_response_headers;
   call deliver_debug_response_headers;
   call deliver_slideshow_fallback;
@@ -457,8 +492,8 @@ sub vcl_error {
   # this should execute before any other backend route vcl_error logic
   call error_init_health_vars;
 #FASTLY error
-  call error_800_fastly_healthcheck;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
+  call error_800_fastly_healthcheck;
   call error_900_route_esi_jsonp_callback;
   call error_995_route_health_service;
   call error_901_to_906_route_userinfo;
@@ -484,7 +519,7 @@ sub vcl_error {
 sub vcl_log {
 #FASTLY log
 
-    # selectively log some services
+    # suppress logs for certain low risk high traffic services
     # log 5xx status ALWAYS
     # log everything in dev and stg
     if (
@@ -515,6 +550,7 @@ sub vcl_log {
       if(resp.http.Fastly-Restarts, {" restarts=["} resp.http.Fastly-Restarts {"]"},"")
       if(req.http.x-nyt-restart-reason,{" restart_reason=["} req.http.x-nyt-restart-reason {"]"}, "")
       if(req.http.x-redirect-reason, {" "} + req.http.x-redirect-reason, "")
-      if(req.http.x-vi-health, {" "} + req.http.x-vi-health, "");
+      if(req.http.x-vi-health, {" "} + req.http.x-vi-health, "")
+      {" is_shield=["} if(req.http.x-nyt-shield-auth,"1","0") {"]"};
     }
-  }
+}

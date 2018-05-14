@@ -30,11 +30,18 @@ sub vcl_recv {
     # initialize header vars that are used throughout logic here
     call initialize_global_variable_headers;
 
-    # what level of access does this user have based on ACL and/or auth headers
-    call recv_set_access_level;
+    # check to see if this request is from a shield pop of the same service service_id
+    # retain the x-nyt-shield-auth header if it is
+    call recv_shield_request_authorization;
 
-    # block the request if the user does not have access to the environment
-    call recv_restrict_access;
+    # do not restrict this request if this is a shield request from an edge pop
+    if (!req.http.x-nyt-shield-auth) {
+      # what level of access does this user have based on ACL and/or auth headers
+      call recv_set_access_level;
+
+      # block the request if the user does not have access to the environment
+      call recv_restrict_access;
+    }
 
     # unset anything that we shouldn't trust from the user request
     if (!req.http.x-nyt-internal-access) {
@@ -68,42 +75,48 @@ sub vcl_recv {
       set req.http.x-nyt-mobile = urldecode(req.http.Cookie:nyt-mobile);
     }
 
-    # handle the nyt-a cookie in a restart safe manner
-    if (!req.http.x-nyt-a && req.http.Cookie:nyt-a) {
-      set req.http.x-nyt-a = req.http.Cookie:nyt-a;
-    }
+    # do not perform this logic on a shield pop backend
+    if(!req.http.x-nyt-shield-auth) {
+        # handle the nyt-a cookie in a restart safe manner
+        if (!req.http.x-nyt-a && req.http.Cookie:nyt-a) {
+          set req.http.x-nyt-a = req.http.Cookie:nyt-a;
+        }
 
-    if (req.http.x-nyt-a !~ ".") { # if nyt-a doesn't match any character, it's either empty string or NULL
-      # we didn't get a uuid, generate and set one
-      set req.http.x-nyt-a = digest.hmac_sha256_base64(
-          # key doesn't really matter for our purposes, but here's 256 bits entropy anyway:
-          "1pCPYoPsNtx1aDpv8EUZ9azYZ3szwSeKFXnmHAojc3s",
-          now.sec +
-          randomstr(64) +
-          req.http.host +
-          req.http.user-agent +
-          req.http.cookie +
-          req.url +
-          client.ip +
-          req.http.Fastly-Client-IP +
-          time.start.usec +
-          time.elapsed.usec +
-          client.port +
-          server.identity
-      );
+        if (req.http.x-nyt-a !~ ".") { # if nyt-a doesn't match any character, it's either empty string or NULL
+          # we didn't get a uuid, generate and set one
+          set req.http.x-nyt-a = digest.hmac_sha256_base64(
+              # key doesn't really matter for our purposes, but here's 256 bits entropy anyway:
+              "1pCPYoPsNtx1aDpv8EUZ9azYZ3szwSeKFXnmHAojc3s",
+              now.sec +
+              randomstr(64) +
+              req.http.host +
+              req.http.user-agent +
+              req.http.cookie +
+              req.url +
+              client.ip +
+              req.http.Fastly-Client-IP +
+              time.start.usec +
+              time.elapsed.usec +
+              client.port +
+              server.identity
+          );
 
-      // we only need 22 base64 chars to reach 128 bits entropy (22 * 6 = 132):
-      set req.http.x-nyt-a = regsub(req.http.x-nyt-a, "^(.{22}).*$", "\1");
-      // replace '+' and '/' with cookie-safe '-' and '_':
-      set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\+", "-");
-      set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\/", "_");
+          // we only need 22 base64 chars to reach 128 bits entropy (22 * 6 = 132):
+          set req.http.x-nyt-a = regsub(req.http.x-nyt-a, "^(.{22}).*$", "\1");
+          // replace '+' and '/' with cookie-safe '-' and '_':
+          set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\+", "-");
+          set req.http.x-nyt-a = regsuball(req.http.x-nyt-a, "\/", "_");
+        }
     }
 
     set req.http.x-nyt-logger-name = "web" + req.http.var-nyt-env + "-www";
 
-    // set the original protocol to let downstream systems know what it was
-    if (req.http.Fastly-SSL) {
-      set req.http.X-Forwarded-Proto = "https";
+    # this could be incorrect if we are on a shield pop backend
+    if (!req.http.x-nyt-shield-auth) {
+      // set the original protocol to let downstream systems know what it was
+      if (req.http.Fastly-SSL) {
+        set req.http.X-Forwarded-Proto = "https";
+      }
     }
 
     /*

@@ -41,3 +41,16 @@ sub recv_route_blogs {
       set req.http.x-nyt-backend = "blogs";
   }
 }
+
+sub miss_pass_route_blogs {
+
+    # the blogs backend does not honor sandbox hosts like www-sandbox01.dev.nytimes.com
+    # normalize these to just www.dev.nytimes.com for blogs route
+    if(    req.http.x-nyt-backend == "blogs"
+        && !req.backend.is_shield
+        && req.http.host ~ "^www-[a-z0-9]+\.(dev|stg)\.nytimes\.com$"
+        && req.http.var-nyt-env != "prd") {
+
+        set bereq.http.host = "www." + req.http.var-nyt-env + ".nytimes.com";
+    }
+}

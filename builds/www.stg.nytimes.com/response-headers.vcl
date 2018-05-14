@@ -11,23 +11,23 @@ sub deliver_response_headers {
     unset resp.http.X-Varnish;
 
 
-    // Well is setting Strict-Transport-Security! This leaks out so we need to remove it.
-    // NO ONE can set this themselves for our entire domain.
+    # Only Fastly services can control this header, do not let it be set right now
     unset resp.http.strict-transport-security;
 
-    # set some headers
-    set resp.http.Connection = "close";
+    # not sure we need this, don't set this if we're a shield pop
+    if(!req.http.x-nyt-shield-auth){
+        set resp.http.Connection = "close";
+    }
 
     # make sure these are available for vcl_log as we might remove it
     set req.http.x-nyt-backend-health = resp.http.x-nyt-backend-health;
 
-    # lets return some headers to internal clients for debugging
+    # decide whether to keep or delete response headers based on auth level
     if (!req.http.x-nyt-internal-access){
         # remove these headers for external requests
         unset resp.http.X-VarnishCacheDuration;
         unset resp.http.X-Origin-Server;
         unset resp.http.x-nyt-backend-health;
-        unset resp.http.x-nyt-backend;
     } else {
         # set these headers for internal requests
         set resp.http.x-nyt-continent = req.http.x-nyt-continent;
@@ -37,8 +37,6 @@ sub deliver_response_headers {
         set resp.http.x-nyt-timezone = req.http.x-nyt-timezone;
         set resp.http.x-nyt-gmt-offset = req.http.x-nyt-gmt-offset;
         set resp.http.device_type = req.http.device_type;
-        set resp.http.x-nyt-backend = req.http.x-nyt-backend;
-
     }
 
     if (resp.http.X-API-Version) {
@@ -47,7 +45,30 @@ sub deliver_response_headers {
         set resp.http.X-API-Version = "F-X";
     }
 
-    if (!resp.http.x-nyt-route){
+    # do not send the restart reason header back out if we are a shield pop
+    if(req.http.x-nyt-shield-auth){
+        unset resp.http.x-nyt-restart-reason;
+    }
+
+    # always set these response headers if this is a shield pop
+    # we will let these flow through to the edge pop as-is
+    # we want to report in the edge response the ACTUAL origin route/backend that served the request
+    # this is in the case the sheild restarted and went to a different backend
+    if (req.http.x-nyt-shield-auth) {
+        set resp.http.x-nyt-route = req.http.x-nyt-route;
+        set resp.http.x-nyt-backend = req.http.x-nyt-backend;
+    # unset the x-nyt-backend header if this is an edge pop without nyhq access
+    } else if(!req.http.x-nyt-internal-access) {
+        unset resp.http.x-nyt-backend;
+    # if we got this far it's an edge that is nyhq
+    # if NOT shielded, overwrite this header with the route defined one
+    # do not let origins override it, this is FASTLY ROUTING ONLY HEADER
+    } else if(!req.http.var-nyt-is-shielded) {
+        set resp.http.x-nyt-backend = req.http.x-nyt-backend;
+    }
+
+    # if the x-nyt-route header is still not set in the response, set it based on req in this node
+    if (!resp.http.x-nyt-route) {
         set resp.http.x-nyt-route = req.http.x-nyt-route;
     }
 

@@ -101,8 +101,6 @@ sub deliver_gdpr {
 
     # this will either set a new cookie
     # or extend the existing one to 6 hours
-    # this is only performed
-
     if (req.http.var-nyt-force-gdpr == "true"
         || (req.http.var-nyt-send-gdpr == "true" && req.http.var-nyt-has-gdpr == "false")
     ) {

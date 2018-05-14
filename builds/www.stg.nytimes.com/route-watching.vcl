@@ -20,18 +20,13 @@ sub recv_route_watching {
 
           if (req.http.x-nyt-route == "watching-nocache") {
               set req.http.var-nyt-force-pass = "true";
+              if (! req.http.Cookie && req.http.X-Cookie) {
+                set req.http.Cookie = req.http.X-Cookie;
+                unset req.http.X-Cookie;
+              }
           }
       }
   }
-}
-
-sub hash_route_watching {
-    if (req.http.x-nyt-route == "watching-nocache") {
-        if (! req.http.Cookie && req.http.X-Cookie) {
-            set req.http.Cookie = req.http.X-Cookie;
-            unset req.http.X-Cookie;
-        }
-    }
 }
 
 sub deliver_watching_api_version {

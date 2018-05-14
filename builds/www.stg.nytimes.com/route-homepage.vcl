@@ -24,6 +24,7 @@ sub recv_route_homepage {
           # homepage
           # - in a test group and not opted out
           # - or internal traffic and not opted out
+          # - or this is a shield pop and the edge pop allocated the user to vi
           #
           # TODO: Vi currently serves a 404 for "/index.html", NYT5 redirects it to "/" Fix this before 100% Vi
           #
@@ -32,6 +33,8 @@ sub recv_route_homepage {
                 (req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0")
                 || req.http.cookie:vi_www_hp_opt == "1"
                 || (req.http.x-nyt-internal-access == "1" && req.http.cookie:vi_www_hp_opt != "0")
+                # this is set if this is a shield pop and the edge allocated vi
+                || (req.http.x-nyt-shield-auth && req.http.x-nyt-vi-alloc-edge == "true")
               )
           ) {
           set req.http.x-nyt-route = "vi-homepage";
