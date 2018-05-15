@@ -93,6 +93,11 @@ sub vcl_recv {
   # before routing calls lets set up the vi allocation vars
   call recv_vi_allocation_init;
 
+  # initialize geo ip headers only on the edge
+  if (!req.http.x-nyt-shield-auth) {
+    call recv_geo_ip;
+  }
+
   # begin routing logic
   # SET DEFAULT BACKEND FIRST
   call recv_set_default_backend;
@@ -499,6 +504,7 @@ sub vcl_error {
   call error_901_to_906_route_userinfo;
   call error_918_amp_gdpr;
   call error_919_gdpr;
+  call error_949_geo_debug_svc;
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code

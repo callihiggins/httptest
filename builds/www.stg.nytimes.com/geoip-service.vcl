@@ -1,4 +1,4 @@
-sub vcl_recv {
+sub recv_geo_ip {
 
 	declare local var.ip_override STRING;
 	declare local var.geo_timezone STRING;
@@ -78,6 +78,7 @@ sub vcl_recv {
 	set req.http.x-nyt-gmt-offset = client.geo.gmt_offset;
 
 	# geoip test service error call
+	# TODO: break into route
 	if (req.http.x-nyt-internal-access) {
 		if (req.url ~ "^/svc/web-products/geoip-test.html") {
 			error 949 "uadiag";
@@ -85,7 +86,7 @@ sub vcl_recv {
 	}
 }
 
-sub vcl_error {
+sub error_949_geo_debug_svc {
 
 	# html geoip response
 	if (obj.status == 949) {
