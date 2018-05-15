@@ -5,10 +5,10 @@ sub recv_route_mwcm {
         if (    req.url == "/subscription"  ||
                 req.url ~ "^/subscription/"  ||
                 (   req.url == "/marketing"  &&
-                    req.url != "/marketing/gdpr"
+                    req.url != "/marketing/(gdpr|moco)"
                 ) ||
                 (   req.url ~ "^/marketing/"  &&
-                    req.url !~ "/marketing/gdpr/"
+                    req.url !~ "/marketing/(gdpr|moco)/"
                 ) ||
                 req.url == "/services/mobile" ||
                 req.url ~ "^/services/mobile/" ||
@@ -36,8 +36,7 @@ sub recv_route_mwcm {
             }
         }
 
-        if (    req.url ~ "^/marketing/gdpr/" ||
-                req.url == "/marketing/gdpr"  
+        if (    req.url ~ "^/marketing/(gdpr|moco)(/)?"
             ) {
 
             set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");

@@ -684,6 +684,23 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM /marketing/gdpr headers test',
       'testId': 27,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': false,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/marketing/moco/tests/fastly.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM /marketing/moco headers test',
+      'testId': 28,
     }
   ];
 
