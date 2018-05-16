@@ -65,7 +65,7 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/slideshow/2013/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
@@ -82,7 +82,7 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/slideshow/2001/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
@@ -99,7 +99,7 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/slideshow/2005/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
@@ -154,13 +154,12 @@ function getScenarioEvents() {
         stg: false,
         dev: false
       },
-      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'https://',
       requestUri:
         '/slideshow/2016/12/14/travel/our-favorite-travel-photography-of-2016/s/18BEST-OF-2016-IMAGES-slide-8RFM.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -174,13 +173,12 @@ function getScenarioEvents() {
         stg: false,
         dev: false
       },
-      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'https://',
       requestUri:
         '/slideshow/2015/12/25/t-magazine/oddball-geniuses-tarantino-fassbender-rampling/s/25tmag-11well_rihanna-t_CA0-copy.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -194,13 +192,12 @@ function getScenarioEvents() {
         stg: true,
         dev: false
       },
-      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
       requestScheme: 'https://',
       requestUri:
         '/slideshow/2014/09/21/upshot/23up-un/s/21up-un-slide-ZRTJ.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -214,16 +211,15 @@ function getScenarioEvents() {
         stg: true,
         dev: false
       },
-      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/slideshow/2013/12/25/dining/20131225-REST.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
-      responseStatusCode: [200, 301],
+      responseStatusCode: [200],
       scenarioDescription:
-        'Test slideshow; Serve 2013 slideshow from NYT5 GKE with HTTP, /slideshow/2013/12/25/dining/20131225-REST.html',
+        'Test slideshow; Serve 2013 slideshow from Vi with HTTPS, /slideshow/2013/12/25/dining/20131225-REST.html',
       testId: 105
     },
     {
@@ -233,16 +229,15 @@ function getScenarioEvents() {
         stg: true,
         dev: false
       },
-      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/slideshow/2011/07/10/world/africa/10sudan.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
-      responseStatusCode: [200, 301],
+      responseStatusCode: [200],
       scenarioDescription:
-        'Test slideshow; Serve 2011 slideshow on NYT5 GKE with HTTP, /slideshow/2011/07/10/world/africa/10sudan.html',
+        'Test slideshow; Serve 2011 slideshow on Vi with HTTPS, /slideshow/2011/07/10/world/africa/10sudan.html',
       testId: 106
     },
     {
@@ -252,16 +247,15 @@ function getScenarioEvents() {
         stg: true,
         dev: false
       },
-      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/slideshow/2009/04/27/science/042809-Ants_index.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
       },
-      responseStatusCode: [200, 301],
+      responseStatusCode: [200],
       scenarioDescription:
-        'Test slideshow; Serve 2009 slideshow on NYT5 GKE with HTTP, /slideshow/2009/04/27/science/042809-Ants_index.html',
+        'Test slideshow; Serve 2009 slideshow on Vi with HTTPS, /slideshow/2009/04/27/science/042809-Ants_index.html',
       testId: 107
     },
     {
@@ -271,8 +265,7 @@ function getScenarioEvents() {
         stg: false,
         dev: false
       },
-      requestHeaderCookie: ['nyt.dv.nyt5-on-gke.slideshow=1'],
-      requestScheme: 'http://',
+      requestScheme: 'https://',
       requestUri: '/slideshow/2007/10/10/nytfrontpage/20071010POD_7.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',

@@ -59,4 +59,3 @@ require("./www.nytimes.com/redirect-mobile-realestate.js");
 require("./www.nytimes.com/redirect-mobile-homepage.js");
 require("./www.nytimes.com/redirect-mobile-article.js");
 require("./www.nytimes.com/redirect-mobile-interactive.js");
-require("./www.nytimes.com/redirect-mobile-slideshow.js");
