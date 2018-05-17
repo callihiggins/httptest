@@ -129,7 +129,7 @@ sub deliver_gdpr {
 #
 # CORS is implemented in the following manner
 #
-#   1. nytimes.com/nyt.net/nyt.com/thewirecutter.com Origin allows `*`
+#   1. nytimes.com/nyt.net/nyt.com/thewirecutter.com/hellosociety.com Origin allows `*`
 #   2. lack of origin header (Safari bug) allowa `*`
 #   3. GET and OPTIONS methods are allowed
 #
@@ -157,7 +157,7 @@ sub error_919_gdpr {
         set obj.status = 200;
         set obj.http.Content-Type = "application/json; charset=utf-8";
         set obj.http.x-gdpr = req.http.var-cookie-nyt-gdpr;
-        if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com|thewirecutter\.com)$") {
+        if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com|thewirecutter\.com|hellosociety\.com)$") {
             ## only allow nyt.net and nytimes.com domain for hace access control
             set obj.http.Access-Control-Allow-Origin = "*";
             set obj.http.Access-Control-Expose-Headers = "Content-Type";
