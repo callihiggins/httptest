@@ -1,5 +1,5 @@
 sub recv_route_tbooks {
-    if (req.http.x-nyt-canonical-www-host) {
+    if (req.http.var-nyt-canonical-www-host) {
         if (req.url ~ "^/tbooks") {
             set req.http.x-nyt-route = "tbooks";
             set req.http.x-nyt-backend = "tbooks";

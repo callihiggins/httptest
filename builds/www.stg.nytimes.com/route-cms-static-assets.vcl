@@ -2,7 +2,7 @@
 
 sub recv_route_cms_static_assets {
     
-    if (req.http.x-nyt-canonical-www-host == "true") {
+    if (req.http.var-nyt-canonical-www-host == "true") {
 
         if (req.url.path ~ "^/images/") {
             set req.http.x-nyt-route = "cms-static-assets";

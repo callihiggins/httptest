@@ -534,7 +534,7 @@ sub vcl_log {
         || req.http.var-nyt-env != "prd"
        ) {
 
-      log {"syslog "} + req.service_id + {" "} + req.http.x-nyt-logger-name + {" :: "}
+      log {"syslog "} + req.service_id + {" "} + req.http.var-nyt-logger-name + {" :: "}
       req.http.Fastly-Client-IP
       {" "-" "-" "}
       {"["} strftime({"%d/%b/%Y:%H:%M:%S %z"}, time.start) {"]"}

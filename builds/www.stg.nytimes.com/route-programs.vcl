@@ -1,5 +1,5 @@
 sub recv_route_programs {
-    if (req.http.x-nyt-canonical-www-host) {
+    if (req.http.var-nyt-canonical-www-host) {
 
         if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/" || req.url.path ~ "^/programs/public/") {
 

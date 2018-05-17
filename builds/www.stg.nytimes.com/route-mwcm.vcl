@@ -1,7 +1,7 @@
 include "subscription-currency-map-table";
 
 sub recv_route_mwcm {
-    if (req.http.x-nyt-canonical-www-host == "true") {
+    if (req.http.var-nyt-canonical-www-host == "true") {
         if (    req.url == "/subscription"  ||
                 req.url ~ "^/subscription/"  ||
                 (   req.url == "/marketing"  &&

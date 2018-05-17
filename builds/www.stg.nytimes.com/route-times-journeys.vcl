@@ -1,5 +1,5 @@
 sub recv_route_times_journeys {
-    if (req.http.x-nyt-canonical-www-host) {
+    if (req.http.var-nyt-canonical-www-host) {
     	// The order of these two checks is important since the second one is a sub path of the first one
         if (req.url.path ~ "^/times-journeys") {
             set req.http.x-nyt-route = "times-journeys";

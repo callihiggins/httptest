@@ -4,7 +4,7 @@ sub recv_https_redirect {
      */
     if ( req.http.x-nyt-route == "blog" ) {
 
-        set req.http.x-https-phase = "internal";
+        set req.http.var-nyt-https-phase = "internal";
     }
 
     /*
@@ -70,7 +70,7 @@ sub recv_https_redirect {
         || req.url.path == "/interactive/us/faces-of-the-dead.html" // special 9/11 interactive
         || req.url.path == "/cookie-policy"
     ) {
-        set req.http.x-https-phase = "live";
+        set req.http.var-nyt-https-phase = "live";
     }
 
     // IS a HTTPS connection
@@ -110,12 +110,12 @@ sub recv_https_redirect {
         ) {
 
         // Urls already live over HTTPS
-        } else if (req.http.x-https-phase == "live") {
+        } else if (req.http.var-nyt-https-phase == "live") {
 
         // Urls live over HTTPS internally
         } else if (
                req.http.x-nyt-internal-access
-            && req.http.x-https-phase == "internal"
+            && req.http.var-nyt-https-phase == "internal"
             && !req.http.x-internal-https-opt-out
         ) {
 
@@ -148,13 +148,13 @@ sub recv_https_redirect {
         } else if (
             req.http.x-nyt-internal-access
             && req.request != "FASTLYPURGE"
-            && req.http.x-https-phase == "internal"
+            && req.http.var-nyt-https-phase == "internal"
             && !req.http.x-internal-https-opt-out
         ) {
             call redirect_to_https;
 
         // URLs that are launched on HTTPS should redirect to HTTPS
-        } else if ( req.http.x-https-phase == "live" && req.request != "FASTLYPURGE" ) {
+        } else if ( req.http.var-nyt-https-phase == "live" && req.request != "FASTLYPURGE" ) {
             call redirect_to_https;
 
         // internal https cookie-based test

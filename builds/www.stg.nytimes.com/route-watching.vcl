@@ -1,6 +1,6 @@
 sub recv_route_watching {
 
-  if (req.http.x-nyt-canonical-www-host) {
+  if (req.http.var-nyt-canonical-www-host) {
       if (   req.url ~ "^/watching$"
           || req.url ~ "^/watching\?"
           || req.url ~ "^/watching/"

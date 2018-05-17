@@ -13,9 +13,9 @@ sub initialize_global_variable_headers {
 
   # set a var to denote if this domain is canonical www request
   if (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" || req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$") {
-    set req.http.x-nyt-canonical-www-host = "true";
+    set req.http.var-nyt-canonical-www-host = "true";
   } else {
-    set req.http.x-nyt-canonical-www-host = "false";
+    set req.http.var-nyt-canonical-www-host = "false";
   }
 
   set req.http.var-nyt-send-gdpr = "false";
@@ -109,7 +109,7 @@ sub vcl_recv {
         }
     }
 
-    set req.http.x-nyt-logger-name = "web" + req.http.var-nyt-env + "-www";
+    set req.http.var-nyt-logger-name = "web" + req.http.var-nyt-env + "-www";
 
     # this could be incorrect if we are on a shield pop backend
     if (!req.http.x-nyt-shield-auth) {

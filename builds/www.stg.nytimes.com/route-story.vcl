@@ -1,7 +1,7 @@
 sub recv_route_story {
 
     # stories only serve from canonical www host
-    if (req.http.x-nyt-canonical-www-host == "true") {
+    if (req.http.var-nyt-canonical-www-host == "true") {
 
       # default route for stories is NYT5
       if (   req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future

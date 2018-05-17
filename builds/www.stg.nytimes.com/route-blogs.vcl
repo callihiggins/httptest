@@ -1,6 +1,6 @@
 sub recv_route_blogs {
   // blogs under WWW hostname
-  if (req.http.x-nyt-canonical-www-host == "true") {
+  if (req.http.var-nyt-canonical-www-host == "true") {
       if (   req.url ~  "^/news/"
           || req.url ~  "^/news$"
           || req.url ~  "^/politics/first-draft"

@@ -2,7 +2,7 @@ sub recv_route_homepage {
 
     # homepage only serves from canonical hosts
     # all others go to legacy
-    if (req.http.x-nyt-canonical-www-host == "true") {
+    if (req.http.var-nyt-canonical-www-host == "true") {
     
         # NYT5 is the default HP route
         if (   req.url.path == "/" || req.url ~ "^/index.html"

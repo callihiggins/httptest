@@ -1,7 +1,7 @@
 sub recv_mobile_redirect_capture_qparam {
     # edge will send this header to the shield, don't capture this if we're a shield
-    if (!req.http.x-nyt-shield-auth) {
-        set req.http.x-nyt-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
+    if (!req.http.x-nyt-shield-auth && req.http.x-orig-querystring ~ "nytmobile=") {
+        set req.http.var-nyt-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
     }
 }
 
@@ -19,10 +19,10 @@ sub vcl_deliver {
 
             if (req.http.x-nyt-route ~ "^blog") {
                 // query string override
-                if (req.http.x-nyt-mobile-param ~ "nytmobile=1") {
+                if (req.http.var-nyt-mobile-param ~ "nytmobile=1") {
                     set req.http.x-do-mobile-redirect = "1";
                 }
-                if (req.http.x-nyt-mobile-param ~ "nytmobile=0") {
+                if (req.http.var-nyt-mobile-param ~ "nytmobile=0") {
                     set req.http.x-do-mobile-redirect = "0";
                 }
 
@@ -72,10 +72,10 @@ sub vcl_deliver {
                 }
             } else {
                 // query string override
-                if (req.http.x-nyt-mobile-param ~ "nytmobile=1") {
+                if (req.http.var-nyt-mobile-param ~ "nytmobile=1") {
                     set req.http.x-do-mobile-redirect = "1";
                 }
-                if (req.http.x-nyt-mobile-param ~ "nytmobile=0") {
+                if (req.http.var-nyt-mobile-param ~ "nytmobile=0") {
                     set req.http.x-do-mobile-redirect = "0";
                 }
                 // homepage & sectionfronts specific logic

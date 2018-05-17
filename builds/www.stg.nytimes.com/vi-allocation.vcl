@@ -282,7 +282,7 @@ sub deliver_vi_allocation_set_cookie {
 # headers used to override vi-alloc logic in the shield
 # so that it is ALWAYS controlled by the edge pop when talking to a shield
 sub miss_pass_remove_vialloc_headers {
-    if (req.http.x-nyt-shield-auth) {
+    if (!req.http.var-nyt-is-shielded) {
         unset bereq.http.x--fastly-req-cookie-vi;
         unset bereq.http.x--fastly-vi-test-group;
         unset bereq.http.x--fastly-req-cookie-vi-story;
@@ -290,9 +290,8 @@ sub miss_pass_remove_vialloc_headers {
         unset bereq.http.x--fastly-project-vi;
         unset bereq.http.x-nyt-vi-alloc-edge;
     } else {
-
-        # this is an edge talking to a shield, set the vi-alloc indicator if we allocated vi
-        if (bereq.http.x--fastly-project-vi == "1" && req.http.var-nyt-is-shielded) {
+        # this is an edge talking to a shield, set the vi-alloc indicator for the shield specifcally
+        if (bereq.http.x--fastly-project-vi == "1") {
             set bereq.http.x-nyt-vi-alloc-edge = "true";
         }
     }
