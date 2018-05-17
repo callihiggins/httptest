@@ -5,5 +5,6 @@ sub recv_route_paidpost {
       set req.http.x-nyt-route = "paidpost";
       set req.http.x-nyt-backend = "paidpost_fe";
       set req.http.var-nyt-wf-auth = "true";
+      set req.http.var-nyt-send-gdpr = "true";
   }
 }
