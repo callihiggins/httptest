@@ -244,7 +244,7 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: true,
+        stg: false,
         dev: false
       },
       requestScheme: 'https://',
@@ -401,7 +401,25 @@ function getScenarioEvents() {
       scenarioDescription:
         'Test slideshow; HTTPS enabled; Internet Explorer, /slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html',
       testId: 113
-    }
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestScheme: 'https://',
+      requestUri: '/slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Test slideshow; Serve 2010 slideshow on Vi with HTTPS (stg), /slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html',
+      testId: 114
+    },
   ];
 
   return scenarios;
