@@ -34,9 +34,10 @@ sub recv_route_video {
 }
 
 sub hash_route_video {
-  // video library needs to pivot on device type
+  // video library needs to pivot on device type and gdpr status
   if(req.http.x-nyt-route == "video-library") {
     set req.hash += req.http.device_type;
+    set req.hash += req.http.var-cookie-nyt-gdpr;
   }
 }
 
@@ -47,6 +48,10 @@ sub miss_pass_route_video {
 
     if (!req.backend.is_shield && req.http.x-nyt-route == "video-offsite-player") {
         call miss_pass_set_bucket_auth_headers;
+    }
+
+    if (!req.backend.is_shield && req.http.x-nyt-route == "video-library") {
+        set bereq.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
     }
 }
 
