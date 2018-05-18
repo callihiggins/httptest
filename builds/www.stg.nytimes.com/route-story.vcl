@@ -26,6 +26,7 @@ sub recv_route_story {
         if (
              req.url ~ "^/(aponline/|reuters/)?201[4-9]"
           && req.url.path !~ "\.amp\.html$" // exclude amp
+          && req.url.path != "/2018/05/18/us/school-shooting-santa-fe-texas.html"
           && (
               req.http.x--fastly-vi-test-group-story ~ "^[a]"
               || req.http.x--fastly-vi-story-opt == "1" // always in
