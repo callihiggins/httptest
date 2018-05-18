@@ -484,6 +484,8 @@ sub vcl_deliver {
   # only execute gdpr logic on the edge in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {
     call deliver_gdpr;
+    call deliver_route_story_us_cookie;
+    call deliver_route_newsletters_us_cookie;
   }
 
   call deliver_response_headers;

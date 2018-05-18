@@ -1055,6 +1055,38 @@ function getScenarioEvents() {
       'scenarioDescription': 'Test routing; opinion article; Always served by VI. Not Allocated',
       'testId': 1400,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2017/02/16/opinion/paul-krugman-with-column-assignment.html?ip-override=137.99.78.82',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-us=1;/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Set cookie with value of 1 for US users for US-only views.',
+      'testId': 1500,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2017/02/16/opinion/paul-krugman-with-column-assignment.html?ip-override=85.90.227.224',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-us=0;/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Set cookie with value of 0 for non-US users.',
+      'testId': 1600,
+    },
   ];
 
   return scenarios;
