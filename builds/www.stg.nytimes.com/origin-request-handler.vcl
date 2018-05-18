@@ -29,4 +29,5 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-has-gdpr;
   unset bereq.http.var-cookie-nyt-gdpr;
   unset bereq.http.var-nyt-https-phase;
+  unset bereq.http.var-nyt-surrogate-key;
 }

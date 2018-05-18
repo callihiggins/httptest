@@ -81,6 +81,7 @@ sub deliver_route_story_restart_indicators {
         unset resp.http.x-vi-compatibility;
         set req.url = req.http.X-OriginalUri;
         set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " vi-Incompatible", "vi-Incompatible");
+        set req.http.var-nyt-surrogate-key = resp.http.var-nyt-surrogate-key;
         return (restart);
     }
 
@@ -150,4 +151,17 @@ sub fetch_route_story {
   if (req.http.x-nyt-route == "article" && beresp.status > 299) {
     unset beresp.http.x-varnishcacheduration;
   }
+
+  # if the response was from vi and incompatible
+  # save off the Surrogate-Key so we can add it to the NYT5 cache object
+  if (beresp.http.x-vi-compatibility == "Incompatible") {
+    set beresp.http.var-nyt-surrogate-key = beresp.http.Surrogate-Key;
+  }
+
+  # if we restarted this transaction because it was incompatible with vi
+  # add the Surrogate-Key we saved into the cache object
+  if (req.http.x-pre-restart-status == "Incompatible") {
+    set beresp.http.Surrogate-Key = req.http.var-nyt-surrogate-key;
+  }
+
 }
