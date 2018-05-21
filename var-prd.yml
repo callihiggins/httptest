@@ -334,8 +334,8 @@ backends:
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "intl.prd.nytimes.com"
-    ssl_sni_hostname: "intl.prd.nytimes.com"
+    port: "80"
+    use_ssl: "false"
     healthcheck:
       host: "intl.prd.nytimes.com"
       path: "/healthcheck.php"
