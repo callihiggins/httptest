@@ -1058,7 +1058,7 @@ function getScenarioEvents() {
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': true,
+        'prd': false,
         'stg': true,
         'dev': true,
       },
@@ -1068,13 +1068,13 @@ function getScenarioEvents() {
         'set-cookie': /(?:^|,)nyt-us=1;/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Set cookie with value of 1 for US users for US-only views.',
+      'scenarioDescription': 'Set cookie with value of 1 for US users for US-only views on dev & stg.',
       'testId': 1500,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': true,
+        'prd': false,
         'stg': true,
         'dev': true,
       },
@@ -1084,7 +1084,39 @@ function getScenarioEvents() {
         'set-cookie': /(?:^|,)nyt-us=0;/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Set cookie with value of 0 for non-US users.',
+      'scenarioDescription': 'Set cookie with value of 0 for non-US users on dev & stg.',
+      'testId': 1600,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=137.99.78.82',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-us=1;/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Set cookie with value of 1 for US users for US-only views on prd.',
+      'testId': 1500,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=85.90.227.224',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-us=0;/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Set cookie with value of 0 for non-US users on prd.',
       'testId': 1600,
     },
   ];
