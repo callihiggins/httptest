@@ -52,7 +52,7 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2014/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-nyt-route': 'legacy-gke'
+        'x-nyt-route': 'legacy-gke',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
@@ -69,7 +69,7 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2013/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-nyt-route': 'legacy-gke'
+        'x-nyt-route': 'legacy-gke',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
@@ -86,7 +86,7 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2001/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-nyt-route': 'legacy-gke'
+        'x-nyt-route': 'legacy-gke',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
@@ -103,7 +103,7 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2005/01/01/us/slug.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-nyt-route': 'legacy-gke'
+        'x-nyt-route': 'legacy-gke',
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
@@ -121,7 +121,11 @@ function getScenarioEvents() {
         '/slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -140,7 +144,11 @@ function getScenarioEvents() {
         '/slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -159,7 +167,11 @@ function getScenarioEvents() {
         '/slideshow/2016/12/14/travel/our-favorite-travel-photography-of-2016/s/18BEST-OF-2016-IMAGES-slide-8RFM.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -178,7 +190,11 @@ function getScenarioEvents() {
         '/slideshow/2015/12/25/t-magazine/oddball-geniuses-tarantino-fassbender-rampling/s/25tmag-11well_rihanna-t_CA0-copy.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -197,7 +213,11 @@ function getScenarioEvents() {
         '/slideshow/2014/09/21/upshot/23up-un/s/21up-un-slide-ZRTJ.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -215,7 +235,11 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2013/12/25/dining/20131225-REST.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -233,7 +257,11 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2011/07/10/world/africa/10sudan.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -251,7 +279,11 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2009/04/27/science/042809-Ants_index.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -269,7 +301,11 @@ function getScenarioEvents() {
       requestUri: '/slideshow/2007/10/10/nytfrontpage/20071010POD_7.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-nyt-route': 'legacy-gke'
+        'x-nyt-route': 'legacy-gke',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200, 301],
       scenarioDescription:
@@ -288,7 +324,11 @@ function getScenarioEvents() {
         '/slideshow/2017/12/29/realestate/new-york-citys-biggest-residential-sales-in-2017/s/31YEAREND-slide-EQPY.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-route': 'slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -307,7 +347,11 @@ function getScenarioEvents() {
         '/slideshow/2017/08/22/realestate/slides-headline/s/22METS-1503371668421.html',
       responseHeaderMatches: {
         'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow'
+        'x-nyt-route': 'slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -326,10 +370,14 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri:
-        '/slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html',
+        '/slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html?gdpr=1',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -351,7 +399,11 @@ function getScenarioEvents() {
         '/slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -373,7 +425,11 @@ function getScenarioEvents() {
         '/slideshow/2018/02/15/dining/the-pool/s/15-slideshow-1.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -395,7 +451,11 @@ function getScenarioEvents() {
         '/slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:
@@ -410,10 +470,14 @@ function getScenarioEvents() {
         dev: false
       },
       requestScheme: 'https://',
-      requestUri: '/slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html',
+      requestUri: '/slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html?gdpr=1',
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-slideshow'
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription:

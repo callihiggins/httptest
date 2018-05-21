@@ -21,6 +21,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test /by collection',
@@ -39,6 +43,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test /column collection',
@@ -57,6 +65,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test /issue collection',
@@ -75,6 +87,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test /news-event collection',
@@ -93,6 +109,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /reviews collection',
@@ -107,10 +127,14 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/reviews/',
+      'requestUri': '/reviews/?gdpr=1',
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 301, 404],
       'scenarioDescription': 'Test /reviews/ redirect',
@@ -129,6 +153,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'misc_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test reviews diningmap',
@@ -147,6 +175,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /saved collection',
@@ -165,6 +197,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'Test /saved/ redirect',
@@ -179,10 +215,14 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/section/qqq',
+      'requestUri': '/section/qqq?gdpr=1',
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test /section collection',
@@ -201,6 +241,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test /spotlight collection',
@@ -219,6 +263,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/company collection',
@@ -237,6 +285,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/destination collection',
@@ -255,6 +307,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/organization collection',
@@ -273,6 +329,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [404],
       'scenarioDescription': 'Test /topic/person collection',
@@ -291,6 +351,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/subject collection',
@@ -309,6 +373,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /section/upshot collection',
@@ -327,6 +395,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'Test /upshot/ redirect',
@@ -341,10 +413,14 @@ function getScenarioEvents()
       },
       'requestHeaderCookie': suite.cookies.is_4k,
       'requestScheme': 'https://',
-      'requestUri': '/column/modern-love',
+      'requestUri': '/column/modern-love?gdpr=1',
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; 4kb cookie string ',
@@ -363,6 +439,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; 8kb cookie string ',
@@ -381,6 +461,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; 12kb cookie string ',
@@ -399,6 +483,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,404],
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; 16kb cookie string ',

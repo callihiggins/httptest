@@ -22,6 +22,10 @@ function getScenarioEvents()
         'x-frame-options': 'DENY',
         'x-nyt-route': 'intl',
         'x-nyt-backend': 'intl_gcp',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseHeadersPresent': [
         'age',
@@ -63,6 +67,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'intl',
         'x-nyt-backend': 'intl_gcp',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'scenarioDescription': 'Test WordPress query parameters in vanity URL redirects',
       'testId': 2,
@@ -76,13 +84,17 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/es/al-dia?mccr=ES',
+      'requestUri': '/es/al-dia?mccr=ES&gdpr=1',
       'responseHeaderPattern': {
         'location': /\d{4}\/\d{2}\/\d{2}\/.+?mccr=ES/,
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'intl',
         'x-nyt-backend': 'intl_gcp',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'scenarioDescription': 'Test analytics query parameters in vanity URL redirects',
       'testId': 3,

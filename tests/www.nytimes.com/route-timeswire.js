@@ -18,7 +18,11 @@ function getScenarioEvents() {
       requestUri: '/timeswire',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-timeswire',
-        'x-nyt-backend': 'projectvi_fe'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; /timeswire',
@@ -35,7 +39,11 @@ function getScenarioEvents() {
       requestUri: '/timeswire/',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-timeswire',
-        'x-nyt-backend': 'projectvi_fe'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; /timeswire/',
@@ -56,7 +64,11 @@ function getScenarioEvents() {
       requestUri: '/timeswire',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-timeswire',
-        'x-nyt-backend': 'projectvi_fe'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Timeswire Page; does not redirect to mobile',

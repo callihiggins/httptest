@@ -21,6 +21,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'blogs',
         'x-nyt-route': 'blog',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,        
       },
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test routing; first-draft; Blogs; /politics/first-draft/2015/05/21/republicans-plan-to-replace-health-law-is-shrug-senator-says/',
@@ -39,6 +43,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'blogs',
         'x-nyt-route': 'blog',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test routing; /news; Blogs; /news/affordable-care-act/2014/03/06/more-than-one-way-to-buy-a-plan/',
@@ -57,6 +65,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'blogs',
         'x-nyt-route': 'blog',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test routing; times-insider; Blogs; /times-insider/2014/04/01/dangerous-roads-constant-crises-adam-nossiter-on-central-africa/',
@@ -71,11 +83,15 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/live/2016-golden-globes/',
+      'requestUri': '/live/2016-golden-globes/?gdpr=1',
       'responseHeaderMatches': {
         'x-nyt-backend': 'blogs',
         'x-nyt-route': 'blog',
+        'x-gdpr': '1',
       },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+      },        
       'responseStatusCode': [200,301,404],
       'scenarioDescription': 'Test routing; /live; blogs; /live/2016-golden-globes/',
       'testId': 4,

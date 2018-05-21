@@ -16,10 +16,14 @@ function getScenarioEvents() {
         sbx: false
       },
       requestScheme: 'https://',
-      requestUri: '/search',
+      requestUri: '/search?gdpr=1',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-search',
-        'x-nyt-backend': 'projectvi_fe'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,        
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Search Homepage',
@@ -29,14 +33,15 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: true,
-        dev: true
+        stg: false,
+        dev: false
       },
       requestScheme: 'https://',
       requestUri: '/search/apple/best',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-search',
-        'x-nyt-backend': 'projectvi_fe'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Search term - apple',

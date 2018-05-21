@@ -4,6 +4,7 @@ sub recv_route_intl {
       set req.http.x-nyt-route = "intl";
       set req.http.x-nyt-backend = "intl_gcp";
       set req.http.var-nyt-wf-auth = "true";
+      set req.http.var-nyt-send-gdpr = "true";
 
     if (req.request != "GET" &&
         req.request != "HEAD" &&

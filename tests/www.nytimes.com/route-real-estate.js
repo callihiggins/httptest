@@ -16,10 +16,14 @@ function getScenarioEvents()
         dev: true,
       },
       requestScheme: 'https://',
-      requestUri: '/real-estate/find-a-home',
+      requestUri: '/real-estate/find-a-home?gdpr=1',
       responseHeaderMatches: {
         'x-nyt-route': 'real-estate',
         'x-nyt-backend': 'realestate_fe',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: 200,
       scenarioDescription:

@@ -21,6 +21,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'bestseller',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers /books/best-sellers/',
@@ -39,6 +43,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'bestseller',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers  /books/best-sellers/combined-print-and-e-book-fiction/',
@@ -57,6 +65,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'bestseller',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers on /books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
@@ -75,6 +87,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'trending',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test trending on /trending/',
@@ -93,6 +109,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'podcasts',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/',
@@ -111,6 +131,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'podcasts',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/modern-love',
@@ -125,10 +149,14 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/reviews/dining/map/',
+      'requestUri': '/reviews/dining/map/?gdpr=1',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'collection',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test misc  on /reviews/dining/map/',
@@ -148,6 +176,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'bestseller',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers /books/best-sellers/',
@@ -167,6 +199,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'bestseller',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers  /books/best-sellers/combined-print-and-e-book-fiction/',
@@ -186,6 +222,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'bestseller',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test bestsellers on /books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
@@ -201,10 +241,14 @@ function getScenarioEvents()
       },
       'requestHeaderCookie': 'nyt.dv.nyt5-on-gke=1',
       'requestScheme': 'https://',
-      'requestUri': '/trending/',
+      'requestUri': '/trending/?gdpr=1',
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'trending',
+        'x-gdpr': '1',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test trending on /trending/',
@@ -224,6 +268,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'podcasts',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/',
@@ -243,6 +291,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'podcasts',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test podcasts on /podcasts/modern-love',
@@ -262,6 +314,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-api-version': 'F-GM',
         'x-nyt-route': 'collection',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test misc  on /reviews/dining/map/',

@@ -11,6 +11,7 @@ sub recv_route_blogs {
       ) {
           set req.http.x-nyt-route = "blog";
           set req.http.x-nyt-backend = "blogs";
+          set req.http.var-nyt-send-gdpr = "true";
           // legacy urls
           if (   req.url ~ "^/timesjourneys"
               || req.url ~ "/live-updates/(json|text)/"
