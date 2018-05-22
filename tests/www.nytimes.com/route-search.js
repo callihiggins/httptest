@@ -37,7 +37,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestScheme: 'https://',
-      requestUri: '/search/apple/best',
+      requestUri: '/search?query=apple&sort=best',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-search',
         'x-nyt-backend': 'projectvi_fe',

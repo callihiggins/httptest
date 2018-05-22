@@ -76,6 +76,9 @@ sub recv_geo_ip {
 	set req.http.x-nyt-country = client.geo.country_code;
 	set req.http.x-nyt-region = client.geo.region;
 	set req.http.x-nyt-gmt-offset = client.geo.gmt_offset;
+	set req.http.x-nyt-latitude = client.geo.latitude;
+	set req.http.x-nyt-longitude = client.geo.longitude;
+	set req.http.x-nyt-city = client.geo.city;
 
 	# geoip test service error call
 	# TODO: break into route

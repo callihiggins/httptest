@@ -35,6 +35,9 @@ sub deliver_response_headers {
         set resp.http.x-nyt-region = req.http.x-nyt-region;
         set resp.http.x-nyt-geo-hash = req.http.x-nyt-geo-hash;
         set resp.http.x-nyt-timezone = req.http.x-nyt-timezone;
+        set resp.http.x-nyt-latitude = req.http.x-nyt-latitude;
+        set resp.http.x-nyt-longitude = req.http.x-nyt-longitude;
+        set resp.http.x-nyt-city = req.http.x-nyt-city;
         set resp.http.x-nyt-gmt-offset = req.http.x-nyt-gmt-offset;
         set resp.http.device_type = req.http.device_type;
     }
