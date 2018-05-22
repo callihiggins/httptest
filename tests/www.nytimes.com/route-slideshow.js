@@ -302,10 +302,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke',
-        'x-gdpr': '0',
-      },
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200, 301],
       scenarioDescription:
