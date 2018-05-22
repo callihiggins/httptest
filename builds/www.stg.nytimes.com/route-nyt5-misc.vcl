@@ -44,6 +44,12 @@ sub recv_route_diningmap {
   }
 }
 
+sub miss_pass_route_nyt5_misc {
+  if (req.http.x-nyt-backend == "misc_fe") {
+    unset bereq.http.cookie;
+  }
+}
+
 sub set_nyt5_misc_backend {
   set req.http.var-nyt-wf-auth = "true";
   set req.http.var-nyt-send-gdpr = "true";

@@ -24,23 +24,17 @@ sub recv_route_adx {
 
         set req.http.x-nyt-route = "adx-static";
         set req.http.x-nyt-backend = "adx_static";
-        unset req.http.Cookie;
-        unset req.http.X-Cookie;
-        unset req.http.x-nyt-edition;
-        unset req.http.x-nyt-s;
-        unset req.http.x-nyt-wpab;
+
         unset req.http.Authorization;
 
         # remove query string parameters
         set req.url = querystring.remove(req.url);
-        #return(lookup);
-
     }
 }
 
 sub miss_pass_route_adx {
     if (req.http.x-nyt-route == "adx-static") {
-      set req.backend = F_adx_static;
+      unset bereq.http.cookie;
       set bereq.http.host = "nyt-adx-static.storage.googleapis.com";
     }
 }

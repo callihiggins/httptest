@@ -25,12 +25,6 @@ sub recv_route_elections {
             }
         }
 
-        unset req.http.Cookie;
-        unset req.http.X-Cookie;
-        unset req.http.x-nyt-edition;
-        unset req.http.x-nyt-s;
-        unset req.http.x-nyt-wpab;
-
         # Redirect to https before updating req.http.host header
         if ( !req.http.Fastly-SSL ) {
           call redirect_to_https;
@@ -42,6 +36,9 @@ sub recv_route_elections {
 # authenticate the request.
 sub miss_pass_route_elections {
   if (req.http.x-nyt-route == "elections") {
+
+    unset bereq.http.cookie;
+
     set bereq.http.date = now;
     if (table.lookup(newsdev_elections, "use_s3", "false") == "true") {
         set bereq.http.host = req.http.x-bucket ".s3.amazonaws.com";

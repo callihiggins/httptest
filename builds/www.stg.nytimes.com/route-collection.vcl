@@ -28,3 +28,9 @@ sub recv_route_collection {
   }
 
 }
+
+sub miss_pass_route_collection {
+  if (req.http.x-nyt-route == "collection") {
+    unset bereq.http.cookie;
+  }
+}

@@ -5,12 +5,6 @@ sub recv_route_video {
         if (req.url ~ "^/video-media") {
             set req.http.x-nyt-route = "video-media";
             set req.http.x-nyt-backend = "vp";
-
-	        unset req.http.x-nyt-edition;
-	        unset req.http.x-nyt-s;
-	        unset req.http.x-nyt-wpab;
-	        unset req.http.Cookie;
-          unset req.http.X-Cookie;
         }
     }
 
@@ -42,6 +36,12 @@ sub hash_route_video {
 }
 
 sub miss_pass_route_video {
+
+    # video routes do not need cookies
+    if (req.http.x-nyt-route ~ "^video-") {
+        unset bereq.http.cookie;
+    }
+
     if(!req.backend.is_shield && req.http.x-nyt-route == "video-media") {
       set bereq.http.host = "vp.nyt.com";
     }

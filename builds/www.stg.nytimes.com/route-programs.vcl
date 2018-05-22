@@ -5,11 +5,6 @@ sub recv_route_programs {
 
             set req.http.x-nyt-route = "programs-gcs";
             set req.http.x-nyt-backend = "programs_gcs";
-            unset req.http.Cookie;
-            unset req.http.X-Cookie;
-            unset req.http.x-nyt-edition;
-            unset req.http.x-nyt-s;
-            unset req.http.x-nyt-wpab;
         } else if (req.url.path ~ "^/programs/svc/shaq") {
             set req.http.x-nyt-route = "shaq-service";
             set req.http.x-nyt-backend = "shaq_svc";
@@ -17,14 +12,13 @@ sub recv_route_programs {
         } else if (req.url.path ~ "^/programs/" ) {
             set req.http.x-nyt-route = "programs-service";
             set req.http.x-nyt-backend = "programs_svc";
-            unset req.http.Cookie;
-            unset req.http.X-Cookie;
         }
     }
 }
 
 sub miss_pass_route_programs {
     if (req.http.x-nyt-route == "programs-service") {
+        unset bereq.http.cookie;
         call set_programs_web_host;
     }
 
@@ -33,6 +27,7 @@ sub miss_pass_route_programs {
     }
 
     if (req.http.x-nyt-route == "programs-gcs") {
+        unset bereq.http.cookie;
         call set_programs_gcs_host;
     }
 }

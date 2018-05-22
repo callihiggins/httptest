@@ -12,15 +12,25 @@ sub recv_route_real_estate {
         unset req.http.x--fastly-project-vi;
 
         # we have to pass directly here
-        # so that we don't return users data.
+        # so that we don't cache private user data.
         if (   req.url ~ "^/real-estate/api/mail"
             || req.url ~ "^/real-estate/api/personalization"
         ) {
-            // We want to pass the NYT-S cookie only to the realestate backend
-            // becasue of the 8k headers size limit
-            set req.http.Cookie = "NYT-S=" req.http.Cookie:NYT-S ";";
+            set req.http.x-nyt-route = "real-estate-pass";
             set req.http.var-nyt-force-pass = "true";
-            #return(pass);
         }
+    }
+}
+
+sub miss_pass_route_real_estate {
+
+    # We want to pass the NYT-S cookie only to the realestate backend
+    # becasue of the 8k headers size limit
+    if (req.http.x-nyt-route == "real-estate-pass") {
+        set bereq.http.cookie = "NYT-S=" req.http.cookie:NYT-S ";";
+    }
+
+    if (req.http.x-nyt-route == "real-estate") {
+        unset bereq.http.cookie;
     }
 }

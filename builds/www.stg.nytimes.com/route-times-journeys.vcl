@@ -33,13 +33,9 @@ sub miss_pass_route_times_journeys {
         set bereq.http.host = "timesjourneysstudents.nytimes.com";
     }
 
-    unset bereq.http.x-nyt-edition;
-    unset bereq.http.x-nyt-s;
-    unset bereq.http.x-nyt-wpab;
     // Both of the origins are user agnostic. The wordpress hosting also has the default 8k header size limit
     // We're going to unset the cookies on the request
-    unset bereq.http.Cookie;
-    unset bereq.http.X-Cookie;
+    unset bereq.http.cookie;
   }
 }
 

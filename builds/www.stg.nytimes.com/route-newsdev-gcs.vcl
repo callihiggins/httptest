@@ -6,12 +6,6 @@ sub recv_route_newsdev_gcs {
     set req.http.x-nyt-route = "newsdev-gcs";
     set req.http.x-nyt-backend = "gcs_origin";
 
-    unset req.http.cookie;
-    unset req.http.x-cookie;
-    unset req.http.x-nyt-edition;
-    unset req.http.x-nyt-s;
-    unset req.http.x-nyt-wpab;
-
     # Redirect to https before updating req.http.host header
     if ( !req.http.Fastly-SSL ) {
       call redirect_to_https;
@@ -35,6 +29,8 @@ sub fetch_route_newsdev_gcs {
 sub miss_pass_route_newsdev_gcs {
 
   if (req.http.x-nyt-route == "newsdev-gcs") {
+    unset bereq.http.cookie;
+
     if(!req.backend.is_shield) {
         set bereq.url = regsub(bereq.url, "^/images/", "/");
         call miss_pass_set_bucket_auth_headers;

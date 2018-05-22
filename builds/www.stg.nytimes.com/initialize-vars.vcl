@@ -43,14 +43,15 @@ sub vcl_recv {
       call recv_restrict_access;
     }
 
-    # unset anything that we shouldn't trust from the user request
-    if (!req.http.x-nyt-internal-access) {
-      unset req.http.x-nyt-backend-health;
-      unset req.http.x-nyt-backend;
-      unset req.http.x-nyt-ttl-override;
-      unset req.http.var-nyt-force-pass;
-      unset req.http.x-nyt-mobile;
-    }
+    unset req.http.x-nyt-backend-health;
+    unset req.http.x-nyt-backend;
+    unset req.http.x-nyt-ttl-override;
+    unset req.http.var-nyt-force-pass;
+
+    # do not allow these to be passed in or live across restarts
+    # routing must start from zero every execution
+    unset req.http.x-nyt-route;
+    unset req.http.x-nyt-backend;
 
     /*
      * capture specific cookie values into custom headers

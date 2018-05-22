@@ -8,3 +8,9 @@ sub recv_route_paidpost {
       set req.http.var-nyt-send-gdpr = "true";
   }
 }
+
+sub miss_pass_route_paidpost {
+  if (req.http.x-nyt-route == "paidpost") {
+    unset bereq.http.cookie;
+  }
+}

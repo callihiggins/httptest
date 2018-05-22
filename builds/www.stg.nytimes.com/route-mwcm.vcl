@@ -21,12 +21,6 @@ sub recv_route_mwcm {
             set req.http.x-nyt-backend = "mwcm";
             set req.http.var-nyt-send-gdpr = "true";
 
-            unset req.http.x-nyt-edition;
-            unset req.http.x-nyt-s;
-            unset req.http.x-nyt-wpab;
-            unset req.http.x-cookie;
-            unset req.http.cookie;
-
             if (req.url == "/subscriptions" || req.url ~ "^/subscriptions/") {
                 # excludes "ptr" query string parameter.
                 set req.url = querystring.filter_except(req.url, "ptr");
@@ -40,7 +34,7 @@ sub recv_route_mwcm {
             ) {
 
             set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
-            set req.http.x-nyt-route = "mwcm";
+            set req.http.x-nyt-route = "mwcm-pass";
             set req.http.x-nyt-backend = "mwcm";
             set req.http.var-nyt-send-gdpr = "true";
         }
@@ -64,5 +58,11 @@ sub deliver_route_mwcm {
                 set resp.http.Location = resp.http.Location req.http.x-orig-querystring;
             }
         }
+    }
+}
+
+sub miss_pass_route_mwcm {
+    if (req.http.x-nyt-route == "mwcm") {
+        unset bereq.http.cookie;
     }
 }

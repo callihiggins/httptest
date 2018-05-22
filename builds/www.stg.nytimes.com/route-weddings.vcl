@@ -7,3 +7,9 @@ sub recv_route_weddings {
       set req.http.x--fastly-project-vi = "1";
   }
 }
+
+sub miss_pass_route_weddings {
+  if (req.http.x-nyt-route == "vi-weddings") {
+    unset bereq.http.cookie;
+  }
+}

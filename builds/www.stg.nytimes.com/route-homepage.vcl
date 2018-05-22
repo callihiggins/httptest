@@ -55,3 +55,9 @@ sub hash_route_homepage {
       set req.hash += req.http.x-vi-ssr-www-hp;
   }
 }
+
+sub miss_pass_route_homepage {
+  if (req.http.x-nyt-route == "vi-homepage" || req.http.x-nyt-route == "homepage") {
+    unset bereq.http.cookie;
+  }
+}

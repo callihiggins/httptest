@@ -80,7 +80,6 @@ include "set-cache-object-ttl";
 # begin other logic
 include "https-redirect";
 include "device-detect";
-include "cookie";
 include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
@@ -97,10 +96,6 @@ sub vcl_recv {
   if (!req.http.x-nyt-shield-auth) {
     call recv_geo_ip;
   }
-
-  # begin routing logic
-  # SET DEFAULT BACKEND FIRST
-  call recv_set_default_backend;
 
   # calling the GDPR setup prior to routes to capture cookie and
   # query params prior to potentially being stripped by a route
@@ -167,6 +162,15 @@ sub vcl_recv {
   call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
 
+  ##################################################
+  # DO NOT PUT YOUR ROUTE SUB CALL BELOW THIS LINE #
+  ##################################################
+
+  # if none of the above routes matched, we will go to the default backend
+  if (!req.http.x-nyt-route || !req.http.x-nyt-backend) {
+    call recv_set_default_backend;
+  }
+
   # at this point all routing decisions should be final
   # first check to see if we should redirect https<->http
   # do not perform https redirects on the shield
@@ -193,25 +197,18 @@ sub vcl_recv {
   # this has a backend check, put it AFTER the macro to set backends.
   call recv_querystring;
 
-  # check to see if we need to remove the cookie header
-  call recv_remove_cookie_check;
-
   # check to see if the client asked for a cache miss
   # the test suite does this
   call recv_test_suite_force_miss;
 
-  call recv_route_default_remove_cookie;
-
-  # Set the edge req header
-  set req.http.X-NYT-Edge-CDN = "Fastly";
+  # set the edge cdn identification header for origins
+  set req.http.x-nyt-edge-cdn = "Fastly";
 
   call recv_route_uncachable_methods;
   call recv_route_invalid_urls;
 
   # We do not yet allow cache if there is an Authorization header
-  # or if the Cookie still exists in the request
-  # TODO: the cookie shouldn't matter!!! Refactor that.
-  if (req.http.Authorization || req.http.Cookie) {
+  if (req.http.Authorization) {
     set req.http.var-nyt-force-pass = "true";
   }
 
@@ -266,23 +263,6 @@ sub vcl_hit {
 sub vcl_miss {
 #FASTLY miss
 
-  // this should be removed already, but lets be sure
-  // since this was a lookup we were not pass
-  remove bereq.http.Cookie;
-
-  // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
-  if(    req.http.x-nyt-route == "article"
-      || req.http.x-nyt-route == "collection"
-      || req.http.x-nyt-route == "slideshow"
-      || req.http.x-nyt-route == "homepage"
-      || req.http.x-nyt-route == "paidpost"
-      || req.http.x-nyt-route == "trending"
-      || req.http.x-nyt-route == "podcasts"
-      || req.http.x-nyt-route == "bestseller"
-  ){
-    unset bereq.http.X-Cookie;
-  }
-
   # send signed requests to shield pops
   call miss_pass_shield_request_signing;
 
@@ -313,6 +293,23 @@ sub vcl_miss {
   call miss_pass_route_vi_assets;
   call miss_pass_route_switchboard;
   call miss_pass_route_blogs;
+  call miss_pass_route_add_svc;
+  call miss_pass_route_intl;
+  call miss_pass_route_real_estate;
+  call miss_pass_route_nyt5_misc;
+  call miss_pass_route_newsletters;
+  call miss_pass_route_paidpost;
+  call miss_pass_route_weddings;
+  call miss_pass_route_search;
+  call miss_pass_route_timeswire;
+  call miss_pass_route_interactive;
+  call miss_pass_route_collection;
+  call miss_pass_route_homepage;
+  call miss_pass_route_story;
+  call miss_pass_route_watching;
+  call miss_pass_route_default_remove_cookie;
+  call miss_pass_route_mwcm;
+  call miss_pass_route_slideshow;
   call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
@@ -324,20 +321,6 @@ sub vcl_miss {
 
 sub vcl_pass {
 #FASTLY pass
-
-  // collapse X-Cookie unset for article, collection,slideshow,homepage,paidpost and misc
-  if(    req.http.x-nyt-route == "article"
-      || req.http.x-nyt-route == "collection"
-      || req.http.x-nyt-route == "slideshow"
-      || req.http.x-nyt-route == "homepage"
-      || req.http.x-nyt-route == "paidpost"
-      || req.http.x-nyt-route == "trending"
-      || req.http.x-nyt-route == "podcasts"
-      || req.http.x-nyt-route == "bestseller"
-  ){
-    unset bereq.http.Cookie;
-    unset bereq.http.X-Cookie;
-  }
 
   # send signed requests to shield pops
   call miss_pass_shield_request_signing;
@@ -368,6 +351,23 @@ sub vcl_pass {
   call miss_pass_route_vi_assets;
   call miss_pass_route_switchboard;
   call miss_pass_route_blogs;
+  call miss_pass_route_add_svc;
+  call miss_pass_route_intl;
+  call miss_pass_route_real_estate;
+  call miss_pass_route_nyt5_misc;
+  call miss_pass_route_newsletters;
+  call miss_pass_route_paidpost;
+  call miss_pass_route_weddings;
+  call miss_pass_route_search;
+  call miss_pass_route_timeswire;
+  call miss_pass_route_interactive;
+  call miss_pass_route_collection;
+  call miss_pass_route_homepage;
+  call miss_pass_route_story;
+  call miss_pass_route_watching;
+  call miss_pass_route_default_remove_cookie;
+  call miss_pass_route_mwcm;
+  call miss_pass_route_slideshow;
   call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
@@ -387,7 +387,6 @@ sub vcl_fetch {
   call fetch_elections_redirect;
   call fetch_route_newsdev_gke;
   call fetch_route_newsdev_gcs;
-  call fetch_route_content_api;
   call fetch_route_community_svc;
   call fetch_route_intl_headers;
   call fetch_route_newsgraphics_gcs;

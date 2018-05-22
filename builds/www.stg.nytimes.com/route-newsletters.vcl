@@ -11,6 +11,13 @@ sub recv_route_newsletters {
     }
 }
 
+
+sub miss_pass_route_newsletters {
+    if (req.http.x-nyt-route == "newsletters") {
+        unset bereq.http.cookie;
+    }
+}
+
 sub deliver_route_newsletters_us_cookie {
     # if the client is in the United Sates and we determine this is a newsletter page
     # set a cookie indicating this is a user in the United States

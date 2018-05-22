@@ -165,3 +165,9 @@ sub fetch_route_story {
   }
 
 }
+
+sub miss_pass_route_story {
+  if (req.http.x-nyt-route == "article" || req.http.x-nyt-route == "vi-story") {
+    unset bereq.http.cookie;
+  }
+}

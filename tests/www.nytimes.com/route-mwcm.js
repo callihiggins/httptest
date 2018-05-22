@@ -678,7 +678,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/marketing/gdpr/tests/fastly.html',
       'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
+        'x-nyt-route': 'mwcm-pass',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
@@ -695,7 +695,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/marketing/moco/tests/fastly.html',
       'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
+        'x-nyt-route': 'mwcm-pass',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],

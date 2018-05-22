@@ -10,41 +10,28 @@ sub recv_route_content_api {
         set req.http.x-nyt-route = "content-api";
         set req.http.x-nyt-backend = "content_api";
 
-        unset req.http.X-Cookie;
-        unset req.http.x-nyt-edition;
-        unset req.http.x-nyt-s;
-        unset req.http.x-nyt-wpab;
-
         set req.http.var-nyt-force-pass = "true";
-        #return(pass);
     }
 
     if (req.url.path ~ "^/svc/oembed/"){
         set req.http.x-nyt-route = "content-api-gae";
         set req.http.x-nyt-backend = "gae_oembed_content_api";
-
-        unset req.http.X-Cookie;
-        unset req.http.x-nyt-edition;
-        unset req.http.x-nyt-s;
-        unset req.http.x-nyt-wpab;
-        #return(lookup);
     }
 }
 
 sub miss_pass_route_content_api {
-    if (req.http.x-nyt-backend == "gae_oembed_content_api") {
+
+    # host header for gae route
+    if (req.http.x-nyt-route == "content-api-gae") {
         if (req.http.var-nyt-env == "prd") {
             set bereq.http.host = "nyt-du-prd.appspot.com";
         } else {
             set bereq.http.host = "nyt-du-dev.appspot.com";
         }
     }
-}
 
-sub fetch_route_content_api {
-    if (req.http.x-nyt-route == "content-api") {
-        # stale-while-revalidate override
-        set beresp.http.x-nyt-stale-while-revalidate = "30";
+    if (req.http.x-nyt-route == "content-api" || req.http.x-nyt-route == "content-api-gae") {
+        unset bereq.http.cookie;
     }
 }
 

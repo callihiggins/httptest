@@ -51,12 +51,6 @@ sub recv_route_games {
             if (!req.http.Fastly-SSL) {
                 call redirect_to_https;
             }
-
-            unset req.http.Cookie;
-            unset req.http.X-Cookie;
-            unset req.http.x-nyt-edition;
-            unset req.http.x-nyt-s;
-            unset req.http.x-nyt-wpab;
         }
 
         // submissions page
@@ -80,6 +74,7 @@ sub miss_pass_route_games {
   } else if (req.http.x-nyt-route == "games-web") {
     call set_games_web_host;
   } else if (req.http.x-nyt-route == "games-assets") {
+    unset bereq.http.cookie;
     call set_games_assets_host;
   } else if (req.http.x-nyt-route == "games-phoenix") {
     call set_games_phoenix_host;

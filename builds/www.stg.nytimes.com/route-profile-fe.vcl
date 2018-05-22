@@ -7,14 +7,7 @@ sub recv_route_profile_fe {
         set req.http.x-nyt-route = "profile-fe";
         set req.http.x-nyt-backend = "profile_fe";
 
-        unset req.http.x-nyt-edition;
-        unset req.http.x-nyt-s;
-        unset req.http.x-nyt-d;
-        unset req.http.x-nyt-wpab;
-
-        // This backend need cookies and query params passed, so returning early
         set req.http.var-nyt-force-pass = "true";
-        #return(pass);
     }
 }
 

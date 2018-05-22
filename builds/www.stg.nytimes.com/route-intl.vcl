@@ -15,14 +15,15 @@ sub recv_route_intl {
 
     # Bypass cache for logged-in WordPress users, etc.
     if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {
+      set req.http.x-nyt-route = "intl-pass";
       set req.http.var-nyt-force-pass = "true";
-    } else {
-      unset req.http.Cookie;
-      unset req.http.X-Cookie;
-      unset req.http.x-nyt-edition;
-      unset req.http.x-nyt-s;
-      unset req.http.x-nyt-wpab;
     }
+  }
+}
+
+sub miss_pass_route_intl {
+  if (req.http.x-nyt-route == "intl") {
+    unset bereq.http.cookie;
   }
 }
 

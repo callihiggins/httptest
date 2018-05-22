@@ -174,7 +174,8 @@ sub recv_vi_allocation_init {
         }
 
         # use the req object to stash our test group and incoming `vi_www_hp` cookie,
-        # so later in vcl_recv we can set the outgoing `vi_www_hp` cookie if needed:
+        # so later in vcl_recv we can set the outgoing `vi_www_hp` cookie if needed
+        # shield pop also needs these headers
         set req.http.x--fastly-vi-test-group = var.test_group;
         set req.http.x--fastly-req-cookie-vi = req.http.cookie:vi_www_hp;
         set req.http.x--fastly-vi-test-group-story = var.test_group_story;

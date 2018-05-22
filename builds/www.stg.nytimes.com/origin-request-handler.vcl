@@ -1,7 +1,9 @@
 sub miss_pass_unset_bereq_headers {
+
   # remove headers used as variables for logic
   # backend definitely does not need these
   # in some cases it could be a security concern
+  # TODO: which of these can be refactored to var-nyt namespace
   unset bereq.http.x-nyt-edition;
   unset bereq.http.x-nyt-a;
   unset bereq.http.x-nyt-wpab;
@@ -11,9 +13,17 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.x-nyt-bucket-secret;
   unset bereq.http.x-nyt-bucket-name;
   unset bereq.http.x-nyt-bucket-provider;
-  #unset bereq.http.x-nyt-mobile;
 
-  # Denotes headers that have been through the audit
+  # unset the routing headers if we are sending
+  # this request to a fastly shield pop
+  # it should route it again itself
+  if (req.http.var-nyt-is-shielded == "true") {
+    unset bereq.http.x-nyt-route;
+    unset bereq.http.x-nyt-backend;
+  }
+
+  # unset header vars being used solely for fastly logic
+  # there are the headers that have recfactored naming
   unset bereq.http.var-nyt-env;
   unset bereq.http.var-nyt-wf-auth;
   unset bereq.http.var-nyt-force-pass;

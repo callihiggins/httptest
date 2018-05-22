@@ -7,3 +7,9 @@ sub recv_route_search {
       set req.http.var-nyt-send-gdpr = "true";
   }
 }
+
+sub miss_pass_route_search {
+  if (req.http.x-nyt-route == "vi-search") {
+    unset bereq.http.cookie;
+  }
+}

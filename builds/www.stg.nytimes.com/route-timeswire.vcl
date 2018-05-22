@@ -8,3 +8,9 @@ sub recv_route_timeswire {
   }
 
 }
+
+sub miss_pass_route_timeswire {
+  if (req.http.x-nyt-route == "vi-timeswire") {
+    unset bereq.http.cookie;
+  }
+}

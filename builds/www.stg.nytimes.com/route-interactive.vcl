@@ -9,3 +9,9 @@ sub recv_route_interactive {
     set req.http.x-nyt-backend = "projectvi_fe";
   }
 }
+
+sub miss_pass_route_interactive {
+  if (req.http.x-nyt-route == "vi-interactive") {
+    unset bereq.http.cookie;
+  }
+}

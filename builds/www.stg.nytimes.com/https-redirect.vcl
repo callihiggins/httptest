@@ -104,7 +104,7 @@ sub recv_https_redirect {
             || req.url ~ "^/glogin"
             || req.url.path ~ "^/images/"
             || req.url.path == "/esi/jsonp-callback"
-            || req.http.x-nyt-route == "mwcm"
+            || req.http.x-nyt-route ~ "^mwcm"
             # content that was previously passing early can do both protocols
             || req.http.var-nyt-force-pass == "true"
         ) {

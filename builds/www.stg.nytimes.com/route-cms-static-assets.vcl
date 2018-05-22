@@ -7,8 +7,6 @@ sub recv_route_cms_static_assets {
         if (req.url.path ~ "^/images/") {
             set req.http.x-nyt-route = "cms-static-assets";
             set req.http.x-nyt-backend = "gcs_origin";
-            unset req.http.Cookie;
-            unset req.http.X-Cookie;
         }
     }
 }
@@ -17,6 +15,8 @@ sub miss_pass_route_cms_static_assets {
 
   if (req.http.x-nyt-route == "cms-static-assets") {
 
+    unset bereq.http.cookie;
+
     # the bucket does not contain the /images/ prefix
     if(!req.backend.is_shield) {
         set bereq.url = regsub(bereq.url, "^/images/", "/");
@@ -24,5 +24,4 @@ sub miss_pass_route_cms_static_assets {
     }
 
   }
-
 }

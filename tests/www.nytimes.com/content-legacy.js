@@ -189,7 +189,29 @@ var scenarios = [
     responseStatusCode: [301],
     scenarioDescription: 'Test /gst/movies/ served from Legacy GKE Backend',
     testId: 10
-  }
+  },
+  {
+    id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+    isDeployedInEnv: {
+      prd: true,
+      stg: true,
+      dev: true,
+      sbx: false
+    },
+    requestScheme: 'http://',
+    requestUri: '/gst/movies/msearch.html',
+    responseHeaderMatches: {
+      'x-nyt-backend': 'www_legacy_gke',
+      'x-nyt-route': 'legacy-gke'
+    },
+    responseHeaderPattern: {
+      'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+      'x-gdpr': /^[0-1]$/,
+    },
+    responseStatusCode: [301],
+    scenarioDescription: 'Legacy route sets gdpr cookie and header',
+    testId: 11
+  },
 ];
 return scenarios;
 }
