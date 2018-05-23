@@ -62,22 +62,6 @@ function getScenarioEvents() {
       },
       testId: 3
     },
-    {
-      id: 'RedirectHomescreenToggle',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'https://',
-      requestUri: '/2017/09/24/theater/slug.amp.html',
-      responseStatusCode: [301],
-      scenarioDescription: '301 redirect WWW AMP to WWW Canonical',
-      responseHeaderMatches: {
-        location: 'https://' + suite.servername + '/2017/09/24/theater/slug.html'
-      },
-      testId: 4
-    }
   ];
 
   return scenarios;

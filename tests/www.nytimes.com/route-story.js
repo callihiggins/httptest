@@ -1056,6 +1056,43 @@ function getScenarioEvents() {
       'testId': 1400,
     },
     {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/2017/09/24/theater/slug.amp.html',
+      responseStatusCode: [200,404],
+      scenarioDescription: 'Amp articles, should not be cached',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'amp',
+        'x-cache': 'MISS'
+      },
+      testId: 1800,
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestHeaders: {
+        'x-nyt-internal-access': 0,
+        'x-nyt-external-access': 0
+      },
+      requestUri: '/2017/09/24/theater/slug.amp.html',
+      responseStatusCode: [302],
+      responseHeaderContains: {
+        'location': '/2017/09/24/theater/slug.html'
+      },
+      scenarioDescription: 'amp articles should 302 to regular url if they requesting client isnt allowed',
+      testId: 1801
+    },
+    {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,

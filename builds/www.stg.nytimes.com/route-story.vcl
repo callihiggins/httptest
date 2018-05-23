@@ -4,9 +4,10 @@ sub recv_route_story {
     if (req.http.var-nyt-canonical-www-host == "true") {
 
       # default route for stories is NYT5
-      if (   req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
+      if (  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
           || req.url ~ "^/(aponline|reuters)/" // wire sources
           || req.url ~ "^/blog/" // all blogposts
+          ) && req.url.path !~ "\.amp\.html$"
       ) {
           set req.http.x-nyt-route = "article";
           set req.http.x-nyt-backend = "article_fe";
@@ -70,6 +71,45 @@ sub recv_route_story {
          }
       }
    }
+}
+
+sub recv_route_amp {
+  // Route amp articles
+   if ( req.http.var-nyt-canonical-www-host == "true" &&
+     req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" &&
+      req.url.path ~ "\.amp\.html$"
+    ) {
+
+     if (client.ip ~ googlebot || req.http.x-nyt-internal-access == "1" || req.http.x-nyt-external-access == "1") {
+       set req.http.x-nyt-route = "amp";
+       set req.http.x-nyt-backend = "amp";
+       set req.http.var-nyt-force-pass = "true";
+     } else {
+       // redirect to regular url
+       set req.http.var-nyt-amp-redirect = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
+       error 755 req.http.var-nyt-amp-redirect;
+     }
+   }
+}
+
+sub miss_pass_route_amp {
+  if (req.http.x-nyt-route == "amp") {
+      if (req.http.var-nyt-env != "prd") {
+          set bereq.http.host = "amp-dot-nyt-wfvi-dev.appspot.com";
+      } else {
+          set bereq.http.host = "amp-dot-nyt-wfvi-prd.appspot.com";
+      }
+  }
+}
+
+// This could also be 770 should it be?
+sub error_755_amp_redirect {
+  if (obj.status == 755) {
+      set obj.http.Location = obj.response;
+      set obj.status = 302;
+      set obj.response = "Moved Temporarily";
+      return(deliver);
+  }
 }
 
 sub deliver_route_story_restart_indicators {

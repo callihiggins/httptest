@@ -10,18 +10,10 @@ sub vcl_recv {
 
     // redirect international to www
     if (req.http.host ~ "^international\.(dev\.|stg\.)?nytimes.com$") {
-        set req.http.x-Redir-Url = 
+        set req.http.x-Redir-Url =
             "https://" +
             regsub(req.http.host, "^international.","www.") +
             req.url;
-        error 750 req.http.x-Redir-Url;
-    }
-
-    if (req.url ~ "\.amp\.html"
-        && (req.http.host ~ "^(www-[a-z0-9]+\.)(dev\.|stg\.|)?nytimes.com$" 
-            || req.http.host ~ "^www\.(dev\.|stg\.|)?nytimes.com$"))
-    {
-        set req.http.x-Redir-Url = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
         error 750 req.http.x-Redir-Url;
     }
 
@@ -31,7 +23,7 @@ sub vcl_recv {
         set req.http.X-Redir-Url =  "https://" + req.http.host + req.url;
         error 750 req.http.X-Redir-Url;
     }
-    
+
     # classic homepage toggle
     if (req.url == "/homescreen" && req.http.x-nyt-internal-access == "1") {
       if (req.http.cookie:vi_www_hp_opt != "0") {

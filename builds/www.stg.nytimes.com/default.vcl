@@ -153,6 +153,7 @@ sub vcl_recv {
 
   # order matters for these routes that are all using ^/year/mo/day
   call recv_route_story;
+  call recv_route_amp;
   call recv_route_watching; # this needs to come AFTER article routing since it uses ^/year/mo/day
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
@@ -293,6 +294,7 @@ sub vcl_miss {
   call miss_pass_route_vi_assets;
   call miss_pass_route_switchboard;
   call miss_pass_route_blogs;
+  call miss_pass_route_amp;
   call miss_pass_route_add_svc;
   call miss_pass_route_intl;
   call miss_pass_route_real_estate;
@@ -351,6 +353,7 @@ sub vcl_pass {
   call miss_pass_route_vi_assets;
   call miss_pass_route_switchboard;
   call miss_pass_route_blogs;
+  call miss_pass_route_amp;
   call miss_pass_route_add_svc;
   call miss_pass_route_intl;
   call miss_pass_route_real_estate;
@@ -479,7 +482,7 @@ sub vcl_deliver {
   call deliver_route_newsdev_gcs_error;
 
   # set response headers
-  
+
   # only execute gdpr logic on the edge in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {
     call deliver_gdpr;
@@ -499,6 +502,7 @@ sub vcl_error {
   call error_init_health_vars;
 #FASTLY error
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
+  call error_755_amp_redirect;
   call error_800_fastly_healthcheck;
   call error_900_route_esi_jsonp_callback;
   call error_995_route_health_service;
@@ -506,6 +510,7 @@ sub vcl_error {
   call error_918_amp_gdpr;
   call error_919_gdpr;
   call error_949_geo_debug_svc;
+
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code

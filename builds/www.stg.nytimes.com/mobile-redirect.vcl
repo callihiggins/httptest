@@ -103,6 +103,13 @@ sub vcl_deliver {
                   set req.http.x-do-mobile-redirect = "0";
                 }
 
+
+                // FOR MOBILE SHUTDOWN
+                // Exceptions for urls now supported by www
+                if (req.http.x-nyt-route == "amp") {
+                  set req.http.x-do-mobile-redirect = "0";
+                }
+
                 if (req.http.x-do-mobile-redirect == "1") {
                     if (   req.url ~ "^/$"
                         || req.url ~ "^/index.html"

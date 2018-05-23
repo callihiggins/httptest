@@ -53,6 +53,7 @@ require("./www.nytimes.com/route-search.js");
 require("./www.nytimes.com/route-timeswire.js");
 require("./www.nytimes.com/route-blogs.js");
 require("./www.nytimes.com/redirect-mobile-realestate.js");
+require("./www.nytimes.com/kill-mobile-redirect.js");
 
 
 // please leave these tests here and add your includes above
