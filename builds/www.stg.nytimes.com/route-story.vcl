@@ -79,10 +79,9 @@ sub recv_route_amp {
      req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" &&
       req.url.path ~ "\.amp\.html$"
     ) {
-
+      set req.http.x-nyt-route = "amp";
+      set req.http.x-nyt-backend = "amp";
      if (client.ip ~ googlebot || req.http.x-nyt-internal-access == "1" || req.http.x-nyt-external-access == "1") {
-       set req.http.x-nyt-route = "amp";
-       set req.http.x-nyt-backend = "amp";
        set req.http.var-nyt-force-pass = "true";
      } else {
        // redirect to regular url

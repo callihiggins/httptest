@@ -1093,6 +1093,27 @@ function getScenarioEvents() {
       testId: 1801
     },
     {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestHeaders: {
+        'x-nyt-internal-access': 0,
+        'x-nyt-external-access': 0,
+        'user-agent': 'iphone'
+      },
+      requestUri: '/2017/09/24/theater/slug.amp.html',
+      responseStatusCode: [302],
+      responseHeaderContains: {
+        'location': '/2017/09/24/theater/slug.html'
+      },
+      scenarioDescription: 'amp articles should 302 to regular url if they requesting client isnt allowed',
+      testId: 1802
+    },
+    {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,
