@@ -32,7 +32,7 @@ sub recv_querystring {
         && req.http.x-nyt-route != "games-phoenix"
         && req.http.x-nyt-route != "games-assets"
         && req.http.x-nyt-route != "games-web"
-        && req.http.x-nyt-route != "mwcm"
+        && req.http.x-nyt-route ~ "^mwcm"
         && req.http.x-nyt-route != "newsdev-gke"
         && req.http.x-nyt-route != "video-media"
         && req.http.x-nyt-route != "search-suggest"
