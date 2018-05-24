@@ -96,7 +96,6 @@ function getScenarioEvents() {
       responseHeadersNotPresent: [
         "cookie",
         "nnCoection",
-        "set-cookie",
         "via",
         "x-age",
         "x-backend",
@@ -134,7 +133,6 @@ function getScenarioEvents() {
       responseHeadersNotPresent: [
         "cookie",
         "nnCoection",
-        "set-cookie",
         "via",
         "x-age",
         "x-backend",

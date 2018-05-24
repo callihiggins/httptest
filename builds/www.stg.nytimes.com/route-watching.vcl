@@ -6,6 +6,9 @@ sub recv_route_watching {
           || req.url ~ "^/watching/"
           || req.url ~ "^\/\d{4}\/\d{2}\/\d{2}\/watching\/"
       ) {
+          # set gdpr cookie on this route
+          set req.http.var-nyt-send-gdpr = "true";
+
           if (req.url ~ "^/watching/api/users/") {
               set req.http.x-nyt-route = "watching-nocache";
           } else {

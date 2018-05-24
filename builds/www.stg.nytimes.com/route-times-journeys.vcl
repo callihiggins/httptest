@@ -4,11 +4,13 @@ sub recv_route_times_journeys {
         if (req.url.path ~ "^/times-journeys") {
             set req.http.x-nyt-route = "times-journeys";
             set req.http.x-nyt-backend = "times_journeys";
+            set req.http.var-nyt-send-gdpr = "true";
         }
 
         if (req.url.path ~ "^/times-journeys/students") {
             set req.http.x-nyt-route = "times-journeys-students";
             set req.http.x-nyt-backend = "times_journeys_students";
+            set req.http.var-nyt-send-gdpr = "true";
         }
     }
 }

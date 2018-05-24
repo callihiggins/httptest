@@ -3,6 +3,7 @@ sub recv_route_newsgraphics_gcs {
   if (req.url ~ "^/newsgraphics/" || req.url ~ "^/projects/") {
     set req.http.x-nyt-route = "newsgraphics-gcs";
     set req.http.x-nyt-backend = "gcs_origin";
+    set req.http.var-nyt-send-gdpr = "true";
   }
 }
 

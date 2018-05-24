@@ -65,6 +65,11 @@ sub recv_gdpr {
         set req.http.var-cookie-nyt-gdpr = req.http.Cookie:nyt-gdpr;
     }
 
+    # temporarily setting the cookie in every request
+    # for routes that have send-gdpr == "true"
+    # TODO: remove at some future point
+    set req.http.var-nyt-has-gdpr = "false";
+
     # If the request didn't have an `nyt-gdpr` cookie present, then we do geo detection
     # and match against the country list to determine whether headers should be sent back
     if (req.http.var-nyt-has-gdpr == "false") {

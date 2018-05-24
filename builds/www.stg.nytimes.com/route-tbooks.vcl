@@ -3,7 +3,7 @@ sub recv_route_tbooks {
         if (req.url ~ "^/tbooks") {
             set req.http.x-nyt-route = "tbooks";
             set req.http.x-nyt-backend = "tbooks";
-
+            set req.http.var-nyt-send-gdpr = "true";
             set req.http.var-nyt-force-pass = "true";
         }
     }

@@ -5,6 +5,7 @@ sub recv_route_newsdev_gcs {
 
     set req.http.x-nyt-route = "newsdev-gcs";
     set req.http.x-nyt-backend = "gcs_origin";
+    set req.http.var-nyt-send-gdpr = "true";
 
     # Redirect to https before updating req.http.host header
     if ( !req.http.Fastly-SSL ) {

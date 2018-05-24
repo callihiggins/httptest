@@ -9,6 +9,7 @@ sub recv_route_newsdev_gke {
     ) {
         set req.http.x-nyt-route = "newsdev-gke";
         set req.http.x-nyt-backend = "newsdev_k8s_gke";
+        set req.http.var-nyt-send-gdpr = "true";
 
         // Bypass cache for certain /svc/int routes
         if (
