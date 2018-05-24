@@ -799,6 +799,12 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
+    name    = "route-gdpr-form"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-gdpr-form.vcl")}"
+  }
+
+  vcl {
     name    = "test-suite-force-miss"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/test-suite-force-miss.vcl")}"

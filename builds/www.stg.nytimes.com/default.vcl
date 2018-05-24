@@ -70,6 +70,7 @@ include "route-paidpost";
 include "route-blogs";
 include "route-slideshow";
 include "route-invalid-requests";
+include "route-gdpr-form";
 
 # backend response processing
 include "surrogate-key";
@@ -143,6 +144,7 @@ sub vcl_recv {
   call recv_route_weddings;
   call recv_route_search;
   call recv_route_timeswire;
+  call recv_route_gdpr_form;
   call recv_route_interactive;
   call recv_route_blogs;
   call recv_route_vi_assets;
