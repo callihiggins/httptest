@@ -342,12 +342,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "geoip-timezone-map-table"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-timezone-map-table.vcl")}"
-  }
-
-  vcl {
     name    = "route-elections"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-elections.vcl")}"
@@ -510,9 +504,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "geoip-location-consolidation-map-table"
+    name    = "geoip-homepage-briefing-map"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-location-consolidation-map-table.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-homepage-briefing-map.vcl")}"
   }
 
   vcl {
@@ -540,9 +534,15 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "geoip-service"
+    name    = "geoip-header-init"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-service.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-header-init.vcl")}"
+  }
+
+  vcl {
+    name    = "route-geoip"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-geoip.vcl")}"
   }
 
   vcl {

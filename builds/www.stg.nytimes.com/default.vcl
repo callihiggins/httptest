@@ -8,9 +8,8 @@ include "sanitize-url";
 include "normalize-url";
 include "access-level-authorization";
 include "initialize-vars";
-include "geoip-timezone-map-table";
-include "geoip-location-consolidation-map-table";
-include "geoip-service";
+include "geoip-homepage-briefing-map";
+include "geoip-header-init";
 include "frame-buster";
 include "ipauth";
 include "www-redirect";
@@ -23,6 +22,7 @@ include "test-suite-force-miss";
 include "route-health-service"; # service that reports health of defined backends
 include "route-default";
 
+include "route-geoip";
 include "route-fastly-healthcheck";
 include "route-esi-jsonp-callback";
 include "route-cms-static-assets";
@@ -112,6 +112,7 @@ sub vcl_recv {
   call recv_route_esi_jsonp_callback;
   call recv_route_cms_static_assets;
   call recv_route_ads_static_assets;
+  call recv_route_geoip_svc;
   call recv_route_search_suggest_svc;
   call recv_route_switchboard;
   call recv_route_collections_svc;

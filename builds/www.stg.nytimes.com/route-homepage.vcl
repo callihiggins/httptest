@@ -50,10 +50,38 @@ sub hash_route_homepage {
 
   # if vi allocated, add hash parameters for cache variance
   if (req.http.x-nyt-route == "vi-homepage") {
+      call calculate_geo_hash;
+
       set req.hash += req.http.x-nyt-geo-hash;
       set req.hash += req.http.device_type;
       set req.hash += req.http.x-vi-ssr-www-hp;
   }
+}
+
+sub calculate_geo_hash {
+
+	declare local var.geo_lookup_key STRING;
+	declare local var.geo_hash STRING;
+	declare local var.final_geohash STRING;
+
+	# lookup homepage regional resolution for briefing
+	set var.geo_lookup_key = client.geo.continent_code + client.geo.country_code + client.geo.region;
+	set var.geo_hash = table.lookup(geo_homepage_briefing_map, var.geo_lookup_key, "NOT_MAPPED");
+	if (var.geo_hash != "NOT_MAPPED"){
+		set var.final_geohash = var.geo_hash;
+	} else {
+		# lookup by continent + country_code
+		set var.geo_lookup_key = client.geo.continent_code + client.geo.country_code;
+		set var.geo_hash = table.lookup(geo_homepage_briefing_map, var.geo_lookup_key, "NOT_MAPPED");
+		if (var.geo_hash != "NOT_MAPPED"){
+			set var.final_geohash = var.geo_hash;
+		} else {
+			# not found, so default to continent
+			set var.final_geohash = client.geo.continent_code;
+		}
+	}
+
+	set req.http.x-nyt-geo-hash = var.final_geohash + client.geo.gmt_offset;
 }
 
 sub miss_pass_route_homepage {

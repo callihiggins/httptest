@@ -1,4 +1,5 @@
-table geo_consolidation_map {
+# rename to homepage_briefing_map or similar
+table geo_homepage_briefing_map {
   "NA": "NA",
   "SA": "SA",
   "AS": "AS",

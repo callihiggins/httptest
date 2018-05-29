@@ -19,13 +19,15 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/web-products/geoip-test.html?ip-override=85.90.227.224',
       'responseHeaderMatches': {
-        'x-nyt-geo-hash': 'EUEurope/London',
         'x-nyt-continent': 'EU',
         'x-nyt-country': 'GB',
         'x-nyt-region': 'LND',
         'x-nyt-latitude': '51.515',
         'x-nyt-longitude': '-0.083',
         'x-nyt-city': 'london',
+      },
+      'responseHeaderPattern': {
+        'x-nyt-gmt-offset': /(0|100)/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test geo hash return value for IP 85.90.227.224',
@@ -42,7 +44,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/web-products/geoip-test.html?ip-override=112.120.130.250',
       'responseHeaderMatches': {
-        'x-nyt-geo-hash': 'ASAsia/Hong_Kong',
+        'x-nyt-gmt-offset': '800',
         'x-nyt-continent': 'AS',
         'x-nyt-country': 'HK',
         'x-nyt-region': 'NO REGION',
@@ -65,7 +67,6 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/web-products/geoip-test.html?ip-override=170.157.174.185',
       'responseHeaderMatches': {
-        'x-nyt-geo-hash': 'OCAustralia/Sydney',
         'x-nyt-continent': 'OC',
         'x-nyt-country': 'AU',
         'x-nyt-region': 'ACT',
@@ -91,7 +92,6 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/svc/web-products/geoip-test.html?ip-override=137.99.78.82',
       'responseHeaderMatches': {
-        'x-nyt-geo-hash': 'NAAmerica/New_York',
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
         'x-nyt-region': 'CT',
@@ -99,10 +99,40 @@ function getScenarioEvents()
         'x-nyt-longitude': '-72.251',
         'x-nyt-city': 'storrs mansfield',
       },
+      'responseHeaderPattern': {
+        'x-nyt-gmt-offset': /-[45]00/,
+      },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test geo hash return value for IP 137.99.78.82',
       'testId': 272,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/?ip-override=173.63.201.100',
+      'responseHeaderMatches': {
+        'x-nyt-continent': 'NA',
+        'x-nyt-country': 'US',
+        'x-nyt-region': 'NJ',
+        'x-nyt-latitude': '40.722',
+        'x-nyt-longitude': '-74.202',
+        'x-nyt-city': 'newark',
+      },
+      'responseHeaderPattern': {
+        'x-nyt-gmt-offset': /-[45]00/,
+        'x-nyt-geo-hash': /NAUSNY-[45]00/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test geo hash return value for IP 173.63.201.100, NJ should get NY geo-hash',
+      'testId': 273,
     }
+
   ];
 
   return scenarios;
