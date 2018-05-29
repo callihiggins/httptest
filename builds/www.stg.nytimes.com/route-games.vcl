@@ -1,6 +1,6 @@
 sub recv_route_games {
     if (req.http.var-nyt-canonical-www-host) {
-        if (req.url.path ~ "^/games/prototype/" || req.url.path ~ "^/svc/crosswords/" || req.url.path ~ "^/svc/games/(sudoku|set)/") {
+        if (req.url.path ~ "^/games/prototype/" || req.url.path ~ "^/svc/crosswords/" || req.url.path ~ "^/svc/games/") {
             set req.http.x-nyt-route = "games-service";
             set req.http.x-nyt-backend = "games_svc";
             set req.http.var-nyt-force-pass = "true";
