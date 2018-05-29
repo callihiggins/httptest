@@ -13,127 +13,20 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
-      },
-      'requestHeaders': {
-        'authorization': 'Basic ThisShouldCauseAFastlyPass',
+        'dev': true,
       },
       'requestScheme': 'https://',
-      'requestUri': '/svc/suggest/v1/timestags?query=foo',
+      'requestUri': '/svc/suggest/v1/timestags?query=foo&hello=1&bad1=2',
       'responseHeaderMatches': {
         'x-cache': 'MISS',
         'x-nyt-route': "search-suggest",
         'x-nyt-backend': "search_suggest",
+        'x-nyt-final-url': '/svc/suggest/v1/timestags?query=foo'
       },
       'responseStatusCode': [200, 404],
-      'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=foo',
+      'scenarioDescription': 'route-search-suggest-svc: filter querystring',
       'testId': 1,
     },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-      },
-      'requestHeaders': {
-        'authorization': 'Basic ThisShouldCauseAFastlyPass',
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/svc/suggest/v1/timestags?query=obama',
-      'responseHeaderMatches': {
-        'x-cache': 'MISS',
-        'x-nyt-route': "search-suggest",
-        'x-nyt-backend': "search_suggest",
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=obama',
-      'testId': 2,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-      },
-      'requestHeaders': {
-        'authorization': 'Basic ThisShouldCauseAFastlyPass',
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/svc/suggest/v1/timestags?query=fart',
-      'responseHeaderMatches': {
-        'x-cache': 'MISS',
-        'x-nyt-route': "search-suggest",
-        'x-nyt-backend': "search_suggest",
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=fart',
-      'testId': 3,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForService Search Suggest',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': true,
-      },
-      'requestHeaders': {
-        'authorization': 'Basic ThisShouldCauseAFastlyPass',
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/svc/suggest/v1/timestags?query=foo',
-      'responseHeaderMatches': {
-        'x-cache': 'MISS',
-        'x-nyt-route': "search-suggest",
-        'x-nyt-backend': "search_suggest",
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=foo',
-      'testId': 101,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': true,
-      },
-      'requestHeaders': {
-        'authorization': 'Basic ThisShouldCauseAFastlyPass',
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/svc/suggest/v1/timestags?query=obama',
-      'responseHeaderMatches': {
-        'x-cache': 'MISS',
-        'x-nyt-route': "search-suggest",
-        'x-nyt-backend': "search_suggest",
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=obama',
-      'testId': 102,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': true,
-      },
-      'requestHeaders': {
-        'authorization': 'Basic ThisShouldCauseAFastlyPass',
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/svc/suggest/v1/timestags?query=fart',
-      'responseHeaderMatches': {
-        'x-cache': 'MISS',
-        'x-nyt-route': "search-suggest",
-        'x-nyt-backend': "search_suggest",
-      },
-      'responseStatusCode': [200, 404],
-      'scenarioDescription': 'route-search-suggest-svc: ensure Fastly pass; /svc/suggest/v1/timestags?query=fart',
-      'testId': 103,
-    },    
   ];
   return scenarios;
 }

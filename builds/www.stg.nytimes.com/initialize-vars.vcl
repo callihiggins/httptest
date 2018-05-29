@@ -19,11 +19,15 @@ sub initialize_global_variable_headers {
   }
 
   set req.http.var-nyt-send-gdpr = "false";
+
+  # save off the URL the user came with
+  # need it to reset for restarts and other logic
+  set req.http.X-OriginalUri = req.url;
 }
 
 sub vcl_recv {
 
-    # nearly everything in here eventually needs to be put in default.vcl
+    # nearly everything in here eventually needs to be put in main.vcl
     # in a sub call..
     # cannot until all the other logic is moved there due to order of ops
 

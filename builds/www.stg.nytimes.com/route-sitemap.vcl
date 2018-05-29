@@ -2,6 +2,7 @@ sub recv_route_sitemap {
   if (req.url.path ~ "^/sitemaps/") {
     set req.http.x-nyt-route = "sitemap";
     set req.http.x-nyt-backend = "sitemap";
+    set req.url = querystring.remove(req.url);
   }
 }
 

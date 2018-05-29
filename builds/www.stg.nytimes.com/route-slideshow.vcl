@@ -7,6 +7,8 @@ sub recv_route_slideshow {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
 
+      call recv_route_slideshow_filter_querystring;
+
       # if we needed to switch back to NYT5, unset the vi flag
       unset req.http.x--fastly-project-vi;
   }
@@ -23,6 +25,7 @@ sub recv_route_slideshow {
       set req.http.x-nyt-backend = "projectvi_fe";
       set req.http.x-nyt-wf-auth = "true";
       set req.http.x--fastly-project-vi = "1";
+      set req.url = querystring.remove(req.url);
   }
 
   # slideshow JSON files
@@ -65,4 +68,19 @@ sub miss_pass_route_slideshow {
   if (req.http.x-nyt-route == "slideshow") {
     unset bereq.http.cookie;
   }
+}
+
+sub recv_route_slideshow_filter_querystring {
+  set req.url = querystring.filter_except(req.url,
+      "action" + querystring.filtersep() +
+      "contentCollection" + querystring.filtersep() +
+      "contentPlacement" + querystring.filtersep() +
+      "currentSlide" + querystring.filtersep() +
+      "entrySlide" + querystring.filtersep() +
+      "module" + querystring.filtersep() +
+      "pgtype" + querystring.filtersep() +
+      "region" + querystring.filtersep() +
+      "slideshowTitle" + querystring.filtersep() +
+      "url" + querystring.filtersep() +
+      "version");
 }

@@ -7,6 +7,7 @@ sub recv_route_trending {
       set req.http.x-nyt-route = "trending";
       set req.http.x-nyt-backend = "misc_fe";
       set req.http.var-nyt-send-gdpr = "true";
+      set req.url = querystring.remove(req.url);
       call set_nyt5_misc_backend;
   }
 }
@@ -17,6 +18,7 @@ sub recv_route_podcasts {
       set req.http.x-nyt-route = "podcasts";
       set req.http.x-nyt-backend = "misc_fe";
       set req.http.var-nyt-send-gdpr = "true";
+      set req.url = querystring.remove(req.url);
       call set_nyt5_misc_backend;
   }
 }
@@ -30,6 +32,7 @@ sub recv_route_best_sellers {
       set req.http.x-nyt-route = "bestseller";
       set req.http.x-nyt-backend = "misc_fe";
       set req.http.var-nyt-send-gdpr = "true";
+      set req.url = querystring.filter_except(req.url, "nytapp");
       call set_nyt5_misc_backend;
   }
 }
@@ -40,6 +43,7 @@ sub recv_route_diningmap {
       set req.http.x-nyt-route = "collection";
       set req.http.x-nyt-backend = "misc_fe";
       set req.http.var-nyt-send-gdpr = "true";
+      set req.url = querystring.filter_except(req.url, "nytapp");
       call set_nyt5_misc_backend;
   }
 }

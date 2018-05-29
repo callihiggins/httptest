@@ -81,7 +81,6 @@ include "set-cache-object-ttl";
 # begin other logic
 include "https-redirect";
 include "device-detect";
-include "querystring";
 include "mobile-redirect";
 include "homepage-redirect";
 include "uuid";
@@ -198,9 +197,6 @@ sub vcl_recv {
 # DO NOT REMOVE THIS LINE, FASTLY MACRO
 #FASTLY recv
 
-  # this has a backend check, put it AFTER the macro to set backends.
-  call recv_querystring;
-
   # check to see if the client asked for a cache miss
   # the test suite does this
   call recv_test_suite_force_miss;
@@ -233,7 +229,10 @@ sub vcl_recv {
     unset req.http.var-nyt-is-shielded;
   }
 
-  # if the route didn't specifically ask for a pass we will do a lookup
+  # sort the querystring just to be sure we optimize cache
+  set req.url = querystring.sort(req.url);
+
+  # if the route did not specifically ask for a pass we will do a lookup
   if (req.http.var-nyt-force-pass == "true") {
     return(pass);
   } else {

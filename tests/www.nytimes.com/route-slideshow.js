@@ -480,6 +480,24 @@ function getScenarioEvents() {
         'Test slideshow; Serve 2010 slideshow on Vi with HTTPS (stg), /slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html',
       testId: 114
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/slideshow/2017/04/28/realestate/on-the-market-in-new-york-city/s/30OTM-NYC-slide-VVNR.html?module=5&bad1=4&version=2&bad2=5&action=hello',
+      'responseHeaderMatches': {
+        'x-nyt-backend': 'slideshow_fe',
+        'x-nyt-route': 'slideshow',
+        'x-nyt-final-url': '/slideshow/2017/04/28/realestate/on-the-market-in-new-york-city/s/30OTM-NYC-slide-VVNR.html?action=hello&module=5&version=2',
+      },
+      'responseStatusCode': [200,301,404],
+      'scenarioDescription': 'Test real estate slideshow querystring filter',
+      'testId': 115,
+    },
   ];
 
   return scenarios;

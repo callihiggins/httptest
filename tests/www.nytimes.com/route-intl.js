@@ -60,7 +60,7 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/es/al-dia?withcomments=true',
+      'requestUri': '/es/al-dia?withcomments=true&bogusq=2&hellothere=2',
       'responseHeaderPattern': {
         'location': /\d{4}\/\d{2}\/\d{2}\/.+?withcomments=true/,
       },
@@ -68,6 +68,7 @@ function getScenarioEvents()
         'x-nyt-route': 'intl',
         'x-nyt-backend': 'intl_gcp',
         'x-gdpr': '0',
+        'x-nyt-final-url': '/es/al-dia?withcomments=true',
       },
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,

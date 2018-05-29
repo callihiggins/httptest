@@ -38,8 +38,6 @@ sub recv_route_mwcm {
             set req.http.x-nyt-backend = "mwcm";
             set req.http.var-nyt-send-gdpr = "true";
         }
-        # sorts all the query parameters. 
-        set req.url = querystring.sort(req.url);
     }
 }
 

@@ -43,6 +43,12 @@ sub recv_route_homepage {
           set req.http.x--fastly-project-vi = "1";
           set req.http.var-nyt-send-gdpr = "true";
         }
+
+        if (req.http.x-nyt-route == "vi-homepage") {
+          set req.url = querystring.filter_except(req.url, "alphalayoutB");
+        } else if (req.http.x-nyt-route == "homepage") {
+          set req.url = querystring.remove(req.url);
+        }
     }
 }
 

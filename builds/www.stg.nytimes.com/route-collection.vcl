@@ -23,6 +23,7 @@ sub recv_route_collection {
       set req.http.x-nyt-backend = "collection_fe";
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
+      set req.url = querystring.filter_except(req.url, "nytapp");
       # if we needed to switch back to NYT5, unset the vi flag
       unset req.http.x--fastly-project-vi;
   }

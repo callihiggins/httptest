@@ -37,11 +37,12 @@ function getScenarioEvents() {
         dev: false
       },
       requestScheme: 'https://',
-      requestUri: '/search?query=apple&sort=best',
+      requestUri: '/search?query=apple&sort=best&_gae=hello&_=1234123',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-search',
         'x-nyt-backend': 'projectvi_fe',
         'x-gdpr': '0',
+        'x-nyt-final-url': '/search?query=apple&sort=best',
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Search term - apple',

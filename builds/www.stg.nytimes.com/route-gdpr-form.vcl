@@ -4,5 +4,6 @@ sub recv_route_gdpr_form {
     set req.http.x-nyt-backend = "projectvi_fe";
     set req.http.var-nyt-wf-auth = "true";
     set req.http.var-nyt-send-gdpr = "true";
+    set req.url = querystring.remove(req.url);
   }
 }

@@ -152,6 +152,25 @@ function getScenarioEvents()
       'scenarioDescription': 'Test hitting the video offsite player',
       'testId': 6,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/video/sciencetake?apagenum=5&bad1=4&playlistId=2&bad2=5&callback=hello',
+      'responseHeaderMatches': {
+        'x-nyt-backend': 'video_library',
+        'x-nyt-route': 'video-library',
+        'x-nyt-final-url': '/video/sciencetake?playlistId=2',
+      },
+      'responseStatusCode': [200,301,404],
+      'scenarioDescription': 'Test video-library querystring filter',
+      'testId': 7,
+    },
   ];
   return scenarios;
 }

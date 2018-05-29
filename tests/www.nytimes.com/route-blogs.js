@@ -96,6 +96,25 @@ function getScenarioEvents()
       'scenarioDescription': 'Test routing; /live; blogs; /live/2016-golden-globes/',
       'testId': 4,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/live/2016-golden-globes/?apagenum=5&bad1=4&p=2&bad2=5&callback=hello',
+      'responseHeaderMatches': {
+        'x-nyt-backend': 'blogs',
+        'x-nyt-route': 'blog',
+        'x-nyt-final-url': '/live/2016-golden-globes/?apagenum=5&callback=hello&p=2',
+      },
+      'responseStatusCode': [200,301,404],
+      'scenarioDescription': 'Test blogs querystring filter',
+      'testId': 5,
+    },
   ];
 
   return scenarios;

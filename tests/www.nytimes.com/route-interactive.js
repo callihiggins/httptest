@@ -134,10 +134,11 @@ function getScenarioEvents()
     'requestHeaders': {
     },
     'requestScheme': 'https://',
-    'requestUri': '/interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html',
+    'requestUri': '/interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html?hello=2&query=good&_goog=blah',
     'responseHeaderMatches': {
       'x-nyt-route': 'vi-interactive',
       'x-nyt-backend': 'projectvi_fe',
+      'x-nyt-final-url': '/interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html',
     },
     'responseHeadersPresent': [
       'age',
@@ -158,7 +159,7 @@ function getScenarioEvents()
       'x-varnish',
     ],
     'responseStatusCode': [200,404],
-    'scenarioDescription': 'Test NYTimes Interactive served by Vi',
+    'scenarioDescription': 'Test NYTimes Interactive served by Vi with qparam removed',
     'testId': 7,
   },
   {

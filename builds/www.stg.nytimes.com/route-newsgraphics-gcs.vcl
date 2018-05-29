@@ -4,6 +4,7 @@ sub recv_route_newsgraphics_gcs {
     set req.http.x-nyt-route = "newsgraphics-gcs";
     set req.http.x-nyt-backend = "gcs_origin";
     set req.http.var-nyt-send-gdpr = "true";
+    set req.url = querystring.remove(req.url);
   }
 }
 

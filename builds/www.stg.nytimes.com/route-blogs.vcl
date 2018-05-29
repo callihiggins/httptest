@@ -41,6 +41,16 @@ sub recv_route_blogs {
       set req.http.x-nyt-route = "blog-legacy";
       set req.http.x-nyt-backend = "blogs";
   }
+
+  # now let us deal with the qparams for this route
+  if (req.http.x-nyt-route ~ "^blog") {
+    # WP-7352: Don't deal with POST requests
+    if (req.request == "POST") {
+        set req.http.var-nyt-force-pass = "true";
+    } else {
+       call recv_route_blogs_filter_querystring;
+    }
+  }
 }
 
 sub miss_pass_route_blogs {
@@ -57,4 +67,29 @@ sub miss_pass_route_blogs {
           set bereq.http.host = "www." + req.http.var-nyt-env + ".nytimes.com";
         }
     }
+}
+
+sub recv_route_blogs_filter_querystring {
+    set req.url = querystring.filter_except(req.url,
+      "_jsonp" + querystring.filtersep() +
+      "apagenum" + querystring.filtersep() +
+      "apikey" + querystring.filtersep() +
+      "apitoken" + querystring.filtersep() +
+      "asset_id" + querystring.filtersep() +
+      "author" + querystring.filtersep() +
+      "callback" + querystring.filtersep() +
+      "category" + querystring.filtersep() +
+      "chromeless" + querystring.filtersep() +
+      "entry" + querystring.filtersep() +
+      "feed_type" + querystring.filtersep() +
+      "homepage" + querystring.filtersep() +
+      "nytapp" + querystring.filtersep() +
+      "offset" + querystring.filtersep() +
+      "p" + querystring.filtersep() +
+      "pagewanted" + querystring.filtersep() +
+      "post_not_in" + querystring.filtersep() +
+      "post_type" + querystring.filtersep() +
+      "posts_per_page" + querystring.filtersep() +
+      "s" + querystring.filtersep() +
+      "tag");
 }

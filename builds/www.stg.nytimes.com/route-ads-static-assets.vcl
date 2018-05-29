@@ -2,6 +2,7 @@ sub recv_route_ads_static_assets {
   if (req.url.path ~ "^/ads/") {
     set req.http.x-nyt-route = "ads-static-assets";
     set req.http.x-nyt-backend = "gcs_origin";
+    set req.url = querystring.remove(req.url);
   }
 }
 

@@ -110,10 +110,11 @@ function getScenarioEvents()
         'sbx': false,
       },
       'requestScheme': 'https://',
-      'requestUri': '/watching/api/recommendations?ids[]=100000004539144',
+      'requestUri': '/watching/api/recommendations?ids[]=100000004539144&test=hello&bad1=1',
       'responseHeaderMatches': {
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
+        'x-nyt-final-url': '/watching/api/recommendations?ids[]=100000004539144',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'Test Watching; multi-recommendations URL with query param',

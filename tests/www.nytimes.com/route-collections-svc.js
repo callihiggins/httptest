@@ -10,12 +10,13 @@ function getScenarioEvents()
   var scenarios = [
     {
       'requestScheme': 'https://',
-      'requestUri': '/svc/collections/v1/publish/scoop/www.nytimes.com/section/politics?limit=0',
+      'requestUri': '/svc/collections/v1/publish/scoop/www.nytimes.com/section/politics?limit=0&what=1&hi=2',
       'responseHeaderMatches': {
         'x-nyt-backend': 'collections_svc',
         'x-api-version': 'F-X',
         'x-frame-options': 'DENY',
         'x-nyt-route': 'collections-svc',
+        'x-nyt-final-url': '/svc/collections/v1/publish/scoop/www.nytimes.com/section/politics?limit=0',
       },
       'responseHeadersPresent': [
         'x-cache',
@@ -38,7 +39,7 @@ function getScenarioEvents()
         'x-varnishcacheduration',
       ],
       'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting collections-svc endpoints dev/stg/prd',
+      'scenarioDescription': 'Test hitting collections-svc endpoints with querystring filter check dev/stg/prd',
       'testId': 1,
     },
     {

@@ -1,8 +1,12 @@
 sub recv_set_default_backend {
-  // default is WWW Legacy GKE
   set req.http.x-nyt-backend = "www_legacy_gke";
   set req.http.x-nyt-route = "legacy-gke";
   set req.http.var-nyt-send-gdpr = "true";
+
+  # TODO: there are most likely many more legacy routes that can remove/filter qparams
+  if (req.url ~ "^/svc/comscore/") {
+    set req.url = querystring.remove(req.url);
+  }
 }
 
 sub miss_pass_route_default_remove_cookie {

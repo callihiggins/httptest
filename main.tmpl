@@ -230,7 +230,7 @@ resource "fastly_service_v1" "www" {
     type        = "request"
   }
 
-  # this is not being used yet in TF, look in default.vcl
+  # this is not being used yet in TF, look in main.vcl
   condition {
     name      = "Suppress adx and svc unless 50x response code"
     priority  = 10
@@ -245,7 +245,7 @@ resource "fastly_service_v1" "www" {
     type      = "RESPONSE"
   }
 
-  # look in default.vcl for this logic for the time being
+  # look in main.vcl for this logic for the time being
   default_ttl = 3600
 
   gzip {
@@ -330,9 +330,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "default"
+    name    = "main"
     main    = true
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/default.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/main.vcl")}"
   }
 
   vcl {
@@ -345,12 +345,6 @@ resource "fastly_service_v1" "www" {
     name    = "route-elections"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-elections.vcl")}"
-  }
-
-  vcl {
-    name    = "querystring"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/querystring.vcl")}"
   }
 
   vcl {

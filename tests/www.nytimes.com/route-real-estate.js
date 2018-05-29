@@ -30,6 +30,25 @@ function getScenarioEvents()
         'Test real estate: "/real-estate/find-a-home" ',
       testId: 1
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/real-estate/find-a-home?price=5&bad1=4&region=2&bad2=5&neighborhood=hello',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'real-estate',
+        'x-nyt-backend': 'realestate_fe',
+        'x-nyt-final-url': '/real-estate/find-a-home?neighborhood=hello&price=5&region=2',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test realestate querystring filter',
+      'testId': 2,
+    },
   ];
 
   return scenarios;

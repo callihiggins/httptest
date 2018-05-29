@@ -7,6 +7,7 @@ sub recv_route_cms_static_assets {
         if (req.url.path ~ "^/images/") {
             set req.http.x-nyt-route = "cms-static-assets";
             set req.http.x-nyt-backend = "gcs_origin";
+            set req.url = querystring.remove(req.url);
         }
     }
 }
