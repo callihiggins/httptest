@@ -14,9 +14,6 @@
 #                                                                  any routes other than home anymore)
 #   HP only:                    Abra  0.5%       => "e2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-serv"
 #   HP only:                    Abra  0.5%       => "f2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-orig"
-#   HP only:                    Abra  0.33%      => "g2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-rm_gpt_media_dfp"
-#   HP only:                    Abra  0.33%      => "h2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-rm_media_dfp"
-#   HP only:                    Abra  0.33%      => "i2"    vi/nyt5/nyt5    WP_ProjectVi_www_hp="hp-orig_dfp"
 #                                                               (^ Full server side rendered home AB test)
 #
 #   `vi_www_hp` cookie (not read; used ONLY to signal to frontend JavaScript):
@@ -26,11 +23,8 @@
 #       c = nyt5
 #       d = vi (added Dec. 2017)
 #       y = nyt5 (added Dec. 2017)
-#       e = vi ab test variation with server-rendered homepage (added Feb. 2018)
-#       f = vi ab test control (added Feb. 2018)
-#       g = vi dfp ab test variation, remove gpt media (added June 2018)
-#       h = vi dfp ab test variation, remove media (added June 2018)
-#       i = vi dfp ab test control (added June 2018)
+#       e = vi with server-rendered homepage (added Feb. 2018)
+#       f = vi (added Feb. 2018)
 #
 #   `vi_www_hp_opt` cookie meaning (handled elsewhere):
 #       1 = force vi homepage
@@ -48,7 +42,7 @@
 
 sub recv_vi_allocation_init {
     declare local var.hash STRING;
-    declare local var.d INTEGER;
+    declare local var.dart INTEGER;
     declare local var.test_group STRING;
     declare local var.test_group_story STRING;
     declare local var.abra_overrides STRING;
@@ -90,19 +84,17 @@ sub recv_vi_allocation_init {
         if (req.http.X-From-Onion == "1") {
             set var.test_group = "b2";
         } else if (var.abra_overrides ~ "(?:^|&)WP_ProjectVi_www_hp=([^&]*)") {
-            if      (re.group.1 == "hp-st")               { set var.test_group = "a0"; } # translate to equiv.
-            else if (re.group.1 == "hp")                  { set var.test_group = "b0"; } # test_group code
-            else if (re.group.1 == "st")                  { set var.test_group = "c0"; }
-            else if (re.group.1 == "hp-st*")              { set var.test_group = "a2"; } # trailing `*` means,
-            else if (re.group.1 == "hp-serv")             { set var.test_group = "e2"; } # HP ab test variant
-            else if (re.group.1 == "hp-orig")             { set var.test_group = "f2"; } # HP ab test control
-            else if (re.group.1 == "hp-rm_gpt_media_dfp") { set var.test_group = "g2"; } # HP ab test dfp variant
-            else if (re.group.1 == "hp-rm_media_dfp")     { set var.test_group = "h2"; } # HP ab test dfp variant
-            else if (re.group.1 == "hp-orig_dfp")         { set var.test_group = "i2"; } # HP ab test dfp control
-            else if (re.group.1 == "hp*")                 { set var.test_group = "b2"; } # make the frontend
-            else if (re.group.1 == "st*")                 { set var.test_group = "c2"; } # report this to Abra
-            else if (re.group.1 ~ "\*$")                  { set var.test_group = "z2"; }
-            else                                          { set var.test_group = "z0"; } # default to ctrl grp
+            if      (re.group.1 == "hp-st")        { set var.test_group = "a0"; } # translate to equiv.
+            else if (re.group.1 == "hp")           { set var.test_group = "b0"; } # test_group code
+            else if (re.group.1 == "st")           { set var.test_group = "c0"; }
+            else if (re.group.1 == "hp-st*")       { set var.test_group = "a2"; } # trailing `*` means,
+            else if (re.group.1 == "hp-serv")      { set var.test_group = "e2"; } # HP SSR ab test variant
+            else if (re.group.1 == "hp-orig")      { set var.test_group = "f2"; } # HP SSR ab test control
+            else if (re.group.1 == "hp*")          { set var.test_group = "b2"; } # make the frontend
+            else if (re.group.1 == "st*")          { set var.test_group = "c2"; } # report this to Abra
+            else if (re.group.1 ~ "\*$")           { set var.test_group = "z2"; }
+            else                                   { set var.test_group = "z0"; } # default to ctrl grp
+
         } else if (req.http.X-Rigor-Vi-Access == "1") {
             # Special header granting access to Vi for Rigor testing
             set var.test_group = "a0"; # HP + Story, unreported
@@ -120,43 +112,33 @@ sub recv_vi_allocation_init {
 
             set var.hash = digest.hash_sha256(req.http.x-nyt-a + " WP_ProjectVi_www_hp");
             set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-            set var.d = std.strtol(var.hash, 16);
+            set var.dart = std.strtol(var.hash, 16);
 
             if (req.http.var-nyt-env == "prd") {
-                if      (var.d <   42949673) { set var.test_group = "b2"; } # < 1%      HP only, reported
-                else if (var.d <   85899346) { set var.test_group = "z2"; } # < 2%      control, reported
-                else if (var.d <  128849019) { set var.test_group = "d2"; } # < 3%      HP only (added Dec. 2017), reported
-                else if (var.d <  171798692) { set var.test_group = "y2"; } # < 4%      control (added Dec. 2017), reported
-                else if (var.d <  193273528) { set var.test_group = "e2"; } # < 4.5%    hp-serv (added Feb. 2018), reported
-                else if (var.d <  214748365) { set var.test_group = "f2"; } # < 5%      hp-orig (added Feb. 2018), reported
-                else if (var.d <  229064922) { set var.test_group = "g2"; } # < 5+1/3%  hp-rm_gpt_media_dfp (added June 2018), reported
-                else if (var.d <  243381480) { set var.test_group = "h2"; } # < 5+2/3%  hp-rm_media_dfp (added June 2018), reported
-                else if (var.d <  257698038) { set var.test_group = "i2"; } # < 6%      hp-orig_dfp (added June 2018), reported
-                else   /* var.d < 2^32 */    { set var.test_group = "z0"; } # < 100%    control, unreported
+                if    (var.dart <   42949673) { set var.test_group = "b2"; } #  1%   HP only, reported
+                elsif (var.dart <   85899346) { set var.test_group = "z2"; } #  1%   control, reported
+                elsif (var.dart <  128849018) { set var.test_group = "d2"; } #  1%   HP only (added Dec. 2017), reported
+                elsif (var.dart <  171798691) { set var.test_group = "y2"; } #  1%   control (added Dec. 2017), reported
+                elsif (var.dart <  193273528) { set var.test_group = "e2"; } #  0.5% hp-serv (added Feb. 2018), reported
+                elsif (var.dart <  214748365) { set var.test_group = "f2"; } #  0.5% hp-orig (added Feb. 2018), reported
+                else /*    dart < 2^32     */ { set var.test_group = "z0"; } # 95%   control, unreported
+
             } else { # in staging or dev, use equal weights:
-                if      (var.d <  429496730) { set var.test_group = "b2"; } # < 1/10    HP only, reported
-                else if (var.d <  858993460) { set var.test_group = "z2"; } # < 2/10    control, reported
-                else if (var.d < 1288490190) { set var.test_group = "d2"; } # < 3/10    HP only (added Dec. 2017), reported
-                else if (var.d < 1717986920) { set var.test_group = "y2"; } # < 4/10    control (added Dec. 2017), reported
-                else if (var.d < 2147483650) { set var.test_group = "e2"; } # < 5/10    hp-serv (added Feb. 2018), reported
-                else if (var.d < 2576980380) { set var.test_group = "f2"; } # < 6/10    hp-orig (added Feb. 2018), reported
-                else if (var.d < 3006477110) { set var.test_group = "g2"; } # < 7/10    hp-rm_gpt_media_dfp (added June 2018), reported
-                else if (var.d < 3435973840) { set var.test_group = "h2"; } # < 8/10    hp-rm_media_dfp (added June 2018), reported
-                else if (var.d < 3865470570) { set var.test_group = "i2"; } # < 9/10    hp-orig_dfp (added June 2018), reported
-                else  /* var.d < 2^32 */     { set var.test_group = "z0"; } # < 10/10   control, unreported
+                if    (var.dart <  613566757) { set var.test_group = "b2"; } # 1/7 HP only, reported
+                elsif (var.dart < 1227133513) { set var.test_group = "z2"; } # 1/7 control, reported
+                elsif (var.dart < 1840700270) { set var.test_group = "d2"; } # 1/7 HP only (added Dec. 2017), reported
+                elsif (var.dart < 2454267026) { set var.test_group = "y2"; } # 1/7 control (added Dec. 2017), reported
+                elsif (var.dart < 3067833783) { set var.test_group = "e2"; } # 1/7 hp-serv (added Feb. 2018), reported
+                elsif (var.dart < 3681400539) { set var.test_group = "f2"; } # 1/7 hp-orig (added Feb. 2018), reported
+                else /*    dart < 2^32     */ { set var.test_group = "z0"; } # 1/7 control, unreported
             }
         }
+
         # If we're in the server-render test variation, tell Vi to server-render
         # the homepage via a header named `x-vi-ssr-www-hp` (which is meaningless
         # to the other backends and will be ignored):
         if (req.url.path == "/" && var.test_group ~ "^e") {
             set req.http.x-vi-ssr-www-hp = "hp-serv";
-        } else if (req.url.path == "/" && var.test_group ~ "^g"){
-            set req.http.x-vi-ssr-www-hp = "hp-rm_gpt_media_dfp";
-        } else if (req.url.path == "/" && var.test_group ~ "^h"){
-            set req.http.x-vi-ssr-www-hp = "hp-rm_media_dfp";
-        } else if (req.url.path == "/" && var.test_group ~ "^i"){
-            set req.http.x-vi-ssr-www-hp = "hp-orig_dfp";
         } else {
             set req.http.x-vi-ssr-www-hp = "hp-orig";
         }
@@ -177,16 +159,16 @@ sub recv_vi_allocation_init {
 
             set var.hash = digest.hash_sha256(req.http.x-nyt-a + " WP_ProjectVi_Story");
             set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-            set var.d = std.strtol(var.hash, 16);
+            set var.dart = std.strtol(var.hash, 16);
 
             # at launch the values will be updated to match comments
-            if (var.d < 4294967296) { # 100% * 0x100000000
+            if (var.dart < 4294967296) { # 100% * 0x100000000
                 set var.test_group_story = "a0"; # Getting VI response
-            # } else if (var.d < 4294967296) { # 100% * 0x100000000
+            # } else if (var.dart < 4294967296) { # 100% * 0x100000000
             #     set var.test_group_story = "b0"; # Not getting VI response
-            # } else if (var.d < 4294967296) { # 100% * 0x100000000
+            # } else if (var.dart < 4294967296) { # 100% * 0x100000000
             #     set var.test_group_story = "c0"; # Not getting VI response
-            # } else { # var.d < 0x100000000
+            # } else { # var.dart < 0x100000000
             #     set var.test_group_story = "z0"; # Not getting VI response
             }
         }
@@ -199,7 +181,7 @@ sub recv_vi_allocation_init {
         set req.http.x--fastly-vi-test-group-story = var.test_group_story;
         set req.http.x--fastly-req-cookie-vi-story = req.http.x-vistory;
         set req.http.x--fastly-vi-story-opt = req.http.x-vi-story-opt;
-        set req.http.x--fastly-dart = var.d;
+        set req.http.x--fastly-dart = var.dart;
     }
 }
 
