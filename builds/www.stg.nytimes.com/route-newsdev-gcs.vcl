@@ -42,20 +42,17 @@ sub miss_pass_route_newsdev_gcs {
 
 sub deliver_route_newsdev_gcs_error {
   if (req.http.x-nyt-route == "newsdev-gcs") {
-    # This GCS backend is private so the 404 page cannot be configured
-    # and is xml, so load a custom 404 by restarting the request
-    # By restarting the request with an additional header that is
-    # handled by the receiver
-    if (resp.status == 404 && req.restarts < 1) {
-      set req.http.x-nyt-gcs-404 = "true";
-      set req.url = "/interactive/projects/404.html";
-      restart;
-    }
 
+    # If the gcs object returns a 404, serve a custom 404 error page
+    if (resp.status == 404 && req.restarts < 1) {
+      set req.http.var-nyt-404-url = "/interactive/projects/404.html";
+      call deliver_custom_404_error;
+    }
     # Since the custom 404 page is successfully found,
     # restore the original status code
-    if (req.http.x-nyt-gcs-404 && req.restarts > 0) {
+    if (req.http.var-nyt-404-url && req.restarts > 0) {
       set resp.status = 404;
     }
+
   }
 }

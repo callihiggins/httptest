@@ -481,7 +481,9 @@ sub vcl_deliver {
   call deliver_times_journeys_api_version;
   call deliver_watching_api_version;
   call deliver_video_api_version;
+  call deliver_route_elections_gcs_error;
   call deliver_route_newsdev_gcs_error;
+  call deliver_route_newsgraphics_gcs_error;
 
   # set response headers
 

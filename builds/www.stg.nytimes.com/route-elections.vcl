@@ -70,3 +70,20 @@ sub deliver_elections_api_version {
         set resp.http.X-API-Version = "I";
     }
 }
+
+sub deliver_route_elections_gcs_error {
+  if (req.http.x-nyt-route == "elections") {
+
+    # If the gcs object returns a 404, serve a custom 404 error page
+    if (resp.status == 404 && req.restarts < 1) {
+      set req.http.var-nyt-404-url = "/interactive/projects/404.html";
+      call deliver_custom_404_error;
+    }
+    # Since the custom 404 page is successfully found,
+    # restore the original status code
+    if (req.http.var-nyt-404-url && req.restarts > 0) {
+      set resp.status = 404;
+    }
+
+  }
+}
