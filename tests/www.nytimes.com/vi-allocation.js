@@ -328,10 +328,18 @@ function getScenarioEvents()
       'testId': 230,
     },
 
-
-
     // generate a bunch of nyt-a's like this (in bash):
-    // for i in {1..1000}; do a="$(base64 /dev/random | head -c22 | tr /+ -_)"; s="$a WP_ProjectVi_www_hp"; printf '%s %010d\n' "$s" $((0x"$(printf %s "$s" | openssl dgst -sha256 | cut -c1-8)")); done
+
+    /*
+
+    for i in {1..1000};
+    do a="$(base64 /dev/random | head -c22 | tr /+ -_)";
+    s="$a WP_ProjectVi_www_hp";
+    st=$(printf %s "$s" | openssl dgst -sha256 | cut -c1-8);
+    printf '%s %010d\n' "$s" $((0x$st));
+    done
+
+    */
 
     {
       'scenarioDescription': 'Request with nyt-a mapping to hp-serv (in non-prd)',
@@ -345,7 +353,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=sJ50prL_8s36390EzUdhZ6', // in NON-PRODUCTION envs, this results in variation `hp-serv`
+        'nyt-a=Am9NOWpxfQUGvulVQTez3X', // in NON-PRODUCTION envs, this results in variation `hp-serv`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -371,7 +379,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=VY-be0W--laBW4oZMjs2cA', // in NON-PRODUCTION envs, this results in variation `hp-orig`
+        'nyt-a=qpIMnuwZRkSAlkWJXp-MA6', // in NON-PRODUCTION envs, this results in variation `hp-orig`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -380,6 +388,83 @@ function getScenarioEvents()
       },
       'responseHeaderPattern': {
         'set-cookie': /\bvi_www_hp=f[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 250,
+    },
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-rm_gpt_media_dfp (in non-prd)',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=fA7SN8BEcG1SKpZ7pvg7x5', // in NON-PRODUCTION envs, this results in variation `hp-rm_gpt_media_dfp`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-rm_gpt_media_dfp',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=g[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 250,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-rm_media_dfp (in non-prd)',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=Dkv0_hLLXRUvB39OJhghpv', // in NON-PRODUCTION envs, this results in variation `hp-rm_media_dfp`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-rm_media_dfp',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=h[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 250,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-orig_dfp (in non-prd)',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=CQlpUXoLRiNjYw60hOtSOS', // in NON-PRODUCTION envs, this results in variation `hp-orig_dfp`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-orig_dfp',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=i[012][0-9];/,
       },
       'responseStatusCode': 200,
       'testId': 250,
@@ -397,7 +482,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=PkSCqxV0PdpleISJhYVrx1', // in PRODUCTION env, this results in variation `hp-serv`
+        'nyt-a=lLZUkY_xzl4LheXxv-xymJ', // in PRODUCTION env, this results in variation `hp-serv`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -423,7 +508,7 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=nTIWyFEyrbC2ODBXwRv8yw', // in PRODUCTION env, this results in variation `hp-orig`
+        'nyt-a=Am9NOWpxfQUGvulVQTez3X', // in PRODUCTION env, this results in variation `hp-orig`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -437,6 +522,83 @@ function getScenarioEvents()
       'testId': 270,
     },
 
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-rm_gpt_media_dfp (in prd)',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=qpIMnuwZRkSAlkWJXp-MA6', // in PRODUCTION envs, this results in variation `hp-rm_gpt_media_dfp`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-rm_gpt_media_dfp',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=g[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 280,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-rm_media_dfp (in prd)',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=t03GJuKQbD8DWUgwvBVHD5', // in PRODUCTION envs, this results in variation `hp-rm_media_dfp`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-rm_media_dfp',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=h[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 280,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to hp-orig_dfp (in prd)',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+        'sbx': false,
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        'nyt-a=dme1xviasVTHWcS__BHePH', // in PRODUCTION envs, this results in variation `hp-orig_dfp`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': 'hp-orig_dfp',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=i[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 280,
+    },
 
   ];
 
