@@ -3,7 +3,7 @@ sub recv_route_homepage {
     # homepage only serves from canonical hosts
     # all others go to legacy
     if (req.http.var-nyt-canonical-www-host == "true") {
-    
+
         # NYT5 is the default HP route
         if (   req.url.path == "/" || req.url ~ "^/index.html"
         ) {
@@ -30,7 +30,7 @@ sub recv_route_homepage {
           #
           req.url.path == "/"
               && (
-                (req.http.x--fastly-vi-test-group ~ "^[abdef]" && req.http.cookie:vi_www_hp_opt != "0")
+                (req.http.x--fastly-vi-test-group ~ "^[abdefghi]" && req.http.cookie:vi_www_hp_opt != "0")
                 || req.http.cookie:vi_www_hp_opt == "1"
                 || (req.http.x-nyt-internal-access == "1" && req.http.cookie:vi_www_hp_opt != "0")
                 # this is set if this is a shield pop and the edge allocated vi
