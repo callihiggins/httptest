@@ -7,6 +7,9 @@ sub recv_route_homepage {
         # NYT5 is the default HP route
         if (   req.url.path == "/" || req.url ~ "^/index.html"
         ) {
+            # first check to see if we need to redirect to a different edition
+            call recv_route_homepage_edition_redirect;
+
             set req.http.x-nyt-route = "homepage";
             set req.http.x-nyt-backend = "homepage_fe";
             set req.http.var-nyt-wf-auth = "true";
@@ -49,6 +52,26 @@ sub recv_route_homepage {
         } else if (req.http.x-nyt-route == "homepage") {
           set req.url = querystring.remove(req.url);
         }
+    }
+}
+
+sub recv_route_homepage_edition_redirect {
+    # redirect HP based on edition
+    if (req.http.x-nyt-edition == "edition|SPANISH"
+        && (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-homepage")
+    ) {
+        declare local var.target_url STRING;
+        set var.target_url =  "http://" + req.http.host + "/es/" + req.http.x-orig-querystring;
+        error 771 var.target_url;
+    }
+}
+
+sub error_771_perform_302_redirect {
+    if (obj.status == 771) {
+        set obj.http.Location = obj.response;
+        set obj.status = 302;
+        set obj.response = "Found";
+        return(deliver);
     }
 }
 

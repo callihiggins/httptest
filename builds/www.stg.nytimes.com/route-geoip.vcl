@@ -2,7 +2,7 @@ sub recv_route_geoip_svc {
   # geoip test service error call
 	if (req.http.x-nyt-internal-access) {
 		if (req.url ~ "^/svc/web-products/geoip-test.html") {
-			error 949 "uadiag";
+			error 949;
 		}
 	}
 }
@@ -12,6 +12,7 @@ sub error_949_geo_debug_svc {
 	# html geoip response
 	if (obj.status == 949) {
 		set obj.status = 200;
+		set obj.response = "OK";
 		set obj.http.Content-Type = "text/html; charset=utf-8";
 		synthetic
 			{"<html><title>GeoIP Test Service</title>

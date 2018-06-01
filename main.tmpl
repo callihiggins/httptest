@@ -420,9 +420,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "device-detect"
+    name    = "device-detection-init"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/device-detect.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/device-detection-init.vcl")}"
   }
 
   vcl {
@@ -465,12 +465,6 @@ resource "fastly_service_v1" "www" {
     name    = "www-redirect"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/www-redirect.vcl")}"
-  }
-
-  vcl {
-    name    = "homepage-redirect"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/homepage-redirect.vcl")}"
   }
 
   vcl {
@@ -796,6 +790,12 @@ resource "fastly_service_v1" "www" {
     name    = "route-gdpr-form"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-gdpr-form.vcl")}"
+  }
+
+  vcl {
+    name    = "route-device-detection-debug"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-device-detection-debug.vcl")}"
   }
 
   vcl {

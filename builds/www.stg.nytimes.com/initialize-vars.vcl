@@ -1,5 +1,4 @@
-# this subroutine is for the new routing logic created in recfactor
-# we will migrate things into this sub as needed
+# this subroutine collects header var initialization logic
 sub initialize_global_variable_headers {
 
   # set the environment class variable
@@ -23,6 +22,9 @@ sub initialize_global_variable_headers {
   # save off the URL the user came with
   # need it to reset for restarts and other logic
   set req.http.X-OriginalUri = req.url;
+
+  # set up the device detection header variables
+  call recv_device_detection_init;
 }
 
 sub vcl_recv {

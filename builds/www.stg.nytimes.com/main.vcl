@@ -10,6 +10,7 @@ include "access-level-authorization";
 include "initialize-vars";
 include "geoip-homepage-briefing-map";
 include "geoip-header-init";
+include "device-detection-init";
 include "frame-buster";
 include "ipauth";
 include "www-redirect";
@@ -71,6 +72,7 @@ include "route-blogs";
 include "route-slideshow";
 include "route-invalid-requests";
 include "route-gdpr-form";
+include "route-device-detection-debug";
 
 # backend response processing
 include "surrogate-key";
@@ -80,9 +82,7 @@ include "set-cache-object-ttl";
 
 # begin other logic
 include "https-redirect";
-include "device-detect";
 include "mobile-redirect";
-include "homepage-redirect";
 include "uuid";
 include "gdpr";
 include "response-headers";
@@ -152,6 +152,7 @@ sub vcl_recv {
   call recv_route_diningmap;
   call recv_route_slideshow;
   call recv_route_homepage;
+  call recv_route_device_detection_debug;
 
   # order matters for these routes that are all using ^/year/mo/day
   call recv_route_story;
@@ -485,7 +486,8 @@ sub vcl_deliver {
   call deliver_route_newsdev_gcs_error;
   call deliver_route_newsgraphics_gcs_error;
 
-  # set response headers
+  # control when our content is allowed to be framed
+  call deliver_frame_buster;
 
   # only execute gdpr logic on the edge in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {
@@ -494,8 +496,11 @@ sub vcl_deliver {
     call deliver_route_newsletters_us_cookie;
   }
 
+  # set other response headers
   call deliver_response_headers;
   call deliver_debug_response_headers;
+
+  # slideshow incompatbility fallback
   call deliver_slideshow_fallback;
 
   return(deliver);
@@ -505,16 +510,21 @@ sub vcl_error {
   # this should execute before any other backend route vcl_error logic
   call error_init_health_vars;
 #FASTLY error
-  call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
+
+  # call subs here that are handling custom error codes
+  # please add the error code(s) to the sub names
+  # these must be >= 600 and <= 999
   call error_755_amp_redirect;
+  call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
+  call error_771_perform_302_redirect; # e.x. "error 771 <absolute_url>"
   call error_800_fastly_healthcheck;
+  call error_848_device_detection_debug;
   call error_900_route_esi_jsonp_callback;
-  call error_995_route_health_service;
   call error_901_to_906_route_userinfo;
   call error_918_amp_gdpr;
   call error_919_gdpr;
   call error_949_geo_debug_svc;
-
+  call error_995_route_health_service;
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code

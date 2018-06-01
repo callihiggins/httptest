@@ -1,12 +1,8 @@
-sub vcl_recv {
-    # ua override
-    if (req.url ~ "[^\w]ua=") {
-        set req.http.User-Agent = regsub(req.url,"^.*[^\w]ua=([^&]*).*","\1");
-    }
-
-    // set device_type and Is-* flags that response-headers.vcl references
-    // we're defaulting to desktop in the new Fastly config
-    // if they ever get WURFL we'll go back to what we had
+sub recv_device_detection_init {
+    # set device_type and Is-* flags that response-headers.vcl references
+    # we're defaulting to desktop in the new Fastly config
+    # if they ever get WURFL we'll go back to what we had
+    
     set req.http.Is-Tablet = "0";
     set req.http.Is-Desktop = "1";
     set req.http.Is-Wireless-Device = "0";
@@ -104,78 +100,5 @@ sub vcl_recv {
     ) {
         set req.http.device_type = "phone";
         set req.http.Is-Wireless-Device = "1";
-    }
-
-    #/uadiag commands
-    if (req.http.x-nyt-internal-access) {
-        if (req.url ~ "^/svc/web-products/uadiag.js") {
-            error 849 "uadiag.js";
-        } else if (req.url ~ "^/svc/web-products/uadiag") {
-            error 848 "uadiag";
-        }
-    }
-}
-
-sub vcl_error {
-    # plain text ua diag
-    if (obj.status == 848) {
-        set obj.status = 200;
-        set obj.http.Content-Type = "text/html; charset=utf-8";
-        synthetic
-        {"<html>
-            <head>
-                <title>UADIAG</title>
-                <style>
-                    table {
-                        font-family: Arial;
-                    }
-                    tr > td {
-                        padding: 4px;
-                    }
-                    td:first-child {
-                        color: #fff;
-                        background-color: #000;
-                    }
-                    td:last-child {
-                        border-bottom: 1px dotted #000;
-                    }                  
-                </style>
-            </head>
-            <body>
-                <h1>UADIAG</h1>
-                <table>
-                    <tr><td>User-Agent</td><td>"} + req.http.User-Agent + {"</td></tr>
-                    <tr><td>Device type</td><td>"} + req.http.device_type + {"</td></tr>
-                    <tr><td>Wireless</td><td>"} + req.http.Is-Wireless-Device + {"</td></tr>
-                    <tr><td>Tablet</td><td>"} + req.http.Is-Tablet + {"</td></tr>
-                    <tr><td>Desktop</td><td>"} + req.http.Is-Desktop + {"</td></tr>
-                </table>
-            </body>
-        </html>"};
-
-        return(deliver);
-    }
-
-    # json ua diag with optional jsonp callback parameter
-    else if (obj.status == 849) {
-        set obj.status = 200;
-        set req.http.device_cb = "";
-        set req.http.device_cbe = "";
-        if (req.url ~ "[^\w]callback=\w+") {
-            set obj.http.Content-Type = "application/javascript; charset=utf-8";
-            set req.http.device_cb = regsub(req.url,"^.*[^\w]callback=(\w+).*","\1(");
-            set req.http.device_cbe = ");";
-        } else {
-            set obj.http.Content-Type = "application/json; charset=utf-8";
-        }
-        synthetic
-            req.http.device_cb + {"{
-                "user_agent":""} + req.http.User-Agent + {"",
-                "device_type":""} + req.http.device_type + {"",
-                "wireless":""} + req.http.Is-Wireless-Device + {"",
-                "tablet":""} + req.http.Is-Tablet + {"",
-                "desktop":""} + req.http.Is-Desktop + {"",
-            }"} + req.http.device_cbe;
-        return(deliver);
     }
 }
