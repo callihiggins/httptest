@@ -804,4 +804,10 @@ resource "fastly_service_v1" "www" {
     content = "${file("${path.module}/builds/www.stg.nytimes.com/test-suite-force-miss.vcl")}"
   }
 
+    vcl {
+    name    = "route-audio"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-audio.vcl")}"
+  }
+
 }

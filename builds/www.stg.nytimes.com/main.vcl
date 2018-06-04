@@ -72,6 +72,7 @@ include "route-blogs";
 include "route-slideshow";
 include "route-invalid-requests";
 include "route-gdpr-form";
+include "route-audio";
 include "route-device-detection-debug";
 
 # backend response processing
@@ -152,6 +153,7 @@ sub vcl_recv {
   call recv_route_diningmap;
   call recv_route_slideshow;
   call recv_route_homepage;
+  call recv_route_audio;
   call recv_route_device_detection_debug;
 
   # order matters for these routes that are all using ^/year/mo/day

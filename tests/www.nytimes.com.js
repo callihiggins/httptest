@@ -55,6 +55,7 @@ require("./www.nytimes.com/route-blogs.js");
 require("./www.nytimes.com/redirect-mobile-realestate.js");
 require("./www.nytimes.com/kill-mobile-redirect.js");
 require("./www.nytimes.com/route-gdpr-form.js");
+require("./www.nytimes.com/route-audio.js");
 
 
 // please leave these tests here and add your includes above
