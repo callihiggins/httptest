@@ -1,6 +1,7 @@
-sub vcl_recv {
+sub recv_bot_detection {
 
-    # TODO: I don't think we care about crawlers any longer, audit it with origin app teams
+    # no origin apps are using the X-CRWL request header
+    # set to an internal var so it can be used by logic
 
     if (req.http.user-agent ~ "(?i)googlebot|mediapartners-google|adsbot-google|amphtml|developers\.google\.com/\+/web/snippet/") {
         # Googlebot user-agents: https://support.google.com/webmasters/answer/1061943
@@ -8,15 +9,15 @@ sub vcl_recv {
         if (client.ip ~ googlebot) {
             # TODO: replace with https://support.google.com/webmasters/answer/80553?hl=en
             # and libvmod-dns
-            set req.http.X-CRWL = "true"; # googlebot user-agent from Google IP range
+            set req.http.var-nyt-is-crawler = "1"; # googlebot user-agent from Google IP range
         } else {
-            set req.http.X-CRWL = "false"; # user-agent claims googlebot, but is outside Google's IP range
+            set req.http.var-nyt-is-crawler = "0"; # user-agent claims googlebot, but is outside Google's IP range
         }
 
     } else if (client.ip ~ crawlers) { # this list excludes Googlebot
-        set req.http.X-CRWL = "true";
+        set req.http.var-nyt-is-crawler = "1";
 
     } else {
-        set req.http.X-CRWL = "false";
+        set req.http.var-nyt-is-crawler = "0";
     }
 }

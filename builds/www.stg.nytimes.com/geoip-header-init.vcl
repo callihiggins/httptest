@@ -7,11 +7,11 @@ sub recv_geo_ip {
 	if (req.restarts > 0){
 		set var.ip_override = req.http.x-geoip-ip;
 	} else {
-		set var.ip_override = regsub(req.http.x-orig-querystring, ".*?.*ip-override=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*", "\1");
+		set var.ip_override = regsub(req.http.x-nyt-orig-querystring, ".*?.*ip-override=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*", "\1");
 	}
 
 	# check if we got the ip-override param
-	if (var.ip_override != req.http.x-orig-querystring){
+	if (var.ip_override != req.http.x-nyt-orig-querystring){
 		set client.geo.ip_override = var.ip_override;
 		# save this in a req header incase we restart
 		set req.http.x-geoip-ip = var.ip_override;

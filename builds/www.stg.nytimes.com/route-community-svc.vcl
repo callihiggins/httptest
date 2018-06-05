@@ -7,7 +7,7 @@ sub recv_route_community_svc {
 
         # we only allow caching here if the command is not BasicInfo and the user is not logged in
         if (req.url ~ "cmd=Get((?!BasicInfo)[^&]+)"
-            && (!req.http.x-nyt-s || req.http.x-nyt-s ~ "^0")) {
+            && (!req.http.var-cookie-nyt-s || req.http.var-cookie-nyt-s ~ "^0")) {
 
             set req.http.x-nyt-route = "community-svc-cacheable";
 

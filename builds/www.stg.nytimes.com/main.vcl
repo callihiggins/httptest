@@ -1,20 +1,20 @@
+# acl
 include "acl-internal";
 include "acl-vpc-gateway";
 include "acl-external-staging-access";
 include "acl-crawlers";
 include "acl-blacklist";
+
+# initialization
 include "error-pages";
-include "sanitize-url";
-include "normalize-url";
+include "sanitize-request";
 include "access-level-authorization";
-include "initialize-vars";
+include "initialize-transaction-state";
 include "geoip-homepage-briefing-map";
 include "geoip-header-init";
 include "device-detection-init";
 include "frame-buster";
-include "ipauth";
-include "www-redirect";
-include "tips";
+include "bot-detection";
 include "auth-headers";
 include "vi-allocation";
 include "test-suite-force-miss";
@@ -23,6 +23,7 @@ include "test-suite-force-miss";
 include "route-health-service"; # service that reports health of defined backends
 include "route-default";
 
+include "route-zone-apex-redirect";
 include "route-geoip";
 include "route-fastly-healthcheck";
 include "route-esi-jsonp-callback";
@@ -65,6 +66,7 @@ include "route-timeswire";
 include "route-interactive";
 include "route-vi-assets";
 include "route-homepage";
+include "route-homepage-version-toggle";
 include "route-story";
 include "route-collection";
 include "route-paidpost";
@@ -74,6 +76,7 @@ include "route-invalid-requests";
 include "route-gdpr-form";
 include "route-audio";
 include "route-device-detection-debug";
+include "route-tips";
 
 # backend response processing
 include "surrogate-key";
@@ -89,6 +92,36 @@ include "gdpr";
 include "response-headers";
 
 sub vcl_recv {
+
+  # check to see if this request is from a shield pop of the same service service_id
+  # retain the x-nyt-shield-auth header if it is
+  call recv_shield_request_authorization;
+
+  # remove known invalid patterns from client request
+  call recv_sanitize_request;
+
+  # initialize state variables
+  call recv_determine_env_from_host;
+  call recv_set_canonical_www_host_var;
+  call recv_capture_cookie_values;
+
+  # set misc state vars (no use in creating 15 more subs)
+  call recv_initialize_transaction_state;
+
+  # set up the device detection header variables
+  call recv_device_detection_init;
+
+  # detect bots
+  call recv_bot_detection;
+
+  # do not restrict this request if this is a shield request from an edge pop
+  if (!req.http.x-nyt-shield-auth) {
+    # what level of access does this user have based on ACL and/or auth headers
+    call recv_set_access_level;
+
+    # block the request if the user does not have access to the environment
+    call recv_restrict_access;
+  }
 
   # before routing calls lets set up the vi allocation vars
   call recv_vi_allocation_init;
@@ -106,8 +139,10 @@ sub vcl_recv {
   }
   call recv_route_svc_gdpr;
   call recv_route_svc_amp_gdpr;
-
+ 
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
+  call recv_route_zone_apex_redirect;
+  call recv_route_tips;
   call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
   call recv_route_cms_static_assets;
@@ -153,6 +188,7 @@ sub vcl_recv {
   call recv_route_diningmap;
   call recv_route_slideshow;
   call recv_route_homepage;
+  call recv_route_homepage_version_toggle;
   call recv_route_audio;
   call recv_route_device_detection_debug;
 
@@ -463,6 +499,13 @@ sub vcl_fetch {
 sub vcl_deliver {
 #FASTLY deliver
 
+  # redirect to mobile if need be
+  # this is on life support, but I want all the reserved `vcl_` functions in `main.vcl` only
+  call deliver_mobile_redirect;
+
+  # set the nyt-a uuid cookie
+  call deliver_set_uuid_cookie;
+
   if (resp.http.x-nyt-restart-reason) {
     set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " " + resp.http.x-nyt-restart-reason, resp.http.x-nyt-restart-reason);
     return(restart);
@@ -471,6 +514,7 @@ sub vcl_deliver {
   call deliver_route_story_restart_indicators;
   call deliver_vi_allocation_set_cookie;
 
+  call deliver_route_tips;
   call deliver_add_svc_access_control;
   call deliver_route_newsdev_cloud_functions_access_control;
   call deliver_games_api_version;
@@ -517,6 +561,7 @@ sub vcl_error {
   # please add the error code(s) to the sub names
   # these must be >= 600 and <= 999
   call error_755_amp_redirect;
+  call error_762_route_homepage_version_toggle;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_771_perform_302_redirect; # e.x. "error 771 <absolute_url>"
   call error_800_fastly_healthcheck;

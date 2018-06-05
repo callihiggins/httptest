@@ -46,7 +46,7 @@ require("./www.nytimes.com/route-switchboard.js");
 require("./www.nytimes.com/route-newsdev-cloud-functions.js");
 require("./www.nytimes.com/route-real-estate.js");
 require("./www.nytimes.com/redirect-zone-apex.js");
-require("./www.nytimes.com/www-redirect.js");
+require("./www.nytimes.com/route-homepage-version-toggle.js");
 require("./www.nytimes.com/route-guides.js");
 require("./www.nytimes.com/route-weddings.js");
 require("./www.nytimes.com/route-search.js");

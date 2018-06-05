@@ -4,11 +4,6 @@ sub miss_pass_unset_bereq_headers {
   # backend definitely does not need these
   # in some cases it could be a security concern
   # TODO: which of these can be refactored to var-nyt namespace
-  unset bereq.http.x-nyt-edition;
-  unset bereq.http.x-nyt-a;
-  unset bereq.http.x-nyt-wpab;
-  unset bereq.http.x-nyt-s;
-  unset bereq.http.x-nyt-d;
   unset bereq.http.x-nyt-bucket-token;
   unset bereq.http.x-nyt-bucket-secret;
   unset bereq.http.x-nyt-bucket-name;
@@ -38,6 +33,14 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-cookie-nyt-t;
   unset bereq.http.var-nyt-has-gdpr;
   unset bereq.http.var-cookie-nyt-gdpr;
+  unset bereq.http.var-cookie-nyt-s;
   unset bereq.http.var-nyt-https-phase;
   unset bereq.http.var-nyt-surrogate-key;
+  unset bereq.http.var-nyt-is-crawler;
+  unset bereq.http.var-cookie-nyt-a;
+  unset bereq.http.var-cookie-nyt-edition;
+  unset bereq.http.var-cookie-nyt-mobile;
+  unset bereq.http.var-cookie-np-enable-https;
+  unset bereq.http.var-cookie-nyt-np-internal-https-opt-out;
+  unset bereq.http.var-nyt-no-referrer;
 }

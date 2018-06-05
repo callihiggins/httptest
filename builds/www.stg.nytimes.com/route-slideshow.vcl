@@ -43,7 +43,7 @@ sub deliver_slideshow_fallback {
         && resp.http.x-nyt-backend ~ "^(slideshow_fe|projectvi_fe)$"
         && (resp.status == 404 || resp.status == 400)) {
         set req.http.x-nyt-slideshow-compatibility = "NYT4";
-        set req.url = req.http.X-OriginalUri;
+        set req.url = req.http.x-nyt-original-url;
         set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " NYT4 slideshow", "NYT4 slideshow");
         return (restart);
     }

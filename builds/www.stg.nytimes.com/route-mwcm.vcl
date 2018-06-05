@@ -50,10 +50,10 @@ sub deliver_route_mwcm {
 
         if (resp.status == 301 || resp.status == 302) {
             if (resp.http.Location ~ "\?") {
-                set resp.http.Location = resp.http.Location regsub(req.http.x-orig-querystring, "^\?", "&");
+                set resp.http.Location = resp.http.Location regsub(req.http.x-nyt-orig-querystring, "^\?", "&");
             }
             else {
-                set resp.http.Location = resp.http.Location req.http.x-orig-querystring;
+                set resp.http.Location = resp.http.Location req.http.x-nyt-orig-querystring;
             }
         }
     }

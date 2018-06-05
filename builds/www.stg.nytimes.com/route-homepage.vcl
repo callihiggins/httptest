@@ -57,11 +57,11 @@ sub recv_route_homepage {
 
 sub recv_route_homepage_edition_redirect {
     # redirect HP based on edition
-    if (req.http.x-nyt-edition == "edition|SPANISH"
+    if (req.http.var-cookie-nyt-edition == "edition|SPANISH"
         && (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-homepage")
     ) {
         declare local var.target_url STRING;
-        set var.target_url =  "http://" + req.http.host + "/es/" + req.http.x-orig-querystring;
+        set var.target_url =  "http://" + req.http.host + "/es/" + req.http.x-nyt-orig-querystring;
         error 771 var.target_url;
     }
 }

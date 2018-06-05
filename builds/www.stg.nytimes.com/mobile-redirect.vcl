@@ -1,11 +1,11 @@
 sub recv_mobile_redirect_capture_qparam {
     # edge will send this header to the shield, don't capture this if we're a shield
-    if (!req.http.x-nyt-shield-auth && req.http.x-orig-querystring ~ "nytmobile=") {
-        set req.http.var-nyt-mobile-param = regsub(req.http.x-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
+    if (!req.http.x-nyt-shield-auth && req.http.x-nyt-orig-querystring ~ "nytmobile=") {
+        set req.http.var-nyt-mobile-param = regsub(req.http.x-nyt-orig-querystring, ".*?.*(nytmobile=.).*", "\1");
     }
 }
 
-sub vcl_deliver {
+sub deliver_mobile_redirect {
 
     # only redirect to mobile on an edge pop
     if (!req.http.x-nyt-shield-auth) {
@@ -27,10 +27,10 @@ sub vcl_deliver {
                 }
 
                 // cookie override
-                if (req.http.x-nyt-mobile == "0") {
+                if (req.http.var-cookie-nyt-mobile == "0") {
                     set req.http.x-do-mobile-redirect = "0";
                 }
-                if (req.http.x-nyt-mobile == "1") {
+                if (req.http.var-cookie-nyt-mobile == "1") {
                     set req.http.x-do-mobile-redirect = "1";
                 }
 
@@ -81,10 +81,10 @@ sub vcl_deliver {
                 // homepage & sectionfronts specific logic
                 if (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-homepage") {
                     // cookie override
-                    if (req.http.x-nyt-mobile == "0") {
+                    if (req.http.var-cookie-nyt-mobile == "0") {
                         set req.http.x-do-mobile-redirect = "0";
                     }
-                    if (req.http.x-nyt-mobile == "1") {
+                    if (req.http.var-cookie-nyt-mobile == "1") {
                         set req.http.x-do-mobile-redirect = "1";
                     }
                 }
@@ -135,7 +135,7 @@ sub do_redirect {
 
     declare local var.orig_url STRING;
 
-    set var.orig_url = req.url.path + req.http.x-orig-querystring;
+    set var.orig_url = req.url.path + req.http.x-nyt-orig-querystring;
 
     // pick mobile host based on the Fastly service we're in
     if (req.http.var-nyt-env == "dev") {

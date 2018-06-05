@@ -123,7 +123,7 @@ sub deliver_route_story_restart_indicators {
     if (resp.http.x-vi-compatibility == "Incompatible") {
         set req.http.x-pre-restart-status = "Incompatible";
         unset resp.http.x-vi-compatibility;
-        set req.url = req.http.X-OriginalUri;
+        set req.url = req.http.x-nyt-original-url;
         set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " vi-Incompatible", "vi-Incompatible");
         set req.http.var-nyt-surrogate-key = resp.http.var-nyt-surrogate-key;
         return (restart);
@@ -134,7 +134,7 @@ sub deliver_route_story_restart_indicators {
     if (resp.http.x-cms-format == "oak") {
         set req.http.x-pre-restart-cms-format = "oak";
         unset resp.http.x-cms-format;
-        set req.url = req.http.X-OriginalUri;
+        set req.url = req.http.x-nyt-original-url;
         set req.http.x-nyt-restart-reason = if (req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " Oak-content", "Oak-content");
         return (restart);
     }

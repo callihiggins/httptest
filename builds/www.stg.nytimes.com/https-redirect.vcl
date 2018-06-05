@@ -118,14 +118,14 @@ sub recv_https_redirect {
         } else if (
                req.http.x-nyt-internal-access
             && req.http.var-nyt-https-phase == "internal"
-            && !req.http.x-internal-https-opt-out
+            && !req.http.var-cookie-nyt-np-internal-https-opt-out
         ) {
 
         // internal https cookie-based test
         } else if (
                req.http.x-nyt-internal-access
-            && req.http.x-nyt-np-enable-https == "1"
-            && !req.http.x-internal-https-opt-out
+            && req.http.var-cookie-np-enable-https == "1"
+            && !req.http.var-cookie-nyt-np-internal-https-opt-out
         ) {
 
         // if not in the above categories, redirect to http
@@ -151,7 +151,7 @@ sub recv_https_redirect {
             req.http.x-nyt-internal-access
             && req.request != "FASTLYPURGE"
             && req.http.var-nyt-https-phase == "internal"
-            && !req.http.x-internal-https-opt-out
+            && !req.http.var-cookie-nyt-np-internal-https-opt-out
         ) {
             call redirect_to_https;
 
@@ -162,8 +162,8 @@ sub recv_https_redirect {
         // internal https cookie-based test
         } else if (
                req.http.x-nyt-internal-access
-            && req.http.x-nyt-np-enable-https == "1"
-            && !req.http.x-internal-https-opt-out
+            && req.http.var-cookie-np-enable-https == "1"
+            && !req.http.var-cookie-nyt-np-internal-https-opt-out
         ) {
             call redirect_to_https;
 
@@ -182,11 +182,11 @@ sub error_770_perform_301_redirect {
 }
 
 sub redirect_to_http {
-    set req.http.x-Redir-Url = "http://" + req.http.host + req.url.path + req.http.x-orig-querystring;
+    set req.http.x-Redir-Url = "http://" + req.http.host + req.url.path + req.http.x-nyt-orig-querystring;
     error 770 req.http.x-Redir-Url;
 }
 
 sub redirect_to_https {
-    set req.http.x-Redir-Url = "https://" + req.http.host + req.url.path + req.http.x-orig-querystring;
+    set req.http.x-Redir-Url = "https://" + req.http.host + req.url.path + req.http.x-nyt-orig-querystring;
     error 770 req.http.x-Redir-Url;
 }

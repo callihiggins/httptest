@@ -1,4 +1,15 @@
 sub recv_route_intl {
+
+  # redirect deprecated international host to www
+  if (req.http.host ~ "^international\.(dev\.|stg\.)?nytimes.com$") {
+      declare local var.target_url STRING;
+      set var.target_url =
+          "https://" +
+          regsub(req.http.host, "^international.","www.") +
+          req.url;
+      error 770 var.target_url;
+  }
+
   if ((req.url == "/es") || (req.url ~ "^/es/")
       || (req.url == "/global") || (req.url ~ "^/global/")) {
       set req.http.x-nyt-route = "intl";

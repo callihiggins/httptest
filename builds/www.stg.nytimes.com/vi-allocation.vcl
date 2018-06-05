@@ -118,7 +118,7 @@ sub recv_vi_allocation_init {
             # 1..2%:    "z2" (control, reported)
             # 2..100%:  "z0" (control, unreported)
 
-            set var.hash = digest.hash_sha256(req.http.x-nyt-a + " WP_ProjectVi_www_hp");
+            set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " WP_ProjectVi_www_hp");
             set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
             set var.d = std.strtol(var.hash, 16);
 
@@ -175,7 +175,7 @@ sub recv_vi_allocation_init {
             # 100..100%:    "c0" - NYT5 test group, receives NYT5 (except Vi-only)          WP_ProjectVi_story_desktop=nyt5
             # 100..100%:    "z0" - NYT5 holdout, receives NYT5 (except Vi-only)             WP_ProjectVi_story_desktop=nyt5h
 
-            set var.hash = digest.hash_sha256(req.http.x-nyt-a + " WP_ProjectVi_Story");
+            set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " WP_ProjectVi_Story");
             set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
             set var.d = std.strtol(var.hash, 16);
 

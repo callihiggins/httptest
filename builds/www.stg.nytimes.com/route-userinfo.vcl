@@ -3,7 +3,7 @@ sub recv_route_userinfo {
   // if the cookie does not start with "0" we will
   // fall through this and it will be a backend hit
   // to the API on the origin
-  if (req.http.x-nyt-s ~ "^0" || !req.http.x-nyt-s){
+  if (req.http.var-cookie-nyt-s ~ "^0" || !req.http.var-cookie-nyt-s){
     if (req.url ~ "^/svc/web-products/userinfo.jsonp") {
       set req.http.x-nyt-route = "service";
       error 901;

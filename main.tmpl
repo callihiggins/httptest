@@ -312,12 +312,6 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "normalize-url"
-    main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/normalize-url.vcl")}"
-  }
-
-  vcl {
     name    = "route-newsdev-gcs"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-gcs.vcl")}"
@@ -348,9 +342,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "ipauth"
+    name    = "bot-detection"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/ipauth.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/bot-detection.vcl")}"
   }
 
   vcl {
@@ -390,9 +384,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "initialize-vars"
+    name    = "initialize-transaction-state"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/initialize-vars.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/initialize-transaction-state.vcl")}"
   }
 
   vcl {
@@ -414,9 +408,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "tips"
+    name    = "route-tips"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/tips.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-tips.vcl")}"
   }
 
   vcl {
@@ -462,9 +456,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "www-redirect"
+    name    = "route-zone-apex-redirect"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/www-redirect.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-zone-apex-redirect.vcl")}"
   }
 
   vcl {
@@ -498,9 +492,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "sanitize-url"
+    name    = "sanitize-request"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/sanitize-url.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/sanitize-request.vcl")}"
   }
 
   vcl {
@@ -591,6 +585,12 @@ resource "fastly_service_v1" "www" {
     name    = "route-homepage"
     main    = false
     content = "${file("${path.module}/builds/www.stg.nytimes.com/route-homepage.vcl")}"
+  }
+
+  vcl {
+    name    = "route-homepage-version-toggle"
+    main    = false
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-homepage-version-toggle.vcl")}"
   }
 
   vcl {
