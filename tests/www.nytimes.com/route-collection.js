@@ -492,6 +492,27 @@ function getScenarioEvents()
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; 16kb cookie string ',
       'testId': '204',
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForCollectionPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/column/road-trip',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'vi-collection',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+      },
+      'responseStatusCode': [200,404],
+      'scenarioDescription': 'Test /column/road-trip collection',
+      'testId': 205,
+    },
   ];
 
   return scenarios;

@@ -12,6 +12,7 @@ sub deliver_set_uuid_cookie {
             || req.http.x-nyt-route == "vi-story"
             || req.http.x-nyt-route == "bestseller"
             || req.http.x-nyt-route == "collection"
+            || req.http.x-nyt-route == "vi-collection"
             || req.http.x-nyt-route == "elections"
             || req.http.x-nyt-route == "homepage"
             || req.http.x-nyt-route == "vi-homepage"
