@@ -123,19 +123,19 @@ sub recv_vi_allocation_init {
             set var.d = std.strtol(var.hash, 16);
 
             if (req.http.var-nyt-env == "prd") {
-                if      (var.d <   42949673) { set var.test_group = "b2"; } # < 1%      HP only, reported
-                else if (var.d <   85899346) { set var.test_group = "z2"; } # < 2%      control, reported
-                else if (var.d <  128849019) { set var.test_group = "d2"; } # < 3%      HP only (added Dec. 2017), reported
-                else if (var.d <  171798692) { set var.test_group = "y2"; } # < 4%      control (added Dec. 2017), reported
-                else if (var.d <  193273528) { set var.test_group = "e2"; } # < 4.5%    hp-serv (added Feb. 2018), reported
-                else if (var.d <  214748365) { set var.test_group = "f2"; } # < 5%      hp-orig (added Feb. 2018), reported
-                else if (var.d <  229064922) { set var.test_group = "g2"; } # < 5+1/3%  hp-rm_gpt_media_dfp (added June 2018), reported
-                else if (var.d <  243381480) { set var.test_group = "h2"; } # < 5+2/3%  hp-rm_media_dfp (added June 2018), reported
-                else if (var.d <  257698038) { set var.test_group = "i2"; } # < 6%      hp-orig_dfp (added June 2018), reported
+                if      (var.d < 0042949673) { set var.test_group = "b2"; } # < 1%      HP only, reported
+                else if (var.d < 0085899346) { set var.test_group = "z2"; } # < 2%      control, reported
+                else if (var.d < 0128849019) { set var.test_group = "d2"; } # < 3%      HP only (added Dec. 2017), reported
+                else if (var.d < 0171798692) { set var.test_group = "y2"; } # < 4%      control (added Dec. 2017), reported
+                else if (var.d < 0193273528) { set var.test_group = "e2"; } # < 4.5%    hp-serv (added Feb. 2018), reported
+                else if (var.d < 0214748365) { set var.test_group = "f2"; } # < 5%      hp-orig (added Feb. 2018), reported
+                else if (var.d < 0229064922) { set var.test_group = "g2"; } # < 5+1/3%  hp-rm_gpt_media_dfp (added June 2018), reported
+                else if (var.d < 0243381480) { set var.test_group = "h2"; } # < 5+2/3%  hp-rm_media_dfp (added June 2018), reported
+                else if (var.d < 0257698038) { set var.test_group = "i2"; } # < 6%      hp-orig_dfp (added June 2018), reported
                 else   /* var.d < 2^32 */    { set var.test_group = "z0"; } # < 100%    control, unreported
             } else { # in staging or dev, use equal weights:
-                if      (var.d <  429496730) { set var.test_group = "b2"; } # < 1/10    HP only, reported
-                else if (var.d <  858993460) { set var.test_group = "z2"; } # < 2/10    control, reported
+                if      (var.d < 0429496730) { set var.test_group = "b2"; } # < 1/10    HP only, reported
+                else if (var.d < 0858993460) { set var.test_group = "z2"; } # < 2/10    control, reported
                 else if (var.d < 1288490190) { set var.test_group = "d2"; } # < 3/10    HP only (added Dec. 2017), reported
                 else if (var.d < 1717986920) { set var.test_group = "y2"; } # < 4/10    control (added Dec. 2017), reported
                 else if (var.d < 2147483650) { set var.test_group = "e2"; } # < 5/10    hp-serv (added Feb. 2018), reported

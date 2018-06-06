@@ -67,7 +67,7 @@ pipeline:
       event: push
       branch:
         include: [ sandbox01 ]
-    
+
   # Run tests against dev service in sandbox01
   sandbox01-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
@@ -98,7 +98,7 @@ pipeline:
       event: push
       branch:
         include: [ sandbox02 ]
-    
+
   # Run tests against dev service in sandbox02
   sandbox02-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
@@ -129,7 +129,7 @@ pipeline:
       event: push
       branch:
         include: [ sandbox03 ]
-  
+
   # Run tests against dev service in sandbox03
   sandbox03-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
@@ -220,8 +220,8 @@ pipeline:
     when:
       event: push
       branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]  
-      status: [success, failure]  
+        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
+      status: [success, failure]
 
   stg-template:
     image: hairyhenderson/gomplate:v2.3.0

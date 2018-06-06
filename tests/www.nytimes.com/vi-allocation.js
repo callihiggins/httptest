@@ -482,7 +482,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=lLZUkY_xzl4LheXxv-xymJ', // in PRODUCTION env, this results in variation `hp-serv`
+        // var.d = 0189515186
+        'nyt-a=1oDScuo7U4F_w_kBbp5N9a', // in PRODUCTION env, this results in variation `hp-serv`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -508,7 +509,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=Am9NOWpxfQUGvulVQTez3X', // in PRODUCTION env, this results in variation `hp-orig`
+         // var.d = 0202462000
+        'nyt-a=PiTgPaKR1pVRjUEWYoEdbU', // in PRODUCTION env, this results in variation `hp-orig`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -534,7 +536,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=qpIMnuwZRkSAlkWJXp-MA6', // in PRODUCTION envs, this results in variation `hp-rm_gpt_media_dfp`
+        // var.d = 0220022125
+        'nyt-a=DxEvJXhoIawOEMiR2sMVGH', // in PRODUCTION envs, this results in variation `hp-rm_gpt_media_dfp`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -560,7 +563,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=t03GJuKQbD8DWUgwvBVHD5', // in PRODUCTION envs, this results in variation `hp-rm_media_dfp`
+        // var.d = 0240724968
+        'nyt-a=3rIUlcgaGMIoUOq5FIseV8', // in PRODUCTION envs, this results in variation `hp-rm_media_dfp`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -586,7 +590,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        'nyt-a=dme1xviasVTHWcS__BHePH', // in PRODUCTION envs, this results in variation `hp-orig_dfp`
+        // var.d = 0250132554
+        'nyt-a=41KNozgVJJZe1qhKPVUk9a', // in PRODUCTION envs, this results in variation `hp-orig_dfp`
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
