@@ -3,7 +3,7 @@ sub recv_route_newsdev_gke {
     # MAKE SURE recv_route_newsdev_attribute is AFTER THIS FUNCTION CALL in vcl_recv
     # it has a more specific route than /svc/int
     if (req.url ~ "^/svc/int/"
-        || req.url ~ "^/interactive/projects/(notable-deaths|guantanamo)"
+        || req.url ~ "^/interactive/projects/guantanamo"
         || req.url == "/fashion/runway"
         || req.url ~ "^/fashion/runway"
     ) {

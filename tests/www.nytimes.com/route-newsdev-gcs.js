@@ -257,6 +257,27 @@ function getScenarioEvents()
       'scenarioDescription': 'Test gcs "404" page directly',
       'testId': 11,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForStaticGCSPageRedirect',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Host': suite.servername,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/projects/notable-deaths/2017',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'newsdev-gcs',
+        'x-nyt-backend': 'gcs_origin',
+        'location': 'https://www.nytimes.com/interactive/2017/obituaries/notable-deaths'
+      },
+      'responseStatusCode': [301],
+      'scenarioDescription': 'Test notable-deaths GCS redirect metadata',
+      'testId': 12,
+    },
   ];
 
   return scenarios;
