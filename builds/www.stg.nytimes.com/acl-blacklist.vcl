@@ -13,7 +13,4 @@ acl blacklist {
   # Latin American and Caribbean IP address Regional Registry, no other info available
   "190.237.183.174"/32;
 
-  # this comcast IP was looping an invalid RSS url to the tune of 7 million per day
-  "50.202.222.154"/32;
-
 }
