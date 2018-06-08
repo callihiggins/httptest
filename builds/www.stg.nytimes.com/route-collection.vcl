@@ -28,8 +28,18 @@ sub recv_route_collection {
       unset req.http.x--fastly-project-vi;
   }
 
-  # route road trip to VI
-  if (req.url ~ "^/column/road-trip") {
+  # route selected columns to VI
+  if (   req.url ~ "^/column/road-trip"
+      || req.url ~ "^/column/by-the-book"
+      || req.url ~ "^/column/learning-news-quiz"
+      || req.url ~ "^/column/diagnosis"
+      || req.url ~ "^/column/crime"
+      || req.url ~ "^/column/learning-student-opinion"
+      || req.url ~ "^/column/vows"
+      || req.url ~ "^/column/36-hours"
+      || req.url ~ "^/column/learning-word-of-the-day"
+      || req.url ~ "^/column/best-of-late-night"
+  ) {
     set req.http.x-nyt-route = "vi-collection";
     set req.http.x-nyt-backend = "projectvi_fe";
     set req.http.var-nyt-wf-auth = "true";

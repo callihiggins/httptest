@@ -495,7 +495,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForCollectionPage',
       'isDeployedInEnv': {
-        'prd': true,
+        'prd': false,
         'stg': true,
         'dev': true,
       },
@@ -509,9 +509,51 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test /column/road-trip collection',
+      'responseStatusCode': [200,404,500,503],
+      'scenarioDescription': 'Dev/Staging Test /column/road-trip collection',
       'testId': 205,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForCollectionPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/column/diagnosis',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'vi-collection',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Production Test /column/diagnosis collection',
+      'testId': 206,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForCollectionPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/column/36-hours',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'vi-collection',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Production Test /column/36-hours collection',
+      'testId': 207,
     },
   ];
 
