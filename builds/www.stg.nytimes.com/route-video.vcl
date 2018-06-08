@@ -18,7 +18,7 @@ sub recv_route_video {
     if ( req.url.path ~ "^/video/players/offsite/" ) {
         set req.http.x-nyt-route = "video-offsite-player";
         set req.http.x-nyt-backend = "gcs_origin";
-        set req.http.X-SendGDPR = "true";
+        set req.http.var-nyt-send-gdpr = "true";
         set req.url = querystring.remove(req.url);
     }
 

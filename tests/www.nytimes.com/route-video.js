@@ -19,6 +19,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'video-library',
       },
+      responseHeaderPattern: {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+        'x-gdpr': /^[0-1]$/,
+      },
       'requestScheme': 'https://',
       'requestUri': '/video/sciencetake',
       'responseStatusCode': 200,
@@ -146,6 +150,10 @@ function getScenarioEvents()
       'responseHeadersNotPresent': [
         'x-frame-options',
       ],
+      responseHeaderPattern: {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+        'x-gdpr': /^[0-1]$/,
+      },
       'requestScheme': 'https://',
       'requestUri': '/video/players/offsite/index.html?videoId=100000003586257',
       'responseStatusCode': 200,
