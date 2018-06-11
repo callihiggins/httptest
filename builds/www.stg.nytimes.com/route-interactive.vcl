@@ -16,3 +16,9 @@ sub miss_pass_route_interactive {
     unset bereq.http.cookie;
   }
 }
+
+sub fetch_route_interactive {
+  if (req.http.x-nyt-route == "vi-interactive" && beresp.status == 400) {
+    set beresp.cacheable = true;
+  }
+}

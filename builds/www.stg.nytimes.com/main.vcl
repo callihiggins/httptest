@@ -435,6 +435,7 @@ sub vcl_fetch {
   call fetch_route_intl_headers;
   call fetch_route_newsgraphics_gcs;
   call fetch_route_story;
+  call fetch_route_interactive;
 
   # set surrogate key header properly
   call fetch_surrogate_key_handler;

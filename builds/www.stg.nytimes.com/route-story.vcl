@@ -196,6 +196,10 @@ sub fetch_route_story {
     unset beresp.http.x-varnishcacheduration;
   }
 
+  if (req.http.x-nyt-route == "vi-story" && beresp.status == 400) {
+    set beresp.cacheable = true;
+  }
+
   # if the response was from vi and incompatible
   # save off the Surrogate-Key so we can add it to the NYT5 cache object
   if (beresp.http.x-vi-compatibility == "Incompatible") {
@@ -207,7 +211,6 @@ sub fetch_route_story {
   if (req.http.x-pre-restart-status == "Incompatible") {
     set beresp.http.Surrogate-Key = req.http.var-nyt-surrogate-key;
   }
-
 }
 
 sub miss_pass_route_story {
