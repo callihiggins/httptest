@@ -179,13 +179,13 @@ sub hash_route_story {
   # if a request was restarted from VI due to Incompatiblity
   # append to the hash to keep a separate key
   if (req.http.x-pre-restart-status){
-   set req.hash += req.http.x-pre-restart-status;
+    set req.hash += req.http.x-pre-restart-status;
   }
 
   # if a request was restarted from NYT5 due to being an OAK Article
   # append to the hash to keep a separate key
   if (req.http.x-pre-restart-cms-format){
-   set req.hash += req.http.x-pre-restart-cms-format;
+    set req.hash += req.http.x-pre-restart-cms-format;
   }
 }
 

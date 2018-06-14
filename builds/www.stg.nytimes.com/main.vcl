@@ -287,6 +287,7 @@ sub vcl_hash {
 
   call hash_route_video;
   call hash_route_slideshow;
+  call hash_route_collection;
   call hash_route_homepage;
   call hash_route_story;
 
@@ -436,6 +437,7 @@ sub vcl_fetch {
   call fetch_route_newsgraphics_gcs;
   call fetch_route_story;
   call fetch_route_interactive;
+  call fetch_route_collection;
 
   # set surrogate key header properly
   call fetch_surrogate_key_handler;
@@ -513,6 +515,7 @@ sub vcl_deliver {
   }
 
   call deliver_route_story_restart_indicators;
+  call deliver_route_collection_restart_indicators;
   call deliver_vi_allocation_set_cookie;
 
   call deliver_route_tips;
