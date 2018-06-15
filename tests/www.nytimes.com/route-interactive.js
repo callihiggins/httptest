@@ -14,7 +14,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
       'User-Agent': 'NYTimes',
@@ -53,7 +52,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
     },
@@ -90,7 +88,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
       'Referer': 'https://mobile.nytimes.com/2017/02/14/briefing/michael-flynn-opec-india.html',
@@ -129,7 +126,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
     },
@@ -168,7 +164,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
     },
@@ -206,7 +201,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
     },
@@ -243,7 +237,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
     },
@@ -280,7 +273,6 @@ function getScenarioEvents()
       'prd': true,
       'stg': true,
       'dev': true,
-      'sbx': false,
     },
     'requestHeaders': {
       'Referer': 'https://www.stg.nytimes.com/2017/10/02/automobiles/test-oak-with-embedded-interactive.html',

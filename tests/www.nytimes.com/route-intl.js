@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/es/',
@@ -56,8 +55,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/es/al-dia?withcomments=true&bogusq=2&hellothere=2',
@@ -81,8 +79,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/es/al-dia?mccr=ES&gdpr=1',

@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/fashion/runway/season/spring-2014-rtw',
@@ -31,8 +30,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/int/dialects',
@@ -49,8 +47,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -74,8 +71,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -95,8 +91,7 @@ function getScenarioEvents()
     'isDeployedInEnv': {
       'prd': true,
       'stg': true,
-      'dev': true,
-      'sbx': false,
+      'dev': true
     },
     'requestScheme': 'https://',
     'requestUri': '/svc/int/dialects',
@@ -134,8 +129,7 @@ function getScenarioEvents()
     'isDeployedInEnv': {
       'prd': true,
       'stg': true,
-      'dev': true,
-      'sbx': false,
+      'dev': true
     },
     'requestScheme': 'https://',
     'requestUri': '/svc/int/godzown/test/65de670cf7510f4402c442fbd21b141e726f7159',

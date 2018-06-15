@@ -12,8 +12,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2014/01/05/poverty-map/index.html',
@@ -32,8 +31,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/projects/healthcheck.txt',
@@ -52,8 +50,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         'prd': false,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       requestScheme: 'http://',
       requestUri: '/newsgraphics/2012/1220-snow-fall-preview/',
@@ -73,8 +70,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2018/healthcheck.txt',
@@ -91,8 +87,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       requestScheme: 'https://',
       requestUri: '/newsgraphics/2017/healthcheck.txt',

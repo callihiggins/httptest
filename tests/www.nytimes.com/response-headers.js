@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/2016/01/01/us/slug.html',
@@ -51,8 +50,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/2016/01/01/us/slug.html',

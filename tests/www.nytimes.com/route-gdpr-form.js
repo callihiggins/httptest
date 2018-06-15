@@ -12,8 +12,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': true,
+        'dev': true
       },
       requestScheme: "https://",
       requestUri: "/data-subject-request",

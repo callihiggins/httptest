@@ -12,8 +12,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'http://',
     requestUri: '/save75',
@@ -30,8 +29,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'https://',
     requestUri: '/js/selectWidget.js',
@@ -49,8 +47,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'https://',
     requestUri: '/.well-known/apple-app-site-association',
@@ -67,8 +64,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'https://',
     requestUri: '/svc/comscore/pvc.html',
@@ -85,8 +81,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'https://',
     requestUri: '/services/xml/rss/nyt/Dealbook.xml',
@@ -104,8 +99,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'http://',
     requestUri: '/favicon.ico',
@@ -122,8 +116,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'http://',
     requestUri: '/humans.txt',
@@ -140,8 +133,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'http://',
     requestUri: '/interactive/2013/12/19/us/politics/19nsa-review.html',
@@ -158,8 +150,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'http://',
     requestUri:
@@ -177,8 +168,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'http://',
     requestUri: '/gst/movies/msearch.html',
@@ -195,8 +185,7 @@ var scenarios = [
     isDeployedInEnv: {
       prd: true,
       stg: true,
-      dev: true,
-      sbx: false
+      dev: true
     },
     requestScheme: 'http://',
     requestUri: '/gst/movies/msearch.html',

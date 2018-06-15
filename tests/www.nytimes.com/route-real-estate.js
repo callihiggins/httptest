@@ -35,8 +35,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/real-estate/find-a-home?price=5&bad1=4&region=2&bad2=5&neighborhood=hello',

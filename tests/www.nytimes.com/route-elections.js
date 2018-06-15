@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaders': {
         'Host': suite.servername,
@@ -37,8 +36,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/elections/results/president',
@@ -59,8 +57,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/elections/2017/widget/mobile/2017-12-12',

@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'video-library',
@@ -34,8 +33,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'video-library',
@@ -51,8 +49,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'video-api',
@@ -68,8 +65,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaders': {
           'Fastly-Debug': '1',
@@ -104,8 +100,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaders': {
         'Fastly-Debug': '1',
@@ -141,8 +136,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'video-offsite-player',
@@ -165,8 +159,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/video/sciencetake?apagenum=5&bad1=4&playlistId=2&bad2=5&callback=hello',

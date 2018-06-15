@@ -12,8 +12,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: "https://",
       requestUri: "/programs/status.txt",
@@ -47,8 +46,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: true
+        dev: true
       },
       requestScheme: "https://",
       requestUri: "/programs/svc/shaq/v1/healthcheck",
@@ -82,8 +80,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: "https://",
       requestUri: "/programs/ftu/public/healthcheck.txt",
@@ -119,8 +116,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: "https://",
       requestUri: "/programs/public/healthcheck.txt",

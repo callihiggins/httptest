@@ -12,8 +12,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestHeaderCookie: 'vi_www_hp_opt=',
       requestScheme: 'https://',

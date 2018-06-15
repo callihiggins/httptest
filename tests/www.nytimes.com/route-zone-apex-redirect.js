@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'Host': 'nytimes.com',

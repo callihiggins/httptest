@@ -13,7 +13,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=',
       'requestHeaders': {
@@ -31,7 +30,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=',
       'requestHeaders': {
@@ -52,7 +50,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=',
       'requestHeaders': {
@@ -70,7 +67,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=',
       'requestHeaders': {
@@ -88,7 +84,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=',
       'requestHeaders': {
@@ -109,7 +104,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=',
       'requestHeaders': {
@@ -130,7 +124,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=0',
       'requestHeaders': {
@@ -148,7 +141,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=0',
       'requestHeaders': {
@@ -166,7 +158,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=0',
       'requestHeaders': {
@@ -184,7 +175,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=0',
       'requestHeaders': {
@@ -202,7 +192,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=0',
       'requestHeaders': {
@@ -220,7 +209,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=0',
       'requestHeaders': {
@@ -238,7 +226,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -259,7 +246,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -280,7 +266,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -301,7 +286,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -322,7 +306,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -343,7 +326,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -364,7 +346,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=',
       'requestHeaders': {
@@ -385,7 +366,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -406,7 +386,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {
@@ -427,7 +406,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': 'nyt-mobile=1',
       'requestHeaders': {

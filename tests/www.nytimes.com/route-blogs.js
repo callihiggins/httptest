@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/politics/first-draft/2015/05/21/republicans-plan-to-replace-health-law-is-shrug-senator-says/',
@@ -35,8 +34,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/news/affordable-care-act/2014/03/06/more-than-one-way-to-buy-a-plan/',
@@ -57,8 +55,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/times-insider/2014/04/01/dangerous-roads-constant-crises-adam-nossiter-on-central-africa/',
@@ -79,8 +76,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/live/2016-golden-globes/?gdpr=1',
@@ -101,8 +97,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/live/2016-golden-globes/?apagenum=5&bad1=4&p=2&bad2=5&callback=hello',

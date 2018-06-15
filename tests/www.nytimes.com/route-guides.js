@@ -13,8 +13,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/guides/culture/guide-to-the-metropolitan-museum-of-art',

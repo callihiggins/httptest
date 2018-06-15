@@ -21,8 +21,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -40,7 +39,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestHeaderCookie': [
@@ -60,8 +58,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestHeaderCookie': [
@@ -83,8 +80,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestHeaderCookie': [
@@ -104,8 +100,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestHeaderCookie': [
@@ -126,8 +121,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/?gdpr=1',
@@ -143,8 +137,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/?gdpr=0',
@@ -160,8 +153,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/gdpr.json',
@@ -177,8 +169,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/amp-consent.json',
@@ -194,8 +185,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/amp-consent.json?gdpr=0',
@@ -212,8 +202,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/amp-consent.json?gdpr=1',
@@ -231,7 +220,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/amp-consent.json?gdpr=0',
@@ -248,8 +236,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/amp-consent.json?gdpr=1',
@@ -266,8 +253,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/svc/amp-consent.json?gdpr=1',

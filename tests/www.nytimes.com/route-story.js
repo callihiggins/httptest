@@ -421,8 +421,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -444,8 +443,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -470,8 +468,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -490,8 +487,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -510,8 +506,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -534,8 +529,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -557,8 +551,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -581,8 +574,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -606,8 +598,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -630,8 +621,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -653,8 +643,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -676,8 +665,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -742,8 +730,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -765,8 +752,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -791,8 +777,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -811,8 +796,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -831,8 +815,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -855,8 +838,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -878,8 +860,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -902,8 +883,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -927,8 +907,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -951,8 +930,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -974,8 +952,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
@@ -997,8 +974,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaders': {
         'x-nyt-debug': '1'

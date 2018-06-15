@@ -12,8 +12,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': false,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       requestScheme: "https://",
       requestUri: "/images/2017/12/20/arts/testtestmerlindec19/testtestmerlindec19-videoSmall.jpg",
@@ -30,8 +29,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       requestScheme: "https://",
       requestUri: "/images/2018/01/10/watching/getOUT/getOUT-videoSmall.jpg",
@@ -48,8 +46,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       requestScheme: "https://",
       requestUri: "/images/2018/02/07/arts/07fieldguide/05fieldguide-blogSmallThumb.jpg",

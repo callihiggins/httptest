@@ -13,7 +13,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html',
@@ -31,7 +30,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/notfound.html',
@@ -49,7 +47,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd.html?testQueryString=test',
@@ -70,7 +67,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'http://',
       'requestUri': '/subscription/hd/1041.html',
@@ -91,7 +87,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=170.149.100.75',
@@ -136,7 +131,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html',
@@ -160,7 +154,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaders': {
         'Fastly-Debug': 1
@@ -188,7 +181,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=91.187.91.187',
@@ -210,7 +202,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=91.118.126.194',
@@ -232,7 +223,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=170.157.174.185',
@@ -254,7 +244,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=129.128.1.199',
@@ -276,7 +265,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=85.90.227.224',
@@ -298,7 +286,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=195.43.49.101',
@@ -320,7 +307,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=115.187.34.211',
@@ -342,7 +328,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?ip-override=66.220.253.41',
@@ -364,7 +349,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/marketing/surveys/crs-15101-australia.html',
@@ -408,8 +392,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/marketing/surveys/survey-not-found.html',
@@ -422,8 +405,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'http://',
       'requestUri': '/services/mobile/index.html',
@@ -465,8 +447,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/services/mobile/index.html',
@@ -482,8 +463,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'http://',
       'requestUri': '/marketing/hd/welcome/index.html',
@@ -525,8 +505,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'https://',
       'requestUri': '/marketing/hd/welcome/index.html',
@@ -546,8 +525,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestScheme': 'http://',
       'requestUri': '/subscriptions/lp8Y84W.html',
@@ -589,8 +567,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=verizon',
@@ -610,8 +587,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=sharethetimes',
@@ -631,8 +607,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=marathon',
@@ -652,8 +627,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=newsindia',

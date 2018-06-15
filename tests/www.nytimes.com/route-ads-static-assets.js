@@ -12,8 +12,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       requestScheme: "https://",
       requestUri: "/ads/emailads/twitter.jpg",
@@ -31,8 +30,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       requestScheme: "https://",
       requestUri: "/ads/safeads/index.html",

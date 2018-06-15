@@ -12,8 +12,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       requestScheme: 'https://',
       requestUri: '/svc/pushmobile/v2/device/newsandroid/systemtest.json',
@@ -30,8 +29,7 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       requestScheme: 'https://',
       requestUri: '/svc/message/v1/list/global.json',

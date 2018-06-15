@@ -13,8 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -36,8 +35,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -59,8 +57,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s,
@@ -82,8 +79,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s,
@@ -102,8 +98,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -119,8 +114,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -139,8 +133,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'games-assets',
@@ -156,8 +149,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -176,8 +168,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -196,8 +187,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -217,7 +207,6 @@ function getScenarioEvents()
         'prd': false,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -237,7 +226,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': false,
         'dev': false,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -257,7 +245,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -277,7 +264,6 @@ function getScenarioEvents()
         'prd': true,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -297,7 +283,6 @@ function getScenarioEvents()
         'prd': false,
         'stg': true,
         'dev': true,
-        'sbx': false,
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -316,8 +301,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -336,8 +320,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -356,8 +339,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s,
@@ -376,8 +358,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s,
@@ -396,8 +377,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -416,8 +396,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -436,8 +415,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': true,
-        'sbx': false,
+        'dev': true
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -456,8 +434,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false,
-        'sbx': false,
+        'dev': false
       },
       'requestHeaderCookie': [
         'NYT-S=' + suite.cookies.nyt_s_games,
@@ -476,8 +453,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
       requestScheme: 'https://',
@@ -497,8 +473,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'https://',
       requestUri: '/crosswords/index.html',
@@ -516,8 +491,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
       requestScheme: 'https://',
@@ -535,8 +509,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
@@ -554,8 +527,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/gift-guide/holiday-2010/categories.html',
@@ -573,8 +545,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestScheme: 'http://',
       requestUri: '/services/xml/rss/',
@@ -591,8 +562,7 @@ function getScenarioEvents()
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true,
-        sbx: false
+        dev: true
       },
       requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
       requestScheme: 'https://',
