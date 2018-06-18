@@ -16,6 +16,10 @@ domains:
     - name: "www-sandbox03.dev.nytimes.com"
   sandbox04:
     - name: "www-sandbox04.dev.nytimes.com"
+  sandbox05:
+    - name: "www-sandbox05.dev.nytimes.com"
+  sandbox06:
+    - name: "www-sandbox06.dev.nytimes.com"
 
 # these are the default values for backend config keys if not specified
 # some are only here for documentation purposes, some you can override

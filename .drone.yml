@@ -172,6 +172,68 @@ pipeline:
       branch:
         include: [ sandbox04 ]
 
+  # SANDBOX: uses branch sandbox05 to deploy to www.sandbox05
+  sandbox05:
+    image: jmccann/drone-terraform:4.0-0.10.7
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/sandbox05/terraform.tfstate"
+    vars:
+      env: dev
+      service_name: sandbox05
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
+    when:
+      event: push
+      branch:
+        include: [ sandbox05 ]
+
+  # Run tests against dev service in sandbox05
+  sandbox05-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www-sandbox05.dev.nytimes.com
+    print_failures_only: true
+    when:
+      event: push
+      branch:
+        include: [ sandbox05 ]
+
+  # SANDBOX: uses branch sandbox06 to deploy to www.sandbox06
+  sandbox06:
+    image: jmccann/drone-terraform:4.0-0.10.7
+    plan: false
+    init_options:
+      backend-config:
+        - "path=fastly/fastly-www/sandbox06/terraform.tfstate"
+    vars:
+      env: dev
+      service_name: sandbox06
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+
+      - source: google_credentials
+        target: GOOGLE_CREDENTIALS
+    when:
+      event: push
+      branch:
+        include: [ sandbox06 ]
+
+  # Run tests against dev service in sandbox04
+  sandbox06-test:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
+    servername: www-sandbox06.dev.nytimes.com
+    print_failures_only: true
+    when:
+      event: push
+      branch:
+        include: [ sandbox06 ]
+
   # DEV: Deploy to www.dev service
   dev:
     image: jmccann/drone-terraform:4.0-0.10.7
@@ -191,7 +253,7 @@ pipeline:
     when:
       event: push
       branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
+        exclude: [ sandbox0*, master ]
 
   dev-sleep:
     image: alpine
@@ -200,7 +262,7 @@ pipeline:
     when:
       event: push
       branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
+        exclude: [ sandbox0*, master ]
 
   # Run tests against dev service
   dev-test:
@@ -210,7 +272,7 @@ pipeline:
     when:
       event: push
       branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
+        exclude: [ sandbox0*, master ]
 
   # Run tests against dev service
   dev-paidpost-test:
@@ -220,7 +282,7 @@ pipeline:
     when:
       event: push
       branch:
-        exclude: [ sandbox01, sandbox02, sandbox03, sandbox04, master ]
+        exclude: [ sandbox0*, master ]
       status: [success, failure]
 
   stg-template:
