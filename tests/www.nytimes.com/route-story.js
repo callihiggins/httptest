@@ -20,7 +20,7 @@ function getScenarioEvents() {
         '/2016/11/04/homepage/new-york-times-open-access-election-2016.html',
       responseHeaderPattern: {
         'x-nyt-route': /(article|vi-story)/,
-        'x-nyt-backend': /(article_fe|projectvi_fe)/
+        'x-nyt-backend': /(article_fe|projectvi_fe)/,
       },
       responseStatusCode: [200, 404],
       scenarioDescription:
@@ -428,9 +428,11 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
-      'responseHeaderPattern': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
+      },
+      'responseHeaderPattern': {
         'set-cookie': /^((?!vistory).)*$/,
       },
       'responseStatusCode': [200],
@@ -452,7 +454,7 @@ function getScenarioEvents() {
       ],
       'requestScheme': 'https://',
       'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
-      'responseHeaderPattern': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story'
       },
@@ -528,9 +530,10 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2017/10/16/upshot/test.html',
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-        'fastly-restarts': /1/,
+      'responseHeaderMatches': {
+        'x-nyt-route': 'article',
+        'x-nyt-backend': 'article_fe',
+        'fastly-restarts': '1',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with compatibility issues.',
@@ -548,7 +551,7 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html',
-      'responseHeaderPattern': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'article_fe',
         'x-nyt-route': 'article'
       },
@@ -591,7 +594,7 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html',
-      'responseHeaderPattern': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story'
       },
@@ -614,7 +617,7 @@ function getScenarioEvents() {
       ],
       'requestScheme': 'https://',
       'requestUri': '/2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html',
-      'responseHeaderPattern': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story'
       },
@@ -650,7 +653,7 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2017/10/15/nyregion/harvey-weinstein-new-york-sex-assault-investigation.html',
-      'responseHeaderContains': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
@@ -670,7 +673,7 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2016/08/26/arts/things-to-do-in-new-york-metropolitan-museum-flume.html',
-      'responseHeaderContains': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
@@ -690,9 +693,10 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2018/01/30/us/politics/trump-state-of-the-union.html',
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
-        'fastly-restarts': /1/,
+      'responseHeaderMatches': {
+        'x-nyt-route': 'article',
+        'x-nyt-backend': 'article_fe',
+        'fastly-restarts': '1',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with compatibility issues.',
@@ -710,7 +714,7 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html',
-      'responseHeaderPattern': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'article_fe',
         'x-nyt-route': 'article'
       },
@@ -730,7 +734,7 @@ function getScenarioEvents() {
       },
       'requestScheme': 'https://',
       'requestUri': '/2018/03/02/opinion/dicks-guns-walmart.html',
-      'responseHeaderContains': {
+      'responseHeaderMatches': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
