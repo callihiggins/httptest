@@ -1,10 +1,5 @@
 sub recv_route_newsdev_cloud_functions {
-  // For now, whitelist only the contact-reporter function.
-  // In future, could possibly manage a whitelist of functions to let through
-  // with an edge dictionary.
-  if (
-      req.url.path ~ "^/svc/int/functions/contact-reporter" ||
-      req.url.path ~ "^/svc/int/functions/sources-unsubscribe" ) {
+  if (req.url.path ~ "^/svc/int/functions/") {
     set req.http.x-nyt-route = "newsdev-cloud-functions";
     set req.http.x-nyt-backend = "newsdev_cloud_functions_us_central1";
     set req.url = querystring.remove(req.url);
@@ -13,8 +8,12 @@ sub recv_route_newsdev_cloud_functions {
 
 sub miss_pass_route_newsdev_cloud_functions {
   if (req.http.x-nyt-route == "newsdev-cloud-functions") {
-    // set function name
-    set bereq.url = regsub(req.url, "^/svc/int/functions/", "/");
+    // Replace the www-fastly routing prefix with the name of the Google Cloud
+    // Function, where it is deployed. Also add ther `www-` prefix used to
+    // expose functions to Fastly.
+    // /svc/int/functions/test > /www-test
+
+    set bereq.url = regsub(req.url, "^/svc/int/functions/", "/www-");
 
     if (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") {
       set bereq.http.host = "us-central1-nytint-stg.cloudfunctions.net";
@@ -26,6 +25,10 @@ sub miss_pass_route_newsdev_cloud_functions {
 
 sub deliver_route_newsdev_cloud_functions_access_control {
   if (req.http.x-nyt-route == "newsdev-cloud-functions") {
-    set resp.http.Access-Control-Allow-Origin = "*";
+    // Block responses to missing functions / 302s
+    if (resp.status == 302 && resp.http.location ~ "https://accounts.google.com") {
+      set resp.status = 404;
+      unset resp.http.location;
+    }
   }
 }
