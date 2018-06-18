@@ -566,10 +566,10 @@ backends:
       path: "/.status"
       check_interval: "5000"
       expected_response: "200"
-      initial: "5"
-      threshold: "5"
+      initial: "4"
+      threshold: "3"
       timeout: "3000"
-      window: "5"
+      window: "4"
 
   - name: "amp"
     address: "amp-dot-nyt-wfvi-prd.appspot.com"
