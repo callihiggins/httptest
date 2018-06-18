@@ -429,10 +429,9 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
       'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story',
+        'set-cookie': /^((?!vistory).)*$/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'No vistory cookie',
@@ -454,10 +453,8 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
       'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story'
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Empty vistory cookie',
@@ -474,10 +471,7 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[a][012][0-9];/,
-      },
+      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
       'responseStatusCode': [200],
       'scenarioDescription': 'abra set story VI cookie using query param',
       'testId': 52,
@@ -493,35 +487,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[z][012][0-9];/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'abra unset story VI cookie using query param',
-      'testId': 53,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': true
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
+      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
       'responseHeaderContains': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff. Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff.',
       'testId': 54,
     },
     {
@@ -535,38 +507,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff. Not Allocated',
-      'testId': 55,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2017/02/23/learning/oak-style-guide.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
+      'requestUri': '/2017/02/23/learning/oak-style-guide.html',
       'responseHeaderContains': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'OAK article served by VI. Allocated',
+      'scenarioDescription': 'OAK article served by VI.',
       'testId': 56,
     },
     {
@@ -580,40 +527,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/02/23/learning/oak-style-guide.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderContains': {
-        'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-story',
-        'fastly-restarts': '1',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'OAK article still served by VI. Not Allocated',
-      'testId': 57,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2017/10/16/upshot/test.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
+      'requestUri': '/2017/10/16/upshot/test.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5)/,
         'fastly-restarts': /1/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues.',
       'testId': 58,
     },
     {
@@ -627,37 +547,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/10/16/upshot/test.html?abra=WP_ProjectVi_Story=horse',
+      'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html',
       'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
+        'x-nyt-backend': 'article_fe',
+        'x-nyt-route': 'article'
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Not Allocated',
-      'testId': 59,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Allocated',
+      'scenarioDescription': 'Non-OAK outside correct date range with no fancy header.',
       'testId': 60,
     },
     {
@@ -665,62 +561,20 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
-      'testId': 61,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
         'dev': false,
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/02/16/opinion/paul-krugman-with-column-assignment.html?abra=WP_ProjectVi_Story=st',
+      'requestUri': '/2017/02/16/opinion/paul-krugman-with-column-assignment.html',
       'responseHeaderContains': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Allocated',
+      'scenarioDescription': 'Test routing; opinion article; Always served by VI.',
       'testId': 62,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': true,
-        'dev': false,
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2017/02/16/opinion/paul-krugman-with-column-assignment.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderContains': {
-        'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-story',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Not Allocated',
-      'testId': 63,
     },
 
     // Production
@@ -738,10 +592,8 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html',
       'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story'
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'No vistory cookie',
@@ -763,10 +615,8 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html',
       'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story'
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Empty vistory cookie',
@@ -783,10 +633,7 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[a][012][0-9];/,
-      },
+      'requestUri': '/2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html',
       'responseStatusCode': [200],
       'scenarioDescription': 'abra set story VI cookie using query param',
       'testId': 300,
@@ -802,35 +649,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[z][012][0-9];/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'abra unset story VI cookie using query param',
-      'testId': 400,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2017/10/15/nyregion/harvey-weinstein-new-york-sex-assault-investigation.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
+      'requestUri': '/2017/10/15/nyregion/harvey-weinstein-new-york-sex-assault-investigation.html',
       'responseHeaderContains': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff. Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff.',
       'testId': 500,
     },
     {
@@ -844,38 +669,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/10/15/nyregion/harvey-weinstein-new-york-sex-assault-investigation.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff. Not Allocated',
-      'testId': 600,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2016/08/26/arts/things-to-do-in-new-york-metropolitan-museum-flume.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
+      'requestUri': '/2016/08/26/arts/things-to-do-in-new-york-metropolitan-museum-flume.html',
       'responseHeaderContains': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'OAK article served by VI. Allocated',
+      'scenarioDescription': 'OAK article served by VI.',
       'testId': 700,
     },
     {
@@ -889,40 +689,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2016/08/26/arts/things-to-do-in-new-york-metropolitan-museum-flume.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderContains': {
-        'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-story',
-        'fastly-restarts': '1',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'OAK article still served by VI. Not Allocated',
-      'testId': 800,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2018/01/30/us/politics/trump-state-of-the-union.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
+      'requestUri': '/2018/01/30/us/politics/trump-state-of-the-union.html',
       'responseHeaderPattern': {
         'x-api-version': /F-(GA|5-5|VI)/,
         'fastly-restarts': /1/,
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Allocated',
+      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues.',
       'testId': 900,
     },
     {
@@ -936,37 +709,13 @@ function getScenarioEvents() {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2017/10/11/theater/denise-gough-st-anns-warehouse-angels-in-america.html?abra=WP_ProjectVi_Story=horse',
+      'requestUri': '/2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html',
       'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
+        'x-nyt-backend': 'article_fe',
+        'x-nyt-route': 'article'
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK in correct date range with compatibility issues. Not Allocated',
-      'testId': 1000,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html?abra=WP_ProjectVi_Story=st',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Allocated',
+      'scenarioDescription': 'Non-OAK outside correct date range with no fancy header.',
       'testId': 1100,
     },
     {
@@ -974,125 +723,25 @@ function getScenarioEvents() {
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': false
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderPattern': {
-        'set-cookie': /\bvistory=[abcz][012][0-9];/,
-      },
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GA|5-5|VI)/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with no fancy header. Not Allocated',
-      'testId': 1200,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
         'dev': false,
       },
       'requestHeaders': {
         'x-nyt-debug': '1'
       },
       'requestScheme': 'https://',
-      'requestUri': '/2018/03/02/opinion/dicks-guns-walmart.html?abra=WP_ProjectVi_Story=st',
+      'requestUri': '/2018/03/02/opinion/dicks-guns-walmart.html',
       'responseHeaderContains': {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Allocated',
+      'scenarioDescription': 'Test routing; opinion article; Always served by VI.',
       'testId': 1300,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': false,
-        'dev': false,
-      },
-      'requestHeaders': {
-        'x-nyt-debug': '1'
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/2018/03/02/opinion/dicks-guns-walmart.html?abra=WP_ProjectVi_Story=horse',
-      'responseHeaderContains': {
-        'x-nyt-backend': 'projectvi_fe',
-        'x-nyt-route': 'vi-story',
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test routing; opinion article; Always served by VI. Not Allocated',
-      'testId': 1400,
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'https://',
-      requestUri: '/2017/09/24/theater/slug.amp.html',
-      responseStatusCode: [200,404],
-      scenarioDescription: 'Amp articles, should not be cached',
-      responseHeaderMatches: {
-        'x-nyt-backend': 'amp',
-        'x-cache': 'MISS'
-      },
-      testId: 1800,
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'https://',
-      requestHeaders: {
-        'x-nyt-internal-access': 0,
-        'x-nyt-external-access': 0
-      },
-      requestUri: '/2017/09/24/theater/slug.amp.html',
-      responseStatusCode: [302],
-      responseHeaderContains: {
-        'location': '/2017/09/24/theater/slug.html'
-      },
-      scenarioDescription: 'amp articles should 302 to regular url if they requesting client isnt allowed',
-      testId: 1801
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: true,
-        stg: true,
-        dev: true
-      },
-      requestScheme: 'https://',
-      requestHeaders: {
-        'x-nyt-internal-access': 0,
-        'x-nyt-external-access': 0,
-        'user-agent': 'iphone'
-      },
-      requestUri: '/2017/09/24/theater/slug.amp.html',
-      responseStatusCode: [302],
-      responseHeaderContains: {
-        'location': '/2017/09/24/theater/slug.html'
-      },
-      scenarioDescription: 'amp articles should 302 to regular url if they requesting client isnt allowed',
-      testId: 1802
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
         'stg': true,
         'dev': true,
       },

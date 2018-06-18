@@ -50,7 +50,6 @@ sub recv_vi_allocation_init {
     declare local var.hash STRING;
     declare local var.d INTEGER;
     declare local var.test_group STRING;
-    declare local var.test_group_story STRING;
     declare local var.abra_overrides STRING;
 
     # only if this execution is not on the shield pop in a shielding scenario
@@ -66,6 +65,8 @@ sub recv_vi_allocation_init {
 
         if (!req.http.x-vi-story-opt && req.http.cookie:vi_story_opt) {
             set req.http.x-vi-story-opt = req.http.cookie:vi_story_opt;
+        } else { // if there is no opt-out value, default them to vi
+            set req.http.x-vi-story-opt = "1";
         }
 
         #
@@ -161,43 +162,11 @@ sub recv_vi_allocation_init {
             set req.http.x-vi-ssr-www-hp = "hp-orig";
         }
 
-        #
-        # Story allocation
-        #
-
-        if (var.abra_overrides ~ "(?:^|&)WP_ProjectVi_Story=([^&]*)") {
-            if (re.group.1 == "st")   { set var.test_group_story = "a0"; } # translate to equiv.
-            else                      { set var.test_group_story = "z0"; } # default to ctrl grp
-        } else {
-            # use Abra-style allocation, like so:                                           <https://github.com/nytm/vi-rollout-abra-reporting-js>
-            # 0..100%:      "a0" - Vi test group, receives Vi story (except incompatble)    WP_ProjectVi_story_desktop=sd
-            # 100..100%:    "b0" - Vi holdout, receives NYT5 (except Vi-only)               WP_ProjectVi_story_desktop=sdh
-            # 100..100%:    "c0" - NYT5 test group, receives NYT5 (except Vi-only)          WP_ProjectVi_story_desktop=nyt5
-            # 100..100%:    "z0" - NYT5 holdout, receives NYT5 (except Vi-only)             WP_ProjectVi_story_desktop=nyt5h
-
-            set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " WP_ProjectVi_Story");
-            set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-            set var.d = std.strtol(var.hash, 16);
-
-            # at launch the values will be updated to match comments
-            if (var.d < 4294967296) { # 100% * 0x100000000
-                set var.test_group_story = "a0"; # Getting VI response
-            # } else if (var.d < 4294967296) { # 100% * 0x100000000
-            #     set var.test_group_story = "b0"; # Not getting VI response
-            # } else if (var.d < 4294967296) { # 100% * 0x100000000
-            #     set var.test_group_story = "c0"; # Not getting VI response
-            # } else { # var.d < 0x100000000
-            #     set var.test_group_story = "z0"; # Not getting VI response
-            }
-        }
-
         # use the req object to stash our test group and incoming `vi_www_hp` cookie,
         # so later in vcl_recv we can set the outgoing `vi_www_hp` cookie if needed
         # shield pop also needs these headers
         set req.http.x--fastly-vi-test-group = var.test_group;
         set req.http.x--fastly-req-cookie-vi = req.http.cookie:vi_www_hp;
-        set req.http.x--fastly-vi-test-group-story = var.test_group_story;
-        set req.http.x--fastly-req-cookie-vi-story = req.http.x-vistory;
         set req.http.x--fastly-vi-story-opt = req.http.x-vi-story-opt;
         set req.http.x--fastly-dart = var.d;
     }
@@ -249,7 +218,6 @@ sub deliver_vi_allocation_set_cookie {
             # at least ~365 days from now (encoded as its last digit):
             set var.expire_year_last_digit = regsub(var.expire_year, "^\d+(\d)$|^.*$", "\1");
             set var.vi_cookie_desired = req.http.x--fastly-vi-test-group + var.expire_year_last_digit;
-            set var.vi_cookie_desired_story = req.http.x--fastly-vi-test-group-story + var.expire_year_last_digit;
 
             # If the existing cookie is wrong, we need to update it. But also, if
             # the date encoded within it is different from our desired expiration
@@ -264,26 +232,11 @@ sub deliver_vi_allocation_set_cookie {
                     );
             }
 
-            # If the existing cookie is wrong, we need to update it. But also, if
-            # the date encoded within it is different from our desired expiration
-            # date, we need to bump it:
-            if (req.http.x--fastly-req-cookie-vi-story != var.vi_cookie_desired_story) {
-                add resp.http.Set-Cookie =
-                    "vistory=" + var.vi_cookie_desired_story +
-                    "; path=/; domain=.nytimes.com; expires=" +
-                    std.time(
-                        "Sun, 1 Jan " + var.expire_year + " 00:00:00 GMT", # the "Sun" part doesn't matter
-                        time.add(var.now_dt, 730d) # default to 2 years from now if std.time parsing fails
-                    );
-            }
-
         #     set resp.http.X-Debug-now_dt = var.now_dt;
         #     set resp.http.X-Debug-now_year = var.now_year;
         #     set resp.http.X-Debug-expire_year = var.expire_year;
         #     set resp.http.X-Debug-vi_cookie_desired = var.vi_cookie_desired;
         #     set resp.http.X-Debug-vi_cookie_actual = "here --> '" + req.http.x--fastly-req-cookie-vi + "'";
-        #     set resp.http.X-Debug-vi_cookie_desired_story = var.vi_cookie_desired_story;
-        #     set resp.http.X-Debug-vi_cookie_actual_story = "here --> '" + req.http.x--fastly-req-cookie-vi-story + "'";
         #     set resp.http.X-Debug-dart = "dart --> '" + req.http.x--fastly-dart + "'";
         #     set resp.http.X-Debug-vi_story_opt = "here --> '" + req.http.x--fastly-vi-story-opt + "'";
         }
@@ -304,8 +257,6 @@ sub miss_pass_remove_vialloc_headers {
     if (!req.http.var-nyt-is-shielded) {
         unset bereq.http.x--fastly-req-cookie-vi;
         unset bereq.http.x--fastly-vi-test-group;
-        unset bereq.http.x--fastly-req-cookie-vi-story;
-        unset bereq.http.x--fastly-vi-test-group-story;
         unset bereq.http.x--fastly-project-vi;
         unset bereq.http.x-nyt-vi-alloc-edge;
     } else {
