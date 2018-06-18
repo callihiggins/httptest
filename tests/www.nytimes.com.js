@@ -51,7 +51,7 @@ require("./www.nytimes.com/route-guides.js");
 require("./www.nytimes.com/route-weddings.js");
 require("./www.nytimes.com/route-search.js");
 require("./www.nytimes.com/route-timeswire.js");
-require("./www.nytimes.com/route-tips.js");
+require("./www.nytimes.com/secure-tips.js");
 require("./www.nytimes.com/route-blogs.js");
 require("./www.nytimes.com/redirect-mobile-realestate.js");
 require("./www.nytimes.com/kill-mobile-redirect.js");

@@ -408,9 +408,9 @@ resource "fastly_service_v1" "www" {
   }
 
   vcl {
-    name    = "route-tips"
+    name    = "secure-tips"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-tips.vcl")}"
+    content = "${file("${path.module}/builds/www.stg.nytimes.com/secure-tips.vcl")}"
   }
 
   vcl {

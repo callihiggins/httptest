@@ -19,7 +19,7 @@ function getScenarioEvents() {
       requestUri: '/tips?test=true',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-nyt-route': 'tips',
+        'x-nyt-route': 'legacy-gke',
         'referrer-policy': 'no-referrer',
         location: 'https://' + suite.servername + '/tips?test=true'
       },
@@ -38,7 +38,7 @@ function getScenarioEvents() {
       requestUri: '/tips?test=true',
       responseHeaderMatches: {
         'x-nyt-backend': 'www_legacy_gke',
-        'x-nyt-route': 'tips',
+        'x-nyt-route': 'legacy-gke',
         'referrer-policy': 'no-referrer'
       },
       responseStatusCode: [301, 404],

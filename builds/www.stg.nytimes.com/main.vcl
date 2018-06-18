@@ -76,7 +76,7 @@ include "route-invalid-requests";
 include "route-gdpr-form";
 include "route-audio";
 include "route-device-detection-debug";
-include "route-tips";
+include "secure-tips";
 
 # backend response processing
 include "surrogate-key";
@@ -142,7 +142,7 @@ sub vcl_recv {
  
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
   call recv_route_zone_apex_redirect;
-  call recv_route_tips;
+  call recv_secure_tips;
   call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
   call recv_route_cms_static_assets;
@@ -518,7 +518,7 @@ sub vcl_deliver {
   call deliver_route_collection_restart_indicators;
   call deliver_vi_allocation_set_cookie;
 
-  call deliver_route_tips;
+  call deliver_secure_tips;
   call deliver_add_svc_access_control;
   call deliver_route_newsdev_cloud_functions_access_control;
   call deliver_games_api_version;
