@@ -745,7 +745,7 @@ function getScenarioEvents() {
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': true,
+        'prd': false,
         'stg': true,
         'dev': true,
       },
