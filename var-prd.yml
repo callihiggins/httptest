@@ -540,7 +540,7 @@ backends:
     first_byte_timeout: "30000"
     ssl_cert_hostname: "alpha.nyt.net"
     ssl_sni_hostname: "alpha.nyt.net"
-    shield: "atl-ga-us"
+    shield: "jfk-ny-us"
     healthcheck:
       host: "alpha.gtm.nyt.net"
       path: "/.healthcheck"
