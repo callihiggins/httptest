@@ -328,6 +328,32 @@ function getScenarioEvents()
     */
 
     {
+      'scenarioDescription': 'Request with nyt-a mapping to control, unreported (in non-prd)',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      // var.d 4183719077
+      'requestHeaderCookie': [
+        'nyt-a=tidwfIDeOX355q6RAa7hQM', // in NON-PRODUCTION envs, this results in variation `control, unreported`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': '',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=z[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 240,
+    },
+
+    {
       'scenarioDescription': 'Request with nyt-a mapping to hp-serv (in non-prd)',
       'isDeployedInEnv': {
         'prd': false,
@@ -357,7 +383,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': true,
-        'dev': true 
+        'dev': true
       },
       'requestHeaders': {
         'x-nyt-debug': '1',
@@ -449,6 +475,32 @@ function getScenarioEvents()
       },
       'responseStatusCode': 200,
       'testId': 250,
+    },
+
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to control, unreported (in prd)',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        // var.d = 0849969054
+        'nyt-a=3kqkZ3QENvyIlMMhaw6kv_', // in PRODUCTION env, this results in variation `control, unreported`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderContains': {
+        'x-nyt-debug-req-http-x-vi-ssr-www-hp': '',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=z[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 260,
     },
 
     {

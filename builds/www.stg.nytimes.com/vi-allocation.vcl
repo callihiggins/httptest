@@ -152,6 +152,8 @@ sub recv_vi_allocation_init {
         # to the other backends and will be ignored):
         if (req.url.path == "/" && var.test_group ~ "^e") {
             set req.http.x-vi-ssr-www-hp = "hp-serv";
+        } else if (req.url.path == "/" && var.test_group ~ "^f"){
+            set req.http.x-vi-ssr-www-hp = "hp-orig";
         } else if (req.url.path == "/" && var.test_group ~ "^g"){
             set req.http.x-vi-ssr-www-hp = "hp-rm_gpt_media_dfp";
         } else if (req.url.path == "/" && var.test_group ~ "^h"){
@@ -159,7 +161,7 @@ sub recv_vi_allocation_init {
         } else if (req.url.path == "/" && var.test_group ~ "^i"){
             set req.http.x-vi-ssr-www-hp = "hp-orig_dfp";
         } else {
-            set req.http.x-vi-ssr-www-hp = "hp-orig";
+            set req.http.x-vi-ssr-www-hp = "";
         }
 
         # use the req object to stash our test group and incoming `vi_www_hp` cookie,
