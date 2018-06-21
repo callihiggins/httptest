@@ -1,35 +1,5 @@
-terraform {
-  backend "gcs" {
-    bucket  = "nyt-bsre-prd-tfstate"
-    project = "nyt-bsre-prd"
-  }
-}
-
-# pin the Fastly provider to 0.1.3. We should not get surprised by automatic upgrades
-provider "fastly" {
-  version = "= 0.1.3"
-}
-
-variable "env" {
-  type = "string"
-}
-
-variable "service_name" {
-  type = "string"
-}
-
-variable "sumologic_endpoint" {
-  type = "map"
-
-  default = {
-    dev = "https://collectors.sumologic.com/receiver/v1/http/ZaVnC4dhaV090sPFU_YnnEP_F61BBPpciroz627Cc5zoPONnZQtGWWIiqPAs6g3LsPXOc3JfFUPl44yl-tlLnkH-Pn7xp1X9QarWeCQeQjSPeA0wqbLn-A=="
-    stg = "https://collectors.sumologic.com/receiver/v1/http/ZaVnC4dhaV090sPFU_YnnEP_F61BBPpciroz627Cc5zoPONnZQtGWWIiqPAs6g3LsPXOc3JfFUPl44yl-tlLnkH-Pn7xp1X9QarWeCQeQjSPeA0wqbLn-A=="
-    prd = "https://collectors.sumologic.com/receiver/v1/http/ZaVnC4dhaV3DIdcy2GqnQ5DMhk6CZkjlLK9C5V5fjRSlaVm4RJg3dU1REHf-_owjetrn1mzlLqDx1KlNQ6qwtrgHf1KwvOaVcZBHpQSdqG-tFYf0OFYEUQ=="
-  }
-}
-
-resource "fastly_service_v1" "www" {
-  name = "www.${var.service_name}"
+resource "fastly_service_v1" "service" {
+  name = "${var.app}.${var.env}"
 
   {{ $domains := (datasource "config").domains }}
 
@@ -308,506 +278,506 @@ resource "fastly_service_v1" "www" {
   vcl {
     name    = "route-newsdev-attribute"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-attribute.vcl")}"
+    content = "${file("../vcl/route-newsdev-attribute.vcl")}"
   }
 
   vcl {
     name    = "route-newsdev-gcs"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-gcs.vcl")}"
+    content = "${file("../vcl/route-newsdev-gcs.vcl")}"
   }
 
   vcl {
     name    = "acl-blacklist"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-blacklist.vcl")}"
+    content = "${file("../vcl/acl-blacklist.vcl")}"
   }
 
   vcl {
     name    = "main"
     main    = true
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/main.vcl")}"
+    content = "${file("../vcl/main.vcl")}"
   }
 
   vcl {
     name    = "surrogate-key"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/surrogate-key.vcl")}"
+    content = "${file("../vcl/surrogate-key.vcl")}"
   }
 
   vcl {
     name    = "route-elections"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-elections.vcl")}"
+    content = "${file("../vcl/route-elections.vcl")}"
   }
 
   vcl {
     name    = "bot-detection"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/bot-detection.vcl")}"
+    content = "${file("../vcl/bot-detection.vcl")}"
   }
 
   vcl {
     name    = "https-redirect"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/https-redirect.vcl")}"
+    content = "${file("../vcl/https-redirect.vcl")}"
   }
 
   vcl {
     name    = "response-headers"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/response-headers.vcl")}"
+    content = "${file("../vcl/response-headers.vcl")}"
   }
 
   vcl {
     name    = "route-mwcm"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-mwcm.vcl")}"
+    content = "${file("../vcl/route-mwcm.vcl")}"
   }
 
   vcl {
     name    = "route-content-api"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-content-api.vcl")}"
+    content = "${file("../vcl/route-content-api.vcl")}"
   }
 
   vcl {
     name    = "route-intl"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-intl.vcl")}"
+    content = "${file("../vcl/route-intl.vcl")}"
   }
 
   vcl {
     name    = "route-invalid-requests"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-invalid-requests.vcl")}"
+    content = "${file("../vcl/route-invalid-requests.vcl")}"
   }
 
   vcl {
     name    = "initialize-transaction-state"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/initialize-transaction-state.vcl")}"
+    content = "${file("../vcl/initialize-transaction-state.vcl")}"
   }
 
   vcl {
     name    = "route-newsdev-gke"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-gke.vcl")}"
+    content = "${file("../vcl/route-newsdev-gke.vcl")}"
   }
 
   vcl {
     name    = "frame-buster"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/frame-buster.vcl")}"
+    content = "${file("../vcl/frame-buster.vcl")}"
   }
 
   vcl {
     name    = "route-games"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-games.vcl")}"
+    content = "${file("../vcl/route-games.vcl")}"
   }
 
   vcl {
     name    = "secure-tips"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/secure-tips.vcl")}"
+    content = "${file("../vcl/secure-tips.vcl")}"
   }
 
   vcl {
     name    = "device-detection-init"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/device-detection-init.vcl")}"
+    content = "${file("../vcl/device-detection-init.vcl")}"
   }
 
   vcl {
     name    = "route-video"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-video.vcl")}"
+    content = "${file("../vcl/route-video.vcl")}"
   }
 
   vcl {
     name    = "subscription-currency-map-table"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/subscription-currency-map-table.vcl")}"
+    content = "${file("../vcl/subscription-currency-map-table.vcl")}"
   }
 
   vcl {
     name    = "route-tbooks"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-tbooks.vcl")}"
+    content = "${file("../vcl/route-tbooks.vcl")}"
   }
 
   vcl {
     name    = "acl-vpc-gateway"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-vpc-gateway.vcl")}"
+    content = "${file("../vcl/acl-vpc-gateway.vcl")}"
   }
 
   vcl {
     name    = "route-guides"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-guides.vcl")}"
+    content = "${file("../vcl/route-guides.vcl")}"
   }
 
   vcl {
     name    = "route-programs"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-programs.vcl")}"
+    content = "${file("../vcl/route-programs.vcl")}"
   }
 
   vcl {
     name    = "route-zone-apex-redirect"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-zone-apex-redirect.vcl")}"
+    content = "${file("../vcl/route-zone-apex-redirect.vcl")}"
   }
 
   vcl {
     name    = "route-fastly-healthcheck"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-fastly-healthcheck.vcl")}"
+    content = "${file("../vcl/route-fastly-healthcheck.vcl")}"
   }
 
   vcl {
     name    = "mobile-redirect"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/mobile-redirect.vcl")}"
+    content = "${file("../vcl/mobile-redirect.vcl")}"
   }
 
   vcl {
     name    = "route-times-journeys"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-times-journeys.vcl")}"
+    content = "${file("../vcl/route-times-journeys.vcl")}"
   }
 
   vcl {
     name    = "route-userinfo"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-userinfo.vcl")}"
+    content = "${file("../vcl/route-userinfo.vcl")}"
   }
 
   vcl {
     name    = "geoip-homepage-briefing-map"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-homepage-briefing-map.vcl")}"
+    content = "${file("../vcl/geoip-homepage-briefing-map.vcl")}"
   }
 
   vcl {
     name    = "sanitize-request"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/sanitize-request.vcl")}"
+    content = "${file("../vcl/sanitize-request.vcl")}"
   }
 
   vcl {
     name    = "acl-internal"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-internal.vcl")}"
+    content = "${file("../vcl/acl-internal.vcl")}"
   }
 
   vcl {
     name    = "vi-allocation"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/vi-allocation.vcl")}"
+    content = "${file("../vcl/vi-allocation.vcl")}"
   }
 
   vcl {
     name    = "route-health-service"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-health-service.vcl")}"
+    content = "${file("../vcl/route-health-service.vcl")}"
   }
 
   vcl {
     name    = "geoip-header-init"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/geoip-header-init.vcl")}"
+    content = "${file("../vcl/geoip-header-init.vcl")}"
   }
 
   vcl {
     name    = "route-geoip"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-geoip.vcl")}"
+    content = "${file("../vcl/route-geoip.vcl")}"
   }
 
   vcl {
     name    = "acl-crawlers"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-crawlers.vcl")}"
+    content = "${file("../vcl/acl-crawlers.vcl")}"
   }
 
   vcl {
     name    = "acl-external-staging-access"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/acl-external-staging-access.vcl")}"
+    content = "${file("../vcl/acl-external-staging-access.vcl")}"
   }
 
   vcl {
     name    = "route-paidpost"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-paidpost.vcl")}"
+    content = "${file("../vcl/route-paidpost.vcl")}"
   }
 
   vcl {
     name    = "route-watching"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-watching.vcl")}"
+    content = "${file("../vcl/route-watching.vcl")}"
   }
 
   vcl {
     name    = "uuid"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/uuid.vcl")}"
+    content = "${file("../vcl/uuid.vcl")}"
   }
 
   vcl {
     name    = "gdpr"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/gdpr.vcl")}"
+    content = "${file("../vcl/gdpr.vcl")}"
   }
 
   vcl {
     name    = "error-pages"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/error-pages.vcl")}"
+    content = "${file("../vcl/error-pages.vcl")}"
   }
 
   vcl {
     name    = "route-slideshow"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-slideshow.vcl")}"
+    content = "${file("../vcl/route-slideshow.vcl")}"
   }
 
   vcl {
     name    = "route-story"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-story.vcl")}"
+    content = "${file("../vcl/route-story.vcl")}"
   }
 
   vcl {
     name    = "route-homepage"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-homepage.vcl")}"
+    content = "${file("../vcl/route-homepage.vcl")}"
   }
 
   vcl {
     name    = "route-homepage-version-toggle"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-homepage-version-toggle.vcl")}"
+    content = "${file("../vcl/route-homepage-version-toggle.vcl")}"
   }
 
   vcl {
     name    = "auth-headers"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/auth-headers.vcl")}"
+    content = "${file("../vcl/auth-headers.vcl")}"
   }
 
   vcl {
     name    = "route-default"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-default.vcl")}"
+    content = "${file("../vcl/route-default.vcl")}"
   }
 
   vcl {
     name    = "route-adx"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-adx.vcl")}"
+    content = "${file("../vcl/route-adx.vcl")}"
   }
 
   vcl {
     name    = "route-nyt5-misc"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-nyt5-misc.vcl")}"
+    content = "${file("../vcl/route-nyt5-misc.vcl")}"
   }
 
   vcl {
     name    = "set-cache-object-ttl"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/set-cache-object-ttl.vcl")}"
+    content = "${file("../vcl/set-cache-object-ttl.vcl")}"
   }
 
   vcl {
     name    = "origin-response-handler"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/origin-response-handler.vcl")}"
+    content = "${file("../vcl/origin-response-handler.vcl")}"
   }
 
   vcl {
     name    = "origin-request-handler"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/origin-request-handler.vcl")}"
+    content = "${file("../vcl/origin-request-handler.vcl")}"
   }
 
   vcl {
     name    = "route-cms-static-assets"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-cms-static-assets.vcl")}"
+    content = "${file("../vcl/route-cms-static-assets.vcl")}"
   }
 
   vcl {
     name    = "route-ads-static-assets"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-ads-static-assets.vcl")}"
+    content = "${file("../vcl/route-ads-static-assets.vcl")}"
   }
 
   vcl {
     name    = "route-search-suggest-svc"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-search-suggest-svc.vcl")}"
+    content = "${file("../vcl/route-search-suggest-svc.vcl")}"
     }
 
   vcl {
     name    = "route-collections-svc"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-collections-svc.vcl")}"
+    content = "${file("../vcl/route-collections-svc.vcl")}"
   }
 
   vcl {
     name    = "route-add-svc"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-add-svc.vcl")}"
+    content = "${file("../vcl/route-add-svc.vcl")}"
   }
 
   vcl {
     name    = "route-sitemap"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-sitemap.vcl")}"
+    content = "${file("../vcl/route-sitemap.vcl")}"
   }
 
   vcl {
     name    = "route-newsdev-cloud-functions"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsdev-cloud-functions.vcl")}"
+    content = "${file("../vcl/route-newsdev-cloud-functions.vcl")}"
   }
 
   vcl {
     name    = "route-newsroom-files-gcs"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsroom-files-gcs.vcl")}"
+    content = "${file("../vcl/route-newsroom-files-gcs.vcl")}"
   }
 
   vcl {
     name    = "route-newsgraphics-gcs"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsgraphics-gcs.vcl")}"
+    content = "${file("../vcl/route-newsgraphics-gcs.vcl")}"
   }
 
   vcl {
     name    = "route-profile-fe"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-profile-fe.vcl")}"
+    content = "${file("../vcl/route-profile-fe.vcl")}"
   }
 
   vcl {
     name    = "route-community-svc"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-community-svc.vcl")}"
+    content = "${file("../vcl/route-community-svc.vcl")}"
   }
 
   vcl {
     name    = "route-switchboard"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-switchboard.vcl")}"
+    content = "${file("../vcl/route-switchboard.vcl")}"
   }
 
   vcl {
     name    = "route-messaging"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-messaging.vcl")}"
+    content = "${file("../vcl/route-messaging.vcl")}"
   }
 
   vcl {
     name    = "route-esi-jsonp-callback"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-esi-jsonp-callback.vcl")}"
+    content = "${file("../vcl/route-esi-jsonp-callback.vcl")}"
   }
 
   vcl {
     name    = "route-recommendations"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-recommendations.vcl")}"
+    content = "${file("../vcl/route-recommendations.vcl")}"
   }
 
   vcl {
     name    = "route-newsletters"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-newsletters.vcl")}"
+    content = "${file("../vcl/route-newsletters.vcl")}"
   }
 
   vcl {
     name    = "route-real-estate"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-real-estate.vcl")}"
+    content = "${file("../vcl/route-real-estate.vcl")}"
   }
 
   vcl {
     name    = "route-weddings"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-weddings.vcl")}"
+    content = "${file("../vcl/route-weddings.vcl")}"
   }
 
   vcl {
     name    = "route-search"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-search.vcl")}"
+    content = "${file("../vcl/route-search.vcl")}"
   }
 
   vcl {
     name    = "route-timeswire"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-timeswire.vcl")}"
+    content = "${file("../vcl/route-timeswire.vcl")}"
   }
 
   vcl {
     name    = "route-blogs"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-blogs.vcl")}"
+    content = "${file("../vcl/route-blogs.vcl")}"
   }
 
   vcl {
     name    = "route-vi-assets"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-vi-assets.vcl")}"
+    content = "${file("../vcl/route-vi-assets.vcl")}"
   }
 
   vcl {
     name    = "route-collection"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-collection.vcl")}"
+    content = "${file("../vcl/route-collection.vcl")}"
   }
 
   vcl {
 
     name    = "access-level-authorization"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/access-level-authorization.vcl")}"
+    content = "${file("../vcl/access-level-authorization.vcl")}"
   }
 
   vcl {
     name    = "route-interactive"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-interactive.vcl")}"
+    content = "${file("../vcl/route-interactive.vcl")}"
   }
 
   vcl {
     name    = "route-gdpr-form"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-gdpr-form.vcl")}"
+    content = "${file("../vcl/route-gdpr-form.vcl")}"
   }
 
   vcl {
     name    = "route-device-detection-debug"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-device-detection-debug.vcl")}"
+    content = "${file("../vcl/route-device-detection-debug.vcl")}"
   }
 
   vcl {
     name    = "test-suite-force-miss"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/test-suite-force-miss.vcl")}"
+    content = "${file("../vcl/test-suite-force-miss.vcl")}"
   }
 
     vcl {
     name    = "route-audio"
     main    = false
-    content = "${file("${path.module}/builds/www.stg.nytimes.com/route-audio.vcl")}"
+    content = "${file("../vcl/route-audio.vcl")}"
   }
 
 }

@@ -1,12 +1,15 @@
+workspace:
+  base: /root
+
 pipeline:
 
   # First step is yml file syntax check for all environment
   yml_syntax_check:
     image: inzinger/alpine-ruby:2.3
     commands:
-      - ruby -r yaml -e 'YAML.parse(File.open("./var-dev.yml"))'
-      - ruby -r yaml -e 'YAML.parse(File.open("./var-stg.yml"))'
-      - ruby -r yaml -e 'YAML.parse(File.open("./var-prd.yml"))'
+      - ruby -r yaml -e 'YAML.parse(File.open("./config/dev.yml"))'
+      - ruby -r yaml -e 'YAML.parse(File.open("./config/stg.yml"))'
+      - ruby -r yaml -e 'YAML.parse(File.open("./config/prd.yml"))'
 
   # This step runs the template engine for sandbox and dev services
   # notice we are setting an env for dev that will trigger
@@ -17,8 +20,8 @@ pipeline:
     environment:
       - env=dev
     commands:
-      - /gomplate -f main.tmpl -o main.tf -d config=var-dev.yml
-      - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-dev.yml
+      - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d config=config/dev.yml
+      - /gomplate -f vcl/route-health-service.vcl.tmpl -o vcl/route-health-service.vcl -d config=config/dev.yml
     when:
       event: push
       branch:
@@ -30,6 +33,7 @@ pipeline:
   tf_syntax_check:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: true
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/dev/terraform.tfstate"
@@ -51,6 +55,7 @@ pipeline:
   sandbox01:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/sandbox01/terraform.tfstate"
@@ -82,6 +87,7 @@ pipeline:
   sandbox02:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/sandbox02/terraform.tfstate"
@@ -113,6 +119,7 @@ pipeline:
   sandbox03:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/sandbox03/terraform.tfstate"
@@ -145,6 +152,7 @@ pipeline:
   sandbox04:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/sandbox04/terraform.tfstate"
@@ -176,6 +184,7 @@ pipeline:
   sandbox05:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/sandbox05/terraform.tfstate"
@@ -207,6 +216,7 @@ pipeline:
   sandbox06:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/sandbox06/terraform.tfstate"
@@ -238,6 +248,7 @@ pipeline:
   dev:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/dev/terraform.tfstate"
@@ -288,8 +299,8 @@ pipeline:
   stg-template:
     image: hairyhenderson/gomplate:v2.3.0
     commands:
-      - /gomplate -f main.tmpl -o main.tf -d config=var-stg.yml
-      - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-stg.yml
+      - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d config=config/stg.yml
+      - /gomplate -f vcl/route-health-service.vcl.tmpl -o vcl/route-health-service.vcl -d config=config/stg.yml
     when:
       event: push
       branch: master
@@ -299,6 +310,7 @@ pipeline:
   staging:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/stg/terraform.tfstate"
@@ -344,8 +356,8 @@ pipeline:
   prd-template:
     image: hairyhenderson/gomplate:v2.3.0
     commands:
-      - /gomplate -f main.tmpl -o main.tf -d config=var-prd.yml
-      - /gomplate -f builds/www.stg.nytimes.com/route-health-service.tmpl -o builds/www.stg.nytimes.com/route-health-service.vcl -d config=var-prd.yml
+      - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d config=config/prd.yml
+      - /gomplate -f vcl/route-health-service.vcl.tmpl -o vcl/route-health-service.vcl -d config=config/prd.yml
     when:
       event: tag
       branch: [ master, hotfix* ]
@@ -354,6 +366,7 @@ pipeline:
   production:
     image: jmccann/drone-terraform:4.0-0.10.7
     plan: false
+    root_dir: terraform
     init_options:
       backend-config:
         - "path=fastly/fastly-www/prd/terraform.tfstate"
