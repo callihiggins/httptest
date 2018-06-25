@@ -13,4 +13,13 @@ acl blacklist {
   # Latin American and Caribbean IP address Regional Registry, no other info available
   "190.237.183.174"/32;
 
+  # per request https://jira.nyt.net/browse/WF-25
+  "109.226.37.37"/32;
+  "109.226.37.38"/31;
+  "109.226.37.40"/31;
+  "212.150.211.160"/28;
+  "212.150.211.176"/29;
+  "212.150.211.184"/31;
+  "62.90.131.202"/32;
+  "82.166.195.64"/28;
 }
