@@ -1,5 +1,5 @@
 resource "fastly_service_v1" "service" {
-  name = "${var.app}.${var.env}"
+  name = "${var.app}.${var.service_name}"
 
   {{ $domains := (datasource "config").domains }}
 
