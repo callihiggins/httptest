@@ -27,4 +27,5 @@ sub recv_geo_ip {
 	set req.http.x-nyt-latitude = client.geo.latitude;
 	set req.http.x-nyt-longitude = client.geo.longitude;
 	set req.http.x-nyt-city = client.geo.city;
+	set req.http.x-nyt-postal-code = client.geo.postal_code;
 }

@@ -37,6 +37,7 @@ sub deliver_response_headers {
         set resp.http.x-nyt-longitude = req.http.x-nyt-longitude;
         set resp.http.x-nyt-city = req.http.x-nyt-city;
         set resp.http.x-nyt-gmt-offset = req.http.x-nyt-gmt-offset;
+        set resp.http.x-nyt-postal-code = req.http.x-nyt-postal-code;
         set resp.http.device_type = req.http.device_type;
         set resp.http.x-nyt-final-url = req.url;
         if (req.http.x-nyt-geo-hash) {
