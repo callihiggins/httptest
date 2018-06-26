@@ -16,6 +16,7 @@ sub recv_geo_ip {
 		# save this in a req header incase we restart
 		set req.http.x-geoip-ip = var.ip_override;
 	} else {
+		set client.geo.ip_override = req.http.Fastly-Client-IP;
 		set req.http.x-geoip-ip = req.http.Fastly-Client-IP;
 	}
 
