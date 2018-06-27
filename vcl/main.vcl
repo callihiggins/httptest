@@ -58,6 +58,7 @@ include "route-real-estate";
 include "route-nyt5-misc";
 include "route-userinfo";
 include "route-newsroom-files-gcs";
+include "route-tips-html-gcs";
 include "route-newsgraphics-gcs";
 include "route-newsletters";
 include "route-weddings";
@@ -139,7 +140,7 @@ sub vcl_recv {
   }
   call recv_route_svc_gdpr;
   call recv_route_svc_amp_gdpr;
- 
+
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
   call recv_route_zone_apex_redirect;
   call recv_secure_tips;
@@ -175,6 +176,7 @@ sub vcl_recv {
   call recv_route_userinfo;
   call recv_route_newsroom_files_gcs;
   call recv_route_newsgraphics_gcs;
+  call recv_route_tips_html_gcs;
   call recv_route_newsletters;
   call recv_route_paidpost;
   call recv_route_weddings;
@@ -333,6 +335,7 @@ sub vcl_miss {
   call miss_pass_wf_auth_headers;
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
+  call miss_pass_route_tips_html_gcs;
   call miss_pass_route_vi_assets;
   call miss_pass_route_switchboard;
   call miss_pass_route_blogs;
@@ -392,6 +395,7 @@ sub vcl_pass {
   call miss_pass_wf_auth_headers;
   call miss_pass_route_newsroom_files_gcs;
   call miss_pass_route_newsgraphics_gcs;
+  call miss_pass_route_tips_html_gcs;
   call miss_pass_route_vi_assets;
   call miss_pass_route_switchboard;
   call miss_pass_route_blogs;

@@ -654,6 +654,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "route-tips-html-gcs"
+    main    = false
+    content = "${file("../vcl/route-tips-html-gcs.vcl")}"
+  }
+
+  vcl {
     name    = "route-newsgraphics-gcs"
     main    = false
     content = "${file("../vcl/route-newsgraphics-gcs.vcl")}"

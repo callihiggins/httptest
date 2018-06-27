@@ -30,6 +30,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "newsdev-gcs"   // interative news
         || req.http.x-nyt-route == "newsdev-attribute"   // interative news
         || req.http.x-nyt-route == "newsroom-files-gcs"   // newsroom digital transition
+        || req.http.x-nyt-route == "tips-html-gcs"   // tips html page
         || req.http.x-nyt-route == "guides"          // beta - well guides
         || req.http.x-nyt-route == "trending"
         || req.http.x-nyt-route == "bestseller"

@@ -894,3 +894,7 @@ cloud_storage_buckets:
     auth: "false"
     bucket_name: "nyt-video-stg"
     bucket_provider: "gcs"
+  - pagetype: "tips-html-gcs"
+    auth: "true"
+    bucket_name: "nyt-tips-dev-tips-html"
+    bucket_provider: "gcs"

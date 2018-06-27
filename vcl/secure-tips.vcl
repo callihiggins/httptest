@@ -1,8 +1,7 @@
 sub recv_secure_tips {
     # remove source IP and Referer from tips related pages
     # https://jira.nyt.net/browse/DV-237
-    if (   req.url ~ "^/tips(/)?(\?.*)?$"
-        || req.url == "/securedrop"
+    if ( req.url == "/securedrop"
         || req.url ~ "^/newsgraphics/2016/news-tips"
     ) {
         set req.http.var-nyt-no-referrer = "true";

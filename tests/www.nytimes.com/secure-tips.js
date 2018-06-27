@@ -7,13 +7,13 @@ suite.run(suite, scenarios);
  */
 function getScenarioEvents() {
   var scenarios = [
-    
+
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: true,
-        dev: true
+        stg: false,
+        dev: false
       },
       requestScheme: 'http://',
       requestUri: '/tips?test=true',
@@ -31,8 +31,8 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: true,
-        dev: true
+        stg: false,
+        dev: false
       },
       requestScheme: 'https://',
       requestUri: '/tips?test=true',
