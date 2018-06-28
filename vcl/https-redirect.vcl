@@ -99,7 +99,6 @@ sub recv_https_redirect {
             || req.url ~ "^/newsgraphics/2016/news-tips"
             || req.url ~ "^/tips(/)?(\?.*)?$"
             || req.url.path ~ "^/.well-known/" // https://tools.ietf.org/html/rfc5785
-            || req.url == "/securedrop"
             || req.url ~ "^/es/wp-json/nyt/"
             || req.url ~ "^/mem/email-this.html"
             || req.url ~ "^/packages/html/mobile/"
@@ -144,7 +143,6 @@ sub recv_https_redirect {
             || req.url ~ "^/gst/emailus.html"
             || req.url ~ "^/newsgraphics/2016/news-tips"
             || req.url ~ "^/tips(/)?(\?.*)?$"
-            || req.url == "/securedrop"
         ) {
             call redirect_to_https;
 

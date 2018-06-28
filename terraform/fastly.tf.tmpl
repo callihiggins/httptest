@@ -378,12 +378,6 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "secure-tips"
-    main    = false
-    content = "${file("../vcl/secure-tips.vcl")}"
-  }
-
-  vcl {
     name    = "device-detection-init"
     main    = false
     content = "${file("../vcl/device-detection-init.vcl")}"

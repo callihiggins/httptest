@@ -19,6 +19,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'tips-html-gcs',
         'x-nyt-backend': 'gcs_origin',
+        'referrer-policy': 'no-referrer',
       },
       responseStatusCode: [200],
       scenarioDescription: "Tips path responds with 200",
@@ -36,10 +37,11 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'tips-html-gcs',
         'x-nyt-backend': 'gcs_origin',
+        'referrer-policy': 'no-referrer',
       },
       responseStatusCode: [200],
       scenarioDescription: "Tips index.html responds with 200",
-      testId: 1
+      testId: 2
     },
     {
       id: "FunctionalTestScenarioDefinitionForTipsHTMLGCSBucket",
@@ -53,10 +55,33 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'tips-html-gcs',
         'x-nyt-backend': 'gcs_origin',
+        'referrer-policy': 'no-referrer',
       },
       responseStatusCode: [200],
       scenarioDescription: "Tips email public GPG key responds with 200",
-      testId: 1
+      testId: 3
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/tips',
+      responseHeaderMatches: {
+        'x-nyt-route': 'tips-html-gcs',
+        'x-nyt-backend': 'gcs_origin',
+        'referrer-policy': 'no-referrer',
+        location:
+          'https://' +
+          suite.servername +
+          '/tips'
+      },
+      responseStatusCode: 301,
+      scenarioDescription: 'Test HTTPS Everywhere; tips; non-secure',
+      testId: 4
     },
   ];
 
