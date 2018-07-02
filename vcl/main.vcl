@@ -618,7 +618,8 @@ sub vcl_log {
       {" ""} cstr_escape(req.http.referer) {"""}
       {"" ""} cstr_escape(req.http.user-agent) {"""}
       {" backend=["} if(req.http.x-nyt-backend,req.http.x-nyt-backend,"-") {"]"}
-      {" pagetype=["} if(resp.http.x-nyt-route,resp.http.x-nyt-route,"-") {"]"}
+      {" pagetype=["} if(resp.http.x-PageType,resp.http.x-PageType,"-") {"]"}
+      {" route=["} resp.http.x-nyt-route {"]"}
       {" apiversion=["} if(resp.http.X-API-Version,resp.http.X-API-Version,"-") {"]"}
       {" cachetype=["} if(fastly_info.state,fastly_info.state,"-") {"]"}
       {" reqtime=["} time.elapsed {"]"}
