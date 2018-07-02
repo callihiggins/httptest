@@ -76,6 +76,39 @@ function getScenarioEvents() {
       scenarioDescription: 'Test response headers from cloud functions are preserved',
       testId: 4
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForNewsdevCloudFunctionsForceHttps',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/svc/int/functions/sources-unsubscribe/healthz',
+      responseHeaderMatches: {
+        'x-nyt-route': 'newsdev-cloud-functions',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /svc/int/functions is served over https',
+      testId: 5
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForNewsdevCloudFunctionsForcePass',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/svc/int/functions/sources-unsubscribe/healthz',
+      responseHeaderMatches: {
+        'x-nyt-route': 'newsdev-cloud-functions',
+        'debug-var-nyt-force-pass': 'true',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /svc/int/functions is not cached',
+      testId: 6
+    },
   ];
 
   return scenarios;

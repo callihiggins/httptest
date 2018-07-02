@@ -29,6 +29,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "newsdev-gke"   // interative news
         || req.http.x-nyt-route == "newsdev-gcs"   // interative news
         || req.http.x-nyt-route == "newsdev-attribute"   // interative news
+        || req.http.x-nyt-route == "newsdev-cloud-functions"   // interative news
         || req.http.x-nyt-route == "newsroom-files-gcs"   // newsroom digital transition
         || req.http.x-nyt-route == "tips-html-gcs"   // tips html page
         || req.http.x-nyt-route == "guides"          // beta - well guides
@@ -49,7 +50,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "gdpr-form"
         || req.http.x-nyt-route == "vi-interactive"
         || req.http.x-nyt-route == "ads-static-assets"
-        || req.url ~ "^/elections"
+        || req.http.x-nyt-route == "elections"
         || ( req.http.x-nyt-route == "newsgraphics-gcs"
                 && req.url ~ "^/newsgraphics/2(01[7-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" )// 2017 - future
         || req.http.x-nyt-route == "games-web"

@@ -2,7 +2,7 @@ sub recv_route_newsdev_cloud_functions {
   if (req.url.path ~ "^/svc/int/functions/") {
     set req.http.x-nyt-route = "newsdev-cloud-functions";
     set req.http.x-nyt-backend = "newsdev_cloud_functions_us_central1";
-    set req.url = querystring.remove(req.url);
+    set req.http.var-nyt-force-pass = "true";
   }
 }
 
