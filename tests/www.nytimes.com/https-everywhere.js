@@ -761,7 +761,26 @@ function getScenarioEvents() {
       responseStatusCode: 401,
       scenarioDescription: 'Test HTTPS Auth is working for real-estate',
       testId: 60
-    }
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSpellingBee',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestHeaderCookie: ['NYT-S=' + suite.cookies.nyt_s],
+      requestScheme: 'http://',
+      requestUri: '/puzzles/spelling-bee',
+      responseHeaderMatches: {
+        location: 'https://' + suite.servername + '/puzzles/spelling-bee'
+      },
+      responseStatusCode: 301,
+      scenarioDescription:
+        'Test HTTPS Everywhere; spelling-bee; non-secure; opt-out cookie not set',
+      testId: 61
+    },
+
   ];
   return scenarios;
 }

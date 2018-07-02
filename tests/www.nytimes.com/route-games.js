@@ -202,9 +202,9 @@ function getScenarioEvents()
       'testId': 10,
     },
     {
-      'id': 'Functional Test For Games Submission page (stg)',
+      'id': 'Functional Test For Games Submission page',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -219,25 +219,6 @@ function getScenarioEvents()
       'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /crosswords/submissions endpoint',
       'testId': 11,
-    },
-    {
-      'id': 'Functional Test For Games Submission page (prd)',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false,
-      },
-      'requestHeaderCookie': [
-        'NYT-S=' + suite.cookies.nyt_s_games,
-      ],
-      'responseHeaderMatches': {
-        'x-nyt-route': 'games-web',
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/crosswords/submissions',
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting /crosswords/submissions in prod still not published',
-      'testId': 12,
     },
     {
       'id': 'Functional Test For Sudoku',

@@ -12,11 +12,6 @@ sub recv_route_games {
               set req.http.x-nyt-backend = "games_phoenix";
               set req.http.var-nyt-send-gdpr = "true";
 
-              // Since we're returning early, we need to do this here for now
-              if (!req.http.Fastly-SSL) {
-                  call redirect_to_https;
-              }
-
               // Games need cookies and until we sort out our mess with cookies we need to pass requests
               // to the apps
               set req.http.var-nyt-force-pass = "true";
@@ -24,17 +19,10 @@ sub recv_route_games {
               set req.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
         }
 
-        if (req.url.path ~ "^/crosswords" &&
-            req.url.qs !~ "nyt-games=legacy") {
-
+        if (req.url.path ~ "^/crosswords") {
             set req.http.x-nyt-route = "games-web";
             set req.http.x-nyt-backend = "games_web";
             set req.http.var-nyt-send-gdpr = "true";
-
-            // Since we're returning early, we need to do this here for now
-            if (!req.http.Fastly-SSL) {
-                call redirect_to_https;
-            }
 
             // Games need cookies and until we sort out our mess with cookies we need to pass requests
             // to the apps
@@ -47,23 +35,6 @@ sub recv_route_games {
         if (req.url.path ~ "^/games-assets/") {
             set req.http.x-nyt-route = "games-assets";
             set req.http.x-nyt-backend = "games_assets";
-
-            if (!req.http.Fastly-SSL) {
-                call redirect_to_https;
-            }
-        }
-
-        // submissions page
-        if (req.url.path ~ "^/crosswords/submissions$") {
-            set req.http.x-nyt-route = "games-web";
-            set req.http.x-nyt-backend = "games_web";
-
-            if (!req.http.Fastly-SSL) {
-                call redirect_to_https;
-            }
-            set req.http.var-nyt-force-pass = "true";
-            // Send x-gdpr header value to backend server
-            set req.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
         }
     }
 }

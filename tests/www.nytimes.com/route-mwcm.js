@@ -627,7 +627,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
-        'dev': false
+        'dev': true,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=newsindia',
@@ -650,13 +650,16 @@ function getScenarioEvents()
         'dev': true
       },
       'requestScheme': 'https://',
-      'requestUri': '/marketing/gdpr/tests/fastly.html',
+      'requestUri': '/marketing/gdpr/tests/fastly.html?test1=test1',
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/marketing/gdpr/tests/fastly.html?test1=test1',
+      },
       'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm-pass',
+        'x-nyt-route': 'mwcm-params',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'WCM /marketing/gdpr headers test',
+      'scenarioDescription': 'WCM /marketing/gdpr headers test, query params preserved',
       'testId': 27,
     },
     {
@@ -667,13 +670,16 @@ function getScenarioEvents()
         'dev': true
       },
       'requestScheme': 'https://',
-      'requestUri': '/marketing/moco/tests/fastly.html',
+      'requestUri': '/marketing/moco/tests/fastly.html?test1=test1',
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/marketing/moco/tests/fastly.html?test1=test1',
+      },
       'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm-pass',
+        'x-nyt-route': 'mwcm-params',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'WCM /marketing/moco headers test',
+      'scenarioDescription': 'WCM /marketing/moco headers test, query params preserved',
       'testId': 28,
     }
   ];

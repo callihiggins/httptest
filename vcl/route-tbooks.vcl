@@ -4,7 +4,12 @@ sub recv_route_tbooks {
             set req.http.x-nyt-route = "tbooks";
             set req.http.x-nyt-backend = "tbooks";
             set req.http.var-nyt-send-gdpr = "true";
-            set req.http.var-nyt-force-pass = "true";
+
+            # From route-intl.vcl, bypass cache for logged-in WordPress users, etc.
+            if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {
+                set req.http.x-nyt-route = "tbooks-pass";
+                set req.http.var-nyt-force-pass = "true";
+            }
         }
     }
 }

@@ -45,9 +45,7 @@ sub recv_route_blogs {
   # now let us deal with the qparams for this route
   if (req.http.x-nyt-route ~ "^blog") {
     # WP-7352: Don't deal with POST requests
-    if (req.request == "POST") {
-        set req.http.var-nyt-force-pass = "true";
-    } else {
+    if (req.request != "POST") {
        call recv_route_blogs_filter_querystring;
     }
   }
