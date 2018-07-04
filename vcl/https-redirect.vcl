@@ -68,6 +68,8 @@ sub recv_https_redirect {
               && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || req.http.x-nyt-route == "vi-slideshow"
         || req.http.x-nyt-route == "audio"
+        || req.http.x-nyt-route == "tbooks"
+        || req.http.x-nyt-route == "tbooks-pass"
         || req.url ~ "^/newsletters"
         || req.url ~ "^/(js|js2|css|bi)/"
         || req.url ~ "^/pages/cooking/" // newsletters

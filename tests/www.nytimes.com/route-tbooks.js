@@ -40,7 +40,7 @@ function getScenarioEvents()
         'x-nyt-backend':'tbooks',
         'debug-var-nyt-force-pass': 'false',
       },
-      'responseStatusCode': [200,301,404],
+      'responseStatusCode': [200,404],
       'scenarioDescription': 'Test /tbooks book URL',
       'testId': 2,
     },
