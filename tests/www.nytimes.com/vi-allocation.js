@@ -16,6 +16,9 @@ function getScenarioEvents()
         'stg': true,
         'dev': true
       },
+      'requestHeaders': {
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
+      },
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderPattern': {
@@ -38,6 +41,9 @@ function getScenarioEvents()
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
+      'requestHeaders': {
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
+      },
       'responseHeaderPattern': {
         'set-cookie': /\bvi_www_hp=[abcdefghiyz][012][0-9];/,
       },
@@ -57,6 +63,9 @@ function getScenarioEvents()
         'vi_www_hp=xyz',
       ],
       'requestScheme': 'https://',
+      'requestHeaders': {
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
+      },
       'requestUri': '/',
       'responseHeaderPattern': {
         'set-cookie': /\bvi_www_hp=[abcdefghiyz][012][0-9];/,
@@ -74,7 +83,8 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaders': {
-        'x-nyt-debug': '1'
+        'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         'ab7=WP_ProjectVi_www_hp=0*',
@@ -119,7 +129,8 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaders': {
-        'x-nyt-debug': '1'
+        'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         'ab7=WP_ProjectVi_www_hp=hp-st*',
@@ -167,7 +178,8 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaders': {
-        'x-nyt-debug': '1'
+        'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         'ab7=WP_ProjectVi_www_hp=hp*',
@@ -214,7 +226,8 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaders': {
-        'x-nyt-debug': '1'
+        'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         'vi_www_hp_opt=0',
@@ -237,7 +250,8 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaders': {
-        'x-nyt-debug': '1'
+        'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         'vi_www_hp_opt=1',
@@ -309,7 +323,7 @@ function getScenarioEvents()
       'requestHeaders': {
         'User-Agent': 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Mobile Safari/537.36',
       },
-      'responseStatusCode': 303,
+      'responseStatusCode': 200,
       'scenarioDescription': 'Test Static Asset Backend for project vi',
       'testId': 230,
     },
@@ -362,6 +376,7 @@ function getScenarioEvents()
       },
       'requestHeaders': {
         'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         'nyt-a=Am9NOWpxfQUGvulVQTez3X', // in NON-PRODUCTION envs, this results in variation `hp-serv`
@@ -387,6 +402,7 @@ function getScenarioEvents()
       },
       'requestHeaders': {
         'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         'nyt-a=qpIMnuwZRkSAlkWJXp-MA6', // in NON-PRODUCTION envs, this results in variation `hp-orig`
@@ -512,6 +528,7 @@ function getScenarioEvents()
       },
       'requestHeaders': {
         'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
         // var.d = 0189515186
@@ -538,6 +555,7 @@ function getScenarioEvents()
       },
       'requestHeaders': {
         'x-nyt-debug': '1',
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36 (NodeJS test suite <falkae@nytimes.com>)',
       },
       'requestHeaderCookie': [
          // var.d = 0202462000

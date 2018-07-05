@@ -110,6 +110,11 @@ sub deliver_mobile_redirect {
                   set req.http.x-do-mobile-redirect = "0";
                 }
 
+                // homepage mobile requests
+                if (req.http.x-nyt-route == "vi-homepage" && req.http.var-nyt-env != "prd") {
+                  set req.http.x-do-mobile-redirect = "0";
+                }
+
                 if (req.http.x-do-mobile-redirect == "1") {
                     if (   req.url ~ "^/$"
                         || req.url ~ "^/index.html"

@@ -17,7 +17,13 @@ sub recv_route_homepage {
             set req.http.var-nyt-send-gdpr = "true";
         }
 
-
+        // ALL mobile devices should go to vi always
+        if (req.url.path == "/"  && req.http.device_type ~ "phone" && req.http.var-nyt-env != "prd") {
+          set req.http.x-nyt-route = "vi-homepage";
+          set req.http.x-nyt-backend = "projectvi_fe";
+          set req.http.var-nyt-wf-auth = "true";
+          set req.http.var-nyt-send-gdpr = "true";
+        }
 
         ##############################################################
         # Vi overrides home route based on allocation and opt-out
@@ -25,13 +31,14 @@ sub recv_route_homepage {
         ##############################################################
         if (
           # homepage
+          # - is tablet or desktop
           # - in a test group and not opted out
           # - or internal traffic and not opted out
           # - or this is a shield pop and the edge pop allocated the user to vi
           #
           # TODO: Vi currently serves a 404 for "/index.html", NYT5 redirects it to "/" Fix this before 100% Vi
           #
-          req.url.path == "/"
+          req.url.path == "/" && (req.http.device_type !~ "phone" || req.http.var-nyt-env == "prd")
               && (
                 (req.http.x--fastly-vi-test-group ~ "^[abdefghi]" && req.http.cookie:vi_www_hp_opt != "0")
                 || req.http.cookie:vi_www_hp_opt == "1"
