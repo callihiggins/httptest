@@ -143,7 +143,7 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/?nytmobile=0',
-      'responseStatusCode': 200,
+      'responseStatusCode': 303,
       'scenarioDescription': 'Test mobile redirect in prd; homepage; querystring "nytmobile=0"; cookie "nyt-mobile=1"; mobile; should redirect',
       'testId': 81,
     }

@@ -59,7 +59,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForRedirect',
       'isDeployedInEnv': {
-        'prd': true,
+        'prd': false,
         'stg': true,
         'dev': true
       },

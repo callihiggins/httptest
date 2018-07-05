@@ -108,14 +108,8 @@ sub deliver_mobile_redirect {
                 }
 
                 // FOR MOBILE SHUTDOWN
+                // Everything dev and stg should not be redirected
                 if (req.http.var-nyt-env != "prd") {
-                    if (req.http.x-nyt-route == "article" || req.http.x-nyt-route == "vi-story") {
-                        set req.http.x-do-mobile-redirect = "0";
-                    }
-                }
-
-                // homepage mobile requests
-                if (req.http.x-nyt-route == "vi-homepage" && req.http.var-nyt-env != "prd") {
                   set req.http.x-do-mobile-redirect = "0";
                 }
 
