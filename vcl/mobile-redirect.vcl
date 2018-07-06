@@ -120,7 +120,6 @@ sub deliver_mobile_redirect {
                         || req.url ~ "^/2[0-9][0-9][0-9]/"
                         || req.url ~ "^/(aponline|reuters)/20([0-9][7-9]|[1-9][0-9])/"
                         || req.url ~ "^/pages/"
-                        || req.url ~ "^/(recommendations)"
                         || req.url ~ "^/best-sellers-books/overview.html"
                         || req.url ~ "^/interactive/blogs/directory.html"
                         || req.url ~ "^/most-popular-emailed"
