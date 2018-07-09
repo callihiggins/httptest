@@ -57,7 +57,7 @@ sub fetch_set_stale_content_controls {
         set beresp.stale_while_revalidate = std.atoi(beresp.http.x-nyt-stale-while-revalidate);
       } else {
         # default is 60 seconds
-        set beresp.stale_while_revalidate = 60s;
+        set beresp.stale_while_revalidate = 1200s;
       }
     }
   }
