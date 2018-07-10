@@ -61,7 +61,7 @@ sub recv_route_amp {
     ) {
       set req.http.x-nyt-route = "amp";
       set req.http.x-nyt-backend = "amp";
-     if (client.ip ~ googlebot || req.http.x-nyt-internal-access == "1" || req.http.x-nyt-external-access == "1") {
+     if (client.ip ~ googlebot || req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1") {
        set req.http.var-nyt-force-pass = "true";
      } else {
        // redirect to regular url

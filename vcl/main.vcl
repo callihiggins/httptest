@@ -1,14 +1,10 @@
 # acl
-include "acl-internal";
-include "acl-vpc-gateway";
-include "acl-external-staging-access";
+include "shared-access-control";
 include "acl-crawlers";
-include "acl-blacklist";
 
 # initialization
 include "error-pages";
 include "sanitize-request";
-include "access-level-authorization";
 include "initialize-transaction-state";
 include "geoip-homepage-briefing-map";
 include "geoip-header-init";
@@ -117,10 +113,10 @@ sub vcl_recv {
   # do not restrict this request if this is a shield request from an edge pop
   if (!req.http.x-nyt-shield-auth) {
     # what level of access does this user have based on ACL and/or auth headers
-    call recv_set_access_level;
+    call shared_recv_set_access_level;
 
     # block the request if the user does not have access to the environment
-    call recv_restrict_access;
+    call shared_recv_restrict_access;
   }
 
   # before routing calls lets set up the vi allocation vars

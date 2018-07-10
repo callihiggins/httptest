@@ -1,5 +1,5 @@
 sub miss_pass_route_health_service {
-  if (req.url.path ~ "^/backendhealth\.(json|html)$" && req.http.x-nyt-internal-access) {
+  if (req.url.path ~ "^/backendhealth\.(json|html)$" && req.http.x-nyt-nyhq-access) {
 
     # this does not use query strings
     set req.url = querystring.remove(req.url);

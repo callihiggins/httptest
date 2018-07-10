@@ -49,7 +49,7 @@ sub deliver_slideshow_fallback {
     }
 
     # expose the slideshow compatibility header on internal network
-    if (req.http.x-nyt-internal-access) {
+    if (req.http.x-nyt-nyhq-access) {
       set resp.http.x-nyt-slideshow-compatibility = req.http.x-nyt-slideshow-compatibility;
     }
 

@@ -121,14 +121,14 @@ sub recv_https_redirect {
 
         // Urls live over HTTPS internally
         } else if (
-               req.http.x-nyt-internal-access
+               req.http.x-nyt-nyhq-access
             && req.http.var-nyt-https-phase == "internal"
             && !req.http.var-cookie-nyt-np-internal-https-opt-out
         ) {
 
         // internal https cookie-based test
         } else if (
-               req.http.x-nyt-internal-access
+               req.http.x-nyt-nyhq-access
             && req.http.var-cookie-np-enable-https == "1"
             && !req.http.var-cookie-nyt-np-internal-https-opt-out
         ) {
@@ -152,7 +152,7 @@ sub recv_https_redirect {
 
         // Urls that are on HTTPS internally
         } else if (
-            req.http.x-nyt-internal-access
+            req.http.x-nyt-nyhq-access
             && req.request != "FASTLYPURGE"
             && req.http.var-nyt-https-phase == "internal"
             && !req.http.var-cookie-nyt-np-internal-https-opt-out
@@ -165,7 +165,7 @@ sub recv_https_redirect {
 
         // internal https cookie-based test
         } else if (
-               req.http.x-nyt-internal-access
+               req.http.x-nyt-nyhq-access
             && req.http.var-cookie-np-enable-https == "1"
             && !req.http.var-cookie-nyt-np-internal-https-opt-out
         ) {

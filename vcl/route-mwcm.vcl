@@ -35,7 +35,7 @@ sub recv_route_mwcm {
 sub deliver_route_mwcm {
     if (req.http.x-nyt-route == "mwcm") {
 
-        if (req.http.x-nyt-internal-access) {
+        if (req.http.x-nyt-nyhq-access) {
             set resp.http.x-nyt-currency = req.http.x-nyt-currency;
         }
 

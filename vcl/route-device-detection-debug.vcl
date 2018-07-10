@@ -1,5 +1,5 @@
 sub recv_route_device_detection_debug {
-    if (req.http.x-nyt-internal-access) {
+    if (req.http.x-nyt-nyhq-access) {
         if (req.url ~ "^/svc/web-products/uadiag") {
             set req.http.x-nyt-route = "device-detection-debug";
             set req.http.x-nyt-backend = "synthetic";
@@ -31,7 +31,7 @@ sub error_848_device_detection_debug {
                     }
                     td:last-child {
                         border-bottom: 1px dotted #000;
-                    }                  
+                    }
                 </style>
             </head>
             <body>

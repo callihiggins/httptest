@@ -75,7 +75,7 @@ sub recv_vi_allocation_init {
 
         # allow forcing our variation with querystring like `?abra=WP_ProjectVi_www_hp=hp-st`
         # or cookie like `ab7=WP_ProjectVi_www_hp=hp-st`:
-        if (req.http.x-nyt-internal-access || req.http.x-nyt-external-access) {
+        if (req.http.x-nyt-nyhq-access || req.http.x-nyt-staging-only-access) {
             set var.abra_overrides = "";
             # let `abra` querystring come first for priority over `ab7` cookie:
             if (req.url ~ "(?i)\?(?:|.*&)abra=([^&]*)") {
@@ -244,7 +244,7 @@ sub deliver_vi_allocation_set_cookie {
         }
 
         # for debugging and automated tests:
-        if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-internal-access || req.http.x-nyt-external-access)) {
+        if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-nyhq-access || req.http.x-nyt-staging-only-access)) {
             set resp.http.x-nyt-debug-req-http-x-vi-ssr-www-hp = req.http.x-vi-ssr-www-hp;
         }
     }

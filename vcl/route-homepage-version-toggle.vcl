@@ -1,8 +1,8 @@
-sub recv_route_homepage_version_toggle {  
+sub recv_route_homepage_version_toggle {
     # classic homepage toggle
     declare local var.is_classic STRING;
-    if (   req.url == "/homescreen" 
-        && req.http.x-nyt-internal-access == "1"
+    if (   req.url == "/homescreen"
+        && req.http.x-nyt-nyhq-access == "1"
         && req.http.var-nyt-canonical-www-host == "true") {
 
       if (req.http.cookie:vi_www_hp_opt != "0") {

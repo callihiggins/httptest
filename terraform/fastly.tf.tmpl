@@ -1,3 +1,7 @@
+module "shared_vcl" {
+  source = "git::https://github.com/nytm/fastly-shared-code.git//vcl?ref=master"
+}
+
 resource "fastly_service_v1" "service" {
   name = "${var.app}.${var.service_name}"
 
@@ -288,15 +292,20 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "acl-blacklist"
-    main    = false
-    content = "${file("../vcl/acl-blacklist.vcl")}"
-  }
-
-  vcl {
     name    = "main"
     main    = true
     content = "${file("../vcl/main.vcl")}"
+  }
+
+  vcl {
+    name    = "shared-access-control"
+    content = "${module.shared_vcl.access_control}"
+  }
+
+  vcl {
+    name    = "acl-crawlers"
+    main    = false
+    content = "${file("../vcl/acl-crawlers.vcl")}"
   }
 
   vcl {
@@ -402,12 +411,6 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "acl-vpc-gateway"
-    main    = false
-    content = "${file("../vcl/acl-vpc-gateway.vcl")}"
-  }
-
-  vcl {
     name    = "route-guides"
     main    = false
     content = "${file("../vcl/route-guides.vcl")}"
@@ -462,12 +465,6 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "acl-internal"
-    main    = false
-    content = "${file("../vcl/acl-internal.vcl")}"
-  }
-
-  vcl {
     name    = "vi-allocation"
     main    = false
     content = "${file("../vcl/vi-allocation.vcl")}"
@@ -489,18 +486,6 @@ resource "fastly_service_v1" "service" {
     name    = "route-geoip"
     main    = false
     content = "${file("../vcl/route-geoip.vcl")}"
-  }
-
-  vcl {
-    name    = "acl-crawlers"
-    main    = false
-    content = "${file("../vcl/acl-crawlers.vcl")}"
-  }
-
-  vcl {
-    name    = "acl-external-staging-access"
-    main    = false
-    content = "${file("../vcl/acl-external-staging-access.vcl")}"
   }
 
   vcl {
@@ -741,13 +726,6 @@ resource "fastly_service_v1" "service" {
     name    = "route-collection"
     main    = false
     content = "${file("../vcl/route-collection.vcl")}"
-  }
-
-  vcl {
-
-    name    = "access-level-authorization"
-    main    = false
-    content = "${file("../vcl/access-level-authorization.vcl")}"
   }
 
   vcl {
