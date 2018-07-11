@@ -321,7 +321,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-slideshow',
-        'x-gdpr': '1',
+        'x-gdpr': '0',
       },
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
@@ -344,7 +344,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-slideshow',
-        'x-gdpr': '1',
+        'x-gdpr': '0',
       },
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
