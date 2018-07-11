@@ -411,7 +411,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'x-nyt-route': /(vi-collection|collection)/,
         'x-nyt-backend': /(projectvi_fe|collection_fe)/,
-        'x-gdpr': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200,404,500,503],
