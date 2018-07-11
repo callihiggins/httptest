@@ -18,7 +18,7 @@ sub recv_route_homepage {
         }
 
         // ALL mobile devices should go to vi always
-        if (req.url.path == "/"  && req.http.device_type ~ "phone" && req.http.var-nyt-env != "prd") {
+        if (req.url.path == "/"  && req.http.device_type ~ "phone") {
           set req.http.x-nyt-route = "vi-homepage";
           set req.http.x-nyt-backend = "projectvi_fe";
           set req.http.var-nyt-wf-auth = "true";
@@ -38,7 +38,7 @@ sub recv_route_homepage {
           #
           # TODO: Vi currently serves a 404 for "/index.html", NYT5 redirects it to "/" Fix this before 100% Vi
           #
-          req.url.path == "/" && (req.http.device_type !~ "phone" || req.http.var-nyt-env == "prd")
+          req.url.path == "/" && (req.http.device_type !~ "phone")
               && (
                 (req.http.x--fastly-vi-test-group ~ "^[abdefghi]" && req.http.cookie:vi_www_hp_opt != "0")
                 || req.http.cookie:vi_www_hp_opt == "1"

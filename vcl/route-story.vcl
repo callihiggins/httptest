@@ -135,14 +135,12 @@ sub hash_route_story {
   if (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "article") {
     set req.hash += req.http.x--fastly-vi-story-opt;
 
-    if (req.http.var-nyt-env != "prd") {
-      // need to vary based on phone/mobile since some stories are OK on phones for vi
-      // but should go to NYT5 on desktop or non-mobile
-      if (req.http.device_type ~ "phone" && req.http.x-nyt-route == "vi-story") {
-        set req.hash += "phone";
-      } else {
-        set req.hash += "non-phone";
-      }
+    // need to vary based on phone/mobile since some stories are OK on phones for vi
+    // but should go to NYT5 on desktop or non-mobile
+    if (req.http.device_type ~ "phone" && req.http.x-nyt-route == "vi-story") {
+      set req.hash += "phone";
+    } else {
+      set req.hash += "non-phone";
     }
 
     # if a request was restarted from VI due to Incompatiblity

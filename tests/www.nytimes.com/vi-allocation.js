@@ -311,23 +311,6 @@ function getScenarioEvents()
       'scenarioDescription': 'Test Static Asset Backend for project vi',
       'testId': 220,
     },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage', // ?
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/',
-      'requestHeaders': {
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Mobile Safari/537.36',
-      },
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test Static Asset Backend for project vi',
-      'testId': 230,
-    },
-
     // generate a bunch of nyt-a's like this (in bash):
 
     /*

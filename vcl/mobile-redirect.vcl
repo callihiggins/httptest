@@ -108,10 +108,8 @@ sub deliver_mobile_redirect {
                 }
 
                 // FOR MOBILE SHUTDOWN
-                // Everything dev and stg should not be redirected
-                if (req.http.var-nyt-env != "prd") {
-                  set req.http.x-do-mobile-redirect = "0";
-                }
+                // nothing should be redirected
+                set req.http.x-do-mobile-redirect = "0";
 
                 if (req.http.x-do-mobile-redirect == "1") {
                     if (   req.url ~ "^/$"
