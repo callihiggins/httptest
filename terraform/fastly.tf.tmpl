@@ -752,10 +752,16 @@ resource "fastly_service_v1" "service" {
     content = "${file("../vcl/test-suite-force-miss.vcl")}"
   }
 
-    vcl {
+  vcl {
     name    = "route-audio"
     main    = false
     content = "${file("../vcl/route-audio.vcl")}"
+  }
+
+  vcl {
+    name    = "log-purge"
+    main    = false
+    content = "${file("../vcl/log-purge.vcl")}"
   }
 
 }

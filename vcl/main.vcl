@@ -14,6 +14,7 @@ include "bot-detection";
 include "auth-headers";
 include "vi-allocation";
 include "test-suite-force-miss";
+include "log-purge";
 
 # the following files contain routes for the backends defined above
 include "route-health-service"; # service that reports health of defined backends
@@ -266,6 +267,11 @@ sub vcl_recv {
 
   # sort the querystring just to be sure we optimize cache
   set req.url = querystring.sort(req.url);
+
+  # log any purge request that came in
+  if (req.request == "FASTLYPURGE" || req.request == "PURGE") {
+      call recv_sumologic_purge_log_line;
+  }
 
   # if the route did not specifically ask for a pass we will do a lookup
   if (req.http.var-nyt-force-pass == "true") {
