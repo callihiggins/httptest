@@ -21,7 +21,6 @@ sub deliver_set_uuid_cookie {
             || req.http.x-nyt-route == "newsletter"
             || req.http.x-nyt-route == "paidpost"
             || req.http.x-nyt-route == "real-estate"
-            || req.http.x-nyt-route == "slideshow"
             || req.http.x-nyt-route == "trending"
             || req.http.x-nyt-route == "video-library"
             || req.http.x-nyt-route == "watching"
@@ -66,5 +65,5 @@ sub recv_create_uuid_var {
       // replace '+' and '/' with cookie-safe '-' and '_':
       set req.http.var-cookie-nyt-a = regsuball(req.http.var-cookie-nyt-a, "\+", "-");
       set req.http.var-cookie-nyt-a = regsuball(req.http.var-cookie-nyt-a, "\/", "_");
-    }    
+    }
 }

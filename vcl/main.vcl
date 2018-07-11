@@ -356,7 +356,6 @@ sub vcl_miss {
   call miss_pass_route_watching;
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
-  call miss_pass_route_slideshow;
   call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
@@ -416,7 +415,6 @@ sub vcl_pass {
   call miss_pass_route_watching;
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
-  call miss_pass_route_slideshow;
   call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars

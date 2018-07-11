@@ -64,8 +64,6 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "video-media"
         || req.http.x-nyt-route == "adx-static"
         || req.http.x-nyt-route == "add-svc"
-        || (  req.http.x-nyt-route == "slideshow"
-              && req.url ~ "^/slideshow/2(01[4-9]|(0[2-9][0-9])|([1-9][0-9][0-9]))" ) // 2014 - future
         || req.http.x-nyt-route == "vi-slideshow"
         || req.http.x-nyt-route == "audio"
         || req.http.x-nyt-route == "tbooks"

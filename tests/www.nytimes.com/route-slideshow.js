@@ -319,9 +319,9 @@ function getScenarioEvents() {
       requestUri:
         '/slideshow/2017/12/29/realestate/new-york-citys-biggest-residential-sales-in-2017/s/31YEAREND-slide-EQPY.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow',
-        'x-gdpr': '0',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '1',
       },
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
@@ -342,9 +342,9 @@ function getScenarioEvents() {
       requestUri:
         '/slideshow/2017/08/22/realestate/slides-headline/s/22METS-1503371668421.html',
       responseHeaderMatches: {
-        'x-api-version': 'F-GS',
-        'x-nyt-route': 'slideshow',
-        'x-gdpr': '0',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-slideshow',
+        'x-gdpr': '1',
       },
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
@@ -479,24 +479,6 @@ function getScenarioEvents() {
       scenarioDescription:
         'Test slideshow; Serve 2010 slideshow on Vi with HTTPS (stg), /slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html',
       testId: 114
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/slideshow/2017/04/28/realestate/on-the-market-in-new-york-city/s/30OTM-NYC-slide-VVNR.html?module=5&bad1=4&version=2&bad2=5&action=hello',
-      'responseHeaderMatches': {
-        'x-nyt-backend': 'slideshow_fe',
-        'x-nyt-route': 'slideshow',
-        'x-nyt-final-url': '/slideshow/2017/04/28/realestate/on-the-market-in-new-york-city/s/30OTM-NYC-slide-VVNR.html?action=hello&module=5&version=2',
-      },
-      'responseStatusCode': [200,301,404],
-      'scenarioDescription': 'Test real estate slideshow querystring filter',
-      'testId': 115,
     },
   ];
 
