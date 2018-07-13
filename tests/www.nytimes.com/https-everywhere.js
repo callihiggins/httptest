@@ -780,7 +780,37 @@ function getScenarioEvents() {
         'Test HTTPS Everywhere; spelling-bee; non-secure; opt-out cookie not set',
       testId: 61
     },
-
+    {
+      id: 'FunctionalTestScenarioDefinitionForSpellingBee',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/robots.txt',
+      responseHeaderMatches: {
+        location: 'https://' + suite.servername + '/robots.txt'
+      },
+      responseStatusCode: 301,
+      scenarioDescription:
+        'Test HTTPS Everywhere; /robots.txt redirects to https',
+      testId: 62
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSpellingBee',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/robots.txt',
+      responseStatusCode: 200,
+      scenarioDescription:
+        'Test HTTPS Everywhere; /robots.txt serves over https',
+      testId: 63
+    },
   ];
   return scenarios;
 }

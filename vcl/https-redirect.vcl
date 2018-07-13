@@ -75,6 +75,7 @@ sub recv_https_redirect {
         || req.url ~ "^/pages/todaysheadlines/" // newsletters
         || req.url.path == "/interactive/us/faces-of-the-dead.html" // special 9/11 interactive
         || req.url.path == "/cookie-policy"
+        || req.url.path == "/robots.txt"
     ) {
         set req.http.var-nyt-https-phase = "live";
     }
