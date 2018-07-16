@@ -82,7 +82,6 @@ include "set-cache-object-ttl";
 
 # begin other logic
 include "https-redirect";
-include "mobile-redirect";
 include "uuid";
 include "gdpr";
 include "response-headers";
@@ -498,10 +497,6 @@ sub vcl_fetch {
 
 sub vcl_deliver {
 #FASTLY deliver
-
-  # redirect to mobile if need be
-  # this is on life support, but I want all the reserved `vcl_` functions in `main.vcl` only
-  call deliver_mobile_redirect;
 
   # set the nyt-a uuid cookie
   call deliver_set_uuid_cookie;

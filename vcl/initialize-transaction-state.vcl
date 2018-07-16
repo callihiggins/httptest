@@ -85,7 +85,4 @@ sub recv_initialize_transaction_state {
             set req.http.x-nyt-orig-querystring = "";
         }
     }
-
-    # catpure mobile redirect qparam
-    call recv_mobile_redirect_capture_qparam;
 }

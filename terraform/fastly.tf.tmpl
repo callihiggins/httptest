@@ -423,12 +423,6 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "mobile-redirect"
-    main    = false
-    content = "${file("../vcl/mobile-redirect.vcl")}"
-  }
-
-  vcl {
     name    = "route-times-journeys"
     main    = false
     content = "${file("../vcl/route-times-journeys.vcl")}"
