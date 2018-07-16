@@ -211,14 +211,14 @@ backends:
       window: "4"
 
   - name: "content_api"
-    address: "content.api.nytimes.com"
+    address: "origin-content.api.nytimes.com"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "content.api.nytimes.com"
-    ssl_sni_hostname: "content.api.nytimes.com"
+    ssl_cert_hostname: "origin-content.api.nytimes.com"
+    ssl_sni_hostname: "origin-content.api.nytimes.com"
     healthcheck:
-      host: "content.api.nytimes.com"
+      host: "origin-content.api.nytimes.com"
       path: "/version.json"
       check_interval: "5000"
       expected_response: "200"
