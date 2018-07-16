@@ -303,12 +303,6 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "acl-crawlers"
-    main    = false
-    content = "${file("../vcl/acl-crawlers.vcl")}"
-  }
-
-  vcl {
     name    = "surrogate-key"
     main    = false
     content = "${file("../vcl/surrogate-key.vcl")}"
@@ -318,12 +312,6 @@ resource "fastly_service_v1" "service" {
     name    = "route-elections"
     main    = false
     content = "${file("../vcl/route-elections.vcl")}"
-  }
-
-  vcl {
-    name    = "bot-detection"
-    main    = false
-    content = "${file("../vcl/bot-detection.vcl")}"
   }
 
   vcl {
@@ -486,6 +474,12 @@ resource "fastly_service_v1" "service" {
     name    = "route-geoip"
     main    = false
     content = "${file("../vcl/route-geoip.vcl")}"
+  }
+
+  vcl {
+    name    = "acl-googlebot"
+    main    = false
+    content = "${file("../vcl/acl-googlebot.vcl")}"
   }
 
   vcl {

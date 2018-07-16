@@ -36,7 +36,6 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-cookie-nyt-s;
   unset bereq.http.var-nyt-https-phase;
   unset bereq.http.var-nyt-surrogate-key;
-  unset bereq.http.var-nyt-is-crawler;
   unset bereq.http.var-cookie-nyt-a;
   unset bereq.http.var-cookie-nyt-edition;
   unset bereq.http.var-cookie-nyt-mobile;

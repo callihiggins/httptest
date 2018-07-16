@@ -1,6 +1,6 @@
 # acl
+include "acl-googlebot";
 include "shared-access-control";
-include "acl-crawlers";
 
 # initialization
 include "error-pages";
@@ -10,7 +10,6 @@ include "geoip-homepage-briefing-map";
 include "geoip-header-init";
 include "device-detection-init";
 include "frame-buster";
-include "bot-detection";
 include "auth-headers";
 include "vi-allocation";
 include "test-suite-force-miss";
@@ -107,9 +106,6 @@ sub vcl_recv {
 
   # set up the device detection header variables
   call recv_device_detection_init;
-
-  # detect bots
-  call recv_bot_detection;
 
   # do not restrict this request if this is a shield request from an edge pop
   if (!req.http.x-nyt-shield-auth) {
