@@ -134,7 +134,6 @@ sub vcl_recv {
   call recv_route_svc_amp_gdpr;
 
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
-  call recv_route_zone_apex_redirect;
   call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
   call recv_route_cms_static_assets;
@@ -197,6 +196,11 @@ sub vcl_recv {
   call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
 
+  # adding the zone apex redirect last
+  # there is logic in some of the above routes that needs to execute
+  # before the zone apex redirect
+  call recv_route_zone_apex_redirect;
+
   ##################################################
   # DO NOT PUT YOUR ROUTE SUB CALL BELOW THIS LINE #
   ##################################################
@@ -219,11 +223,6 @@ sub vcl_recv {
  * be aware of this for the above functionality that is executed
  * make sure all backends in terraform have backend-name conditionals!
  * backends will be set WITHIN THIS MACRO
- *
- * WARNING, we are mid refactor the above is not 100% true yet
- * There be dragons here. Pay close attention to the test suite
- * There are tons of routes & logic in vcl files with their own vcl_recv in the includes!!
- * Lets migrate them to custom subs iteratively!
  */
 
 # DO NOT REMOVE THIS LINE, FASTLY MACRO

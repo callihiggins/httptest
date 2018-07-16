@@ -5,6 +5,11 @@ sub recv_route_newsgraphics_gcs {
     set req.http.x-nyt-backend = "gcs_origin";
     set req.http.var-nyt-send-gdpr = "true";
     set req.url = querystring.remove(req.url);
+
+    # remove the client ip from assets that exist on the old tips page
+    if(req.url.path ~ "^/newsgraphics/2016/news-tips") {
+      set req.http.Fastly-Client-IP = "0.0.0.0";
+    }
   }
 }
 
