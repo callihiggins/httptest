@@ -21,7 +21,7 @@ sub error_762_route_homepage_version_toggle {
         set obj.http.Cache-Control = "no-store, no-cache";
         set obj.http.Set-Cookie =
             "vi_www_hp_opt=" + obj.response + "; path=/; domain=.nytimes.com; expires=" + time.add(now, 365d);
-        set obj.http.Location = "https://" + req.http.host + "/";
+        set obj.http.Location = "https://" + req.http.host + "/?r=" + randomstr(7);
         set obj.status = 302;
         set obj.response = "Temporarily Redirected";
         return(deliver);

@@ -20,11 +20,10 @@ function getScenarioEvents() {
       responseStatusCode: [302],
       scenarioDescription: '302 redirect to homepage, sets the cookie to 0',
       responseHeaderPattern: {
-        'set-cookie': /vi_www_hp_opt=0/
+        'set-cookie': /vi_www_hp_opt=0/,
+        location: /\?r=([A-Za-z0-9_-]){7}/,
       },
-      responseHeaderMatches: {
-        location: 'https://' + suite.servername + '/',
-      },
+
       testId: 1
     },
     {
@@ -40,11 +39,10 @@ function getScenarioEvents() {
       responseStatusCode: [302],
       scenarioDescription: '302 redirect to homepage, flips cookie from 1 to 0',
       responseHeaderPattern: {
-        'set-cookie': /vi_www_hp_opt=0/
+        'set-cookie': /vi_www_hp_opt=0/,
+        location: /\?r=([A-Za-z0-9_-]){7}/,
       },
-      responseHeaderMatches: {
-        location: 'https://' + suite.servername + '/',
-      },
+
       testId: 2
     },
     {
@@ -60,10 +58,8 @@ function getScenarioEvents() {
       responseStatusCode: [302],
       scenarioDescription: '302 redirect to homepage, flips cookie from 0 to 1',
       responseHeaderPattern: {
-        'set-cookie': /vi_www_hp_opt=1/
-      },
-      responseHeaderMatches: {
-        location: 'https://' + suite.servername + '/',
+        'set-cookie': /vi_www_hp_opt=1/,
+        location: /\?r=([A-Za-z0-9_-]){7}/,
       },
       testId: 3
     },
