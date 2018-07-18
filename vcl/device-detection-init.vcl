@@ -2,7 +2,7 @@ sub recv_device_detection_init {
     # set device_type and Is-* flags that response-headers.vcl references
     # we're defaulting to desktop in the new Fastly config
     # if they ever get WURFL we'll go back to what we had
-    
+
     set req.http.Is-Tablet = "0";
     set req.http.Is-Desktop = "1";
     set req.http.Is-Wireless-Device = "0";
