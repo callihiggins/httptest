@@ -14,7 +14,7 @@
 1. Push the branch to origin:
     * `git push origin <branch_name>`
     * This will run CI and tests using Drone
-    * You can find Drone's build status in GitHub's “commits” view of your branch ([for example](https://github.com/nytm/www-fastly/commits/article)) — look for the green √ or red X
+    * You can find Drone's build status in GitHub's “commits” view of your branch ([for example](https://github.com/nytm/fastly-www/commits/article)) — look for the green √ or red X
     * If it's broken, fix it and push again
 1. Rebase from origin/master `git rebase -i origin/master`
     * Be kind and squash all but the first commit if you have many

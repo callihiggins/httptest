@@ -8,10 +8,10 @@ sub recv_route_newsdev_cloud_functions {
 
 sub miss_pass_route_newsdev_cloud_functions {
   if (req.http.x-nyt-route == "newsdev-cloud-functions") {
-    // Replace the www-fastly routing prefix with the name of the Google Cloud
-    // Function, where it is deployed. Also add ther `www-` prefix used to
-    // expose functions to Fastly.
-    // /svc/int/functions/test > /www-test
+    # Replace the fastly-www routing prefix with the name of the Google Cloud
+    # Function, where it is deployed. Also add the `www-` prefix used to
+    # expose functions to Fastly.
+    # /svc/int/functions/test > /www-test
 
     set bereq.url = regsub(req.url, "^/svc/int/functions/", "/www-");
 
