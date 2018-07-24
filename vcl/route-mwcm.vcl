@@ -28,6 +28,29 @@ sub recv_route_mwcm {
             } else {
                   set req.http.x-nyt-route = "mwcm-params";
             }
+
+            if ( req.http.var-nyt-env != "prd") {
+                # changes applies to only STG and DEV env. 
+                
+                # x-nyt-subscriber header detects whether the user is a subscriber or not.
+                # default value "false"
+                # checks the presence of NYT-S cookie, changes the value to be "true", if present. 
+                set req.http.x-nyt-subscriber = "false";
+                if ( req.http.cookie ~ "NYT-S=" ) {
+                    set req.http.x-nyt-subscriber = "true";
+                }
+                # sets value of the header "req.http.var-nyt-ismagnolia" to "true|false" 
+                # req.http.var-nyt-ismagnolia = "true" when requests comes to magnolia cms in mwcm backend
+                # default vaule is "false"
+                set req.http.var-nyt-ismagnolia = "false";
+
+                if (    req.url == "/subscription" ||
+                        req.url ~ "^/subscription/" ||
+                        req.url ~ "^/marketing/(surveys|gdpr|moco)(/)?"
+                    ) {
+                    set req.http.var-nyt-ismagnolia = "true";
+                }
+            }
         }
     }
 }
@@ -51,7 +74,24 @@ sub deliver_route_mwcm {
 }
 
 sub miss_pass_route_mwcm {
-    if (req.http.x-nyt-route == "mwcm") {
+    #https://community.fastly.com/t/pull-cookie-values-without-regular-expressions/430
+    #https://www.getpagespeed.com/server-setup/varnish/varnish-cache-cookies
+    # logic to allow NYT-S and nyt-a cookies to mwcm backend 
+    if (req.http.x-nyt-route == "mwcm" && req.http.var-nyt-env != "prd" && req.http.var-nyt-ismagnolia == "true" ) {        
+        
+        set bereq.http.cookie = "";
+        if ( req.http.cookie ~ "nyt-a=" ) {
+            #checks the presence of the nyt-a
+            # allows nyt-a to MWCM backend
+            set bereq.http.cookie = "nyt-a=" req.http.cookie:nyt-a ";";
+            
+        } 
+        if (req.http.cookie ~ "NYT-S=") {
+            #checks the presence of the NYT-S
+            # allows NYT-S to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " NYT-S=" req.http.cookie:NYT-S ";";
+        }  
+    } else {
         unset bereq.http.cookie;
     }
 }
