@@ -681,6 +681,29 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM /marketing/moco headers test, query params preserved',
       'testId': 28,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderPattern': {
+        'vary': /x-nyt-subscriber/,
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "x-nyt-subscriber vary" header presence test',
+      'testId': 29,
     }
   ];
 
