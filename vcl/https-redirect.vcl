@@ -66,6 +66,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "add-svc"
         || req.http.x-nyt-route == "vi-slideshow"
         || req.http.x-nyt-route == "audio"
+        || req.http.x-nyt-route == "ask"
         || req.http.x-nyt-route == "tbooks"
         || req.http.x-nyt-route == "tbooks-pass"
         || req.url ~ "^/newsletters"
