@@ -77,6 +77,8 @@ sub recv_https_redirect {
         || req.url.path == "/interactive/us/faces-of-the-dead.html" // special 9/11 interactive
         || req.url.path == "/cookie-policy"
         || req.url.path == "/robots.txt"
+        || req.http.x-nyt-route == "sitemap"
+
     ) {
         set req.http.var-nyt-https-phase = "live";
     }
