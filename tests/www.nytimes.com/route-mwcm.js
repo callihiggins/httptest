@@ -685,7 +685,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -695,14 +695,14 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html',
       'responseHeaderPattern': {
-        'vary': /x-nyt-subscriber/,
+        'vary': /X-NYT-Subscriber/,
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'WCM subscription "x-nyt-subscriber vary" header presence test',
+      'scenarioDescription': 'WCM subscription "X-NYT-Subscriber vary" header presence test',
       'testId': 29,
     }
   ];
