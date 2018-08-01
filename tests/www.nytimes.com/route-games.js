@@ -318,7 +318,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For Acrostic',
       'isDeployedInEnv': {
-        'prd': true,
+        'prd': false,
         'stg': true,
         'dev': true
       },
@@ -330,7 +330,7 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/acrostic/2017/09/03',
-      'responseStatusCode': 200,
+      'responseStatusCode': 301,
       'scenarioDescription': 'Test hitting Acrostic page',
       'testId': 18,
     },
