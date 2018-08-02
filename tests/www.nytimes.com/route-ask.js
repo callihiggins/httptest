@@ -10,12 +10,12 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForAskRoute',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
       requestScheme: 'https://',
-      requestUri: '/ask',
+      requestUri: '/ask/fitness',
       responseHeaderMatches: {
         'x-nyt-route': 'ask',
         'x-nyt-backend': 'projectvi_fe',

@@ -343,6 +343,7 @@ sub vcl_miss {
   call miss_pass_route_newsletters;
   call miss_pass_route_paidpost;
   call miss_pass_route_weddings;
+  call miss_pass_route_ask;
   call miss_pass_route_search;
   call miss_pass_route_timeswire;
   call miss_pass_route_interactive;
@@ -402,6 +403,7 @@ sub vcl_pass {
   call miss_pass_route_newsletters;
   call miss_pass_route_paidpost;
   call miss_pass_route_weddings;
+  call miss_pass_route_ask;
   call miss_pass_route_search;
   call miss_pass_route_timeswire;
   call miss_pass_route_interactive;
