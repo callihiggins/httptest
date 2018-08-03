@@ -705,6 +705,29 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription "X-NYT-Subscriber vary" header presence test',
       'testId': 29,
     }
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderPattern': {
+        'vary': /X-NYT-Device/,
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "X-NYT-Device vary" header presence test',
+      'testId': 30,
+    }
   ];
 
   return scenarios;

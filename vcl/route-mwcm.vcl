@@ -47,6 +47,17 @@ sub recv_route_mwcm {
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
             }
+            
+            # sets x-nyt-device="mobile"|"tablet"|"desktop" header based on the device_type header. 
+            # x-nyt-device header will be used on mwcm backend for targeting.
+            set req.http.x-nyt-device = "";
+            if (req.http.device_type ~ "phone") {
+                set req.http.x-nyt-device = "mobile";
+            } else if (req.http.device_type ~ "tablet") {
+                set req.http.x-nyt-device = "tablet";
+            } else {
+                set req.http.x-nyt-device = "desktop";
+            }
         }
     }
 }
