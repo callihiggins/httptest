@@ -156,14 +156,14 @@ function getScenarioEvents() {
       requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
-        '/2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
+        '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       responseHeaderMatches: {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
-        'Test routing; article; NYT5; ensure Fastly pass; /2001/01/20/technology/the-new-york-times-five-years-on-the-web.html',
+        'Test routing; article; NYT5; ensure Fastly pass; /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       testId: 8
     },
     {
