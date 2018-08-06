@@ -562,6 +562,7 @@ sub vcl_error {
   # these must be >= 600 and <= 999
   call error_755_amp_redirect;
   call error_762_route_homepage_version_toggle;
+  call error_763_route_homepage_onboarding;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_771_perform_302_redirect; # e.x. "error 771 <absolute_url>"
   call error_800_fastly_healthcheck;

@@ -1,7 +1,7 @@
 sub recv_route_homepage_version_toggle {
     # classic homepage toggle
     declare local var.is_classic STRING;
-    if (   req.url == "/homescreen"
+    if (req.url == "/homescreen"
         && req.http.x-nyt-nyhq-access == "1"
         && req.http.var-nyt-canonical-www-host == "true") {
 
@@ -12,6 +12,12 @@ sub recv_route_homepage_version_toggle {
       }
       error 762 var.is_classic;
     }
+    if (req.url == "/homepage"
+        && req.http.var-nyt-canonical-www-host == "true") {
+      set var.is_classic = "1";
+
+      error 763 var.is_classic;
+    }
 }
 
 sub error_762_route_homepage_version_toggle {
@@ -20,7 +26,21 @@ sub error_762_route_homepage_version_toggle {
     if (obj.status == 762) {
         set obj.http.Cache-Control = "no-store, no-cache";
         set obj.http.Set-Cookie =
-            "vi_www_hp_opt=" + obj.response + "; path=/; domain=.nytimes.com; expires=" + time.add(now, 365d);
+            "vi_www_hp_opt=" + obj.response + "; path=/; domain=.nytimes.com; max-age=31536000; expires=" + time.add(now, 365d);
+        set obj.http.Location = "https://" + req.http.host + "/?r=" + randomstr(7);
+        set obj.status = 302;
+        set obj.response = "Temporarily Redirected";
+        return(deliver);
+    }
+}
+
+sub error_763_route_homepage_onboarding {
+
+    # set the cookie to 1, redirect to vi homepage, expire the cookie after 1 minute
+    if (obj.status == 763) {
+        set obj.http.Cache-Control = "no-store, no-cache";
+        set obj.http.Set-Cookie =
+            "vi_www_hp_opt=" + obj.response + "; path=/; domain=.nytimes.com; max-age=60; expires=" + time.add(now, 1m);
         set obj.http.Location = "https://" + req.http.host + "/?r=" + randomstr(7);
         set obj.status = 302;
         set obj.response = "Temporarily Redirected";

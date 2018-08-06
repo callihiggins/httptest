@@ -63,6 +63,23 @@ function getScenarioEvents() {
       },
       testId: 3
     },
+    {
+      id: 'RedirectHomescreenOnboarding',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/homepage',
+      responseStatusCode: [302],
+      scenarioDescription: '302 redirect to homepage, set cookie to 1',
+      responseHeaderPattern: {
+        'set-cookie': /vi_www_hp_opt=1/,
+        location: /\?r=([A-Za-z0-9_-]){7}/,
+      },
+      testId: 4
+    },
   ];
 
   return scenarios;
