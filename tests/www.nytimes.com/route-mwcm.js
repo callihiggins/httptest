@@ -704,7 +704,7 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "X-NYT-Subscriber vary" header presence test',
       'testId': 29,
-    }
+    },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
@@ -727,6 +727,57 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "X-NYT-Device vary" header presence test',
       'testId': 30,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaderCookie': 'mwcm_exclude_optimizely=true',
+      'responseHeaderPattern': {
+        'vary': /X-NYT-Device/,
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-final-url': '/subscription/hd/1041.html?exclude_optimizely=true',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_optimizely and addes qs exclude_optimizely"',
+      'testId': 31,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaderCookie': ['mwcm_exclude_jsonkidd=true', 'mwcm_exclude_optimizely=true'],
+      'responseHeaderPattern': {
+        'x-nyt-final-url': /exclude_jsonkidd=true/,
+        'x-nyt-final-url': /exclude_optimizely=true/,
+        'x-nyt-final-url': /subscription\/hd\/1041\.html/,
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_jsonkidd adds qs exclude_jsonkidd=true"',
+      'testId': 33,
     }
   ];
 

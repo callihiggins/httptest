@@ -36,6 +36,21 @@ sub recv_route_mwcm {
             if ( req.http.cookie ~ "NYT-S=" ) {
                 set req.http.x-nyt-subscriber = "true";
             }
+            
+            # this logic allows stripping of optimizely dependency via cookie "mwcm_exclude_optimizely"
+            # checks the presence of the "mwcm_exclude_optimizely" cookie 
+            # appends "exclude_optimizely=true" qs parameter to the url
+            if ( req.http.cookie ~ "mwcm_exclude_optimizely=" ) {
+                set req.url = querystring.add(req.url, "exclude_optimizely", "true");
+            }
+
+            # this logic allows stripping of jsonkidd dependency via cookie "mwcm_exclude_jsonkidd"
+            # checks the presence of the "mwcm_exclude_jsonkidd" cookie
+            # appends "exclude_jsonkidd=true" qs parameter to the url
+            if ( req.http.cookie ~ "mwcm_exclude_jsonkidd=" ) {
+                set req.url = querystring.add(req.url, "exclude_jsonkidd", "true");
+            }
+
             # sets value of the header "req.http.var-nyt-ismagnolia" to "true|false" 
             # req.http.var-nyt-ismagnolia = "true" when requests comes to magnolia cms in mwcm backend
             # default vaule is "false"
