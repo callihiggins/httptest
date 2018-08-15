@@ -304,6 +304,30 @@ function getScenarioEvents()
     'responseStatusCode': [200,404],
     'scenarioDescription': 'Test NYTimes Embedded Interactive Served By Project Vi',
     'testId': 11,
+  },
+  {
+    'id': 'FunctionalTestScenarioDefinitionForMastheadOnInteractive',
+    'isDeployedInEnv': {
+      'prd': true,
+      'stg': true,
+      'dev': true,
+    },
+    'requestHeaders': {
+    },
+    'requestScheme': 'https://',
+    'requestUri': '/interactive/magazine/masthead.html',
+    'responseHeaderMatches': {
+      'x-nyt-route': 'vi-interactive',
+      'x-nyt-backend': 'projectvi_fe',
+    },
+    'responseHeadersPresent': [
+      'age',
+      'x-cache',
+      'x-served-by',
+    ],
+    'responseStatusCode': [200,404],
+    'scenarioDescription': 'Test NYTimes Masthead served by vi-interactive',
+    'testId': 12,
   }
   ];
 
