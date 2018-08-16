@@ -693,7 +693,7 @@ function getScenarioEvents()
         'Fastly-Debug': 1
       },
       'requestScheme': 'https://',
-      'requestUri': '/subscription/hd/1041.html',
+      'requestUri': '/subscription/tests/nginxfastly/test-request-header.html',
       'responseHeaderPattern': {
         'vary': /X-NYT-Subscriber/,
       },
@@ -716,7 +716,7 @@ function getScenarioEvents()
         'Fastly-Debug': 1
       },
       'requestScheme': 'https://',
-      'requestUri': '/subscription/hd/1041.html',
+      'requestUri': '/subscription/tests/nginxfastly/test-request-header.html',
       'responseHeaderPattern': {
         'vary': /X-NYT-Device/,
       },
@@ -739,15 +739,12 @@ function getScenarioEvents()
         'Fastly-Debug': 1
       },
       'requestScheme': 'https://',
-      'requestUri': '/subscription/hd/1041.html',
+      'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html',
       'requestHeaderCookie': 'mwcm_exclude_optimizely=true',
-      'responseHeaderPattern': {
-        'vary': /X-NYT-Device/,
-      },
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
-        'x-nyt-final-url': '/subscription/hd/1041.html?exclude_optimizely=true',
+        'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?exclude_optimizely=true',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_optimizely and addes qs exclude_optimizely"',
@@ -764,12 +761,34 @@ function getScenarioEvents()
         'Fastly-Debug': 1
       },
       'requestScheme': 'https://',
-      'requestUri': '/subscription/hd/1041.html',
+      'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html',
+      'requestHeaderCookie': 'mwcm_exclude_jsonkidd=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?exclude_jsonkidd=true',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_jsonkidd and addes qs exclude_optimizely"',
+      'testId': 32,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html',
       'requestHeaderCookie': ['mwcm_exclude_jsonkidd=true', 'mwcm_exclude_optimizely=true'],
       'responseHeaderPattern': {
         'x-nyt-final-url': /exclude_jsonkidd=true/,
         'x-nyt-final-url': /exclude_optimizely=true/,
-        'x-nyt-final-url': /subscription\/hd\/1041\.html/,
+        'x-nyt-final-url': /subscription\/tests\/nginxfastly\/lp8HYKU\.html/,
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
@@ -778,7 +797,51 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_jsonkidd adds qs exclude_jsonkidd=true"',
       'testId': 33,
-    }
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaderCookie': 'mwcm_exclude_optimizely=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-final-url': '/subscription/hd/1041.html',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "ignores the cookie:exclude_optimizely=true for hd pages and does not add the exclude_optimizely qs parameter"',
+      'testId': 34,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaderCookie': 'mwcm_exclude_jsonkidd=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-final-url': '/subscription/hd/1041.html',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "ignores the cookie:mwcm_exclude_jsonkidd=true for hd pages and does not add the exclude_jsonkidd qs parameter"',
+      'testId': 35,
+    },
   ];
 
   return scenarios;

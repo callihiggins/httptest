@@ -29,28 +29,6 @@ sub recv_route_mwcm {
                   set req.http.x-nyt-route = "mwcm-params";
             }
 
-            # x-nyt-subscriber header detects whether the user is a subscriber or not.
-            # default value "false"
-            # checks the presence of NYT-S cookie, changes the value to be "true", if present. 
-            set req.http.x-nyt-subscriber = "false";
-            if ( req.http.cookie ~ "NYT-S=" ) {
-                set req.http.x-nyt-subscriber = "true";
-            }
-            
-            # this logic allows stripping of optimizely dependency via cookie "mwcm_exclude_optimizely"
-            # checks the presence of the "mwcm_exclude_optimizely" cookie 
-            # appends "exclude_optimizely=true" qs parameter to the url
-            if ( req.http.cookie ~ "mwcm_exclude_optimizely=" ) {
-                set req.url = querystring.add(req.url, "exclude_optimizely", "true");
-            }
-
-            # this logic allows stripping of jsonkidd dependency via cookie "mwcm_exclude_jsonkidd"
-            # checks the presence of the "mwcm_exclude_jsonkidd" cookie
-            # appends "exclude_jsonkidd=true" qs parameter to the url
-            if ( req.http.cookie ~ "mwcm_exclude_jsonkidd=" ) {
-                set req.url = querystring.add(req.url, "exclude_jsonkidd", "true");
-            }
-
             # sets value of the header "req.http.var-nyt-ismagnolia" to "true|false" 
             # req.http.var-nyt-ismagnolia = "true" when requests comes to magnolia cms in mwcm backend
             # default vaule is "false"
@@ -62,6 +40,30 @@ sub recv_route_mwcm {
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
             }
+
+            # x-nyt-subscriber header detects whether the user is a subscriber or not.
+            # default value "false"
+            # checks the presence of NYT-S cookie, changes the value to be "true", if present. 
+            set req.http.x-nyt-subscriber = "false";
+            if ( req.http.cookie ~ "NYT-S=" ) {
+                set req.http.x-nyt-subscriber = "true";
+            }
+            
+            # this logic allows stripping of optimizely dependency via cookie "mwcm_exclude_optimizely"
+            # checks the presence of the "mwcm_exclude_optimizely" cookie 
+            # appends "exclude_optimizely=true" qs parameter to the url
+            # logic not applies to hd pages.
+            if ( req.http.cookie ~ "mwcm_exclude_optimizely=" && req.url !~ "^/subscription/hd(/)?") {
+                set req.url = querystring.add(req.url, "exclude_optimizely", "true");
+            }
+
+            # this logic allows stripping of jsonkidd dependency via cookie "mwcm_exclude_jsonkidd"
+            # checks the presence of the "mwcm_exclude_jsonkidd" cookie
+            # appends "exclude_jsonkidd=true" qs parameter to the url
+            # logic not applies to hd pages.
+            if ( req.http.cookie ~ "mwcm_exclude_jsonkidd=" && req.url !~ "^/subscription/hd(/)?") {
+                set req.url = querystring.add(req.url, "exclude_jsonkidd", "true");
+            }        
             
             # sets x-nyt-device="mobile"|"tablet"|"desktop" header based on the device_type header. 
             # x-nyt-device header will be used on mwcm backend for targeting.
