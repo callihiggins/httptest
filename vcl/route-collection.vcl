@@ -43,6 +43,7 @@ sub recv_route_collection {
     } else {
       set req.http.x-nyt-route = "vi-collection";
       set req.http.x-nyt-backend = "projectvi_fe";
+      set req.http.var-nyt-error-retry = "false";
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
       set req.url = querystring.filter_except(req.url, "nytapp");

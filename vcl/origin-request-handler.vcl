@@ -43,4 +43,5 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-cookie-nyt-np-internal-https-opt-out;
   unset bereq.http.var-nyt-no-referrer;
   unset bereq.http.var-nyt-vi-story-compatibility;
+  unset bereq.http.var-nyt-error-retry;
 }

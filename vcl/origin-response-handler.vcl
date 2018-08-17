@@ -8,8 +8,12 @@ sub fetch_deliver_stale_on_error {
         return(deliver_stale);
       }
 
-      # if the object was not in cache and we have not restarted, try one more time
-      if (req.restarts < 1 && (req.request == "GET" || req.request == "HEAD")) {
+      # logic to retry the transcation
+      # routes can set req.http.var-nyt-error-retry to false to disable this
+      if (   req.restarts < 1
+          && req.http.var-nyt-error-retry != "false"
+          && (req.request == "GET" || req.request == "HEAD")
+          ) {
         set beresp.http.x-nyt-restart-reason = beresp.status + " retry";
       }
 
