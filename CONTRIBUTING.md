@@ -20,7 +20,7 @@
     * Be kind and squash all but the first commit if you have many
     * Rewrite to a nice descriptive commit
     * You can continue to do this after opening the PR if you need to make many changes based on reviews or ongoing work
-1. If it helps, you can test your changes interactively by [deploying your branch to a Fastly sandbox service](https://github.com/nytm/dv-fastly-guide/blob/master/Topics/www_sandboxes.md)
+1. If it helps, you can test your changes interactively by [deploying your branch to a Fastly sandbox service](https://github.com/nytm/dv-fastly-guide/blob/master/topics/www_sandboxes.md)
 
 ### 2. Integrate Changes
 
