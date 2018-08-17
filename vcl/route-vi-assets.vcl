@@ -16,3 +16,10 @@ sub miss_pass_route_vi_assets {
     }
   }
 }
+
+sub deliver_route_vi_assets_access_control {
+  // https://jira.nyt.net/browse/STORY-4223
+  if (req.http.x-nyt-route == "vi-assets" && req.url ~ "fonts-[a-f0-9]+\.css") {
+    set resp.http.Access-Control-Allow-Origin = "*";
+  }
+}

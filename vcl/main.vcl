@@ -531,6 +531,7 @@ sub vcl_deliver {
   call deliver_route_elections_gcs_error;
   call deliver_route_newsdev_gcs_error;
   call deliver_route_newsgraphics_gcs_error;
+  call deliver_route_vi_assets_access_control;
 
   # control when our content is allowed to be framed
   call deliver_frame_buster;
