@@ -123,29 +123,22 @@ sub recv_vi_allocation_init {
             set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
             set var.d = std.strtol(var.hash, 16);
 
-            if (req.http.var-nyt-env == "prd") {
-                if      (var.d < 0042949673) { set var.test_group = "b2"; } # < 1%      HP only, reported
-                else if (var.d < 0085899346) { set var.test_group = "z2"; } # < 2%      control, reported
-                else if (var.d < 0128849019) { set var.test_group = "d2"; } # < 3%      HP only (added Dec. 2017), reported
-                else if (var.d < 0171798692) { set var.test_group = "y2"; } # < 4%      control (added Dec. 2017), reported
-                else if (var.d < 0193273528) { set var.test_group = "e2"; } # < 4.5%    hp-serv (added Feb. 2018), reported
-                else if (var.d < 0214748365) { set var.test_group = "f2"; } # < 5%      hp-orig (added Feb. 2018), reported
-                else if (var.d < 0229064922) { set var.test_group = "g2"; } # < 5+1/3%  hp-rm_gpt_media_dfp (added June 2018), reported
-                else if (var.d < 0243381480) { set var.test_group = "h2"; } # < 5+2/3%  hp-rm_media_dfp (added June 2018), reported
-                else if (var.d < 0257698038) { set var.test_group = "i2"; } # < 6%      hp-orig_dfp (added June 2018), reported
-                else   /* var.d < 2^32 */    { set var.test_group = "z0"; } # < 100%    control, unreported
-            } else { # in staging or dev, use equal weights:
-                if      (var.d < 0429496730) { set var.test_group = "b2"; } # < 1/10    HP only, reported
-                else if (var.d < 0858993460) { set var.test_group = "z2"; } # < 2/10    control, reported
-                else if (var.d < 1288490190) { set var.test_group = "d2"; } # < 3/10    HP only (added Dec. 2017), reported
-                else if (var.d < 1717986920) { set var.test_group = "y2"; } # < 4/10    control (added Dec. 2017), reported
-                else if (var.d < 2147483650) { set var.test_group = "e2"; } # < 5/10    hp-serv (added Feb. 2018), reported
-                else if (var.d < 2576980380) { set var.test_group = "f2"; } # < 6/10    hp-orig (added Feb. 2018), reported
-                else if (var.d < 3006477110) { set var.test_group = "g2"; } # < 7/10    hp-rm_gpt_media_dfp (added June 2018), reported
-                else if (var.d < 3435973840) { set var.test_group = "h2"; } # < 8/10    hp-rm_media_dfp (added June 2018), reported
-                else if (var.d < 3865470570) { set var.test_group = "i2"; } # < 9/10    hp-orig_dfp (added June 2018), reported
-                else  /* var.d < 2^32 */     { set var.test_group = "z0"; } # < 10/10   control, unreported
-            }
+            if      (var.d < 0042949673) { set var.test_group = "b2"; } # < 1%      HP only, reported
+            else if (var.d < 0085899346) { set var.test_group = "z2"; } # < 2%      control, reported
+            else if (var.d < 0128849019) { set var.test_group = "d2"; } # < 3%      HP only (added Dec. 2017), reported
+            else if (var.d < 0171798692) { set var.test_group = "y2"; } # < 4%      control (added Dec. 2017), reported
+            else if (var.d < 0193273528) { set var.test_group = "e2"; } # < 4.5%    hp-serv (added Feb. 2018), reported
+            else if (var.d < 0214748365) { set var.test_group = "f2"; } # < 5%      hp-orig (added Feb. 2018), reported
+            else if (var.d < 0229064922) { set var.test_group = "g2"; } # < 5+1/3%  hp-rm_gpt_media_dfp (added June 2018), reported
+            else if (var.d < 0243381480) { set var.test_group = "h2"; } # < 5+2/3%  hp-rm_media_dfp (added June 2018), reported
+            else if (var.d < 0257698038) { set var.test_group = "i2"; } # < 6%      hp-orig_dfp (added June 2018), reported
+            else if (var.d < 0343597384) { set var.test_group = "j2"; } # < 8%      HP ramp up, 2% special allocation
+            else if (var.d < 1073741824) { set var.test_group = "k2"; } # < 25%     HP ramp up, 25% threshold
+            /*
+            else if (var.d < 2147483648) { set var.test_group = "l2"; } # < 50%     HP ramp up, 50% threshold
+            else if (var.d < 3221225472) { set var.test_group = "m2"; } # < 75%     HP ramp up, 75% threshold
+            */
+            else   /* var.d < 2^32 */    { set var.test_group = "z0"; } # < 100%    control, unreported
         }
         # If we're in the server-render test variation, tell Vi to server-render
         # the homepage via a header named `x-vi-ssr-www-hp` (which is meaningless
