@@ -685,8 +685,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
+        'prd': false,
+        'stg': false,
         'dev': true,
       },
       'requestHeaders': {
@@ -709,7 +709,7 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': false,
-        'stg': true,
+        'stg': false,
         'dev': true,
       },
       'requestHeaders': {
@@ -801,7 +801,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -823,7 +823,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -841,6 +841,26 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription "ignores the cookie:mwcm_exclude_jsonkidd=true for hd pages and does not add the exclude_jsonkidd qs parameter"',
       'testId': 35,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/exo/tests/fastly.html?test1=test1',
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/subscription/exo/tests/fastly.html?test1=test1',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-params',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM /subscription/exo headers test, query params preserved',
+      'testId': 36,
     },
   ];
 

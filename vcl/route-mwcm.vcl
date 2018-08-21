@@ -16,7 +16,9 @@ sub recv_route_mwcm {
             set req.http.x-nyt-backend = "mwcm";
             set req.http.var-nyt-send-gdpr = "true";
 
-            if (req.url !~ "^/marketing/(gdpr|moco)(/)?") {
+            if (    req.url !~ "^/marketing/(gdpr|moco)(/)?"  &&
+                    req.url !~ "^/subscription/exo(/)?"
+                ) {
 
               if (req.url == "/subscriptions" || req.url ~ "^/subscriptions/") {
                   # excludes "ptr" query string parameter.
