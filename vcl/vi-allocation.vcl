@@ -134,8 +134,8 @@ sub recv_vi_allocation_init {
             else if (var.d < 0257698038) { set var.test_group = "i2"; } # < 6%      hp-orig_dfp (added June 2018), reported
             else if (var.d < 0343597384) { set var.test_group = "j2"; } # < 8%      HP ramp up, 2% special allocation
             else if (var.d < 1073741824) { set var.test_group = "k2"; } # < 25%     HP ramp up, 25% threshold
-            /*
             else if (var.d < 2147483648) { set var.test_group = "l2"; } # < 50%     HP ramp up, 50% threshold
+            /*
             else if (var.d < 3221225472) { set var.test_group = "m2"; } # < 75%     HP ramp up, 75% threshold
             */
             else   /* var.d < 2^32 */    { set var.test_group = "z0"; } # < 100%    control, unreported

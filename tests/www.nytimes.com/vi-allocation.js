@@ -528,28 +528,28 @@ function getScenarioEvents()
       'testId': 280,
     },
 
-    // {
-    //   'scenarioDescription': 'Request with nyt-a mapping to cookie allocation l 25% to 50%',
-    //   'isDeployedInEnv': {
-    //     'prd': true,
-    //     'stg': true,
-    //     'dev': true
-    //   },
-    //   'requestHeaders': {
-    //     'x-nyt-debug': '1',
-    //   },
-    //   'requestHeaderCookie': [
-    //     // var.d = 2017547206
-    //     'nyt-a=S9PXHCS7XebazlXEoYpTbz', // this results in allocation `l`
-    //   ],
-    //   'requestScheme': 'https://',
-    //   'requestUri': '/',
-    //   'responseHeaderPattern': {
-    //     'set-cookie': /\bvi_www_hp=l[012][0-9];/,
-    //   },
-    //   'responseStatusCode': 200,
-    //   'testId': 280,
-    // },
+    {
+      'scenarioDescription': 'Request with nyt-a mapping to cookie allocation l 25% to 50%',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestHeaders': {
+        'x-nyt-debug': '1',
+      },
+      'requestHeaderCookie': [
+        // var.d = 2017547206
+        'nyt-a=S9PXHCS7XebazlXEoYpTbz', // this results in allocation `l`
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/',
+      'responseHeaderPattern': {
+        'set-cookie': /\bvi_www_hp=l[012][0-9];/,
+      },
+      'responseStatusCode': 200,
+      'testId': 280,
+    },
     //
     // {
     //   'scenarioDescription': 'Request with nyt-a mapping to cookie allocation m 50% to 75%',
