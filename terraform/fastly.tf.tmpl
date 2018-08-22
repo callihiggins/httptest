@@ -525,12 +525,6 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "route-homepage-version-toggle"
-    main    = false
-    content = "${file("../vcl/route-homepage-version-toggle.vcl")}"
-  }
-
-  vcl {
     name    = "auth-headers"
     main    = false
     content = "${file("../vcl/auth-headers.vcl")}"

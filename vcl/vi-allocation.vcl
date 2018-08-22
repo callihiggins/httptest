@@ -86,74 +86,40 @@ sub recv_vi_allocation_init {
             }
         }
 
-
         # Bypass to vi for onion clients
         if (req.http.X-From-Onion == "1") {
             set var.test_group = "b2";
         } else if (var.abra_overrides ~ "(?:^|&)WP_ProjectVi_www_hp=([^&]*)") {
-            if      (re.group.1 == "hp-st")               { set var.test_group = "a0"; } # translate to equiv.
-            else if (re.group.1 == "hp")                  { set var.test_group = "b0"; } # test_group code
-            else if (re.group.1 == "st")                  { set var.test_group = "c0"; }
-            else if (re.group.1 == "hp-st*")              { set var.test_group = "a2"; } # trailing `*` means,
-            else if (re.group.1 == "hp-serv")             { set var.test_group = "e2"; } # HP ab test variant
-            else if (re.group.1 == "hp-orig")             { set var.test_group = "f2"; } # HP ab test control
-            else if (re.group.1 == "hp-rm_gpt_media_dfp") { set var.test_group = "g2"; } # HP ab test dfp variant
-            else if (re.group.1 == "hp-rm_media_dfp")     { set var.test_group = "h2"; } # HP ab test dfp variant
-            else if (re.group.1 == "hp-orig_dfp")         { set var.test_group = "i2"; } # HP ab test dfp control
-            else if (re.group.1 == "hp*")                 { set var.test_group = "b2"; } # make the frontend
-            else if (re.group.1 == "st*")                 { set var.test_group = "c2"; } # report this to Abra
-            else if (re.group.1 ~ "\*$")                  { set var.test_group = "z2"; }
-            else                                          { set var.test_group = "z0"; } # default to ctrl grp
+            if      (re.group.1 == "hp-st")               { set var.test_group = "a0"; }
+            else                                          { set var.test_group = "b2"; }
         } else if (req.http.X-Rigor-Vi-Access == "1") {
             # Special header granting access to Vi for Rigor testing
             set var.test_group = "a0"; # HP + Story, unreported
             # TODO: change Rigor to use `ab7` cookie override
-
-        } else if (client.geo.country_code == "CA" || client.geo.country_code == "AU") {
-            # Canada and Australia excluded
-            set var.test_group = "z0"; # control, unreported
-
         } else {
             # use Abra-style allocation, like so:
-            # 0..1%:    "b2" (HP only, reported)
-            # 1..2%:    "z2" (control, reported)
-            # 2..100%:  "z0" (control, unreported)
+            # 0..6%:    "b2" (vi)
+            # 6..8%:    "j2" (vi, 2% special allocation cohort)
+            # 2..100%:  "b2" (vi)
 
             set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " WP_ProjectVi_www_hp");
             set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
             set var.d = std.strtol(var.hash, 16);
 
-            if      (var.d < 0042949673) { set var.test_group = "b2"; } # < 1%      HP only, reported
-            else if (var.d < 0085899346) { set var.test_group = "z2"; } # < 2%      control, reported
-            else if (var.d < 0128849019) { set var.test_group = "d2"; } # < 3%      HP only (added Dec. 2017), reported
-            else if (var.d < 0171798692) { set var.test_group = "y2"; } # < 4%      control (added Dec. 2017), reported
-            else if (var.d < 0193273528) { set var.test_group = "e2"; } # < 4.5%    hp-serv (added Feb. 2018), reported
-            else if (var.d < 0214748365) { set var.test_group = "f2"; } # < 5%      hp-orig (added Feb. 2018), reported
-            else if (var.d < 0229064922) { set var.test_group = "g2"; } # < 5+1/3%  hp-rm_gpt_media_dfp (added June 2018), reported
-            else if (var.d < 0243381480) { set var.test_group = "h2"; } # < 5+2/3%  hp-rm_media_dfp (added June 2018), reported
-            else if (var.d < 0257698038) { set var.test_group = "i2"; } # < 6%      hp-orig_dfp (added June 2018), reported
-            else if (var.d < 0343597384) { set var.test_group = "j2"; } # < 8%      HP ramp up, 2% special allocation
-            else if (var.d < 1073741824) { set var.test_group = "k2"; } # < 25%     HP ramp up, 25% threshold
-            else if (var.d < 2147483648) { set var.test_group = "l2"; } # < 50%     HP ramp up, 50% threshold
-            else if (var.d < 3221225472) { set var.test_group = "m2"; } # < 75%     HP ramp up, 75% threshold
-            else   /* var.d < 2^32 */    { set var.test_group = "z0"; } # < 100%    control, unreported
+            if      (var.d < 0257698038) { set var.test_group = "b2"; } # < 6%      vi
+            else if (var.d < 0343597384) { set var.test_group = "j2"; } # < 8%      vi, 2% special allocation
+            else   /* var.d < 2^32 */    { set var.test_group = "b2"; } # < 100%    vi
         }
         # If we're in the server-render test variation, tell Vi to server-render
         # the homepage via a header named `x-vi-ssr-www-hp` (which is meaningless
         # to the other backends and will be ignored):
-        if (req.url.path == "/" && var.test_group ~ "^e") {
+        /* if (req.url.path == "/" && var.test_group ~ "^e") {
             set req.http.x-vi-ssr-www-hp = "hp-serv";
-        } else if (req.url.path == "/" && var.test_group ~ "^f"){
-            set req.http.x-vi-ssr-www-hp = "hp-orig";
-        } else if (req.url.path == "/" && var.test_group ~ "^g"){
-            set req.http.x-vi-ssr-www-hp = "hp-rm_gpt_media_dfp";
-        } else if (req.url.path == "/" && var.test_group ~ "^h"){
-            set req.http.x-vi-ssr-www-hp = "hp-rm_media_dfp";
         } else if (req.url.path == "/" && var.test_group ~ "^i"){
             set req.http.x-vi-ssr-www-hp = "hp-orig_dfp";
         } else {
             set req.http.x-vi-ssr-www-hp = "";
-        }
+        } */
 
         # use the req object to stash our test group and incoming `vi_www_hp` cookie,
         # so later in vcl_recv we can set the outgoing `vi_www_hp` cookie if needed

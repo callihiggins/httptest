@@ -1,7 +1,6 @@
 require("./www.nytimes.com/response-headers.js");
 require("./www.nytimes.com/nyt-a.js");
 require("./www.nytimes.com/nyt-gdpr.js");
-require("./www.nytimes.com/route-homepage.js");
 require("./www.nytimes.com/route-story.js");
 require("./www.nytimes.com/route-collection.js");
 require("./www.nytimes.com/route-slideshow.js");
@@ -47,7 +46,6 @@ require("./www.nytimes.com/route-switchboard.js");
 require("./www.nytimes.com/route-newsdev-cloud-functions.js");
 require("./www.nytimes.com/route-real-estate.js");
 require("./www.nytimes.com/route-zone-apex-redirect.js");
-require("./www.nytimes.com/route-homepage-version-toggle.js");
 require("./www.nytimes.com/route-guides.js");
 require("./www.nytimes.com/route-weddings.js");
 require("./www.nytimes.com/route-search.js");

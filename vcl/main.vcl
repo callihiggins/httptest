@@ -63,7 +63,6 @@ include "route-timeswire";
 include "route-interactive";
 include "route-vi-assets";
 include "route-homepage";
-include "route-homepage-version-toggle";
 include "route-story";
 include "route-collection";
 include "route-paidpost";
@@ -180,7 +179,6 @@ sub vcl_recv {
   call recv_route_diningmap;
   call recv_route_slideshow;
   call recv_route_homepage;
-  call recv_route_homepage_version_toggle;
   call recv_route_audio;
   call recv_route_ask;
   call recv_route_device_detection_debug;
@@ -562,8 +560,6 @@ sub vcl_error {
   # please add the error code(s) to the sub names
   # these must be >= 600 and <= 999
   call error_755_amp_redirect;
-  call error_762_route_homepage_version_toggle;
-  call error_763_route_homepage_onboarding;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_771_perform_302_redirect; # e.x. "error 771 <absolute_url>"
   call error_800_fastly_healthcheck;
