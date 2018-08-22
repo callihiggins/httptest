@@ -1,51 +1,26 @@
 sub recv_route_homepage {
-
     # homepage only serves from canonical hosts
     # all others go to legacy
     if (req.http.var-nyt-canonical-www-host == "true") {
-
-        # NYT5 is the default HP route
-        if (   req.url.path == "/" || req.url ~ "^/index.html"
-        ) {
-            # first check to see if we need to redirect to a different edition
-            call recv_route_homepage_edition_redirect;
-
-            set req.http.x-nyt-route = "homepage";
-            set req.http.x-nyt-backend = "homepage_fe";
-            set req.http.var-nyt-wf-auth = "true";
-            unset req.http.x--fastly-project-vi;
-            set req.http.var-nyt-send-gdpr = "true";
-        }
-
-        // ALL mobile devices should go to vi always
-        if (req.url.path == "/"  && req.http.device_type ~ "phone") {
-          set req.http.x-nyt-route = "vi-homepage";
-          set req.http.x-nyt-backend = "projectvi_fe";
-          set req.http.var-nyt-error-retry = "false";
-          set req.http.var-nyt-wf-auth = "true";
-          set req.http.var-nyt-send-gdpr = "true";
-        }
-
-        ##############################################################
-        # Vi overrides home route based on allocation and opt-out
-        # see vi-allocation.vcl
-        ##############################################################
         if (req.url.path == "/") {
-          # homepage
-          # TODO: Vi currently serves a 404 for "/index.html", NYT5 redirects it to "/" Fix this before 100% Vi
-          #
+          # first check to see if we need to redirect to a different edition
+          call recv_route_homepage_edition_redirect;
+
           set req.http.x-nyt-route = "vi-homepage";
           set req.http.x-nyt-backend = "projectvi_fe";
           set req.http.var-nyt-error-retry = "false";
           set req.http.var-nyt-wf-auth = "true";
           set req.http.x--fastly-project-vi = "1";
           set req.http.var-nyt-send-gdpr = "true";
+          set req.url = querystring.filter_except(req.url, "homeTest");
         }
 
-        if (req.http.x-nyt-route == "vi-homepage") {
-          set req.url = querystring.filter_except(req.url, "alphalayoutB");
-        } else if (req.http.x-nyt-route == "homepage") {
-          set req.url = querystring.remove(req.url);
+        if (req.url ~ "^/index.html") {
+            set req.http.x-nyt-route = "homepage";
+            set req.http.x-nyt-backend = "homepage_fe";
+            set req.http.var-nyt-wf-auth = "true";
+            unset req.http.x--fastly-project-vi;
+            set req.http.var-nyt-send-gdpr = "true";
         }
     }
 }
