@@ -510,8 +510,8 @@ backends:
     port: "443"
     use_ssl: "true"
     ssl_check_cert: "true"
-    ssl_cert_hostname: "mwcm-pub.stg.gtm.nytimes.com"
-    ssl_sni_hostname: "mwcm-pub.stg.gtm.nytimes.com"
+    ssl_cert_hostname: "mwcm-pub.stg.nytimes.com"
+    ssl_sni_hostname: "mwcm-pub.stg.nytimes.com"
     healthcheck:
       host: "mwcm-pub.stg.gtm.nytimes.com"
       path: "/.status"
