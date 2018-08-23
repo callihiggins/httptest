@@ -520,6 +520,20 @@ function getScenarioEvents()
       'scenarioDescription': 'Prod test /section/business collection fallback to NYT5',
       'testId': 209,
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/section/business',
+      'method': 'POST',
+      'responseStatusCode': [405],
+      'scenarioDescription': 'POST method requests are not allowed for collection route',
+      'testId': 220
+    },
   ];
 
   return scenarios;

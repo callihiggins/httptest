@@ -480,6 +480,20 @@ function getScenarioEvents() {
         'Test slideshow; Serve 2010 slideshow on Vi with HTTPS (stg), /slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html',
       testId: 114
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html',
+      'method': 'POST',
+      'responseStatusCode': [405],
+      'scenarioDescription': 'POST method requests are not allowed for slideshow route',
+      'testId': 120
+    },
   ];
 
   return scenarios;

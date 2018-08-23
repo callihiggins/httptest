@@ -806,6 +806,20 @@ function getScenarioEvents() {
       'scenarioDescription': 'Set cookie with value of 0 for non-US users on prd.',
       'testId': 1600,
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2013/06/16/travel/travel-guide-new-york-for-kids.html',
+      'method': 'POST',
+      'responseStatusCode': [405],
+      'scenarioDescription': 'POST method requests are not allowed for story route',
+      'testId': 1700
+    },
   ];
 
   return scenarios;

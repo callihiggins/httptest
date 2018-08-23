@@ -24,6 +24,20 @@ function getScenarioEvents() {
       scenarioDescription: 'Test /ask is served from vi',
       testId: 1
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/ask/fitness',
+      'method': 'POST',
+      'responseStatusCode': [405],
+      'scenarioDescription': 'POST method requests are not allowed for ask route',
+      'testId': 10
+    },
   ];
 
   return scenarios;

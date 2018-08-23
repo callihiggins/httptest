@@ -67,6 +67,20 @@ function getScenarioEvents() {
       scenarioDescription: 'Set cookie with value of 0 for non-US users.',
       testId: 3
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/newsletters/louder',
+      'method': 'POST',
+      'responseStatusCode': [405],
+      'scenarioDescription': 'POST method requests are not allowed for newsletters route',
+      'testId': 4
+    },
   ];
 
   return scenarios;

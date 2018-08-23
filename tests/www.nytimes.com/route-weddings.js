@@ -23,7 +23,21 @@ function getScenarioEvents() {
       responseStatusCode: [200],
       scenarioDescription: 'Vi Weddings Announcement Page',
       testId: 1
-    }
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/style/weddings/announcements',
+      'method': 'POST',
+      'responseStatusCode': [405],
+      'scenarioDescription': 'POST method requests are not allowed for weddings route',
+      'testId': 2
+    },
   ];
 
   return scenarios;

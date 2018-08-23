@@ -56,3 +56,4 @@ require("./www.nytimes.com/kill-mobile-redirect.js");
 require("./www.nytimes.com/route-gdpr-form.js");
 require("./www.nytimes.com/route-audio.js");
 require("./www.nytimes.com/route-ask.js");
+require("./www.nytimes.com/route-homepage.js");

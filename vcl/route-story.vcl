@@ -9,6 +9,8 @@ sub recv_route_story {
           || req.url ~ "^/blog/" // all blogposts
           ) && req.url.path !~ "\.amp\.html$"
       ) {
+          call recv_post_method_restricted;
+
           set req.http.x-nyt-route = "article";
           set req.http.x-nyt-backend = "article_fe";
           set req.http.var-nyt-wf-auth = "true";

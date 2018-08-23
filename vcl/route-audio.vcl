@@ -7,5 +7,7 @@ sub recv_route_audio {
     set req.http.var-nyt-wf-auth = "true";
     set req.http.var-nyt-send-gdpr = "true";
     set req.http.x--fastly-project-vi = "1";
+
+    call recv_post_method_restricted;
   }
 }

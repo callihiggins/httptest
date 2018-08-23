@@ -47,7 +47,21 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription: 'Test /audio/ is served from vi',
-      testId: 1
+      testId: 2
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/audio/2017/06/28/arts/artsspecial/28-June-21909.html',
+      'method': 'POST',
+      'responseStatusCode': [405],
+      'scenarioDescription': 'POST method requests are not allowed for audio route',
+      'testId': 220
     },
   ];
 

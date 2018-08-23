@@ -7,6 +7,8 @@ sub recv_route_weddings {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.x--fastly-project-vi = "1";
       set req.url = querystring.remove(req.url);
+
+      call recv_post_method_restricted;
   }
 }
 
