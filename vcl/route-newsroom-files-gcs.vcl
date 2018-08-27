@@ -3,6 +3,7 @@ sub recv_route_newsroom_files_gcs {
     set req.http.x-nyt-route = "newsroom-files-gcs";
     set req.http.x-nyt-backend = "gcs_origin";
     set req.url = querystring.remove(req.url);
+    unset req.http.Authorization;
 
     # these pages are ready for HTTPS
     if ( !req.http.Fastly-SSL ) {

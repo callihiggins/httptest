@@ -13,6 +13,7 @@ sub recv_route_homepage {
           set req.http.x--fastly-project-vi = "1";
           set req.http.var-nyt-send-gdpr = "true";
           set req.url = querystring.filter_except(req.url, "homeTest");
+          unset req.http.Authorization;
 
           call recv_post_method_restricted;
         }
@@ -23,6 +24,7 @@ sub recv_route_homepage {
             set req.http.var-nyt-wf-auth = "true";
             unset req.http.x--fastly-project-vi;
             set req.http.var-nyt-send-gdpr = "true";
+            unset req.http.Authorization;
 
             call recv_post_method_restricted;
         }

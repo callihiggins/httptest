@@ -7,6 +7,7 @@ sub recv_route_timeswire {
       set req.http.var-nyt-send-gdpr = "true";
       set req.http.x--fastly-project-vi = "1";
       set req.url = querystring.remove(req.url);
+      unset req.http.Authorization;
 
       call recv_post_method_restricted;
   }

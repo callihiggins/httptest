@@ -6,5 +6,6 @@ sub recv_route_gdpr_form {
     set req.http.var-nyt-wf-auth = "true";
     set req.http.var-nyt-send-gdpr = "true";
     set req.url = querystring.remove(req.url);
+    unset req.http.Authorization;
   }
 }

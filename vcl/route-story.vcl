@@ -9,7 +9,6 @@ sub recv_route_story {
           || req.url ~ "^/blog/" // all blogposts
           ) && req.url.path !~ "\.amp\.html$"
       ) {
-          call recv_post_method_restricted;
 
           set req.http.x-nyt-route = "article";
           set req.http.x-nyt-backend = "article_fe";
@@ -17,6 +16,9 @@ sub recv_route_story {
           unset req.http.x--fastly-project-vi;
           set req.http.var-nyt-send-gdpr = "true";
           set req.url = querystring.filter_except(req.url, "nytapp");
+          unset req.http.Authorization;
+
+          call recv_post_method_restricted;
 
         ##############################################################
         # Vi overrides story route based on date range and allocation.

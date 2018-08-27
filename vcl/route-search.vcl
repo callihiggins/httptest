@@ -6,6 +6,7 @@ sub recv_route_search {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.x--fastly-project-vi = "1";
       set req.http.var-nyt-send-gdpr = "true";
+      unset req.http.Authorization;
 
       call recv_route_search_filter_querystring;
   }

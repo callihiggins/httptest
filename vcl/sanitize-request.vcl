@@ -21,7 +21,7 @@ sub recv_sanitize_request {
 }
 
 sub recv_post_method_restricted {
-    if(req.request == "POST") {
+    if (req.request == "POST") {
         error 405 "Method Not Allowed";
     }
 }

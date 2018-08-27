@@ -20,6 +20,7 @@ sub recv_route_collection {
       set req.url = querystring.filter_except(req.url, "nytapp");
       # if we needed to switch back to NYT5, unset the vi flag
       unset req.http.x--fastly-project-vi;
+      unset req.http.Authorization;
 
       call recv_post_method_restricted;
   }
@@ -42,6 +43,7 @@ sub recv_route_collection {
         set req.url = querystring.filter_except(req.url, "nytapp");
         # if we needed to switch back to NYT5, unset the vi flag
         unset req.http.x--fastly-project-vi;
+        unset req.http.Authorization;
     } else {
       set req.http.x-nyt-route = "vi-collection";
       set req.http.x-nyt-backend = "projectvi_fe";
@@ -50,6 +52,7 @@ sub recv_route_collection {
       set req.http.var-nyt-send-gdpr = "true";
       set req.url = querystring.filter_except(req.url, "nytapp");
       set req.http.x--fastly-project-vi = "1";
+      unset req.http.Authorization;
 
       call recv_post_method_restricted;
     }

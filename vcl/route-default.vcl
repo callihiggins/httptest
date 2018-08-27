@@ -2,6 +2,7 @@ sub recv_set_default_backend {
   set req.http.x-nyt-backend = "www_legacy_gke";
   set req.http.x-nyt-route = "legacy-gke";
   set req.http.var-nyt-send-gdpr = "true";
+  unset req.http.Authorization;
 
   # TODO: there are most likely many more legacy routes that can remove/filter qparams
   if (req.url ~ "^/svc/comscore/") {
