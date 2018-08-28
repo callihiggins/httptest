@@ -687,7 +687,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': false,
-        'dev': true,
+        'dev': false,
       },
       'requestHeaders': {
         'Fastly-Debug': 1
@@ -710,7 +710,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': false,
         'stg': false,
-        'dev': true,
+        'dev': false,
       },
       'requestHeaders': {
         'Fastly-Debug': 1
@@ -731,7 +731,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -753,7 +753,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -775,7 +775,7 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -861,6 +861,139 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM /subscription/exo headers test, query params preserved',
       'testId': 36,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaderCookie': 'nyt-m=D003BE2989BA6B4476E9EF81AC17234A&e=i.1370059200&t=i.10&v=i.10&l=l.25.3767397534.187745581.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1&n=i.2&g=i.5&er=i.1366659192&vr=l.4.18.0.0.0&pr=l.4.305.0.0.0&vp=i.0&gf=l.10.3767397534.187745581.-1.-1.-1.-1.-1.-1.-1.-1&ft=i.0&fv=i.0&gl=l.5.-1.-1.-1.-1.-1&cav=i.16&imu=i.1&igu=i.1&iue=i.0&ier=i.0&iru=i.0&ifpv=i.0&isr=i.0&imv=i.1&igv=i.0&igav=i.0',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-gateway-hits': '5',
+        'x-nyt-metered-hits': '10',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription nyt-m cookie:sets X-NYT-Metered-Hits and X-NYT-Gateway-Hits',
+      'testId': 37,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.nytimes.com/subscription/multiproduct/lp8HYKU.com'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-referer': 'subscription',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription referer targeting: sets subscription if nytimes.com/subscription/*',
+      'testId': 38,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.facebook.com'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-referer': 'facebook',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription referer targeting: sets facebook if facebook.com',
+      'testId': 39,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.google.com'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-referer': 'google',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription referer targeting: sets google if google.com',
+      'testId': 40,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-device': 'desktop',
+        'x-nyt-subscriber': 'false',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="false" if NYT-S cookie is not presents',
+      'testId': 41,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+      },
+      'requestScheme': 'https://',
+      'requestHeaderCookie': 'NYT-S=somehash',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-subscriber': 'true',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="true" if NYT-S cookie presents',
+      'testId': 42,
     },
   ];
 
