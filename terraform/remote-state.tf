@@ -1,6 +1,14 @@
+# These values are universal for all Fastly services
+# No need to change
 terraform {
-  backend "gcs" {
-    bucket  = "nyt-bsre-prd-tfstate"
-    project = "nyt-bsre-prd"
+  backend "s3" {
+    bucket         = "dv-fastly"
+    dynamodb_table = "fastly-terraform-lock"
+    region         = "us-east-1"
+    encrypt        = true
+
+    # set in drone-terraform
+    #key=
+    #role_arn=
   }
 }

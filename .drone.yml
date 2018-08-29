@@ -32,11 +32,16 @@ pipeline:
   # it's ok that this uses dev service for everything, just a plan to validate tf
   tf_syntax_check:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: true
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/dev/terraform.tfstate"
+        - "key=www/dev/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-dev"
     vars:
       env: dev
       service_name: dev
@@ -44,21 +49,28 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
         exclude: [ master ]
 
+
+
   # SANDBOX: uses branch sandbox01 to deploy to www.sandbox01
   sandbox01:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/sandbox01/terraform.tfstate"
+        - "key=www/sandbox01/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-sandbox01"
     vars:
       env: dev
       service_name: sandbox01
@@ -66,8 +78,8 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
@@ -86,11 +98,16 @@ pipeline:
   # SANDBOX: uses branch sandbox02 to deploy to www.sandbox02
   sandbox02:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/sandbox02/terraform.tfstate"
+        - "key=www/sandbox02/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-sandbox02"
     vars:
       env: dev
       service_name: sandbox02
@@ -98,8 +115,8 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
@@ -118,11 +135,16 @@ pipeline:
   # SANDBOX: uses branch sandbox03 to deploy to www.sandbox03
   sandbox03:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/sandbox03/terraform.tfstate"
+        - "key=www/sandbox03/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-sandbox03"
     vars:
       env: dev
       service_name: sandbox03
@@ -130,8 +152,8 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
@@ -151,11 +173,16 @@ pipeline:
   # SANDBOX: uses branch sandbox04 to deploy to www.sandbox04
   sandbox04:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/sandbox04/terraform.tfstate"
+        - "key=www/sandbox04/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-sandbox04"
     vars:
       env: dev
       service_name: sandbox04
@@ -163,8 +190,8 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
@@ -183,11 +210,16 @@ pipeline:
   # SANDBOX: uses branch sandbox05 to deploy to www.sandbox05
   sandbox05:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/sandbox05/terraform.tfstate"
+        - "key=www/sandbox05/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-sandbox05"
     vars:
       env: dev
       service_name: sandbox05
@@ -195,8 +227,8 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
@@ -215,11 +247,16 @@ pipeline:
   # SANDBOX: uses branch sandbox06 to deploy to www.sandbox06
   sandbox06:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/sandbox06/terraform.tfstate"
+        - "key=www/sandbox06/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-sandbox06"
     vars:
       env: dev
       service_name: sandbox06
@@ -227,8 +264,8 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
@@ -247,11 +284,16 @@ pipeline:
   # DEV: Deploy to www.dev service
   dev:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/dev/terraform.tfstate"
+        - "key=www/dev/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-dev"
     vars:
       env: dev
       service_name: dev
@@ -259,8 +301,8 @@ pipeline:
       - source: fastly_api_key_dev
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch:
@@ -309,11 +351,16 @@ pipeline:
   # Deployment to staging service
   staging:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/stg/terraform.tfstate"
+        - "key=www/stg/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-stg"
     vars:
       env: stg
       service_name: stg
@@ -321,8 +368,8 @@ pipeline:
       - source: fastly_api_key_stg
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: push
       branch: master
@@ -365,11 +412,16 @@ pipeline:
  # Deployment to production service
   production:
     image: jmccann/drone-terraform:4.0-0.10.7
+    environment:
+      AWS_ACCESS_KEY_ID: "AKIAIGLI4T7FC5NL3NDA"
     plan: false
     root_dir: terraform
     init_options:
+      lock: true
+      lock-timeout: 300s
       backend-config:
-        - "path=fastly/fastly-www/prd/terraform.tfstate"
+        - "key=www/prd/terraform.tfstate"
+        - "role_arn=arn:aws:iam::731841313232:role/fastly-www-prd"
     vars:
       env: prd
       service_name: prd
@@ -377,8 +429,8 @@ pipeline:
       - source: fastly_api_key_prd
         target: FASTLY_API_KEY
 
-      - source: google_credentials
-        target: GOOGLE_CREDENTIALS
+      - source: aws_secret_access_key
+        target: AWS_SECRET_ACCESS_KEY
     when:
       event: tag
       branch: [ master, hotfix* ]
