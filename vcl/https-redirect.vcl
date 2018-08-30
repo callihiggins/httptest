@@ -58,6 +58,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "games-service"
         || req.http.x-nyt-route == "games-phoenix"
         || req.http.x-nyt-route == "paidpost"
+        || req.http.x-nyt-route == "vi-paidpost"
         || req.http.x-nyt-route == "programs-service"
         || req.http.x-nyt-route == "shaq-service"
         || req.http.x-nyt-route == "programs-gcs"
