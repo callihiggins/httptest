@@ -48,6 +48,7 @@ sub fetch_route_community_svc {
     esi;
     unset beresp.http.cache-control;
     unset beresp.http.pragma;
+    unset beresp.http.expires;
   }
 
 }
