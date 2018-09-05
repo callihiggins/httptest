@@ -19,12 +19,8 @@ sub recv_route_intl {
 
       call recv_route_intl_filter_querystring;
 
-    if (req.request != "GET" &&
-        req.request != "HEAD" &&
-        req.request != "FASTLYPURGE"
-    ) {
-      error 405 "Not allowed.";
-    }
+      unset req.http.Authorization;
+      call recv_post_method_restricted;
 
     # Bypass cache for logged-in WordPress users, etc.
     if (req.http.Cookie ~ "comment_author_|wordpress_(?!test_cookie)|wp-postpass_" ) {

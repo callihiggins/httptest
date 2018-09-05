@@ -3,6 +3,8 @@ sub recv_route_collections_svc {
     set req.http.x-nyt-route = "collections-svc";
     set req.http.x-nyt-backend = "collections_svc";
     call recv_route_collections_svc_filter_querystring;
+    unset req.http.Authorization;
+    call recv_post_method_restricted;
   }
 }
 

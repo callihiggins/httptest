@@ -44,6 +44,7 @@ sub recv_route_collection {
         # if we needed to switch back to NYT5, unset the vi flag
         unset req.http.x--fastly-project-vi;
         unset req.http.Authorization;
+        call recv_post_method_restricted;
     } else {
       set req.http.x-nyt-route = "vi-collection";
       set req.http.x-nyt-backend = "projectvi_fe";

@@ -26,6 +26,7 @@ sub recv_route_adx {
         set req.http.x-nyt-backend = "adx_static";
 
         unset req.http.Authorization;
+        call recv_post_method_restricted;
 
         # remove query string parameters
         set req.url = querystring.remove(req.url);

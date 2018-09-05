@@ -1,3 +1,5 @@
+# owner: Search team
+# slack: #search
 sub recv_route_add_svc {
   if ( req.url.path ~ "^/svc/add/v1/sitesearch.json"
     || req.url.path ~ "^/svc/add/v1/articlesearch.json"
@@ -8,6 +10,8 @@ sub recv_route_add_svc {
   ) {
     set req.http.x-nyt-route = "add-svc";
     set req.http.x-nyt-backend = "add_svc";
+    unset req.http.Authorization;
+    call recv_post_method_restricted;
   }
 }
 

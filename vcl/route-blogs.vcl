@@ -42,12 +42,11 @@ sub recv_route_blogs {
       set req.http.x-nyt-backend = "blogs";
   }
 
-  # now let us deal with the qparams for this route
+  # some basic validation then qparam management for all blog routes
   if (req.http.x-nyt-route ~ "^blog") {
-    # WP-7352: Don't deal with POST requests
-    if (req.request != "POST") {
-       call recv_route_blogs_filter_querystring;
-    }
+    unset req.http.Authorization;
+    call recv_post_method_restricted;
+    call recv_route_blogs_filter_querystring;
   }
 }
 
