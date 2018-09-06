@@ -5,7 +5,8 @@ sub recv_set_default_backend {
   unset req.http.Authorization;
 
   # TODO: there are most likely many more legacy routes that can remove/filter qparams
-  if (req.url ~ "^/svc/comscore/") {
+  if (req.url ~ "^/svc/comscore/" ||
+      req.url ~ "^/services/xml/") {
     set req.url = querystring.remove(req.url);
   }
 }
