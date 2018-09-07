@@ -12,4 +12,17 @@
 # users just like we do for commit author emails.
 #docs/*  docs@example.com
 
-builds/www.stg.nytimes.com/vi-allocation.vcl  @nytm/dti
+vcl/vi-allocation.vcl  @nytm/dti
+
+# vcl/route-homepage* @nytm/home-team   @nytm/web-frameworks-team
+# vcl/route-story*  @nytm/story-team    @nytm/web-frameworks-team
+# vcl/route-community* @nytm/community-team
+# vcl/route-collection*  vcl/route-slideshow*   @nytm/story-team
+# vcl/route-newdev*    vcl/route-interactive*    @nytm/interactive-team
+# vcl/route-mwcm*  @nytm/nyt-mwcm-fastly-consultants
+# vcl/route-paidpost*  @nytm/ads-team
+# vcl/route-ads*	vcl/route-adx*   @nytm/ads-team    @nytm/nyt-ad-tech
+# vcl/route-add*  vcl/route-search*   vcl/route-switch*   vcl/route-recommendation*   @nytm/nyt-search
+# vcl/route-newsletters*   @nytm/nyt-personalization
+# vcl/route-video*  @nytm/nyt-video
+# vcl/route-vi-*    @nytm/web-frameworks-team
