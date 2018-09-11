@@ -80,7 +80,6 @@ sub recv_https_redirect {
         || req.url.path == "/robots.txt"
         || req.url.path == "/ads.txt"
         || req.http.x-nyt-route == "sitemap"
-
     ) {
         set req.http.var-nyt-https-phase = "live";
     }
@@ -118,6 +117,7 @@ sub recv_https_redirect {
             || req.http.x-nyt-route ~ "^mwcm"
             # content that was previously passing early can do both protocols
             || req.http.var-nyt-force-pass == "true"
+            || req.url.path == "/favicon.ico"
         ) {
 
         // Urls already live over HTTPS
