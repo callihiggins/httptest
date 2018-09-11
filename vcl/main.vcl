@@ -621,7 +621,7 @@ sub vcl_log {
       {" vialloc=["} if(req.http.x--fastly-project-vi,"1","0") {"]"}
       if(resp.http.Fastly-Restarts, {" restarts=["} resp.http.Fastly-Restarts {"]"},"")
       if(req.http.x-nyt-restart-reason,{" restart_reason=["} req.http.x-nyt-restart-reason {"]"}, "")
-      if(req.http.x-redirect-reason, {" "} + req.http.x-redirect-reason, "")
+      if(req.http.var-nyt-redirect-reason, {" "} + req.http.var-nyt-redirect-reason, "")
       if(req.http.x-vi-health, {" "} + req.http.x-vi-health, "")
       {" is_shield=["} if(req.http.x-nyt-shield-auth,"1","0") {"]"};
     }
