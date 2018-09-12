@@ -90,9 +90,22 @@ sub deliver_response_headers {
     // Content Security Policy for HTTPS
     if (req.http.Fastly-SSL) {
         declare local var.csp STRING;
+        declare local var.report-uri STRING;
 
         set var.csp = "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;";
-        set resp.http.Content-Security-Policy = var.csp;
+        set var.report-uri = "report-uri https://wwwnytimes.report-uri.com/r/d/csp/enforce;";
+
+        # dev and stg only for now
+        if (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") {
+            // all internal traffic, and 1% of external traffic should report CSP violations
+            if (req.http.var-nyt-allow-access-nyhq || randombool(1, 100)) {
+                set resp.http.Content-Security-Policy = var.csp + " " + var.report-uri;
+            } else {
+                set resp.http.Content-Security-Policy = var.csp;
+            }
+        } else {
+            set resp.http.Content-Security-Policy = var.csp;
+        }
     }
 }
 
