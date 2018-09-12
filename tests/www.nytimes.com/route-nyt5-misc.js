@@ -96,48 +96,6 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/podcasts/',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GM',
-        'x-nyt-route': 'podcasts',
-        'x-gdpr': '0',
-      },
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test podcasts on /podcasts/',
-      'testId': 5,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/podcasts/modern-love',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GM',
-        'x-nyt-route': 'podcasts',
-        'x-gdpr': '0',
-      },
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test podcasts on /podcasts/modern-love',
-      'testId': 6,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
         'stg': false,
         'dev': true,
       },
@@ -242,50 +200,6 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Test trending on /trending/',
       'testId': 104,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-      },
-      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke=1',
-      'requestScheme': 'https://',
-      'requestUri': '/podcasts/',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GM',
-        'x-nyt-route': 'podcasts',
-        'x-gdpr': '0',
-      },
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test podcasts on /podcasts/',
-      'testId': 105,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': false,
-      },
-      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke=1',
-      'requestScheme': 'https://',
-      'requestUri': '/podcasts/modern-love',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GM',
-        'x-nyt-route': 'podcasts',
-        'x-gdpr': '0',
-      },
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test podcasts on /podcasts/modern-love',
-      'testId': 106,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',

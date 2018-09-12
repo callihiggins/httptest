@@ -12,17 +12,6 @@ sub recv_route_trending {
   }
 }
 
-sub recv_route_podcasts {
-  // podcasts application
-  if (req.url ~ "^/podcasts") {
-      set req.http.x-nyt-route = "podcasts";
-      set req.http.x-nyt-backend = "misc_fe";
-      set req.http.var-nyt-send-gdpr = "true";
-      set req.url = querystring.remove(req.url);
-      call set_nyt5_misc_backend;
-  }
-}
-
 sub recv_route_best_sellers {
   // bestseller application
   if (   req.url ~ "^/books/best-sellers/"

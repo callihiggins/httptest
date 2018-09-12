@@ -7,11 +7,21 @@ sub recv_route_switchboard {
     || req.url.path ~ "^/briefing"
     || req.url.path ~ "^/ambriefing"
     || (req.url.path ~ "^/thedaily" && req.url.path !~ "^/thedailyoffer")
+    || (req.url.path ~ "^/the-daily")
+    || (req.url.path ~ "^/stillprocessing" || req.url.path ~ "^/still-processing")
+    || (req.url.path ~ "^/bookreviewpodcast" || req.url.path ~ "book-review-podcast")
+    || (req.url.path ~ "^/popcast")
+    || (req.url.path ~ "^/dearsugars")
   ) {
     set req.http.x-nyt-route = "switchboard";
     set req.http.x-nyt-backend = "switchboard";
     set req.http.var-nyt-send-gdpr = "true";
-
+  }
+  if ( req.url.path ~ "^/podcasts" ) {
+    set req.http.x-nyt-route = "switchboard";
+    set req.http.x-nyt-backend = "switchboard";
+    set req.http.var-nyt-send-gdpr = "true";
+    set req.url = querystring.remove(req.url);
   }
 }
 
