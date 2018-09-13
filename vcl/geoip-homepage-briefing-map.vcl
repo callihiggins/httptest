@@ -6,6 +6,7 @@ table geo_homepage_briefing_map {
   "OC": "OC",
   "EU": "EU",
   "AF": "AF",
+  "NAUS": "NAUS",
   "NAUSNY": "NAUSNY",
   "NAUSNJ": "NAUSNY",
   "NAUSCT": "NAUSNY",
