@@ -73,6 +73,7 @@ include "route-gdpr-form";
 include "route-audio";
 include "route-ask";
 include "route-device-detection-debug";
+include "route-trending";
 
 # backend response processing
 include "surrogate-key";
@@ -343,6 +344,7 @@ sub vcl_miss {
   call miss_pass_route_ask;
   call miss_pass_route_search;
   call miss_pass_route_timeswire;
+  call miss_pass_route_trending;
   call miss_pass_route_interactive;
   call miss_pass_route_collection;
   call miss_pass_route_homepage;
@@ -411,6 +413,7 @@ sub vcl_pass {
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
   call miss_pass_remove_vialloc_headers;
+  call miss_pass_route_trending;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above

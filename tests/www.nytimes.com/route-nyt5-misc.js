@@ -71,27 +71,7 @@ function getScenarioEvents()
       'scenarioDescription': 'Test bestsellers on /books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',
       'testId': 3,
     },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/trending/',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GM',
-        'x-nyt-route': 'trending',
-        'x-gdpr': '0',
-      },
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test trending on /trending/',
-      'testId': 4,
-    },
+
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
@@ -183,28 +163,6 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': false,
-      },
-      'requestHeaderCookie': 'nyt.dv.nyt5-on-gke=1',
-      'requestScheme': 'https://',
-      'requestUri': '/trending/?gdpr=1',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-GM',
-        'x-nyt-route': 'trending',
-        'x-gdpr': '1',
-      },
-      'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
-      },
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test trending on /trending/',
-      'testId': 104,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
         'stg': false,
         'dev': false,
       },
@@ -223,7 +181,6 @@ function getScenarioEvents()
       'scenarioDescription': 'Test misc  on /reviews/dining/map/',
       'testId': 107,
     },
-
 
   ];
 

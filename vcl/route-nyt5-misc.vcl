@@ -1,17 +1,3 @@
-sub recv_route_trending {
-  // trending application
-  if (   req.url ~ "^/trending/"
-      || req.url ~ "^/trending?"
-      || req.url ~ "^/trending$"
-  ) {
-      set req.http.x-nyt-route = "trending";
-      set req.http.x-nyt-backend = "misc_fe";
-      set req.http.var-nyt-send-gdpr = "true";
-      set req.url = querystring.remove(req.url);
-      call set_nyt5_misc_backend;
-  }
-}
-
 sub recv_route_best_sellers {
   // bestseller application
   if (   req.url ~ "^/books/best-sellers/"
