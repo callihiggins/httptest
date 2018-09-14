@@ -83,42 +83,6 @@ function getScenarioEvents()
       'testId': 5,
     },
     {
-      'id': 'FunctionalTestScenarioDefinitionForSvcLocation',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/svc/location/v1/current.json',
-      'responseHeaderMatches': {
-        'x-api-version': 'F-CA',
-        'x-frame-options': 'DENY',
-        'x-nyt-route': 'content-api',
-      },
-      'responseHeadersPresent': [
-        'x-served-by',
-      ],
-      'responseHeadersNotPresent': [
-        'nnCoection',
-        'via',
-        'x-age',
-        'x-backend',
-        'x-detectedruntimeconfigflag',
-        'x-esi-status',
-        'x-hash',
-        'x-origin-server',
-        'x-powered-by',
-        'x-servername',
-        'x-servername2',
-        'x-varnish',
-        'x-varnishcacheduration',
-      ],
-      'responseStatusCode': [200],
-      'scenarioDescription': 'Test service; location',
-      'testId': 6,
-    },
-    {
       'id': 'FunctionalTestScenarioDefinitionForSvcMostPopular',
       'isDeployedInEnv': {
         'prd': true,
