@@ -995,6 +995,42 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="true" if NYT-S cookie presents',
       'testId': 42,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/marketing/mpc/tests/fastly.html?test1=test1',
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/marketing/mpc/tests/fastly.html?test1=test1',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-params',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM /marketing/mpc headers test, query params preserved',
+      'testId': 43,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'scenarioDescription': 'WCM /subscription.html headers test, x-nyt-route=mwcm',
+      'testId': 44,
+    },
   ];
 
   return scenarios;

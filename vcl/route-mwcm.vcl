@@ -3,7 +3,7 @@ include "subscription-currency-map-table";
 sub recv_route_mwcm {
     if (req.http.var-nyt-canonical-www-host == "true") {
         if (    req.url == "/subscription"  ||
-                req.url ~ "^/subscription/"  ||
+                req.url ~ "^/subscription(/|.html)"  ||
                 req.url ~ "^/marketing(/)?" ||
                 req.url == "/services/mobile" ||
                 req.url ~ "^/services/mobile/" ||
@@ -16,7 +16,7 @@ sub recv_route_mwcm {
             set req.http.x-nyt-backend = "mwcm";
             set req.http.var-nyt-send-gdpr = "true";
 
-            if (    req.url !~ "^/marketing/(gdpr|moco)(/)?"  &&
+            if (    req.url !~ "^/marketing/(gdpr|moco|mpc)(/)?"  &&
                     req.url !~ "^/subscription/exo(/)?"
                 ) {
 
@@ -37,8 +37,8 @@ sub recv_route_mwcm {
             set req.http.var-nyt-ismagnolia = "false";
 
             if (    req.url == "/subscription" ||
-                    req.url ~ "^/subscription/" ||
-                    req.url ~ "^/marketing/(surveys|gdpr|moco)(/)?"
+                    req.url ~ "^/subscription(/|.html)" ||
+                    req.url ~ "^/marketing/(surveys|gdpr|moco|mpc)(/)?"
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
 
