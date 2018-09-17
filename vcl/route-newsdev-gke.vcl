@@ -4,8 +4,6 @@ sub recv_route_newsdev_gke {
     # it has a more specific route than /svc/int
     if (req.url ~ "^/svc/int/"
         || req.url ~ "^/interactive/projects/guantanamo"
-        || req.url == "/fashion/runway"
-        || req.url ~ "^/fashion/runway"
     ) {
         set req.http.x-nyt-route = "newsdev-gke";
         set req.http.x-nyt-backend = "newsdev_k8s_gke";
@@ -13,17 +11,11 @@ sub recv_route_newsdev_gke {
 
         // Bypass cache for certain /svc/int routes
         if (
-             req.url ~ "^(/svc/int/balloteer/ballot/[a-z0-9\-]*/current_user|/svc/int/balloteer/ballot/[a-z0-9\-]*/user_ballot(/\w+)?|/svc/int/balloteer/ballot/[a-z0-9\-]*/user_ballot/\w+/update|/svc/int/balloteer/ballot/[a-z0-9\-]*/update_picks)"
-          || req.url ~ "^/svc/int/godzown/u"
+             req.url ~ "^/svc/int/godzown/u"
           || req.url ~ "^/svc/int/dialects"
-          || req.url ~ "^/svc/int/grandmominator"
           || req.url ~ "^/svc/int/attribute"
         ) {
           set req.http.var-nyt-force-pass = "true";
-        } else if ( req.url ~ "^/svc/int/balloteer" ) {
-          set req.url = querystring.regfilter(req.url, "^(?!callback)");
-        } else if ( req.url ~ "^/svc/int/dialects" ) {
-          set req.url = querystring.regfilter(req.url, "^(?!a)");
         }
     }
 }

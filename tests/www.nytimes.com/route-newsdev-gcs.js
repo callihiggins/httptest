@@ -278,6 +278,23 @@ function getScenarioEvents()
       'scenarioDescription': 'Test notable-deaths GCS redirect metadata',
       'testId': 12,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForFashionRunway',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/fashion/runway/season/spring-2014-rtw',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'newsdev-gcs',
+        'x-nyt-backend': 'gcs_origin',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test fashion runway pages',
+      'testId': 13,
+    },
   ];
 
   return scenarios;

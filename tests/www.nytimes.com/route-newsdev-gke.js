@@ -9,23 +9,6 @@ function getScenarioEvents()
 {
   var scenarios = [
     {
-      'id': 'FunctionalTestScenarioDefinitionForFashionRunway',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/fashion/runway/season/spring-2014-rtw',
-      'responseHeaderMatches': {
-        'x-nyt-route': 'newsdev-gke',
-        'x-nyt-backend': 'newsdev_k8s_gke',
-      },
-      'responseStatusCode': [200,404],
-      'scenarioDescription': 'Test fashion runway pages',
-      'testId': 1,
-    },
-    {
       'id': 'FunctionalTestScenarioDefinitionForDynamicPublicApp',
       'isDeployedInEnv': {
         'prd': true,

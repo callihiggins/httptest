@@ -1,8 +1,9 @@
 sub recv_route_newsdev_gcs {
   if (     req.url ~ "^/interactive/projects/"
         || req.url ~ "^/roomfordebate"
-        || req.url ~ "^/editorial-standards" ) {
-
+        || req.url ~ "^/fashion/runway"
+        || req.url ~ "^/editorial-standards"
+  ) {
     set req.http.x-nyt-route = "newsdev-gcs";
     set req.http.x-nyt-backend = "gcs_origin";
     set req.http.var-nyt-send-gdpr = "true";
