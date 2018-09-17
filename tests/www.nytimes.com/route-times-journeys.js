@@ -254,6 +254,26 @@ function getScenarioEvents()
       'scenarioDescription': 'Test Times Journeys Students; landing page; with query params',
       'testId': 14,
     },
+    {
+      'id':  'Functional Test For Allowing Terms and Conditions in iframe',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'responseHeaderMatches': {
+        'x-api-version': 'F-TJ',
+        'x-nyt-route': 'times-journeys',
+      },
+      'responseHeadersNotPresent': [
+        'x-frame-options',
+      ],
+      'requestScheme': 'https://',
+      'requestUri': '/times-journeys/travel/treasures-of-the-danube/terms/',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test missing x-frame-options from times-journeys',
+      'testId': 15,
+    },
   ];
 
   return scenarios;
