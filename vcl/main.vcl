@@ -1,6 +1,7 @@
 # acl
 include "acl-googlebot";
 include "shared-access-control";
+include "shared-vcl-version";
 
 # initialization
 include "error-pages";
@@ -106,7 +107,7 @@ sub vcl_recv {
 
   # set up the device detection header variables
   call recv_device_detection_init;
-
+  call shared_recv_vcl_version;
   # do not restrict this request if this is a shield request from an edge pop
   if (!req.http.x-nyt-shield-auth) {
     # what level of access does this user have based on ACL and/or auth headers
@@ -115,7 +116,6 @@ sub vcl_recv {
     # block the request if the user does not have access to the environment
     call shared_recv_restrict_access;
   }
-
   # before routing calls lets set up the vi allocation vars
   call recv_vi_allocation_init;
 
@@ -562,6 +562,7 @@ sub vcl_error {
   # call subs here that are handling custom error codes
   # please add the error code(s) to the sub names
   # these must be >= 600 and <= 999
+  call shared_error_vcl_version; # error 710 for fastly vcl version catch
   call error_755_amp_redirect;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_771_perform_302_redirect; # e.x. "error 771 <absolute_url>"

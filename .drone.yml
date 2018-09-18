@@ -308,14 +308,17 @@ pipeline:
       branch:
         exclude: [ sandbox0*, master ]
 
-  dev-sleep:
-    image: alpine
-    commands:
-      - sleep 10
+  dev-wait:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-wait
+    pull: true
+    expected_version_path: /root/output/vcl_version
+    hostname: https://www.dev.nytimes.com
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
     when:
+      # Test dev environment for every pull request
       event: push
-      branch:
-        exclude: [ sandbox0*, master ]
 
   # Run tests against dev service
   dev-test:
@@ -374,11 +377,16 @@ pipeline:
       event: push
       branch: master
 
-  stg-sleep:
-    image: alpine
-    commands:
-      - sleep 10
+  stg-wait:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-wait
+    pull: true
+    expected_version_path: /root/output/vcl_version
+    hostname: https://www.stg.nytimes.com
+    secrets:
+      - source: fastly_api_key_stg
+        target: FASTLY_API_KEY
     when:
+      # Deploy to stg for every push to master
       event: push
       branch: master
 
@@ -435,11 +443,16 @@ pipeline:
       event: tag
       branch: [ master, hotfix* ]
 
-  prd-sleep:
-    image: alpine
-    commands:
-      - sleep 10
+  prd-wait:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-wait
+    pull: true
+    expected_version_path: /root/output/vcl_version
+    hostname: https://www.nytimes.com
+    secrets:
+      - source: fastly_api_key_prd
+        target: FASTLY_API_KEY
     when:
+      # Test prd environment for every tag in git
       event: tag
 
   prd-test:

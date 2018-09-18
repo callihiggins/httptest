@@ -303,6 +303,11 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "shared-vcl-version"
+    content = "${module.shared_vcl.vcl_version}"
+  }
+
+  vcl {
     name    = "surrogate-key"
     main    = false
     content = "${file("../vcl/surrogate-key.vcl")}"
