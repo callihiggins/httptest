@@ -27,9 +27,14 @@ Thanks for contributing!
 
 The functional tests for this service are part of the repo. They should be updated along with configuration changes and filed in the same PR.
 
+### Writing tests
+The guide of writing the tests can be found [here](https://github.com/nytm/drone-fastly-tests/blob/master/writing-tests.md).
+
 ### Running tests
 
-Tests can be run locally using the [drone-fastly-tests](https://github.com/nytm/drone-fastly-tests) image from the root of the repo with
+The tests are run in the build pipeline in Drone using the [drone-fastly-tests](https://github.com/nytm/drone-fastly-tests) image. 
+
+Tests can be run locally using the same image from the root of the repo with
 
 ```bash
 docker run -t -i -e PLUGIN_SERVERNAME="www.stg.nytimes.com" -v `pwd`/tests:/tests us.gcr.io/nyt-registry-prd/drone-fastly-tests:latest
