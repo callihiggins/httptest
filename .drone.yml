@@ -319,6 +319,8 @@ pipeline:
     when:
       # Test dev environment for every pull request
       event: push
+      branch:
+        exclude: [ sandbox0*, master ]
 
   # Run tests against dev service
   dev-test:
