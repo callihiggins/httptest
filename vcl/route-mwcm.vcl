@@ -2,13 +2,10 @@ include "subscription-currency-map-table";
 
 sub recv_route_mwcm {
     if (req.http.var-nyt-canonical-www-host == "true") {
-        if (    req.url == "/subscription"  ||
-                req.url ~ "^/subscription(/|.html)"  ||
+        if (    req.url ~ "^/subscription"  ||
                 req.url ~ "^/marketing(/)?" ||
                 req.url == "/services/mobile" ||
-                req.url ~ "^/services/mobile/" ||
-                req.url == "/subscriptions" ||
-                req.url ~ "^/subscriptions/"
+                req.url ~ "^/services/mobile/" 
             ) {
 
             set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");

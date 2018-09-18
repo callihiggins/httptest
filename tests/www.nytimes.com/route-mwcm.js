@@ -1031,6 +1031,38 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM /subscription.html headers test, x-nyt-route=mwcm',
       'testId': 44,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'scenarioDescription': 'WCM /subscription headers test, x-nyt-route=mwcm',
+      'testId': 45,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription?testparam=test',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'scenarioDescription': 'WCM /subscription headers test, x-nyt-route=mwcm',
+      'testId': 46,
+    },
   ];
 
   return scenarios;
