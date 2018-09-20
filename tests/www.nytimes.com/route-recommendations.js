@@ -11,8 +11,8 @@ function getScenarioEvents() {
       id: "FunctionalTestScenarioDefinitionForSitemap",
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       requestScheme: 'https://',
       requestUri: '/recommendations',
