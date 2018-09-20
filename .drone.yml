@@ -397,7 +397,7 @@ pipeline:
     pull: true
     service_id: 5ZUFNZ8akJJutsQY0aLhyG
     secrets:
-      - source: fastly_api_key_dev
+      - source: fastly_api_key_stg
         target: FASTLY_API_KEY
     when:
       event: push
@@ -473,7 +473,7 @@ pipeline:
     pull: true
     service_id: 4KIqPuWQ3AzqDCA3lc4vxE
     secrets:
-      - source: fastly_api_key_dev
+      - source: fastly_api_key_prd
         target: FASTLY_API_KEY
     when:
       event: tag
