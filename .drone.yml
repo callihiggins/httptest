@@ -392,6 +392,17 @@ pipeline:
       event: push
       branch: master
 
+  stg-diff:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-vcl-diff
+    pull: true
+    service_id: 5ZUFNZ8akJJutsQY0aLhyG
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+    when:
+      event: push
+      branch: master
+
   stg-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
     servername: www.stg.nytimes.com
@@ -455,6 +466,16 @@ pipeline:
         target: FASTLY_API_KEY
     when:
       # Test prd environment for every tag in git
+      event: tag
+
+  prd-diff:
+    image: us.gcr.io/nyt-registry-prd/drone-fastly-vcl-diff
+    pull: true
+    service_id: 4KIqPuWQ3AzqDCA3lc4vxE
+    secrets:
+      - source: fastly_api_key_dev
+        target: FASTLY_API_KEY
+    when:
       event: tag
 
   prd-test:
