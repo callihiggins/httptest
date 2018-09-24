@@ -14,7 +14,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/2016/11/04/homepage/new-york-times-open-access-election-2016.html',
@@ -34,7 +33,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
@@ -54,7 +52,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
@@ -74,7 +71,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
@@ -94,7 +90,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
@@ -114,7 +109,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
@@ -134,7 +128,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/2001/01/20/technology/20ANNIVERSARY.html',
       responseHeaderMatches: {
@@ -153,7 +146,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
@@ -173,7 +165,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/2006/01/29/fashion/sundaystyles/29LOVE.html',
       responseHeaderMatches: {
@@ -192,7 +183,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/2006/02/26/fashion/sundaystyles/26LOVE.html',
       responseHeaderMatches: {
@@ -211,7 +201,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/2006/11/12/fashion/12love.html',
       responseHeaderMatches: {
@@ -230,7 +219,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'http://',
       requestUri: '/blog/2000/01/01/us/slug.html',
       responseHeaderMatches: {
@@ -249,7 +237,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/1850/01/01/us/slug.html',
       responseHeaderMatches: {
@@ -268,7 +255,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/1979/01/01/us/slug.html',
       responseHeaderMatches: {
@@ -287,7 +273,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/1981/01/01/us/slug.html',
       responseHeaderMatches: {
@@ -306,7 +291,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/1995/01/01/us/slug.html',
       responseHeaderMatches: {
@@ -325,7 +309,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
@@ -345,7 +328,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/2013/06/16/travel/travel-guide-new-york-for-kids.html',
       responseHeaderMatches: {
@@ -364,7 +346,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/1981/01/03/nyregion/uso-in-times-square.html',
       responseHeaderMatches: {
@@ -383,7 +364,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri:
         '/1996/01/22/business/the-new-york-times-introduces-a-web-site.html',
@@ -402,7 +382,6 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
-      requestHeaderCookie: ['vi_www_hp=z0', 'vi_www_hp_opt=0'],
       requestScheme: 'https://',
       requestUri: '/2006/11/12/fashion/12love.html',
       responseHeaderMatches: {

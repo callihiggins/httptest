@@ -452,12 +452,6 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "vi-allocation"
-    main    = false
-    content = "${file("../vcl/vi-allocation.vcl")}"
-  }
-
-  vcl {
     name    = "route-health-service"
     main    = false
     content = "${file("../vcl/route-health-service.vcl")}"

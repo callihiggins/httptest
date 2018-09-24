@@ -10,21 +10,27 @@ sub recv_route_story {
           ) && req.url.path !~ "\.amp\.html$"
       ) {
 
-          set req.http.x-nyt-route = "article";
-          set req.http.x-nyt-backend = "article_fe";
-          set req.http.var-nyt-wf-auth = "true";
-          unset req.http.x--fastly-project-vi;
-          set req.http.var-nyt-send-gdpr = "true";
-          set req.url = querystring.filter_except(req.url, "nytapp");
-          unset req.http.Authorization;
+        set req.http.x-nyt-route = "article";
+        set req.http.x-nyt-backend = "article_fe";
+        set req.http.var-nyt-wf-auth = "true";
+        set req.http.var-nyt-send-gdpr = "true";
+        set req.url = querystring.filter_except(req.url, "nytapp");
+        unset req.http.Authorization;
 
-          call recv_post_method_restricted;
+        call recv_post_method_restricted;
+
+        # `vi_story_opt` cookie - allows newsroom to force NYT5
+        #  1 = force vi stories
+        #  0 = opt out vi stories
+        if (!req.http.x-vi-story-opt && req.http.cookie:vi_story_opt) {
+          set req.http.x-vi-story-opt = req.http.cookie:vi_story_opt;
+        } else { // if there is no opt-out value, default them to vi
+          set req.http.x-vi-story-opt = "1";
+        }
 
         ##############################################################
         # Vi overrides story route based on date range and allocation.
-        # see vi-allocation.vcl
         ##############################################################
-        #
         # The articles that are potentially served by the publishing pipeline
         # are limited by a date range of no earlier than 2014/01/01. This date is going
         # to be extended in the future to include older articles and the code will
@@ -41,7 +47,6 @@ sub recv_route_story {
                 set req.http.x-nyt-route = "article";
                 set req.http.x-nyt-backend = "article_fe";
                 set req.http.var-nyt-wf-auth = "true";
-                unset req.http.x--fastly-project-vi;
                 set req.http.var-nyt-send-gdpr = "true";
                 set req.url = querystring.filter_except(req.url, "nytapp");
             } else {
@@ -49,7 +54,6 @@ sub recv_route_story {
               set req.http.x-nyt-backend = "projectvi_fe";
               set req.http.var-nyt-error-retry = "false";
               set req.http.var-nyt-wf-auth = "true";
-              set req.http.x--fastly-project-vi = "1";
               set req.http.var-nyt-send-gdpr = "true";
               set req.url = querystring.filter_except(req.url, "nytapp");
             }

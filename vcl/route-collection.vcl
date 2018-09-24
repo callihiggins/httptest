@@ -18,8 +18,6 @@ sub recv_route_collection {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
       set req.url = querystring.filter_except(req.url, "nytapp");
-      # if we needed to switch back to NYT5, unset the vi flag
-      unset req.http.x--fastly-project-vi;
       unset req.http.Authorization;
 
       call recv_post_method_restricted;
@@ -41,8 +39,6 @@ sub recv_route_collection {
         set req.http.var-nyt-wf-auth = "true";
         set req.http.var-nyt-send-gdpr = "true";
         set req.url = querystring.filter_except(req.url, "nytapp");
-        # if we needed to switch back to NYT5, unset the vi flag
-        unset req.http.x--fastly-project-vi;
         unset req.http.Authorization;
         call recv_post_method_restricted;
     } else {
@@ -52,7 +48,6 @@ sub recv_route_collection {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
       set req.url = querystring.filter_except(req.url, "nytapp");
-      set req.http.x--fastly-project-vi = "1";
       unset req.http.Authorization;
 
       call recv_post_method_restricted;

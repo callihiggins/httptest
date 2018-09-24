@@ -16,7 +16,7 @@ function getScenarioEvents()
         'dev': true
       },
       'requestScheme': 'https://',
-      'requestUri': '/?ip-override=170.149.100.75&abra=WP_ProjectVi_www_hp=0',
+      'requestUri': '/?ip-override=170.149.100.75',
       'responseHeaderMatches': {
         'x-frame-options': 'DENY',
         'x-nyt-continent': 'NA',

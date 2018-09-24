@@ -36,9 +36,6 @@ sub recv_route_userinfo {
     set req.http.x-nyt-backend = "www_userinfo";
     set req.http.var-nyt-force-pass = "true";
     set req.http.var-nyt-wf-auth = "true";
-
-    # if we needed to switch back to NYT5, unset the vi flag
-    unset req.http.x--fastly-project-vi;
   }
 }
 

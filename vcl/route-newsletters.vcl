@@ -8,7 +8,6 @@ sub recv_route_newsletters {
         set req.http.x-nyt-backend = "projectvi_fe";
         set req.http.var-nyt-error-retry = "false";
         set req.http.var-nyt-wf-auth = "true";
-        set req.http.x--fastly-project-vi = "1";
         unset req.http.Authorization;
 
         call recv_post_method_restricted;

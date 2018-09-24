@@ -5,7 +5,6 @@ sub recv_route_interactive {
       req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/") {
     set req.http.x-nyt-route = "vi-interactive";
     set req.http.var-nyt-wf-auth = "true";
-    set req.http.x--fastly-project-vi = "1";
     set req.http.var-nyt-send-gdpr = "true";
     set req.http.x-nyt-backend = "projectvi_fe";
     set req.http.var-nyt-error-retry = "false";

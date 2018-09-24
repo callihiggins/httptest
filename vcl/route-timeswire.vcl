@@ -5,7 +5,6 @@ sub recv_route_timeswire {
       set req.http.var-nyt-error-retry = "false";
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
-      set req.http.x--fastly-project-vi = "1";
       set req.url = querystring.remove(req.url);
       unset req.http.Authorization;
 

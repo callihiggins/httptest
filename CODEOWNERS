@@ -12,8 +12,6 @@
 # users just like we do for commit author emails.
 #docs/*  docs@example.com
 
-vcl/vi-allocation.vcl  @nytm/dti
-
 # vcl/route-homepage* @nytm/home-team   @nytm/web-frameworks-team
 # vcl/route-story*  @nytm/story-team    @nytm/web-frameworks-team
 # vcl/route-community* @nytm/community-team

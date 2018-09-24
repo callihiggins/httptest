@@ -5,7 +5,6 @@ sub recv_route_paidpost {
       if ( (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") && !req.http.Cookie:paidpost-on-nyt5 ) {
 
         set req.http.x-nyt-route = "vi-paidpost";
-        set req.http.x--fastly-project-vi = "1";
         set req.http.x-nyt-backend = "projectvi_fe";
         set req.http.var-nyt-error-retry = "false";
 

@@ -32,8 +32,6 @@ sub miss_pass_route_nyt5_misc {
 sub set_nyt5_misc_backend {
   set req.http.var-nyt-wf-auth = "true";
   set req.http.var-nyt-send-gdpr = "true";
-  # if we needed to switch back to NYT5, unset the vi flag
-  unset req.http.x--fastly-project-vi;
   unset req.http.Authorization;
   call recv_post_method_restricted;
 }

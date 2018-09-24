@@ -12,7 +12,6 @@ include "geoip-header-init";
 include "device-detection-init";
 include "frame-buster";
 include "auth-headers";
-include "vi-allocation";
 include "test-suite-force-miss";
 include "log-purge";
 
@@ -116,8 +115,6 @@ sub vcl_recv {
     # block the request if the user does not have access to the environment
     call shared_recv_restrict_access;
   }
-  # before routing calls lets set up the vi allocation vars
-  call recv_vi_allocation_init;
 
   # initialize geo ip headers only on the edge
   if (!req.http.x-nyt-shield-auth) {
@@ -352,7 +349,6 @@ sub vcl_miss {
   call miss_pass_route_watching;
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
-  call miss_pass_remove_vialloc_headers;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -412,7 +408,6 @@ sub vcl_pass {
   call miss_pass_route_watching;
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
-  call miss_pass_remove_vialloc_headers;
   call miss_pass_route_trending;
 
   # unset headers to the origin that we use for vars
@@ -512,7 +507,6 @@ sub vcl_deliver {
 
   call deliver_route_story_restart_indicators;
   call deliver_route_collection_restart_indicators;
-  call deliver_vi_allocation_set_cookie;
 
   call deliver_tips_html_gcs;
   call deliver_add_svc_access_control;
@@ -546,6 +540,7 @@ sub vcl_deliver {
   # set other response headers
   call deliver_response_headers;
   call deliver_debug_response_headers;
+  call deliver_homepage_set_debug_header;
 
   # slideshow incompatbility fallback
   call deliver_slideshow_fallback;
@@ -621,7 +616,6 @@ sub vcl_log {
       {" reqsize=["} req.bytes_read {"]"}
       {" protocol=["} if(req.http.Fastly-SSL,"https","http") {"]"}
       {" behealth=["} if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,"-") {"]"}
-      {" vialloc=["} if(req.http.x--fastly-project-vi,"1","0") {"]"}
       if(resp.http.Fastly-Restarts, {" restarts=["} resp.http.Fastly-Restarts {"]"},"")
       if(req.http.x-nyt-restart-reason,{" restart_reason=["} req.http.x-nyt-restart-reason {"]"}, "")
       if(req.http.var-nyt-redirect-reason, {" "} + req.http.var-nyt-redirect-reason, "")
