@@ -39,7 +39,7 @@ sub recv_route_story {
              req.url ~ "^/(aponline/|reuters/)?201[4-9]"
           && req.url.path !~ "\.amp\.html$" // exclude amp
           && req.url.path != "/2018/05/18/us/school-shooting-santa-fe-texas.html"
-          && req.http.x--fastly-vi-story-opt != "0" // always out
+          && req.http.x-vi-story-opt != "0" // always out
         ) {
             # if the request was sent to VI and determined
             # to be Incompatible then we don't send to VI again
@@ -142,7 +142,7 @@ sub hash_route_story {
   # we need to keep the hash in sync between the shield and edge for hit ratio
 
   if (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "article") {
-    set req.hash += req.http.x--fastly-vi-story-opt;
+    set req.hash += req.http.x-vi-story-opt;
 
     // need to vary based on phone/mobile since some stories are OK on phones for vi
     // but should go to NYT5 on desktop or non-mobile
@@ -185,7 +185,9 @@ sub fetch_route_story {
 }
 
 sub miss_pass_route_story {
-  if (req.http.x-nyt-route == "article" || req.http.x-nyt-route == "vi-story") {
-    unset bereq.http.cookie;
+  if (!req.backend.is_shield) {
+    if (req.http.x-nyt-route == "article" || req.http.x-nyt-route == "vi-story") {
+      unset bereq.http.cookie;
+    }
   }
 }
