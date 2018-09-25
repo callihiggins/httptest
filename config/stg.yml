@@ -666,6 +666,7 @@ backends:
     first_byte_timeout: "10000"
     ssl_cert_hostname: "cherry-api.stg.nyt.net"
     ssl_sni_hostname: "cherry-api.stg.nyt.net"
+    shield: "mdw-il-us"
     healthcheck:
       host: "cherry-api.stg.nyt.net"
       path: "/.status"

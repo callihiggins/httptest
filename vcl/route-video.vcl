@@ -40,7 +40,7 @@ sub hash_route_video {
 sub miss_pass_route_video {
 
     # video routes do not need cookies
-    if (req.http.x-nyt-route ~ "^video-") {
+    if (!req.backend.is_shield && req.http.x-nyt-route ~ "^video-") {
         unset bereq.http.cookie;
     }
 
