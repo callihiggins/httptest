@@ -717,6 +717,7 @@ backends:
     first_byte_timeout: "10000"
     ssl_cert_hostname: "times-video.stg.nyt.net"
     ssl_sni_hostname: "times-video.stg.nyt.net"
+    shield: "mdw-il-us"
     healthcheck:
       host: "times-video.stg.nyt.net"
       path: "/.status"
