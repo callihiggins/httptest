@@ -53,11 +53,25 @@ sub recv_route_mwcm {
                 }
 
                 # checks the value of referer header
-                # if nytimes.com/subscription/ then sets x-nyt-referer = "subscription"
+                # if nytimes.com then sets x-nyt-targeting-source="hp"
+                # if nytimes.com/subscription/ then sets x-nyt-referer = "subscription" and x-nyt-targeting-source="lp"
+                # if nytimes.com/interactive/ then sets x-nyt-targeting-source="ip"
+                # if nytimes.com/201[4-9]/ then sets x-nyt-targeting-source="vi"
+                # if nytimes.com/(18[5-9][0-9]|19[0-9][0-9]|200[0-9]|201[0-3])/ then sets x-nyt-targeting-source="nyt5"
+                # x-nyt-targeting-source header will be used for source targeting. 
                 # if facebook.com then sets x-nyt-referer = "facebook"
                 # if google.com then sets x-nyt-referer = "google" 
-                if ( req.http.Referer ~ "^http(s?):\/\/www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com\/subscription(\/)?" ) {
+                if ( req.http.Referer ~ "^http(s?):\/\/www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com($|\/$)" ) {
+                    set req.http.x-nyt-targeting-source = "hp";
+                } else if ( req.http.Referer ~ "^http(s?):\/\/www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com\/subscription(\/)?" ) {
                     set req.http.x-nyt-referer = "subscription";
+                    set req.http.x-nyt-targeting-source = "lp"; # "lp" stands for landing page
+                } else if ( req.http.Referer ~ "^http(s?):\/\/www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com\/interactive(\/)?" ) {
+                    set req.http.x-nyt-targeting-source = "ip"; # "ip" stands for interactive page
+                } else if ( req.http.Referer ~ "^http(s?):\/\/www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com\/(18[5-9][0-9]|19[0-9][0-9]|200[0-9]|201[0-3])/" ) {
+                    set req.http.x-nyt-targeting-source = "nyt5"; # "nyt5" is for nyt5 articles
+                } else if ( req.http.Referer ~ "^http(s?):\/\/www([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com\/201[4-9]/" ) {
+                    set req.http.x-nyt-targeting-source = "vi"; # "vi" is for vi articles  
                 } else if ( req.http.Referer ~ "^http(s?):\/\/(.*\.)?facebook\.com" ) {
                     set req.http.x-nyt-referer = "facebook";
                 } else if ( req.http.Referer ~ "^http(s?):\/\/(.*\.)?google\.com" ) {
@@ -115,6 +129,7 @@ sub deliver_route_mwcm {
             set resp.http.x-nyt-gateway-hits = req.http.x-nyt-gateway-hits;
             set resp.http.x-nyt-device = req.http.x-nyt-device;
             set resp.http.x-nyt-subscriber = req.http.x-nyt-subscriber;
+            set resp.http.x-nyt-targeting-source = req.http.x-nyt-targeting-source;
         }
 
         if (resp.status == 301 || resp.status == 302) {

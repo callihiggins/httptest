@@ -902,6 +902,7 @@ function getScenarioEvents()
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
         'x-nyt-referer': 'subscription',
+        'x-nyt-targeting-source': 'lp',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'WCM subscription referer targeting: sets subscription if nytimes.com/subscription/*',
@@ -1062,6 +1063,116 @@ function getScenarioEvents()
       },
       'scenarioDescription': 'WCM /subscription headers test, x-nyt-route=mwcm',
       'testId': 46,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.nytimes.com'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-targeting-source': 'hp',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription source targeting: sets "hp" if the referer is nytimes.com',
+      'testId': 47,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.nytimes.com/'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-targeting-source': 'hp',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription source targeting: sets "hp" if the referer is nytimes.com/',
+      'testId': 48,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.nytimes.com/2011/03/13/business/13hire.html'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-targeting-source': 'nyt5',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription source targeting: sets "nyt5" if the referer is nytimes.com/(18[5-9][0-9]|19[0-9][0-9]|200[0-9]|201[0-3])/',
+      'testId': 49,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.nytimes.com/2018/09/25/world/americas/united-nations-general-assembly-live-updates.html'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-targeting-source': 'vi',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription source targeting: sets "vi" if the referer is nytimes.com/201[4-9]/',
+      'testId': 50,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'Fastly-Debug': 1,
+        'Referer': 'https://www.nytimes.com/interactive/2017/12/21/us/2017-year-in-graphics.html'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-targeting-source': 'ip',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription source targeting: sets "ip" if the referer is nytimes.com/interactive/',
+      'testId': 51,
     },
   ];
 
