@@ -757,4 +757,10 @@ resource "fastly_service_v1" "service" {
     content = "${file("../vcl/log-purge.vcl")}"
   }
 
+  vcl {
+    name    = "log-sumologic"
+    main    = false
+    content = "${file("../vcl/log-sumologic.vcl")}"
+  }
+
 }
