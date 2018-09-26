@@ -18,15 +18,6 @@ sub recv_route_homepage {
           call recv_homepage_abra_allocation;
         }
 
-        if (req.url ~ "^/index.html") {
-            set req.http.x-nyt-route = "homepage";
-            set req.http.x-nyt-backend = "homepage_fe";
-            set req.http.var-nyt-wf-auth = "true";
-            set req.http.var-nyt-send-gdpr = "true";
-            unset req.http.Authorization;
-
-            call recv_post_method_restricted;
-        }
     }
 }
 
