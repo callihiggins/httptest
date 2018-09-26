@@ -45,7 +45,6 @@ function getScenarioEvents()
       'requestUri': '/svc/web-products/userinfo-v3.json',
       'responseHeaderContains': {},
       'responseHeaderMatches': {
-        'x-api-version': 'F-0',
         'x-nyt-route': 'service',
       },
       'responseStatusCode': 200,
@@ -68,9 +67,6 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/svc/web-products/userinfo-v3.json',
       'responseHeaderContains': {},
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GU|5-0)/,
-      },
       'responseHeaderMatches': {
         'x-nyt-route': 'service',
       },
@@ -97,9 +93,6 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/svc/web-products/userinfo-v3.json',
       'responseHeaderContains': {},
-      'responseHeaderPattern': {
-        'x-api-version': /F-(GU|5-0)/,
-      },
       'responseHeaderMatches': {
         'x-nyt-route': 'service',
       },

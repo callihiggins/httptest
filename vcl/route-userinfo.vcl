@@ -13,7 +13,7 @@ sub recv_route_userinfo {
       error 902;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.jsonp") {
-      set req.http.x-nyt-route = "service";
+      set req.http.x-nyt-route = "service";    
       error 903;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.json") {
@@ -76,7 +76,6 @@ sub route_userinfo_deliver_v1_json_string {
   set obj.status = 200;
   set obj.response = "OK";
   set obj.http.Content-Type = "application/json";
-  set obj.http.X-API-Version = "0";
 
   synthetic {"{ "meta": {},
   "data": {
@@ -103,7 +102,6 @@ sub route_userinfo_deliver_v1_jsonp_string {
   set obj.status = 200;
   set obj.response = "OK";
   set obj.http.Content-Type = "application/javascript";
-  set obj.http.X-API-Version = "0";
 
   synthetic "/**/" + req.http.x-callback-param + {"({ "meta": {},
     "data": {
@@ -128,7 +126,6 @@ sub route_userinfo_deliver_v2_json_string {
   set obj.status = 200;
   set obj.response = "OK";
   set obj.http.Content-Type = "application/json";
-  set obj.http.X-API-Version = "0";
 
   synthetic {"{ "meta": {},
     "data": {
@@ -154,7 +151,6 @@ sub route_userinfo_deliver_v2_jsonp_string {
   set obj.status = 200;
   set obj.response = "OK";
   set obj.http.Content-Type = "application/javascript";
-  set obj.http.X-API-Version = "0";
 
   synthetic "/**/" + req.http.x-callback-param + {"({ "meta": {},
     "data": {
@@ -178,7 +174,6 @@ sub route_userinfo_deliver_v3_json_string {
   set obj.status = 200;
   set obj.response = "OK";
   set obj.http.Content-Type = "application/json";
-  set obj.http.X-API-Version = "0";
 
   synthetic {"{ "meta": {},
   "data": {
@@ -199,7 +194,6 @@ sub route_userinfo_deliver_v3_jsonp_string {
   set obj.status = 200;
   set obj.response = "OK";
   set obj.http.Content-Type = "application/javascript";
-  set obj.http.X-API-Version = "0";
 
   synthetic "/**/" + req.http.x-callback-param + {"({ "meta": {},
   "data": {
