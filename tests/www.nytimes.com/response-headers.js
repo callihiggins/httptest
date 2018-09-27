@@ -19,7 +19,7 @@ function getScenarioEvents()
       'requestUri': '/2016/01/01/us/slug.html',
       'responseHeaderMatches': {
         'x-frame-options': 'DENY',
-        'content-security-policy': "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss: blob:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content; report-uri https://wwwnytimes.report-uri.com/r/d/csp/enforce;"
+        'content-security-policy': "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss: blob:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;"
       },
       'responseHeadersPresent': [
         'age',
