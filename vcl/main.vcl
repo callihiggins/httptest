@@ -74,6 +74,7 @@ include "route-audio";
 include "route-ask";
 include "route-device-detection-debug";
 include "route-trending";
+include "route-get-started";
 
 # backend response processing
 include "surrogate-key";
@@ -182,6 +183,7 @@ sub vcl_recv {
   call recv_route_audio;
   call recv_route_ask;
   call recv_route_device_detection_debug;
+  call recv_route_get_started;
 
   # order matters for these routes that are all using ^/year/mo/day
   call recv_route_story;
@@ -352,6 +354,7 @@ sub vcl_miss {
   call miss_pass_route_watching;
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
+  call miss_pass_route_get_started;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -412,6 +415,7 @@ sub vcl_pass {
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
   call miss_pass_route_trending;
+  call miss_pass_route_get_started;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above

@@ -79,6 +79,7 @@ sub recv_https_redirect {
         || req.url.path == "/robots.txt"
         || req.url.path == "/ads.txt"
         || req.http.x-nyt-route == "sitemap"
+        || req.http.x-nyt-route == "vi-get-started"
     ) {
         set req.http.var-nyt-https-phase = "live";
     }

@@ -763,4 +763,10 @@ resource "fastly_service_v1" "service" {
     content = "${file("../vcl/log-sumologic.vcl")}"
   }
 
+  vcl {
+    name    = "route-get-started"
+    main    = false
+    content = "${file("../vcl/route-get-started.vcl")}"
+  }
+
 }
