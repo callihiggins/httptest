@@ -1174,6 +1174,42 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription source targeting: sets "ip" if the referer is nytimes.com/interactive/',
       'testId': 51,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoDate=20181212&skipFastly=true&test1=test1',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoDate=20181212&skipFastly=true',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "allows campaignId, skipFastly and promoDate qs string params to mwcm backend and strips test1 qs param"',
+      'testId': 52,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html?skipFastly=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-cache': 'MISS',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription "cache type should be MISS if skipFastly=true qs && x-nyt-nyhq-access flag present"',
+      'testId': 52,
+    },
   ];
 
   return scenarios;

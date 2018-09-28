@@ -22,7 +22,7 @@ sub recv_route_mwcm {
                   set req.url = querystring.filter_except(req.url, "ptr");
               } else {
                   # excludes "exclude_optimizely", "exclude_jsonkidd", "exclude_abra" qs parameters
-                  set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff)$");
+                  set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoDate)$");
               }
             } else {
                   set req.http.x-nyt-route = "mwcm-params";
@@ -38,6 +38,13 @@ sub recv_route_mwcm {
                     req.url ~ "^/marketing/(surveys|gdpr|moco|mpc)(/)?"
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
+
+                # checks skipFastly=true qs param
+                # if present, then sets x-nyt-miss
+                # x-nyt-miss forces cache type to be miss if the request is coming from the internal ips. 
+                if (req.url ~ "(\?|\&)skipFastly=true(\&|$)") {
+                    set req.http.x-nyt-miss = "1";
+                }
 
                 # checks the presence of nyt-m (meter) cookie
                 # if present, then sets x-nyt-metered-hits and x-nyt-gateway-hits
