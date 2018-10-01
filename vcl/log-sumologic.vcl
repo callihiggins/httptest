@@ -17,7 +17,7 @@ sub log_sumologic {
       {" "} resp.status
       {" "} regsub(resp.body_bytes_written, "^0$", {""-""})
       {" ""} cstr_escape(req.http.referer) {"""}
-      {"" ""} cstr_escape(req.http.user-agent) {"""}
+      {" ""} cstr_escape(req.http.user-agent) {"""}
       {" backend=["} if(req.http.x-nyt-backend,req.http.x-nyt-backend,"-") {"]"}
       {" pagetype=["} if(resp.http.x-PageType,resp.http.x-PageType,"-") {"]"}
       {" route=["} resp.http.x-nyt-route {"]"}
