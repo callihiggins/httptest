@@ -16,7 +16,7 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestScheme': 'https://',
-      'requestUri': '/mexico-tourism/my-journey-to-mexico.html',
+      'requestUri': '/paidpost/mexico-tourism/my-journey-to-mexico.html',
       'responseHeaderMatches': {
         'x-nyt-route': 'vi-paidpost',
         'x-nyt-backend': 'projectvi_fe',
