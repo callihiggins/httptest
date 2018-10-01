@@ -11,7 +11,7 @@ sub recv_route_homepage {
           set req.http.var-nyt-error-retry = "false";
           set req.http.var-nyt-wf-auth = "true";
           set req.http.var-nyt-send-gdpr = "true";
-          set req.url = querystring.filter_except(req.url, "homeTest");
+          set req.url = querystring.filter_except(req.url, "abraHomeTest");
           unset req.http.Authorization;
 
           call recv_post_method_restricted;
