@@ -21,7 +21,7 @@ pipeline:
       - env=dev
     commands:
       - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d config=config/dev.yml
-      - /gomplate -f vcl/route-health-service.vcl.tmpl -o vcl/route-health-service.vcl -d config=config/dev.yml
+      - /gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d config=config/dev.yml
     when:
       event: push
       branch:
@@ -347,7 +347,7 @@ pipeline:
     image: hairyhenderson/gomplate:v2.3.0
     commands:
       - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d config=config/stg.yml
-      - /gomplate -f vcl/route-health-service.vcl.tmpl -o vcl/route-health-service.vcl -d config=config/stg.yml
+      - /gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d config=config/stg.yml
     when:
       event: push
       branch: master
@@ -425,7 +425,7 @@ pipeline:
     image: hairyhenderson/gomplate:v2.3.0
     commands:
       - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d config=config/prd.yml
-      - /gomplate -f vcl/route-health-service.vcl.tmpl -o vcl/route-health-service.vcl -d config=config/prd.yml
+      - /gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d config=config/prd.yml
     when:
       event: tag
       branch: [ master, hotfix* ]

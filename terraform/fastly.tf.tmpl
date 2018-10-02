@@ -452,9 +452,9 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "route-health-service"
+    name    = "route-backend-health-report"
     main    = false
-    content = "${file("../vcl/route-health-service.vcl")}"
+    content = "${file("../vcl/route-backend-health-report.vcl")}"
   }
 
   vcl {

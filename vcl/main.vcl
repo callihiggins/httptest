@@ -16,7 +16,7 @@ include "test-suite-force-miss";
 include "log-purge";
 
 # the following files contain routes for the backends defined above
-include "route-health-service"; # service that reports health of defined backends
+include "route-backend-health-report"; # service that reports health of defined backends
 include "route-default";
 
 include "route-zone-apex-redirect";
@@ -135,6 +135,7 @@ sub vcl_recv {
   call recv_route_svc_amp_gdpr;
 
   # each route needs a separate route-<semantic-name>.vcl file with a recv_route_<semantic_name> sub
+  call recv_route_backend_health_report;
   call recv_route_fastly_healthcheck;
   call recv_route_esi_jsonp_callback;
   call recv_route_cms_static_assets;
@@ -325,7 +326,6 @@ sub vcl_miss {
   call miss_pass_route_content_api;
   call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
-  call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
   call miss_pass_wf_auth_headers;
@@ -386,7 +386,6 @@ sub vcl_pass {
   call miss_pass_route_content_api;
   call miss_pass_route_newsdev_gcs;
   call miss_pass_route_times_journeys;
-  call miss_pass_route_health_service;
   call miss_pass_route_newsdev_attribute;
   call miss_pass_route_video;
   call miss_pass_wf_auth_headers;
@@ -574,7 +573,7 @@ sub vcl_error {
   call error_918_amp_gdpr;
   call error_919_gdpr;
   call error_949_geo_debug_svc;
-  call error_995_route_health_service;
+  call error_995_route_backend_health_report;
 
   # handle 5xx errors if the error handler was called
   # with a 500-599 code
