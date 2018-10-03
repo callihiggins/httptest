@@ -281,8 +281,11 @@ sub vcl_recv {
 sub vcl_hash {
 #FASTLY hash
 
+# WARNING: DO NOT modify this block of code below UNLESS you know what you are doing
+# ------------------------------
   set req.hash += req.url;
   set req.hash += req.http.host;
+# ------------------------------
 
   call hash_route_video;
   call hash_route_slideshow;
