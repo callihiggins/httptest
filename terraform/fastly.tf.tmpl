@@ -279,6 +279,19 @@ resource "fastly_service_v1" "service" {
     url                = "${var.sumologic_endpoint[var.env]}"
   }
 
+  # bigquery logging integration
+  {{ $bigquery_log := (datasource "config").bigquery_log }}
+  bigquerylogging {
+    name       = "{{$bigquery_log.name}}"
+    project_id = "{{$bigquery_log.project_id}}"
+    dataset    = "{{$bigquery_log.dataset}}"
+    table      = "{{$bigquery_log.table}}"
+    email      = "{{$bigquery_log.email}}"
+    template   = "{{$bigquery_log.template}}"
+    format     = "{{$bigquery_log.format}}"
+    secret_key = "${var.bigquery_secret_key}"
+  }
+
   vcl {
     name    = "route-newsdev-attribute"
     main    = false

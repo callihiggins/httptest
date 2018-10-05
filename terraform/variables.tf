@@ -20,3 +20,7 @@ variable "sumologic_endpoint" {
     prd = "https://collectors.sumologic.com/receiver/v1/http/ZaVnC4dhaV3DIdcy2GqnQ5DMhk6CZkjlLK9C5V5fjRSlaVm4RJg3dU1REHf-_owjetrn1mzlLqDx1KlNQ6qwtrgHf1KwvOaVcZBHpQSdqG-tFYf0OFYEUQ=="
   }
 }
+
+variable "bigquery_secret_key" {
+  type = "string"
+}
