@@ -949,7 +949,7 @@ bigquery_log:
     \"request_x_forwarded_for\":\"%{X-Forwarded-For}i\",
     \"status\":\"%s\",
     \"content_type\":\"%{Content-Type}o\",
-    \"cache_status\":\"%{regsub(fastly_info.state,\\\"^(HIT-(SYNTH)|(HITPASS|HIT|MISS|PASS|ERROR|PIPE)).*\\\", \\\"\\\\2\\\\3\\\")}V\",
+    \"cache_status\":\"%{fastly_info.state}V\",
     \"is_cacheable\":%{if(fastly_info.state ~\\\"^(HIT|MISS)$\\\", \\\"true\\\", \\\"false\\\")}V,
     \"response_age\":\"%{Age}o\",
     \"response_cache_control\":\"%{Cache-Control}o\",
