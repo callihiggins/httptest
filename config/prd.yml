@@ -965,7 +965,7 @@ bigquery_log:
     \"request_x_forwarded_for\":\"%{X-Forwarded-For}i\",
     \"status\":\"%s\",
     \"content_type\":\"%{Content-Type}o\",
-    \"cache_status\":\"%{regsub(fastly_info.state,\\\"^(HIT-(SYNTH)|(HITPASS|HIT|MISS|PASS|ERROR|PIPE)).*\\\", \\\"\\2\\3\\\")}V\",
+    \"cache_status\":\"%{regsub(fastly_info.state,\\\"^(HIT-(SYNTH)|(HITPASS|HIT|MISS|PASS|ERROR|PIPE)).*\\\", \\\"\\\\2\\\\3\\\")}V\",
     \"is_cacheable\":%{if(fastly_info.state ~\\\"^(HIT|MISS)$\\\", \\\"true\\\", \\\"false\\\")}V,
     \"response_age\":\"%{Age}o\",
     \"response_cache_control\":\"%{Cache-Control}o\",
@@ -994,13 +994,11 @@ bigquery_log:
     \"socket_tcpi_total_retrans\":%{client.socket.tcpi_total_retrans}V,
     \"socket_tcpi_delta_retrans\":%{client.socket.tcpi_delta_retrans}V,
     \"socket_ploss\":%{client.socket.ploss}V,
-    \"backend_name\":\"%{if(req.http.X-NYT-Backend,req.http.X-NYT-Backend,\\\"\\\")}V\",
-    \"pagetype\":\"%{if(req.http.X-PageType,req.http.X-PageType,\\\"\\\")}V\",
+    \"backend_name\":\"%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\\\"\\\")}V\",
+    \"pagetype\":\"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
     \"apiversion\":\"%{if(resp.http.X-API-Version,resp.http.X-API-Version,\\\"\\\")}V\",
-    \"redirect_reason\":\"%{if(req.http.x-redirect-reason,regsub(req.http.x-redirect-reason,\\\"redir=\\\\[([^\\\\]]+)\\\\]\\\",\\\"\\1\\\"),\\\"\\\")}V\",
+    \"redirect_reason\":\"%{if(req.http.var-nyt-redirect-reason,regsub(req.http.var-nyt-redirect-reason,\\\"redir=\\\\[([^\\\\]]+)\\\\]\\\",\\\"\\\\1\\\"),\\\"\\\")}V\",
     \"trace_id\": \"%{if(req.http.x-b3-trace-id,req.http.x-b3-trace-id,\\\"\\\")}V\",
     \"backend_healthy\": \"%{if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,\\\"\\\")}V\",
-    \"vialloc\": %{if(req.http.x--fastly-project-vi,\\\"1\\\",\\\"0\\\")}V,
-    \"restarts\": %{req.restarts}V,
-    \"vi_healthy\": \"%{if(req.http.x-vi-health,regsub(req.http.x-vi-health,\\\"vihealth=\\\\[([^\\\\]]+)\\\\]\\\",\\\"\\1\\\"),\\\"\\\")}V\"
+    \"restarts\": %{req.restarts}V
     }
