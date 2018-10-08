@@ -218,7 +218,7 @@ function getScenarioEvents() {
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
       isDeployedInEnv: {
-        prd: false,
+        prd: true,
         stg: true,
         dev: true
       },
@@ -250,6 +250,22 @@ function getScenarioEvents() {
       responseStatusCode: [301],
       scenarioDescription: 'Test podcasts on /podcasts/',
       testId: 15,
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/the-argument',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /dearsugars is served from switchboard',
+      testId: 16
     },
   ];
 
