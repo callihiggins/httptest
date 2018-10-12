@@ -75,6 +75,43 @@ function getScenarioEvents()
       'scenarioDescription': 'content-elections: Do not framebust requests from Scoop',
       'testId': 5,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForS3Failover',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': false,
+        'dev': false
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/elections/results/president',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'elections',
+        'x-nyt-backend': 'newsdev_elections_s3',
+      },
+      'responseHeadersNotPresent': [
+        'x-goog-hash'
+      ],
+      'responseStatusCode': 200,
+      'scenarioDescription': 'content-elections: Serve from S3 when newsdev_elections.use_s3 = true',
+      'testId': 6,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForViFailover',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': false,
+        'dev': false
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/interactive/2018/11/06/us/elections/results-kansas-elections.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'elections',
+        'x-nyt-backend': 'newsdev_elections',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'content-elections: Serve select interactives from GCS when newsdev_elections.serve_vi = true',
+      'testId': 7,
+    },
   ];
 
   return scenarios;
