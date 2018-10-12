@@ -204,21 +204,6 @@ resource "fastly_service_v1" "service" {
     type        = "request"
   }
 
-  # this is not being used yet in TF, look in main.vcl
-  condition {
-    name      = "Suppress adx and svc unless 50x response code"
-    priority  = 10
-    statement = "(req.url !~ \"^/svc/\" && req.url !~ \"^/adx/\") || resp.status >= 500"
-    type      = "RESPONSE"
-  }
-
-  condition {
-    name      = "do-not-log"
-    priority  = 10
-    statement = "!req.url"
-    type      = "RESPONSE"
-  }
-
   # look in main.vcl for this logic for the time being
   default_ttl = 3600
 
@@ -279,6 +264,21 @@ resource "fastly_service_v1" "service" {
     url                = "${var.sumologic_endpoint[var.env]}"
   }
 
+  condition {
+    name      = "do-not-log"
+    priority  = 10
+    statement = "!req.url"
+    type      = "RESPONSE"
+  }
+
+  # this is not being used yet in TF, look in log-sumologic.vcl for the sumologic logger conditional
+  condition {
+    name      = "Suppress adx and svc unless 50x response code"
+    priority  = 10
+    statement = "(req.url !~ \"^/svc/\" && req.url !~ \"^/adx/\") || resp.status >= 500"
+    type      = "RESPONSE"
+  }
+
   # bigquery logging integration
   {{ $bigquery_log := (datasource "config").bigquery_log }}
   bigquerylogging {
@@ -290,6 +290,14 @@ resource "fastly_service_v1" "service" {
     template   = "{{$bigquery_log.template}}"
     format     = "{{$bigquery_log.format}}"
     secret_key = "${var.bigquery_secret_key}"
+    response_condition = "bigquerylogging-suppression"
+  }
+
+  condition {
+    name      = "bigquerylogging-suppression"
+    priority  = 10
+    statement = "req.http.x-nyt-route != \"vi-assets\" || resp.status >= 400 || req.http.var-nyt-env != \"prd\""
+    type      = "RESPONSE"
   }
 
   vcl {
