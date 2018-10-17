@@ -162,6 +162,9 @@ sub miss_pass_route_mwcm {
             # allows nyt-a to MWCM backend
             set bereq.http.cookie = "nyt-a=" req.http.cookie:nyt-a ";";   
         }
+        else if (req.http.var-cookie-nyt-a) {
+            set bereq.http.cookie = "nyt-a=" req.http.var-cookie-nyt-a ";";
+        }
         
         if (req.http.cookie ~ "NYT-S=") {
             #checks the presence of the NYT-S
