@@ -13,7 +13,7 @@ sub recv_route_mwcm {
             set req.http.x-nyt-backend = "mwcm";
             set req.http.var-nyt-send-gdpr = "true";
 
-            if (    req.url !~ "^/marketing/(gdpr|moco|mpc)(/)?"  &&
+            if (    req.url !~ "^/marketing/(gdpr|moco|mpc|account)(/)?"  &&
                     req.url !~ "^/subscription/exo(/)?"
                 ) {
 
@@ -35,7 +35,7 @@ sub recv_route_mwcm {
 
             if (    req.url == "/subscription" ||
                     req.url ~ "^/subscription(/|.html)" ||
-                    req.url ~ "^/marketing/(surveys|gdpr|moco|mpc)(/)?"
+                    req.url ~ "^/marketing/(surveys|gdpr|moco|mpc|account)(/)?"
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
 

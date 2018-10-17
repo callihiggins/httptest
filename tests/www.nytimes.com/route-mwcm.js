@@ -1210,6 +1210,26 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription "cache type should be MISS if skipFastly=true qs && x-nyt-nyhq-access flag present"',
       'testId': 52,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/marketing/account/tests/fastly.html?test1=test1',
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/marketing/account/tests/fastly.html?test1=test1',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-params',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM /marketing/tests headers test, query params preserved',
+      'testId': 53,
+    },
   ];
 
   return scenarios;
