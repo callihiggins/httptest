@@ -126,6 +126,56 @@ function getScenarioEvents()
       'responseStatusCode': [200],
       'scenarioDescription': 'Test geo hash return value for IP 173.63.201.100, NJ should get NY geo-hash',
       'testId': 273,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/?ip-override=192.206.151.131',
+      'responseHeaderMatches': {
+        'x-nyt-continent': 'NA',
+        'x-nyt-country': 'CA',
+        'x-nyt-region': 'ON',
+        'x-nyt-latitude': '43.677',
+        'x-nyt-longitude': '-79.425',
+        'x-nyt-city': 'toronto',
+      },
+      'responseHeaderPattern': {
+        'x-nyt-gmt-offset': /-[45]00/,
+        'x-nyt-geo-hash': /NACA-[45]00/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test geo hash return value for IP 192.206.151.131, CA should get CA geo-hash',
+      'testId': 274,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/?ip-override=52.95.131.27',
+      'responseHeaderMatches': {
+        'x-nyt-continent': 'OC',
+        'x-nyt-country': 'AU',
+        'x-nyt-region': 'NSW',
+        'x-nyt-latitude': '-33.867',
+        'x-nyt-longitude': '151.207',
+        'x-nyt-city': 'sydney',
+      },
+      'responseHeaderPattern': {
+        'x-nyt-gmt-offset': /1[01]00/,
+        'x-nyt-geo-hash': /OCAU1[01]00/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Test geo hash return value for IP 52.95.131.27, AU should get AU geo-hash',
+      'testId': 275,
     }
 
   ];
