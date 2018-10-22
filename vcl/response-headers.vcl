@@ -30,6 +30,7 @@ sub deliver_response_headers {
         unset resp.http.x-nyt-backend-health;
     } else {
         # set these headers for internal requests
+        set resp.http.x-nyt-fastly-info-state = if(fastly_info.state,fastly_info.state,"NULL");
         set resp.http.x-nyt-continent = req.http.x-nyt-continent;
         set resp.http.x-nyt-country = req.http.x-nyt-country;
         set resp.http.x-nyt-region = req.http.x-nyt-region;
