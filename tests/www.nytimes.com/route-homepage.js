@@ -95,8 +95,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        // var.d = 2264797531
-        'nyt-a=FajTJMPZS-G86er2k0McHc',
+        // var.d = 0119201577
+        'nyt-a=1Vw3GnbqfcV0Qp9NPY1r9Z',
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -117,8 +117,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        // var.d = 0119201577
-        'nyt-a=1Vw3GnbqfcV0Qp9NPY1r9Z',
+        // var.d = 0166063497
+        'nyt-a=Wq86wIwFCr0t-dwbj7FEsd',
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -139,8 +139,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        // var.d = 0164842166
-        'nyt-a=xxm1pIpkzD5LNy2z8FdpsF',
+        // var.d = 3209428244
+        'nyt-a=VCTwq3rrtjmInU0IbZnytN',
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
