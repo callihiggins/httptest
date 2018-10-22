@@ -23,7 +23,7 @@ sub recv_route_adx {
         }
 
         set req.http.x-nyt-route = "adx-static";
-        set req.http.x-nyt-backend = "adx_static";
+        set req.http.x-nyt-backend = "gcs_origin";
 
         unset req.http.Authorization;
         call recv_post_method_restricted;
@@ -34,14 +34,11 @@ sub recv_route_adx {
 }
 
 sub miss_pass_route_adx {
-    if (req.http.x-nyt-route == "adx-static") {
-      unset bereq.http.cookie;
-      set bereq.http.host = "nyt-adx-static.storage.googleapis.com";
+  if (req.http.x-nyt-route == "adx-static") {
+    if(!req.backend.is_shield) {
+        unset bereq.http.cookie;
+        call miss_pass_set_bucket_auth_headers;
     }
-}
 
-sub deliver_adx_static_api_version {
-    if (req.http.x-nyt-route == "adx-static") {
-        set resp.http.X-API-Version = "AS";
-    }
+  }
 }

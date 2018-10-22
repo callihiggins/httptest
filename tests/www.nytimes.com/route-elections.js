@@ -39,7 +39,7 @@ function getScenarioEvents()
         'dev': true
       },
       'requestScheme': 'https://',
-      'requestUri': '/elections/results/president',
+      'requestUri': '/elections/2016/results/president',
       'responseHeaderMatches': {
         'cache-control': 'public, max-age=86400',
         'x-nyt-route': 'elections',
@@ -83,7 +83,7 @@ function getScenarioEvents()
         'dev': false
       },
       'requestScheme': 'https://',
-      'requestUri': '/elections/results/president',
+      'requestUri': '/elections/2016/results/president',
       'responseHeaderMatches': {
         'x-nyt-route': 'elections',
         'x-nyt-backend': 'newsdev_elections_s3',

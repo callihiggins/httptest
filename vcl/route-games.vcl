@@ -34,7 +34,7 @@ sub recv_route_games {
         // We can treat the games assets as everything else and cache those (no cookies needed there)
         if (req.url.path ~ "^/games-assets/") {
             set req.http.x-nyt-route = "games-assets";
-            set req.http.x-nyt-backend = "games_assets";
+            set req.http.x-nyt-backend = "gcs_origin";
         }
     }
 }
@@ -82,8 +82,10 @@ sub set_games_web_host {
 }
 
 sub set_games_assets_host {
-    set bereq.http.host = "storage.googleapis.com";
-
+    if(!req.backend.is_shield) {
+        call miss_pass_set_bucket_auth_headers;
+        set bereq.url = regsub(bereq.url, "^/games-assets/", "/");
+    }
 }
 
 sub set_games_phoenix_host {

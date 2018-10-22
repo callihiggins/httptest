@@ -137,6 +137,7 @@ function getScenarioEvents()
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'games-assets',
+        'x-nyt-backend': 'gcs_origin'
       },
       'requestScheme': 'https://',
       'requestUri': '/games-assets/favicon.ico',

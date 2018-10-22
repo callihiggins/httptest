@@ -117,46 +117,46 @@ resource "fastly_service_v1" "service" {
   {{range $cloud_storage_buckets -}}
 
   condition = {
-    name = "{{.pagetype}}_bucket"
-    statement = "req.http.x-nyt-route == \"{{.pagetype}}\""
+    name = "{{.route}}_bucket"
+    statement = "req.http.x-nyt-route == \"{{.route}}\""
     type = "REQUEST"
     priority = "500"
   }
 
   header {
     action      = "set"
-    name        = "{{.pagetype}}"
+    name        = "{{.route}}"
     priority    = "400"
     source      = "\"{{.bucket_name}}\""
     destination = "http.x-nyt-bucket-name"
     type        = "request"
-    request_condition   = "{{.pagetype}}_bucket"
+    request_condition   = "{{.route}}_bucket"
   }
 
   header {
     action      = "set"
-    name        = "{{.pagetype}}_bucket_provider"
+    name        = "{{.route}}_bucket_provider"
     priority    = "401"
     source      = "\"{{.bucket_provider}}\""
     destination = "http.x-nyt-bucket-provider"
     type        = "request"
-    request_condition   = "{{.pagetype}}_bucket"
+    request_condition   = "{{.route}}_bucket"
   }
 
   {{if eq .auth "true"}}
   header {
     action      = "set"
-    name        = "{{.pagetype}}_auth"
+    name        = "{{.route}}_auth"
     priority    = "401"
     source      = "\"true\""
     destination = "http.x-nyt-bucket-auth"
     type        = "request"
-    request_condition   = "{{.pagetype}}_bucket"
+    request_condition   = "{{.route}}_bucket"
   }
 
   header {
     action      = "set"
-    name        = "{{.pagetype}}_token"
+    name        = "{{.route}}_token"
     priority    = "401"
     {{if (has . "auth_key")}}
     source      = "\"{{.auth_key}}\""
@@ -169,12 +169,12 @@ resource "fastly_service_v1" "service" {
     {{end}}
     destination = "http.x-nyt-bucket-token"
     type        = "request"
-    request_condition   = "{{.pagetype}}_bucket"
+    request_condition   = "{{.route}}_bucket"
   }
 
   header {
     action      = "set"
-    name        = "{{.pagetype}}_secret"
+    name        = "{{.route}}_secret"
     priority    = "401"
     {{if (has . "auth_secret")}}
     source      = "\"{{.auth_secret}}\""
@@ -187,7 +187,7 @@ resource "fastly_service_v1" "service" {
     {{end}}
     destination = "http.x-nyt-bucket-secret"
     type        = "request"
-    request_condition   = "{{.pagetype}}_bucket"
+    request_condition   = "{{.route}}_bucket"
   }
 
   {{end}}

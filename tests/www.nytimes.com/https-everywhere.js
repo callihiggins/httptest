@@ -562,7 +562,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'https://',
-      requestUri: '/elections/results/president',
+      requestUri: '/elections/2016/results/president',
       responseStatusCode: [200, 404],
       scenarioDescription: 'Test HTTPS Everywhere; elections; secure',
       testId: 48
@@ -575,9 +575,9 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'http://',
-      requestUri: '/elections/results/president',
+      requestUri: '/elections/2016/results/president',
       responseHeaderMatches: {
-        location: 'https://' + suite.servername + '/elections/results/president'
+        location: 'https://' + suite.servername + '/elections/2016/results/president'
       },
       responseStatusCode: 301,
       scenarioDescription: 'Test HTTPS Everywhere; elections; non-secure',

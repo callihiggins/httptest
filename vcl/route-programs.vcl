@@ -4,7 +4,7 @@ sub recv_route_programs {
         if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/" || req.url.path ~ "^/programs/public/") {
 
             set req.http.x-nyt-route = "programs-gcs";
-            set req.http.x-nyt-backend = "programs_gcs";
+            set req.http.x-nyt-backend = "gcs_origin";
             set req.http.var-nyt-send-gdpr = "true";
         } else if (req.url.path ~ "^/programs/svc/shaq") {
             set req.http.x-nyt-route = "shaq-service";
@@ -31,16 +31,13 @@ sub miss_pass_route_programs {
 
     if (req.http.x-nyt-route == "programs-gcs") {
         unset bereq.http.cookie;
-        call set_programs_gcs_host;
+        call miss_pass_set_bucket_auth_headers;
     }
 }
 
 sub deliver_programs_api_version {
     if (req.http.x-nyt-route == "programs-service") {
         set resp.http.X-API-Version = "PS";
-    }
-    if (req.http.x-nyt-route == "programs-gcs") {
-        set resp.http.X-API-Version = "PGCS";
     }
 }
 
@@ -53,18 +50,6 @@ sub set_programs_web_host {
     } else {
         set bereq.http.host = "ftu-dot-nyt-betaprog-prd.appspot.com";
     }
-
-}
-
-sub set_programs_gcs_host {
-  # Configure access to Cloud Storage
-  if (req.http.var-nyt-env == "dev") {
-    set bereq.http.host = "nyt-betaprog-dev-assets.storage.googleapis.com";
-  } else if (req.http.var-nyt-env == "stg") {
-    set bereq.http.host = "nyt-betaprog-dev-assets.storage.googleapis.com";
-  } else {
-    set bereq.http.host = "nyt-betaprog-prd-assets.storage.googleapis.com";
-  }
 
 }
 

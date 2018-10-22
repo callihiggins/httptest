@@ -522,7 +522,6 @@ sub vcl_deliver {
   call deliver_route_newsdev_cloud_functions_access_control;
   call deliver_games_api_version;
   call deliver_profile_fe_api_version;
-  call deliver_adx_static_api_version;
   call deliver_elections_api_version;
   call deliver_tbooks_api_version;
   call deliver_content_api_version;

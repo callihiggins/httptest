@@ -85,9 +85,9 @@ function getScenarioEvents() {
       requestScheme: "https://",
       requestUri: "/programs/ftu/public/healthcheck.txt",
       responseHeaderMatches: {
-        "x-api-version": "F-PGCS",
         "x-frame-options": "DENY",
-        "x-nyt-route": "programs-gcs"
+        "x-nyt-route": "programs-gcs",
+        "x-nyt-backend": "gcs_origin"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
@@ -121,9 +121,9 @@ function getScenarioEvents() {
       requestScheme: "https://",
       requestUri: "/programs/public/healthcheck.txt",
       responseHeaderMatches: {
-        "x-api-version": "F-PGCS",
         "x-frame-options": "DENY",
-        "x-nyt-route": "programs-gcs"
+        "x-nyt-route": "programs-gcs",
+        "x-nyt-backend": "gcs_origin"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
