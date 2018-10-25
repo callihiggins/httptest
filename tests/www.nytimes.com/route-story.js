@@ -531,11 +531,11 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html',
       'responseHeaderMatches': {
-        'x-nyt-backend': 'article_fe',
-        'x-nyt-route': 'article'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story'
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'Non-OAK outside correct date range with no fancy header.',
+      'scenarioDescription': 'Vi article; Non-OAK outside correct date range with no fancy header.',
       'testId': 60,
     },
     {
