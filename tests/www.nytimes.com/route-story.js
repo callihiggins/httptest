@@ -799,6 +799,74 @@ function getScenarioEvents() {
       'scenarioDescription': 'POST method requests are not allowed for story route',
       'testId': 1700
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/es/2018/09/20/universal/tu-resumen-de-noticias-del-jueves.html',
+      method: 'GET',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': "projectvi_fe",
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Vi Internationalized URL /es',
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/es/2018/09/20/universal/tu-resumen-de-noticias-del-jueves.html?test=value',
+      method: 'GET',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': "projectvi_fe",
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Vi internationalized URL /es with query params',
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/es/interactive/2018/09/20/universal/test-spanish-interactive.html',
+      method: 'GET',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': "projectvi_fe",
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Vi internationalized interactive URL /es',
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/zh-hans/2018/08/15/universal/03china-coffins-hans.html',
+      method: 'GET',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': "projectvi_fe",
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Vi internationalized URL /zh-hans',
+    },
   ];
 
   return scenarios;

@@ -2,11 +2,20 @@ sub recv_route_story {
 
     # stories only serve from canonical www host
     if (req.http.var-nyt-canonical-www-host == "true") {
+      // Internationalized URLs https://jira.nyt.net/browse/DV-1731
+      declare local var.internationalized_url BOOL;
+      if (   req.url ~ "^/(a[fryz]|b[egns]|c[aksy]|d[ae]|e[lnotu]|f[abiory]|g[alnux]|h[eiruy]|i[dst]|j[av]|k[akmnou]|l[aitv]|m[gklnrst]|n[beln]|p[alst]|qu|r[mou]|s[aekloqrvwy]|t[aeghlrt]|u[krz]|vi|xh|yi|zh|zh-(CN|HK|TW|hans|hant)|zu)/"
+          || req.url.path ~ "^/es/.*\.html$") {
+        set var.internationalized_url = true;
+      } else {
+        set var.internationalized_url = false;
+      }
 
       # default route for stories is NYT5
       if (  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
           || req.url ~ "^/(aponline|reuters)/" // wire sources
           || req.url ~ "^/blog/" // all blogposts
+          || var.internationalized_url
           ) && req.url.path !~ "\.amp\.html$"
       ) {
 
@@ -35,8 +44,9 @@ sub recv_route_story {
         # are limited by a date range of no earlier than 2013/01/01. This date is going
         # to be extended in the future to include older articles and the code will
         # be updated accordingly.
-        if (
-             req.url ~ "^/(aponline/|reuters/)?201[3-9]"
+        if ((  req.url ~ "^/(aponline/|reuters/)?201[3-9]"
+            || var.internationalized_url
+          )
           && req.url.path !~ "\.amp\.html$" // exclude amp
           && req.url.path != "/2018/05/18/us/school-shooting-santa-fe-texas.html"
           && req.http.x-vi-story-opt != "0" // always out

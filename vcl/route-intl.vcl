@@ -10,14 +10,16 @@ sub recv_route_intl {
       error 770 var.target_url;
   }
 
-  if ((req.url == "/es") || (req.url ~ "^/es/")
-      || (req.url == "/global") || (req.url ~ "^/global/")) {
-      set req.http.x-nyt-route = "intl";
-      set req.http.x-nyt-backend = "intl_gcp";
-      set req.http.var-nyt-wf-auth = "true";
-      set req.http.var-nyt-send-gdpr = "true";
+  if (req.url == "/es" || (req.url ~ "^/es/" && req.url.path !~ "\.html$") ||
+      req.url == "/global" || req.url ~ "^/global/"
+  ) {
 
-      call recv_route_intl_filter_querystring;
+    set req.http.x-nyt-route = "intl";
+    set req.http.x-nyt-backend = "intl_gcp";
+    set req.http.var-nyt-wf-auth = "true";
+    set req.http.var-nyt-send-gdpr = "true";
+
+    call recv_route_intl_filter_querystring;
 
       unset req.http.Authorization;
       call recv_post_method_restricted;
