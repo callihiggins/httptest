@@ -32,11 +32,11 @@ sub recv_route_story {
         # Vi overrides story route based on date range and allocation.
         ##############################################################
         # The articles that are potentially served by the publishing pipeline
-        # are limited by a date range of no earlier than 2014/01/01. This date is going
+        # are limited by a date range of no earlier than 2013/01/01. This date is going
         # to be extended in the future to include older articles and the code will
         # be updated accordingly.
         if (
-             req.url ~ "^/(aponline/|reuters/)?201[4-9]"
+             req.url ~ "^/(aponline/|reuters/)?201[3-9]"
           && req.url.path !~ "\.amp\.html$" // exclude amp
           && req.url.path != "/2018/05/18/us/school-shooting-santa-fe-texas.html"
           && req.http.x-vi-story-opt != "0" // always out

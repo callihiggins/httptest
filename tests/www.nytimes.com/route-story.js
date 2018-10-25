@@ -313,12 +313,12 @@ function getScenarioEvents() {
       requestUri:
         '/2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
       responseHeaderMatches: {
-        'x-nyt-backend': "article_fe",
-        'x-nyt-route': 'article',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story'
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
-        'Test routing; article; NYT5; ensure Fastly pass; /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
+        'Test routing; article; VI; ensure Fastly pass; /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
       testId: 17
     },
     {
@@ -331,12 +331,12 @@ function getScenarioEvents() {
       requestScheme: 'https://',
       requestUri: '/2013/06/16/travel/travel-guide-new-york-for-kids.html',
       responseHeaderMatches: {
-        'x-nyt-backend': "article_fe",
-        'x-nyt-route': 'article',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story'
       },
       responseStatusCode: [200, 301, 404],
       scenarioDescription:
-        'Test routing; article; NYT5; ensure Fastly pass; /2013/06/16/travel/travel-guide-new-york-for-kids.html',
+        'Test routing; article; VI; ensure Fastly pass; /2013/06/16/travel/travel-guide-new-york-for-kids.html',
       testId: 168
     },
     {
