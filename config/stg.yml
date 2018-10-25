@@ -247,14 +247,14 @@ backends:
       window: "5"
 
   - name: "intl_gcp"
-    address: "intl.stg.nytimes.com"
+    address: "intl.stg.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "intl.stg.nytimes.com"
-    ssl_sni_hostname: "intl.stg.nytimes.com"
+    ssl_cert_hostname: "intl.stg.nyt.net"
+    ssl_sni_hostname: "intl.stg.nyt.net"
     healthcheck:
-      host: "intl.stg.nytimes.com"
+      host: "intl.stg.nyt.net"
       path: "/healthcheck.php"
       check_interval: "30000"
       expected_response: "200"
