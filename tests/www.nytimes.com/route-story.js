@@ -807,7 +807,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'https://',
-      requestUri: '/es/2018/09/20/universal/tu-resumen-de-noticias-del-jueves.html',
+      requestUri: '/es/2018/09/20/espanol/tu-resumen-de-noticias-del-jueves.html',
       method: 'GET',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-story',
@@ -824,7 +824,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'https://',
-      requestUri: '/es/2018/09/20/universal/tu-resumen-de-noticias-del-jueves.html?test=value',
+      requestUri: '/es/2018/09/20/espanol/tu-resumen-de-noticias-del-jueves.html?test=value',
       method: 'GET',
       responseHeaderMatches: {
         'x-nyt-route': 'vi-story',
