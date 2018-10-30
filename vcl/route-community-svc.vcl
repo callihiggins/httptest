@@ -6,8 +6,11 @@ sub recv_route_community_svc {
         set req.http.x-nyt-backend = "community_svc";
 
         # we only allow caching here if the command is not BasicInfo and the user is not logged in
-        if (req.url ~ "cmd=Get((?!BasicInfo)[^&]+)"
-            && (!req.http.var-cookie-nyt-s || req.http.var-cookie-nyt-s ~ "^0")) {
+        # Temporary fix: we are caching all community request to lower the community risk profile for elections.
+        # -- restore this logic in the if statement to stop caching nyt-s requests:
+        # && (!req.http.var-cookie-nyt-s || req.http.var-cookie-nyt-s ~ "^0")
+
+        if (req.url ~ "cmd=Get((?!BasicInfo)[^&]+)") {
 
             set req.http.x-nyt-route = "community-svc-cacheable";
 
