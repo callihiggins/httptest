@@ -5,7 +5,7 @@ sub miss_pass_set_bucket_auth_headers {
 
   if (!req.backend.is_shield) {
 
-    if(bereq.http.x-nyt-bucket-provider == "gcs") {
+    if (bereq.http.x-nyt-bucket-provider == "gcs") {
       set bereq.http.host = bereq.http.x-nyt-bucket-name + ".storage.googleapis.com";
     } else {
       set bereq.http.host = bereq.http.x-nyt-bucket-name + ".s3.amazonaws.com";

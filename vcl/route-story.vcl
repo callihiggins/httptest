@@ -54,11 +54,11 @@ sub recv_route_story {
             # if the request was sent to VI and determined
             # to be Incompatible then we don't send to VI again
             if (req.http.var-nyt-vi-story-compatibility == "Incompatible") {
-                set req.http.x-nyt-route = "article";
-                set req.http.x-nyt-backend = "article_fe";
-                set req.http.var-nyt-wf-auth = "true";
-                set req.http.var-nyt-send-gdpr = "true";
-                set req.url = querystring.filter_except(req.url, "nytapp");
+              set req.http.x-nyt-route = "article";
+              set req.http.x-nyt-backend = "article_fe";
+              set req.http.var-nyt-wf-auth = "true";
+              set req.http.var-nyt-send-gdpr = "true";
+              set req.url = querystring.filter_except(req.url, "nytapp");
             } else {
               set req.http.x-nyt-route = "vi-story";
               set req.http.x-nyt-backend = "projectvi_fe";
@@ -66,6 +66,8 @@ sub recv_route_story {
               set req.http.var-nyt-wf-auth = "true";
               set req.http.var-nyt-send-gdpr = "true";
               set req.url = querystring.filter_except(req.url, "nytapp");
+
+              call recv_route_vi_static_backup_gcs;
             }
         }
       }

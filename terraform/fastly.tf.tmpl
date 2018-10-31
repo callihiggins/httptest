@@ -790,4 +790,10 @@ resource "fastly_service_v1" "service" {
     content = "${file("../vcl/route-get-started.vcl")}"
   }
 
+  vcl {
+    name    = "route-vi-static-backup-gcs"
+    main    = false
+    content = "${file("../vcl/route-vi-static-backup-gcs.vcl")}"
+  }
+
 }

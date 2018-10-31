@@ -16,6 +16,7 @@ sub recv_route_homepage {
 
           call recv_post_method_restricted;
           call recv_homepage_abra_allocation;
+          call recv_route_vi_static_backup_gcs;
         }
 
     }

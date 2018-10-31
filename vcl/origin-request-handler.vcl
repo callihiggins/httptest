@@ -46,4 +46,6 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-error-retry;
   unset bereq.http.var-nyt-redirect-reason;
   unset bereq.http.var-nyt-elections-bucket;
+  unset bereq.http.var-is-vi-static-backup-enabled;
+  unset bereq.http.var-is-east-static-backup-enabled;
 }

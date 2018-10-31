@@ -3,12 +3,12 @@ sub fetch_deliver_stale_on_error {
 
   if (beresp.status >= 500 && beresp.status < 600) {
 
-      # Deliver stale if the object is avilable
+      # Deliver stale if the object is available
       if (stale.exists) {
         return(deliver_stale);
       }
 
-      # logic to retry the transcation
+      # logic to retry the transaction
       # routes can set req.http.var-nyt-error-retry to false to disable this
       if (   req.restarts < 1
           && req.http.var-nyt-error-retry != "false"

@@ -75,6 +75,7 @@ include "route-ask";
 include "route-device-detection-debug";
 include "route-trending";
 include "route-get-started";
+include "route-vi-static-backup-gcs";
 
 # backend response processing
 include "surrogate-key";
@@ -358,6 +359,7 @@ sub vcl_miss {
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
   call miss_pass_route_get_started;
+  call miss_pass_route_vi_static_backup_gcs;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -418,6 +420,7 @@ sub vcl_pass {
   call miss_pass_route_mwcm;
   call miss_pass_route_trending;
   call miss_pass_route_get_started;
+  call miss_pass_route_vi_static_backup_gcs;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -425,6 +428,10 @@ sub vcl_pass {
 }
 
 sub vcl_fetch {
+
+  # if the static backup is enabled,
+  # check that before handling 5xx errors
+  call fetch_route_vi_static_backup_gcs;
 
   # handle 5xx errors from the backend
   call fetch_deliver_stale_on_error;
@@ -467,7 +474,7 @@ sub vcl_fetch {
 
   # hacky, TODO: fix the backends
   # legacy cacheable content should not be private
-  if(req.http.x-nyt-route == "legacy-cacheable" && beresp.http.Cache-Control ~ "private"){
+  if (req.http.x-nyt-route == "legacy-cacheable" && beresp.http.Cache-Control ~ "private") {
     unset beresp.http.Cache-Control;
   }
 
@@ -477,8 +484,8 @@ sub vcl_fetch {
   # we are also going to remove set-cookie if RMID is there, no one is using it anymore
   # unfortunately this is sloppy but we do not have much choice
   # TODO: Backends stop setting nyt-a and RMID cookies
-  if(req.url !~ "^/adx") {
-    if(setcookie.get_value_by_name(beresp,"nyt-a") || setcookie.get_value_by_name(beresp,"RMID")){
+  if (req.url !~ "^/adx") {
+    if (setcookie.get_value_by_name(beresp,"nyt-a") || setcookie.get_value_by_name(beresp,"RMID")) {
       remove beresp.http.Set-Cookie;
     }
   }

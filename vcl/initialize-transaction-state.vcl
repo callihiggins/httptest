@@ -78,11 +78,20 @@ sub recv_initialize_transaction_state {
     # Set a var with the original querystring if it exists, some logic needs to use it in vcl_deliver
     # do not do this if this has been restarted or if we're on a shield pop
     # we will rely on the edge to send this to the shield
-    if(req.restarts == 0 && !req.http.x-nyt-shield-auth) {
+    if (req.restarts == 0 && !req.http.x-nyt-shield-auth) {
         if (req.url ~ "\?") {
             set req.http.x-nyt-orig-querystring = regsub(req.url, ".*(\?.*)", "\1");
         } else {
             set req.http.x-nyt-orig-querystring = "";
         }
     }
+
+    # (route-vi-static-backup-gcs)
+    # Manual switch to turn on/off the vi static backup routing.
+    # In the case that we want to failover,
+    # set the following to "true" and redeploy.
+    set req.http.var-is-vi-static-backup-enabled = "false";
+    # The default static backup will be read from the Central cluster.
+    # Failover to East by setting the following to "true".
+    set req.http.var-is-east-static-backup-enabled = "false";
 }
