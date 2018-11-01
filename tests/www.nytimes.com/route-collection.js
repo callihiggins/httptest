@@ -349,8 +349,8 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/section/upshot',
       'responseHeaderMatches': {
-        'x-nyt-route': 'collection',
-        'x-nyt-backend': 'collection_fe',
+        'x-nyt-route': 'vi-collection',
+        'x-nyt-backend': 'projectvi_fe',
         'x-gdpr': '0',
       },
       'responseHeaderPattern': {
