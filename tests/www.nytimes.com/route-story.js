@@ -694,8 +694,8 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html',
       'responseHeaderMatches': {
-        'x-nyt-backend': 'article_fe',
-        'x-nyt-route': 'article'
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story'
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK outside correct date range with no fancy header.',
