@@ -16,7 +16,6 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestHeaders': {
-        'Host': suite.servername,
         'vi-static-backup-test': 'true',
       },
       'requestScheme': 'https://',
@@ -31,27 +30,26 @@ function getScenarioEvents()
       'testId': 1,
     },
     {
-        'id': 'FunctionalTestScenarioViStaticBackupStory',
-        'isDeployedInEnv': {
-          'prd': true,
-          'stg': true,
-          'dev': true,
-        },
-        'requestHeaders': {
-          'Host': suite.servername,
-          'vi-static-backup-test': 'true',
-        },
-        'requestScheme': 'https://',
-        'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
-        'responseHeaderMatches': {
-          'x-nyt-route': 'vi-story',
-          'x-nyt-backend': 'projectvi_static_backup_gcs',
-        },
-        'responseHeadersPresent': ["x-guploader-uploadid"],
-        'responseStatusCode': [503],
-        'scenarioDescription': 'Test static backup of a story that we know will not exist in the backup',
-        'testId': 1,
-      }
+      'id': 'FunctionalTestScenarioViStaticBackupStory',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaders': {
+        'vi-static-backup-test': 'true',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2017/10/16/upshot/this-is-a-test-article.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': 'projectvi_static_backup_gcs',
+      },
+      'responseHeadersPresent': ["x-guploader-uploadid"],
+      'responseStatusCode': [503],
+      'scenarioDescription': 'Test static backup of a story that we know will not exist in the backup',
+      'testId': 1,
+    }
   ];
 
   return scenarios;
