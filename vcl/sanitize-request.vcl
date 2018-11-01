@@ -10,6 +10,9 @@ sub recv_sanitize_request {
     	set req.url = regsuball(req.url, "[\/]+", "\/");
     }
 
+    # convert host header to all lowercase
+    set req.http.host = std.tolower(req.http.host);
+
     # remove query strings like login-email, login-password etc.
     if (req.url ~ "[?&]login-[^=&]+") {
     	declare local var.target_url STRING;
