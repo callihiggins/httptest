@@ -348,11 +348,12 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/section/upshot',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'collection',
+        'x-nyt-backend': 'collection_fe',
+        'x-gdpr': '0',
+      },
       'responseHeaderPattern': {
-        'x-nyt-route': /(vi-collection|collection)/,
-        'x-nyt-backend': /(projectvi_fe|collection_fe)/,
-        'x-gdpr': /0/,
-        'fastly-restarts': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       'responseStatusCode': [200, 404],
