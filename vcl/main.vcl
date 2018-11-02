@@ -443,6 +443,7 @@ sub vcl_fetch {
   call fetch_elections_redirect;
   call fetch_route_newsdev_gke;
   call fetch_route_newsdev_gcs;
+  call fetch_route_elections;
   call fetch_route_community_svc;
   call fetch_route_intl_headers;
   call fetch_route_newsgraphics_gcs;

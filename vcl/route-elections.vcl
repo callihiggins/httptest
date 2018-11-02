@@ -37,6 +37,20 @@ sub recv_route_elections {
     }
 }
 
+sub fetch_route_elections {
+  if (req.http.x-nyt-route == "elections") {
+
+    # on GCS/S3 unauthorized or not found
+    if (beresp.status == 404 || beresp.status == 403) {
+
+      # deliver cached response if available
+      if (stale.exists) {
+        return(deliver_stale);
+      }
+    }
+  }
+}
+
 # Sets backend request headers sent to GCS or S3 used to
 # authenticate the request.
 sub miss_pass_route_elections {
