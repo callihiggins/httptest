@@ -42,9 +42,13 @@ sub miss_pass_route_vi_static_backup_gcs {
 sub fetch_route_vi_static_backup_gcs {
   # If the requested content does not exist in the static backup.
   if (req.http.var-is-vi-static-backup-enabled == "true"
-      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "vi-homepage")
-      && beresp.status != 200) {
-    # Set the status to 503 so that Fastly will try to serve stale.
-    set beresp.status = 503;
+      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "vi-homepage")) {
+    # Remove cache from the private bucket response which has a 0 TTL
+    unset beresp.http.Cache-Control;
+    unset beresp.http.Expires;
+    if (beresp.status != 200) {
+      # Set the status to 503 so that Fastly will try to serve stale.
+      set beresp.status = 503;
+    }
   }
 }
