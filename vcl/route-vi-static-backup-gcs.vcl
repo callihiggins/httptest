@@ -1,10 +1,4 @@
 sub recv_route_vi_static_backup_gcs {
-  # If the request is internal and we detect our backup
-  # unit test header then manually turn on the switch.
-  if (req.http.x-nyt-nyhq-access && req.http.vi-static-backup-test == "true") {
-    set req.http.var-is-vi-static-backup-enabled = "true";
-  }
-
   # If the static backup is enabled, point to the gcs backend.
   if (req.http.var-is-vi-static-backup-enabled == "true") {
     set req.http.var-nyt-wf-auth = "false";
@@ -13,7 +7,8 @@ sub recv_route_vi_static_backup_gcs {
 }
 
 sub miss_pass_route_vi_static_backup_gcs {
-  if (req.http.var-is-vi-static-backup-enabled == "true") {
+  if (req.http.var-is-vi-static-backup-enabled == "true"
+      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "vi-homepage")) {
     unset bereq.http.cookie;
 
     # Prepend the path to the static backup in the gcs bucket.
@@ -47,6 +42,7 @@ sub miss_pass_route_vi_static_backup_gcs {
 sub fetch_route_vi_static_backup_gcs {
   # If the requested content does not exist in the static backup.
   if (req.http.var-is-vi-static-backup-enabled == "true"
+      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "vi-homepage")
       && beresp.status != 200) {
     # Set the status to 503 so that Fastly will try to serve stale.
     set beresp.status = 503;

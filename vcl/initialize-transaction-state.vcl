@@ -91,6 +91,11 @@ sub recv_initialize_transaction_state {
     # In the case that we want to failover,
     # set the following to "true" and redeploy.
     set req.http.var-is-vi-static-backup-enabled = "false";
+    # If the request is internal and we detect our backup
+    # unit test header then manually turn on the switch.
+    if (req.http.x-nyt-nyhq-access && req.http.vi-static-backup-test == "true") {
+      set req.http.var-is-vi-static-backup-enabled = "true";
+    }
     # The default static backup will be read from the Central cluster.
     # Failover to East by setting the following to "true".
     set req.http.var-is-east-static-backup-enabled = "false";
