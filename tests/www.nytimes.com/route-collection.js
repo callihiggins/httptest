@@ -535,6 +535,27 @@ function getScenarioEvents()
       'scenarioDescription': 'POST method requests are not allowed for collection route',
       'testId': 220
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForDiningReviewPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/reviews/dining',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'vi-collection',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-gdpr': '0',
+      },
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
+      },
+      'responseStatusCode':  [200, 404],
+      'scenarioDescription': 'Test /reviews/dining collection',
+      'testId': 221,
+    },    
   ];
 
   return scenarios;
