@@ -125,7 +125,7 @@ sub recv_route_mwcm {
 }
 
 sub deliver_route_mwcm {
-    if (req.http.x-nyt-route == "mwcm") {
+    if (req.http.x-nyt-route ~ "^mwcm") {
 
         if (req.http.x-nyt-nyhq-access) {
             # sets the response header only for the internal ips.
@@ -147,6 +147,16 @@ sub deliver_route_mwcm {
                 set resp.http.Location = resp.http.Location req.http.x-nyt-orig-querystring;
             }
         }
+
+        if (req.http.Origin ~ "\.nyt(imes)?\.(com|net)(:\d+)?$") {
+            ## only allow nyt.net and nytimes.com domain for hace access control
+            set resp.http.Access-Control-Allow-Origin = req.http.Origin;
+            set resp.http.Access-Control-Allow-Credentials = "true";
+        } else if (!req.http.Origin || req.http.Origin == "null" ) {
+            ## this is to support IOS requests. They don't send Header Origin
+            set resp.http.Access-Control-Allow-Origin = "*";
+            set resp.http.Access-Control-Allow-Credentials = "true";
+        }
     }
 }
 
@@ -154,7 +164,7 @@ sub miss_pass_route_mwcm {
     #https://community.fastly.com/t/pull-cookie-values-without-regular-expressions/430
     #https://www.getpagespeed.com/server-setup/varnish/varnish-cache-cookies
     # logic to allow NYT-S and nyt-a cookies to mwcm backend 
-    if (req.http.x-nyt-route == "mwcm" && req.http.var-nyt-ismagnolia == "true") {
+    if (req.http.x-nyt-route ~ "^mwcm" && req.http.var-nyt-ismagnolia == "true") {
         set bereq.http.cookie = "";
             
         if ( req.http.cookie ~ "nyt-a=" ) {

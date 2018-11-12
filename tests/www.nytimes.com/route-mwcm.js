@@ -1230,6 +1230,93 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM /marketing/tests headers test, query params preserved',
       'testId': 53,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaders': {
+        'Origin': 'http://www.vi.nytimes.com:3000'
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'access-control-allow-origin': 'http://www.vi.nytimes.com:3000',
+        'access-control-allow-credentials': 'true',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription CORS test',
+      'testId': 54,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaders': {
+        'Origin': 'null'
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'access-control-allow-origin': '*',
+        'access-control-allow-credentials': 'true',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription CORS test - should not fail if no origin header or origin has a null value',
+      'testId': 55,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'access-control-allow-origin': '*',
+        'access-control-allow-credentials': 'true',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription CORS test - should not fail if no origin header or origin has a null value',
+      'testId': 56,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaders': {
+        'Origin': 'http://www.facebook.com'
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeadersNotPresent': [
+        'access-control-allow-origin',
+        'access-control-allow-credentials'
+      ],
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM subscription CORS should fail if its not a nytimes domain/sub-domain',
+      'testId': 57,
+    },
   ];
 
   return scenarios;
