@@ -103,20 +103,14 @@ sub recv_homepage_abra_allocation {
     # - `O_control`. Receives 1% of traffic (values 0 <= p < floor(0.01 * 2^32)).
     # - `1_variant`. Receives 1% of traffic (values floor(0.01 * 2^32) <= p < floor(0.02 * 2^32)).
     # - `2_unallocated`. Receives 98% of traffic (values floor(0.02 * 2^32) <= p < floor(1.00 * 2^32)).
-    set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " HOME_midterms");
+    set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " HOME_video_promo_media");
     set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
     set var.p = std.strtol(var.hash, 16);
 
-    if (var.p < 0042949672) { # floor(0.01 * 2^32)
+    if (var.p < 2147483648) { # floor(0.5 * 2^32)
       set var.test_group = "0_control";
-    } else if (var.p < 0085899345) { # floor(0.02 * 2^32)
-      set var.test_group = "1_variant";
-    } else if (var.p < 0128849016) { # floor(0.03 * 2^32)
-      set var.test_group = "2_variant";
-    } else if (var.p < 0171798688) { # floor(0.04 * 2^32)
-      set var.test_group = "3_variant";
     } else {
-      set var.test_group = "4_unallocated";
+      set var.test_group = "1_variant";
     }
 
     # We pass a generically-named header `x-vi-abtest-www-hp` to the Vi server, which
