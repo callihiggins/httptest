@@ -31,19 +31,8 @@ sub deliver_response_headers {
     } else {
         # set these headers for internal requests
         set resp.http.x-nyt-fastly-info-state = if(fastly_info.state,fastly_info.state,"NULL");
-        set resp.http.x-nyt-continent = req.http.x-nyt-continent;
-        set resp.http.x-nyt-country = req.http.x-nyt-country;
-        set resp.http.x-nyt-region = req.http.x-nyt-region;
-        set resp.http.x-nyt-latitude = req.http.x-nyt-latitude;
-        set resp.http.x-nyt-longitude = req.http.x-nyt-longitude;
-        set resp.http.x-nyt-city = req.http.x-nyt-city;
-        set resp.http.x-nyt-gmt-offset = req.http.x-nyt-gmt-offset;
-        set resp.http.x-nyt-postal-code = req.http.x-nyt-postal-code;
         set resp.http.device_type = req.http.device_type;
         set resp.http.x-nyt-final-url = req.url;
-        if (req.http.x-nyt-geo-hash) {
-            set resp.http.x-nyt-geo-hash = req.http.x-nyt-geo-hash;
-        }
     }
 
     if (resp.http.X-API-Version) {

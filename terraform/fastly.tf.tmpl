@@ -329,6 +329,11 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "shared-geoip-headers-init"
+    content = "${module.shared_vcl.geoip_headers_init}"
+  }
+
+  vcl {
     name    = "surrogate-key"
     main    = false
     content = "${file("../vcl/surrogate-key.vcl")}"
@@ -476,12 +481,6 @@ resource "fastly_service_v1" "service" {
     name    = "route-backend-health-report"
     main    = false
     content = "${file("../vcl/route-backend-health-report.vcl")}"
-  }
-
-  vcl {
-    name    = "geoip-header-init"
-    main    = false
-    content = "${file("../vcl/geoip-header-init.vcl")}"
   }
 
   vcl {

@@ -2,13 +2,13 @@
 include "acl-googlebot";
 include "shared-access-control";
 include "shared-vcl-version";
+include "shared-geoip-headers-init";
 
 # initialization
 include "error-pages";
 include "sanitize-request";
 include "initialize-transaction-state";
 include "geoip-homepage-briefing-map";
-include "geoip-header-init";
 include "device-detection-init";
 include "frame-buster";
 include "auth-headers";
@@ -123,7 +123,7 @@ sub vcl_recv {
 
   # initialize geo ip headers only on the edge
   if (!req.http.x-nyt-shield-auth) {
-    call recv_geo_ip;
+    call shared_recv_geoip_headers_init;
   }
 
   # calling the GDPR setup prior to routes to capture cookie and
@@ -557,6 +557,7 @@ sub vcl_deliver {
   call deliver_response_headers;
   call deliver_debug_response_headers;
   call deliver_homepage_set_debug_header;
+  call shared_deliver_geoip_response_headers;
 
   # slideshow incompatbility fallback
   call deliver_slideshow_fallback;
