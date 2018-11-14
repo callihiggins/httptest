@@ -254,20 +254,39 @@ resource "fastly_service_v1" "service" {
     type          = "request"
   }
 
-  # this does not currently log anything, it's only providing the log stream configuration, see the conditional
-  sumologic {
+
+  ########### Beginning of Sumolog integration #############
+  {{ $sumo_log := (datasource "config").sumo_log }}
+  sumologic = [
+  {
     format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\"-\")}V] pagetype=[%{if(req.http.x-nyt-route,req.http.x-nyt-route,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.var-nyt-redirect-reason,req.http.var-nyt-redirect-reason,\"\")}V"
     format_version     = "2"
     message_type       = "classic"
     name               = "web${var.env}-www"
     response_condition = "do-not-log"
     url                = "${var.sumologic_endpoint[var.env]}"
+  },
+  {
+    name               = "${var.sumo_logger_name[var.env]}"
+    url                = "${var.sumologic_endpoint_json[var.env]}"
+    response_condition = "www-json-log"
+    format_version     = "2"
+    format             = "{{$sumo_log.format}}"
+    message_type       = "blank"
   }
+  ]
 
   condition {
     name      = "do-not-log"
     priority  = 10
     statement = "!req.url"
+    type      = "RESPONSE"
+  }
+
+  condition {
+    name      = "www-json-log"
+    priority  = 10
+    statement = "((randombool(1,100) && req.http.var-nyt-env == \"prd\" && req.url !~ \"^/svc/(web-products|comscore)\" && req.url !~ \"^/adx/\" && req.http.x-nyt-route != \"vi-assets\") || (req.http.var-nyt-env != \"prd\") || (resp.status >= 400 && req.http.var-nyt-env == \"prd\"))"
     type      = "RESPONSE"
   }
 
@@ -278,6 +297,7 @@ resource "fastly_service_v1" "service" {
     statement = "(req.url !~ \"^/svc/\" && req.url !~ \"^/adx/\") || resp.status >= 500"
     type      = "RESPONSE"
   }
+  ########### End of Sumolog integration #############
 
   # bigquery logging integration
   {{ $bigquery_log := (datasource "config").bigquery_log }}
