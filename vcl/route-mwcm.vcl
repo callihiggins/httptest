@@ -127,7 +127,7 @@ sub recv_route_mwcm {
 sub deliver_route_mwcm {
     if (req.http.x-nyt-route ~ "^mwcm") {
 
-        if (req.http.x-nyt-nyhq-access) {
+        if (req.http.x-nyt-nyhq-access == "1") {
             # sets the response header only for the internal ips.
             # these headers will be useful for troubleshooting purpose.
             set resp.http.x-nyt-currency = req.http.x-nyt-currency;
@@ -186,6 +186,18 @@ sub miss_pass_route_mwcm {
             #checks the presence of the nyt-mwcm
             # allows nyt-mwcm to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " nyt-mwcm=" req.http.cookie:nyt-mwcm ";";
+        }
+
+        if (req.http.cookie ~ "ab7=" && req.http.x-nyt-nyhq-access == "1") {
+            #checks the presence of ab7 and nyhd 
+            # allows ab7 to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " ab7=" req.http.cookie:ab7 ";";
+        }
+
+        if (req.http.cookie ~ "nyt-d=") {
+            #checks the presence of the nyt-d
+            # allows nyt-d to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " nyt-d=" req.http.cookie:nyt-d ";";
         }
     }
 }
