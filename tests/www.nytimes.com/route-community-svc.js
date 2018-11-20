@@ -77,10 +77,10 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'community_svc',
         'x-frame-options': 'DENY',
-        'x-nyt-route': 'community-svc-cacheable',
+        'x-nyt-route': 'community-svc',
       },
       'responseStatusCode': 200,
-      'scenarioDescription': 'route-community-svc: Temporarily cacheable during elections',
+      'scenarioDescription': 'route-community-svc: GetCommentSummary is not cacheable if user is logged in, https',
       'skipJquerySignatureCheck': false,
       'testId': 3,
     },
@@ -114,12 +114,31 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': 'community_svc',
         'x-frame-options': 'DENY',
+        'x-nyt-route': 'community-svc',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'route-community-svc: GetCommentSummary is not cacheable if user is logged in, https',
+      'skipJquerySignatureCheck': false,
+      'testId': 5,
+    },
+    {
+      'isDeployedInEnv': {
+        'dev': true,
+        'stg': true,
+        'prd': true,
+      },
+      'requestHeaderCookie': ['NYT-S=' + suite.cookies.nyt_s],
+      'requestScheme': 'https://',
+      'requestUri': '/svc/community/V3/requestHandler?cacheable=true&callback=jQuery21407773274087830635_1520633908267&url=https%253A%252F%252Fwww.nytimes.com%252F2018%252F03%252F08%252Fus%252Fpolitics%252Ftrump-meeting-kim-jong-un.html&cmd=GetCommentSummary&method=get&_=1520633908271',
+      'responseHeaderMatches': {
+        'x-nyt-backend': 'community_svc',
+        'x-frame-options': 'DENY',
         'x-nyt-route': 'community-svc-cacheable',
       },
       'responseStatusCode': 200,
-      'scenarioDescription': 'route-community-svc: GetCommentSummary is temporarily cachable for logged in users during the election.',
+      'scenarioDescription': 'route-community-svc: cacheable=true routes are cacheable even with cookie present, https',
       'skipJquerySignatureCheck': false,
-      'testId': 5,
+      'testId': 6,
     },
   ]
   return scenarios;
