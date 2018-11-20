@@ -6,3 +6,9 @@ sub recv_route_recommendations {
     set req.http.var-nyt-send-gdpr = "true";
   }
 }
+
+sub miss_pass_route_recommendation {
+  if (req.http.x-nyt-route == "recommendation") {
+    set bereq.url = "/recommendations" + bereq.url;
+  }
+}

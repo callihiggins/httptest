@@ -360,6 +360,7 @@ sub vcl_miss {
   call miss_pass_route_mwcm;
   call miss_pass_route_get_started;
   call miss_pass_route_vi_static_backup_gcs;
+  call miss_pass_route_recommendation;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
