@@ -1317,6 +1317,26 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription CORS should fail if its not a nytimes domain/sub-domain',
       'testId': 57,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/ads/tests/fastly.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeadersNotPresent': [
+        'x-frame-options',
+      ],
+      'responseStatusCode': [200],
+      'scenarioDescription': 'WCM /subscription/ads : should not the header x-frame-options: deny',
+      'testId': 58,
+    },
   ];
 
   return scenarios;

@@ -10,6 +10,7 @@ sub deliver_frame_buster {
         && req.url.path !~ "^/newsgraphics/"
         && req.url.path !~ "^/video/players/offsite/"
         && req.url.path !~ "^/times-journeys/(.*)terms(.*)"
+        && req.url.path !~ "^/subscription/ads/"
         ) {
 
     	# not in the whitelist, check the Referer
