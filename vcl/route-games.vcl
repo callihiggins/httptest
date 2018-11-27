@@ -73,7 +73,7 @@ sub set_games_svc_host {
 
 sub set_games_web_host {
     if (req.http.var-nyt-env == "dev") {
-        set bereq.http.host = "puzzles.dev.nyt.net";
+        set bereq.http.host = "web.games.sbx.nyt.net";
     } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else {
@@ -89,8 +89,9 @@ sub set_games_assets_host {
 }
 
 sub set_games_phoenix_host {
-    if (req.http.var-nyt-env == "dev" ||
-        req.http.var-nyt-env == "stg") {
+    if (req.http.var-nyt-env == "dev") {
+        set bereq.http.host = "phoenix.games.sbx.nyt.net";
+    } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "phoenix.games.dev.nyt.net";
     } else {
         set bereq.http.host = "phoenix.games.prd.nyt.net";

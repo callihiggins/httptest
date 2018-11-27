@@ -229,14 +229,14 @@ backends:
       window: "5"
 
   - name: "games_web"
-    address: "puzzles.dev.nyt.net"
+    address: "web.games.sbx.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "puzzles.dev.nyt.net"
-    ssl_sni_hostname: "puzzles.dev.nyt.net"
+    ssl_cert_hostname: "web.games.sbx.nyt.net"
+    ssl_sni_hostname: "web.games.sbx.nyt.net"
     healthcheck:
-      host: "puzzles.dev.nyt.net"
+      host: "web.games.sbx.nyt.net"
       path: "/health-web"
       check_interval: "10000"
       expected_response: "200"
@@ -246,14 +246,14 @@ backends:
       window: "5"
 
   - name: "games_phoenix"
-    address: "phoenix.games.dev.nyt.net"
+    address: "phoenix.games.sbx.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "puzzles.dev.nyt.net"
-    ssl_sni_hostname: "puzzles.dev.nyt.net"
+    ssl_cert_hostname: "web.games.sbx.nyt.net"
+    ssl_sni_hostname: "web.games.sbx.nyt.net"
     healthcheck:
-      host: "phoenix.games.dev.nyt.net"
+      host: "phoenix.games.sbx.nyt.net"
       path: "/healthz"
       check_interval: "10000"
       expected_response: "200"
@@ -997,4 +997,3 @@ sumo_log:
     \"restarts\": \"%{req.restarts}V\",
     \"restart_reason\": \"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\"
     }
-
