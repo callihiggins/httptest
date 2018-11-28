@@ -25,7 +25,7 @@ function getScenarioEvents()
         'x-nyt-backend': 'newsdev_elections',
       },
       'responseHeaderPattern': {
-        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/elections\/results\/.+/
+        'location': /https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/interactive\/2018\/11\/06\/us\/elections\/results.+/
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'content-elections: Test elections; obey redirects configured by x-amz-meta-website-redirect-location header',
