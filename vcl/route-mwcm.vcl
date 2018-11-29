@@ -199,5 +199,17 @@ sub miss_pass_route_mwcm {
             # allows nyt-d to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " nyt-d=" req.http.cookie:nyt-d ";";
         }
+
+        if (req.http.cookie ~ "edu_cig_opt=") {
+            #checks the presence of the edu_cig_opt
+            # allows edu_cig_opt to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " edu_cig_opt=" req.http.cookie:edu_cig_opt ";";
+        }
+
+        if (req.http.cookie ~ "b2b_cig_opt=") {
+            #checks the presence of the b2b_cig_opt
+            # allows b2b_cig_opt to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " b2b_cig_opt=" req.http.cookie:b2b_cig_opt ";";
+        }
     }
 }

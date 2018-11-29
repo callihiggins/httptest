@@ -467,7 +467,7 @@ backends:
       path: "/.status"
       check_interval: "60000"
       expected_response: "200"
-      initial: "4"
+      initial: "2"
       threshold: "1"
       timeout: "3000"
       window: "2"

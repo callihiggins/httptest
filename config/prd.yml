@@ -497,12 +497,12 @@ backends:
     healthcheck:
       host: "mwcm-pub.gtm.nytimes.com"
       path: "/.status"
-      check_interval: "5000"
+      check_interval: "60000"
       expected_response: "200"
-      initial: "4"
-      threshold: "3"
+      initial: "2"
+      threshold: "1"
       timeout: "3000"
-      window: "4"
+      window: "2"
 
   - name: "amp"
     address: "amp-dot-nyt-wfvi-prd.appspot.com"
