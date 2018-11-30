@@ -4,10 +4,68 @@ sub recv_route_real_estate {
         || req.url ~ "^/real-estate?"
         || req.url ~ "^/real-estate$"
     ) {
+        // set req.http.X-UA-Device
         set req.http.x-nyt-route = "real-estate";
         set req.http.x-nyt-backend = "realestate_fe";
         set req.http.var-nyt-wf-auth = "true";
         set req.http.var-nyt-send-gdpr = "true";
+
+        if (req.http.device_type == "mobile") {
+          declare local var.target_url STRING;
+          // https://www.nytimes.com/real-estate/usa/ny/brooklyn/clinton-hill/homes-for-rent/333-washington-avenue/46-3257305
+          if ( req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ){
+              set var.target_url = "https://m.realestatelistings.nytimes.com/listing/" re.group.4;
+              error 770 var.target_url;
+          }
+
+          # https://www.nytimes.com/real-estate/usa/ny/new-york/upper-east-side/homes-for-sale
+          if ( req.url ~ "^/real-estate/([^\/]+)/([^\/]+)/([^\/]+)/([^\/]+)/homes-for-sale" ){
+              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=sales&search=See+Available+Homes&location=" re.group.4 "-" re.group.3 "-" re.group.2 "-" re.group.1;
+              error 770 var.target_url;
+          }
+
+          # https://www.nytimes.com/real-estate/usa/ny/new-york/upper-east-side/homes-for-rent
+          if ( req.url ~ "^/real-estate/([^\/]+)/([^\/]+)/([^\/]+)/([^\/]+)/homes-for-rent" ){
+              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=rentals&search=See+Available+Homes&location=" re.group.4 "-" re.group.3 "-" re.group.2 "-" re.group.1;
+              error 770 var.target_url;
+          }
+
+          #  https://www.nytimes.com/real-estate/homes-for-sale/?locations%5B%5D=upper-west-side-new-york-ny-usa&locations%5B%5D=lower-east-side-new-york-ny-usa&redirect=find-a-home
+          if ( req.url ~ "locations[^=]+=([^&]+)" && req.url ~ "/real-estate/homes-for-sale" ){
+              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=sales&search=See+Available+Homes&location=" re.group.0;
+              error 770 var.target_url;
+          }
+
+          # https://www.nytimes.com/real-estate/homes-for-rent/?locations%5B%5D=upper-west-side-new-york-ny-usa&locations%5B%5D=lower-east-side-new-york-ny-usa&redirect=find-a-home
+          if ( req.url ~ "locations[^=]+=([^&]+)" && req.url ~ "/real-estate/homes-for-rent" ){
+              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=rentals&search=See+Available+Homes&location=" re.group.0;
+              error 770 var.target_url;
+          }
+
+          if ( req.url ~ "^/real-estate/find-a-home"){
+              error 770 "https://m.realestatelistings.nytimes.com/";
+          }
+
+          if ( req.url ~ "^/real-estate/my-real-estate" ){
+              error 770 "https://m.realestatelistings.nytimes.com/savedlistings";
+          }
+
+          if ( req.url ~ "^/real-estate/(.*)/building/" ){
+              error 770 "https://m.realestatelistings.nytimes.com/";
+          }
+
+          if ( req.url ~ "^/real-estate/(.*)/building/" ){
+              error 770 "https://m.realestatelistings.nytimes.com/";
+          }
+
+          if ( req.url ~ "^/real-estate/homes-for-rent" ){
+              error 770 "https://m.realestatelistings.nytimes.com/?channel=rentals";
+          }
+
+          if ( req.url ~ "^/real-estate/homes-for-sale" ){
+              error 770 "https://m.realestatelistings.nytimes.com/?channel=sales";
+          }
+        }
 
         # we have to pass directly here
         # so that we don't cache private user data.
