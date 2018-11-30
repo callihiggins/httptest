@@ -181,7 +181,7 @@ function getScenarioEvents() {
         '/real-estate/homes-for-sale/?locations%5B%5D=upper-west-side-new-york-ny-usa&redirect=find-a-home',
       responseHeaderMatches: {
         location:
-          'https://m.realestatelistings.nytimes.com/search?channel=sales&location=upper-west-side-new-york-ny-usa&search=See+Available+Homes',
+          'https://m.realestatelistings.nytimes.com/search?channel=sales&search=See+Available+Homes&location=upper-west-side-new-york-ny-usa',
       },
       responseStatusCode: 301,
       scenarioDescription:
@@ -205,7 +205,7 @@ function getScenarioEvents() {
         '/real-estate/homes-for-rent/?locations%5B%5D=upper-west-side-new-york-ny-usa&redirect=find-a-home',
       responseHeaderMatches: {
         location:
-          'https://m.realestatelistings.nytimes.com/search?channel=rentals&location=upper-west-side-new-york-ny-usa&search=See+Available+Homes',
+          'https://m.realestatelistings.nytimes.com/search?channel=rentals&search=See+Available+Homes&location=upper-west-side-new-york-ny-usa',
       },
       responseStatusCode: 301,
       scenarioDescription:

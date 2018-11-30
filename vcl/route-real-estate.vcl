@@ -10,7 +10,7 @@ sub recv_route_real_estate {
         set req.http.var-nyt-wf-auth = "true";
         set req.http.var-nyt-send-gdpr = "true";
 
-        if (req.http.device_type == "mobile") {
+        if (req.http.device_type ~ "phone") {
           declare local var.target_url STRING;
           // https://www.nytimes.com/real-estate/usa/ny/brooklyn/clinton-hill/homes-for-rent/333-washington-avenue/46-3257305
           if ( req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ){
@@ -31,14 +31,14 @@ sub recv_route_real_estate {
           }
 
           #  https://www.nytimes.com/real-estate/homes-for-sale/?locations%5B%5D=upper-west-side-new-york-ny-usa&locations%5B%5D=lower-east-side-new-york-ny-usa&redirect=find-a-home
-          if ( req.url ~ "locations[^=]+=([^&]+)" && req.url ~ "/real-estate/homes-for-sale" ){
-              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=sales&search=See+Available+Homes&location=" re.group.0;
+          if ( req.url ~ "/real-estate/homes-for-sale" && req.http.x-nyt-orig-querystring ~ "locations[^=]+=([^&]+)" ){
+              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=sales&search=See+Available+Homes&location=" re.group.1;
               error 770 var.target_url;
           }
 
           # https://www.nytimes.com/real-estate/homes-for-rent/?locations%5B%5D=upper-west-side-new-york-ny-usa&locations%5B%5D=lower-east-side-new-york-ny-usa&redirect=find-a-home
-          if ( req.url ~ "locations[^=]+=([^&]+)" && req.url ~ "/real-estate/homes-for-rent" ){
-              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=rentals&search=See+Available+Homes&location=" re.group.0;
+          if ( req.url ~ "/real-estate/homes-for-rent" && req.http.x-nyt-orig-querystring ~ "locations[^=]+=([^&]+)" ){
+              set var.target_url = "https://m.realestatelistings.nytimes.com/search?channel=rentals&search=See+Available+Homes&location=" re.group.1;
               error 770 var.target_url;
           }
 

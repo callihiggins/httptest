@@ -63,7 +63,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'real-estate',
         'x-nyt-backend': 'realestate_fe',
-        'location': 'https://m.realestatelistings.nytimes.com/search?channel=sales&location=new-york-ny-usa&search=See+Available+Homes'
+        'location': 'https://m.realestatelistings.nytimes.com/search?channel=sales&search=See+Available+Homes&location=new-york-ny-usa'
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test realestate mobile redirect',
@@ -84,7 +84,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'real-estate',
         'x-nyt-backend': 'realestate_fe',
-        'location': 'https://m.realestatelistings.nytimes.com/search?channel=rentals&location=new-york-ny-usa&search=See+Available+Homes'
+        'location': 'https://m.realestatelistings.nytimes.com/search?channel=rentals&search=See+Available+Homes&location=new-york-ny-usa'
       },
       'responseStatusCode': 301,
       'scenarioDescription': 'Test realestate mobile redirect',
