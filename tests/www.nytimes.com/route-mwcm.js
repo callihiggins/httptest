@@ -1337,6 +1337,26 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM /subscription/ads : should not the header x-frame-options: deny',
       'testId': 58,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?mwcm-preview=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-preview',
+        'x-nyt-backend': 'mwcm_preview',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/subscription/hd/1041.html?mwcm-preview=true',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route',
+      'testId': 59,
+    },
   ];
 
   return scenarios;

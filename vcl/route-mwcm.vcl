@@ -5,7 +5,7 @@ sub recv_route_mwcm {
         if (    req.url ~ "^/subscription"  ||
                 req.url ~ "^/marketing(/)?" ||
                 req.url == "/services/mobile" ||
-                req.url ~ "^/services/mobile/" 
+                req.url ~ "^/services/mobile/"
             ) {
 
             set req.http.x-nyt-currency = table.lookup(subscription_currency_map, client.geo.country_code, "USD");
@@ -22,7 +22,7 @@ sub recv_route_mwcm {
                   set req.url = querystring.filter_except(req.url, "ptr");
               } else {
                   # excludes "exclude_optimizely", "exclude_jsonkidd", "exclude_abra" qs parameters
-                  set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoDate)$");
+                  set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoDate|mwcm-preview)$");
               }
             } else {
                   set req.http.x-nyt-route = "mwcm-params";
@@ -38,6 +38,18 @@ sub recv_route_mwcm {
                     req.url ~ "^/marketing/(surveys|gdpr|moco|mpc|account)(/)?"
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
+
+                # if a querystring `mwcm-preview=true` present
+                # then change the x-nyt-backend to be `mwcm_preview`
+                # and x-nyt-route to be `mwcm-preview`
+                if (    req.http.x-nyt-nyhq-access == "1" &&
+                        req.url ~ "(\?|\&)mwcm-preview=true(\&|$)" &&
+                        req.http.var-nyt-env != "prd"
+                    ) {
+                    set req.http.x-nyt-route = "mwcm-preview";
+                    set req.http.x-nyt-backend = "mwcm_preview";
+                    set req.http.var-nyt-force-pass = "true";
+                }
 
                 # checks skipFastly=true qs param
                 # if present, then sets x-nyt-miss
@@ -189,7 +201,7 @@ sub miss_pass_route_mwcm {
         }
 
         if (req.http.cookie ~ "ab7=" && req.http.x-nyt-nyhq-access == "1") {
-            #checks the presence of ab7 and nyhd 
+            #checks the presence of ab7 and nyhd
             # allows ab7 to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " ab7=" req.http.cookie:ab7 ";";
         }
