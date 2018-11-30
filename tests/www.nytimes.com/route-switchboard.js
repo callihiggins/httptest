@@ -161,7 +161,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/thedailyoffer',
       responseHeaderMatches: {
-        'x-nyt-route': 'www_legacy_gke',
+        'x-nyt-route': 'legacy-gke',
       },
       scenarioDescription: 'Test /thedailyoffer is not served from switchboard',
       testId: 10
@@ -176,7 +176,7 @@ function getScenarioEvents() {
       requestScheme: 'http://',
       requestUri: '/thedailylistener',
       responseHeaderMatches: {
-        'x-nyt-route': 'www_legacy_gke',
+        'x-nyt-route': 'legacy-gke',
       },
       scenarioDescription: 'Test /thedailylistener is not served from switchboard',
       testId: 11
