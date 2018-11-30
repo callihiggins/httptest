@@ -6,7 +6,7 @@ sub recv_route_switchboard {
     || req.url.path ~ "^/listings"
     || req.url.path ~ "^/briefing"
     || req.url.path ~ "^/ambriefing"
-    || (req.url.path ~ "^/thedaily" && req.url.path !~ "^/thedailyoffer")
+    || (req.url.path ~ "^/thedaily" && req.url.path !~ "^/thedaily(offer|listener)")
     || req.url.path ~ "^/the-daily"
     || (req.url.path ~ "^/stillprocessing" || req.url.path ~ "^/still-processing")
     || (req.url.path ~ "^/bookreviewpodcast" || req.url.path ~ "^/book-review-podcast")

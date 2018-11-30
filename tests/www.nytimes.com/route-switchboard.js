@@ -142,6 +142,52 @@ function getScenarioEvents() {
         stg: true,
         dev: true
       },
+      requestScheme: 'http://',
+      requestUri: '/the-daily',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [302],
+      scenarioDescription: 'Test /the-daily is served from switchboard',
+      testId: 9
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/thedailyoffer',
+      responseHeaderMatches: {
+        'x-nyt-route': 'www_legacy_gke',
+      },
+      scenarioDescription: 'Test /thedailyoffer is not served from switchboard',
+      testId: 10
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/thedailylistener',
+      responseHeaderMatches: {
+        'x-nyt-route': 'www_legacy_gke',
+      },
+      scenarioDescription: 'Test /thedailylistener is not served from switchboard',
+      testId: 11
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
       requestScheme: 'https://',
       requestUri: '/stillprocessing',
       responseHeaderMatches: {
@@ -149,7 +195,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /stillprocessing is served from switchboard',
-      testId: 9
+      testId: 12
     },
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
@@ -165,7 +211,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /book-review-podcast is served from switchboard',
-      testId: 10
+      testId: 13
     },
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
@@ -181,7 +227,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /popcast is served from switchboard',
-      testId: 11
+      testId: 14
     },
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
@@ -197,7 +243,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /podcasts/modern-love is served from switchboard',
-      testId: 12
+      testId: 15
     },
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
@@ -213,7 +259,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /podcasts/music-popcast is served from switchboard',
-      testId: 13
+      testId: 16
     },
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
@@ -229,7 +275,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /dearsugars is served from switchboard',
-      testId: 14
+      testId: 17
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
@@ -249,7 +295,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test podcasts on /podcasts/',
-      testId: 15,
+      testId: 18,
     },
     {
       id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
@@ -265,7 +311,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [301],
       scenarioDescription: 'Test /dearsugars is served from switchboard',
-      testId: 16
+      testId: 19
     },
   ];
 
