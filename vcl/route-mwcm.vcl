@@ -43,8 +43,7 @@ sub recv_route_mwcm {
                 # then change the x-nyt-backend to be `mwcm_preview`
                 # and x-nyt-route to be `mwcm-preview`
                 if (    req.http.x-nyt-nyhq-access == "1" &&
-                        req.url ~ "(\?|\&)mwcm-preview=true(\&|$)" &&
-                        req.http.var-nyt-env != "prd"
+                        req.url ~ "(\?|\&)mwcm-preview=true(\&|$)"
                     ) {
                     set req.http.x-nyt-route = "mwcm-preview";
                     set req.http.x-nyt-backend = "mwcm_preview";
