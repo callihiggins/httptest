@@ -1182,14 +1182,14 @@ function getScenarioEvents()
         'dev': true,
       },
       'requestScheme': 'https://',
-      'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoDate=20181212&skipFastly=true&test1=test1',
+      'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoStartDate=20181212&skipFastly=true&test1=test1',
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
-        'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoDate=20181212&skipFastly=true',
+        'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoStartDate=20181212&skipFastly=true',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'WCM subscription "allows campaignId, skipFastly and promoDate qs string params to mwcm backend and strips test1 qs param"',
+      'scenarioDescription': 'WCM subscription "allows campaignId, skipFastly and promoStartDate qs string params to mwcm backend and strips test1 qs param"',
       'testId': 52,
     },
     {
