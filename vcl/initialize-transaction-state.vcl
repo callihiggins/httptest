@@ -74,7 +74,7 @@ sub recv_initialize_transaction_state {
     # set the var for using vcl log to sumo in this service
     # TODO: if we change the name of the integration this needs to change
     set req.http.var-nyt-logger-name = "web" + req.http.var-nyt-env + "-www";
-    set req.http.var-nyt-sumo-log-name = "fastly-www/" + if(req.http.var-nyt-env != "prd", "stg","prd");
+    set req.http.var-nyt-sumo-purge-log-name = "fastly-www-purge/" + if(req.http.var-nyt-env != "prd", "stg","prd");
 
     # Set a var with the original querystring if it exists, some logic needs to use it in vcl_deliver
     # do not do this if this has been restarted or if we're on a shield pop

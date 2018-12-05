@@ -273,6 +273,14 @@ resource "fastly_service_v1" "service" {
     format_version     = "2"
     format             = "{{$sumo_log.format}}"
     message_type       = "blank"
+  },
+  {
+    name               = "${var.sumo_logger_purge_name[var.env]}"
+    url                = "${var.sumologic_endpoint_json_purge[var.env]}"
+    response_condition = "do-not-log"
+    format_version     = "2"
+    format             = "{{$sumo_log.format}}"
+    message_type       = "blank"
   }
   ]
 
