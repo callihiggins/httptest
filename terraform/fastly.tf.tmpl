@@ -5,7 +5,7 @@ module "shared_vcl" {
 resource "fastly_service_v1" "service" {
   name = "${var.app}.${var.service_name}"
 
-  {{ $domains := (datasource "config").domains }}
+  {{ $domains := (datasource "env_config").domains }}
 
   {{/*
     for DEV, we will range over the domains for sandboxes
@@ -45,9 +45,9 @@ resource "fastly_service_v1" "service" {
 
   {{end}}
 
-  {{ $backends := (datasource "config").backends }}
-  {{ $backend_defaults := (datasource "config").backend_defaults }}
-  {{ $healthcheck_defaults := (datasource "config").healthcheck_defaults }}
+  {{ $backends := (datasource "env_config").backends }}
+  {{ $backend_defaults := (datasource "env_config").backend_defaults }}
+  {{ $healthcheck_defaults := (datasource "env_config").healthcheck_defaults }}
   {{range $backends -}}
   backend = {
     name = "{{.name}}"
@@ -112,8 +112,8 @@ resource "fastly_service_v1" "service" {
 
 
 
-  {{ $cloud_storage_buckets := (datasource "config").cloud_storage_buckets }}
-  {{ $cloud_storage_bucket_defaults := (datasource "config").cloud_storage_bucket_defaults }}
+  {{ $cloud_storage_buckets := (datasource "env_config").cloud_storage_buckets }}
+  {{ $cloud_storage_bucket_defaults := (datasource "env_config").cloud_storage_bucket_defaults }}
   {{range $cloud_storage_buckets -}}
 
   condition = {
@@ -256,7 +256,7 @@ resource "fastly_service_v1" "service" {
 
 
   ########### Beginning of Sumolog integration #############
-  {{ $sumo_log := (datasource "config").sumo_log }}
+  {{ $sumo_log := (datasource "shared_config").sumo_log }}
   sumologic = [
   {
     format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\"-\")}V] pagetype=[%{if(req.http.x-nyt-route,req.http.x-nyt-route,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.var-nyt-redirect-reason,req.http.var-nyt-redirect-reason,\"\")}V"
@@ -308,15 +308,16 @@ resource "fastly_service_v1" "service" {
   ########### End of Sumolog integration #############
 
   # bigquery logging integration
-  {{ $bigquery_log := (datasource "config").bigquery_log }}
+  {{ $bigquery_env_log := (datasource "env_config").bigquery_log }}
+  {{ $bigquery_shared_log := (datasource "shared_config").bigquery_log }}
   bigquerylogging {
-    name       = "{{$bigquery_log.name}}"
-    project_id = "{{$bigquery_log.project_id}}"
-    dataset    = "{{$bigquery_log.dataset}}"
-    table      = "{{$bigquery_log.table}}"
-    email      = "{{$bigquery_log.email}}"
-    template   = "{{$bigquery_log.template}}"
-    format     = "{{$bigquery_log.format}}"
+    name       = "{{$bigquery_env_log.name}}"
+    project_id = "{{$bigquery_env_log.project_id}}"
+    dataset    = "{{$bigquery_env_log.dataset}}"
+    table      = "{{$bigquery_env_log.table}}"
+    email      = "{{$bigquery_env_log.email}}"
+    template   = "{{$bigquery_shared_log.template}}"
+    format     = "{{$bigquery_shared_log.format}}"
     secret_key = "${var.bigquery_secret_key}"
     response_condition = "bigquerylogging-suppression"
   }

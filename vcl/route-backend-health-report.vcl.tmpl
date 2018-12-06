@@ -18,7 +18,7 @@ sub recv_route_backend_health_report {
 
 
     # template the backend health rows based on configured backends
-    {{ $backends := (datasource "config").backends }}
+    {{ $backends := (datasource "env_config").backends }}
     {{range $backends -}}
     set req.backend = F_{{.name}};
     set req.http.x-nyt-temp-backend-name = "{{.name}}";
