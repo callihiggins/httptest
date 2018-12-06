@@ -98,20 +98,15 @@ sub vcl_recv {
   # retain the x-nyt-shield-auth header if it is
   call recv_shield_request_authorization;
 
-  # remove known invalid patterns from client request
-  call recv_sanitize_request;
-
-  # initialize state variables
+  # determine the environment based on hostname
   call recv_determine_env_from_host;
-  call recv_set_canonical_www_host_var;
-  call recv_capture_cookie_values;
 
-  # set misc state vars (no use in creating 15 more subs)
-  call recv_initialize_transaction_state;
-
-  # set up the device detection header variables
-  call recv_device_detection_init;
+  # returns vcl version, needs to be before the access check
   call shared_recv_vcl_version;
+
+  # the following two calls restrict access levels to dev/stg and also provide
+  # validated clients with NYHQ access priviledge for debug headers
+  # TODO: break this into two headers
   # do not restrict this request if this is a shield request from an edge pop
   if (!req.http.x-nyt-shield-auth) {
     # what level of access does this user have based on ACL and/or auth headers
@@ -120,6 +115,19 @@ sub vcl_recv {
     # block the request if the user does not have access to the environment
     call shared_recv_restrict_access;
   }
+
+  # remove known invalid patterns from client request
+  call recv_sanitize_request;
+
+  # set up a few state vars reflecting the request structure
+  call recv_set_canonical_www_host_var;
+  call recv_capture_cookie_values;
+
+  # set misc state vars (no use in creating 15 more subs)
+  call recv_initialize_transaction_state;
+
+  # set up the device detection header variables
+  call recv_device_detection_init;
 
   # initialize geo ip headers only on the edge
   if (!req.http.x-nyt-shield-auth) {
