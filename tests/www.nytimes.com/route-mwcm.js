@@ -1357,6 +1357,46 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route',
       'testId': 59,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?pre_prod=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-preview',
+        'x-nyt-backend': 'mwcm_preview',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/subscription/hd/1041.html?pre_prod=true',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route',
+      'testId': 60,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/subscription/tests/fastly/redirect-test.html?campaignId=XXXXX&mwcm-preview=true&pre_prod=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-preview',
+        'x-nyt-backend': 'mwcm_preview',
+      },
+      'responseHeaderContains' : {
+        'location': 'https://' + suite.servername + '/subscription/hd/1041.html?campaignId=XXXXX&mwcm-preview=true&pre_prod=true',
+      },
+      'responseStatusCode': 302,
+      'scenarioDescription': 'WCM subscription: should not append duplicates of mwcm-preview, campaignId and pre_prod qs',
+      'testId': 61,
+    },
   ];
 
   return scenarios;
