@@ -1360,9 +1360,9 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': false,
+        'prd': true,
+        'stg': true,
+        'dev': true,
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?pre_prod=true',

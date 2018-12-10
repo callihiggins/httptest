@@ -34,7 +34,7 @@ sub recv_route_mwcm {
             set req.http.var-nyt-ismagnolia = "false";
 
             if (    req.url == "/subscription" ||
-                    req.url ~ "^/subscription(/|.html)" ||
+                    req.url ~ "^/subscription(/|.html|\?)" ||
                     req.url ~ "^/marketing/(surveys|gdpr|moco|mpc|account)(/)?"
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
@@ -43,7 +43,7 @@ sub recv_route_mwcm {
                 # then change the x-nyt-backend to be `mwcm_preview`
                 # and x-nyt-route to be `mwcm-preview`
                 if (    req.http.x-nyt-nyhq-access == "1" &&
-                        req.url ~ "(\?|\&)mwcm-preview=true(\&|$)"
+                        req.url ~ "(\?|\&)(mwcm-preview|pre_prod)=true(\&|$)"
                     ) {
                     set req.http.x-nyt-route = "mwcm-preview";
                     set req.http.x-nyt-backend = "mwcm_preview";
@@ -161,7 +161,7 @@ sub deliver_route_mwcm {
 
             if (resp.http.Location ~ "\?") {
                 
-                if (req.url ~ "^/subscription/") {
+                if (req.url ~ "^/subscription(/|\?)") {
                     
                     # for "/subscription", we allow "campaignId" to the backend
                     # we need to strip campaignId, mwcm-preview and pre_prod from the http.x-nyt-orig-querystring
