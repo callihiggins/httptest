@@ -15,12 +15,12 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'https://',
-      requestUri: '/ask/fitness',
+      requestUri: '/ask/womens-health',
       responseHeaderMatches: {
         'x-nyt-route': 'ask',
         'x-nyt-backend': 'projectvi_fe',
       },
-      responseStatusCode: [200],
+      responseStatusCode: [404,200],
       scenarioDescription: 'Test /ask is served from vi',
       testId: 1
     },
@@ -32,7 +32,7 @@ function getScenarioEvents() {
         dev: true
       },
       'requestScheme': 'https://',
-      'requestUri': '/ask/fitness',
+      'requestUri': '/ask/womens-health',
       'method': 'POST',
       'responseStatusCode': [405],
       'scenarioDescription': 'POST method requests are not allowed for ask route',
