@@ -98,7 +98,7 @@ sumo_log:
     \"url\":\"%{cstr_escape(req.url)}V\",
     \"is_h2\":\"%{if(fastly_info.is_h2, \\\"true\\\", \\\"false\\\")}V\",
     \"request_referer\":\"%{Referer}i\",
-    \"request_user_agent\":\"%{User-Agent}i\",
+    \"request_user_agent\":\"%{regsub(req.http.User-Agent, \\\"^(.\\{0,200\\}).*\\\", \\\"\\\\1\\\")}V\",
     \"request_accept_content\":\"%{Accept}i\",
     \"request_accept_encoding\":\"%{Accept-Encoding}i\",
     \"request_accept_charset\":\"%{Accept-Charset}i\",
