@@ -90,7 +90,7 @@ include "gdpr";
 include "response-headers";
 
 # logging related includes
-include "log-sumologic";
+### include "log-sumologic";
 
 sub vcl_recv {
 
@@ -614,6 +614,6 @@ sub vcl_error {
 sub vcl_log {
 #FASTLY log
 
-  call log_sumologic;
+#  call log_sumologic;
 
 }

@@ -259,14 +259,6 @@ resource "fastly_service_v1" "service" {
   {{ $sumo_log := (datasource "shared_config").sumo_log }}
   sumologic = [
   {
-    format             = "%h %l %u %t %{Host}i \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" backend=[%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\"-\")}V] pagetype=[%{if(req.http.x-nyt-route,req.http.x-nyt-route,\"-\")}V] apiversion=[%{if(resp.http.X-API-Version,resp.http.X-API-Version,\"-\")}V] cachetype=[%{if(fastly_info.state,fastly_info.state,\"-\")}V] reqtime=[%{time.elapsed}V] reqsize=[%I] protocol=[%{if(req.http.Fastly-SSL,\"https\",\"http\")}V] %{if(req.http.var-nyt-redirect-reason,req.http.var-nyt-redirect-reason,\"\")}V"
-    format_version     = "2"
-    message_type       = "classic"
-    name               = "web${var.env}-www"
-    response_condition = "do-not-log"
-    url                = "${var.sumologic_endpoint[var.env]}"
-  },
-  {
     name               = "${var.sumo_logger_name[var.env]}"
     url                = "${var.sumologic_endpoint_json[var.env]}"
     response_condition = "www-json-log"
@@ -294,7 +286,7 @@ resource "fastly_service_v1" "service" {
   condition {
     name      = "www-json-log"
     priority  = 10
-    statement = "((randombool(1,100) && req.http.var-nyt-env == \"prd\" && req.url !~ \"^/svc/(web-products|comscore)\" && req.url !~ \"^/adx/\" && req.http.x-nyt-route != \"vi-assets\") || (req.http.var-nyt-env != \"prd\") || (resp.status >= 400 && req.http.var-nyt-env == \"prd\"))"
+    statement = "(req.url !~ \"^/svc/(web-products|comscore)\" && req.url !~ \"^/adx/\" && req.http.x-nyt-route != \"vi-assets\") || (req.http.var-nyt-env != \"prd\") || (resp.status >= 400)"
     type      = "RESPONSE"
   }
 
@@ -806,11 +798,11 @@ resource "fastly_service_v1" "service" {
     content = "${file("../vcl/log-purge.vcl")}"
   }
 
-  vcl {
-    name    = "log-sumologic"
-    main    = false
-    content = "${file("../vcl/log-sumologic.vcl")}"
-  }
+#  vcl {
+#    name    = "log-sumologic"
+#    main    = false
+#    content = "${file("../vcl/log-sumologic.vcl")}"
+#  }
 
   vcl {
     name    = "route-get-started"

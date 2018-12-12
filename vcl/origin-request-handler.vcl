@@ -25,7 +25,8 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-shield-auth;
   unset bereq.http.var-nyt-is-shielded;
   unset bereq.http.var-nyt-mobile-param;
-  unset bereq.http.var-nyt-logger-name;
+  ##unset bereq.http.var-nyt-logger-name;
+  unset bereq.http.var-nyt-sumo-purge-log-name;
   unset bereq.http.var-nyt-canonical-www-host;
   unset bereq.http.var-nyt-send-gdpr;
   unset bereq.http.var-nyt-force-gdpr;
