@@ -583,7 +583,6 @@ sub vcl_error {
   # please add the error code(s) to the sub names
   # these must be >= 600 and <= 999
   call shared_error_vcl_version; # error 710 for fastly vcl version catch
-  call error_755_amp_redirect;
   call error_770_perform_301_redirect; # e.x. "error 770 <absolute_url>"
   call error_771_perform_302_redirect; # e.x. "error 771 <absolute_url>"
   call error_800_fastly_healthcheck;

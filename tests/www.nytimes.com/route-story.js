@@ -800,6 +800,27 @@ function getScenarioEvents() {
       'testId': 1700
     },
     {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestHeaders': {
+        'x-nyt-nyhq-access': 0,
+        'x-nyt-staging-only-access': 0,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/07/18/world/middleeast/islamic-state-detainees-syria-prisons.amp.html',
+      'responseHeaderMatches': {
+        'x-nyt-backend': 'amp',
+        'x-nyt-route': 'amp',
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'AMP articles are 200, no longer 301, outside network',
+      'testId': 1800,
+    },
+    {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: false,

@@ -82,13 +82,9 @@ sub recv_route_amp {
     ) {
       set req.http.x-nyt-route = "amp";
       set req.http.x-nyt-backend = "amp";
-     if (client.ip ~ googlebot || req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1") {
-       set req.http.var-nyt-force-pass = "true";
-     } else {
-       // redirect to regular url
-       set req.http.var-nyt-amp-redirect = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
-       error 755 req.http.var-nyt-amp-redirect;
-     }
+      if (client.ip ~ googlebot) {
+        set req.http.var-nyt-force-pass = "true";
+      }
    }
 }
 
@@ -99,16 +95,6 @@ sub miss_pass_route_amp {
       } else {
           set bereq.http.host = "amp-dot-nyt-wfvi-prd.appspot.com";
       }
-  }
-}
-
-// This could also be 770 should it be?
-sub error_755_amp_redirect {
-  if (obj.status == 755) {
-      set obj.http.Location = obj.response;
-      set obj.status = 302;
-      set obj.response = "Moved Temporarily";
-      return(deliver);
   }
 }
 
