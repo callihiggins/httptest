@@ -161,7 +161,7 @@ sub deliver_route_mwcm {
 
             if (resp.http.Location ~ "\?") {
                 
-                if (req.url ~ "^/subscription(/|\?)") {
+                if (req.url ~ "^/subscription[^s]") {
                     
                     # for "/subscription", we allow "campaignId" to the backend
                     # we need to strip campaignId, mwcm-preview and pre_prod from the http.x-nyt-orig-querystring

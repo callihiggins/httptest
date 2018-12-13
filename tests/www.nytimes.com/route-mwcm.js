@@ -1390,12 +1390,52 @@ function getScenarioEvents()
         'x-nyt-route': 'mwcm-preview',
         'x-nyt-backend': 'mwcm_preview',
       },
-      'responseHeaderContains' : {
-        'location': 'https://' + suite.servername + '/subscription/hd/1041.html?campaignId=XXXXX&mwcm-preview=true&pre_prod=true',
+      'responseHeaderPattern' : {
+        'location' : /\?campaignId=XXXXX&mwcm-preview=true&pre_prod=true$/,
       },
       'responseStatusCode': 302,
       'scenarioDescription': 'WCM subscription: should not append duplicates of mwcm-preview, campaignId and pre_prod qs',
       'testId': 61,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/subscription.html?campaignId=XXXXX',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'location': 'https://' + suite.servername + '/subscription.html?campaignId=XXXXX',
+      },
+      'responseStatusCode': 301,
+      'scenarioDescription': 'WCM subscription: should not append duplicates of campaignId when url subscription.html',
+      'testId': 62,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'http://',
+      'requestUri': '/subscription?campaignId=XXXXX',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'location': 'https://' + suite.servername + '/subscription?campaignId=XXXXX',
+      },
+      'responseStatusCode': 301,
+      'scenarioDescription': 'WCM subscription: should not append duplicates of campaignId when url subscription?',
+      'testId': 63,
     },
   ];
 
