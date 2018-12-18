@@ -86,8 +86,9 @@ sub recv_route_amp {
       set req.http.var-nyt-force-pass = "true";
     } else {
       // redirect to regular url
-      set req.http.var-nyt-amp-redirect = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
-      error 755 req.http.var-nyt-amp-redirect;
+      declare local var.amp_redirect_target STRING;
+      set var.amp_redirect_target = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
+      error 755 var.amp_redirect_target;
     }
   }
 }

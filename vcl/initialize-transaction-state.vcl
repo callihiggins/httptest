@@ -28,10 +28,6 @@ sub recv_capture_cookie_values {
       set req.http.var-cookie-nyt-edition = urldecode(req.http.Cookie:NYT-Edition);
     }
 
-    if (req.http.Cookie:nyt-mobile) {
-      set req.http.var-cookie-nyt-mobile = urldecode(req.http.Cookie:nyt-mobile);
-    }
-
     if (req.http.Cookie:nyt.np.enable-https) {
         set req.http.var-cookie-np-enable-https = urldecode(req.http.Cookie:nyt.np.enable-https);
     }

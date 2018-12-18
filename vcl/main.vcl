@@ -256,7 +256,7 @@ sub vcl_recv {
 
   # removing because Symfony2 (PHP framework) Request object will use this for getUri() if present
   if (req.http.X-Original-Url) {
-    remove req.http.X-Original-Url;
+    unset req.http.X-Original-Url;
   }
 
   # on the shield pop, do not honor stale-while-revalidate
@@ -496,7 +496,7 @@ sub vcl_fetch {
   # TODO: Backends stop setting nyt-a and RMID cookies
   if (req.url !~ "^/adx") {
     if (setcookie.get_value_by_name(beresp,"nyt-a") || setcookie.get_value_by_name(beresp,"RMID")) {
-      remove beresp.http.Set-Cookie;
+      unset beresp.http.Set-Cookie;
     }
   }
 

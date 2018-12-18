@@ -24,6 +24,6 @@ sub deliver_frame_buster {
 	        set resp.http.X-Frame-Options = "DENY";
 	    }
 	} else {
-		remove resp.http.X-Frame-Options;
+		unset resp.http.X-Frame-Options;
 	}
 }
