@@ -29,7 +29,7 @@ function getScenarioEvents()
 
     for i in {1..1000};
     do a="$(base64 /dev/random | head -c22 | tr /+ -_)";
-    s="$a HOME_video_promo_media"; # Put your ABRA test name here
+    s="$a HOME_video_headline"; # Put your ABRA test name here
     st=$(printf %s "$s" | openssl dgst -sha256 | cut -c1-8);
     printf '%s %010d\n' "$s" $((0x$st));
     done
@@ -37,7 +37,7 @@ function getScenarioEvents()
     */
 
     {
-      'scenarioDescription': 'Request with nyt-a mapping to HOME_video_promo_media allocation 0_control, 0-50%',
+      'scenarioDescription': 'Request with nyt-a mapping to HOME_video_headline allocation 0_control, 0-25%',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
@@ -47,8 +47,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        // var.d = 1960843216
-        'nyt-a=we2n4lOsMT4NXLbY626w9J',
+        // var.d = 1064756818
+        'nyt-a=eO1Pe8yAxRG-eTrs7qLYDj',
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
@@ -59,7 +59,7 @@ function getScenarioEvents()
       'testId': 290,
     },
     {
-      'scenarioDescription': 'Request with nyt-a mapping to HOME_video_promo_media allocation 1_variant, 50-100%',
+      'scenarioDescription': 'Request with nyt-a mapping to HOME_video_headline allocation 1_variant, 25-50%',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
@@ -69,8 +69,8 @@ function getScenarioEvents()
         'x-nyt-debug': '1',
       },
       'requestHeaderCookie': [
-        // var.d = 3482882155
-        'nyt-a=yp2ltPpWyprg4D9mOtcAUF',
+        // var.d = 2139393394
+        'nyt-a=WYESoCibgH3CnaSjX84d-s',
       ],
       'requestScheme': 'https://',
       'requestUri': '/',
