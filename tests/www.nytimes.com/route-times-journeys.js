@@ -269,7 +269,7 @@ function getScenarioEvents()
         'x-frame-options',
       ],
       'requestScheme': 'https://',
-      'requestUri': '/times-journeys/travel/treasures-of-the-danube/terms/',
+      'requestUri': '/times-journeys/travel/behind-the-scenes-of-new-york-theater/terms/',
       'responseStatusCode': 200,
       'scenarioDescription': 'Test missing x-frame-options from times-journeys',
       'testId': 15,
