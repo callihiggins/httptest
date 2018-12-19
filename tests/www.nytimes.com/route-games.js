@@ -262,7 +262,7 @@ function getScenarioEvents()
     {
       'id': 'Functional Test For Set',
       'isDeployedInEnv': {
-        'prd': false,
+        'prd': true,
         'stg': true,
         'dev': true,
       },
@@ -274,8 +274,8 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/set',
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting Set page',
+      'responseStatusCode': 301,
+      'scenarioDescription': 'Test redirect to Set page',
       'testId': 15,
     },
     {
@@ -331,8 +331,8 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/acrostic/2017/09/03',
-      'responseStatusCode': [200,301],
-      'scenarioDescription': 'Test hitting Acrostic page',
+      'responseStatusCode': 301,
+      'scenarioDescription': 'Test redirect to Acrostic page',
       'testId': 18,
     },
     {
@@ -557,6 +557,44 @@ function getScenarioEvents()
       responseStatusCode: [200, 404, 403],
       scenarioDescription: 'Test legacy; www-apps cluster; crosswords; archive',
       testId: '18e'
+    },
+    {
+      'id': 'Functional Test For Set',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s_games,
+      ],
+      'responseHeaderMatches': {
+        'x-nyt-route': 'games-phoenix',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/puzzles/set',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Set page',
+      'testId': 19,
+    },
+    {
+      'id': 'Functional Test For Acrostic',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s,
+      ],
+      'responseHeaderMatches': {
+        'x-nyt-route': 'games-phoenix',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/puzzles/acrostic/2017/09/03',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Acrostic page',
+      'testId': 20,
     }
   ];
 
