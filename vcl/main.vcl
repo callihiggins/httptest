@@ -552,14 +552,15 @@ sub vcl_deliver {
   call deliver_route_newsgraphics_gcs_error;
   call deliver_route_vi_assets_access_control;
 
-  # control when our content is allowed to be framed
-  call deliver_frame_buster;
-
-  # only execute gdpr logic on the edge in a shielding scenario
+  # logic executed only on the edge in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {
+    #gdpr
     call deliver_gdpr;
     call deliver_route_story_us_cookie;
     call deliver_route_newsletters_us_cookie;
+
+    # control when our content is allowed to be framed
+    call deliver_frame_buster;
   }
 
   # set other response headers
