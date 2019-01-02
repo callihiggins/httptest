@@ -22,7 +22,7 @@ sub recv_route_mwcm {
                   set req.url = querystring.filter_except(req.url, "ptr");
               } else {
                   # excludes "exclude_optimizely", "exclude_jsonkidd", "exclude_abra" qs parameters
-                  set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|mwcm-preview|pre_prod)$");
+                  set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod)$");
               }
             } else {
                   set req.http.x-nyt-route = "mwcm-params";
@@ -39,11 +39,11 @@ sub recv_route_mwcm {
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
 
-                # if a querystring `mwcm-preview=true` present
+                # if a querystring `pre_prod=true` present
                 # then change the x-nyt-backend to be `mwcm_preview`
                 # and x-nyt-route to be `mwcm-preview`
                 if (    req.http.x-nyt-nyhq-access == "1" &&
-                        req.url ~ "(\?|\&)(mwcm-preview|pre_prod)=true(\&|$)"
+                        req.url ~ "(\?|\&)pre_prod=true(\&|$)"
                     ) {
                     set req.http.x-nyt-route = "mwcm-preview";
                     set req.http.x-nyt-backend = "mwcm_preview";
@@ -164,19 +164,12 @@ sub deliver_route_mwcm {
                 if (req.url ~ "^/subscription[^s]") {
                     
                     # for "/subscription", we allow "campaignId" to the backend
-                    # we need to strip campaignId, mwcm-preview and pre_prod from the http.x-nyt-orig-querystring
-                    # as resp.http.Location will have the campaignId, mwcm-preview and pre_prod
+                    # we need to strip campaignId and pre_prod from the http.x-nyt-orig-querystring
+                    # as resp.http.Location will have the campaignId and pre_prod
                     if (    req.http.x-nyt-orig-querystring ~ "campaignId=([^&]*)" &&
                             resp.http.Location ~ "campaignId=([^&]*)"
                         ) {
                         set req.http.x-nyt-orig-querystring = regsub(req.http.x-nyt-orig-querystring, "campaignId=([^&]*)","");
-                    
-                    }
-
-                    if (    req.http.x-nyt-orig-querystring ~ "mwcm-preview=([^&]*)" &&
-                            resp.http.Location ~ "mwcm-preview=([^&]*)"
-                        ) {
-                        set req.http.x-nyt-orig-querystring = regsub(req.http.x-nyt-orig-querystring, "mwcm-preview=([^&]*)","");
                     
                     }
 
