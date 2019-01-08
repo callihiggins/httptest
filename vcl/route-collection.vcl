@@ -1,6 +1,5 @@
 sub recv_route_collection {
   if (   req.url ~ "^/by/"
-      || req.url ~ "^/reviews/theater"
       || req.url ~ "^/reviews/movies"
       || req.url ~ "^/reviews/dining/map"
       || req.url ~ "^/reviews?"
@@ -32,6 +31,7 @@ sub recv_route_collection {
       || req.url ~ "^/news-event/"
       || req.url ~ "^/section/"
       || req.url ~ "^/spotlight/"
+      || req.url ~ "^/reviews/theater"      
       || (req.url ~ "^/reviews/dining" && req.url !~ "^/reviews/dining/map")
   ) {
     # if the request was sent to VI and determined
