@@ -43,7 +43,9 @@ sub recv_route_mwcm {
                 # then change the x-nyt-backend to be `mwcm_preview`
                 # and x-nyt-route to be `mwcm-preview`
                 if (    req.http.x-nyt-nyhq-access == "1" &&
-                        req.url ~ "(\?|\&)pre_prod=true(\&|$)"
+                        (   subfield(req.url.qs, "pre_prod", "&") == "true" ||
+                            req.http.cookie:cmots_pre_prod == "true"
+                        )
                     ) {
                     set req.http.x-nyt-route = "mwcm-preview";
                     set req.http.x-nyt-backend = "mwcm_preview";
@@ -53,13 +55,13 @@ sub recv_route_mwcm {
                 # checks skipFastly=true qs param
                 # if present, then sets x-nyt-miss
                 # x-nyt-miss forces cache type to be miss if the request is coming from the internal ips. 
-                if (req.url ~ "(\?|\&)skipFastly=true(\&|$)") {
+                if ( subfield(req.url.qs, "skipFastly", "&") == "true" ) {
                     set req.http.x-nyt-miss = "1";
                 }
 
                 # checks the presence of nyt-m (meter) cookie
                 # if present, then sets x-nyt-metered-hits and x-nyt-gateway-hits
-                if ( req.http.cookie ~ "nyt-m=" ) {
+                if ( req.http.cookie:nyt-m ) {
                     
                     if (req.http.cookie:nyt-m ~ "&v=i.(\d+)&" ) {
                         set req.http.x-nyt-metered-hits = re.group.1;
@@ -101,7 +103,7 @@ sub recv_route_mwcm {
             # default value "false"
             # checks the presence of NYT-S cookie, changes the value to be "true", if present. 
             set req.http.x-nyt-subscriber = "false";
-            if ( req.http.cookie ~ "NYT-S=" ) {
+            if ( req.http.cookie:NYT-S ) {
                 set req.http.x-nyt-subscriber = "true";
             }
             
@@ -109,7 +111,7 @@ sub recv_route_mwcm {
             # checks the presence of the "mwcm_exclude_optimizely" cookie 
             # appends "exclude_optimizely=true" qs parameter to the url
             # logic not applies to hd pages.
-            if ( req.http.cookie ~ "mwcm_exclude_optimizely=" && req.url !~ "^/subscription/hd(/)?") {
+            if ( req.http.cookie:mwcm_exclude_optimizely && req.url !~ "^/subscription/hd(/)?") {
                 set req.url = querystring.add(req.url, "exclude_optimizely", "true");
             }
 
@@ -117,7 +119,7 @@ sub recv_route_mwcm {
             # checks the presence of the "mwcm_exclude_jsonkidd" cookie
             # appends "exclude_jsonkidd=true" qs parameter to the url
             # logic not applies to hd pages.
-            if ( req.http.cookie ~ "mwcm_exclude_jsonkidd=" && req.url !~ "^/subscription/hd(/)?") {
+            if ( req.http.cookie:mwcm_exclude_jsonkidd && req.url !~ "^/subscription/hd(/)?") {
                 set req.url = querystring.add(req.url, "exclude_jsonkidd", "true");
             }        
             
@@ -213,7 +215,7 @@ sub miss_pass_route_mwcm {
     if (req.http.x-nyt-route ~ "^mwcm" && req.http.var-nyt-ismagnolia == "true") {
         set bereq.http.cookie = "";
             
-        if ( req.http.cookie ~ "nyt-a=" ) {
+        if ( req.http.cookie:nyt-a ) {
             #checks the presence of the nyt-a
             # allows nyt-a to MWCM backend
             set bereq.http.cookie = "nyt-a=" req.http.cookie:nyt-a ";";   
@@ -222,37 +224,43 @@ sub miss_pass_route_mwcm {
             set bereq.http.cookie = "nyt-a=" req.http.var-cookie-nyt-a ";";
         }
         
-        if (req.http.cookie ~ "NYT-S=") {
+        if (req.http.cookie:NYT-S) {
             #checks the presence of the NYT-S
             # allows NYT-S to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " NYT-S=" req.http.cookie:NYT-S ";";
         }
 
-        if (req.http.cookie ~ "nyt-mwcm=") {
+        if (req.http.cookie:nyt-mwcm) {
             #checks the presence of the nyt-mwcm
             # allows nyt-mwcm to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " nyt-mwcm=" req.http.cookie:nyt-mwcm ";";
         }
 
-        if (req.http.cookie ~ "ab7=" && req.http.x-nyt-nyhq-access == "1") {
+        if (req.http.cookie:ab7 && req.http.x-nyt-nyhq-access == "1") {
             #checks the presence of ab7 and nyhd
             # allows ab7 to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " ab7=" req.http.cookie:ab7 ";";
         }
 
-        if (req.http.cookie ~ "nyt-d=") {
+        if (req.http.cookie:cmots_pre_prod && req.http.x-nyt-nyhq-access == "1") {
+            #checks the presence of  cmots_pre_prod and nyhd
+            # allows ab7 to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " cmots_pre_prod=" req.http.cookie:cmots_pre_prod ";";
+        }
+
+        if (req.http.cookie:nyt-d) {
             #checks the presence of the nyt-d
             # allows nyt-d to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " nyt-d=" req.http.cookie:nyt-d ";";
         }
 
-        if (req.http.cookie ~ "edu_cig_opt=") {
+        if (req.http.cookie:edu_cig_opt) {
             #checks the presence of the edu_cig_opt
             # allows edu_cig_opt to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " edu_cig_opt=" req.http.cookie:edu_cig_opt ";";
         }
 
-        if (req.http.cookie ~ "b2b_cig_opt=") {
+        if (req.http.cookie:b2b_cig_opt) {
             #checks the presence of the b2b_cig_opt
             # allows b2b_cig_opt to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " b2b_cig_opt=" req.http.cookie:b2b_cig_opt ";";

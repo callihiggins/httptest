@@ -1417,6 +1417,27 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription: should not append duplicates of campaignId when url subscription?',
       'testId': 62,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaderCookie': 'cmots_pre_prod=true',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-preview',
+        'x-nyt-backend': 'mwcm_preview',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/subscription/hd/1041.html',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route via cmots_pre_prod cookie',
+      'testId': 63,
+    },
   ];
 
   return scenarios;
