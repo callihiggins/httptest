@@ -811,6 +811,37 @@ function getScenarioEvents() {
         'Test HTTPS Everywhere; /robots.txt serves over https',
       testId: 63
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForBingSiteAuth',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'http://',
+      requestUri: '/BingSiteAuth.xml',
+      responseHeaderMatches: {
+        location: 'https://' + suite.servername + '/BingSiteAuth.xml'
+      },
+      responseStatusCode: 301,
+      scenarioDescription:
+        'Test HTTPS Everywhere; /BingSiteAuth.xml redirects to https',
+      testId: 64
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForBingSiteAuth',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/BingSiteAuth.xml',
+      responseStatusCode: 200,
+      scenarioDescription:
+        'Test HTTPS Everywhere; /BingSiteAuth.xml serves over https',
+      testId: 65
+    },
   ];
   return scenarios;
 }
