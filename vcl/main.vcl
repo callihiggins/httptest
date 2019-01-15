@@ -76,6 +76,7 @@ include "route-device-detection-debug";
 include "route-trending";
 include "route-get-started";
 include "route-vi-static-backup-gcs";
+include "route-alpha";
 
 # backend response processing
 include "surrogate-key";
@@ -118,6 +119,7 @@ sub vcl_recv {
 
   # set up a few state vars reflecting the request structure
   call recv_set_canonical_www_host_var;
+  call recv_set_canonical_alpha_host_var;
   call recv_capture_cookie_values;
 
   # set misc state vars (no use in creating 15 more subs)
@@ -196,6 +198,9 @@ sub vcl_recv {
   call recv_route_story;
   call recv_route_amp;
   call recv_route_watching; # this needs to come AFTER article routing since it uses ^/year/mo/day
+
+  # call preview route after story
+  call recv_route_alpha;
 
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
   call recv_route_newsdev_gcs;
@@ -298,6 +303,7 @@ sub vcl_hash {
   call hash_route_collection;
   call hash_route_homepage;
   call hash_route_story;
+  call hash_route_alpha;
 
   return(hash);
 }
@@ -456,6 +462,7 @@ sub vcl_fetch {
   call fetch_route_story;
   call fetch_route_interactive;
   call fetch_route_collection;
+  call fetch_route_alpha;
 
   # set surrogate key header properly
   call fetch_surrogate_key_handler;
@@ -548,6 +555,7 @@ sub vcl_deliver {
   call deliver_route_newsdev_gcs_error;
   call deliver_route_newsgraphics_gcs_error;
   call deliver_route_vi_assets_access_control;
+  call deliver_route_alpha;
 
   # logic executed only on the edge in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {

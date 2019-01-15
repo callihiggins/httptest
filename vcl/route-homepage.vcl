@@ -1,7 +1,7 @@
 sub recv_route_homepage {
     # homepage only serves from canonical hosts
     # all others go to legacy
-    if (req.http.var-nyt-canonical-www-host == "true") {
+    if (req.http.var-nyt-canonical-www-host == "true" || req.http.var-nyt-canonical-alpha-host == "true") {
         if (req.url.path == "/") {
           # first check to see if we need to redirect to a different edition
           call recv_route_homepage_edition_redirect;

@@ -18,6 +18,15 @@ sub recv_set_canonical_www_host_var {
     }
 }
 
+sub recv_set_canonical_alpha_host_var {
+    # set a var to denote if this domain is canonical alpha request
+    if (req.http.host ~ "^alpha" || req.http.host ~ "^apple") {
+      set req.http.var-nyt-canonical-alpha-host = "true";
+    } else {
+      set req.http.var-nyt-canonical-alpha-host = "false";
+    }
+}
+
 sub recv_capture_cookie_values {
     # capture specific cookie values into custom headers
     if (req.http.Cookie:NYT-S) {

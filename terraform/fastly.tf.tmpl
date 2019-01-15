@@ -786,6 +786,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "route-alpha"
+    main    = false
+    content = "${file("../vcl/route-alpha.vcl")}"
+  }
+
+  vcl {
     name    = "log-purge"
     main    = false
     content = "${file("../vcl/log-purge.vcl")}"

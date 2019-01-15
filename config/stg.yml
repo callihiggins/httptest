@@ -4,6 +4,7 @@
 domains:
   - name: "*.stg.nytimes.com"
   - name: "www.stg.nytimes.com"
+  - name: "apple.stg.nytimes.com"
 
 # these are the default values for backend config keys if not specified
 # some are only here for documentation purposes, some you can override
@@ -444,6 +445,57 @@ backends:
     shield: "jfk-ny-us"
     healthcheck:
       host: "alpha-dev.dev.nyt.net"
+      path: "/.healthcheck"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
+  - name: "alpha_fe"
+    address: "alpha-dev.dev.nyt.net"
+    between_bytes_timeout: "2000"
+    connect_timeout: "3000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "alpha-dev.dev.nyt.net"
+    ssl_sni_hostname: "alpha-dev.dev.nyt.net"
+    healthcheck:
+      host: "alpha-dev.dev.nyt.net"
+      path: "/.healthcheck"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
+  - name: "alpha_test"
+    address: "alpha-test.stg.nyt.net"
+    between_bytes_timeout: "2000"
+    connect_timeout: "3000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "alpha-test.stg.nyt.net"
+    ssl_sni_hostname: "alpha-test.stg.nyt.net"
+    healthcheck:
+      host: "alpha-test.stg.nyt.net"
+      path: "/.healthcheck"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
+  - name: "alpha_preview"
+    address: "alpha-preview-staging.stg.nyt.net"
+    between_bytes_timeout: "2000"
+    connect_timeout: "3000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "alpha-preview-staging.stg.nyt.net"
+    ssl_sni_hostname: "alpha-preview-staging.stg.nyt.net"
+    healthcheck:
+      host: "alpha-preview-staging.stg.nyt.net"
       path: "/.healthcheck"
       check_interval: "20000"
       expected_response: "200"

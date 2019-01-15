@@ -1,7 +1,7 @@
 sub recv_route_story {
 
-    # stories only serve from canonical www host
-    if (req.http.var-nyt-canonical-www-host == "true") {
+    # stories only serve from canonical www host and alpha host
+    if (req.http.var-nyt-canonical-www-host == "true" || req.http.var-nyt-canonical-alpha-host == "true") {
       // Internationalized URLs https://jira.nyt.net/browse/DV-1731
       declare local var.internationalized_url BOOL;
       if (   req.url ~ "^/(a[fryz]|b[egns]|c[aksy]|d[ae]|e[lnotu]|f[abiory]|g[alnux]|h[eiruy]|i[dst]|j[av]|k[akmnou]|l[aitv]|m[gklnrst]|n[beln]|p[alst]|qu|r[mou]|s[aekloqrvwy]|t[aeghlrt]|u[krz]|vi|xh|yi|zh|zh-(CN|HK|TW|hans|hant)|zu)/"

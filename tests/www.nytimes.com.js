@@ -2,6 +2,7 @@ require("./www.nytimes.com/response-headers.js");
 require("./www.nytimes.com/nyt-a.js");
 require("./www.nytimes.com/nyt-gdpr.js");
 require("./www.nytimes.com/route-story.js");
+require("./www.nytimes.com/route-alpha.js");
 require("./www.nytimes.com/route-collection.js");
 require("./www.nytimes.com/route-slideshow.js");
 require("./www.nytimes.com/route-nyt5-misc.js");

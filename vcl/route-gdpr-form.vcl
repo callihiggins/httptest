@@ -1,5 +1,7 @@
 sub recv_route_gdpr_form {
-  if (req.http.var-nyt-canonical-www-host == "true" && req.url.path ~ "^/data-subject-request") {
+  if ((req.http.var-nyt-canonical-www-host == "true" || req.http.var-nyt-canonical-alpha-host == "true")
+      && req.url.path ~ "^/data-subject-request"
+    ) {
     set req.http.x-nyt-route = "gdpr-form";
     set req.http.x-nyt-backend = "projectvi_fe";
     set req.http.var-nyt-error-retry = "false";
