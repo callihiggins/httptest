@@ -89,9 +89,6 @@ include "uuid";
 include "gdpr";
 include "response-headers";
 
-# logging related includes
-### include "log-sumologic";
-
 sub vcl_recv {
 
   # check to see if this request is from a shield pop of the same service service_id
@@ -614,7 +611,5 @@ sub vcl_error {
 
 sub vcl_log {
 #FASTLY log
-
-#  call log_sumologic;
 
 }

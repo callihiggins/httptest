@@ -45,7 +45,6 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-is-shielded;
   unset bereq.http.var-nyt-no-referrer;
   unset bereq.http.var-nyt-redirect-reason;
-  ##unset bereq.http.var-nyt-logger-name;
   unset bereq.http.var-nyt-sumo-purge-log-name;
   unset bereq.http.var-nyt-send-gdpr;
   unset bereq.http.var-nyt-shield-auth;

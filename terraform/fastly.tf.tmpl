@@ -290,13 +290,6 @@ resource "fastly_service_v1" "service" {
     type      = "RESPONSE"
   }
 
-  # this is not being used yet in TF, look in log-sumologic.vcl for the sumologic logger conditional
-  condition {
-    name      = "Suppress adx and svc unless 50x response code"
-    priority  = 10
-    statement = "(req.url !~ \"^/svc/\" && req.url !~ \"^/adx/\") || resp.status >= 500"
-    type      = "RESPONSE"
-  }
   ########### End of Sumolog integration #############
 
   # bigquery logging integration
@@ -797,12 +790,6 @@ resource "fastly_service_v1" "service" {
     main    = false
     content = "${file("../vcl/log-purge.vcl")}"
   }
-
-#  vcl {
-#    name    = "log-sumologic"
-#    main    = false
-#    content = "${file("../vcl/log-sumologic.vcl")}"
-#  }
 
   vcl {
     name    = "route-get-started"
