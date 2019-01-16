@@ -85,11 +85,11 @@ sub recv_gdpr {
     # used to simulate EEA detection for testing purposes. This block
     # is what will parse the query param.
     # this was requested by implementors
-    if (req.url ~ "(?i)\?(?:|.*&)gdpr=([^&]*)") {
-        if (re.group.1 == "0" || re.group.1 == "1") {
-            set req.http.var-nyt-force-gdpr = "true";
-            set req.http.var-cookie-nyt-gdpr = re.group.1;
-        }
+    declare local var.gdpr_qparam STRING;
+    set var.gdpr_qparam = subfield(req.url.qs, "gdpr", "&");
+    if (var.gdpr_qparam == "0" || var.gdpr_qparam == "1") {
+        set req.http.var-nyt-force-gdpr = "true";
+        set req.http.var-cookie-nyt-gdpr = var.gdpr_qparam;
     }
 }
 

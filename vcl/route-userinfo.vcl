@@ -103,7 +103,7 @@ sub route_userinfo_deliver_v1_jsonp_string {
   set obj.response = "OK";
   set obj.http.Content-Type = "application/javascript";
 
-  synthetic "/**/" + req.http.x-callback-param + {"({ "meta": {},
+  synthetic "/**/" + req.http.var-nyt-userinfo-callback-param  + {"({ "meta": {},
     "data": {
       "id": "0",
       "name": "",
@@ -152,7 +152,7 @@ sub route_userinfo_deliver_v2_jsonp_string {
   set obj.response = "OK";
   set obj.http.Content-Type = "application/javascript";
 
-  synthetic "/**/" + req.http.x-callback-param + {"({ "meta": {},
+  synthetic "/**/" + req.http.var-userinfo-callback-param  + {"({ "meta": {},
     "data": {
       "id": "0",
       "name": "",
@@ -195,7 +195,7 @@ sub route_userinfo_deliver_v3_jsonp_string {
   set obj.response = "OK";
   set obj.http.Content-Type = "application/javascript";
 
-  synthetic "/**/" + req.http.x-callback-param + {"({ "meta": {},
+  synthetic "/**/" + req.http.var-nyt-userinfo-callback-param  + {"({ "meta": {},
   "data": {
     "id": "0",
     "name": "",
@@ -211,8 +211,5 @@ sub route_userinfo_deliver_v3_jsonp_string {
 sub route_userinfo_set_callback_querystring_param {
   // use "callback" querystring param for javascript callback function name
   // if not set, default to "userInfoCallback"
-  set req.http.x-callback-param = regsub(req.url, ".*[\?&]callback=([\.A-Za-z0-9_]+).*", "\1");
-  if (req.http.x-callback-param == req.url) {
-    set req.http.x-callback-param = "userInfoCallback";
-  }
+  set req.http.var-nyt-userinfo-callback-param = if (subfield(req.url.qs, "callback", "&"), subfield(req.url.qs, "callback", "&"), "userInfoCallback");
 }
