@@ -39,7 +39,7 @@ include "route-profile-fe";
 include "route-adx";
 include "route-intl";
 include "route-elections";
-include "route-content-api"
+include "route-content-api";
 include "route-tbooks";
 include "route-newsdev-gcs";
 include "route-mwcm";
@@ -85,6 +85,7 @@ include "origin-request-handler";
 include "set-cache-object-ttl";
 
 # begin other logic
+include "abra";
 include "https-redirect";
 include "uuid";
 include "gdpr";

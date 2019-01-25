@@ -15,6 +15,7 @@ sub recv_route_homepage {
           unset req.http.Authorization;
 
           call recv_post_method_restricted;
+          call recv_abra_allocation;
           call recv_route_vi_static_backup_gcs;
         }
 
@@ -53,7 +54,7 @@ sub hash_route_homepage {
 
       set req.hash += req.http.x-nyt-geo-hash;
       set req.hash += req.http.device_type;
-      set req.hash += req.http.x-vi-abtest-www-hp;
+      set req.hash += req.http.x-nyt-vi-abtest;
   }
 }
 
@@ -94,7 +95,7 @@ sub deliver_homepage_set_debug_header {
   if (!req.http.x-nyt-shield-auth && req.http.x-nyt-route == "vi-homepage") {
     # for debugging and automated tests:
     if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-nyhq-access || req.http.x-nyt-staging-only-access)) {
-      set resp.http.x-nyt-debug-req-http-x-vi-abtest-www-hp = req.http.x-vi-abtest-www-hp;
+      set resp.http.x-nyt-debug-req-http-x-nyt-vi-abtest = req.http.x-nyt-vi-abtest;
     }
   }
 }
