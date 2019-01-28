@@ -80,6 +80,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "sitemap"
         || req.http.x-nyt-route == "vi-get-started"
         || req.url.path == "/BingSiteAuth.xml"
+        || req.url ~ "^/(digital|hdleftnav|subscribe|homedelivery|edu|gift|redeem|college|professor|student|campus)" //CMOTS-referrer-issue-fix
     ) {
         set req.http.var-nyt-https-phase = "live";
     }
