@@ -8,6 +8,9 @@ sub recv_route_switchboard {
     || req.url.path ~ "^/ambriefing"
     || (req.url.path ~ "^/thedaily" && req.url.path !~ "^/thedaily(offer|listener)")
     || req.url.path ~ "^/the-daily"
+    || req.url.path ~ "^/theweekly"
+    || req.url.path ~ "^/the-weekly"
+    || req.url.path ~ "^/weekly"
     || (req.url.path ~ "^/stillprocessing" || req.url.path ~ "^/still-processing")
     || (req.url.path ~ "^/bookreviewpodcast" || req.url.path ~ "^/book-review-podcast")
     || (req.url.path ~ "^/theargument" || req.url.path ~ "^/the-argument")
@@ -22,6 +25,15 @@ sub recv_route_switchboard {
             set req.url = querystring.remove(req.url);
         }
     }
+
+    ## TODO need logic for the API requests?
+
+    ## TODO where are the other nginx subdomains? (do they have these headers?)
+
+    ## TODO where does query.nytimes.com get handled?
+    ## there is a conf/httpd/vhosts.d/3_query.nytimes.com.conf in www-legacy
+    ## does not have an obvious pointer to SB?
+    ## TOODO does it go through the www-legacy backend?
 }
 
 sub miss_pass_route_switchboard {

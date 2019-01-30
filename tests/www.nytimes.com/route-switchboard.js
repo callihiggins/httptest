@@ -8,7 +8,7 @@ suite.run(suite, scenarios);
 function getScenarioEvents() {
   var scenarios = [
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheater',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -24,7 +24,7 @@ function getScenarioEvents() {
       testId: 1
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardMovies',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -40,7 +40,7 @@ function getScenarioEvents() {
       testId: 2
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardBestSellers',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -56,7 +56,7 @@ function getScenarioEvents() {
       testId: 3
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardRestaurants',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -72,7 +72,7 @@ function getScenarioEvents() {
       testId: 4
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardListings',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -88,7 +88,7 @@ function getScenarioEvents() {
       testId: 5
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardBriefing',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -104,7 +104,7 @@ function getScenarioEvents() {
       testId: 6
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardAMBriefing',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -120,7 +120,7 @@ function getScenarioEvents() {
       testId: 7
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheDaily',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -136,7 +136,7 @@ function getScenarioEvents() {
       testId: 8
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheHypenDaily',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -152,7 +152,7 @@ function getScenarioEvents() {
       testId: 9
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheDailyOffer',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -167,7 +167,7 @@ function getScenarioEvents() {
       testId: 10
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheDailyListener',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -182,7 +182,7 @@ function getScenarioEvents() {
       testId: 11
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardStillProcessing',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -198,7 +198,7 @@ function getScenarioEvents() {
       testId: 12
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardBookReivewPodcast',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -214,7 +214,7 @@ function getScenarioEvents() {
       testId: 13
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardPopcast',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -230,7 +230,7 @@ function getScenarioEvents() {
       testId: 14
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardPodcastsModernLove',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -246,7 +246,7 @@ function getScenarioEvents() {
       testId: 15
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardPodcastsMusicPopcast',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -262,7 +262,7 @@ function getScenarioEvents() {
       testId: 16
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardDearsugars',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -278,8 +278,8 @@ function getScenarioEvents() {
       testId: 17
     },
     {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardPodcasts',
+      isDeployedInEnv: {
         'prd': true,
         'stg': true,
         'dev': true,
@@ -298,7 +298,7 @@ function getScenarioEvents() {
       testId: 18,
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheArgument',
       isDeployedInEnv: {
         prd: false,
         stg: true,
@@ -310,8 +310,56 @@ function getScenarioEvents() {
         'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /dearsugars is served from switchboard',
+      scenarioDescription: 'Test /the-argument is served from switchboard',
       testId: 19
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheHypenWeekly',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/the-weekly',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /the-weekly is served from switchboard',
+      testId: 20
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheWeekly',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/theweekly',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /theweekly (no hypen) is served from switchboard',
+      testId: 21
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/weekly',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /weekly (no the) is served from switchboard',
+      testId: 22
     },
   ];
 
