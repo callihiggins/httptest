@@ -359,6 +359,90 @@ function getScenarioEvents() {
       scenarioDescription:
         'Alpha host; test scoop collection preview;/section/opinion',
       testId: 14
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: false,
+        dev: true
+      },
+      requestHeaders: {
+        Host: 'apple-preview.dev.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/section/opinion?contentUri=112222&device=desktop&scooppreview',
+      responseHeaderMatches: {
+        'x-nyt-route': 'collection',
+        'x-nyt-backend': 'alpha_preview',
+        'x-gdpr': '0',
+        'x-nyt-final-url':
+          '/section/opinion?contentUri=112222&device=desktop&scooppreview'
+      },
+      responseHeaderPattern: {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test query string filter preview;/section/opinion',
+      testId: 15
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'apple-preview.stg.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/section/opinion?contentUri=112222&device=desktop&scooppreview',
+      responseHeaderMatches: {
+        'x-nyt-route': 'collection',
+        'x-nyt-backend': 'alpha_preview',
+        'x-gdpr': '0',
+        'x-nyt-final-url':
+          '/section/opinion?contentUri=112222&device=desktop&scooppreview'
+      },
+      responseHeaderPattern: {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test query string filter preview;/section/opinion',
+      testId: 16
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'apple-preview.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/section/opinion?contentUri=112222&device=desktop&scooppreview',
+      responseHeaderMatches: {
+        'x-nyt-route': 'collection',
+        'x-nyt-backend': 'alpha_preview',
+        'x-gdpr': '0',
+        'x-nyt-final-url':
+          '/section/opinion?contentUri=112222&device=desktop&scooppreview'
+      },
+      responseHeaderPattern: {
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test query string filter preview;/section/opinion',
+      testId: 17
     }
   ];
 
