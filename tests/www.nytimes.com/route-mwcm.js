@@ -572,7 +572,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=verizon',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscription/promotions/verizon.html?ptr=verizon',
+        'location': 'https://' + suite.servername + '/subscription/promotions/verizon.html?ptr=verizon',
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
@@ -592,7 +592,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=sharethetimes',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscription/promotions/sharethetimes.html?ptr=sharethetimes',
+        'location': 'https://' + suite.servername + '/subscription/promotions/sharethetimes.html?ptr=sharethetimes',
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
@@ -612,7 +612,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=marathon',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscription/promotions/marathon.html?ptr=marathon',
+        'location': 'https://' + suite.servername + '/subscription/promotions/marathon.html?ptr=marathon',
       },
       'responseStatusCode': [301],
       'responseHeaderMatches': {
@@ -632,7 +632,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=newsindia',
       'responseHeaderContains' : {
-        'location': 'http://' + suite.servername + '/subscription/promotions/newsindia.html?ptr=newsindia',
+        'location': 'https://' + suite.servername + '/subscription/promotions/newsindia.html?ptr=newsindia',
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
