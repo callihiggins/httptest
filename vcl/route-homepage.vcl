@@ -13,7 +13,7 @@ sub recv_route_homepage {
           set req.http.var-nyt-send-gdpr = "true";
 
           if (req.http.var-nyt-canonical-alpha-host != "true") {
-            set req.url = querystring.filter_except(req.url, "abraHomeTest");
+            set req.url = querystring.filter_except(req.url, "abra-vi");
           }
 
           unset req.http.Authorization;
