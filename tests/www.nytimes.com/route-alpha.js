@@ -191,31 +191,6 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-test.stg.nytimes.com'
-      },
-      requestScheme: 'https://',
-      requestUri: '/timeswire',
-      responseHeaderMatches: {
-        'x-nyt-route': 'vi-timeswire',
-        'x-nyt-backend': 'alpha_test',
-        'x-gdpr': '0'
-      },
-      responseHeaderPattern: {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
-      },
-      responseStatusCode: [200],
-      scenarioDescription:
-        'Alpha host apple-test.stg.nytimes.com; test Vi Timeswire Page; /timeswire',
-      testId: 8
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: true,
-        dev: false
-      },
-      requestHeaders: {
         Host: 'apple-preview.stg.nytimes.com'
       },
       requestScheme: 'https://',
@@ -232,32 +207,6 @@ function getScenarioEvents() {
       scenarioDescription:
         'Alpha host; test Collection fallback to NYT5; /section/well',
       testId: 9
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: true,
-        dev: false
-      },
-      requestHeaders: {
-        Host: 'apple-preview.stg.nytimes.com'
-      },
-      requestScheme: 'https://',
-      requestUri:
-        '/section/opinion?previewDate=1547060138970&contentUri=nyt://legacycollection/fdbfedd6-69a1-5364-8437-d5870bb61b5a&device=desktop&scooppreview&contentId=100000004178830',
-      responseHeaderMatches: {
-        'x-nyt-route': 'collection',
-        'x-nyt-backend': 'alpha_preview',
-        'x-gdpr': '0'
-      },
-      responseHeaderPattern: {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
-      },
-      responseStatusCode: [200],
-      scenarioDescription:
-        'Alpha host; test scoop collection preview;/section/opinion',
-      testId: 10
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
