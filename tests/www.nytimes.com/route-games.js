@@ -203,7 +203,7 @@ function getScenarioEvents()
       'testId': 10,
     },
     {
-      'id': 'Functional Test For Games Submission page',
+      'id': 'Redirect Test For Games Submission page',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
@@ -217,8 +217,8 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/submissions',
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting a /crosswords/submissions endpoint',
+      'responseStatusCode': 301,
+      'scenarioDescription': 'Test redirect of /crosswords/submissions endpoint',
       'testId': 11,
     },
     {
@@ -241,7 +241,7 @@ function getScenarioEvents()
       'testId': 13,
     },
     {
-      'id': 'Functional Test For KenKen',
+      'id': 'Redirect Test For KenKen',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
@@ -255,8 +255,8 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/kenken',
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting KenKen page',
+      'responseStatusCode': 301,
+      'scenarioDescription': 'Test redirecting KenKen page',
       'testId': 14,
     },
     {
@@ -317,7 +317,7 @@ function getScenarioEvents()
       'testId': 17,
     },
     {
-      'id': 'Functional Test For Acrostic',
+      'id': 'Redirect Test For Acrostic',
       'isDeployedInEnv': {
         'prd': true,
         'stg': true,
@@ -336,7 +336,7 @@ function getScenarioEvents()
       'testId': 18,
     },
     {
-      'id': 'Functional Test Stats Page',
+      'id': 'Redirect Test Stats Page',
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
@@ -350,8 +350,8 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/stats',
-      'responseStatusCode': 200,
-      'scenarioDescription': 'Test hitting Stats page',
+      'responseStatusCode': 301,
+      'scenarioDescription': 'Test redirect to Stats page',
       'testId': 19,
     },
     {
@@ -595,8 +595,64 @@ function getScenarioEvents()
       'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Acrostic page',
       'testId': 20,
+    },
+    {
+      'id': 'Functional Test For KenKen',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s_games,
+      ],
+      'responseHeaderMatches': {
+        'x-nyt-route': 'games-phoenix',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/puzzles/kenken',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting KenKen page',
+      'testId': 21,
+    },
+    {
+      'id': 'Functional Test For Stats',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s_games,
+      ],
+      'responseHeaderMatches': {
+        'x-nyt-route': 'games-phoenix',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/puzzles/stats',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Stats page',
+      'testId': 22,
+    },
+    {
+      'id': 'Functional Test For Submissions',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestHeaderCookie': [
+        'NYT-S=' + suite.cookies.nyt_s_games,
+      ],
+      'responseHeaderMatches': {
+        'x-nyt-route': 'games-phoenix',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/puzzles/submissions/crossword',
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test hitting Submissions page',
+      'testId': 23,
     }
   ];
-
   return scenarios;
 }
