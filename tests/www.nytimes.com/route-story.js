@@ -510,9 +510,8 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2016/06/10/world/asia/japan-summons-chinese-envoy-after-naval-ship-nears-disputed-islands.html',
       'responseHeaderMatches': {
-        'x-nyt-route': 'article',
-        'x-nyt-backend': 'article_fe',
-        'fastly-restarts': '1',
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': 'projectvi_fe',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with compatibility issues.',
