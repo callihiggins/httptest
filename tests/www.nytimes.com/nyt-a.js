@@ -28,7 +28,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};/, // tester seems to toString() header array, hence possible `,`
       },
-      'responseStatusCode': 200,
       'testId': 1,
     },
 
@@ -48,7 +47,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};/, // enforce 22 character minimum
       },
-      'responseStatusCode': 200,
       'testId': 2,
     },
 
@@ -70,7 +68,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};/, // enforce 22 character minimum
       },
-      'responseStatusCode': 200,
       'testId': 3,
     },
 
@@ -90,7 +87,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-a=12345;/,
       },
-      'responseStatusCode': 200,
       'testId': 4,
     },
 
@@ -112,7 +108,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-a=54321;/,
       },
-      'responseStatusCode': 200,
       'testId': 5,
     },
 

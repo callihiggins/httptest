@@ -28,7 +28,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': 200,
       'testId': 1,
     },
 
@@ -48,7 +47,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': 200,
       'testId': 2,
     },
 
@@ -70,7 +68,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': 200,
       'testId': 3,
     },
 
@@ -128,7 +125,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'x-gdpr': /1/,
       },
-      'responseStatusCode': 200,
       'testId': 6,
     },
     {
@@ -144,7 +140,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'x-gdpr': /0/,
       },
-      'responseStatusCode': 200,
       'testId': 7,
     },
     {
