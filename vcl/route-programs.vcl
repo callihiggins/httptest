@@ -11,10 +11,20 @@ sub recv_route_programs {
             set req.http.x-nyt-backend = "shaq_svc";
             set req.http.var-nyt-force-pass = "true";
             set req.http.var-nyt-send-gdpr = "true";
-        } else if (req.url.path ~ "^/programs/" ) {
+        } else if (req.url.path ~ "^/programs/") {
             set req.http.x-nyt-route = "programs-service";
             set req.http.x-nyt-backend = "programs_svc";
             set req.http.var-nyt-send-gdpr = "true";
+
+            # manipulate query string parameters per environment as follows:
+            # - prd: remove all
+            # - stg: filter all except for the "buildId" param
+            # - dev: keep all
+            if (req.http.var-nyt-env == "stg") {
+                set req.url = querystring.filter_except(req.url, "buildId");
+            } else if (req.http.var-nyt-env == "prd") {
+                set req.url = querystring.remove(req.url);
+            }
         }
     }
 }

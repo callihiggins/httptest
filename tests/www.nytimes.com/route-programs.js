@@ -109,7 +109,7 @@ function getScenarioEvents() {
       ],
       responseStatusCode: [200],
       scenarioDescription: "Programs asset CDN; GCS is responding OK",
-      testId: "3"
+      testId: 3
     },
     {
       id: "FunctionalTestScenarioDefinitionForGCSUpdate",
@@ -123,7 +123,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         "x-frame-options": "DENY",
         "x-nyt-route": "programs-gcs",
-        "x-nyt-backend": "gcs_origin"
+        "x-nyt-backend": "gcs_origin",
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
@@ -145,7 +145,118 @@ function getScenarioEvents() {
       ],
       responseStatusCode: [200],
       scenarioDescription: "Programs asset CDN; GCS is responding OK",
-      testId: "4"
+      testId: 4
+    },
+    {
+      id: "FunctionalTestScenarioStripAllQueryParams",
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
+      },
+      requestScheme: "https://",
+      requestUri: "/programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s",
+      responseHeaderMatches: {
+        "x-frame-options": "DENY",
+        "x-nyt-route": "programs-service",
+        "x-nyt-backend": "programs_svc",
+        "x-nyt-final-url": "/programs/well-challenge"
+      },
+      responseHeadersPresent: ["x-cache", "x-served-by"],
+      responseHeadersNotPresent: [
+        "cookie",
+        "nnCoection",
+        "via",
+        "x-age",
+        "x-backend",
+        "x-detectedruntimeconfigflag",
+        "x-esi-status",
+        "x-gcs-bucket",
+        "x-hash",
+        "x-origin-server",
+        "x-powered-by",
+        "x-servername",
+        "x-servername2",
+        "x-varnish",
+        "x-varnishcacheduration"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "Programs strip all query parameters from final url in prd env",
+      testId: 5
+    },
+    {
+      id: "FunctionalTestScenarioFilterQueryParamsStaging",
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestScheme: "https://",
+      requestUri: "/programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s",
+      responseHeaderMatches: {
+        "x-frame-options": "DENY",
+        "x-nyt-route": "programs-service",
+        "x-nyt-backend": "programs_svc",
+        "x-nyt-final-url": "/programs/well-challenge?buildId=5176112502013952"
+      },
+      responseHeadersPresent: ["x-cache", "x-served-by"],
+      responseHeadersNotPresent: [
+        "cookie",
+        "nnCoection",
+        "via",
+        "x-age",
+        "x-backend",
+        "x-detectedruntimeconfigflag",
+        "x-esi-status",
+        "x-gcs-bucket",
+        "x-hash",
+        "x-origin-server",
+        "x-powered-by",
+        "x-servername",
+        "x-servername2",
+        "x-varnish",
+        "x-varnishcacheduration"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "Programs filter query string for buildId only in stg env",
+      testId: 6
+    },
+    {
+      id: "FunctionalTestScenarioFilterQueryParamsStaging",
+      isDeployedInEnv: {
+        prd: false,
+        stg: false,
+        dev: true
+      },
+      requestScheme: "https://",
+      requestUri: "/programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s",
+      responseHeaderMatches: {
+        "x-frame-options": "DENY",
+        "x-nyt-route": "programs-service",
+        "x-nyt-backend": "programs_svc",
+        "x-nyt-final-url": "/programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s"
+      },
+      responseHeadersPresent: ["x-cache", "x-served-by"],
+      responseHeadersNotPresent: [
+        "cookie",
+        "nnCoection",
+        "via",
+        "x-age",
+        "x-backend",
+        "x-detectedruntimeconfigflag",
+        "x-esi-status",
+        "x-gcs-bucket",
+        "x-hash",
+        "x-origin-server",
+        "x-powered-by",
+        "x-servername",
+        "x-servername2",
+        "x-varnish",
+        "x-varnishcacheduration"
+      ],
+      responseStatusCode: [200],
+      scenarioDescription: "Programs keep all query strings in dev env",
+      testId: 7
     },
   ];
 
