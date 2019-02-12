@@ -942,3 +942,6 @@ bigquery_log:
   dataset: "www_fastly_stg"
   table: "www_stg"
   email: "fastly-log-ingest@nyt-fastlylogs-dev.iam.gserviceaccount.com"
+
+datadog_log:
+  name: "www-dev-datadog"

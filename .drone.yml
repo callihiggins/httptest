@@ -54,6 +54,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:
@@ -86,6 +89,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:
@@ -126,6 +132,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:
@@ -166,6 +175,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:
@@ -207,6 +219,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:
@@ -247,6 +262,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:
@@ -287,6 +305,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:
@@ -327,6 +348,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_bigquery_secret_key
+
+      - source: datadog_api_key_dev
+        target: tf_var_datadog_api_key
     when:
       event: push
       branch:

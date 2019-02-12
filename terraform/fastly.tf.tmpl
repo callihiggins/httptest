@@ -314,6 +314,30 @@ resource "fastly_service_v1" "service" {
     type      = "RESPONSE"
   }
 
+
+  ### datadog logging integration (only dev envs for now)
+  {{if eq (env.Getenv "env") "dev"}}
+  {{ $datadog_env_log := (datasource "env_config").datadog_log }}
+  {{ $datadog_shared_log := (datasource "shared_config").datadog_log }}
+
+  syslog {
+    name           = "{{$datadog_env_log.name}}"
+    use_tls        = "{{$datadog_shared_log.use_tls}}"
+    tls_hostname   = "{{$datadog_shared_log.tls_hostname}}"
+    address        = "{{$datadog_shared_log.address}}"
+    port           = "{{$datadog_shared_log.port}}"
+    format_version = "{{$datadog_shared_log.format_version}}"
+    message_type   = "{{$datadog_shared_log.message_type}}"
+    format         = "${var.datadog_api_key} {{$datadog_shared_log.format}}"
+    tls_ca_cert    = <<EOF
+{{$datadog_shared_log.tls_ca_cert}}
+EOF
+  }
+
+  {{end}}
+  ### end datadog logging integration
+
+
   vcl {
     name    = "route-newsdev-attribute"
     main    = false
