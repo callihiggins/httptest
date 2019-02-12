@@ -63,4 +63,5 @@ variable "bigquery_secret_key" {
 
 variable "datadog_api_key" {
   type = "string"
+  default = "no_key_for_env"
 }
