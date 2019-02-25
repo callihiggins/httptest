@@ -90,6 +90,7 @@ include "https-redirect";
 include "uuid";
 include "gdpr";
 include "response-headers";
+include "geo-identifier";
 
 sub vcl_recv {
 
@@ -564,6 +565,7 @@ sub vcl_deliver {
     call deliver_gdpr;
     call deliver_route_story_us_cookie;
     call deliver_route_newsletters_us_cookie;
+    call deliver_geo_cookie;
 
     # control when our content is allowed to be framed
     call deliver_frame_buster;

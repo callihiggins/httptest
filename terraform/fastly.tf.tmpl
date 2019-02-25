@@ -838,5 +838,10 @@ EOF
     main    = false
     content = "${file("../vcl/route-vi-static-backup-gcs.vcl")}"
   }
+  vcl {
+    name    = "geo-identifier"
+    main    = false
+    content = "${file("../vcl/geo-identifier.vcl")}"
+  }
 
 }

@@ -785,6 +785,54 @@ function getScenarioEvents() {
       'testId': 1600,
     },
     {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=158.97.227.224',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-geo=MX;/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Set cookie with value of MX for Mexico users on prd.',
+      'testId': 1600,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=185.112.249.184',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-geo=UK;/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Set cookie with value of UK for United Kingdom users on prd.',
+      'testId': 1600,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': false,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=39.109.210.210',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-geo=SG;/,
+      },
+      'responseStatusCode': [200],
+      'scenarioDescription': 'Set cookie with value of SG for Singapore users on prd.',
+      'testId': 1600,
+    },
+    {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
         prd: true,
