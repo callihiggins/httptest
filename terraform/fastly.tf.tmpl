@@ -844,4 +844,10 @@ EOF
     content = "${file("../vcl/geo-identifier.vcl")}"
   }
 
+  vcl {
+    name    = "privacy"
+    main    = false
+    content = "${file("../vcl/privacy.vcl")}"
+  }
+
 }

@@ -14,6 +14,7 @@ include "frame-buster";
 include "auth-headers";
 include "test-suite-force-miss";
 include "log-purge";
+include "privacy";
 
 # the following files contain routes for the backends defined above
 include "route-backend-health-report"; # service that reports health of defined backends
@@ -540,7 +541,7 @@ sub vcl_deliver {
   call deliver_route_story_restart_indicators;
   call deliver_route_collection_restart_indicators;
 
-  call deliver_tips_html_gcs;
+  call deliver_enable_privacy;
   call deliver_add_svc_access_control;
   call deliver_route_newsdev_cloud_functions_access_control;
   call deliver_games_api_version;

@@ -10,7 +10,6 @@ sub deliver_response_headers {
     unset resp.http.X-Powered-By;
     unset resp.http.X-Varnish;
 
-
     # Only Fastly services can control this header, do not let it be set right now
     unset resp.http.strict-transport-security;
 
