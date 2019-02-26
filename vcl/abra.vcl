@@ -74,33 +74,6 @@ sub recv_abra_allocation {
     if (req.http.x-nyt-route == "vi-homepage") {
 
       #######################################
-      # Test Name: HOME_comments_count
-      #
-      # Description: Used on vi homepage to determine whether to show a comment count or not.
-      # This test contains a special caveat for all internal users to be allocated into the
-      # "0_control" variant.
-      #
-      # Variants:
-      #   - 0_control       33%
-      #   - 1_comments_25   33%
-      #   - 2_comments_100  33%
-      #
-      set var.test_name = "HOME_comments_count";
-      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
-      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-      set var.p = std.strtol(var.hash, 16);
-
-      if (req.http.x-nyt-nyhq-access || var.p < 1417339207) {
-        set var.test_group = var.test_group + var.test_name + "=0_control";
-      } elseif (var.p < 2834678415) {
-        set var.test_group = var.test_group + var.test_name + "=1_comments_25";
-      } else {
-        set var.test_group = var.test_group + var.test_name + "=2_comments_100";
-      }
-
-      set var.test_group = var.test_group + "&";
-
-      #######################################
       # Test Name: HOME_briefing_carousel
       #
       # Description: briefing carousel A/B test.
