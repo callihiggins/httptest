@@ -810,7 +810,7 @@ function getScenarioEvents() {
       'requestScheme': 'https://',
       'requestUri': '/2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=185.112.249.184',
       'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-geo=UK;/,
+        'set-cookie': /(?:^|,)nyt-geo=GB;/,
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Set cookie with value of UK for United Kingdom users on prd.',
