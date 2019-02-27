@@ -95,6 +95,56 @@ sub recv_abra_allocation {
       } else {
         set var.test_group = var.test_group + var.test_name + "=2_carousel_top";
       }
+
+      set var.test_group = var.test_group + "&";
+
+      #######################################
+      # Test Name: HOME_package_stories_count
+      #
+      # Description: Number of stories per package A/B test.
+      #
+      # Variants:
+      #   - 0_control           98%
+      #   - 1_package_max_one   1%
+      #   - 2_package_max_two   1%
+      #
+      set var.test_name = "HOME_package_stories_count";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (req.http.x-nyt-nyhq-access || var.p < 4209067950) {
+        set var.test_group = var.test_group + var.test_name + "=0_control";
+      } elseif (var.p < 4252017623) {
+        set var.test_group = var.test_group + var.test_name + "=1_package_max_one";
+      } else {
+        set var.test_group = var.test_group + var.test_name + "=2_package_max_two";
+      }
+
+      set var.test_group = var.test_group + "&";
+
+      #######################################
+      # Test Name: HOME_top_stories_count
+      #
+      # Description: Number of stories / packages in top stories A/B test.
+      #
+      # Variants:
+      #   - 0_control           98%
+      #   - 1_total_less_one    1%
+      #   - 2_total_less_two    1%
+      #
+      set var.test_name = "HOME_top_stories_count";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (req.http.x-nyt-nyhq-access || var.p < 4209067950) {
+        set var.test_group = var.test_group + var.test_name + "=0_control";
+      } elseif (var.p < 4252017623) {
+        set var.test_group = var.test_group + var.test_name + "=1_total_less_one";
+      } else {
+        set var.test_group = var.test_group + var.test_name + "=2_total_less_two";
+      }
     }
 
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
