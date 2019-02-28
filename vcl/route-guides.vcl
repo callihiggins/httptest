@@ -6,7 +6,18 @@ sub recv_route_guides {
         set req.http.x-nyt-route = "guides";
         set req.http.x-nyt-backend = "beta_guides";
         set req.http.var-nyt-send-gdpr = "true";
-        set req.url = querystring.remove(req.url);
+
+        if (req.url ~"^/guides/gifts/") {
+            # For Gift Guides, pass category and price params to back-end:
+            set req.url = querystring.filter_except(req.url,
+                "category" + querystring.filtersep() +
+                "price");
+        } else {
+            # Remove query params for all other routes:
+            set req.url = querystring.remove(req.url);
+        }
+
+
     }
 }
 
