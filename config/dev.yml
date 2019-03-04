@@ -580,14 +580,14 @@ backends:
       window: "2"
 
   - name: "realestate_fe"
-    address: "nyt5-app-realestate.dev.oma1.nyt.net"
+    address: "real-estate-vi.dev.oma1.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "30000"
-    ssl_cert_hostname: "nyt5-app-realestate.dev.oma1.nyt.net"
-    ssl_sni_hostname: "nyt5-app-realestate.dev.oma1.nyt.net"
+    ssl_cert_hostname: "real-estate-vi.dev.oma1.nyt.net"
+    ssl_sni_hostname: "real-estate-vi.dev.oma1.nyt.net"
     healthcheck:
-      host: "nyt5-app-realestate.dev.oma1.nyt.net"
+      host: "real-estate-vi.dev.oma1.nyt.net"
       path: "/.status"
       check_interval: "20000"
       expected_response: "200"

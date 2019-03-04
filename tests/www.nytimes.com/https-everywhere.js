@@ -230,7 +230,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true
+        dev: false
       },
       requestScheme: 'http://',
       requestUri: '/real-estate/find-a-home',
@@ -247,7 +247,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true
+        dev: false
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestScheme: 'https://',
@@ -262,7 +262,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true
+        dev: false
       },
       requestScheme: 'https://',
       requestUri: '/real-estate/find-a-home',
@@ -276,7 +276,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true
+        dev: false
       },
       requestHeaderCookie: 'nyt.np.internal-https-opt-out=1',
       requestScheme: 'http://',
@@ -750,7 +750,7 @@ function getScenarioEvents() {
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true
+        dev: false
       },
       requestScheme: 'https://',
       requestUri:
