@@ -32,9 +32,16 @@ sub deliver_watching_api_version {
 }
 
 sub miss_pass_route_watching {
-  if (req.http.x-nyt-route == "watching") {
-    unset bereq.http.cookie;
-  }
+    # host header for gae route
+    if (req.http.x-nyt-route == "watching") {
+        if (req.http.var-nyt-env == "prd") {
+            set bereq.http.host = "watching-dot-nyt-watching-prd.appspot.com";
+        } else {
+            set bereq.http.host = "watching-dot-nyt-watching-dev.appspot.com";
+        }
+
+        unset bereq.http.cookie;
+    }
 }
 
 sub recv_route_watching_filter_querystring {

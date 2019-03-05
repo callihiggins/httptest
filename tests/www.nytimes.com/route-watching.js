@@ -12,12 +12,13 @@ function getScenarioEvents()
       'id': 'Watching Homepage',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/watching',
       'responseHeaderMatches': {
+        'backend': 'gae',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
@@ -29,12 +30,13 @@ function getScenarioEvents()
       'id': 'Watching Homepage redirect to https',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestScheme': 'http://',
       'requestUri': '/watching',
       'responseHeaderMatches': {
+        'backend': 'gae',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
@@ -46,12 +48,13 @@ function getScenarioEvents()
       'id': 'Redirect to remove trailing slash',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/watching/',
       'responseHeaderMatches': {
+        'backend': 'gae',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
@@ -66,12 +69,13 @@ function getScenarioEvents()
       'id': 'Watching page with article URL pattern',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/2016/11/11/watching/moonlight-netflix-medicine-for-melancholy.html',
       'responseHeaderMatches': {
+        'backend': 'gae',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
@@ -83,12 +87,13 @@ function getScenarioEvents()
       'id': 'Watching recommendations URL',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/watching/recommendations/watching-film-broadcast-news',
       'responseHeaderMatches': {
+        'backend': 'gae',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
@@ -100,12 +105,13 @@ function getScenarioEvents()
       'id': 'Watching multi-recommendations URL with query param',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/watching/api/recommendations?ids[]=100000004539144&test=hello&bad1=1',
       'responseHeaderMatches': {
+        'backend': 'gae',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
         'x-nyt-final-url': '/watching/api/recommendations?ids[]=100000004539144',
@@ -118,12 +124,13 @@ function getScenarioEvents()
       'id': 'Watching recommendations URL without query param',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestScheme': 'https://',
       'requestUri': '/watching/api/recommendations',
       'responseHeaderMatches': {
+        'backend': 'gae',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },

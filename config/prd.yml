@@ -127,14 +127,14 @@ backends:
       window: "5"
 
   - name: "beta_watching"
-    address: "np-watching-prd-public-1330526356.us-east-1.elb.amazonaws.com"
+    address: "watching-dot-nyt-watching-prd.appspot.com"
     between_bytes_timeout: "5000"
     connect_timeout: "5000"
     first_byte_timeout: "5000"
-    port: "80"
-    use_ssl: "false"
+    ssl_cert_hostname: "nyt-watching-prd.appspot.com"
+    ssl_sni_hostname: "nyt-watching-prd.appspot.com"
     healthcheck:
-      host: "np-watching-prd-public-1330526356.us-east-1.elb.amazonaws.com"
+      host: "watching-dot-nyt-watching-prd.appspot.com"
       path: "/api/health"
       check_interval: "5000"
       expected_response: "200"
