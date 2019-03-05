@@ -74,31 +74,6 @@ sub recv_abra_allocation {
     if (req.http.x-nyt-route == "vi-homepage") {
 
       #######################################
-      # Test Name: HOME_briefing_carousel
-      #
-      # Description: briefing carousel A/B test.
-      #
-      # Variants:
-      #   - 0_control       33%
-      #   - 1_briefing_top  33%
-      #   - 2_carousel_top  33%
-      #
-      set var.test_name = "HOME_briefing_carousel";
-      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
-      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-      set var.p = std.strtol(var.hash, 16);
-
-      if (var.p < 1417339207) {
-        set var.test_group = var.test_group + var.test_name + "=0_control";
-      } elseif (var.p < 2834678415) {
-        set var.test_group = var.test_group + var.test_name + "=1_briefing_top";
-      } else {
-        set var.test_group = var.test_group + var.test_name + "=2_carousel_top";
-      }
-
-      set var.test_group = var.test_group + "&";
-
-      #######################################
       # Test Name: HOME_package_stories_count
       #
       # Description: Number of stories per package A/B test.
