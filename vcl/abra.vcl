@@ -120,6 +120,31 @@ sub recv_abra_allocation {
       } else {
         set var.test_group = var.test_group + var.test_name + "=2_total_less_two";
       }
+
+      set var.test_group = var.test_group + "&";
+
+      #######################################
+      # Test Name: HOME_chartbeat
+      #
+      # Description: Test performance of users who have the chartbeat script embedded.
+      #
+      # Variants:
+      #   - 0_control               95%
+      #   - 1_flicker_control       2.5%
+      #   - 2_no_flicker_control    2.5%
+      #
+      set var.test_name = "HOME_chartbeat";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (req.http.x-nyt-nyhq-access || var.p < 4080218931) {
+        set var.test_group = var.test_group + var.test_name + "=0_control";
+      } elseif (var.p < 4187593113) {
+        set var.test_group = var.test_group + var.test_name + "=1_flicker_control";
+      } else {
+        set var.test_group = var.test_group + var.test_name + "=2_no_flicker_control";
+      }
     }
 
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
