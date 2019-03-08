@@ -71,7 +71,7 @@ sub recv_abra_allocation {
   if (!req.http.x-nyt-shield-auth) {
 
     # HOMEPAGE TESTS
-    if (req.http.x-nyt-route == "vi-homepage") {
+    if (req.http.x-nyt-route == "homepage") {
 
       #######################################
       # Test Name: HOME_package_stories_count

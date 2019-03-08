@@ -8,7 +8,7 @@ sub recv_route_vi_static_backup_gcs {
 
 sub miss_pass_route_vi_static_backup_gcs {
   if (req.http.var-is-vi-static-backup-enabled == "true"
-      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "vi-homepage")) {
+      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "homepage")) {
     unset bereq.http.cookie;
 
     # Prepend the path to the static backup in the gcs bucket.
@@ -16,7 +16,7 @@ sub miss_pass_route_vi_static_backup_gcs {
 
     # Since the gcs bucket doesn't have document logic
     # we need to prepend index.html if it's a homepage request
-    if (req.http.x-nyt-route == "vi-homepage") {
+    if (req.http.x-nyt-route == "homepage") {
       set bereq.url = bereq.url + "index.html";
     }
 
@@ -42,7 +42,7 @@ sub miss_pass_route_vi_static_backup_gcs {
 sub fetch_route_vi_static_backup_gcs {
   # If the requested content does not exist in the static backup.
   if (req.http.var-is-vi-static-backup-enabled == "true"
-      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "vi-homepage")) {
+      && (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "homepage")) {
     # Remove cache from the private bucket response which has a 0 TTL
     unset beresp.http.Cache-Control;
     unset beresp.http.Expires;

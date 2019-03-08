@@ -11,7 +11,6 @@ sub recv_https_redirect {
      * Items permanently on HTTPS
      */
     if (   req.http.x-nyt-route == "homepage"
-        || req.http.x-nyt-route == "vi-homepage"
         || ( req.http.x-nyt-route == "article"
             && req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/") // Route 1850-future
         || ( req.http.x-nyt-route == "article" && req.url ~ "^/(aponline|reuters)/" ) // wire sources

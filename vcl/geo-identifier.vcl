@@ -3,7 +3,7 @@
 # as a two character country code
 
 sub deliver_geo_cookie {
-    if (req.http.x-nyt-route == "vi-homepage" ||
+    if (req.http.x-nyt-route == "homepage" ||
         req.http.x-nyt-route == "vi-story") {
         add resp.http.Set-Cookie =
             "nyt-geo="+ req.http.x-nyt-country + "; "+ 

@@ -21,7 +21,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/',
       'responseHeaderMatches': {
-        'x-nyt-route': 'vi-homepage',
+        'x-nyt-route': 'homepage',
         'x-nyt-backend': 'projectvi_static_backup_gcs',
       },
       'responseHeadersPresent': ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],

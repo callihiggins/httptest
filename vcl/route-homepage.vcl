@@ -6,7 +6,7 @@ sub recv_route_homepage {
           # first check to see if we need to redirect to a different edition
           call recv_route_homepage_edition_redirect;
 
-          set req.http.x-nyt-route = "vi-homepage";
+          set req.http.x-nyt-route = "homepage";
           set req.http.x-nyt-backend = "projectvi_fe";
           set req.http.var-nyt-error-retry = "false";
           set req.http.var-nyt-wf-auth = "true";
@@ -29,7 +29,7 @@ sub recv_route_homepage {
 sub recv_route_homepage_edition_redirect {
     # redirect HP based on edition
     if (req.http.var-cookie-nyt-edition == "edition|SPANISH"
-        && (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-homepage")
+        && (req.http.x-nyt-route == "homepage" )
     ) {
         declare local var.target_url STRING;
         set var.target_url =  "http://" + req.http.host + "/es/" + req.http.x-nyt-orig-querystring;
@@ -49,7 +49,7 @@ sub error_771_perform_302_redirect {
 sub hash_route_homepage {
 
   # if vi allocated, add hash parameters for cache variance
-  if (req.http.x-nyt-route == "vi-homepage") {
+  if (req.http.x-nyt-route == "homepage") {
 
       # only compute x-nyt-geo-hash on edge pops in shielding scenario
       if(!req.http.x-nyt-shield-auth) {
@@ -89,14 +89,14 @@ sub calculate_geo_hash {
 }
 
 sub miss_pass_route_homepage {
-  if (req.http.x-nyt-route == "vi-homepage" || req.http.x-nyt-route == "homepage") {
+  if (req.http.x-nyt-route == "homepage") {
     unset bereq.http.cookie;
   }
 }
 
 sub deliver_homepage_set_debug_header {
   # only if this execution is not on the shield pop in a shielding scenario
-  if (!req.http.x-nyt-shield-auth && req.http.x-nyt-route == "vi-homepage") {
+  if (!req.http.x-nyt-shield-auth && req.http.x-nyt-route == "homepage") {
     # for debugging and automated tests:
     if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-nyhq-access || req.http.x-nyt-staging-only-access)) {
       set resp.http.x-nyt-debug-req-http-x-nyt-vi-abtest = req.http.x-nyt-vi-abtest;
