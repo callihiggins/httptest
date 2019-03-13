@@ -45,7 +45,7 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
+      responseStatusCode: [301],
       scenarioDescription: 'Vi Timeswire Page; /timeswire/',
       testId: 2
     },
