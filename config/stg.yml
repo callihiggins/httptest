@@ -5,9 +5,6 @@ domains:
   - name: "*.stg.nytimes.com"
   - name: "www.stg.nytimes.com"
   - name: "apple.stg.nytimes.com"
-  - name: "alpha-preview.stg.nytimes.com"
-  - name: "alpha-test.stg.nytimes.com"
-  - name: "alpha.stg.nytimes.com"
 
 # these are the default values for backend config keys if not specified
 # some are only here for documentation purposes, some you can override
