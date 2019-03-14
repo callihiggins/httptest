@@ -88,7 +88,7 @@ sub recv_abra_allocation {
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (req.http.x-nyt-nyhq-access || var.p < 4209067950) {
+      if (req.http.x-nyt-nyhq-access == "1" || var.p < 4209067950) {
         set var.test_group = var.test_group + var.test_name + "=0_control";
       } elseif (var.p < 4252017623) {
         set var.test_group = var.test_group + var.test_name + "=1_package_max_one";
@@ -113,7 +113,7 @@ sub recv_abra_allocation {
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (req.http.x-nyt-nyhq-access || var.p < 4209067950) {
+      if (req.http.x-nyt-nyhq-access == "1" || var.p < 4209067950) {
         set var.test_group = var.test_group + var.test_name + "=0_control";
       } elseif (var.p < 4252017623) {
         set var.test_group = var.test_group + var.test_name + "=1_total_less_one";
@@ -138,7 +138,7 @@ sub recv_abra_allocation {
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (req.http.x-nyt-nyhq-access || var.p < 4080218931) {
+      if (req.http.x-nyt-nyhq-access == "1" || var.p < 4080218931) {
         set var.test_group = var.test_group + var.test_name + "=0_control";
       } elseif (var.p < 4187593113) {
         set var.test_group = var.test_group + var.test_name + "=1_flicker_control";

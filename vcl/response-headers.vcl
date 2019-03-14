@@ -22,7 +22,7 @@ sub deliver_response_headers {
     set req.http.x-nyt-backend-health = resp.http.x-nyt-backend-health;
 
     # decide whether to keep or delete response headers based on auth level
-    if (!req.http.x-nyt-nyhq-access){
+    if ( !(req.http.x-nyt-nyhq-access == "1") ){
         # remove these headers for external requests
         unset resp.http.X-VarnishCacheDuration;
         unset resp.http.X-Origin-Server;
@@ -53,7 +53,7 @@ sub deliver_response_headers {
         set resp.http.x-nyt-route = req.http.x-nyt-route;
         set resp.http.x-nyt-backend = req.http.x-nyt-backend;
     # unset the x-nyt-backend header if this is an edge pop without nyhq access
-    } else if(!req.http.x-nyt-nyhq-access) {
+    } else if( !(req.http.x-nyt-nyhq-access == "1") ) {
         unset resp.http.x-nyt-backend;
     # if we got this far it's an edge that is nyhq
     # if NOT shielded, overwrite this header with the route defined one
@@ -68,7 +68,7 @@ sub deliver_response_headers {
     }
 
     // remove deprecated internal https cookie
-    if (req.http.x-nyt-nyhq-access && req.http.Cookie:nyt.np.https-everywhere) {
+    if (req.http.x-nyt-nyhq-access == "1" && req.http.Cookie:nyt.np.https-everywhere) {
         add resp.http.Set-Cookie =
             "nyt.np.https-everywhere=; " +
             "Expires=" + time.sub(now, 365d) + "; " +
@@ -101,7 +101,7 @@ sub deliver_response_headers {
 // Post Audit function
 // Return debug headers for internal clients
 sub deliver_debug_response_headers {
-  if (req.http.x-nyt-nyhq-access) {
+  if (req.http.x-nyt-nyhq-access == "1") {
     set resp.http.debug-var-nyt-env = req.http.var-nyt-env;
     set resp.http.debug-var-nyt-force-pass = if(req.http.var-nyt-force-pass, req.http.var-nyt-force-pass, "false");
   }

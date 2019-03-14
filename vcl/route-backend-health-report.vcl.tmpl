@@ -1,5 +1,5 @@
 sub recv_route_backend_health_report {
-  if (req.url.path ~ "^/backendhealth\.(json|html)$" && req.http.x-nyt-nyhq-access) {
+  if (req.url.path ~ "^/backendhealth\.(json|html)$" && req.http.x-nyt-nyhq-access == "1") {
 
     # this does not use query strings
     set req.url = querystring.remove(req.url);

@@ -98,7 +98,7 @@ sub deliver_homepage_set_debug_header {
   # only if this execution is not on the shield pop in a shielding scenario
   if (!req.http.x-nyt-shield-auth && req.http.x-nyt-route == "homepage") {
     # for debugging and automated tests:
-    if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-nyhq-access || req.http.x-nyt-staging-only-access)) {
+    if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1")) {
       set resp.http.x-nyt-debug-req-http-x-nyt-vi-abtest = req.http.x-nyt-vi-abtest;
     }
   }

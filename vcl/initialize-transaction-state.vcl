@@ -98,7 +98,7 @@ sub recv_initialize_transaction_state {
     set req.http.var-is-vi-static-backup-enabled = "false";
     # If the request is internal and we detect our backup
     # unit test header then manually turn on the switch.
-    if (req.http.x-nyt-nyhq-access && req.http.vi-static-backup-test == "true") {
+    if (req.http.x-nyt-nyhq-access == "1" && req.http.vi-static-backup-test == "true") {
       set req.http.var-is-vi-static-backup-enabled = "true";
     }
     # The default static backup will be read from the Central cluster.

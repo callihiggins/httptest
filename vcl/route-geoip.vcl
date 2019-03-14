@@ -1,6 +1,6 @@
 sub recv_route_geoip_svc {
   # geoip test service error call
-	if (req.http.x-nyt-nyhq-access) {
+	if (req.http.x-nyt-nyhq-access == "1") {
 		if (req.url ~ "^/svc/web-products/geoip-test.html") {
 			error 949;
 		}

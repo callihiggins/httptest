@@ -1,5 +1,5 @@
 sub recv_route_device_detection_debug {
-    if (req.http.x-nyt-nyhq-access) {
+    if (req.http.x-nyt-nyhq-access == "1") {
         if (req.url ~ "^/svc/web-products/uadiag") {
             set req.http.x-nyt-route = "device-detection-debug";
             set req.http.x-nyt-backend = "synthetic";
