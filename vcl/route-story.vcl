@@ -94,6 +94,20 @@ sub recv_route_amp {
       error 755 var.amp_redirect_target;
     }
   }
+
+  // Route live blog traffic to amp
+  // (in staging, temporarily route to a fork of the amp backend)
+  if (   req.http.var-nyt-canonical-www-host == "true"
+      && req.url ~ "^/live/2019/"
+  ) {
+    if (req.http.var-nyt-env == "prd") {
+      set req.http.x-nyt-route = "amp";
+      set req.http.x-nyt-backend = "amp";
+    } else {
+      set req.http.x-nyt-route = "amp_liveblog";
+      set req.http.x-nyt-backend = "amp_liveblog";
+    }
+  }
 }
 
 sub miss_pass_route_amp {
@@ -102,6 +116,11 @@ sub miss_pass_route_amp {
           set bereq.http.host = "amp-dot-nyt-wfvi-dev.appspot.com";
       } else {
           set bereq.http.host = "amp-dot-nyt-wfvi-prd.appspot.com";
+      }
+  }
+  if (req.http.x-nyt-route == "amp_liveblog") {
+      if (req.http.var-nyt-env != "prd") {
+          set bereq.http.host = "preview-liveblog-dot-amp-dot-nyt-wfvi-dev.appspot.com";
       }
   }
 }

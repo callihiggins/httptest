@@ -6,8 +6,9 @@ sub recv_route_blogs {
           || req.url ~  "^/politics/first-draft"
           || req.url ~  "^/times-insider"
           || req.url ~  "^/timesjourneys"
-          || req.url ~  "^/live/"
           || req.url ~  "^/live$"
+          || (   req.url  ~ "^/live/"
+              && req.url !~ "^/live/2019/")
       ) {
           set req.http.x-nyt-route = "blog";
           set req.http.x-nyt-backend = "blogs";

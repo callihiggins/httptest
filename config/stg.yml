@@ -561,6 +561,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "amp_liveblog"
+    address: "preview-liveblog-dot-amp-dot-nyt-wfvi-dev.appspot.com"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "preview-liveblog-dot-amp-dot-nyt-wfvi-dev.appspot.com"
+    ssl_sni_hostname: "preview-liveblog-dot-amp-dot-nyt-wfvi-dev.appspot.com"
+    healthcheck:
+      host: "preview-liveblog-dot-amp-dot-nyt-wfvi-dev.appspot.com"
+      path: "/.info"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
   - name: "realestate_fe"
     address: "nyt5-app-realestate.stg.oma1.nyt.net"
     between_bytes_timeout: "10000"
