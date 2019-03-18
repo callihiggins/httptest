@@ -145,6 +145,35 @@ sub recv_abra_allocation {
       } else {
         set var.test_group = var.test_group + var.test_name + "=2_no_flicker_control";
       }
+
+      set var.test_group = var.test_group + "&";
+
+      #######################################
+      # Test Name: HOME_summaries
+      #
+      # Description: Test the engagement impact on making the Home screen on mobile web
+      # easier to scroll through
+      #
+      # Variants:
+      #   - 0_control                               97%
+      #   - 1_remove_summaries                      1%
+      #   - 2_remove_summaries_except_package_one   1%
+      #   - 3_remove_bullets                        1%
+      #
+      set var.test_name = "HOME_summaries";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (req.http.x-nyt-nyhq-access || var.p < 4166118277) {
+        set var.test_group = var.test_group + var.test_name + "=0_control";
+      } elseif (var.p < 4209067950) {
+        set var.test_group = var.test_group + var.test_name + "=1_remove_summaries";
+      } elseif (var.p < 4252017623) {
+        set var.test_group = var.test_group + var.test_name + "=2_remove_summaries_except_package_one";
+      } else {
+        set var.test_group = var.test_group + var.test_name + "=3_remove_bullets";
+      }
     }
 
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
