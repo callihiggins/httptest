@@ -117,7 +117,7 @@ sub hash_route_alpha {
 sub fetch_route_alpha {
   if (req.http.var-nyt-canonical-alpha-host == "true" && req.http.x-nyt-route != "vi-assets") {
     // All scoop preview content should be delivered as is to the frontend
-    if (req.http.host ~ "preview\.stg\.") {
+    if (req.http.host ~ "^alpha-preview") {
       return(deliver);
     }
 

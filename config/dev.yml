@@ -11,6 +11,8 @@ domains:
     - name: "apple.dev.nytimes.com"
     - name: "apple-test.dev.nytimes.com"
     - name: "apple-preview.dev.nytimes.com"
+    - name: "alpha.dev.nytimes.com"
+    - name: "alpha-preview.dev.nytimes.com"
   sandbox01:
     - name: "www-sandbox01.dev.nytimes.com"
   sandbox02:
