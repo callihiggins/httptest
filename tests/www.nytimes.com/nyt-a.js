@@ -111,6 +111,25 @@ function getScenarioEvents()
       'testId': 5,
     },
 
+    {
+      'scenarioDescription': 'refreshes nyt-a when provided in request to /crosswords',
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      'requestScheme': 'https://',
+      'requestHeaderCookie': [
+        'nyt-a=12345',
+      ],
+      'requestUri': '/crosswords',
+      'responseHeaderPattern': {
+        'set-cookie': /(?:^|,)nyt-a=12345;/,
+      },
+      'testId': 6,
+    },
+
   ];
 
   return scenarios;

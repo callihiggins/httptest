@@ -14,7 +14,7 @@ Please use the following template for PRs: [PULL_REQUEST_TEMPLATE.md](https://gi
 
 ## Sandboxes
 
-The sandbox policy and documentation can be found [here](https://github.com/nytm/dv-fastly-guide/tree/master/topics/www_sandboxes.md)
+The sandbox policy and documentation can be found [here](https://docs.dv.nyt.net/fastly/guides/www_sandboxes/)
 
 ## Office hours
 
@@ -32,7 +32,7 @@ The guide of writing the tests can be found [here](https://github.com/nytm/drone
 
 ### Running tests
 
-The tests are run in the build pipeline in Drone using the [drone-fastly-tests](https://github.com/nytm/drone-fastly-tests) image. 
+The tests are run in the build pipeline in Drone using the [drone-fastly-tests](https://github.com/nytm/drone-fastly-tests) image.
 
 Tests can be run locally using the same image from the root of the repo with
 

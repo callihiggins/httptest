@@ -88,7 +88,7 @@ include "set-cache-object-ttl";
 # begin other logic
 include "abra";
 include "https-redirect";
-include "uuid";
+include "agent-id";
 include "gdpr";
 include "response-headers";
 include "geo-identifier";
@@ -530,8 +530,8 @@ sub vcl_fetch {
 sub vcl_deliver {
 #FASTLY deliver
 
-  # set the nyt-a uuid cookie
-  call deliver_set_uuid_cookie;
+  # set the agent id (nyt-a cookie):
+  call deliver_set_agent_id_cookie;
 
   if (resp.http.x-nyt-restart-reason) {
     set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " " + resp.http.x-nyt-restart-reason, resp.http.x-nyt-restart-reason);

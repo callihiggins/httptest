@@ -62,8 +62,8 @@ sub recv_initialize_transaction_state {
 
     # logic that should not be executed on a shield pop
     if(!req.http.x-nyt-shield-auth) {
-      # do not create a uuid var if this transaction is on a shield pop backend
-      call recv_create_uuid_var;
+      # do not create an agent id (nyt-a cookie) if this transaction is on a shield pop backend
+      call recv_create_agent_id_var;
 
       # this could be incorrect if we are on a shield pop backend
       # set the original protocol to let downstream systems know what it was

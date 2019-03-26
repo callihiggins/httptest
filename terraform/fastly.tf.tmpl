@@ -528,9 +528,9 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-    name    = "uuid"
+    name    = "agent-id"
     main    = false
-    content = "${file("../vcl/uuid.vcl")}"
+    content = "${file("../vcl/agent-id.vcl")}"
   }
 
   vcl {
