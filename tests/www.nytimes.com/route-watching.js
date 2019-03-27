@@ -18,7 +18,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/watching',
       'responseHeaderMatches': {
-        'backend': 'gae',
+        'x-nyt-backend': 'beta_watching',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
@@ -36,7 +36,7 @@ function getScenarioEvents()
       'requestScheme': 'http://',
       'requestUri': '/watching',
       'responseHeaderMatches': {
-        'backend': 'beta_watching',
+        'x-nyt-backend': 'beta_watching',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
@@ -54,7 +54,7 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/watching/',
       'responseHeaderMatches': {
-        'backend': 'beta_watching',
+        'x-nyt-backend': 'beta_watching',
         'x-api-version': 'F-W2',
         'x-nyt-route': 'watching',
       },
