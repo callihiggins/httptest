@@ -67,6 +67,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "ask"
         || req.http.x-nyt-route == "tbooks"
         || req.http.x-nyt-route == "tbooks-pass"
+        || req.http.x-nyt-route == "amp_liveblog"
         || req.url ~ "^/newsletters"
         || req.url ~ "^/(js|js2|css|bi)/"
         || req.url ~ "^/pages/cooking/" // newsletters

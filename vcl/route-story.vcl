@@ -101,7 +101,7 @@ sub recv_route_amp {
       && req.url ~ "^/live/2019/"
   ) {
     if (req.http.var-nyt-env == "prd") {
-      set req.http.x-nyt-route = "amp";
+      set req.http.x-nyt-route = "amp_liveblog";
       set req.http.x-nyt-backend = "amp";
     } else {
       set req.http.x-nyt-route = "amp_liveblog";

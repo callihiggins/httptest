@@ -924,7 +924,7 @@ function getScenarioEvents() {
       requestUri: '/live/2019/',
       method: 'GET',
       responseHeaderMatches: {
-        'x-nyt-route': 'amp',
+        'x-nyt-route': 'amp_liveblog',
         'x-nyt-backend': 'amp',
       },
       scenarioDescription: 'Route 2019 live blogs to amp',
