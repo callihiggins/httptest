@@ -24,6 +24,8 @@ domains:
   - name: "*.nytimes.com"
   - name: "www.nytimes.com"
   - name: "apple.nytimes.com"
+  - name: "alpha.nytimes.com"
+  - name: "alpha-preview.nytimes.com"
   - name: "www.newyorktimesontheweb.com"
   - name: "www.thenewyorktimes.net"
   - name: "www.nytimes.org"
