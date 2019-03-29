@@ -45,6 +45,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "vi-search"
         || req.http.x-nyt-route == "vi-timeswire"
         || req.http.x-nyt-route == "vi-weddings"
+        || req.http.x-nyt-route == "vi-info"
         || req.http.x-nyt-route == "gdpr-form"
         || req.http.x-nyt-route == "vi-interactive"
         || req.http.x-nyt-route == "ads-static-assets"

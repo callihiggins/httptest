@@ -55,6 +55,11 @@ sub recv_route_alpha {
       set req.http.x-nyt-route = "collection";
     }
 
+    if (req.url ~ "^/.info") {
+      set req.http.var-nyt-wf-auth = "true";
+      set req.http.x-nyt-route = "vi-info";
+    }
+
     // dev
     if (req.http.host == "apple.dev.nytimes.com" || req.http.host == "alpha.dev.nytimes.com") {
       set req.http.var-nyt-force-pass = "true";
@@ -77,6 +82,7 @@ sub recv_route_alpha {
         }
       } else {
         set req.http.x-nyt-backend = "alpha_preview";
+        set req.http.var-nyt-force-pass = "true";
       }
     }
 
@@ -116,11 +122,6 @@ sub hash_route_alpha {
 
 sub fetch_route_alpha {
   if (req.http.var-nyt-canonical-alpha-host == "true" && req.http.x-nyt-route != "vi-assets") {
-    // All scoop preview content should be delivered as is to the frontend
-    if (req.http.host ~ "preview\.stg\.") {
-      return(deliver);
-    }
-
     // equivalent to setting grace mode
     set beresp.stale_if_error = 86400s; // 1 day
     // allow serving stale while latest content is being generated

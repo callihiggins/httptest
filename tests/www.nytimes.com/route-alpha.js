@@ -391,7 +391,103 @@ function getScenarioEvents() {
       scenarioDescription:
         'Alpha host; test query string filter preview;/section/opinion',
       testId: 17
-    }
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: false,
+        dev: true
+      },
+      requestHeaders: {
+        Host: 'alpha.dev.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/.info',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-info',
+        'x-nyt-backend': 'alpha_fe',
+        'x-nyt-final-url':
+          '/.info'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test info route on alpha_fe; /.info',
+      testId: 18
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: false,
+        dev: true
+      },
+      requestHeaders: {
+        Host: 'alpha-preview.dev.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/.info',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-info',
+        'x-nyt-backend': 'alpha_preview',
+        'x-nyt-final-url':
+          '/.info'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test info route on alpha_preview; /.info',
+      testId: 19
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'alpha.stg.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/.info',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-info',
+        'x-nyt-backend': 'alpha_fe',
+        'x-nyt-final-url':
+          '/.info'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test info route on alpha_fe; /.info',
+      testId: 20
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'alpha-preview.stg.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/.info',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-info',
+        'x-nyt-backend': 'alpha_preview',
+        'x-nyt-final-url':
+          '/.info'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test info route on alpha_preview; /.info',
+      testId: 21
+    },
   ];
 
   return scenarios;
