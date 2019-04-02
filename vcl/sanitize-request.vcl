@@ -6,7 +6,7 @@ sub recv_sanitize_request {
 
     # collapse repeated slashes in URL
     # this was breaking query params with schemes in them, don't normalize those
-    if (req.url !~ "https?.{1,3}\/\/"){
+    if (req.url !~ "https?.{1,3}\/\/" && req.http.host !~ "^alpha-preview"){
     	set req.url = regsuball(req.url, "[\/]+", "\/");
     }
 
