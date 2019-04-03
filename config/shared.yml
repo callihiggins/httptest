@@ -120,7 +120,7 @@ sumo_log:
     \"resp_header_size\":\"%{resp.header_bytes_written}V\",
     \"resp_body_size\":\"%B\",
     \"backend\":\"%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\\\"\\\")}V\",
-    \"pagetype\":\"%{if(req.http.x-PageType,req.http.x-PageType,\\\"\\\")}V\",
+    \"pagetype\":\"%{if(resp.http.x-PageType,resp.http.x-PageType,\\\"\\\")}V\",
     \"route\":\"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
     \"is_shield\":\"%{if(req.http.x-nyt-shield-auth,\\\"1\",\\\"0\")}V\",
     \"apiversion\":\"%{if(resp.http.X-API-Version,resp.http.X-API-Version,\\\"\\\")}V\",
