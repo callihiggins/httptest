@@ -114,6 +114,7 @@ sub recv_https_redirect {
             || req.url ~ "^/interactive/.*([0-9]+).embedded.html"
             || req.url ~ "^/export_html/common/new_login_iframe.html"
             || req.url ~ "^/glogin"
+            || req.url ~ "^/help"
             || req.url.path ~ "^/images/"
             || req.url.path == "/esi/jsonp-callback"
             || req.http.x-nyt-route ~ "^mwcm"
