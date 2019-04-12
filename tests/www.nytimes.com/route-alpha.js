@@ -294,7 +294,7 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri:
-        '/section/opinion?previewDate=1547060138970&contentUri=nyt://legacycollection/fdbfedd6-69a1-5364-8437-d5870bb61b5a&device=desktop&scooppreview&contentId=100000004178830',
+        '/section/opinion?previewDate=1547060138970&contentUri=nyt://legacycollection/dadd4177-c938-5311-b6c7-5a0fa318ab49&device=desktop&scooppreview&contentId=100000004178830',
       responseHeaderMatches: {
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'alpha_preview',
