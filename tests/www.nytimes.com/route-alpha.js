@@ -488,6 +488,54 @@ function getScenarioEvents() {
         'Alpha host; test info route on alpha_preview; /.info',
       testId: 21
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: false,
+        dev: true
+      },
+      requestHeaders: {
+        Host: 'alpha.dev.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/code/welcome',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-code',
+        'x-nyt-backend': 'alpha_fe',
+        'x-nyt-final-url':
+          '/code/welcome'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test /code route on alpha_fe; /code/welcome',
+      testId: 22
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: false,
+        dev: true
+      },
+      requestHeaders: {
+        Host: 'alpha.stg.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri:
+        '/code/welcome',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-code',
+        'x-nyt-backend': 'alpha_fe',
+        'x-nyt-final-url':
+          '/code/welcome'
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host; test /code route on alpha_fe; /code/welcome',
+      testId: 23
+    },
   ];
 
   return scenarios;
