@@ -10,9 +10,6 @@ sub recv_route_story {
         set var.internationalized_url = false;
       }
 
-      # Replace space with ? for malformed url's. https://jira.nyt.net/browse/WF-775
-      set req.url = regsub(urldecode(req.url), "\.html ", "\.html?");
-
       # default route for stories is NYT5
       if (  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
           || req.url ~ "^/(aponline|reuters)/" // wire sources
