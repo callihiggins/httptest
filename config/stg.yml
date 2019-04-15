@@ -788,12 +788,12 @@ backends:
       window: "5"
 
   - name: "community_svc"
-    address: "ugc-phpapi-pub-v1-stg-ia-38969-2-1553505918.us-east-1.elb.amazonaws.com"
+    address: "comments-api.dev.nyt.net" # Note: community uses .dev for stg 
     between_bytes_timeout: "5000"
     connect_timeout: "5000"
     first_byte_timeout: "30000"
-    ssl_cert_hostname: "ugc-phpapi-pub-v1.stg.iad1.nyt.net"
-    ssl_sni_hostname: "ugc-phpapi-pub-v1.stg.iad1.nyt.net"
+    ssl_cert_hostname: "comments-api.dev.nyt.net"
+    ssl_sni_hostname: "comments-api.dev.nyt.net"
     healthcheck:
       host: "www.stg.nytimes.com"
       path: "/svc/community/V3/requestHandler?cmd=GetBasicInfo"

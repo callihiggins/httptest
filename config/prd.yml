@@ -802,12 +802,12 @@ backends:
       window: "5"
 
   - name: "community_svc"
-    address: "ugc-phpapi-pub-v1-n2-prd-1561102725.us-east-1.elb.amazonaws.com"
+    address: "comments-api.prd.nyt.net"
     between_bytes_timeout: "5000"
     connect_timeout: "5000"
     first_byte_timeout: "5000"
-    ssl_cert_hostname: "www.nytimes.com"
-    ssl_sni_hostname: "www.nytimes.com"
+    ssl_cert_hostname: "comments-api.prd.nyt.net"
+    ssl_sni_hostname: "comments-api.prd.nyt.net"
     healthcheck:
       host: "www.nytimes.com"
       path: "/svc/community/V3/requestHandler?cmd=GetBasicInfo"
