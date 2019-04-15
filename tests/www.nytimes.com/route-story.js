@@ -347,6 +347,44 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: 'https://',
+      requestUri: '/2013/06/16/travel/travel-guide-new-york-for-kids.html%20http://www.nytimes.com/2013/06/16/travel/travel-guide-new-york-for-kids.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-route': 'vi-story',
+        'x-nyt-final-url': '/2013/06/16/travel/travel-guide-new-york-for-kids.html'
+      },
+      responseStatusCode: [200, 301, 404],
+      scenarioDescription:
+        'Test routing for url with space; article; VI; ensure Fastly pass; /2013/06/16/travel/travel-guide-new-york-for-kids.html',
+      testId: 169
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/2011/06/16/travel/travel-guide-new-york-for-kids.html%20http://www.nytimes.com/2011/06/16/travel/travel-guide-new-york-for-kids.html',
+      responseHeaderMatches: {
+        'x-nyt-backend': 'article_fe',
+        'x-nyt-route': 'article',
+        'x-nyt-final-url': '/2011/06/16/travel/travel-guide-new-york-for-kids.html'
+      },
+      responseStatusCode: [200, 301, 404],
+      scenarioDescription:
+        'Test routing for url with space; article; NYT5; ensure Fastly pass; /2011/06/16/travel/travel-guide-new-york-for-kids.html',
+      testId: 170
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
       requestUri: '/1981/01/03/nyregion/uso-in-times-square.html',
       responseHeaderMatches: {
         'x-nyt-backend': "article_fe",
