@@ -22,7 +22,7 @@ function getScenarioEvents() {
         'x-gdpr': '1',
       },
       'responseHeaderPattern': {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,        
+        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
       responseStatusCode: [200],
       scenarioDescription: 'Vi Search Homepage',
@@ -46,6 +46,24 @@ function getScenarioEvents() {
       responseStatusCode: [200],
       scenarioDescription: 'Vi Search term - apple',
       testId: 2
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/search?query=kevin%20durant',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-search',
+        'x-nyt-backend': 'projectvi_fe',
+        'x-nyt-final-url': '/search?query=kevin%20durant',
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Vi Search term - kevin durant',
+      testId: 3
     }
   ];
 

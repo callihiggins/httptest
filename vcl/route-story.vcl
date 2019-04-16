@@ -18,6 +18,10 @@ sub recv_route_story {
           ) && req.url.path !~ "\.amp\.html$"
       ) {
 
+        # Replace space with ? for malformed url's. https://jira.nyt.net/browse/WF-775
+        set req.url = regsub(urldecode(req.url), "\.html ", "\.html?");
+
+
         set req.http.x-nyt-route = "article";
         set req.http.x-nyt-backend = "article_fe";
         set req.http.var-nyt-wf-auth = "true";
