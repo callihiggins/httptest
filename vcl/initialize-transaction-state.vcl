@@ -20,7 +20,7 @@ sub recv_set_canonical_www_host_var {
 
 sub recv_set_canonical_alpha_host_var {
     # set a var to denote if this domain is canonical alpha request
-    if (req.http.host ~ "^alpha" || req.http.host ~ "^apple") {
+    if (req.http.host ~ "^alpha") {
       set req.http.var-nyt-canonical-alpha-host = "true";
     } else {
       set req.http.var-nyt-canonical-alpha-host = "false";

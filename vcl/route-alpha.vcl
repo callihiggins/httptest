@@ -41,7 +41,7 @@ sub recv_route_alpha {
     }
 
     # use a test backend for alpha.test, targeted briefings needs this
-    if (req.http.host == "alpha-test.stg.nytimes.com" || req.http.host == "apple-test.dev.nytimes.com"){
+    if (req.http.host == "alpha-test.stg.nytimes.com"){
       set req.http.x-nyt-backend = "alpha_test";
     }
 
@@ -67,13 +67,13 @@ sub recv_route_alpha {
     }
 
     // dev
-    if (req.http.host == "apple.dev.nytimes.com" || req.http.host == "alpha.dev.nytimes.com") {
+    if (req.http.host == "alpha.dev.nytimes.com") {
       set req.http.var-nyt-force-pass = "true";
       set req.http.x-nyt-backend = "alpha_fe";
     }
 
     // preview
-    if (req.http.host ~ "^alpha-preview" || req.http.host ~ "^apple-preview" ) {
+    if (req.http.host ~ "^alpha-preview") {
       # if the request was sent to VI and determined
       # to be Incompatible then we don't send to VI again
       if (req.http.x-pre-restart-status == "Incompatible") {
@@ -177,7 +177,6 @@ sub deliver_route_alpha {
         req.http.host == "alpha-preview.nytimes.com"
       || req.http.host == "alpha-preview.stg.nytimes.com"
       || req.http.host == "alpha-preview.dev.nytimes.com"
-      || req.http.host ~ "^apple"
     ) {
       # if the response was not compatible with VI we
       # restart the request and signal that this happened

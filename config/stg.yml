@@ -4,7 +4,6 @@
 domains:
   - name: "*.stg.nytimes.com"
   - name: "www.stg.nytimes.com"
-  - name: "apple.stg.nytimes.com"
   - name: "alpha-preview.stg.nytimes.com"
   - name: "alpha-test.stg.nytimes.com"
   - name: "alpha.stg.nytimes.com"

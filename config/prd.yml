@@ -23,7 +23,6 @@ domains:
   - name: "www.newyorktoday.com"
   - name: "*.nytimes.com"
   - name: "www.nytimes.com"
-  - name: "apple.nytimes.com"
   - name: "alpha.nytimes.com"
   - name: "alpha-preview.nytimes.com"
   - name: "www.newyorktimesontheweb.com"

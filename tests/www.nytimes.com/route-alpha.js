@@ -15,7 +15,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestHeaders: {
-        Host: 'apple.dev.nytimes.com'
+        Host: 'alpha.dev.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
@@ -29,7 +29,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Alpha host apple.dev.nytimes.com; Vi Timeswire Page; /timeswire',
+        'Alpha host alpha.dev.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 1
     },
     {
@@ -40,7 +40,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestHeaders: {
-        Host: 'apple-preview.dev.nytimes.com'
+        Host: 'alpha-preview.dev.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
@@ -54,7 +54,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Alpha host apple-preview.dev.nytimes.com; Vi Timeswire Page; /timeswire',
+        'Alpha host alpha-preview.dev.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 2
     },
     {
@@ -65,7 +65,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestHeaders: {
-        Host: 'apple-test.dev.nytimes.com'
+        Host: 'alpha-test.dev.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
@@ -79,7 +79,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Alpha host apple-test.dev.nytimes.com; test Vi Timeswire Page; /timeswire',
+        'Alpha host alpha-test.dev.nytimes.com; test Vi Timeswire Page; /timeswire',
       testId: 3
     },
     {
@@ -90,7 +90,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestHeaders: {
-        Host: 'apple-preview.dev.nytimes.com'
+        Host: 'alpha-preview.dev.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/section/well',
@@ -115,7 +115,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestHeaders: {
-        Host: 'apple-preview.dev.nytimes.com'
+        Host: 'alpha-preview.dev.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/section/opinion',
@@ -140,7 +140,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple.stg.nytimes.com'
+        Host: 'alpha.stg.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
@@ -154,7 +154,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Alpha host apple.stg.nytimes.com; Vi Timeswire Page; /timeswire',
+        'Alpha host alpha.stg.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 6
     },
     {
@@ -165,7 +165,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-preview.stg.nytimes.com'
+        Host: 'alpha-preview.stg.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
@@ -179,7 +179,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Alpha host apple-preview.stg.nytimes.com; Vi Timeswire Page; /timeswire',
+        'Alpha host alpha-preview.stg.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 7
     },
     {
@@ -190,7 +190,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-preview.stg.nytimes.com'
+        Host: 'alpha-preview.stg.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/section/well',
@@ -215,7 +215,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple.nytimes.com'
+        Host: 'alpha.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
@@ -229,7 +229,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Alpha host apple.nytimes.com; Vi Timeswire Page; /timeswire',
+        'Alpha host alpha.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 11
     },
     {
@@ -240,7 +240,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-preview.nytimes.com'
+        Host: 'alpha-preview.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/timeswire',
@@ -254,7 +254,7 @@ function getScenarioEvents() {
       },
       responseStatusCode: [200],
       scenarioDescription:
-        'Alpha host apple-preview.nytimes.com; Vi Timeswire Page; /timeswire',
+        'Alpha host alpha-preview.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 12
     },
     {
@@ -265,7 +265,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-preview.nytimes.com'
+        Host: 'alpha-preview.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri: '/section/well',
@@ -290,7 +290,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-preview.nytimes.com'
+        Host: 'alpha-preview.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri:
@@ -316,7 +316,7 @@ function getScenarioEvents() {
         dev: true
       },
       requestHeaders: {
-        Host: 'apple-preview.dev.nytimes.com'
+        Host: 'alpha-preview.dev.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri:
@@ -344,7 +344,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-preview.stg.nytimes.com'
+        Host: 'alpha-preview.stg.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri:
@@ -372,7 +372,7 @@ function getScenarioEvents() {
         dev: false
       },
       requestHeaders: {
-        Host: 'apple-preview.nytimes.com'
+        Host: 'alpha-preview.nytimes.com'
       },
       requestScheme: 'https://',
       requestUri:
