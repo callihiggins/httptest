@@ -354,6 +354,11 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "shared-device-detection-init"
+    content = "${module.shared_vcl.device_detection_init}"
+  }
+
+  vcl {
     name    = "surrogate-key"
     main    = false
     content = "${file("../vcl/surrogate-key.vcl")}"
@@ -423,12 +428,6 @@ resource "fastly_service_v1" "service" {
     name    = "route-games"
     main    = false
     content = "${file("../vcl/route-games.vcl")}"
-  }
-
-  vcl {
-    name    = "device-detection-init"
-    main    = false
-    content = "${file("../vcl/device-detection-init.vcl")}"
   }
 
   vcl {

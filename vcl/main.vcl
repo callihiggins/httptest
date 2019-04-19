@@ -3,13 +3,13 @@ include "acl-googlebot";
 include "shared-access-control";
 include "shared-vcl-version";
 include "shared-geoip-headers-init";
+include "shared-device-detection-init";
 
 # initialization
 include "error-pages";
 include "sanitize-request";
 include "initialize-transaction-state";
 include "geoip-homepage-briefing-map";
-include "device-detection-init";
 include "frame-buster";
 include "auth-headers";
 include "test-suite-force-miss";
@@ -128,8 +128,8 @@ sub vcl_recv {
   # set misc state vars (no use in creating 15 more subs)
   call recv_initialize_transaction_state;
 
-  # set up the device detection header variables
-  call recv_device_detection_init;
+  # initializes the device detection header
+  call shared_recv_device_detection_init;
 
   # initialize geo ip headers only on the edge
   if (!req.http.x-nyt-shield-auth) {
@@ -577,6 +577,7 @@ sub vcl_deliver {
   call deliver_debug_response_headers;
   call deliver_homepage_set_debug_header;
   call shared_deliver_geoip_response_headers;
+  call shared_deliver_device_detection_header;
 
   # slideshow incompatbility fallback
   call deliver_slideshow_fallback;

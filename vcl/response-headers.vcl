@@ -30,7 +30,6 @@ sub deliver_response_headers {
     } else {
         # set these headers for internal requests
         set resp.http.x-nyt-fastly-info-state = if(fastly_info.state,fastly_info.state,"NULL");
-        set resp.http.device_type = req.http.device_type;
         set resp.http.x-nyt-final-url = req.url;
     }
 
