@@ -570,16 +570,16 @@ function getScenarioEvents()
         'dev': false
       },
       'requestScheme': 'https://',
-      'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=verizon',
+      'requestUri': '/subscriptions/promotions/lp3FURL.html?ptr=sba',
       'responseHeaderContains' : {
-        'location': 'https://' + suite.servername + '/subscription/promotions/verizon.html?ptr=verizon',
+        'location': 'https://' + suite.servername + '/subscription/promotions/sba.html?ptr=sba',
       },
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseStatusCode': [301],
-      'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for verizon',
+      'scenarioDescription': 'WCM /subscriptions/promotions redirect scenario for sba',
       'testId': 23,
     },
     {
