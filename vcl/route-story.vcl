@@ -65,15 +65,18 @@ sub recv_route_story {
               set req.http.x-nyt-backend = "article_fe";
               set req.http.var-nyt-wf-auth = "true";
               set req.http.var-nyt-send-gdpr = "true";
-              set req.url = querystring.filter_except(req.url, "nytapp");
+              if (req.http.var-nyt-canonical-alpha-host != "true") {
+                set req.url = querystring.filter_except(req.url, "nytapp");
+              }
             } else {
               set req.http.x-nyt-route = "vi-story";
               set req.http.x-nyt-backend = "projectvi_fe";
               set req.http.var-nyt-error-retry = "false";
               set req.http.var-nyt-wf-auth = "true";
               set req.http.var-nyt-send-gdpr = "true";
-              set req.url = querystring.filter_except(req.url, "nytapp");
-
+              if (req.http.var-nyt-canonical-alpha-host != "true") {
+                set req.url = querystring.filter_except(req.url, "nytapp");
+              }
               call recv_route_vi_static_backup_gcs;
             }
         }

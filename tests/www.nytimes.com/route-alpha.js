@@ -536,7 +536,30 @@ function getScenarioEvents() {
         'Alpha host; test /code route on alpha_fe; /code/welcome',
       testId: 23
     },
-  ];
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'alpha-preview.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri: '/2019/04/21/opinion/deblasio-president.html',
+      requestQueryString: '?previewDate=1555949627095&contentUri=nyt://article/11528a61-8269-5ccb-8847-43a448c9c7c9&device=desktop&scooppreview&pagewanted=all&contentId=100000006466459',
+      responseHeaderMatches: {
+        'x-nyt-final-url': '/2019/04/21/opinion/deblasio-president.html?previewDate=1555949627095&contentUri=nyt://article/11528a61-8269-5ccb-8847-43a448c9c7c9&device=desktop&scooppreview&pagewanted=all&contentId=100000006466459',
+      },
+      responseHeaderPattern: {
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host alpha-preview.nytimes.com; scoop preview with contentUri query param',
+      testId: 24
+    },
 
+  ];
   return scenarios;
 }
