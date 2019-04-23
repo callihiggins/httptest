@@ -18,10 +18,12 @@ sub recv_route_programs {
 
             # manipulate query string parameters per environment as follows:
             # - prd: remove all
-            # - stg: filter all except for the "buildId" param
+            # - stg: filter all except for the "SCOUT_API_HOST" and "buildId" param
             # - dev: keep all
             if (req.http.var-nyt-env == "stg") {
-                set req.url = querystring.filter_except(req.url, "buildId");
+                set req.url = querystring.filter_except(req.url,
+                    "SCOUT_API_HOST" + querystring.filtersep() +
+                    "buildId");
             } else if (req.http.var-nyt-env == "prd") {
                 set req.url = querystring.remove(req.url);
             }

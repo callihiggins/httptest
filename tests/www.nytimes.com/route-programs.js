@@ -192,12 +192,12 @@ function getScenarioEvents() {
         dev: false
       },
       requestScheme: "https://",
-      requestUri: "/programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s",
+      requestUri: "/programs/well-challenge?SCOUT_API_HOST=api.guides.stg.nyt.net&buildId=5176112502013952&q=8sdjv073mcl0s",
       responseHeaderMatches: {
         "x-frame-options": "DENY",
         "x-nyt-route": "programs-service",
         "x-nyt-backend": "programs_svc",
-        "x-nyt-final-url": "/programs/well-challenge?buildId=5176112502013952"
+        "x-nyt-final-url": "/programs/well-challenge?SCOUT_API_HOST=api.guides.stg.nyt.net&buildId=5176112502013952"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
@@ -218,7 +218,7 @@ function getScenarioEvents() {
         "x-varnishcacheduration"
       ],
       responseStatusCode: [200],
-      scenarioDescription: "Programs filter query string for buildId only in stg env",
+      scenarioDescription: "Programs filter query string for SCOUT_API_HOST and buildId only in stg env",
       testId: 6
     },
     {
