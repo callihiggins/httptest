@@ -2,6 +2,10 @@ module "shared_vcl" {
   source = "git::https://github.com/nytm/fastly-shared-code.git//vcl?ref=master"
 }
 
+module "cmots_shared_vcl" {
+  source = "git::https://github.com/nytm/cmots-fastly-shared.git//vcl?ref=master"
+}
+
 resource "fastly_service_v1" "service" {
   name = "${var.app}.${var.service_name}"
 
@@ -356,6 +360,11 @@ resource "fastly_service_v1" "service" {
   vcl {
     name    = "shared-device-detection-init"
     content = "${module.shared_vcl.device_detection_init}"
+  }
+
+  vcl {
+    name    = "shared-cmots-headers-init"
+    content = "${module.cmots_shared_vcl.cmots_headers_init}"
   }
 
   vcl {

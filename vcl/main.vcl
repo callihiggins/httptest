@@ -4,6 +4,7 @@ include "shared-access-control";
 include "shared-vcl-version";
 include "shared-geoip-headers-init";
 include "shared-device-detection-init";
+include "shared-cmots-headers-init";
 
 # initialization
 include "error-pages";
