@@ -81,6 +81,7 @@ sub recv_https_redirect {
         || req.url.path == "/ads.txt"
         || req.http.x-nyt-route == "sitemap"
         || req.http.x-nyt-route == "vi-get-started"
+        || req.http.x-nyt-route == "vi-code"
         || req.url.path == "/BingSiteAuth.xml"
         || req.url ~ "^/(digital|hdleftnav|subscribe|homedelivery|edu|gift|redeem|college|professor|student|campus)" //CMOTS-referrer-issue-fix
     ) {

@@ -58,6 +58,7 @@ require("./www.nytimes.com/route-ask.js");
 require("./www.nytimes.com/route-homepage.js");
 require("./www.nytimes.com/route-trending.js");
 require("./www.nytimes.com/route-get-started.js");
+require("./www.nytimes.com/route-code.js");
 require("./www.nytimes.com/route-paidpost.js");
 require("./www.nytimes.com/route-backend-health-report.js");
 require("./www.nytimes.com/route-vi-static-backup-gcs.js");

@@ -77,6 +77,7 @@ include "route-ask";
 include "route-device-detection-debug";
 include "route-trending";
 include "route-get-started";
+include "route-code";
 include "route-vi-static-backup-gcs";
 include "route-alpha";
 
@@ -197,6 +198,7 @@ sub vcl_recv {
   call recv_route_ask;
   call recv_route_device_detection_debug;
   call recv_route_get_started;
+  call recv_route_code;
 
   # order matters for these routes that are all using ^/year/mo/day
   call recv_route_story;
@@ -374,6 +376,7 @@ sub vcl_miss {
   call miss_pass_route_default_remove_cookie;
   call miss_pass_route_mwcm;
   call miss_pass_route_get_started;
+  call miss_pass_route_code;
   call miss_pass_route_vi_static_backup_gcs;
   call miss_pass_route_recommendation;
 
@@ -436,6 +439,7 @@ sub vcl_pass {
   call miss_pass_route_mwcm;
   call miss_pass_route_trending;
   call miss_pass_route_get_started;
+  call miss_pass_route_code;
   call miss_pass_route_vi_static_backup_gcs;
 
   # unset headers to the origin that we use for vars

@@ -60,12 +60,6 @@ sub recv_route_alpha {
       set req.http.x-nyt-route = "vi-info";
     }
 
-    // whitelist /code on alpha domain.
-    if (req.url ~ "^/code") {
-      set req.http.var-nyt-wf-auth = "true";
-      set req.http.x-nyt-route = "vi-code";
-    }
-
     // dev
     if (req.http.host == "alpha.dev.nytimes.com") {
       set req.http.var-nyt-force-pass = "true";

@@ -834,4 +834,10 @@ resource "fastly_service_v1" "service" {
     main    = false
     content = "${file("../vcl/privacy.vcl")}"
   }
+
+  vcl {
+  name    = "route-code"
+  main    = false
+  content = "${file("../vcl/route-code.vcl")}"
+  }
 }
