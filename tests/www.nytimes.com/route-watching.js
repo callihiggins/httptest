@@ -45,27 +45,6 @@ function getScenarioEvents()
       'testId': 2,
     },
     {
-      'id': 'Redirect to remove trailing slash',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': false,
-        'dev': false
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/watching/',
-      'responseHeaderMatches': {
-        'x-nyt-backend': 'beta_watching',
-        'x-api-version': 'F-W2',
-        'x-nyt-route': 'watching',
-      },
-      'responseStatusCode': 301,
-      'responseHeaderMatches': {
-        'location': 'https://' + suite.servername + '/watching',
-      },
-      'scenarioDescription': 'Test Watching; redirect to remove trailing slash',
-      'testId': 3,
-    },
-    {
       'id': 'Watching page with article URL pattern',
       'isDeployedInEnv': {
         'prd': true,
