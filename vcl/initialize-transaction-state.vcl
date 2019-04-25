@@ -50,7 +50,6 @@ sub recv_initialize_transaction_state {
 
     # variables that should always be empty for a new transaction
     unset req.http.x-nyt-backend-health;
-    unset req.http.x-nyt-backend;
     unset req.http.x-nyt-ttl-override;
     unset req.http.var-nyt-force-pass;
     unset req.http.x-nyt-route;
