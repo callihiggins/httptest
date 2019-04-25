@@ -19,7 +19,7 @@ sub recv_route_story {
       ) {
 
         # Replace space with ? for malformed url's. https://jira.nyt.net/browse/WF-775
-        set req.url = regsub(urldecode(req.url), "\.html ", "\.html?");
+        set req.url = regsub(req.url, "\.html\%2520", "\.html?");
 
 
         set req.http.x-nyt-route = "article";

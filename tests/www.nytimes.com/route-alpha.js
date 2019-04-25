@@ -559,7 +559,75 @@ function getScenarioEvents() {
         'Alpha host alpha-preview.nytimes.com; scoop preview with contentUri query param',
       testId: 24
     },
-
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: false,
+        dev: true
+      },
+      requestHeaders: {
+        Host: 'alpha.dev.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri: '/2019/04/24/technology/ecuador-surveillance-cameras-police-government.html',
+      requestQueryString: '?action=click&module=Top%20Stories&pgtype=Homepage',
+      responseHeaderMatches: {
+        'x-nyt-final-url': '/2019/04/24/technology/ecuador-surveillance-cameras-police-government.html?action=click&module=Top%20Stories&pgtype=Homepage',
+      },
+      responseHeaderPattern: {
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host alpha.dev.nytimes.com; query param with space returns 200',
+      testId: 25
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'alpha.stg.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri: '/2019/04/24/technology/ecuador-surveillance-cameras-police-government.html',
+      requestQueryString: '?action=click&module=Top%20Stories&pgtype=Homepage',
+      responseHeaderMatches: {
+        'x-nyt-final-url': '/2019/04/24/technology/ecuador-surveillance-cameras-police-government.html?action=click&module=Top%20Stories&pgtype=Homepage',
+      },
+      responseHeaderPattern: {
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host alpha.stg.nytimes.com; query param with space returns 200',
+      testId: 26
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'alpha.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri: '/2019/04/24/technology/ecuador-surveillance-cameras-police-government.html',
+      requestQueryString: '?action=click&module=Top%20Stories&pgtype=Homepage',
+      responseHeaderMatches: {
+        'x-nyt-final-url': '/2019/04/24/technology/ecuador-surveillance-cameras-police-government.html?action=click&module=Top%20Stories&pgtype=Homepage',
+      },
+      responseHeaderPattern: {
+      },
+      responseStatusCode: [200],
+      scenarioDescription:
+        'Alpha host alpha.nytimes.com; query param with space returns 200',
+      testId: 27
+    },
   ];
   return scenarios;
 }
