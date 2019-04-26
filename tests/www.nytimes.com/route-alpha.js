@@ -65,31 +65,6 @@ function getScenarioEvents() {
         dev: true
       },
       requestHeaders: {
-        Host: 'alpha-test.dev.nytimes.com'
-      },
-      requestScheme: 'https://',
-      requestUri: '/timeswire',
-      responseHeaderMatches: {
-        'x-nyt-route': 'vi-timeswire',
-        'x-nyt-backend': 'alpha_test',
-        'x-gdpr': '0'
-      },
-      responseHeaderPattern: {
-        'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
-      },
-      responseStatusCode: [200],
-      scenarioDescription:
-        'Alpha host alpha-test.dev.nytimes.com; test Vi Timeswire Page; /timeswire',
-      testId: 3
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
-        stg: false,
-        dev: true
-      },
-      requestHeaders: {
         Host: 'alpha-preview.dev.nytimes.com'
       },
       requestScheme: 'https://',
@@ -550,7 +525,7 @@ function getScenarioEvents() {
       requestUri: '/2019/04/21/opinion/deblasio-president.html',
       requestQueryString: '?previewDate=1555949627095&contentUri=nyt://article/11528a61-8269-5ccb-8847-43a448c9c7c9&device=desktop&scooppreview&pagewanted=all&contentId=100000006466459',
       responseHeaderMatches: {
-        'x-nyt-final-url': '/2019/04/21/opinion/deblasio-president.html?previewDate=1555949627095&contentUri=nyt://article/11528a61-8269-5ccb-8847-43a448c9c7c9&device=desktop&scooppreview&pagewanted=all&contentId=100000006466459',
+        'x-nyt-final-url': '/2019/04/21/opinion/deblasio-president.html?contentId=100000006466459&contentUri=nyt://article/11528a61-8269-5ccb-8847-43a448c9c7c9&device=desktop&pagewanted=all&previewDate=1555949627095&scooppreview'
       },
       responseHeaderPattern: {
       },
