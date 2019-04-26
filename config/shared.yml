@@ -79,7 +79,7 @@ bigquery_log:
     \"backend_healthy\": \"%{if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,\\\"\\\")}V\",
     \"restarts\": %{req.restarts}V,
     \"route\": \"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
-    \"is_shield\":\"%{if(req.http.x-nyt-shield-auth,\\\"1\",\\\"0\")}V\",
+    \"is_shield\": %{if(req.http.x-nyt-shield-auth,\\\"1\",\\\"0\")}V,
     \"restart_reason\":\"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\"
     }
 
