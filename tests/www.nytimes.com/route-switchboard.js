@@ -99,7 +99,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [302],
+      responseStatusCode: [301],
       scenarioDescription: 'Test /briefing is served from switchboard',
       testId: 6
     },
@@ -131,7 +131,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [302],
+      responseStatusCode: [301],
       scenarioDescription: 'Test /thedaily is served from switchboard',
       testId: 8
     },
@@ -147,7 +147,7 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [302],
+      responseStatusCode: [301],
       scenarioDescription: 'Test /the-daily is served from switchboard',
       testId: 9
     },
@@ -346,7 +346,7 @@ function getScenarioEvents() {
       testId: 21
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForLegacyGKE',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardWeekly',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -361,6 +361,56 @@ function getScenarioEvents() {
       scenarioDescription: 'Test /weekly (no the) is served from switchboard',
       testId: 22
     },
+
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheHyphenDispatch',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/the-dispatch',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /the-dispatch (with hypehn) is served from switchboard',
+      testId: 23
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheDispatch',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/thedispatch',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /thedispatch (no hypehn) is served from switchboard',
+      testId: 24
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheDispatch',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/column/the-dispatch',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /column/the-dispatch (with hypehn) is served from switchboard',
+      testId: 25
+    },
+
   ];
 
   return scenarios;
