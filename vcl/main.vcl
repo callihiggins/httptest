@@ -553,7 +553,6 @@ sub vcl_deliver {
   call deliver_profile_fe_api_version;
   call deliver_elections_api_version;
   call deliver_tbooks_api_version;
-  call deliver_content_api_version;
   call deliver_route_mwcm;
   call deliver_programs_api_version;
   call deliver_times_journeys_api_version;

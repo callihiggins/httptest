@@ -179,23 +179,6 @@ backends:
       timeout: "5000"
       window: "4"
 
-  - name: "content_api"
-    address: "origin-content.api.dev.nytimes.com"
-    between_bytes_timeout: "10000"
-    connect_timeout: "10000"
-    first_byte_timeout: "10000"
-    ssl_cert_hostname: "origin-content.api.dev.nytimes.com"
-    ssl_sni_hostname: "origin-content.api.dev.nytimes.com"
-    healthcheck:
-      host: "du-cachepar-stg-iad2-38464-2-1123098187.us-east-1.elb.amazonaws.com"
-      path: "/version.json"
-      check_interval: "5000"
-      expected_response: "200"
-      initial: "4"
-      threshold: "4"
-      timeout: "3000"
-      window: "5"
-
   - name: "gae_oembed_content_api"
     address: "nyt-du-dev.appspot.com"
     between_bytes_timeout: "10000"
