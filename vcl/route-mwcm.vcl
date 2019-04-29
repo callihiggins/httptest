@@ -21,7 +21,7 @@ sub recv_route_mwcm {
                       set req.url = querystring.filter_except(req.url, "ptr");
                 } else {
                   # excludes "exclude_optimizely", "exclude_jsonkidd", "exclude_abra" qs parameters
-                    set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod)$");
+                    set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override)$");
                 }
             } else {
                   set req.http.x-nyt-route = "mwcm-params";
@@ -75,6 +75,13 @@ sub recv_route_mwcm {
                 if ( req.http.cookie:mwcm_exclude_jsonkidd && req.url !~ "^/subscription/hd(/)?") {
                     set req.url = querystring.add(req.url, "exclude_jsonkidd", "true");
                 }
+
+                # checks for date-override or promoStartDate
+                # if present, then sets x-nyt-miss
+                # x-nyt-miss forces cache type to be miss if the request is coming from the internal ips.
+                if ( req.url ~ "(\?|&)(promoStartDate|date-override)=" ) {
+                    set req.http.x-nyt-miss = "1";
+                }
             }
         }
     }
@@ -108,14 +115,12 @@ sub deliver_route_mwcm {
                             resp.http.Location ~ "campaignId=([^&]*)"
                         ) {
                         set req.http.x-nyt-orig-querystring = regsub(req.http.x-nyt-orig-querystring, "campaignId=([^&]*)","");
-
                     }
 
                     if (    req.http.x-nyt-orig-querystring ~ "pre_prod=([^&]*)" &&
                             resp.http.Location ~ "pre_prod=([^&]*)"
                         ) {
                         set req.http.x-nyt-orig-querystring = regsub(req.http.x-nyt-orig-querystring, "pre_prod=([^&]*)","");
-
                     }
 
                     # appends x-nyt-orig-querystring to Location header

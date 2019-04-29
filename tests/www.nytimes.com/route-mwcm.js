@@ -1438,6 +1438,204 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route via cmots_pre_prod cookie',
       'testId': 63,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?pre_prod=true',
+      'requestHeaderCookie': 'magpie=persona=/AUD',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-preview',
+        'x-nyt-backend': 'mwcm_preview',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/subscription/hd/1041.html?mgnlPreviewAsVisitor=true&pre_prod=true&previewPersona=%2FAUD',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route via cmots_pre_prod cookie',
+      'testId': 64,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaderCookie': 'magpie=persona=/AUD',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/subscription/hd/1041.html?mgnlPreviewAsVisitor=true&previewPersona=%2FAUD',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route via cmots_pre_prod cookie',
+      'testId': 65,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?preferredLocale=en',
+      'requestHeaders': {
+        'Accept-Language': 'es,pt;q=0.8,en-US;q=0.6,en;q=0.4',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-locale': 'en',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests preferredLocal param override when \"en\" even though preferred Accept-Language:es',
+      'testId': 66,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?preferredLocale=es',
+      'requestHeaders': {
+        'Accept-Language': 'en,pt;q=0.8,en-US;q=0.6,en;q=0.4',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-locale': 'es',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests preferredLocal param override when \"es\" even though preferred Accept-Language:en',
+      'testId': 67,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-locale': 'en',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests \"x-nyt--local\" should defaults to \"es\"',
+      'testId': 68,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaders': {
+        'Accept-Language': 'pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-locale': 'en',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests \"Accept-Language\" has preferred language other than \"en\" or \"es\", it should force \"x-nyt-locale\"" to \"en\" ',
+      'testId': 69,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaders': {
+        'Accept-Language': 'es,pt;q=0.8,en-US;q=0.6,en;q=0.4',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-locale': 'es',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests \"Accept-Language\" has preferred language as \"es\", it should set \"x-nyt-locale\"" to \"es\" ',
+      'testId': 70,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'requestHeaders': {
+        'Accept-Language': 'en,pt;q=0.8,da-US;q=0.6',
+      },
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-locale': 'en',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests \"Accept-Language\" has preferred language as \"en\", it should set \"x-nyt-locale\"" to \"en\" ',
+      'testId': 71,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?date-override=2019-04-04T05:00:24',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+        'x-cache': 'MISS',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-final-url': '/subscription/hd/1041.html?date-override=2019-04-04T05:00:24',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests date-override qs parameter',
+      'testId': 72,
+    },
   ];
 
   return scenarios;
