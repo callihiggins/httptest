@@ -20,6 +20,7 @@ include "privacy";
 # the following files contain routes for the backends defined above
 include "route-backend-health-report"; # service that reports health of defined backends
 include "route-default";
+include "routes-vi"; # services that use projectvi_fe backend are sitting in this vcl for management purpose
 
 include "route-zone-apex-redirect";
 include "route-geoip";
@@ -50,7 +51,6 @@ include "route-times-journeys";
 include "route-guides";
 include "route-newsdev-attribute";
 include "route-newsdev-gke";
-include "route-watching";
 include "route-video";
 include "route-real-estate";
 include "route-nyt5-misc";
@@ -58,27 +58,11 @@ include "route-userinfo";
 include "route-newsroom-files-gcs";
 include "route-tips-html-gcs";
 include "route-newsgraphics-gcs";
-include "route-newsletters";
 include "route-weddings";
-include "route-search";
-include "route-timeswire";
-include "route-interactive";
 include "route-vi-assets";
-include "route-homepage";
-include "route-story";
-include "route-collection";
-include "route-paidpost";
 include "route-blogs";
-include "route-slideshow";
 include "route-invalid-requests";
-include "route-gdpr-form";
-include "route-audio";
-include "route-ask";
 include "route-device-detection-debug";
-include "route-trending";
-include "route-get-started";
-include "route-code";
-include "route-vi-static-backup-gcs";
 include "route-alpha";
 
 # backend response processing

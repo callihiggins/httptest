@@ -374,6 +374,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "routes-vi"
+    main    =  false
+    content = "${file("../vcl/routes-vi.vcl")}"
+  }
+
+  vcl {
     name    = "route-elections"
     main    = false
     content = "${file("../vcl/route-elections.vcl")}"

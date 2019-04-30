@@ -11,6 +11,7 @@
 # You can also use email addresses if you prefer. They'll be used to look up
 # users just like we do for commit author emails.
 #docs/*  docs@example.com
+ vcl/routes-vi* @nytm/web-frameworks-team @nytm/delivery-engineering
 
 # vcl/route-homepage* @nytm/home-team   @nytm/web-frameworks-team
 # vcl/route-story*  @nytm/story-team    @nytm/web-frameworks-team
