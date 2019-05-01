@@ -22,7 +22,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
         'x-nyt-region': 'NY',
-        'x-nyt-postal-code': '10018',
       },
       'responseHeadersPresent': [
         'age',

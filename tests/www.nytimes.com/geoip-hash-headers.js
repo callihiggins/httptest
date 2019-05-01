@@ -21,8 +21,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'EU',
         'x-nyt-country': 'GB',
         'x-nyt-region': 'LND',
-        'x-nyt-latitude': '51.515',
-        'x-nyt-longitude': '-0.083',
         'x-nyt-city': 'london',
       },
       'responseHeaderPattern': {
@@ -46,9 +44,7 @@ function getScenarioEvents()
         'x-nyt-continent': 'AS',
         'x-nyt-country': 'HK',
         'x-nyt-region': 'NO REGION',
-        'x-nyt-latitude': '22.276',
-        'x-nyt-longitude': '114.167',
-        'x-nyt-city': 'hong kong',
+        'x-nyt-city': 'querry bay',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test geo hash return value for IP 112.120.130.250',
@@ -67,8 +63,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'OC',
         'x-nyt-country': 'AU',
         'x-nyt-region': 'ACT',
-        'x-nyt-latitude': '-35.282',
-        'x-nyt-longitude': '149.129',
         'x-nyt-city': 'canberra',
       },
       'responseHeaderPattern': {
@@ -91,8 +85,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
         'x-nyt-region': 'CT',
-        'x-nyt-latitude': '41.794',
-        'x-nyt-longitude': '-72.251',
         'x-nyt-city': 'storrs mansfield',
       },
       'responseHeaderPattern': {
@@ -115,9 +107,7 @@ function getScenarioEvents()
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
         'x-nyt-region': 'NJ',
-        'x-nyt-latitude': '40.722',
-        'x-nyt-longitude': '-74.202',
-        'x-nyt-city': 'newark',
+        'x-nyt-city': 'holmdel',
       },
       'responseHeaderPattern': {
         'x-nyt-gmt-offset': /-[45]00/,
@@ -140,8 +130,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'CA',
         'x-nyt-region': 'ON',
-        'x-nyt-latitude': '43.677',
-        'x-nyt-longitude': '-79.425',
         'x-nyt-city': 'toronto',
       },
       'responseHeaderPattern': {
@@ -165,8 +153,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'OC',
         'x-nyt-country': 'AU',
         'x-nyt-region': 'NSW',
-        'x-nyt-latitude': '-33.867',
-        'x-nyt-longitude': '151.207',
         'x-nyt-city': 'sydney',
       },
       'responseHeaderPattern': {
