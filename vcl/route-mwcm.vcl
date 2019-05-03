@@ -21,7 +21,7 @@ sub recv_route_mwcm {
                       set req.url = querystring.filter_except(req.url, "ptr");
                 } else {
                   # excludes "exclude_optimizely", "exclude_jsonkidd", "exclude_abra" qs parameters
-                    set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override)$");
+                    set req.url = querystring.regfilter_except(req.url, "^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override|us)$");
                 }
             } else {
                   set req.http.x-nyt-route = "mwcm-params";

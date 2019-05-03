@@ -991,9 +991,10 @@ function getScenarioEvents()
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
         'x-nyt-subscriber': 'true',
+        'x-nyt-user-status':'regi',
       },
       'responseStatusCode': [200],
-      'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="true" if NYT-S cookie presents',
+      'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="true" and x-nyt-user-status="regi" if NYT-S cookie presents',
       'testId': 42,
     },
     {
@@ -1635,6 +1636,107 @@ function getScenarioEvents()
       'responseStatusCode': 200,
       'scenarioDescription': 'WCM subscription: tests date-override qs parameter',
       'testId': 72,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?us=sub',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-user-status': 'sub',
+        'x-nyt-final-url': '/subscription/hd/1041.html?us=sub',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests us qs parameter when "us=sub"',
+      'testId': 73,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?us=non-sub',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-user-status': 'non-sub',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests us qs parameter when "us=non-sub"',
+      'testId': 73,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?us=regi',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-user-status': 'regi',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests us qs parameter when "us=regi"',
+      'testId': 74,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?us=test',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-user-status': 'anon',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests us qs parameter when "us=test"',
+      'testId': 75,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-user-status': 'anon',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests us qs parameter when not present',
+      'testId': 76,
     },
   ];
 
