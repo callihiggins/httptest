@@ -51,7 +51,7 @@ sub recv_route_story {
         # are limited by a date range of no earlier than 2013/01/01. This date is going
         # to be extended in the future to include older articles and the code will
         # be updated accordingly.
-        if ((  req.url ~ "^/(aponline/|reuters/)?201[3-9]"
+        if ((  req.url ~ "^/(aponline/|reuters/)?20(1[3-9]|[2-9][0-9])"
             || var.internationalized_url
           )
           && req.url.path !~ "\.amp\.html$" // exclude amp

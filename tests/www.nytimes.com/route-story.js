@@ -955,6 +955,38 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/2020/01/01/test.html',
+      method: 'GET',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': "projectvi_fe",
+      },
+      scenarioDescription: 'Route articles after 2020 to Vi',
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/2025/12/15/test.html',
+      method: 'GET',
+      responseHeaderMatches: {
+        'x-nyt-route': 'vi-story',
+        'x-nyt-backend': "projectvi_fe",
+      },
+      scenarioDescription: 'Route articles after 2020 to Vi',
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
         stg: false,
         dev: false
       },
