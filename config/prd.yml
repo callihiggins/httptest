@@ -881,7 +881,7 @@ backends:
       timeout: "10000"
       window: "5"
 
-  - name: "switchboard"
+  - name: "switchboard_fallback"
     address: "54.163.240.77"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
@@ -890,6 +890,23 @@ backends:
     use_ssl: "false"
     healthcheck:
       host: "ec2-54-163-240-77.compute-1.amazonaws.com"
+      path: "/healthcheck"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "3"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
+  - name: "switchboard_origin"
+    address: "switchboard.prd.nyt.net"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "switchboard.prd.nyt.net"
+    ssl_sni_hostname: "switchboard.prd.nyt.net"
+    healthcheck:
+      host: "switchboard.prd.nyt.net"
       path: "/healthcheck"
       check_interval: "20000"
       expected_response: "200"

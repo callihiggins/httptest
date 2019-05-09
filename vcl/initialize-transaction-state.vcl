@@ -103,4 +103,10 @@ sub recv_initialize_transaction_state {
     # The default static backup will be read from the Central cluster.
     # Failover to East by setting the following to "true".
     set req.http.var-is-east-static-backup-enabled = "false";
+
+    # If the request is internal, allow for a client to choose a specific
+    # backend for a request (only works in route-switchboard)
+    if (req.http.x-nyt-nyhq-access != "1") {
+      unset req.http.x-nyt-force-backend;
+    }
 }
