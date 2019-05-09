@@ -60,3 +60,7 @@ variable "sumologic_endpoint_json_purge" {
 variable "bigquery_secret_key" {
   type = "string"
 }
+
+variable "gcs_secret_key" {
+  type = "string"
+}

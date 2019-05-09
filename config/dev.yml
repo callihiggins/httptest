@@ -35,8 +35,29 @@ backend_defaults:
 healthcheck_defaults:
   method: "GET" # healthchecks will use "GET" method unless specified
 
+##
+# GCS remote logging default configuration
+#
+# @see {@link https://www.terraform.io/docs/providers/fastly/r/service_v1.html}
+# @see {@link https://docs.fastly.com/api/logging#logging_gcs}
+##
+gcslogging_defaults:
+  gzip_level: 7
+  message_type: "blank"
+  path: "/"
+  period: 3600
+  # the default value for `response_condition.statement` is defined
+  # in the `terraform/fastly.tf.tmpl` file as follows:
+  #
+  # ```hcl
+  # statement = "req.http.x-nyt-backend == \"{{.name}}\""
+  # ```
+  #
+  # the logic here matches the pre-existing `REQUEST` condition that is auto-generated for each "backend"
+  # and can be customized via the backend-specific `gcslogging.response_condition_statement` property
+
 # define each backend here in sequence under backends scalar
-# as well as it's healthcheck like:
+# as well as it's healthcheck (and any other backend-specific configs) like:
 #
 # backends:
 #   - name: "fancyapp"
@@ -51,7 +72,23 @@ healthcheck_defaults:
 #       host: "fanciestapp.nyt.net"
 #       key: "value"
 #
+#   - name: "fancyapp_with_gcslogging"
+#     key: "value"
+#     healthcheck:
+#       host: "fancyapp-gcs.dev.nyt.net"
+#       key: "value"
+#     gcslogging:
+#       # customized `gcslogging.bucket_name` (i.e., instead of default "{{ .gcslogging.bucket_name_prefix }}_{{ .backends[*].name }}")
+#       bucket_name: nyt-fancyapp-cdnlogs-dev-nyhq-only
+#       # customized `gcslogging.response_condition` (i.e., only log traffic originating from NYT IP space)
+#       response_condition_statement: req.http.x-nyt-backend == \"fancyapp_with_gcslogging\" && req.http.x-nyt-nyhq-access == \"1\"
+#       # customized `gcslogging.period` (i.e., send logs to GCS every 1m instead of every 5m)
+#       period: 60
+#       # ...
+#       key: "value"
+#
 # each backend must provide a healthcheck for itself!
+# GCS remote logging is optional and will not be configured unless the `gcslogging` property is included in the backend's configuration.
 # Add a blank line between each one for readability.
 # Pay attention to the above defined defaults!
 # each backend must be named uniquely! (do a find before naming)
@@ -417,6 +454,8 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
+    gcslogging:
+      period: 60
 
   - name: "projectvi_static_backup_gcs"
     address: "storage.googleapis.com"
@@ -452,6 +491,8 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
+    gcslogging:
+      period: 60
 
   - name: "alpha_fe"
     address: "alpha-dev.dev.nyt.net"
@@ -469,6 +510,8 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
+    gcslogging:
+      period: 60
 
   - name: "alpha_test"
     address: "alpha-test.stg.nyt.net"
@@ -486,6 +529,8 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
+    gcslogging:
+      period: 60
 
   - name: "alpha_preview"
     address: "alpha-preview-development.dev.nyt.net"
@@ -503,6 +548,8 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
+    gcslogging:
+      period: 60
 
   - name: "amp"
     address: "amp-dot-nyt-wfvi-dev.appspot.com"
@@ -941,3 +988,75 @@ bigquery_log:
   dataset: "www_fastly_stg"
   table: "www_stg"
   email: "fastly-log-ingest@nyt-fastlylogs-dev.iam.gserviceaccount.com"
+
+##
+# GCS remote logging env-specific configuration
+#
+# @see {@link https://docs.fastly.com/api/logging#logging_gcs}
+##
+gcslogging:
+
+  ##
+  # Email address of the GCP service account used by Fastly to authenticate to the GCS API.
+  # The GCP Service Account identified by this address must possess the `roles/storage.objectCreator` permission (minimum) on each bucket configured as a remote logging destination.
+  #
+  # @example
+  # ```bash
+  # gsutil iam ch \
+  #   serviceAccount:fastly-log-ingest@nyt-fastlylogs-dev.iam.gserviceaccount.com:objectCreator \
+  #   gs://fastly_www_dev_projectvi_fe
+  # ```
+  #
+  # @see {@link https://www.terraform.io/docs/providers/fastly/r/service_v1.html#email}
+  ##
+  email: "fastly-log-ingest@nyt-fastlylogs-dev.iam.gserviceaccount.com"
+
+  ##
+  # Prefixed to `backends[*].name` to generate `gcslogging.name`, if no `backends[*].gcslogging.name` was specified.
+  # The result is the name of the GCS logging endpoint within the Fastly API.
+  #
+  # @example
+  # ```hcl
+  # name: "{{ $gcs_env_log.name_prefix }}_{{ .gcslogging.name }}"
+  # ```
+  #
+  # @example
+  # ```bash
+  # my_fastly_api_token='...'
+  # service_id='...'
+  # service_version='...'
+  # gcs_logging_endpoint_name=www_dev_gcs_projectvi_fe
+  #
+  # curl \
+  #  --silent \
+  #  --compressed \
+  #  --header 'Accept: application/json' \
+  #  --header "Fastly-Key: ${my_fastly_api_token}" \
+  #  --url https://api.fastly.com/service/${service_id}/version/${service_version}/logging/gcs/${gcs_logging_endpoint_name} \
+  #    | jq '.'
+  # ```
+  #
+  # @see {@link https://www.terraform.io/docs/providers/fastly/r/service_v1.html#name-13}
+  ##
+  name_prefix: "www_dev_gcs"
+
+  ##
+  # Prefixed to `backends[*].name` to generate `gcslogging.bucket_name`, if no `backends[*].gcslogging.bucket_name` was specified.
+  # The result is the name of the GCS bucket used as the remote logging destination.
+  #
+  # The bucket identified by `gcslogging.bucket_name` must exist and be properly configured before objects can be created by Fastly (see above note regarding GCP Service Account IAM permissions).
+  # Also, even if the bucket exists and is properly configured, the corresponding "backend" must receive traffic within the configured transfer interval (i.e., `gcslogging.period`) and any configured response conditions (i.e., `gcslogging.response_condition`) must have been satisfied.
+  # In other words, if no logs were created by Fastly within a given transfer interval, no GCS object(s) will be created.
+  #
+  # @example
+  # ```bash
+  # gsutil mb gs://fastlylogs_www_dev_projectvi_fe
+  #
+  # @example
+  # ```hcl
+  # bucket_name: "{{ $gcs_env_log.bucket_name_prefix }}_{{ .gcslogging.name }}"
+  # ```
+  #
+  # @see {@link https://www.terraform.io/docs/providers/fastly/r/service_v1.html#bucket_name-1}
+  ##
+  bucket_name_prefix: "fastlylogs_www_dev"

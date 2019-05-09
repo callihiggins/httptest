@@ -318,6 +318,77 @@ resource "fastly_service_v1" "service" {
     type      = "RESPONSE"
   }
 
+  ########### Beginning of GCS Logging integration #############
+
+  {{ $gcslogging_shared := (datasource "shared_config").gcslogging }}
+  {{ $gcslogging_env := (datasource "env_config").gcslogging }}
+  {{ $gcslogging_defaults := (datasource "env_config").gcslogging_defaults }}
+  {{ $backends := (datasource "env_config").backends }}
+  {{ range $backends -}}
+
+  # If backend has GCS log export configuration details, create A GCS endpoint to send streaming logs too
+  # @todo(montmanu): remove feature gate once changes are validated in pre-prod deployments
+  {{ if (has . "gcslogging") and (ne (env.Getenv "env") "prd") }}
+  gcslogging {
+    {{ if (has .gcslogging "name") }}
+    name               = "{{ .gcslogging.name }}"
+    {{ else }}
+    name               = "{{ $gcslogging_env.name_prefix }}_{{ .name }}"
+    {{ end }}
+
+    email              = "{{ $gcslogging_env.email }}"
+
+    {{ if (has .gcslogging "bucket_name") }}
+    bucket_name        = "{{ .gcslogging.bucket_name }}"
+    {{ else }}
+    bucket_name        = "{{ $gcslogging_env.bucket_name_prefix }}_{{ .name }}"
+    {{ end }}
+
+    secret_key         = "${var.gcs_secret_key}"
+
+    {{ if (has .gcslogging "path") }}
+    path               = "{{ .gcslogging.path }}"
+    {{ else }}
+    path               = "{{ $gcslogging_defaults.path }}"
+    {{ end }}
+
+    {{ if (has .gcslogging "period") }}
+    period             = "{{ .gcslogging.period }}"
+    {{ else }}
+    period             = "{{ $gcslogging_defaults.period }}"
+    {{ end }}
+
+    {{ if (has .gcslogging "gzip_level") }}
+    gzip_level         = "{{ .gcslogging.gzip_level }}"
+    {{ else }}
+    gzip_level         = "{{ $gcslogging_defaults.gzip_level }}"
+    {{ end }}
+
+    format             = "{{ $gcslogging_shared.format }}"
+    response_condition = "gcslogging-suppression-{{ .name }}"
+
+    {{ if (has .gcslogging "message_type") }}
+    message_type       = "{{ .gcslogging.message_type }}"
+    {{ else }}
+    message_type       = "{{ $gcslogging_defaults.message_type }}"
+    {{ end }}
+  }
+
+  condition {
+    name      = "gcslogging-suppression-{{ .name }}"
+    priority  = 10
+    {{ if (has .gcslogging "response_condition_statement") }}
+    statement = "{{ .gcslogging.response_condition_statement }}"
+    {{ else }}
+    statement = "req.http.x-nyt-backend == \"{{.name}}\""
+    {{ end }}
+    type      = "RESPONSE"
+  }
+  {{- end -}}
+  {{- end -}}
+
+  ########### End of GCS Logging integration #############
+
   vcl {
     name    = "route-newsdev-attribute"
     main    = false
