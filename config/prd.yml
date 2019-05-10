@@ -95,7 +95,7 @@ gcslogging_defaults:
 #       key: "value"
 #     gcslogging:
 #       # customized `gcslogging.bucket_name` (i.e., instead of default "{{ .gcslogging.bucket_name_prefix }}_{{ .backends[*].name }}")
-#       bucket_name: nyt-fancyapp-cdnlogs-dev-nyhq-only
+#       bucket_name: nyt-fancyapp-cdnlogs-prd-nyhq-only
 #       # customized `gcslogging.response_condition` (i.e., only log traffic originating from NYT IP space)
 #       response_condition_statement: req.http.x-nyt-backend == \"fancyapp_with_gcslogging\" && req.http.x-nyt-nyhq-access == \"1\"
 #       # customized `gcslogging.period` (i.e., send logs to GCS every 1m instead of every 5m)
@@ -1019,13 +1019,13 @@ gcslogging:
   # @example
   # ```bash
   # gsutil iam ch \
-  #   serviceAccount:fastly-log-ingest@nyt-fastlylogs-dev.iam.gserviceaccount.com:objectCreator \
-  #   gs://fastly_www_stg_projectvi_fe
+  #   serviceAccount:fastly-log-ingest@nyt-fastlylogs-prd.iam.gserviceaccount.com:objectCreator \
+  #   gs://fastly_www_prd_projectvi_fe
   # ```
   #
   # @see {@link https://www.terraform.io/docs/providers/fastly/r/service_v1.html#email}
   ##
-  email: "fastly-log-ingest@nyt-fastlylogs-dev.iam.gserviceaccount.com"
+  email: "fastly-log-ingest@nyt-fastlylogs-prd.iam.gserviceaccount.com"
 
   ##
   # Prefixed to `backends[*].name` to generate `gcslogging.name`, if no `backends[*].gcslogging.name` was specified.
