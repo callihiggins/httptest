@@ -16,7 +16,7 @@ sub recv_route_mwcm {
             # routes to mwcm_resilient backend if req.restart greater than "0"
             # sets route as "mwcm-resilient"
             # sets backend as "mwcm_resilient"
-            if ( req.restarts > 0 && req.http.var-nyt-env != "prd") {
+            if ( req.restarts > 0) {
                 set req.http.x-nyt-route = "mwcm-resilient";
                 set req.http.x-nyt-backend = "mwcm_resilient";
                 set req.url = "/subscription/resilient/index.html";
@@ -106,8 +106,7 @@ sub recv_route_mwcm {
 sub fetch_route_mwcm {
 
      if (    beresp.status >= 500 && beresp.status < 600 &&
-            req.http.var-nyt-env != "prd" &&
-            req.http.x-nyt-route ~ "^mwcm"
+             req.http.x-nyt-route ~ "^mwcm"
         ) {
 
          # Deliver stale if the object is available
