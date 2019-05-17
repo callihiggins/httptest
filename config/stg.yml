@@ -576,6 +576,26 @@ backends:
       timeout: "3000"
       window: "2"
 
+  - name: "mwcm_resilient"
+    address: "s1-nyt-com.s3.amazonaws.com"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "10000"
+    port: "443"
+    use_ssl: "true"
+    ssl_check_cert: "true"
+    ssl_cert_hostname: "s3.amazonaws.com"
+    ssl_sni_hostname: "s3.amazonaws.com"
+    healthcheck:
+      host: "s1-nyt-com.s3.amazonaws.com"
+      path: "/subscription/resilient/index.html"
+      check_interval: "600"
+      expected_response: "200"
+      initial: "2"
+      threshold: "1"
+      timeout: "3000"
+      window: "2"
+
   - name: "amp"
     address: "amp-dot-nyt-wfvi-dev.appspot.com"
     between_bytes_timeout: "10000"
@@ -817,7 +837,7 @@ backends:
       window: "5"
 
   - name: "community_svc"
-    address: "comments-api.dev.nyt.net" # Note: community uses .dev for stg 
+    address: "comments-api.dev.nyt.net" # Note: community uses .dev for stg
     between_bytes_timeout: "5000"
     connect_timeout: "5000"
     first_byte_timeout: "30000"

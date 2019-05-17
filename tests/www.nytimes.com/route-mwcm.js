@@ -645,8 +645,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': true
       },
       'requestScheme': 'https://',
@@ -665,8 +665,8 @@ function getScenarioEvents()
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
       'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
+        'prd': true,
+        'stg': true,
         'dev': true
       },
       'requestScheme': 'https://',
@@ -1737,6 +1737,23 @@ function getScenarioEvents()
       'responseStatusCode': 200,
       'scenarioDescription': 'WCM subscription: tests us qs parameter when not present',
       'testId': 76,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/tests/fastly/test-50x',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-resilient',
+        'x-nyt-backend': 'mwcm_resilient',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests mwcm-resilient route and mwcm_resilient backend',
+      'testId': 77,
     },
   ];
 

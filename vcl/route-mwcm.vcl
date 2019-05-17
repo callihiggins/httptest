@@ -11,6 +11,20 @@ sub recv_route_mwcm {
             set req.http.x-nyt-route = "mwcm";
             set req.http.x-nyt-backend = "mwcm";
             set req.http.var-nyt-send-gdpr = "true";
+            set req.http.var-nyt-cmots-s3-fallback = "false";
+
+            # routes to mwcm_resilient backend if req.restart greater than "0"
+            # sets route as "mwcm-resilient"
+            # sets backend as "mwcm_resilient"
+            if ( req.restarts > 0 && req.http.var-nyt-env != "prd") {
+                set req.http.x-nyt-route = "mwcm-resilient";
+                set req.http.x-nyt-backend = "mwcm_resilient";
+                set req.url = "/subscription/resilient/index.html";
+
+                # https://docs.fastly.com/guides/integrations/amazon-s3
+                set req.http.host = "s1-nyt-com.s3.amazonaws.com";
+                set req.http.var-nyt-cmots-s3-fallback = "true";
+            }
 
             if (    req.url !~ "^/marketing/(gdpr|moco|mpc|account)(/)?"  &&
                     req.url !~ "^/subscription/exo(/)?"
@@ -32,9 +46,11 @@ sub recv_route_mwcm {
             # default vaule is "false"
             set req.http.var-nyt-ismagnolia = "false";
 
-            if (    req.url == "/subscription" ||
-                    req.url ~ "^/subscription(/|.html|\?)" ||
-                    req.url ~ "^/marketing/(surveys|gdpr|moco|mpc|account)(/)?"
+            if (  req.http.var-nyt-cmots-s3-fallback != "true" &&
+                    (   req.url == "/subscription" ||
+                        req.url ~ "^/subscription(/|.html|\?)" ||
+                        req.url ~ "^/marketing/(surveys|gdpr|moco|mpc|account)(/)?"
+                    )
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
 
@@ -83,6 +99,30 @@ sub recv_route_mwcm {
                     set req.http.x-nyt-miss = "1";
                 }
             }
+        }
+    }
+}
+
+sub fetch_route_mwcm {
+
+     if (    beresp.status >= 500 && beresp.status < 600 &&
+            req.http.var-nyt-env != "prd" &&
+            req.http.x-nyt-route ~ "^mwcm"
+        ) {
+
+         # Deliver stale if the object is available
+        if (stale.exists) {
+            return(deliver_stale);
+        }
+
+        # handles 5XX retry logic
+        # restarts the request
+        # routes the request to s3 backend
+        if (    req.restarts < 1 &&
+                (req.request == "GET" || req.request == "HEAD")
+          ) {
+
+            restart;
         }
     }
 }
