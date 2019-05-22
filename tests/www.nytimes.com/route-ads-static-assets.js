@@ -43,6 +43,42 @@ function getScenarioEvents() {
       scenarioDescription: "route dev/stg bucket has different assets; 200 or 404 from GCS on correct backend/pagetype",
       testId: 2
     },
+    {
+      id: "FunctionalTestScenarioDefinitionForAdsGCSBucket",
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      requestScheme: "https://",
+      requestUri: "/app-ads.txt",
+      responseHeaderMatches: {
+        "x-nyt-route": "ads-static-assets",
+        "x-nyt-backend": "gcs_origin"
+      },
+      responseHeadersPresent: ["x-guploader-uploadid"],
+      responseStatusCode: [200,404],
+      scenarioDescription: "route: /app-ads.txt; 200 or 404 from GCS on correct backend/pagetype",
+      testId: 3
+    },
+    {
+      id: "FunctionalTestScenarioDefinitionForAdsGCSBucket",
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true
+      },
+      requestScheme: "https://",
+      requestUri: "/ads.txt",
+      responseHeaderMatches: {
+        "x-nyt-route": "ads-static-assets",
+        "x-nyt-backend": "gcs_origin"
+      },
+      responseHeadersPresent: ["x-guploader-uploadid"],
+      responseStatusCode: [200,404],
+      scenarioDescription: "route: /ads.txt; 200 or 404 from GCS on correct backend/pagetype",
+      testId: 4
+    },
   ];
 
   return scenarios;
