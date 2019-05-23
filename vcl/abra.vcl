@@ -71,89 +71,13 @@ sub recv_abra_allocation {
   if (!req.http.x-nyt-shield-auth) {
 
     # HOMEPAGE TESTS
-    if (req.http.x-nyt-route == "homepage") {
-
-      #######################################
-      # Test Name: HOME_package_stories_count
-      #
-      # Description: Number of stories per package A/B test.
-      #
-      # Variants:
-      #   - 0_control           98%
-      #   - 1_package_max_one   1%
-      #   - 2_package_max_two   1%
-      #
-      set var.test_name = "HOME_package_stories_count";
-      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
-      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-      set var.p = std.strtol(var.hash, 16);
-
-      if (req.http.x-nyt-nyhq-access == "1" || var.p < 4209067950) {
-        set var.test_group = var.test_group + var.test_name + "=0_control";
-      } elseif (var.p < 4252017623) {
-        set var.test_group = var.test_group + var.test_name + "=1_package_max_one";
-      } else {
-        set var.test_group = var.test_group + var.test_name + "=2_package_max_two";
-      }
-
-      set var.test_group = var.test_group + "&";
-
-      #######################################
-      # Test Name: HOME_top_stories_count
-      #
-      # Description: Number of stories / packages in top stories A/B test.
-      #
-      # Variants:
-      #   - 0_control           98%
-      #   - 1_total_less_one    1%
-      #   - 2_total_less_two    1%
-      #
-      set var.test_name = "HOME_top_stories_count";
-      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
-      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-      set var.p = std.strtol(var.hash, 16);
-
-      if (req.http.x-nyt-nyhq-access == "1" || var.p < 4209067950) {
-        set var.test_group = var.test_group + var.test_name + "=0_control";
-      } elseif (var.p < 4252017623) {
-        set var.test_group = var.test_group + var.test_name + "=1_total_less_one";
-      } else {
-        set var.test_group = var.test_group + var.test_name + "=2_total_less_two";
-      }
-
-      set var.test_group = var.test_group + "&";
-
-      #######################################
-      # Test Name: HOME_summaries
-      #
-      # Description: Test the engagement impact on making the Home screen on mobile web
-      # easier to scroll through
-      #
-      # Variants:
-      #   - 0_control                               97%
-      #   - 1_remove_summaries                      1%
-      #   - 2_remove_summaries_except_package_one   1%
-      #   - 3_remove_bullets                        1%
-      #
-      set var.test_name = "HOME_summaries";
-      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
-      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-      set var.p = std.strtol(var.hash, 16);
-
-      if (req.http.x-nyt-nyhq-access || var.p < 4166118277) {
-        set var.test_group = var.test_group + var.test_name + "=0_control";
-      } elseif (var.p < 4209067950) {
-        set var.test_group = var.test_group + var.test_name + "=1_remove_summaries";
-      } elseif (var.p < 4252017623) {
-        set var.test_group = var.test_group + var.test_name + "=2_remove_summaries_except_package_one";
-      } else {
-        set var.test_group = var.test_group + var.test_name + "=3_remove_bullets";
-      }
-    }
+    # if (req.http.x-nyt-route == "homepage") {
+    # }
 
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
     # implements the A/B test branching logic.
     # example value: HOME_test_foo=0_control&HOME_test_bar=1_variant
+
     set req.http.x-nyt-vi-abtest = var.test_group;
   }
 }
