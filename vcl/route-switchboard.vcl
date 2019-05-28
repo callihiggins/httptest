@@ -39,7 +39,7 @@ sub recv_switchboard_choose_backend {
         // to the fallback string
         // https://docs.fastly.com/vcl/operators/#comparison-operators
         if (!req.http.x-nyt-force-backend == "fallback")  {
-            if (randombool(1,100)) {
+            if (randombool(25,100)) {
                 set req.http.x-nyt-force-backend = "origin";
             }
         }
