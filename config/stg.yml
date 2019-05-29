@@ -647,6 +647,23 @@ backends:
       timeout: "5000"
       window: "4"
 
+  - name: "realestate_fe_vi"
+    address: "real-estate-vi.stg.oma1.nyt.net"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "real-estate-vi.stg.oma1.nyt.net"
+    ssl_sni_hostname: "real-estate-vi.stg.oma1.nyt.net"
+    healthcheck:
+      host: "real-estate-vi.stg.oma1.nyt.net"
+      path: "/.status"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "3"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
   - name: "sitemap"
     address: "search.ec2.nytimes.com.s3.amazonaws.com"
     between_bytes_timeout: "10000"

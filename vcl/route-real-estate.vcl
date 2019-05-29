@@ -78,6 +78,11 @@ sub recv_route_real_estate {
             # this was not a force pass, filter the qparams
             call recv_route_real_estate_filter_querystring;
         }
+
+        # Router by page
+        if (req.http.var-nyt-env == "stg" && req.url ~ "^/real-estate/mortgage-calculator") {
+          set req.http.x-nyt-backend = "realestate_fe_vi";
+        }
     }
 }
 

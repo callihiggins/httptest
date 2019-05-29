@@ -216,6 +216,46 @@ function getScenarioEvents()
       'scenarioDescription': 'Test realestate mobile redirect',
       'testId': 10,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': false,
+        'dev': true
+      },
+      'requestHeaders': {
+        'User-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/real-estate/mortgage-calculator',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'real-estate',
+        'x-nyt-backend': 'realestate_fe'
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test realestate mortgage-calculator on DEV',
+      'testId': 11,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': true,
+        'dev': false
+      },
+      'requestHeaders': {
+        'User-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25'
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/real-estate/mortgage-calculator',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'real-estate',
+        'x-nyt-backend': 'realestate_fe_vi'
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'Test realestate mortgage-calculator redirect to vi on STG',
+      'testId': 12,
+    },
   ];
 
   return scenarios;
