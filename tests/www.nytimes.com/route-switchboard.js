@@ -395,7 +395,7 @@ function getScenarioEvents() {
       testId: 24
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheDispatch',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardColumnTheDispatch',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -409,6 +409,22 @@ function getScenarioEvents() {
       responseStatusCode: [301],
       scenarioDescription: 'Test /column/the-dispatch (with hypehn) is served from switchboard',
       testId: 25
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardColumnTheWeekly',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/column/the-weekly',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /column/the-weekly (with hypehn) is served from switchboard',
+      testId: 26
     },
 
   ];
