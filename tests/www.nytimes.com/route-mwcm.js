@@ -1448,13 +1448,13 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html?pre_prod=true',
-      'requestHeaderCookie': 'magpie=persona=/AUD',
+      'requestHeaderCookie': 'magpie=persona=previewPersona=/AUD,date-override=20190530',
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm-preview',
         'x-nyt-backend': 'mwcm_preview',
       },
       'responseHeaderContains' : {
-        'x-nyt-final-url': '/subscription/hd/1041.html?mgnlPreviewAsVisitor=true&pre_prod=true&previewPersona=%2FAUD',
+        'x-nyt-final-url': '/subscription/hd/1041.html?date-override=20190530&mgnlPreviewAsVisitor=true&pre_prod=true&previewPersona=/AUD',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route via cmots_pre_prod cookie',
@@ -1469,13 +1469,13 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/hd/1041.html',
-      'requestHeaderCookie': 'magpie=persona=/AUD',
+      'requestHeaderCookie': 'magpie=persona=previewPersona=/AUD&previewPersona=/GBP,date-override=20190530',
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
       },
       'responseHeaderContains' : {
-        'x-nyt-final-url': '/subscription/hd/1041.html?mgnlPreviewAsVisitor=true&previewPersona=%2FAUD',
+        'x-nyt-final-url': '/subscription/hd/1041.html?date-override=20190530&mgnlPreviewAsVisitor=true&previewPersona=/AUD&previewPersona=/GBP',
       },
       'responseStatusCode': 200,
       'scenarioDescription': 'WCM subscription: tests mwcm_preview backend and mwcm-preview route via cmots_pre_prod cookie',
