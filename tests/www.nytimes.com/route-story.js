@@ -1023,7 +1023,7 @@ function getScenarioEvents() {
         dev: true
       },
       'requestHeaders': {
-        'User-Agent': 'DU-apple-news',
+        'User-Agent': 'DU-apple-news AppEngine-Google',
       },
       requestScheme: 'https://',
       requestUri: '/apple-news/2018/11/14/us/politics/conservative-lawyers-trump.html',

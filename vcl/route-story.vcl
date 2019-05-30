@@ -94,7 +94,7 @@ sub recv_route_amp {
   ) {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";
-    if (client.ip ~ googlebot || req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1" || (req.http.User-Agent == "DU-apple-news" && req.url ~ "^/apple-news/")) {
+    if (client.ip ~ googlebot || req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1" || (req.http.User-Agent ~ "DU-apple-news" && req.url ~ "^/apple-news/")) {
       set req.http.var-nyt-force-pass = "true";
     } else {
       // redirect to regular url
