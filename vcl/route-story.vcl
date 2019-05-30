@@ -86,13 +86,15 @@ sub recv_route_story {
 
 sub recv_route_amp {
   // Route amp articles
-  if ( req.http.var-nyt-canonical-www-host == "true" &&
+  if (
+    (req.http.var-nyt-canonical-www-host == "true" &&
     req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" &&
-    req.url.path ~ "\.amp\.html$"
+    req.url.path ~ "\.amp\.html$") ||
+    req.url ~ "^/apple-news/"
   ) {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";
-    if (client.ip ~ googlebot || req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1") {
+    if (client.ip ~ googlebot || req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1" || (req.http.User-Agent == "DU-apple-news" && req.url ~ "^/apple-news/")) {
       set req.http.var-nyt-force-pass = "true";
     } else {
       // redirect to regular url

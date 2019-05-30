@@ -1015,6 +1015,27 @@ function getScenarioEvents() {
       },
       scenarioDescription: 'Route 2019 live blogs to amp_liveblog',
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      'requestHeaders': {
+        'User-Agent': 'DU-apple-news',
+      },
+      requestScheme: 'https://',
+      requestUri: '/apple-news/2018/11/14/us/politics/conservative-lawyers-trump.html',
+      method: 'GET',
+      responseHeaderMatches: {
+        'x-nyt-route': 'amp',
+        'x-nyt-backend': 'amp',
+        'x-cache': 'MISS',
+      },
+      responseStatusCode: [200],
+      scenarioDescription: 'Route Apple News articles to amp',
+    },
   ];
 
   return scenarios;
