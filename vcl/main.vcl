@@ -170,6 +170,7 @@ sub vcl_recv {
   call recv_route_weddings;
   call recv_route_search;
   call recv_route_timeswire;
+  call recv_route_bestsellers;
   call recv_route_gdpr_form;
   call recv_route_interactive;
   call recv_route_blogs;
@@ -354,6 +355,7 @@ sub vcl_miss {
   call miss_pass_route_ask;
   call miss_pass_route_search;
   call miss_pass_route_timeswire;
+  call miss_pass_route_bestsellers;
   call miss_pass_route_trending;
   call miss_pass_route_interactive;
   call miss_pass_route_collection;
@@ -417,6 +419,7 @@ sub vcl_pass {
   call miss_pass_route_ask;
   call miss_pass_route_search;
   call miss_pass_route_timeswire;
+  call miss_pass_route_bestsellers;
   call miss_pass_route_interactive;
   call miss_pass_route_collection;
   call miss_pass_route_homepage;

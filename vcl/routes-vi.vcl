@@ -1,6 +1,7 @@
 # routes that's using projectvi_fe backends
 include "route-ask";
 include "route-audio";
+include "route-bestsellers";
 include "route-code";
 include "route-collection";
 include "route-gdpr-form";

@@ -1,14 +1,16 @@
 sub recv_route_best_sellers {
-  // bestseller application
-  if (   req.url ~ "^/books/best-sellers/"
-      || req.url ~ "^/books/best-sellers?"
-      || req.url ~ "^/books/best-sellers$"
-  ) {
-      set req.http.x-nyt-route = "bestseller";
-      set req.http.x-nyt-backend = "misc_fe";
-      set req.http.var-nyt-send-gdpr = "true";
-      set req.url = querystring.filter_except(req.url, "nytapp");
-      call set_nyt5_misc_backend;
+  // Route bestseller application on prod to NYT5
+  if (req.http.var-nyt-env == "prd") {
+    if (   req.url ~ "^/books/best-sellers/"
+        || req.url ~ "^/books/best-sellers?"
+        || req.url ~ "^/books/best-sellers$"
+    ) {
+        set req.http.x-nyt-route = "bestseller";
+        set req.http.x-nyt-backend = "misc_fe";
+        set req.http.var-nyt-send-gdpr = "true";
+        set req.url = querystring.filter_except(req.url, "nytapp");
+        call set_nyt5_misc_backend;
+    }
   }
 }
 

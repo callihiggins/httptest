@@ -13,7 +13,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': true,
+        'dev': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/books/best-sellers/',
@@ -34,7 +34,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': true,
+        'dev': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/books/best-sellers/combined-print-and-e-book-fiction/',
@@ -55,7 +55,7 @@ function getScenarioEvents()
       'isDeployedInEnv': {
         'prd': true,
         'stg': false,
-        'dev': true,
+        'dev': false,
       },
       'requestScheme': 'https://',
       'requestUri': '/books/best-sellers/2016/03/01/combined-print-and-e-book-fiction/',

@@ -817,6 +817,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "route-bestsellers"
+    main    = false
+    content = "${file("../vcl/route-bestsellers.vcl")}"
+  }
+
+  vcl {
     name    = "route-blogs"
     main    = false
     content = "${file("../vcl/route-blogs.vcl")}"

@@ -5,6 +5,7 @@ require("./www.nytimes.com/route-story.js");
 require("./www.nytimes.com/route-alpha.js");
 require("./www.nytimes.com/route-collection.js");
 require("./www.nytimes.com/route-slideshow.js");
+require("./www.nytimes.com/route-bestsellers.js");
 require("./www.nytimes.com/route-nyt5-misc.js");
 require("./www.nytimes.com/route-elections.js");
 require("./www.nytimes.com/route-default.js");

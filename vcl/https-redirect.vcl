@@ -41,6 +41,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "times-journeys-students"
         || req.http.x-nyt-route == "askwell"
         || req.http.x-nyt-route == "vi-assets"
+        || req.http.x-nyt-route == "vi-bestsellers"
         || req.http.x-nyt-route == "vi-story"
         || req.http.x-nyt-route == "vi-search"
         || req.http.x-nyt-route == "vi-timeswire"
