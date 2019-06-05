@@ -314,7 +314,7 @@ function getScenarioEvents() {
       testId: 19
     },
     {
-      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheHypenWeekly',
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardTheHyphenWeekly',
       isDeployedInEnv: {
         prd: true,
         stg: true,
@@ -375,7 +375,7 @@ function getScenarioEvents() {
         'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /the-dispatch (with hypehn) is served from switchboard',
+      scenarioDescription: 'Test /the-dispatch (with hyphen) is served from switchboard',
       testId: 23
     },
     {
@@ -391,7 +391,7 @@ function getScenarioEvents() {
         'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /thedispatch (no hypehn) is served from switchboard',
+      scenarioDescription: 'Test /thedispatch (no hyphen) is served from switchboard',
       testId: 24
     },
     {
@@ -407,7 +407,7 @@ function getScenarioEvents() {
         'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /column/the-dispatch (with hypehn) is served from switchboard',
+      scenarioDescription: 'Test /column/the-dispatch (with hyphen) is served from switchboard',
       testId: 25
     },
     {
@@ -423,8 +423,24 @@ function getScenarioEvents() {
         'x-nyt-route': 'switchboard',
       },
       responseStatusCode: [301],
-      scenarioDescription: 'Test /column/the-weekly (with hypehn) is served from switchboard',
+      scenarioDescription: 'Test /column/the-weekly (with hyphen) is served from switchboard',
       testId: 26
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardColumnTheWeeklyVariant',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/column/theweekly',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      responseStatusCode: [301],
+      scenarioDescription: 'Test /column/theweekly is served from switchboard',
+      testId: 27
     },
 
   ];

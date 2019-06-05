@@ -29,7 +29,7 @@ sub recv_route_collection {
   }
 
   # route selected collections to VI first.
-  if (   (req.url ~ "^/column/" && req.url !~ "^/column/the-dispatch" && req.url !~ "^/column/the-weekly")
+  if (   (req.url ~ "^/column/" && req.url !~ "^/column/the-dispatch" && req.url !~ "^/column/the-weekly" && req.url !~ "^/column/theweekly")
       || req.url ~ "^/issue/"
       || req.url ~ "^/series/"
       || req.url ~ "^/news-event/"
