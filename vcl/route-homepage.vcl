@@ -58,7 +58,9 @@ sub hash_route_homepage {
 
       set req.hash += req.http.x-nyt-geo-hash;
       set req.hash += req.http.device_type;
-      set req.hash += req.http.x-nyt-vi-abtest;
+
+      # vary on abra test allocation
+      set req.hash += req.http.var-home-abtest-variation;
   }
 }
 
@@ -91,15 +93,5 @@ sub calculate_geo_hash {
 sub miss_pass_route_homepage {
   if (req.http.x-nyt-route == "homepage") {
     unset bereq.http.cookie;
-  }
-}
-
-sub deliver_homepage_set_debug_header {
-  # only if this execution is not on the shield pop in a shielding scenario
-  if (!req.http.x-nyt-shield-auth && req.http.x-nyt-route == "homepage") {
-    # for debugging and automated tests:
-    if (req.http.x-nyt-debug ~ "." && (req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1")) {
-      set resp.http.x-nyt-debug-req-http-x-nyt-vi-abtest = req.http.x-nyt-vi-abtest;
-    }
   }
 }

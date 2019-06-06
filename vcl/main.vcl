@@ -569,7 +569,6 @@ sub vcl_deliver {
   # set other response headers
   call deliver_response_headers;
   call deliver_debug_response_headers;
-  call deliver_homepage_set_debug_header;
   call shared_deliver_geoip_response_headers;
   call shared_deliver_device_detection_header;
 

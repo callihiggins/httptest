@@ -49,12 +49,19 @@
 # set var.p = std.strtol(var.hash, 16);
 #
 # if (var.p < 1417339207) {
-#   set var.test_group = var.test_group + var.test_name + "=0_control";
+#   set var.test_param = var.test_name + "=0_control";
 # } elseif (var.p < 2834678415) {
-#   set var.test_group = var.test_group + var.test_name + "=1_variant";
+#   set var.test_param = var.test_name + "=1_variant";
 # } else {
-#   set var.test_group = var.test_group + var.test_name + "=2_variant";
+#   set var.test_param = var.test_name + "=2_variant";
 # }
+#
+# # Add the variation param to the tests:
+# set var.test_group = var.test_group + var.test_param;
+#
+# # Add the variation param to specific route variables so that the cache can vary.
+# # For example, the homepage route:
+# set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
 #
 # # This pipe needs to be added between each test result, but not after the last one.
 # set var.test_group = var.test_group + "&";
@@ -66,18 +73,63 @@ sub recv_abra_allocation {
   declare local var.p INTEGER;
   declare local var.test_group STRING;
   declare local var.test_name STRING;
+  declare local var.test_param STRING;
 
   # only if this execution is not on the shield pop in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {
 
-    # HOMEPAGE TESTS
-    # if (req.http.x-nyt-route == "homepage") {
-    # }
+    #######################################
+    # Test Name: dfp_latamv2
+    #
+    # Description: Project Ocean ab test which will add variants to Latin American
+    #              users on the home and story routes.
+    #
+    # Variants:
+    #   - 0_control                        25%
+    #   - 1_gdpr_test                      25%
+    #   - 2_change_the_fold_test           25%
+    #   - 3_gdpr_and_change_the_fold_test  25%
+    #
+    #
+    # Are we in a latin american country?
+    declare local var.is_in_latin_am BOOL;
+    set var.is_in_latin_am = (req.http.x-nyt-country == "MX"  # Mexico
+        || req.http.x-nyt-country == "BR"                     # Brazil
+        || req.http.x-nyt-country == "AR"                     # Argentina
+        || req.http.x-nyt-country == "CL");                   # Chile
+
+    # Are we on the home and story routes?
+    declare local var.is_route BOOL;
+    set var.is_route = (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-story");
+
+    if (var.is_in_latin_am && var.is_route && req.http.var-is-project-ocean-enabled) {
+      set var.test_name = "dfp_latamv2";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (var.p < 1073741824) {
+        set var.test_param = var.test_name + "=0_control";
+      } elseif (var.p < 2147483648) {
+        set var.test_param = var.test_name + "=1_gdpr_test";
+      } elseif (var.p < 3221225472) {
+        set var.test_param = var.test_name + "=2_change_the_fold_test";
+      } else {
+        set var.test_param = var.test_name + "=3_gdpr_and_change_the_fold_test";
+      }
+
+      set var.test_group = var.test_group + var.test_param;
+      # We need to vary the cache on both the home and story routes:
+      set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
+      set req.http.var-story-abtest-variation = req.http.var-story-abtest-variation + var.test_param;
+    }
+    #
+    # End of Test dfp_latamv2
+    #######################################
 
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
     # implements the A/B test branching logic.
-    # example value: HOME_test_foo=0_control&HOME_test_bar=1_variant
-
+    # example value: HOME_test_foo=0_control&STORY_test_bar=1_variant
     set req.http.x-nyt-vi-abtest = var.test_group;
   }
 }

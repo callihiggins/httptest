@@ -78,6 +78,7 @@ sub recv_route_story {
                 set req.url = querystring.filter_except(req.url, "nytapp");
               }
               call recv_route_vi_static_backup_gcs;
+              call recv_abra_allocation;
             }
         }
       }
@@ -201,6 +202,9 @@ sub hash_route_story {
     if (req.http.var-nyt-vi-story-compatibility) {
       set req.hash += req.http.var-nyt-vi-story-compatibility;
     }
+
+    # vary on abra test allocation
+    set req.hash += req.http.var-story-abtest-variation;
   }
 }
 

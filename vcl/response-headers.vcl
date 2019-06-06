@@ -103,5 +103,6 @@ sub deliver_debug_response_headers {
   if (req.http.x-nyt-nyhq-access == "1") {
     set resp.http.debug-var-nyt-env = req.http.var-nyt-env;
     set resp.http.debug-var-nyt-force-pass = if(req.http.var-nyt-force-pass, req.http.var-nyt-force-pass, "false");
+    set resp.http.debug-vi-abtest = req.http.x-nyt-vi-abtest;
   }
 }
