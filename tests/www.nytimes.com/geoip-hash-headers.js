@@ -44,7 +44,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'AS',
         'x-nyt-country': 'HK',
         'x-nyt-region': 'NO REGION',
-        'x-nyt-city': 'quarry bay',
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test geo hash return value for IP 112.120.130.250',
@@ -107,7 +106,6 @@ function getScenarioEvents()
         'x-nyt-continent': 'NA',
         'x-nyt-country': 'US',
         'x-nyt-region': 'NJ',
-        'x-nyt-city': 'holmdel',
       },
       'responseHeaderPattern': {
         'x-nyt-gmt-offset': /-[45]00/,
