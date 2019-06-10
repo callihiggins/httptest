@@ -1755,6 +1755,27 @@ function getScenarioEvents()
       'scenarioDescription': 'WCM subscription: tests mwcm-resilient route and mwcm_resilient backend',
       'testId': 77,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/hd/1041.html?US=sub',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm',
+        'x-nyt-backend': 'mwcm',
+      },
+      'responseHeaderContains' : {
+        'x-nyt-user-status': 'sub',
+        'x-nyt-final-url': '/subscription/hd/1041.html?US=sub',
+      },
+      'responseStatusCode': 200,
+      'scenarioDescription': 'WCM subscription: tests us qs parameter(case insensitivity) when "US=sub"',
+      'testId': 78,
+    },
   ];
 
   return scenarios;
