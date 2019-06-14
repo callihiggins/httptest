@@ -575,6 +575,63 @@ function getScenarioEvents()
       'scenarioDescription': 'Test /reviews/theater collection',
       'testId': 222,
     },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForTheaterReviews',
+      'isDeployedInEnv': {
+        'prd': false,
+        'stg': false,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/section/realestate/commercial',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'vi-collection',
+        'x-nyt-backend': 'realestate_fe',
+      },
+      'responseStatusCode': [200, 404],
+      'scenarioDescription': 'Test /section/realestate/commercial collection point to realestate backend',
+      'testId': 223,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForTheaterReviews',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+      },
+      'requestHeaders': {
+        'x-pre-restart-status': 'Incompatible',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/section/realestate/commercial',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'collection',
+        'x-nyt-backend': 'collection_fe',
+      },
+      'responseStatusCode': [200, 404],
+      'scenarioDescription': 'Test /section/realestate/commercial collection point to realestate backend',
+      'testId': 224,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForTheaterReviews',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': false,
+      },
+      'requestHeaders': {
+        'x-pre-restart-status': 'Compatible',
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/section/realestate/commercial',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'vi-collection',
+        'x-nyt-backend': 'projectvi_fe',
+      },
+      'responseStatusCode': [200, 404],
+      'scenarioDescription': 'Test /section/realestate/commercial collection point to realestate backend',
+      'testId': 225,
+    },
   ];
 
   return scenarios;

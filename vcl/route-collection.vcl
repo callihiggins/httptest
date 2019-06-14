@@ -35,7 +35,7 @@ sub recv_route_collection {
       || req.url ~ "^/news-event/"
       || req.url ~ "^/section/"
       || req.url ~ "^/spotlight/"
-      || req.url ~ "^/reviews/theater"      
+      || req.url ~ "^/reviews/theater"
       || (req.url ~ "^/reviews/dining" && req.url !~ "^/reviews/dining/map")
   ) {
     # if the request was sent to VI and determined
@@ -67,6 +67,12 @@ sub recv_route_collection {
 
       call recv_post_method_restricted;
     }
+
+    # RealEstate: Route to the Real Estate backend
+    if (req.http.var-nyt-env == "dev" && req.url ~ "^/section/realestate/commercial") {
+      set req.http.x-nyt-backend = "realestate_fe";
+    }
+
   }
 }
 
