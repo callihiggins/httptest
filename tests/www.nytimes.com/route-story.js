@@ -987,22 +987,6 @@ function getScenarioEvents() {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
       isDeployedInEnv: {
         prd: true,
-        stg: false,
-        dev: false
-      },
-      requestScheme: 'https://',
-      requestUri: '/live/2019/',
-      method: 'GET',
-      responseHeaderMatches: {
-        'x-nyt-route': 'amp_liveblog',
-        'x-nyt-backend': 'amp',
-      },
-      scenarioDescription: 'Route 2019 live blogs to amp',
-    },
-    {
-      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
-      isDeployedInEnv: {
-        prd: false,
         stg: true,
         dev: true
       },
@@ -1010,10 +994,10 @@ function getScenarioEvents() {
       requestUri: '/live/2019/',
       method: 'GET',
       responseHeaderMatches: {
-        'x-nyt-route': 'amp_liveblog',
-        'x-nyt-backend': 'amp_liveblog',
+        'x-nyt-route': 'amp',
+        'x-nyt-backend': 'amp',
       },
-      scenarioDescription: 'Route 2019 live blogs to amp_liveblog',
+      scenarioDescription: 'Route 2019 live blogs to amp',
     },
     {
       id: 'FunctionalTestScenarioDefinitionForHtmlPage',
