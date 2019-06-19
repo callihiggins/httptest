@@ -160,7 +160,6 @@ sub vcl_recv {
   call recv_route_video;
   call recv_route_real_estate;
   call recv_route_trending;
-  call recv_route_best_sellers;
   call recv_route_userinfo;
   call recv_route_newsroom_files_gcs;
   call recv_route_newsgraphics_gcs;
