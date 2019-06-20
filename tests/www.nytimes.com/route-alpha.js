@@ -603,6 +603,50 @@ function getScenarioEvents() {
         'Alpha host alpha.nytimes.com; query param with space returns 200',
       testId: 27
     },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'alpha-preview.stg.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri: '/live/2019/live-blog',
+      responseHeaderMatches: {
+        'x-nyt-route': 'amp',
+        'x-nyt-backend': 'amp',
+      },
+      responseHeaderPattern: {
+      },
+      scenarioDescription:
+        'Alpha host alpha-preview.stg.nytimes.com routes to oak live blogs',
+      testId: 28
+    },
+    {
+      id: 'FunctionalTestScenarioDefinitionForHtmlPage',
+      isDeployedInEnv: {
+        prd: true,
+        stg: false,
+        dev: false
+      },
+      requestHeaders: {
+        Host: 'alpha-preview.nytimes.com'
+      },
+      requestScheme: 'https://',
+      requestUri: '/live/2019/live-blog',
+      responseHeaderMatches: {
+        'x-nyt-route': 'amp',
+        'x-nyt-backend': 'amp',
+      },
+      responseHeaderPattern: {
+      },
+      scenarioDescription:
+        'Alpha host alpha-preview.nytimes.com routes to oak live blogs',
+      testId: 29
+    },
   ];
   return scenarios;
 }

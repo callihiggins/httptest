@@ -2,6 +2,7 @@ sub recv_route_alpha {
   if (
       req.http.var-nyt-canonical-alpha-host == "true"
       && req.http.x-nyt-route != "vi-assets"
+      && req.http.x-nyt-route != "amp"
       && (req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1")
     ) {
     // Add preview ACL
@@ -100,7 +101,11 @@ sub recv_route_alpha {
 }
 
 sub hash_route_alpha {
-  if (req.http.var-nyt-canonical-alpha-host == "true" && req.http.x-nyt-route != "vi-assets") {
+  if (
+      req.http.var-nyt-canonical-alpha-host == "true"
+      && req.http.x-nyt-route != "vi-assets"
+      && req.http.x-nyt-route != "amp"
+    ) {
     set req.hash += req.http.device_type;
 
     # we need to fragment the cache for incompatible restart requests
@@ -121,7 +126,11 @@ sub hash_route_alpha {
 }
 
 sub fetch_route_alpha {
-  if (req.http.var-nyt-canonical-alpha-host == "true" && req.http.x-nyt-route != "vi-assets") {
+  if (
+      req.http.var-nyt-canonical-alpha-host == "true"
+      && req.http.x-nyt-route != "vi-assets"
+      && req.http.x-nyt-route != "amp"
+    ) {
     // equivalent to setting grace mode
     set beresp.stale_if_error = 86400s; // 1 day
     // allow serving stale while latest content is being generated
@@ -141,7 +150,11 @@ sub fetch_route_alpha {
 }
 
 sub deliver_route_alpha {
-  if (req.http.var-nyt-canonical-alpha-host == "true" && req.http.x-nyt-route != "vi-assets") {
+  if (
+      req.http.var-nyt-canonical-alpha-host == "true"
+      && req.http.x-nyt-route != "vi-assets"
+      && req.http.x-nyt-route != "amp"
+    ) {
     if (resp.status >= 500 && resp.status < 600) {
       // restart if the stale object is available
       if (stale.exists) {
