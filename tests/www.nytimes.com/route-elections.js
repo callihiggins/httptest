@@ -12,8 +12,8 @@ function getScenarioEvents()
       'id': 'FunctionalTestScenarioDefinitionForRedirect',
       'isDeployedInEnv': {
         'prd': true,
-        'stg': true,
-        'dev': true
+        'stg': false,
+        'dev': false
       },
       'requestHeaders': {
         'Host': suite.servername,

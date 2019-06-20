@@ -43,7 +43,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-us=1;/,
       },
-      responseStatusCode: [200],
       scenarioDescription: 'Set cookie with value of 1 for US users.',
       testId: 2
     },
@@ -63,7 +62,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-us=0;/,
       },
-      responseStatusCode: [200],
       scenarioDescription: 'Set cookie with value of 0 for non-US users.',
       testId: 3
     },

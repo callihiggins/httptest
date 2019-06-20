@@ -20,7 +20,6 @@ var scenarios = [
       'x-nyt-route': 'legacy-gke',
       'x-nyt-backend': 'www_legacy_gke'
     },
-    responseStatusCode: [301, 404],
     scenarioDescription: 'Test legacy; vanity redirect; </save75>',
     testId: 1
   },
@@ -38,7 +37,6 @@ var scenarios = [
       'x-nyt-route': 'legacy-gke',
       'content-type': 'application/javascript'
     },
-    responseStatusCode: [200],
     scenarioDescription: 'Test WWW JS served from Legacy GKE Backend',
     testId: 2
   },
@@ -55,7 +53,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke'
     },
-    responseStatusCode: [200, 404],
     scenarioDescription: 'Test well-known served from WWW Legacy GKE',
     testId: 3
   },
@@ -72,7 +69,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke'
     },
-    responseStatusCode: [200],
     scenarioDescription: 'Test comscore html served from Legacy GKE backend',
     testId: 4
   },
@@ -89,7 +85,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke'
     },
-    responseStatusCode: [301],
     scenarioDescription:
       'Test rss xml redirects served from Legacy GKE backend',
     testId: 5
@@ -107,7 +102,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke',
     },
-    responseStatusCode: [200, 404],
     scenarioDescription: 'Test legacy; www cluster; favicon file',
     testId: 6
   },
@@ -124,7 +118,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke',
     },
-    responseStatusCode: [200, 404],
     scenarioDescription: 'Test legacy; www cluster; humans file',
     testId: 7
   },
@@ -141,7 +134,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke',
     },
-    responseStatusCode: [200, 301, 404],
     scenarioDescription: 'Test legacy; www cluster; interactive; default',
     testId: 8
   },
@@ -159,7 +151,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke',
     },
-    responseStatusCode: [301, 404],
     scenarioDescription: 'Test legacy; www cluster; packages; HTML',
     testId: 9
   },
@@ -176,7 +167,6 @@ var scenarios = [
       'x-nyt-backend': 'www_legacy_gke',
       'x-nyt-route': 'legacy-gke'
     },
-    responseStatusCode: [301],
     scenarioDescription: 'Test /gst/movies/ served from Legacy GKE Backend',
     testId: 10
   },
@@ -197,7 +187,6 @@ var scenarios = [
       'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       'x-gdpr': /^[0-1]$/,
     },
-    responseStatusCode: [301],
     scenarioDescription: 'Legacy route sets gdpr cookie and header',
     testId: 11
   },

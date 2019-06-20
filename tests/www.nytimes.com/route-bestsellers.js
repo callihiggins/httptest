@@ -25,7 +25,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Vi Bestsellers Page;  /books/best-sellers/',
       'testId': 1,
     },
@@ -46,7 +45,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Vi Bestsellers Page;  /books/best-sellers/combined-print-and-e-book-fiction/',
       'testId': 2,
     },
@@ -67,7 +65,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Vi Bestsellers Page; /books/best-sellers/combined-print-and-e-book-fiction/2016/03/01/',
       'testId': 3,
     },

@@ -20,7 +20,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke'
       },
-      responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
       testId: 2
     },
@@ -37,7 +36,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke'
       },
-      responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
       testId: 3
     },
@@ -54,7 +52,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke',
       },
-      responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
       testId: 4
     },
@@ -71,7 +68,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke',
       },
-      responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
       testId: 5
     },
@@ -88,7 +84,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke',
       },
-      responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
       testId: 6
     },
@@ -105,7 +100,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke',
       },
-      responseStatusCode: [301],
       scenarioDescription: 'Test slideshow; 301 page fallback to NYT4',
       testId: 7
     },
@@ -127,7 +121,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled, /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html ',
       testId: 99
@@ -150,7 +143,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled, /slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html ',
       testId: 101
@@ -173,7 +165,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled, /slideshow/2016/12/14/travel/our-favorite-travel-photography-of-2016/s/18BEST-OF-2016-IMAGES-slide-8RFM.html',
       testId: 102
@@ -196,7 +187,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled, /slideshow/2015/12/25/t-magazine/oddball-geniuses-tarantino-fassbender-rampling/s/25tmag-11well_rihanna-t_CA0-copy.html',
       testId: 103
@@ -219,7 +209,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled, /slideshow/2014/09/21/upshot/23up-un/s/21up-un-slide-ZRTJ.html',
       testId: 104
@@ -241,7 +230,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; Serve 2013 slideshow from Vi with HTTPS, /slideshow/2013/12/25/dining/20131225-REST.html',
       testId: 105
@@ -263,7 +251,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; Serve 2011 slideshow on Vi with HTTPS, /slideshow/2011/07/10/world/africa/10sudan.html',
       testId: 106
@@ -285,7 +272,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; Serve 2009 slideshow on Vi with HTTPS, /slideshow/2009/04/27/science/042809-Ants_index.html',
       testId: 107
@@ -303,7 +289,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'www_legacy_gke',
         'x-nyt-route': 'legacy-gke',
       },
-      responseStatusCode: [200, 301],
       scenarioDescription:
         'Test slideshow2007 slideshow fallback to NYT4 ESX, /slideshow/2007/10/10/nytfrontpage/20071010POD_7.html',
       testId: 108
@@ -326,7 +311,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled; realestate, /slideshow/2017/12/29/realestate/new-york-citys-biggest-residential-sales-in-2017/s/31YEAREND-slide-EQPY.html',
       testId: 109
@@ -349,7 +333,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled; realestate, /slideshow/2017/08/22/realestate/slides-headline/s/22METS-1503371668421.html',
       testId: 110
@@ -375,7 +358,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled; Internet Explorer, /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html ',
       testId: 111
@@ -401,7 +383,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled; Internet Explorer, /slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html ',
       testId: 112
@@ -427,7 +408,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled; Internet Explorer, /slideshow/2018/02/15/dining/the-pool/s/15-slideshow-1.html',
       testId: 113
@@ -453,7 +433,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; HTTPS enabled; Internet Explorer, /slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html',
       testId: 113
@@ -475,7 +454,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Test slideshow; Serve 2010 slideshow on Vi with HTTPS (stg), /slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html',
       testId: 114

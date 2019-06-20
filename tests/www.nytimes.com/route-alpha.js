@@ -27,7 +27,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha.dev.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 1
@@ -52,7 +51,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha-preview.dev.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 2
@@ -77,7 +75,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test Collection fallback to NYT5; /section/well',
       testId: 4
@@ -102,7 +99,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test scoop collection preview;/section/opinion',
       testId: 5
@@ -127,7 +123,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha.stg.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 6
@@ -152,7 +147,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha-preview.stg.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 7
@@ -177,7 +171,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test Collection fallback to NYT5; /section/well',
       testId: 9
@@ -202,7 +195,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 11
@@ -227,7 +219,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha-preview.nytimes.com; Vi Timeswire Page; /timeswire',
       testId: 12
@@ -252,7 +243,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test Collection fallback to NYT5; /section/well',
       testId: 13
@@ -278,7 +268,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test scoop collection preview;/section/opinion',
       testId: 14
@@ -306,7 +295,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test query string filter preview;/section/opinion',
       testId: 15
@@ -334,7 +322,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test query string filter preview;/section/opinion',
       testId: 16
@@ -362,7 +349,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test query string filter preview;/section/opinion',
       testId: 17
@@ -386,7 +372,6 @@ function getScenarioEvents() {
         'x-nyt-final-url':
           '/.info'
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test info route on alpha_fe; /.info',
       testId: 18
@@ -410,7 +395,6 @@ function getScenarioEvents() {
         'x-nyt-final-url':
           '/.info'
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test info route on alpha_preview; /.info',
       testId: 19
@@ -434,7 +418,6 @@ function getScenarioEvents() {
         'x-nyt-final-url':
           '/.info'
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test info route on alpha_fe; /.info',
       testId: 20
@@ -458,7 +441,6 @@ function getScenarioEvents() {
         'x-nyt-final-url':
           '/.info'
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test info route on alpha_preview; /.info',
       testId: 21
@@ -482,7 +464,6 @@ function getScenarioEvents() {
         'x-nyt-final-url':
           '/code/welcome'
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test /code route on alpha_fe; /code/welcome',
       testId: 22
@@ -506,7 +487,6 @@ function getScenarioEvents() {
         'x-nyt-final-url':
           '/code/welcome'
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host; test /code route on alpha_fe; /code/welcome',
       testId: 23
@@ -529,7 +509,6 @@ function getScenarioEvents() {
       },
       responseHeaderPattern: {
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha-preview.nytimes.com; scoop preview with contentUri query param',
       testId: 24
@@ -552,7 +531,6 @@ function getScenarioEvents() {
       },
       responseHeaderPattern: {
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha.dev.nytimes.com; query param with space returns 200',
       testId: 25
@@ -575,7 +553,6 @@ function getScenarioEvents() {
       },
       responseHeaderPattern: {
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha.stg.nytimes.com; query param with space returns 200',
       testId: 26
@@ -598,7 +575,6 @@ function getScenarioEvents() {
       },
       responseHeaderPattern: {
       },
-      responseStatusCode: [200],
       scenarioDescription:
         'Alpha host alpha.nytimes.com; query param with space returns 200',
       testId: 27

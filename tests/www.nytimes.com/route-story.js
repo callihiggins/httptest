@@ -21,7 +21,6 @@ function getScenarioEvents() {
         'x-nyt-route': /(article|vi-story)/,
         'x-nyt-backend': /(article_fe|projectvi_fe)/,
       },
-      responseStatusCode: [200, 404],
       scenarioDescription:
         'content-article: NYT5; ensure Fastly pass; /2016/11/04/homepage/new-york-times-open-access-election-2016.html',
       testId: 1
@@ -40,7 +39,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'content-article: NYT5; ensure Fastly pass; /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       testId: 2
@@ -59,7 +57,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html',
       testId: 3
@@ -78,7 +75,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1959/01/11/archives/sports-of-the-times-forecast-for-1959.html',
       testId: 4
@@ -97,7 +93,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1964/01/01/mexico-tightens-control-of-semipublic-concerns.html',
       testId: 5
@@ -116,7 +111,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html',
       testId: 6
@@ -134,7 +128,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; redirect; /2001/01/20/technology/20ANNIVERSARY.html',
       testId: 7
@@ -153,7 +146,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html',
       testId: 8
@@ -171,7 +163,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /2006/01/29/fashion/sundaystyles/29LOVE.html',
       testId: 9
@@ -189,7 +180,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /2006/02/26/fashion/sundaystyles/26LOVE.html',
       testId: 10
@@ -207,7 +197,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /2006/11/12/fashion/12love.html',
       testId: 11
@@ -225,7 +214,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; blogpost as article; /blog/2000/01/01/us/slug.html',
       testId: 12
@@ -243,7 +231,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1850/01/01/us/slug.html',
       testId: 13
@@ -261,7 +248,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/us/slug.html',
       testId: 14
@@ -279,7 +265,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-backend': "article_fe",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1981/01/01/us/slug.html',
       testId: 15
@@ -297,7 +282,6 @@ function getScenarioEvents() {
         'x-nyt-backend': "article_fe",
         'x-nyt-route': "article",
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1995/01/01/us/slug.html',
       testId: 16
@@ -316,7 +300,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story'
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; VI; ensure Fastly pass; /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html',
       testId: 17
@@ -334,7 +317,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story'
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; VI; ensure Fastly pass; /2013/06/16/travel/travel-guide-new-york-for-kids.html',
       testId: 168
@@ -353,7 +335,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'vi-story',
         'x-nyt-final-url': '/2013/06/16/travel/travel-guide-new-york-for-kids.html'
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing for url with space; article; VI; ensure Fastly pass; /2013/06/16/travel/travel-guide-new-york-for-kids.html',
       testId: 169
@@ -372,7 +353,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'article',
         'x-nyt-final-url': '/2011/06/16/travel/travel-guide-new-york-for-kids.html'
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing for url with space; article; NYT5; ensure Fastly pass; /2011/06/16/travel/travel-guide-new-york-for-kids.html',
       testId: 170
@@ -390,7 +370,6 @@ function getScenarioEvents() {
         'x-nyt-backend': "article_fe",
         'x-nyt-route': 'article',
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test routing; article; NYT5; ensure Fastly pass; /1981/01/03/nyregion/uso-in-times-square.html',
       testId: 19
@@ -408,7 +387,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'article'
       },
-      responseStatusCode: [200, 404],
       scenarioDescription:
         'Test routing; article; NYT5 GKE; ensure Fastly pass; /1996/01/22/business/the-new-york-times-introduces-a-web-site.html',
       testId: 20
@@ -425,7 +403,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'article'
       },
-      responseStatusCode: [200, 404],
       scenarioDescription:
         'Test routing; article; NYT5 GKe; ensure Fastly pass; /2006/11/12/fashion/12love.html',
       testId: 21

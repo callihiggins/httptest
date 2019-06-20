@@ -25,7 +25,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [404],
       'scenarioDescription': 'Test /by collection',
       'testId': 1,
     },
@@ -45,7 +44,6 @@ function getScenarioEvents()
         'fastly-restarts': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [404],
       'scenarioDescription': 'Test /column collection',
       'testId': 2,
     },
@@ -65,7 +63,6 @@ function getScenarioEvents()
         'fastly-restarts': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [404],
       'scenarioDescription': 'Test /issue collection',
       'testId': 3,
     },
@@ -85,7 +82,6 @@ function getScenarioEvents()
         'fastly-restarts': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [404],
       'scenarioDescription': 'Test /news-event collection',
       'testId': 4,
     },
@@ -106,7 +102,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /reviews collection',
       'testId': 5,
     },
@@ -127,7 +122,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 301, 404],
       'scenarioDescription': 'Test /reviews/ redirect',
       'testId': 6,
     },
@@ -148,7 +142,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200,404],
       'scenarioDescription': 'Test reviews diningmap',
       'testId': 7,
     },
@@ -169,7 +162,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /saved collection',
       'testId': 8,
     },
@@ -190,7 +182,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [301],
       'scenarioDescription': 'Test /saved/ redirect',
       'testId': 9,
     },
@@ -210,7 +201,6 @@ function getScenarioEvents()
         'fastly-restarts': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [404],
       'scenarioDescription': 'Test /section collection',
       'testId': 10,
     },
@@ -230,7 +220,6 @@ function getScenarioEvents()
         'fastly-restarts': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [404],
       'scenarioDescription': 'Test /spotlight collection',
       'testId': 11,
     },
@@ -251,7 +240,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/company collection',
       'testId': 12,
     },
@@ -272,7 +260,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/destination collection',
       'testId': 13,
     },
@@ -293,7 +280,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/organization collection',
       'testId': 14,
     },
@@ -314,7 +300,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [404],
       'scenarioDescription': 'Test /topic/person collection',
       'testId': 15,
     },
@@ -335,7 +320,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /topic/subject collection',
       'testId': 16,
     },
@@ -356,7 +340,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /section/upshot collection',
       'testId': 17,
     },
@@ -377,7 +360,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [301],
       'scenarioDescription': 'Test /upshot/ redirect',
       'testId': 18,
     },
@@ -396,7 +378,6 @@ function getScenarioEvents()
         'x-gdpr': /1/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200,404],
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; 4kb cookie string ',
       'testId': '201',
     },
@@ -414,7 +395,6 @@ function getScenarioEvents()
         'x-nyt-backend': /(projectvi_fe|collection_fe)/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200,404,500,503],
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; Dev/Stg /column/modern-love',
       'testId': '202',
     },
@@ -435,7 +415,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200,404,500,503],
       'scenarioDescription': 'Test Fastly; Collection; secure; publish; Dev/Stg /column/road-trip',
       'testId': 205,
     },
@@ -456,7 +435,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Production Test /column/diagnosis collection',
       'testId': 206,
     },
@@ -477,7 +455,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Production Test /column/36-hours collection',
       'testId': 207,
     },
@@ -496,7 +473,6 @@ function getScenarioEvents()
         'x-gdpr': /0/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200,404,500,503],
       'scenarioDescription': 'Dev/Staging test /section/business collection fallback to NYT5',
       'testId': 208,
     },
@@ -515,7 +491,6 @@ function getScenarioEvents()
         'x-gdpr': /0/,
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200,404],
       'scenarioDescription': 'Prod test /section/business collection fallback to NYT5',
       'testId': 209,
     },
@@ -550,7 +525,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode':  [200, 404],
       'scenarioDescription': 'Test /reviews/dining collection',
       'testId': 221,
     },
@@ -571,7 +545,6 @@ function getScenarioEvents()
       'responseHeaderPattern': {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /reviews/theater collection',
       'testId': 222,
     },
@@ -588,7 +561,6 @@ function getScenarioEvents()
         'x-nyt-route': 'vi-collection',
         'x-nyt-backend': 'realestate_fe',
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /section/realestate/commercial collection point to realestate backend',
       'testId': 223,
     },
@@ -608,7 +580,6 @@ function getScenarioEvents()
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /section/realestate/commercial collection point to realestate backend',
       'testId': 224,
     },
@@ -628,7 +599,6 @@ function getScenarioEvents()
         'x-nyt-route': 'collection',
         'x-nyt-backend': 'collection_fe',
       },
-      'responseStatusCode': [200, 404],
       'scenarioDescription': 'Test /section/realestate/commercial collection point to realestate backend',
       'testId': 225,
     },

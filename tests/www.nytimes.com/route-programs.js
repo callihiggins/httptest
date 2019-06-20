@@ -254,7 +254,7 @@ function getScenarioEvents() {
         "x-varnish",
         "x-varnishcacheduration"
       ],
-      responseStatusCode: [200],
+      responseStatusCode: [200,404],
       scenarioDescription: "Programs keep all query strings in dev env",
       testId: 7
     },

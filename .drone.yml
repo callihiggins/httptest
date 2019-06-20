@@ -509,6 +509,7 @@ pipeline:
     when:
       # Test prd environment for every tag in git
       event: tag
+      branch: [ master, hotfix* ]
 
   prd-diff:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-vcl-diff
@@ -519,6 +520,7 @@ pipeline:
         target: FASTLY_API_KEY
     when:
       event: tag
+      branch: [ master, hotfix* ]
 
   prd-test:
     image: us.gcr.io/nyt-registry-prd/drone-fastly-tests

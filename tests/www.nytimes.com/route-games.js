@@ -26,7 +26,6 @@ function getScenarioEvents()
       'responseHeadersPresent': [
         'x-gdpr',
       ],
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /svc/games endpoint',
       'testId': 1,
     },
@@ -48,7 +47,6 @@ function getScenarioEvents()
       ],
       'requestScheme': 'https://',
       'requestUri': '/svc/crosswords/v2/puzzle/1.json',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /svc/crosswords endpoint',
       'testId': 2,
     },
@@ -70,7 +68,6 @@ function getScenarioEvents()
       ],
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/daily',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /crosswords/game/daily web app with games-web backend',
       'testId': 3,
     },
@@ -89,7 +86,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/mini',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /crosswords/game/mini web app with games-web backend',
       'testId': 4,
     },
@@ -124,7 +120,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/variety',
-      'responseStatusCode': 404,
       'scenarioDescription': 'Test hitting a /crosswords/game/variety web app with games-web backend',
       'testId': 6,
     },
@@ -141,7 +136,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/games-assets/favicon.ico',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /games-assets/favicon.ico with gcs backend',
       'testId': 7,
     },
@@ -160,7 +154,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/games/prototype/kenken',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /games/prototype endpoint',
       'testId': 8,
     },
@@ -179,7 +172,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/games/prototype/kenken',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /games/prototype endpoint',
       'testId': 9,
     },
@@ -198,7 +190,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting a /crosswords endpoint',
       'testId': 10,
     },
@@ -217,7 +208,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/submissions',
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test redirect of /crosswords/submissions endpoint',
       'testId': 11,
     },
@@ -236,7 +226,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/sudoku/easy',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Sudoku Easy page',
       'testId': 13,
     },
@@ -255,7 +244,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/kenken',
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test redirecting KenKen page',
       'testId': 14,
     },
@@ -274,7 +262,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/set',
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test redirect to Set page',
       'testId': 15,
     },
@@ -293,7 +280,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',
-      'responseStatusCode': [403,200],
       'scenarioDescription': 'Test hitting Archive Daily page',
       'testId': 16,
     },
@@ -312,7 +298,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/tips-and-tricks',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Tips and Tricks page',
       'testId': 17,
     },
@@ -331,7 +316,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/game/acrostic/2017/09/03',
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test redirect to Acrostic page',
       'testId': 18,
     },
@@ -350,7 +334,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/stats',
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test redirect to Stats page',
       'testId': 19,
     },
@@ -369,7 +352,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Archive Daily page',
       'testId': 20,
     },
@@ -388,7 +370,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/archive/daily',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Archive Daily page',
       'testId': 20,
     },
@@ -407,7 +388,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/crosswords/primer',
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test hitting Primer page',
       'testId': 21,
     },
@@ -426,7 +406,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/puzzles/spelling-bee',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Spelling Bee page',
       'testId': 22,
     },
@@ -445,7 +424,6 @@ function getScenarioEvents()
         'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
-      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www-apps cluster; crosswords; landing page',
       testId: '5p'
@@ -463,7 +441,6 @@ function getScenarioEvents()
         'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
-      responseStatusCode: [301, 404],
       scenarioDescription:
         'Test legacy; www-apps cluster; crosswords; landing page',
       testId: '5d'
@@ -482,7 +459,6 @@ function getScenarioEvents()
         'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
-      responseStatusCode: [200, 403, 404],
       scenarioDescription: 'Test legacy; www-apps cluster; crosswords; archive',
       testId: '6d'
     },
@@ -499,7 +475,6 @@ function getScenarioEvents()
         'x-nyt-route': 'legacy-gke',
         'x-nyt-backend': 'www_legacy_gke'
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test legacy; www-apps cluster; gift guide; 2010 holiday',
       testId: '11p'
@@ -517,7 +492,6 @@ function getScenarioEvents()
         'x-nyt-route': 'legacy-gke',
         'x-nyt-backend': 'www_legacy_gke'
       },
-      responseStatusCode: [200, 301, 404],
       scenarioDescription:
         'Test legacy; www-apps cluster; gift guide; 2010 holiday',
       testId: '11d'
@@ -535,7 +509,6 @@ function getScenarioEvents()
         'x-nyt-route': 'legacy-gke',
         'x-nyt-backend': 'www_legacy_gke'
       },
-      responseStatusCode: [200, 404, 301],
       scenarioDescription: 'Test legacy; www-apps cluster; service; RSS XML',
       testId: '13d'
     },
@@ -554,7 +527,6 @@ function getScenarioEvents()
         'x-nyt-route': 'games-web',
         'x-nyt-backend': 'games_web'
       },
-      responseStatusCode: [200, 404, 403],
       scenarioDescription: 'Test legacy; www-apps cluster; crosswords; archive',
       testId: '18e'
     },
@@ -573,7 +545,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/puzzles/set',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Set page',
       'testId': 19,
     },
@@ -592,7 +563,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/puzzles/acrostic/2017/09/03',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Acrostic page',
       'testId': 20,
     },
@@ -611,7 +581,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/puzzles/kenken',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting KenKen page',
       'testId': 21,
     },
@@ -630,7 +599,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/puzzles/stats',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Stats page',
       'testId': 22,
     },
@@ -649,7 +617,6 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/puzzles/submissions/crossword',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test hitting Submissions page',
       'testId': 23,
     }

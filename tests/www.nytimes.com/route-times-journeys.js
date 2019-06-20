@@ -39,7 +39,6 @@ function getScenarioEvents()
         'x-api-version': 'F-TJ',
         'x-nyt-route': 'times-journeys',
       },
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 1',
       'testId': 2,
     },
@@ -56,7 +55,6 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': "blogs",
       },
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 2',
       'testId': 3,
     },
@@ -73,7 +71,6 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': "blogs",
       },
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys; landing page, non-canonical variant 3',
       'testId': 4,
     },
@@ -162,7 +159,6 @@ function getScenarioEvents()
         'x-api-version': 'F-TJ',
         'x-nyt-route': 'times-journeys-students',
       },
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test Times Journeys Students; landing page, non-canonical variant 1',
       'testId': 9,
     },
@@ -179,7 +175,6 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': "blogs",
       },
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys Students; landing page, non-canonical variant 2',
       'testId': 10,
     },
@@ -196,7 +191,6 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-backend': "blogs",
       },
-      'responseStatusCode': 301,
       'scenarioDescription': 'Test Times Journeys Students; landing page, non-canonical variant 3',
       'testId': 11,
     },
@@ -270,7 +264,6 @@ function getScenarioEvents()
       ],
       'requestScheme': 'https://',
       'requestUri': '/times-journeys/travel/behind-the-scenes-of-new-york-theater/terms/',
-      'responseStatusCode': 200,
       'scenarioDescription': 'Test missing x-frame-options from times-journeys',
       'testId': 15,
     },
