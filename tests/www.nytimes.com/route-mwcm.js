@@ -929,7 +929,6 @@ function getScenarioEvents()
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
         'x-nyt-device': 'desktop',
-        'x-nyt-subscriber': 'false',
       },
       'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="false" if NYT-S cookie is not presents',
       'testId': 41,
@@ -950,7 +949,6 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm',
         'x-nyt-backend': 'mwcm',
-        'x-nyt-subscriber': 'true',
         'x-nyt-user-status':'regi',
       },
       'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="true" and x-nyt-user-status="regi" if NYT-S cookie presents',

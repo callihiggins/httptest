@@ -429,7 +429,6 @@ function getScenarioEvents() {
       'responseHeaderPattern': {
         'set-cookie': /^((?!vistory).)*$/,
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'No vistory cookie',
       'testId': 50,
     },
@@ -452,7 +451,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story'
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Empty vistory cookie',
       'testId': 51,
     },
@@ -488,7 +486,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with no fancy header stuff.',
       'testId': 54,
     },
@@ -508,7 +505,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'OAK article served by VI.',
       'testId': 56,
     },
@@ -528,7 +524,6 @@ function getScenarioEvents() {
         'x-nyt-route': 'vi-story',
         'x-nyt-backend': 'projectvi_fe',
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Non-OAK in correct date range with compatibility issues.',
       'testId': 58,
     },
@@ -548,7 +543,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story'
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Vi article; Non-OAK outside correct date range with no fancy header.',
       'testId': 60,
     },
@@ -568,7 +562,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'projectvi_fe',
         'x-nyt-route': 'vi-story',
       },
-      'responseStatusCode': [200],
       'scenarioDescription': 'Test routing; opinion article; Always served by VI.',
       'testId': 62,
     },
@@ -994,7 +987,6 @@ function getScenarioEvents() {
         'x-nyt-backend': 'amp',
         'x-cache': 'MISS',
       },
-      responseStatusCode: [200],
       scenarioDescription: 'Route Apple News articles to amp',
     },
   ];
