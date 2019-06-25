@@ -19,7 +19,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /theater is served from switchboard',
       testId: 1
     },
@@ -35,7 +34,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /movies is served from switchboard',
       testId: 2
     },
@@ -51,7 +49,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /best-sellers is served from switchboard',
       testId: 3
     },
@@ -67,7 +64,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /restaurants/ is served from switchboard',
       testId: 4
     },
@@ -83,7 +79,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /listings is served from switchboard',
       testId: 5
     },
@@ -99,7 +94,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [302],
       scenarioDescription: 'Test /briefing is served from switchboard',
       testId: 6
     },
@@ -115,7 +109,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /ambriefing is served from switchboard',
       testId: 7
     },
@@ -131,7 +124,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [302],
       scenarioDescription: 'Test /thedaily is served from switchboard',
       testId: 8
     },
@@ -147,7 +139,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [302],
       scenarioDescription: 'Test /the-daily is served from switchboard',
       testId: 9
     },
@@ -193,7 +184,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /stillprocessing is served from switchboard',
       testId: 12
     },
@@ -209,7 +199,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /book-review-podcast is served from switchboard',
       testId: 13
     },
@@ -225,7 +214,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /popcast is served from switchboard',
       testId: 14
     },
@@ -241,7 +229,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /podcasts/modern-love is served from switchboard',
       testId: 15
     },
@@ -257,7 +244,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /podcasts/music-popcast is served from switchboard',
       testId: 16
     },
@@ -273,7 +259,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /dearsugars is served from switchboard',
       testId: 17
     },
@@ -293,7 +278,6 @@ function getScenarioEvents() {
       responseHeaderPattern: {
         'set-cookie': /(?:^|,)nyt-gdpr=(0|1);/,
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test podcasts on /podcasts/',
       testId: 18,
     },
@@ -309,7 +293,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /the-argument is served from switchboard',
       testId: 19
     },
@@ -325,7 +308,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /the-weekly is served from switchboard',
       testId: 20
     },
@@ -341,7 +323,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /theweekly (no hypen) is served from switchboard',
       testId: 21
     },
@@ -357,7 +338,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /weekly (no the) is served from switchboard',
       testId: 22
     },
@@ -374,7 +354,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /the-dispatch (with hyphen) is served from switchboard',
       testId: 23
     },
@@ -390,7 +369,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /thedispatch (no hyphen) is served from switchboard',
       testId: 24
     },
@@ -406,7 +384,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /column/the-dispatch (with hyphen) is served from switchboard',
       testId: 25
     },
@@ -422,7 +399,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /column/the-weekly (with hyphen) is served from switchboard',
       testId: 26
     },
@@ -438,7 +414,6 @@ function getScenarioEvents() {
       responseHeaderMatches: {
         'x-nyt-route': 'switchboard',
       },
-      responseStatusCode: [301, 302],
       scenarioDescription: 'Test /column/theweekly is served from switchboard',
       testId: 27
     },

@@ -24,7 +24,6 @@ function getScenarioEvents()
         'x-nyt-route': 'homepage',
         'x-nyt-backend': 'projectvi_static_backup_gcs',
       },
-      'responseHeadersPresent': ["x-goog-hash","x-goog-storage-class","x-guploader-uploadid"],
       'responseStatusCode': [200],
       'scenarioDescription': 'Test static backup of the homepage ',
       'testId': 1,
@@ -48,7 +47,7 @@ function getScenarioEvents()
       'responseHeadersPresent': ["x-guploader-uploadid"],
       'responseStatusCode': [503],
       'scenarioDescription': 'Test static backup of a story that we know will not exist in the backup',
-      'testId': 1,
+      'testId': 2,
     },
     {
       'id': 'FunctionalTestScenarioViStaticBackupOtherRoute',
@@ -68,7 +67,7 @@ function getScenarioEvents()
       },
       'responseStatusCode': [200],
       'scenarioDescription': 'Test static backup enabled but non-story/homepage route',
-      'testId': 2,
+      'testId': 3,
     },
     {
       'id': 'FunctionalTestScenarioViStaticBackup301',
@@ -87,7 +86,7 @@ function getScenarioEvents()
       },
       'responseStatusCode': [301],
       'scenarioDescription': 'Test static backup enabled and non-200 backend fetch status does not get converted to 503',
-      'testId': 3,
+      'testId': 4,
     }
   ];
 
