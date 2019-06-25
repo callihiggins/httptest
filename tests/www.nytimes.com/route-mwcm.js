@@ -1676,6 +1676,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm-resilient',
         'x-nyt-backend': 'mwcm_resilient',
+        'x-nyt-5xxfallback-reason': '/subscription/tests/fastly/test-50x',
       },
       'scenarioDescription': 'WCM subscription: tests mwcm-resilient route and mwcm_resilient backend',
       'testId': 77,
@@ -1699,6 +1700,54 @@ function getScenarioEvents()
       },
       'scenarioDescription': 'WCM subscription: tests us qs parameter(case insensitivity) when "US=sub"',
       'testId': 78,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/marketing/mpc/tests/test-50x',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-resilient',
+        'x-nyt-backend': 'mwcm_resilient',
+      },
+      'scenarioDescription': 'WCM metered_assets fallback: tests mwcm-resilient route and mwcm_resilient backend',
+      'testId': 79,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/ads/tests/test-50x',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-resilient',
+        'x-nyt-backend': 'mwcm_resilient',
+      },
+      'scenarioDescription': 'WCM metered_assets fallback: tests mwcm-resilient route and mwcm_resilient backend',
+      'testId': 80,
+    },
+    {
+      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
+      'isDeployedInEnv': {
+        'prd': true,
+        'stg': true,
+        'dev': true,
+      },
+      'requestScheme': 'https://',
+      'requestUri': '/subscription/resilient/index.html',
+      'responseHeaderMatches': {
+        'x-nyt-route': 'mwcm-resilient',
+        'x-nyt-backend': 'mwcm_resilient',
+      },
+      'scenarioDescription': 'WCM /subscription/resilient: tests mwcm-resilient route and mwcm_resilient backend',
+      'testId': 81,
     },
   ];
 

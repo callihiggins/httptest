@@ -214,5 +214,6 @@ sumo_log:
     \"behealth\": \"%{if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,\\\"\\\")}V\",
     \"redirect_reason\":\"%{if(req.http.x-nyt-redirect-reason,req.http.x-nyt-redirect-reason,\\\"\\\")}V\",
     \"restarts\": \"%{req.restarts}V\",
-    \"restart_reason\": \"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\"
+    \"restart_reason\": \"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\",
+    \"5xx_fallback_reason\": \"%{if(req.http.x-nyt-5xxfallback-reason,req.http.x-nyt-5xxfallback-reason,\\\"\\\")}V\"
     }

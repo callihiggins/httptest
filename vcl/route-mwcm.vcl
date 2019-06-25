@@ -19,7 +19,16 @@ sub recv_route_mwcm {
             if ( req.restarts > 0) {
                 set req.http.x-nyt-route = "mwcm-resilient";
                 set req.http.x-nyt-backend = "mwcm_resilient";
-                set req.url = "/subscription/resilient/index.html";
+                set req.http.x-nyt-5xxfallback-reason = req.url;
+
+                # NOTE: Supports html for the metered assets fallback, no consumers for now.
+                if ( req.url ~ "^/marketing/mpc/" ) {
+                    set req.url = "/subscription/resilient/mcassets.json";
+                } else if (req.url ~ "^/subscription/ads/") {
+                  set req.url = "/subscription/resilient/banner-ads.html";
+                } else {
+                    set req.url = "/subscription/resilient/index.html";
+                }
 
                 # https://docs.fastly.com/guides/integrations/amazon-s3
                 set req.http.host = "s1-nyt-com.s3.amazonaws.com";
@@ -38,7 +47,16 @@ sub recv_route_mwcm {
                     set req.url = querystring.regfilter_except(req.url, "(?i)^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override|us)$");
                 }
             } else {
-                  set req.http.x-nyt-route = "mwcm-params";
+                    set req.http.x-nyt-route = "mwcm-params";
+            }
+
+            # Set the backend to be S3 bucket
+            # this route conists of the fallback content
+            if (req.url ~ "^/subscription/resilient") {
+                    set req.http.x-nyt-route = "mwcm-resilient";
+                    set req.http.x-nyt-backend = "mwcm_resilient";
+                    set req.http.host = "s1-nyt-com.s3.amazonaws.com";
+                    set req.http.var-nyt-cmots-s3-fallback = "true";
             }
 
             # sets value of the header "req.http.var-nyt-ismagnolia" to "true|false"
@@ -133,6 +151,10 @@ sub deliver_route_mwcm {
         # Sets delivery headers
         # https://github.com/nytm/fastly-shared-cmots
         call shared_deliver_cmots_response_headers;
+
+        if (req.http.x-nyt-nyhq-access == "1") {
+            set resp.http.x-nyt-5xxfallback-reason = req.http.x-nyt-5xxfallback-reason;
+        }
 
         # querystring appending logic applies to only mwcm route
         # does not applies to mwcm-params
