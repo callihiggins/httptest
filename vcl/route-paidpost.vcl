@@ -7,7 +7,16 @@ sub recv_route_paidpost {
         // now let's set our base values for either route
         set req.http.var-nyt-send-gdpr = "true";
         set req.http.var-nyt-wf-auth = "true";
-        set req.url = querystring.remove(req.url);
+        if (req.http.var-nyt-canonical-alpha-host == "true") {
+          set req.url = querystring.filter_except(req.url,
+                                              "contentId" + querystring.filtersep() +
+                                              "contentUri" + querystring.filtersep() +
+                                              "device" + querystring.filtersep() +
+                                              "previewDate" + querystring.filtersep() +
+                                              "scooppreview");
+        } else {
+          set req.url = querystring.remove(req.url);
+        }
         unset req.http.Authorization;
         call recv_post_method_restricted;
 
