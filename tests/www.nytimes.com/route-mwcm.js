@@ -668,28 +668,6 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscription/tests/nginxfastly/test-request-header.html',
       'responseHeaderPattern': {
-        'vary': /X-NYT-Subscriber/,
-      },
-      'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
-      },
-      'scenarioDescription': 'WCM subscription "X-NYT-Subscriber vary" header presence test',
-      'testId': 29,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': false,
-        'stg': false,
-        'dev': false,
-      },
-      'requestHeaders': {
-        'Fastly-Debug': 1
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/subscription/tests/nginxfastly/test-request-header.html',
-      'responseHeaderPattern': {
         'vary': /X-NYT-Device/,
       },
       'responseHeaderMatches': {
@@ -912,47 +890,6 @@ function getScenarioEvents()
       },
       'scenarioDescription': 'WCM subscription referer targeting: sets google if google.com',
       'testId': 40,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-      },
-      'requestHeaders': {
-        'Fastly-Debug': 1,
-      },
-      'requestScheme': 'https://',
-      'requestUri': '/subscription/hd/1041.html',
-      'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
-        'x-nyt-device': 'desktop',
-      },
-      'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="false" if NYT-S cookie is not presents',
-      'testId': 41,
-    },
-    {
-      'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
-      'isDeployedInEnv': {
-        'prd': true,
-        'stg': true,
-        'dev': true,
-      },
-      'requestHeaders': {
-        'Fastly-Debug': 1,
-      },
-      'requestScheme': 'https://',
-      'requestHeaderCookie': 'NYT-S=somehash',
-      'requestUri': '/subscription/hd/1041.html',
-      'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
-        'x-nyt-user-status':'regi',
-      },
-      'scenarioDescription': 'WCM subscription sets x-nyt-subscriber="true" and x-nyt-user-status="regi" if NYT-S cookie presents',
-      'testId': 42,
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',
