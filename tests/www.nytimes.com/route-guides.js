@@ -26,11 +26,11 @@ function getScenarioEvents()
       testId: 1
     },
     {
-      id: 'FunctionalTestScenarioFilterAllQueryParamsForGuides',
+      id: 'FunctionalTestScenarioFilterAllQueryParamsForGuidesNotInDev',
       isDeployedInEnv: {
         prd: true,
         stg: true,
-        dev: true
+        dev: false
       },
       requestScheme: 'https://',
       requestUri: '/guides/culture/guide-to-the-metropolitan-museum-of-art?category=foobar&price=1234-1230',
@@ -78,6 +78,24 @@ function getScenarioEvents()
       responseStatusCode: 200,
       scenarioDescription: 'Gift Guides allows price query parameter',
       testId: 4
+    },
+    {
+      id: 'FunctionalTestScenarioFilterQueryParamsStagingForGuides',
+      isDeployedInEnv: {
+        prd: false,
+        stg: true,
+        dev: false
+      },
+      requestScheme: 'https://',
+      requestUri: '/guides/culture/guide-to-the-metropolitan-museum-of-art?SCOUT_API_HOST=api.guides.prd.nyt.net&category=foobar&price=1234-1230',
+      responseHeaderMatches: {
+        "x-nyt-route": "guides",
+        "x-nyt-backend": "beta_guides",
+        "x-nyt-final-url": "/guides/culture/guide-to-the-metropolitan-museum-of-art?SCOUT_API_HOST=api.guides.prd.nyt.net"
+      },
+      responseStatusCode: 200,
+      scenarioDescription: 'Guides filter query string for SCOUT_API_HOST only in stg env',
+      testId: 5
     },
 
   ];

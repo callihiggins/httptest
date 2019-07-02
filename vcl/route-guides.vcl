@@ -13,8 +13,16 @@ sub recv_route_guides {
                 "category" + querystring.filtersep() +
                 "price");
         } else {
+          # manipulate query string parameters per environment as follows:
+          # - prd: remove all
+          # - stg: filter all except for the "SCOUT_API_HOST"
+          # - dev: keep all
+          if (req.http.var-nyt-env == "stg") {
+            set req.url = querystring.filter_except(req.url, "SCOUT_API_HOST");
+          } else if (req.http.var-nyt-env == "prd") {
             # Remove query params for all other routes:
             set req.url = querystring.remove(req.url);
+          }
         }
 
 
