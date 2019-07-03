@@ -64,3 +64,6 @@ variable "bigquery_secret_key" {
 variable "gcs_secret_key" {
   type = "string"
 }
+variable "botify_s3_secret_key" {
+  type = "string"
+}

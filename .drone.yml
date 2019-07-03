@@ -57,6 +57,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -90,6 +93,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -133,6 +139,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -176,6 +185,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -220,6 +232,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -263,6 +278,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -306,6 +324,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -349,6 +370,9 @@ pipeline:
 
       - source: bigquery_secret_key_dev
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_dev
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch:
@@ -418,6 +442,9 @@ pipeline:
 
       - source: bigquery_secret_key_stg
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_stg
+        target: tf_var_botify_s3_secret_key
     when:
       event: push
       branch: master
@@ -494,6 +521,9 @@ pipeline:
 
       - source: bigquery_secret_key_prd
         target: tf_var_gcs_secret_key
+
+      - source: botify_s3_secret_key_prd
+        target: tf_var_botify_s3_secret_key
     when:
       event: tag
       branch: [ master, hotfix* ]

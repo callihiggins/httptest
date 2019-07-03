@@ -389,6 +389,33 @@ resource "fastly_service_v1" "service" {
 
   ########### End of GCS Logging integration #############
 
+  ####### Begin Botify / S3 Logging #######
+
+  {{ $botify_env_s3_logging := (datasource "env_config").botify_s3_logging }}
+  condition {
+    name      = "botifylogging-suppression"
+    priority  = 10
+    statement = "resp.http.device_type == \"crawler\""
+    type      = "RESPONSE"
+  }
+
+  s3logging {
+    name               = "botify-${var.app}-${var.env}"
+    bucket_name        = "{{$botify_env_s3_logging.bucket_name}}"
+    path               = "/customer.the-new-york-times_19039/nyt-20m-weekly/"
+    s3_access_key      = "{{$botify_env_s3_logging.s3_access_key}}"
+    s3_secret_key      = "${var.botify_s3_secret_key}"
+    gzip_level         = 9
+    format_version     = 2
+    period             = 3600
+    message_type       = "blank"
+    format             = "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""
+    timestamp_format   = "%Y-%m-%dT%H:%M:%S.000"
+    response_condition = "botifylogging-suppression"
+  }
+
+  ####### End Botify / S3 Logging #######
+
   vcl {
     name    = "route-newsdev-attribute"
     main    = false
