@@ -690,10 +690,10 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html',
       'requestHeaderCookie': 'mwcm_exclude_optimizely=true',
-      'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
-        'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?exclude_optimizely=true',
+      'responseHeaderPattern': {
+        'x-nyt-route': /mwcm/,
+        'x-nyt-backend': /mwcm/,
+        'x-nyt-final-url': /\/subscription\/tests\/nginxfastly\/lp8HYKU\.html\?exclude_optimizely=true/,
       },
       'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_optimizely and addes qs exclude_optimizely"',
       'testId': 31,
@@ -711,10 +711,10 @@ function getScenarioEvents()
       'requestScheme': 'https://',
       'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html',
       'requestHeaderCookie': 'mwcm_exclude_jsonkidd=true',
-      'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
-        'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?exclude_jsonkidd=true',
+      'responseHeaderPattern': {
+        'x-nyt-route': /mwcm/,
+        'x-nyt-backend': /mwcm/,
+        'x-nyt-final-url': /\/subscription\/tests\/nginxfastly\/lp8HYKU\.html\?exclude_jsonkidd=true/,
       },
       'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_jsonkidd and addes qs exclude_optimizely"',
       'testId': 32,
@@ -733,13 +733,9 @@ function getScenarioEvents()
       'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html',
       'requestHeaderCookie': ['mwcm_exclude_jsonkidd=true', 'mwcm_exclude_optimizely=true'],
       'responseHeaderPattern': {
-        'x-nyt-final-url': /exclude_jsonkidd=true/,
-        'x-nyt-final-url': /exclude_optimizely=true/,
-        'x-nyt-final-url': /subscription\/tests\/nginxfastly\/lp8HYKU\.html/,
-      },
-      'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
+        'x-nyt-route': /mwcm/,
+        'x-nyt-backend': /mwcm/,
+        'x-nyt-final-url': /\/subscription\/tests\/nginxfastly\/lp8HYKU\.html\?exclude_jsonkidd=true&exclude_optimizely=true/,
       },
       'scenarioDescription': 'WCM subscription "checks presence of cookie:mwcm_exclude_jsonkidd adds qs exclude_jsonkidd=true"',
       'testId': 33,
@@ -1072,9 +1068,11 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoStartDate=20181212&skipFastly=true&test1=test1',
+      'responseHeaderPattern' : {
+        'x-nyt-route': /mwcm/,
+        'x-nyt-backend' : /mwcm/,
+      },
       'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
         'x-nyt-final-url': '/subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoStartDate=20181212&skipFastly=true',
       },
       'scenarioDescription': 'WCM subscription "allows campaignId, skipFastly and promoStartDate qs string params to mwcm backend and strips test1 qs param"',
@@ -1089,13 +1087,15 @@ function getScenarioEvents()
       },
       'requestScheme': 'https://',
       'requestUri': '/subscription/tests/nginxfastly/lp8HYKU.html?skipFastly=true',
+      'responseHeaderPattern' : {
+        'x-nyt-route': /mwcm/,
+        'x-nyt-backend' : /mwcm/,
+      },
       'responseHeaderMatches': {
-        'x-nyt-route': 'mwcm',
-        'x-nyt-backend': 'mwcm',
         'x-cache': 'MISS',
       },
       'scenarioDescription': 'WCM subscription "cache type should be MISS if skipFastly=true qs && x-nyt-nyhq-access flag present"',
-      'testId': 52,
+      'testId': '52a',
     },
     {
       'id': 'FunctionalTestScenarioDefinitionForHtmlPage',

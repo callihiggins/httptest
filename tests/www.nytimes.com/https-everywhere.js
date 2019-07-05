@@ -220,7 +220,10 @@ function getScenarioEvents() {
       },
       requestScheme: 'https://',
       requestUri: '/watching',
-      responseStatusCode: 200,
+      'responseHeaderMatches': {
+        'x-nyt-route': 'watching',
+        'x-nyt-backend': 'beta_watching',
+      },
       scenarioDescription:
         'Test HTTPS Everywhere; watching (phase 3); secure; opt-out cookie not set',
       testId: 15
