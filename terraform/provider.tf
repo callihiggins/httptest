@@ -1,4 +1,4 @@
-# pin the Fastly provider to 0.1.3. We should not get surprised by automatic upgrades
+# pin the Fastly provider to 0.6.1. We should not get surprised by automatic upgrades
 provider "fastly" {
-  version = "= 0.4.0"
+  version = "= 0.6.1"
 }
