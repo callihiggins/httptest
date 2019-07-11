@@ -395,7 +395,7 @@ resource "fastly_service_v1" "service" {
   condition {
     name      = "botifylogging-suppression"
     priority  = 10
-    statement = "resp.http.device_type == \"crawler\""
+    statement = "req.http.device_type == \"crawler\""
     type      = "RESPONSE"
   }
 
