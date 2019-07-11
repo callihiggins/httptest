@@ -85,14 +85,8 @@ sub recv_route_mwcm {
                     set req.http.var-nyt-force-pass = "true";
                 }
 
+                call shared_recv_cmots_miss_init;
                 call shared_recv_cmots_headers_init;
-
-                # checks skipFastly=true qs param
-                # if present, then sets x-nyt-miss
-                # x-nyt-miss forces cache type to be miss if the request is coming from the internal ips.
-                if ( subfield(req.url.qs, "skipFastly", "&") == "true" ) {
-                    set req.http.x-nyt-miss = "1";
-                }
 
                 # this logic allows stripping of optimizely dependency via cookie "mwcm_exclude_optimizely"
                 # checks the presence of the "mwcm_exclude_optimizely" cookie
