@@ -23,6 +23,7 @@ function getScenarioEvents() {
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
+        "authorization",
         "nnCoection",
         "via",
         "x-age",
@@ -91,6 +92,7 @@ function getScenarioEvents() {
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
+        "authorization",
         "cookie",
         "nnCoection",
         "via",
@@ -127,6 +129,7 @@ function getScenarioEvents() {
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
+        "authorization",
         "cookie",
         "nnCoection",
         "via",
@@ -164,6 +167,7 @@ function getScenarioEvents() {
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
+        "authorization",
         "cookie",
         "nnCoection",
         "via",
@@ -201,6 +205,7 @@ function getScenarioEvents() {
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
+        "authorization",
         "cookie",
         "nnCoection",
         "via",
@@ -229,15 +234,16 @@ function getScenarioEvents() {
         dev: true
       },
       requestScheme: "https://",
-      requestUri: "/programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s",
+      requestUri: "/programs/well-challenge?buildId=6486574690729984&q=8sdjv073mcl0s",
       responseHeaderMatches: {
         "x-frame-options": "DENY",
         "x-nyt-route": "programs-service",
         "x-nyt-backend": "programs_svc",
-        "x-nyt-final-url": "/programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s"
+        "x-nyt-final-url": "/programs/well-challenge?buildId=6486574690729984&q=8sdjv073mcl0s"
       },
       responseHeadersPresent: ["x-cache", "x-served-by"],
       responseHeadersNotPresent: [
+        "authorization",
         "cookie",
         "nnCoection",
         "via",
@@ -257,7 +263,7 @@ function getScenarioEvents() {
       responseStatusCode: [200,404],
       scenarioDescription: "Programs keep all query strings in dev env",
       testId: 7
-    },
+    }
   ];
 
   return scenarios;

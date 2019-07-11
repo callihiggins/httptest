@@ -1,8 +1,6 @@
 sub recv_route_programs {
     if (req.http.var-nyt-canonical-www-host) {
-
         if (req.url.path ~ "^/programs/[\-a-z0-9]+/public/" || req.url.path ~ "^/programs/public/") {
-
             set req.http.x-nyt-route = "programs-gcs";
             set req.http.x-nyt-backend = "gcs_origin";
             set req.http.var-nyt-send-gdpr = "true";
@@ -35,6 +33,7 @@ sub miss_pass_route_programs {
     if (req.http.x-nyt-route == "programs-service") {
         unset bereq.http.cookie;
         call set_programs_web_host;
+        call set_secret;
     }
 
     if (req.http.x-nyt-route == "shaq-service") {
@@ -54,7 +53,6 @@ sub deliver_programs_api_version {
 }
 
 sub set_programs_web_host {
-
     if (req.http.var-nyt-env == "dev") {
         set bereq.http.host = "ftu-dot-nyt-betaprog-dev.appspot.com";
     } else if (req.http.var-nyt-env == "stg") {
@@ -62,11 +60,9 @@ sub set_programs_web_host {
     } else {
         set bereq.http.host = "ftu-dot-nyt-betaprog-prd.appspot.com";
     }
-
 }
 
 sub set_programs_shaq_host {
-
     if (req.http.var-nyt-env == "dev") {
         set bereq.http.host = "shaq-dot-nyt-betaprog-dev.appspot.com";
     } else if (req.http.var-nyt-env == "stg") {
@@ -76,5 +72,8 @@ sub set_programs_shaq_host {
     }
 
     set bereq.url = regsub(bereq.url, "^/programs/svc/shaq/(.*)", "/svc/shaq/\1");
+}
 
+sub set_secret {
+  set bereq.http.Authorization = "Bearer " table.lookup(programs_origin_auth_keys, "fastly_secret");
 }
