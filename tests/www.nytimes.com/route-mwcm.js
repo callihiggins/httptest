@@ -1611,7 +1611,7 @@ function getScenarioEvents()
       'responseHeaderMatches': {
         'x-nyt-route': 'mwcm-resilient',
         'x-nyt-backend': 'mwcm_resilient',
-        'x-nyt-5xxfallback-reason': '/subscription/tests/fastly/test-50x',
+        'x-nyt-mwcm-fallback': '/subscription/tests/fastly/test-50x',
       },
       'scenarioDescription': 'WCM subscription: tests mwcm-resilient route and mwcm_resilient backend',
       'testId': 77,

@@ -19,7 +19,7 @@ sub recv_route_mwcm {
             if ( req.restarts > 0) {
                 set req.http.x-nyt-route = "mwcm-resilient";
                 set req.http.x-nyt-backend = "mwcm_resilient";
-                set req.http.x-nyt-5xxfallback-reason = req.url;
+                set req.http.x-nyt-mwcm-fallback = req.url;
 
                 # NOTE: Supports html for the metered assets fallback, no consumers for now.
                 if ( req.url ~ "^/marketing/mpc/" ) {
@@ -153,7 +153,7 @@ sub deliver_route_mwcm {
         call shared_deliver_cmots_response_headers;
 
         if (req.http.x-nyt-nyhq-access == "1") {
-            set resp.http.x-nyt-5xxfallback-reason = req.http.x-nyt-5xxfallback-reason;
+            set resp.http.x-nyt-mwcm-fallback = req.http.x-nyt-mwcm-fallback;
         }
 
         # querystring appending logic applies to only mwcm route
