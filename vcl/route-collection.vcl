@@ -33,7 +33,7 @@ sub recv_route_collection {
       || req.url ~ "^/issue/"
       || req.url ~ "^/series/"
       || req.url ~ "^/news-event/"
-      || req.url ~ "^/section/"
+      || (req.url ~ "^/section/" && req.url !~ "^/section/the-weekly")
       || req.url ~ "^/spotlight/"
       || req.url ~ "^/reviews/theater"
       || (req.url ~ "^/reviews/dining" && req.url !~ "^/reviews/dining/map")

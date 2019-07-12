@@ -417,7 +417,21 @@ function getScenarioEvents() {
       scenarioDescription: 'Test /column/theweekly is served from switchboard',
       testId: 27
     },
-
+    {
+      id: 'FunctionalTestScenarioDefinitionForSwitchboardSectionTheWeekly',
+      isDeployedInEnv: {
+        prd: true,
+        stg: true,
+        dev: true
+      },
+      requestScheme: 'https://',
+      requestUri: '/section/the-weekly',
+      responseHeaderMatches: {
+        'x-nyt-route': 'switchboard',
+      },
+      scenarioDescription: 'Test /section/the-weekly (with hyphen) is served from switchboard',
+      testId: 28
+    },
   ];
 
   return scenarios;
