@@ -190,6 +190,23 @@ var scenarios = [
     scenarioDescription: 'Legacy route sets gdpr cookie and header',
     testId: 11
   },
+  {
+    id: 'FunctionalTestScenarioDefinitionForBeta620',
+    isDeployedInEnv: {
+      prd: true,
+      stg: true,
+      dev: true
+    },
+    requestScheme: 'http://',
+    requestHostname: 'beta620.nytimes.com',
+    requestUri: '/',
+    responseHeaderMatches: {
+      'x-nyt-backend': 'www_legacy_gke',
+      'x-nyt-route': 'legacy-gke',
+    },
+    scenarioDescription: 'Test beta620 has been moved to legacy backend',
+    testId: 12
+  },
 ];
 return scenarios;
 }

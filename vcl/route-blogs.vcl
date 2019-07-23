@@ -33,8 +33,7 @@ sub recv_route_blogs {
   }
 
   // vanity hostnames for blogs
-  if (   req.http.host == "beta620.nytimes.com"
-      || req.http.host == "bits.nytimes.com"
+  if (   req.http.host == "bits.nytimes.com"
       || req.http.host ~  "(www\.)?dealbook\.com$"
       || req.http.host ~  "(www\.)?dealbook\.me$"
       || req.http.host ~  "jobs\.nytco\.com$"
