@@ -588,8 +588,8 @@ backends:
     ssl_sni_hostname: "s3.amazonaws.com"
     healthcheck:
       host: "s1-nyt-com.s3.amazonaws.com"
-      path: "/subscription/resilient/index.html"
-      check_interval: "600"
+      path: "/subscription/resilient/.status"
+      check_interval: "60000"
       expected_response: "200"
       initial: "2"
       threshold: "1"
