@@ -1,0 +1,49 @@
+tests:
+  - description: Vi Bestsellers Page;  /books/best-sellers/
+    request:
+      path: /books/best-sellers/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-bestsellers$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Vi Bestsellers
+      Page;  /books/best-sellers/combined-print-and-e-book-fiction/
+    request:
+      path: /books/best-sellers/combined-print-and-e-book-fiction/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-bestsellers$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Vi Bestsellers Page;
+      /books/best-sellers/combined-print-and-e-book-fiction/2016/03/01/
+    request:
+      path: /books/best-sellers/combined-print-and-e-book-fiction/2016/03/01/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-bestsellers$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+

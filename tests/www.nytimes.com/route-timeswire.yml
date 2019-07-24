@@ -1,0 +1,55 @@
+tests:
+  - description: Vi Timeswire Page; /timeswire
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+  - description: Vi Timeswire Page; /timeswire/
+    request:
+      path: /timeswire/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 301
+  - description: Vi Timeswire Page; does not redirect to mobile
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36
+          (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+

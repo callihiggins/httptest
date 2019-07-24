@@ -1,0 +1,55 @@
+tests:
+  - description: "Test userinfo service, version 3: no cookies; GeoIP of USA; JSON format"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v3.json
+      headers:
+        x-nyt-miss: "1"
+        SRCIP: 170.149.161.130
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+  - description: "Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON
+      format"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v3.json
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+        SRCIP: 170.149.161.130
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+  - description: "Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON
+      format"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v3.json
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-edge-cdn: fastly
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+        SRCIP: 170.149.161.130
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+

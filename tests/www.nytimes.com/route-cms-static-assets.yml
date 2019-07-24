@@ -1,0 +1,53 @@
+tests:
+  - description: "route-cms-static-assets: 200 response from GCS"
+    request:
+      path: /images/2017/12/20/arts/testtestmerlindec19/testtestmerlindec19-videoSmall.jpg
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^cms-static-assets$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+  - description: "route-cms-static-assets: 200 response from GCS"
+    request:
+      path: /images/2018/01/10/watching/getOUT/getOUT-videoSmall.jpg
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^cms-static-assets$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+  - description: "route-cms-static-assets: 200 response from GCS"
+    request:
+      path: /images/2018/02/07/arts/07fieldguide/05fieldguide-blogSmallThumb.jpg
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^cms-static-assets$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+

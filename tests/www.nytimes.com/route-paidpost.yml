@@ -1,0 +1,104 @@
+tests:
+  - description: Test HTTPS; paidpost; secure
+    request:
+      path: /paidpost/mexico-tourism/my-journey-to-mexico.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-paidpost$
+          x-nyt-backend: ^projectvi_fe$
+          x-frame-options: ^DENY$
+          x-gdpr: ^0$
+  - description: Test missing x-frame-options with whitelisted referer
+    request:
+      path: /paidpost/mexico-tourism/my-journey-to-mexico.html
+      headers:
+        x-nyt-miss: "1"
+        Referer: https://media.insightexpress.com/foo/bar
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-paidpost$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+        notPresent:
+          - x-frame-options
+  - description: www host; test query string filter removed
+    request:
+      path: /paidpost/advertiser/headline.html?previewDate=1561476655968&contentUri=nyt://paidpost/44cba1ee-7c5c-5bba-a51f-cf70b111515e&device=desktop&scooppreview&contentId=100000006289908&extraParam
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-paidpost$
+          x-nyt-backend: ^projectvi_fe$
+          x-frame-options: ^DENY$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/paidpost/advertiser/headline\.html$
+  - description: Alpha host /paidpost; test query string sort and filter whitelist preview;
+      /paidpost
+    request:
+      path: /paidpost/advertiser/headline.html?previewDate=1561476655968&contentUri=nyt://paidpost/44cba1ee-7c5c-5bba-a51f-cf70b111515e&device=desktop&scooppreview&contentId=100000006289908&extraParam=2&emptyParam
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-paidpost$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/paidpost/advertiser/headline\.html\?contentId=100000006289908&contentUri=nyt://paidpost/44cba1ee-7c5c-5bba-a51f-cf70b111515e&device=desktop&previewDate=1561476655968&scooppreview$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host /paidpost; test query string sort and filter whitelist preview;
+      /paidpost
+    request:
+      path: /paidpost/advertiser/headline.html?previewDate=1561476655968&contentUri=nyt://paidpost/44cba1ee-7c5c-5bba-a51f-cf70b111515e&device=desktop&scooppreview&contentId=100000006289908&extraParam=2&emptyParam
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-paidpost$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/paidpost/advertiser/headline\.html\?contentId=100000006289908&contentUri=nyt://paidpost/44cba1ee-7c5c-5bba-a51f-cf70b111515e&device=desktop&previewDate=1561476655968&scooppreview$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host /paidpost; test query string sort and filter whitelist preview;
+      /paidpost
+    request:
+      path: /paidpost/advertiser/headline.html?previewDate=1561476655968&contentUri=nyt://paidpost/44cba1ee-7c5c-5bba-a51f-cf70b111515e&device=desktop&scooppreview&contentId=100000006289908&extraParam=2&emptyParam
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-paidpost$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/paidpost/advertiser/headline\.html\?contentId=100000006289908&contentUri=nyt://paidpost/44cba1ee-7c5c-5bba-a51f-cf70b111515e&device=desktop&previewDate=1561476655968&scooppreview$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+

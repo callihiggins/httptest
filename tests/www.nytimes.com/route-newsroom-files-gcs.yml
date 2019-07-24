@@ -1,0 +1,20 @@
+tests:
+  - description: newsroom files route GCS bucket responds with 200
+    request:
+      path: /files/healthcheck.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsroom-files-gcs$
+          x-nyt-backend: ^gcs_origin$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+

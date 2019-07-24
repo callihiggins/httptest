@@ -1,0 +1,59 @@
+tests:
+  - description: Test /newsletters/ is served from vi
+    request:
+      path: /newsletters/louder
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsletter$
+          x-nyt-backend: ^projectvi_fe$
+          set-cookie: (?:^|,)nyt-us=1;
+      statusCodes:
+        - 200
+  - description: Set cookie with value of 1 for US users.
+    request:
+      path: /newsletters/louder?ip-override=137.99.78.82
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsletter$
+          x-nyt-backend: ^projectvi_fe$
+          set-cookie: (?:^|,)nyt-us=1;
+  - description: Set cookie with value of 0 for non-US users.
+    request:
+      path: /newsletters/louder?ip-override=85.90.227.224
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsletter$
+          x-nyt-backend: ^projectvi_fe$
+          set-cookie: (?:^|,)nyt-us=0;
+  - description: POST method requests are not allowed for newsletters route
+    request:
+      method: POST
+      path: /newsletters/louder
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+

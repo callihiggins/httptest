@@ -1,0 +1,197 @@
+tests:
+  - description: creates new nyt-gdpr when missing in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: creates new nyt-gdpr when empty in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-gdpr=
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: creates new nyt-gdpr when empty among other cookies in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: foo=bar; nyt-gdpr=; argh=blargh
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: suppresses nyt-gdpr when provided in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-gdpr=1
+    conditions:
+      env:
+        TEST_ENV: ^$
+    response:
+      headers:
+        notPresent:
+          - x-gdpr
+      statusCodes:
+        - 200
+  - description: suppresses nyt-gdpr when provided among other cookies in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: foo=bar; nyt-gdpr=0; argh=blargh
+    conditions:
+      env:
+        TEST_ENV: ^$
+    response:
+      headers:
+        notPresent:
+          - x-gdpr
+      statusCodes:
+        - 200
+  - description: force gdpr by query param
+    request:
+      path: /?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-gdpr: "1"
+  - description: force gdpr by query param
+    request:
+      path: /?gdpr=0
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-gdpr: "0"
+  - description: GDPR service endpoint
+    request:
+      path: /svc/gdpr.json
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-gdpr: (0|1)
+      statusCodes:
+        - 200
+  - description: GDPR AMP service endpoint. No NYT-T cookie. No nyt-gdpr cookie.
+    request:
+      path: /svc/amp-consent.json
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-amp-consent: "false"
+      statusCodes:
+        - 200
+  - description: GDPR AMP service endpoint. No NYT-T cookie. nyt-gdpr=0 cookie.
+    request:
+      path: /svc/amp-consent.json?gdpr=0
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-gdpr=0
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-amp-consent: "false"
+      statusCodes:
+        - 200
+  - description: GDPR AMP service endpoint. No NYT-T cookie. nyt-gdpr=1 cookie.
+    request:
+      path: /svc/amp-consent.json?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-gdpr=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-amp-consent: "true"
+      statusCodes:
+        - 200
+  - description: GDPR AMP service endpoint. NYT-T=ok cookie. nyt-gdpr=0 cookie.
+    request:
+      path: /svc/amp-consent.json?gdpr=0
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-T=ok; nyt-gdpr=0
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-amp-consent: "false"
+      statusCodes:
+        - 200
+  - description: GDPR AMP service endpoint. NYT-T=ok cookie. nyt-gdpr=1 cookie.
+    request:
+      path: /svc/amp-consent.json?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-T=ok; nyt-gdpr=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-amp-consent: "false"
+      statusCodes:
+        - 200
+  - description: GDPR AMP service endpoint. NYT-T=out cookie. nyt-gdpr=1 cookie.
+    request:
+      path: /svc/amp-consent.json?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-T=out; nyt-gdpr=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-amp-consent: "true"
+      statusCodes:
+        - 200
+

@@ -1,0 +1,283 @@
+tests:
+  - description: Test NYTimes Embedded Interactive with User-Agent
+    request:
+      path: /interactive/2017/02/09/upshot/100000004922380.embedded.html
+      headers:
+        x-nyt-miss: "1"
+        User-Agent: NYTimes
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-frame-options
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Embedded Interactive Without User-Agent
+    request:
+      path: /interactive/2017/02/09/upshot/100000004922380.embedded.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Embedded Interactive With Query String Param
+    request:
+      path: /interactive/2016/01/12/us/100000004069963.embedded.html?isHybrid=true
+      headers:
+        x-nyt-miss: "1"
+        Referer: https://mobile.nytimes.com/2017/02/14/briefing/michael-flynn-opec-india.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-frame-options
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Interactive served by Vi with qparam removed
+    request:
+      path: /interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html?hello=2&query=good&_goog=blah
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-final-url: ^/interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand\.html$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Interactive served by Vi
+    request:
+      path: /interactive/2017/multimedia/test-interactive-standalone-qa.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Embedded Interactive served by NYT5
+    request:
+      path: /interactive/2016/01/12/us/100000004069963.embedded.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Embedded Interactive served by Vi
+    request:
+      path: /interactive/2017/admin/100000005250034.embedded.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Embedded Interactive Served By Project Vi
+    request:
+      path: /interactive/2017/admin/100000005194102.embedded.html
+      headers:
+        x-nyt-miss: "1"
+        Referer: https://www.stg.nytimes.com/2017/10/02/automobiles/test-oak-with-embedded-interactive.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-frame-options
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Masthead served by vi-interactive
+    request:
+      path: /interactive/magazine/masthead.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+      statusCodes:
+        - 200
+        - 404
+  - description: POST method requests are not allowed for vi-interactive route
+    request:
+      method: POST
+      path: /interactive/2017/05/04/travel/what-to-do-36-hours-in-the-golden-triangle-thailand.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+

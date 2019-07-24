@@ -1,0 +1,46 @@
+tests:
+  - description: Vi Search Homepage
+    request:
+      path: /search?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-search$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Vi Search term - apple
+    request:
+      path: /search?query=apple&sort=best&_gae=hello&_=1234123
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-search$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/search\?query=apple&sort=best$
+  - description: Vi Search term - kevin durant
+    request:
+      path: /search?query=kevin%20durant
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-search$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-final-url: ^/search\?query=kevin%20durant$
+

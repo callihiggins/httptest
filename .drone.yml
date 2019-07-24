@@ -2,7 +2,6 @@ workspace:
   base: /root
 
 pipeline:
-
   # First step is yml file syntax check for all environment
   yml_syntax_check:
     image: inzinger/alpine-ruby:2.3
@@ -103,9 +102,17 @@ pipeline:
 
   # Run tests against dev service in sandbox01
   sandbox01-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www-sandbox01.dev.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: dev
+      TEST_HOST: www-sandbox01.dev.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch:
@@ -149,9 +156,17 @@ pipeline:
 
   # Run tests against dev service in sandbox02
   sandbox02-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www-sandbox02.dev.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: dev
+      TEST_HOST: www-sandbox02.dev.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch:
@@ -195,14 +210,21 @@ pipeline:
 
   # Run tests against dev service in sandbox03
   sandbox03-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www-sandbox03.dev.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: dev
+      TEST_HOST: www-sandbox03.dev.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch:
         include: [ sandbox03 ]
-
 
   # SANDBOX: uses branch sandbox04 to deploy to www.sandbox04
   sandbox04:
@@ -242,9 +264,17 @@ pipeline:
 
   # Run tests against dev service in sandbox04
   sandbox04-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www-sandbox04.dev.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: dev
+      TEST_HOST: www-sandbox04.dev.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch:
@@ -288,9 +318,17 @@ pipeline:
 
   # Run tests against dev service in sandbox05
   sandbox05-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www-sandbox05.dev.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: dev
+      TEST_HOST: www-sandbox05.dev.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch:
@@ -334,9 +372,17 @@ pipeline:
 
   # Run tests against dev service in sandbox04
   sandbox06-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www-sandbox06.dev.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: dev
+      TEST_HOST: www-sandbox06.dev.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch:
@@ -394,9 +440,17 @@ pipeline:
 
   # Run tests against dev service
   dev-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www.dev.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: dev
+      TEST_HOST: www.dev.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch:
@@ -473,10 +527,18 @@ pipeline:
       event: push
       branch: master
 
-  stg-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www.stg.nytimes.com
-    print_failures_only: true
+  dev-test:
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: stg
+      TEST_HOST: www.stg.nytimes.com
+      TEST_CONCURRENCY: '10'
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: push
       branch: master
@@ -553,9 +615,16 @@ pipeline:
       branch: [ master, hotfix* ]
 
   prd-test:
-    image: us.gcr.io/nyt-registry-prd/drone-fastly-tests
-    servername: www.nytimes.com
-    print_failures_only: true
+    image: nytimes/httptest
+    pull: true
+    environment:
+      TEST_ENV: prd
+      TEST_HOST: www.nytimes.com
+      TEST_PRINT_FAILED_ONLY: 'true'
+    secrets:
+      - test_cookie_nyt_s
+      - test_cookie_nyt_s_games
+      - test_cookie_is_16k
     when:
       event: tag
       branch: [ master, hotfix* ]

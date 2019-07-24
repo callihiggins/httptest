@@ -1,0 +1,794 @@
+tests:
+  - description: "content-article: NYT5; ensure Fastly pass;
+      /2016/11/04/homepage/new-york-times-open-access-election-2016.html"
+    request:
+      path: /2016/11/04/homepage/new-york-times-open-access-election-2016.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (article|vi-story)
+          x-nyt-backend: (article_fe|projectvi_fe)
+  - description: "content-article: NYT5; ensure Fastly pass;
+      /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-bigg\
+      est-donors-study.html"
+    request:
+      path: /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html
+    request:
+      path: /2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /1959/01/11/archives/sports-of-the-times-forecast-for-1959.html
+    request:
+      path: /1959/01/11/archives/sports-of-the-times-forecast-for-1959.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /1964/01/01/mexico-tightens-control-of-semipublic-concerns.html
+    request:
+      path: /1964/01/01/mexico-tightens-control-of-semipublic-concerns.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html
+    request:
+      path: /1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass; redirect;
+      /2001/01/20/technology/20ANNIVERSARY.html
+    request:
+      path: /2001/01/20/technology/20ANNIVERSARY.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html
+    request:
+      path: /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /2006/01/29/fashion/sundaystyles/29LOVE.html
+    request:
+      path: /2006/01/29/fashion/sundaystyles/29LOVE.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /2006/02/26/fashion/sundaystyles/26LOVE.html
+    request:
+      path: /2006/02/26/fashion/sundaystyles/26LOVE.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /2006/11/12/fashion/12love.html
+    request:
+      path: /2006/11/12/fashion/12love.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass; blogpost as article;
+      /blog/2000/01/01/us/slug.html
+    request:
+      scheme: http
+      path: /blog/2000/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass; /1850/01/01/us/slug.html
+    request:
+      path: /1850/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/us/slug.html
+    request:
+      path: /1979/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass; /1981/01/01/us/slug.html
+    request:
+      path: /1981/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
+  - description: Test routing; article; NYT5; ensure Fastly pass; /1995/01/01/us/slug.html
+    request:
+      path: /1995/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^article_fe$
+          x-nyt-route: ^article$
+  - description: Test routing; article; VI; ensure Fastly pass;
+      /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html
+    request:
+      path: /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+  - description: Test routing; article; VI; ensure Fastly pass;
+      /2013/06/16/travel/travel-guide-new-york-for-kids.html
+    request:
+      path: /2013/06/16/travel/travel-guide-new-york-for-kids.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+  - description: Test routing for url with space; article; VI; ensure Fastly pass;
+      /2013/06/16/travel/travel-guide-new-york-for-kids.html
+    request:
+      path: /2013/06/16/travel/travel-guide-new-york-for-kids.html%20http://www.nytimes.com/2013/06/16/travel/travel-guide-new-york-for-kids.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+          x-nyt-final-url: ^/2013/06/16/travel/travel-guide-new-york-for-kids\.html$
+  - description: Test routing for url with space; article; NYT5; ensure Fastly pass;
+      /2011/06/16/travel/travel-guide-new-york-for-kids.html
+    request:
+      path: /2011/06/16/travel/travel-guide-new-york-for-kids.html%20http://www.nytimes.com/2011/06/16/travel/travel-guide-new-york-for-kids.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^article_fe$
+          x-nyt-route: ^article$
+          x-nyt-final-url: ^/2011/06/16/travel/travel-guide-new-york-for-kids\.html$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /1981/01/03/nyregion/uso-in-times-square.html
+    request:
+      path: /1981/01/03/nyregion/uso-in-times-square.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^article_fe$
+          x-nyt-route: ^article$
+  - description: Test routing; article; NYT5 GKE; ensure Fastly pass;
+      /1996/01/22/business/the-new-york-times-introduces-a-web-site.html
+    request:
+      path: /1996/01/22/business/the-new-york-times-introduces-a-web-site.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+  - description: Test routing; article; NYT5 GKe; ensure Fastly pass;
+      /2006/11/12/fashion/12love.html
+    request:
+      path: /2006/11/12/fashion/12love.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^article$
+  - description: No vistory cookie
+    request:
+      path: /2017/10/16/upshot/this-is-a-test-article.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+          set-cookie: ^((?!vistory).)*$
+  - description: Empty vistory cookie
+    request:
+      path: /2017/10/16/upshot/this-is-a-test-article.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+        cookie: vistory=
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+  - description: abra set story VI cookie using query param
+    request:
+      path: /2017/10/16/upshot/this-is-a-test-article.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Non-OAK in correct date range with no fancy header stuff.
+    request:
+      path: /2017/10/16/upshot/this-is-a-test-article.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: projectvi_fe
+          x-nyt-route: vi-story
+  - description: OAK article served by VI.
+    request:
+      path: /2017/02/23/learning/oak-style-guide.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: projectvi_fe
+          x-nyt-route: vi-story
+  - description: Non-OAK in correct date range with compatibility issues.
+    request:
+      path: /2016/06/10/world/asia/japan-summons-chinese-envoy-after-naval-ship-nears-disputed-islands.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+  - description: Vi article; Non-OAK outside correct date range with no fancy header.
+    request:
+      path: /2013/10/24/arts/music/christian-mcbride-trio-at-dizzys-club-coca-cola.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+  - description: Test routing; opinion article; Always served by VI.
+    request:
+      path: /2017/02/16/opinion/paul-krugman-with-column-assignment.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: projectvi_fe
+          x-nyt-route: vi-story
+  - description: No vistory cookie
+    request:
+      path: /2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 200
+  - description: Empty vistory cookie
+    request:
+      path: /2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+        cookie: vistory=
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 200
+  - description: abra set story VI cookie using query param
+    request:
+      path: /2017/07/14/science/sun-cycles-solar-maximum-minimum-corona.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Non-OAK in correct date range with no fancy header stuff.
+    request:
+      path: /2017/10/15/nyregion/harvey-weinstein-new-york-sex-assault-investigation.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 200
+  - description: OAK article served by VI.
+    request:
+      path: /2016/08/26/arts/things-to-do-in-new-york-metropolitan-museum-flume.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 200
+  - description: Non-OAK in correct date range with no compatibility issues.
+    request:
+      path: /2018/01/30/us/politics/trump-state-of-the-union.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Non-OAK outside correct date range with no fancy header.
+    request:
+      path: /2013/06/25/sports/tennis/tough-first-day-at-wimbledon-for-us-women-despite-stephens-win.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 200
+  - description: Test routing; opinion article; Always served by VI.
+    request:
+      path: /2018/03/02/opinion/dicks-guns-walmart.html
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-debug: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 200
+  - description: Set cookie with value of 1 for US users for US-only views on dev & stg.
+    request:
+      path: /2017/02/16/opinion/paul-krugman-with-column-assignment.html?ip-override=137.99.78.82
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-us=1;
+      statusCodes:
+        - 200
+  - description: Set cookie with value of 0 for non-US users on dev & stg.
+    request:
+      path: /2017/02/16/opinion/paul-krugman-with-column-assignment.html?ip-override=85.90.227.224
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-us=0;
+      statusCodes:
+        - 200
+  - description: Set cookie with value of 1 for US users for US-only views on prd.
+    request:
+      path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=137.99.78.82
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-us=1;
+      statusCodes:
+        - 200
+  - description: Set cookie with value of 0 for non-US users on prd.
+    request:
+      path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=85.90.227.224
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-us=0;
+      statusCodes:
+        - 200
+  - description: Set cookie with value of MX for Mexico users on prd.
+    request:
+      path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=158.97.227.224
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-geo=MX;
+      statusCodes:
+        - 200
+  - description: Set cookie with value of UK for United Kingdom users on prd.
+    request:
+      path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=185.112.249.184
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-geo=GB;
+      statusCodes:
+        - 200
+  - description: Set cookie with value of SG for Singapore users on prd.
+    request:
+      path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=39.109.210.210
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-geo=SG;
+      statusCodes:
+        - 200
+  - description: POST method requests are not allowed for story route
+    request:
+      method: POST
+      path: /2013/06/16/travel/travel-guide-new-york-for-kids.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+  - description: Vi Internationalized URL /es
+    request:
+      method: GET
+      path: /es/2018/09/20/espanol/america-latina/a-tu-resumen-de-noticias-del-jueves.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Vi internationalized URL /es with query params
+    request:
+      method: GET
+      path: /es/2018/09/20/espanol/america-latina/a-tu-resumen-de-noticias-del-jueves.html?test=value
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Vi internationalized interactive URL /es
+    request:
+      method: GET
+      path: /es/interactive/2018/09/20/universal/test-spanish-interactive.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Vi internationalized URL /zh-hans
+    request:
+      method: GET
+      path: /zh-hans/2018/08/15/universal/03china-coffins-hans.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Route articles after 2020 to Vi
+    request:
+      method: GET
+      path: /2020/01/01/test.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+  - description: Route articles after 2020 to Vi
+    request:
+      method: GET
+      path: /2025/12/15/test.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+  - description: Route 2019 live blogs to amp
+    request:
+      method: GET
+      path: /live/2019/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+  - description: Route Apple News articles to amp
+    request:
+      method: GET
+      path: /apple-news/2018/11/14/us/politics/conservative-lawyers-trump.html
+      headers:
+        x-nyt-miss: "1"
+        User-Agent: DU-apple-news AppEngine-Google
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+          x-cache: ^MISS$
+

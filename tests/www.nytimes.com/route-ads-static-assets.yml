@@ -1,0 +1,75 @@
+tests:
+  - description: "route: /ads; 200 or 404 from GCS on correct backend/pagetype"
+    request:
+      path: /ads/emailads/twitter.jpg
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^ads-static-assets$
+          x-nyt-backend: ^gcs_origin$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+        - 404
+  - description: route dev/stg bucket has different assets; 200 or 404 from GCS on correct
+      backend/pagetype
+    request:
+      path: /ads/safeads/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^ads-static-assets$
+          x-nyt-backend: ^gcs_origin$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+        - 404
+  - description: "route: /app-ads.txt; 200 or 404 from GCS on correct backend/pagetype"
+    request:
+      path: /app-ads.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^ads-static-assets$
+          x-nyt-backend: ^gcs_origin$
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+        - 404
+  - description: "route: /ads.txt; 200 or 404 from GCS on correct backend/pagetype"
+    request:
+      path: /ads.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^ads-static-assets$
+          x-nyt-backend: ^gcs_origin$
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+        - 404
+

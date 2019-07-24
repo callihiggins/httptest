@@ -1,0 +1,400 @@
+tests:
+  - description: Alpha host alpha.dev.nytimes.com; Vi Timeswire Page; /timeswire
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^alpha_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host alpha-preview.dev.nytimes.com; Vi Timeswire Page; /timeswire
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test Collection fallback to NYT5; /section/well
+    request:
+      path: /section/well
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test scoop collection preview;/section/opinion
+    request:
+      path: /section/opinion
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host alpha.stg.nytimes.com; Vi Timeswire Page; /timeswire
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^alpha_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host alpha-preview.stg.nytimes.com; Vi Timeswire Page; /timeswire
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test Collection fallback to NYT5; /section/well
+    request:
+      path: /section/well
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host alpha.nytimes.com; Vi Timeswire Page; /timeswire
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^alpha_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host alpha-preview.nytimes.com; Vi Timeswire Page; /timeswire
+    request:
+      path: /timeswire
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-timeswire$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test Collection fallback to NYT5; /section/well
+    request:
+      path: /section/well
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test scoop collection preview;/section/opinion
+    request:
+      path: /section/opinion?previewDate=1547060138970&contentUri=nyt://legacycollection/dadd4177-c938-5311-b6c7-5a0fa318ab49&device=desktop&scooppreview&contentId=100000004178830
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test query string filter preview;/section/opinion
+    request:
+      path: /section/opinion?contentUri=112222&device=desktop&scooppreview
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/section/opinion\?contentUri=112222&device=desktop&scooppreview$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test query string filter preview;/section/opinion
+    request:
+      path: /section/opinion?contentUri=112222&device=desktop&scooppreview
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/section/opinion\?contentUri=112222&device=desktop&scooppreview$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test query string filter preview;/section/opinion
+    request:
+      path: /section/opinion?contentUri=112222&device=desktop&scooppreview
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^alpha_preview$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/section/opinion\?contentUri=112222&device=desktop&scooppreview$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Alpha host; test info route on alpha_fe; /.info
+    request:
+      path: /.info
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-info$
+          x-nyt-backend: ^alpha_fe$
+          x-nyt-final-url: ^/\.info$
+  - description: Alpha host; test info route on alpha_preview; /.info
+    request:
+      path: /.info
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-info$
+          x-nyt-backend: ^alpha_preview$
+          x-nyt-final-url: ^/\.info$
+  - description: Alpha host; test info route on alpha_fe; /.info
+    request:
+      path: /.info
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-info$
+          x-nyt-backend: ^alpha_fe$
+          x-nyt-final-url: ^/\.info$
+  - description: Alpha host; test info route on alpha_preview; /.info
+    request:
+      path: /.info
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-info$
+          x-nyt-backend: ^alpha_preview$
+          x-nyt-final-url: ^/\.info$
+  - description: Alpha host; test /code route on alpha_fe; /code/welcome
+    request:
+      path: /code/welcome
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-code$
+          x-nyt-backend: ^alpha_fe$
+          x-nyt-final-url: ^/code/welcome$
+  - description: Alpha host; test /code route on alpha_fe; /code/welcome
+    request:
+      path: /code/welcome
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-code$
+          x-nyt-backend: ^alpha_fe$
+          x-nyt-final-url: ^/code/welcome$
+  - description: Alpha host alpha-preview.nytimes.com; scoop preview with contentUri query
+      param
+    request:
+      path: /2019/04/21/opinion/deblasio-president.html?previewDate=1555949627095&contentUri=nyt://article/11528a61-8269-5ccb-8847-43a448c9c7c9&device=desktop&scooppreview&pagewanted=all&contentId=100000006466459
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-final-url: ^/2019/04/21/opinion/deblasio-president\.html\?contentId=100000006466459&contentUri=nyt://article/11528a61-8269-5ccb-8847-43a448c9c7c9&device=desktop&pagewanted=all&previewDate=1555949627095&scooppreview$
+  - description: Alpha host alpha.dev.nytimes.com; query param with space returns 200
+    request:
+      path: /2019/04/24/technology/ecuador-surveillance-cameras-police-government.html?action=click&module=Top%20Stories&pgtype=Homepage
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-final-url: ^/2019/04/24/technology/ecuador-surveillance-cameras-police-government\.html\?action=click&module=Top%20Stories&pgtype=Homepage$
+  - description: Alpha host alpha.stg.nytimes.com; query param with space returns 200
+    request:
+      path: /2019/04/24/technology/ecuador-surveillance-cameras-police-government.html?action=click&module=Top%20Stories&pgtype=Homepage
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-final-url: ^/2019/04/24/technology/ecuador-surveillance-cameras-police-government\.html\?action=click&module=Top%20Stories&pgtype=Homepage$
+  - description: Alpha host alpha.nytimes.com; query param with space returns 200
+    request:
+      path: /2019/04/24/technology/ecuador-surveillance-cameras-police-government.html?action=click&module=Top%20Stories&pgtype=Homepage
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-final-url: ^/2019/04/24/technology/ecuador-surveillance-cameras-police-government\.html\?action=click&module=Top%20Stories&pgtype=Homepage$
+  - description: Alpha host alpha-preview.stg.nytimes.com routes to oak live blogs
+    request:
+      path: /live/2019/live-blog
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+  - description: Alpha host alpha-preview.nytimes.com routes to oak live blogs
+    request:
+      path: /live/2019/live-blog
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+

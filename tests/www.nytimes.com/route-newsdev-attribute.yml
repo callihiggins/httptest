@@ -1,0 +1,18 @@
+tests:
+  - description: "content-newsdev-attribute: Test GET success on healthz path"
+    request:
+      path: /svc/int/attribute/projects/healthz/submissions.json
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-attribute$
+          x-nyt-backend: ^newsdev_cloud_functions_us_central1$
+          content-type: ^application/json; charset=utf-8$
+      statusCodes:
+        - 200
+

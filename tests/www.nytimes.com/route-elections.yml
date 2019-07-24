@@ -1,0 +1,88 @@
+tests:
+  - description: "content-elections: Test elections; obey redirects configured by
+      x-amz-meta-website-redirect-location header"
+    request:
+      path: /elections/results
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^elections$
+          x-nyt-backend: ^newsdev_elections$
+          location: https:\/\/www(\.dev|\.stg)?\.nytimes\.com\/interactive\/2018\/11\/06\/us\/elections\/results.+
+      statusCodes:
+        - 301
+  - description: "content-elections: Test elections 200 cache"
+    request:
+      path: /elections/2016/results/president
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          cache-control: ^public, max-age=86400$
+          x-nyt-route: ^elections$
+          x-nyt-backend: ^newsdev_elections$
+          x-goog-hash: .+
+      statusCodes:
+        - 200
+  - description: "content-elections: Do not framebust requests from Scoop"
+    request:
+      path: /elections/2017/widget/mobile/2017-12-12
+      headers:
+        x-nyt-miss: "1"
+        Referer: https://scoop.nyt.net/
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^elections$
+          x-nyt-backend: ^newsdev_elections$
+        notPresent:
+          - x-frame-options
+      statusCodes:
+        - 200
+  - description: "content-elections: Serve from S3 when newsdev_elections.use_s3 = true"
+    request:
+      path: /elections/2016/results/president
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: ^$
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^elections$
+          x-nyt-backend: ^newsdev_elections_s3$
+        notPresent:
+          - x-goog-hash
+      statusCodes:
+        - 200
+  - description: "content-elections: Serve select interactives from GCS when
+      newsdev_elections.serve_vi = true"
+    request:
+      path: /interactive/2018/11/06/us/elections/results-kansas-elections.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: ^$
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^elections$
+          x-nyt-backend: ^newsdev_elections$
+      statusCodes:
+        - 200
+

@@ -1,0 +1,100 @@
+tests:
+  - description: Test Watching; canonical landing page
+    request:
+      path: /watching
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^beta_watching$
+          x-api-version: ^F-W2$
+          x-nyt-route: ^watching$
+      statusCodes:
+        - 200
+  - description: Test Watching; redirect from https to http
+    request:
+      scheme: http
+      path: /watching
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^beta_watching$
+          x-api-version: ^F-W2$
+          x-nyt-route: ^watching$
+      statusCodes:
+        - 301
+  - description: Test Watching; article URL
+    request:
+      path: /2016/11/11/watching/moonlight-netflix-medicine-for-melancholy.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          backend: ^gae$
+          x-api-version: ^F-W2$
+          x-nyt-route: ^watching$
+      statusCodes:
+        - 200
+  - description: Test Watching; recommendations URL
+    request:
+      path: /watching/recommendations/watching-film-broadcast-news
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          backend: ^gae$
+          x-api-version: ^F-W2$
+          x-nyt-route: ^watching$
+      statusCodes:
+        - 200
+  - description: Test Watching; multi-recommendations URL with query param
+    request:
+      path: /watching/api/recommendations?ids[]=100000004539144&test=hello&bad1=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          backend: ^gae$
+          x-api-version: ^F-W2$
+          x-nyt-route: ^watching$
+          x-nyt-final-url: ^/watching/api/recommendations\?ids\[\]=100000004539144$
+      statusCodes:
+        - 200
+  - description: Test Watching; multi-recommendations URL without query param
+    request:
+      path: /watching/api/recommendations
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          backend: ^gae$
+          x-api-version: ^F-W2$
+          x-nyt-route: ^watching$
+      statusCodes:
+        - 400
+

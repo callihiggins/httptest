@@ -1,0 +1,108 @@
+tests:
+  - description: "route-community-svc: test GetBasicInfo, contains no ESI"
+    request:
+      path: /svc/community/V3/requestHandler?cmd=GetBasicInfo
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^community_svc$
+          x-frame-options: ^DENY$
+          x-nyt-route: ^community-svc$
+      statusCodes:
+        - 200
+  - description: "route-community-svc: GetCommentSummary is cacheable if user not logged
+      in, https"
+    request:
+      path: /svc/community/V3/requestHandler?callback=jQuery21407773274087830635_1520633908267&url=https%253A%252F%252Fwww.nytimes.com%252F2018%252F03%252F08%252Fus%252Fpolitics%252Ftrump-meeting-kim-jong-un.html&cmd=GetCommentSummary&method=get&_=1520633908271
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^community_svc$
+          x-frame-options: ^DENY$
+          x-nyt-route: ^community-svc-cacheable$
+      statusCodes:
+        - 200
+  - description: "route-community-svc: GetCommentSummary is not cacheable if user is logged
+      in, https"
+    request:
+      path: /svc/community/V3/requestHandler?callback=jQuery21407773274087830635_1520633908267&url=https%253A%252F%252Fwww.nytimes.com%252F2018%252F03%252F08%252Fus%252Fpolitics%252Ftrump-meeting-kim-jong-un.html&cmd=GetCommentSummary&method=get&_=1520633908271
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^community_svc$
+          x-frame-options: ^DENY$
+          x-nyt-route: ^community-svc$
+      statusCodes:
+        - 200
+  - description: "route-community-svc: GetCommentSummary is cacheable if user not logged
+      in, http"
+    request:
+      scheme: http
+      path: /svc/community/V3/requestHandler?callback=jQuery21407773274087830635_1520633908267&url=https%253A%252F%252Fwww.nytimes.com%252F2018%252F03%252F08%252Fus%252Fpolitics%252Ftrump-meeting-kim-jong-un.html&cmd=GetCommentSummary&method=get&_=1520633908271
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^community_svc$
+          x-frame-options: ^DENY$
+          x-nyt-route: ^community-svc-cacheable$
+      statusCodes:
+        - 200
+  - description: "route-community-svc: GetCommentSummary is not cacheable if user is logged
+      in, https"
+    request:
+      scheme: http
+      path: /svc/community/V3/requestHandler?callback=jQuery21407773274087830635_1520633908267&url=https%253A%252F%252Fwww.nytimes.com%252F2018%252F03%252F08%252Fus%252Fpolitics%252Ftrump-meeting-kim-jong-un.html&cmd=GetCommentSummary&method=get&_=1520633908271
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^community_svc$
+          x-frame-options: ^DENY$
+          x-nyt-route: ^community-svc$
+      statusCodes:
+        - 200
+  - description: "route-community-svc: cacheable=true routes are cacheable even with cookie
+      present, https"
+    request:
+      path: /svc/community/V3/requestHandler?cacheable=true&callback=jQuery21407773274087830635_1520633908267&url=https%253A%252F%252Fwww.nytimes.com%252F2018%252F03%252F08%252Fus%252Fpolitics%252Ftrump-meeting-kim-jong-un.html&cmd=GetCommentSummary&method=get&_=1520633908271
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^community_svc$
+          x-frame-options: ^DENY$
+          x-nyt-route: ^community-svc-cacheable$
+      statusCodes:
+        - 200
+

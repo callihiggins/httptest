@@ -1,0 +1,68 @@
+tests:
+  - description: Test NYTimes en Espanol
+    request:
+      path: /es/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^intl$
+          x-nyt-backend: ^intl_gcp$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+  - description: Test WordPress query parameters in vanity URL redirects
+    request:
+      path: /es/al-dia?withcomments=true&bogusq=2&hellothere=2
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^intl$
+          x-nyt-backend: ^intl_gcp$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/es/al-dia\?withcomments=true$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test analytics query parameters in vanity URL redirects
+    request:
+      path: /es/al-dia?mccr=ES&gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^intl$
+          x-nyt-backend: ^intl_gcp$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+

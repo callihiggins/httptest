@@ -1,0 +1,31 @@
+tests:
+  - description: Test /ask is served from vi
+    request:
+      path: /ask/womens-health
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^ask$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 404
+        - 200
+  - description: POST method requests are not allowed for ask route
+    request:
+      method: POST
+      path: /ask/womens-health
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+

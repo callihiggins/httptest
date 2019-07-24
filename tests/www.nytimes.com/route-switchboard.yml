@@ -1,0 +1,351 @@
+tests:
+  - description: Test /theater is served from switchboard
+    request:
+      scheme: http
+      path: /theater
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /movies is served from switchboard
+    request:
+      scheme: http
+      path: /movies
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /best-sellers is served from switchboard
+    request:
+      scheme: http
+      path: /best-sellers
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /restaurants/ is served from switchboard
+    request:
+      scheme: http
+      path: /restaurants/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /listings is served from switchboard
+    request:
+      scheme: http
+      path: /listings
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /briefing is served from switchboard
+    request:
+      scheme: http
+      path: /briefing
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /ambriefing is served from switchboard
+    request:
+      scheme: http
+      path: /ambriefing
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /thedaily is served from switchboard
+    request:
+      scheme: http
+      path: /thedaily
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /the-daily is served from switchboard
+    request:
+      scheme: http
+      path: /the-daily
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /thedailyoffer is not served from switchboard
+    request:
+      scheme: http
+      path: /thedailyoffer
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+  - description: Test /thedailylistener is not served from switchboard
+    request:
+      scheme: http
+      path: /thedailylistener
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+  - description: Test /stillprocessing is served from switchboard
+    request:
+      path: /stillprocessing
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /book-review-podcast is served from switchboard
+    request:
+      path: /book-review-podcast
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /popcast is served from switchboard
+    request:
+      path: /popcast
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /podcasts/modern-love is served from switchboard
+    request:
+      path: /podcasts/modern-love
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /podcasts/music-popcast is served from switchboard
+    request:
+      path: /podcasts/music-popcast
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /dearsugars is served from switchboard
+    request:
+      path: /dearsugars
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test podcasts on /podcasts/
+    request:
+      path: /podcasts/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /the-argument is served from switchboard
+    request:
+      path: /the-argument
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /the-weekly is served from switchboard
+    request:
+      path: /the-weekly
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /theweekly (no hypen) is served from switchboard
+    request:
+      path: /theweekly
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /weekly (no the) is served from switchboard
+    request:
+      path: /weekly
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /the-dispatch (with hyphen) is served from switchboard
+    request:
+      path: /the-dispatch
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /thedispatch (no hyphen) is served from switchboard
+    request:
+      path: /thedispatch
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /column/the-dispatch (with hyphen) is served from switchboard
+    request:
+      path: /column/the-dispatch
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /column/the-weekly (with hyphen) is served from switchboard
+    request:
+      path: /column/the-weekly
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /column/theweekly is served from switchboard
+    request:
+      path: /column/theweekly
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+  - description: Test /section/the-weekly (with hyphen) is served from switchboard
+    request:
+      path: /section/the-weekly
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^switchboard$
+

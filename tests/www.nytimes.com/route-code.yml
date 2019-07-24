@@ -1,0 +1,34 @@
+tests:
+  - description: Vi Code Redemption Landing Page
+    request:
+      path: /code
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-code$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Vi Code Redemption code - abc1235679876xyz
+    request:
+      path: /code?gift_code=abc1235679876xyz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-code$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/code\?gift_code=abc1235679876xyz$
+      statusCodes:
+        - 200
+

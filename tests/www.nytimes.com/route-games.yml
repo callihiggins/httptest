@@ -1,0 +1,456 @@
+tests:
+  - description: Test hitting a /svc/games endpoint
+    request:
+      path: /svc/games/set/v1/puzzles.json
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-service$
+          x-gdpr: .+
+  - description: Test hitting a /svc/crosswords endpoint
+    request:
+      path: /svc/crosswords/v2/puzzle/1.json
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-service$
+          x-gdpr: .+
+  - description: Test hitting a /crosswords/game/daily web app with games-web backend
+    request:
+      path: /crosswords/game/daily
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+          x-gdpr: .+
+  - description: Test hitting a /crosswords/game/mini web app with games-web backend
+    request:
+      path: /crosswords/game/mini
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test redirect to https for /crosswords/game/mini web app
+    request:
+      scheme: http
+      path: /crosswords/game/mini
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 301
+  - description: Test hitting a /crosswords/game/variety web app with games-web backend
+    request:
+      path: /crosswords/game/variety
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting a /games-assets/favicon.ico with gcs backend
+    request:
+      path: /games-assets/favicon.ico
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-assets$
+          x-nyt-backend: ^gcs_origin$
+  - description: Test hitting a /games/prototype endpoint
+    request:
+      path: /games/prototype/kenken
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-service$
+  - description: Test hitting a /games/prototype endpoint
+    request:
+      path: /games/prototype/kenken
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-service$
+  - description: Test hitting a /crosswords endpoint
+    request:
+      path: /crosswords
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test redirect of /crosswords/submissions endpoint
+    request:
+      path: /crosswords/submissions
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting Sudoku Easy page
+    request:
+      path: /crosswords/game/sudoku/easy
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test redirecting KenKen page
+    request:
+      path: /crosswords/game/kenken
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test redirect to Set page
+    request:
+      path: /crosswords/game/set
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting Archive Daily page
+    request:
+      path: /crosswords/archive/daily
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting Tips and Tricks page
+    request:
+      path: /crosswords/tips-and-tricks
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test redirect to Acrostic page
+    request:
+      path: /crosswords/game/acrostic/2017/09/03
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test redirect to Stats page
+    request:
+      path: /crosswords/stats
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting Archive Daily page
+    request:
+      path: /crosswords/archive/daily
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting Archive Daily page
+    request:
+      path: /crosswords/archive/daily
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting Primer page
+    request:
+      path: /crosswords/primer
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+  - description: Test hitting Spelling Bee page
+    request:
+      path: /puzzles/spelling-bee
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-phoenix$
+  - description: Test legacy; www-apps cluster; crosswords; landing page
+    request:
+      path: /crosswords/index.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^games-web$
+          x-nyt-backend: ^games_web$
+  - description: Test legacy; www-apps cluster; crosswords; landing page
+    request:
+      path: /crosswords/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+          x-nyt-backend: ^games_web$
+  - description: Test legacy; www-apps cluster; crosswords; archive
+    request:
+      path: /crosswords/archive/
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-web$
+          x-nyt-backend: ^games_web$
+  - description: Test legacy; www-apps cluster; gift guide; 2010 holiday
+    request:
+      scheme: http
+      path: /gift-guide/holiday-2010/categories.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+          x-nyt-backend: ^www_legacy_gke$
+  - description: Test legacy; www-apps cluster; gift guide; 2010 holiday
+    request:
+      scheme: http
+      path: /gift-guide/holiday-2010/categories.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+          x-nyt-backend: ^www_legacy_gke$
+  - description: Test legacy; www-apps cluster; service; RSS XML
+    request:
+      scheme: http
+      path: /services/xml/rss/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+          x-nyt-backend: ^www_legacy_gke$
+  - description: Test legacy; www-apps cluster; crosswords; archive
+    request:
+      path: /crosswords/archive/
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^games-web$
+          x-nyt-backend: ^games_web$
+  - description: Test hitting Set page
+    request:
+      path: /puzzles/set
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-phoenix$
+  - description: Test hitting Acrostic page
+    request:
+      path: /puzzles/acrostic/2017/09/03
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-phoenix$
+  - description: Test hitting KenKen page
+    request:
+      path: /puzzles/kenken
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-phoenix$
+  - description: Test hitting Stats page
+    request:
+      path: /puzzles/stats
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-phoenix$
+  - description: Test hitting Submissions page
+    request:
+      path: /puzzles/submissions/crossword
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S_GAMES}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^games-phoenix$
+

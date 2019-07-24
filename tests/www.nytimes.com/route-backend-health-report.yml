@@ -1,0 +1,32 @@
+tests:
+  - description: Backend health report HTML payload returns 200
+    request:
+      path: /backendhealth.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^backend-health-report$
+          x-nyt-backend: ^fastly-synth$
+      statusCodes:
+        - 200
+  - description: Backend health report JSON payload returns 200
+    request:
+      path: /backendhealth.json
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^backend-health-report$
+          x-nyt-backend: ^fastly-synth$
+      statusCodes:
+        - 200
+

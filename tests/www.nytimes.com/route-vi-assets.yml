@@ -1,0 +1,31 @@
+tests:
+  - description: Test fetching a vi asset
+    request:
+      path: /vi-assets/up.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-assets$
+          x-goog-storage-class: .+
+      statusCodes:
+        - 200
+  - description: Fonts .css files served with CORS headers
+    request:
+      path: /vi-assets/static-assets/story-woff2.fonts-8cda51537d027e0df92bea96a094bfe3.css
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          access-control-allow-origin: ^\*$
+      statusCodes:
+        - 200
+

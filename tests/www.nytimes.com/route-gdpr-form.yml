@@ -1,0 +1,17 @@
+tests:
+  - description: "route: gdpr form"
+    request:
+      path: /data-subject-request
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^gdpr-form$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+

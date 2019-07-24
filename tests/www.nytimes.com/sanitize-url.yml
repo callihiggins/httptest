@@ -1,0 +1,14 @@
+tests:
+  - description: Test response code
+    request:
+      path: /%00
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+

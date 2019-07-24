@@ -1,0 +1,33 @@
+tests:
+  - description: "Test userinfo service, version 2: no cookies; JSON format"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v2.json
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+  - description: "Test userinfo service, version 2: valid NYT-S cookie; JSON format"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v2.json
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+

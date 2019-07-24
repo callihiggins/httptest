@@ -1,0 +1,465 @@
+tests:
+  - description: Test /by collection
+    request:
+      path: /by/qqq
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /column collection
+    request:
+      path: /column/qqq
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "0"
+          fastly-restarts: "1"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /issue collection
+    request:
+      path: /issue/qqq
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "0"
+          fastly-restarts: "1"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /news-event collection
+    request:
+      path: /news-event/qqq
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "0"
+          fastly-restarts: "1"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /reviews collection
+    request:
+      path: /reviews
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /reviews/ redirect
+    request:
+      path: /reviews/?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test reviews diningmap
+    request:
+      path: /reviews/dining/map/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^misc_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /saved collection
+    request:
+      path: /saved
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /saved/ redirect
+    request:
+      path: /saved/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /section collection
+    request:
+      path: /section/qqq?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "1"
+          fastly-restarts: "1"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /spotlight collection
+    request:
+      path: /spotlight/qqq
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "0"
+          fastly-restarts: "1"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /topic/company collection
+    request:
+      path: /topic/company/alphabet-inc
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /topic/destination collection
+    request:
+      path: /topic/destination/france
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /topic/organization collection
+    request:
+      path: /topic/organization/new-york-yankees
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /topic/person collection
+    request:
+      path: /topic/person/qqq
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /topic/subject collection
+    request:
+      path: /topic/subject/whistleblowers
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /section/upshot collection
+    request:
+      path: /section/upshot
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /upshot/ redirect
+    request:
+      path: /upshot/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: "Test Fastly; Collection; secure; publish; 4kb cookie string "
+    request:
+      path: /column/modern-love?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "1"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test Fastly; Collection; secure; publish; Dev/Stg /column/modern-love
+    request:
+      path: /column/modern-love?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test Fastly; Collection; secure; publish; Dev/Stg /column/road-trip
+    request:
+      path: /column/road-trip
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Production Test /column/diagnosis collection
+    request:
+      path: /column/diagnosis
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Production Test /column/36-hours collection
+    request:
+      path: /column/36-hours
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Dev/Staging test /section/business collection fallback to NYT5
+    request:
+      path: /section/business
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "0"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Prod test /section/business collection fallback to NYT5
+    request:
+      path: /section/business
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: (vi-collection|collection)
+          x-nyt-backend: (projectvi_fe|collection_fe)
+          x-gdpr: "0"
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: POST method requests are not allowed for collection route
+    request:
+      method: POST
+      path: /section/business
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+  - description: Test /reviews/dining collection
+    request:
+      path: /reviews/dining
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /reviews/theater collection
+    request:
+      path: /reviews/theater
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /section/realestate/commercial collection point to realestate backend
+    request:
+      path: /section/realestate/commercial
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^realestate_fe$
+  - description: Test /section/realestate/commercial collection point to realestate backend
+    request:
+      path: /section/realestate/commercial
+      headers:
+        x-nyt-miss: "1"
+        x-pre-restart-status: Incompatible
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+  - description: Test /section/realestate/commercial collection point to realestate backend
+    request:
+      path: /section/realestate/commercial
+      headers:
+        x-nyt-miss: "1"
+        x-pre-restart-status: Compatible
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+

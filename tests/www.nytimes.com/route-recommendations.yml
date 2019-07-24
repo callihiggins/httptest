@@ -1,0 +1,17 @@
+tests:
+  - description: Test recommendations, migrated from netscaler
+    request:
+      path: /recommendations
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^recommendations$
+          x-nyt-route: ^recommendations$
+      statusCodes:
+        - 200
+

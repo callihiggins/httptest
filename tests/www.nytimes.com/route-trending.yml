@@ -1,0 +1,36 @@
+tests:
+  - description: Test trending on /trending/
+    request:
+      path: /trending/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_trending_fe$
+          x-nyt-route: ^trending$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+  - description: Test trending on /trending/
+    request:
+      path: /trending/?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_trending_fe$
+          x-nyt-route: ^trending$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+

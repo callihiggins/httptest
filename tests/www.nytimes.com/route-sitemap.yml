@@ -1,0 +1,33 @@
+tests:
+  - description: Test sitemap, redirect from http to https
+    request:
+      scheme: http
+      path: /sitemaps/sitemap_news/sitemap.xml.gz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^sitemap$
+          x-nyt-route: ^sitemap$
+      statusCodes:
+        - 301
+  - description: Test sitemap, migrated from netscaler
+    request:
+      path: /sitemaps/sitemap_news/sitemap.xml.gz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^sitemap$
+          x-nyt-route: ^sitemap$
+      statusCodes:
+        - 200
+

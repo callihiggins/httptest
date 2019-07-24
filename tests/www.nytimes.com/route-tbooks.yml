@@ -1,0 +1,74 @@
+tests:
+  - description: Test /tbooks
+    request:
+      path: /tbooks
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tbooks$
+          x-nyt-backend: ^tbooks$
+          debug-var-nyt-force-pass: ^false$
+      statusCodes:
+        - 200
+        - 301
+        - 404
+  - description: Test /tbooks book URL
+    request:
+      path: /tbooks/book/gawkers-bad-awful-year/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tbooks$
+          x-nyt-backend: ^tbooks$
+          debug-var-nyt-force-pass: ^false$
+      statusCodes:
+        - 200
+        - 404
+  - description: Test /tbooks book URL with query params
+    request:
+      path: /tbooks?action=click&contentCollection=insider&region=navbar&module=collectionsnav&pagetype=sectionfront&pgtype=sectionfront
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tbooks$
+          x-nyt-backend: ^tbooks$
+          debug-var-nyt-force-pass: ^false$
+      statusCodes:
+        - 200
+        - 301
+        - 404
+  - description: Test /tbooks book URL
+    request:
+      path: /tbooks/book/gawkers-bad-awful-year/
+      headers:
+        x-nyt-miss: "1"
+        cookie: comment_author_foo=some_test
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tbooks-pass$
+          x-nyt-backend: ^tbooks$
+          debug-var-nyt-force-pass: ^true$
+      statusCodes:
+        - 200
+        - 301
+        - 404
+

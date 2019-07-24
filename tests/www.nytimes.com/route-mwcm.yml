@@ -1,0 +1,1304 @@
+tests:
+  - description: "WCM subscription: 200 status code test"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: "WCM subscription: 404 status code test"
+    request:
+      path: /subscription/hd/notfound.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription redirect [302] with preserving query string test
+    request:
+      path: /subscription/hd.html?testQueryString=test
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: testQueryString=test
+  - description: WCM subscription protocol upgrade [http => https] test
+    request:
+      scheme: http
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: https://${TEST_HOST}/subscription/hd/1041\.html
+  - description: WCM subscription header test
+    request:
+      path: /subscription/hd/1041.html?ip-override=170.149.100.75
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-currency: ^USD$
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          x-nyt-region: ^NY$
+          x-nyt-route: .+
+          x-nyt-backend: ^mwcm$
+          age: .+
+          cache-control: .+
+          x-api-version: .+
+          x-cache: .+
+          x-cache-hits: .+
+          x-origin-server: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+  - description: WCM subscription "surrogate-key" header presence test
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          surrogate-key: .+
+  - description: WCM subscription "vary" header presence test
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          vary: X-NYT-Currency
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      91.187.91.187
+    request:
+      path: /subscription/hd/1041.html?ip-override=91.187.91.187
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      91.118.126.194
+    request:
+      path: /subscription/hd/1041.html?ip-override=91.118.126.194
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      170.157.174.185
+    request:
+      path: /subscription/hd/1041.html?ip-override=170.157.174.185
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      129.128.1.199
+    request:
+      path: /subscription/hd/1041.html?ip-override=129.128.1.199
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      85.90.227.224
+    request:
+      path: /subscription/hd/1041.html?ip-override=85.90.227.224
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      195.43.49.101
+    request:
+      path: /subscription/hd/1041.html?ip-override=195.43.49.101
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      115.187.34.211
+    request:
+      path: /subscription/hd/1041.html?ip-override=115.187.34.211
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
+      66.220.253.41
+    request:
+      path: /subscription/hd/1041.html?ip-override=66.220.253.41
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM marketing/surveys header test
+    request:
+      path: /marketing/surveys/crs-15101-australia.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: .+
+          x-nyt-backend: ^mwcm$
+          x-frame-options: ^DENY$
+          x-nyt-currency: ^USD$
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          age: .+
+          cache-control: .+
+          x-api-version: .+
+          x-cache: .+
+          x-cache-hits: .+
+          x-origin-server: .+
+          x-served-by: .+
+          x-nyt-region: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+  - description: "WCM Marketing Surveys: 404 status code test"
+    request:
+      path: /marketing/surveys/survey-not-found.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 404
+  - description: WCM /services/mobile headers test
+    request:
+      scheme: http
+      path: /services/mobile/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: .+
+          x-nyt-backend: ^mwcm$
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          age: .+
+          cache-control: .+
+          x-api-version: .+
+          x-cache: .+
+          x-cache-hits: .+
+          x-origin-server: .+
+          x-served-by: .+
+          x-nyt-region: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+  - description: WCM /services/mobile force https to http test
+    request:
+      path: /services/mobile/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: http://${TEST_HOST}/services/mobile/index\.html
+  - description: WCM /marketing headers test
+    request:
+      scheme: http
+      path: /marketing/hd/welcome/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: .+
+          x-nyt-backend: ^mwcm$
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          age: .+
+          cache-control: .+
+          x-api-version: .+
+          x-cache: .+
+          x-cache-hits: .+
+          x-origin-server: .+
+          x-served-by: .+
+          x-nyt-region: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+  - description: WCM /marketing force https to http test
+    request:
+      path: /marketing/hd/welcome/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: http://${TEST_HOST}/marketing/hd/welcome/index\.html
+  - description: WCM /subscriptions headers test, validate routing
+    request:
+      scheme: http
+      path: /subscriptions/lp8Y84W.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: .+
+          x-nyt-backend: ^mwcm$
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          age: .+
+          cache-control: .+
+          x-api-version: .+
+          x-cache: .+
+          x-cache-hits: .+
+          x-origin-server: .+
+          x-served-by: .+
+          x-nyt-region: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+  - description: WCM /subscriptions/promotions redirect scenario for sba
+    request:
+      path: /subscriptions/promotions/lp3FURL.html?ptr=sba
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: https://${TEST_HOST}/subscription/promotions/sba\.html\?ptr=sba
+  - description: WCM /subscriptions/promotions redirect scenario for sharethetimes
+    request:
+      path: /subscriptions/promotions/lp3FURL.html?ptr=sharethetimes
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: https://${TEST_HOST}/subscription/promotions/sharethetimes\.html\?ptr=sharethetimes
+  - description: WCM /subscriptions/promotions redirect scenario for marathon
+    request:
+      path: /subscriptions/promotions/lp3FURL.html?ptr=marathon
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: https://${TEST_HOST}/subscription/promotions/marathon\.html\?ptr=marathon
+  - description: WCM /subscriptions/promotions redirect scenario for newsindia
+    request:
+      path: /subscriptions/promotions/lp3FURL.html?ptr=newsindia
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: https://${TEST_HOST}/subscription/promotions/newsindia\.html\?ptr=newsindia
+  - description: WCM /marketing/gdpr headers test, query params preserved
+    request:
+      path: /marketing/gdpr/tests/fastly.html?test1=test1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-params$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: /marketing/gdpr/tests/fastly\.html\?test1=test1
+  - description: WCM /marketing/moco headers test, query params preserved
+    request:
+      path: /marketing/moco/tests/fastly.html?test1=test1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-params$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: /marketing/moco/tests/fastly\.html\?test1=test1
+  - description: WCM subscription "X-NYT-Device vary" header presence test
+    request:
+      path: /subscription/tests/nginxfastly/test-request-header.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+    conditions:
+      env:
+        TEST_ENV: ^$
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          vary: X-NYT-Device
+  - description: WCM subscription "checks presence of cookie:mwcm_exclude_optimizely and
+      addes qs exclude_optimizely"
+    request:
+      path: /subscription/tests/nginxfastly/lp8HYKU.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        cookie: mwcm_exclude_optimizely=true
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: mwcm
+          x-nyt-backend: mwcm
+          x-nyt-final-url: \/subscription\/tests\/nginxfastly\/lp8HYKU\.html\?exclude_optimizely=true
+  - description: WCM subscription "checks presence of cookie:mwcm_exclude_jsonkidd and
+      addes qs exclude_optimizely"
+    request:
+      path: /subscription/tests/nginxfastly/lp8HYKU.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        cookie: mwcm_exclude_jsonkidd=true
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: mwcm
+          x-nyt-backend: mwcm
+          x-nyt-final-url: \/subscription\/tests\/nginxfastly\/lp8HYKU\.html\?exclude_jsonkidd=true
+  - description: WCM subscription "checks presence of cookie:mwcm_exclude_jsonkidd adds qs
+      exclude_jsonkidd=true"
+    request:
+      path: /subscription/tests/nginxfastly/lp8HYKU.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        cookie: mwcm_exclude_jsonkidd=true; mwcm_exclude_optimizely=true
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: mwcm
+          x-nyt-backend: mwcm
+          x-nyt-final-url: \/subscription\/tests\/nginxfastly\/lp8HYKU\.html\?exclude_jsonkidd=true&exclude_optimizely=true
+  - description: WCM subscription "ignores the cookie:exclude_optimizely=true for hd pages
+      and does not add the exclude_optimizely qs parameter"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        cookie: mwcm_exclude_optimizely=true
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: ^/subscription/hd/1041\.html$
+  - description: WCM subscription "ignores the cookie:mwcm_exclude_jsonkidd=true for hd
+      pages and does not add the exclude_jsonkidd qs parameter"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        cookie: mwcm_exclude_jsonkidd=true
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: ^/subscription/hd/1041\.html$
+  - description: WCM /subscription/exo headers test, query params preserved
+    request:
+      path: /subscription/exo/tests/fastly.html?test1=test1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-params$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: /subscription/exo/tests/fastly\.html\?test1=test1
+  - description: WCM subscription nyt-m cookie:sets X-NYT-Metered-Hits and
+      X-NYT-Gateway-Hits
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        cookie: nyt-m=D003BE2989BA6B4476E9EF81AC17234A&e=i.1370059200&t=i.10&v=i.10&l=l.25.3767397534.187745581.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1.-1&n=i.2&g=i.5&er=i.1366659192&vr=l.4.18.0.0.0&pr=l.4.305.0.0.0&vp=i.0&gf=l.10.3767397534.187745581.-1.-1.-1.-1.-1.-1.-1.-1&ft=i.0&fv=i.0&gl=l.5.-1.-1.-1.-1.-1&cav=i.16&imu=i.1&igu=i.1&iue=i.0&ier=i.0&iru=i.0&ifpv=i.0&isr=i.0&imv=i.1&igv=i.0&igav=i.0
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-gateway-hits: ^5$
+          x-nyt-metered-hits: ^10$
+  - description: "WCM subscription referer targeting: sets subscription if
+      nytimes.com/subscription/*"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.nytimes.com/subscription/multiproduct/lp8HYKU.com
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-referer: ^subscription$
+          x-nyt-targeting-source: ^lp$
+  - description: "WCM subscription referer targeting: sets facebook if facebook.com"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.facebook.com
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-referer: ^facebook$
+  - description: "WCM subscription referer targeting: sets google if google.com"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.google.com
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-referer: ^google$
+  - description: WCM /marketing/mpc headers test, query params preserved
+    request:
+      path: /marketing/mpc/tests/fastly.html?test1=test1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-params$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: /marketing/mpc/tests/fastly\.html\?test1=test1
+  - description: WCM /subscription.html headers test, x-nyt-route=mwcm
+    request:
+      path: /subscription.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM /subscription headers test, x-nyt-route=mwcm
+    request:
+      path: /subscription
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: WCM /subscription headers test, x-nyt-route=mwcm
+    request:
+      path: /subscription?testparam=test
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: 'WCM subscription source targeting: sets "hp" if the referer is
+      nytimes.com'
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-targeting-source: ^hp$
+  - description: 'WCM subscription source targeting: sets "hp" if the referer is
+      nytimes.com/'
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.nytimes.com/
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-targeting-source: ^hp$
+  - description: 'WCM subscription source targeting: sets "nyt5" if the referer is
+      nytimes.com/(18[5-9][0-9]|19[0-9][0-9]|200[0-9]|201[0-3])/'
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.nytimes.com/2011/03/13/business/13hire.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-targeting-source: ^nyt5$
+  - description: 'WCM subscription source targeting: sets "vi" if the referer is
+      nytimes.com/201[4-9]/'
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.nytimes.com/2018/09/25/world/americas/united-nations-general-assembly-live-updates.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-targeting-source: ^vi$
+  - description: 'WCM subscription source targeting: sets "ip" if the referer is
+      nytimes.com/interactive/'
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Fastly-Debug: 1
+        Referer: https://www.nytimes.com/interactive/2017/12/21/us/2017-year-in-graphics.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-targeting-source: ^ip$
+  - description: WCM subscription "allows campaignId, skipFastly and promoStartDate qs
+      string params to mwcm backend and strips test1 qs param"
+    request:
+      path: /subscription/tests/nginxfastly/lp8HYKU.html?campaignId=123XY&promoStartDate=20181212&skipFastly=true&test1=test1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-final-url: ^/subscription/tests/nginxfastly/lp8HYKU\.html\?campaignId=123XY&promoStartDate=20181212&skipFastly=true$
+          x-nyt-route: mwcm
+          x-nyt-backend: mwcm
+  - description: WCM subscription "cache type should be MISS if skipFastly=true qs &&
+      x-nyt-nyhq-access flag present"
+    request:
+      path: /subscription/tests/nginxfastly/lp8HYKU.html?skipFastly=true
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-cache: ^MISS$
+          x-nyt-route: mwcm
+          x-nyt-backend: mwcm
+  - description: WCM /marketing/tests headers test, query params preserved
+    request:
+      path: /marketing/account/tests/fastly.html?test1=test1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-params$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: /marketing/account/tests/fastly\.html\?test1=test1
+  - description: WCM subscription CORS test
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Origin: http://www.vi.nytimes.com:3000
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          access-control-allow-origin: ^http://www\.vi\.nytimes\.com:3000$
+          access-control-allow-credentials: ^true$
+  - description: WCM subscription CORS test - should not fail if no origin header or origin
+      has a null value
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Origin: "null"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          access-control-allow-origin: ^\*$
+          access-control-allow-credentials: ^true$
+  - description: WCM subscription CORS test - should not fail if no origin header or origin
+      has a null value
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          access-control-allow-origin: ^\*$
+          access-control-allow-credentials: ^true$
+  - description: WCM subscription CORS should fail if its not a nytimes domain/sub-domain
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Origin: http://www.facebook.com
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+        notPresent:
+          - access-control-allow-origin
+          - access-control-allow-credentials
+  - description: "WCM /subscription/ads : should not the header x-frame-options: deny"
+    request:
+      path: /subscription/ads/tests/fastly.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+        notPresent:
+          - x-frame-options
+  - description: "WCM subscription: tests mwcm_preview backend and mwcm-preview route"
+    request:
+      path: /subscription/hd/1041.html?pre_prod=true
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-preview$
+          x-nyt-backend: ^mwcm_preview$
+          x-nyt-final-url: /subscription/hd/1041\.html\?pre_prod=true
+  - description: "WCM subscription: should not append duplicates of campaignId and pre_prod
+      qs"
+    request:
+      scheme: http
+      path: /subscription/tests/fastly/redirect-test.html?campaignId=XXXXX&pre_prod=true
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-preview$
+          x-nyt-backend: ^mwcm_preview$
+          location: \?campaignId=XXXXX&pre_prod=true$
+  - description: "WCM subscription: should not append duplicates of campaignId when url
+      subscription.html"
+    request:
+      scheme: http
+      path: /subscription.html?campaignId=XXXXX
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: https://${TEST_HOST}/subscription\.html\?campaignId=XXXXX
+  - description: "WCM subscription: should not append duplicates of campaignId when url
+      subscription?"
+    request:
+      scheme: http
+      path: /subscription?campaignId=XXXXX
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          location: https://${TEST_HOST}/subscription\?campaignId=XXXXX
+  - description: "WCM subscription: tests mwcm_preview backend and mwcm-preview route via
+      cmots_pre_prod cookie"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: cmots_pre_prod=true
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-preview$
+          x-nyt-backend: ^mwcm_preview$
+          x-nyt-final-url: /subscription/hd/1041\.html
+  - description: "WCM subscription: tests mwcm_preview backend and mwcm-preview route via
+      cmots_pre_prod cookie"
+    request:
+      path: /subscription/hd/1041.html?pre_prod=true
+      headers:
+        x-nyt-miss: "1"
+        cookie: magpie=persona=previewPersona=/AUD,date-override=20190530
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-preview$
+          x-nyt-backend: ^mwcm_preview$
+          x-nyt-final-url: /subscription/hd/1041\.html\?date-override=20190530&mgnlPreviewAsVisitor=true&pre_prod=true&previewPersona=/AUD
+  - description: "WCM subscription: tests mwcm_preview backend and mwcm-preview route via
+      cmots_pre_prod cookie"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: magpie=persona=previewPersona=/AUD&previewPersona=/GBP,date-override=20190530
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-final-url: /subscription/hd/1041\.html\?date-override=20190530&mgnlPreviewAsVisitor=true&previewPersona=/AUD&previewPersona=/GBP
+  - description: 'WCM subscription: tests preferredLocal param override when "en" even
+      though preferred Accept-Language:es'
+    request:
+      path: /subscription/hd/1041.html?preferredLocale=en
+      headers:
+        x-nyt-miss: "1"
+        Accept-Language: es,pt;q=0.8,en-US;q=0.6,en;q=0.4
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-locale: en
+  - description: 'WCM subscription: tests preferredLocal param override when "es" even
+      though preferred Accept-Language:en'
+    request:
+      path: /subscription/hd/1041.html?preferredLocale=es
+      headers:
+        x-nyt-miss: "1"
+        Accept-Language: en,pt;q=0.8,en-US;q=0.6,en;q=0.4
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-locale: es
+  - description: 'WCM subscription: tests "x-nyt--local" should defaults to "es"'
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-locale: en
+  - description: 'WCM subscription: tests "Accept-Language" has preferred language other
+      than "en" or "es", it should force "x-nyt-locale"" to "en" '
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Accept-Language: pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-locale: en
+  - description: 'WCM subscription: tests "Accept-Language" has preferred language as "es",
+      it should set "x-nyt-locale"" to "es" '
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Accept-Language: es,pt;q=0.8,en-US;q=0.6,en;q=0.4
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-locale: es
+  - description: 'WCM subscription: tests "Accept-Language" has preferred language as "en",
+      it should set "x-nyt-locale"" to "en" '
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+        Accept-Language: en,pt;q=0.8,da-US;q=0.6
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-locale: en
+  - description: "WCM subscription: tests date-override qs parameter"
+    request:
+      path: /subscription/hd/1041.html?date-override=2019-04-04T05:00:24
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-cache: ^MISS$
+          x-nyt-final-url: /subscription/hd/1041\.html\?date-override=2019-04-04T05:00:24
+  - description: 'WCM subscription: tests us qs parameter when "us=sub"'
+    request:
+      path: /subscription/hd/1041.html?us=sub
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: sub
+          x-nyt-final-url: /subscription/hd/1041\.html\?us=sub
+  - description: 'WCM subscription: tests us qs parameter when "us=non-sub"'
+    request:
+      path: /subscription/hd/1041.html?us=non-sub
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: non-sub
+  - description: 'WCM subscription: tests us qs parameter when "us=regi"'
+    request:
+      path: /subscription/hd/1041.html?us=regi
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: regi
+  - description: 'WCM subscription: tests us qs parameter when "us=test"'
+    request:
+      path: /subscription/hd/1041.html?us=test
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: anon
+  - description: "WCM subscription: tests us qs parameter when not present"
+    request:
+      path: /subscription/hd/1041.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: anon
+  - description: "WCM subscription: tests mwcm-resilient route and mwcm_resilient backend"
+    request:
+      path: /subscription/tests/fastly/test-50x
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-resilient$
+          x-nyt-backend: ^mwcm_resilient$
+          x-nyt-mwcm-fallback: ^/subscription/tests/fastly/test-50x$
+  - description: 'WCM subscription: tests us qs parameter(case insensitivity) when "US=sub"'
+    request:
+      path: /subscription/hd/1041.html?US=sub
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: sub
+          x-nyt-final-url: /subscription/hd/1041\.html\?US=sub
+  - description: "WCM metered_assets fallback: tests mwcm-resilient route and
+      mwcm_resilient backend"
+    request:
+      path: /marketing/mpc/tests/test-50x
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-resilient$
+          x-nyt-backend: ^mwcm_resilient$
+  - description: "WCM metered_assets fallback: tests mwcm-resilient route and
+      mwcm_resilient backend"
+    request:
+      path: /subscription/ads/tests/test-50x
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-resilient$
+          x-nyt-backend: ^mwcm_resilient$
+  - description: "WCM /subscription/resilient: tests mwcm-resilient route and
+      mwcm_resilient backend"
+    request:
+      path: /subscription/resilient/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-resilient$
+          x-nyt-backend: ^mwcm_resilient$
+

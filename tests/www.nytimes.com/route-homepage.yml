@@ -1,0 +1,15 @@
+tests:
+  - description: POST method requests are not allowed for homepage route
+    request:
+      method: POST
+      path: /
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+

@@ -1,0 +1,253 @@
+tests:
+  - description: Test static html pages hosted on gs://nytint-undefined-www
+    request:
+      path: /editorial-standards/ethical-journalism.html
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+  - description: Test static html pages hosted on gs://nytint-undefined-www
+    request:
+      path: /interactive/projects/london2012
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+          content-type: ^text/html; charset=utf-8$
+      statusCodes:
+        - 200
+  - description: Test nested static html pages hosted on gs://nytint-undefined-www
+    request:
+      path: /interactive/projects/london2012/schedule
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+          content-type: ^text/html; charset=utf-8$
+      statusCodes:
+        - 200
+  - description: Test static json pages hosted on gs://nytint-undefined-www
+    request:
+      path: /interactive/projects/london2012/navigation.json
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+          content-type: ^application/json$
+      statusCodes:
+        - 200
+  - description: Test s3 redirect metadata
+    request:
+      path: /interactive/projects/crime
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: ^$
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+          location: ^https://www\.nytimes\.com/interactive/projects/crime/homicides/map$
+      statusCodes:
+        - 301
+  - description: Test gcs cache response
+    request:
+      path: /interactive/projects/crime/homicides/map
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          cache-control: ^public, max-age=86400$
+          x-nyt-backend: ^gcs_origin$
+          x-nyt-route: ^newsdev-gcs$
+      statusCodes:
+        - 200
+  - description: Test gcs conversation pieces routing
+    request:
+      path: /interactive/projects/cp/awards-season/emmys-2015/uzo-aduba-thanks-those-who-let-her-be-herself
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+  - description: Room for debate homepage
+    request:
+      path: /roomfordebate
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+  - description: Room for debate detail
+    request:
+      path: /roomfordebate/2017/01/17/can-western-states-afford-a-federal-land-transfer/state-management-of-federal-lands-would-advance-corporate-profits-over-public-benefit
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+  - description: Test NYTimes Interactive Modern Love
+    request:
+      path: /interactive/projects/modern-love/36-questions/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+        - 404
+  - description: Test gcs "404" page directly
+    request:
+      path: /interactive/projects/404.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^gcs_origin$
+          x-nyt-route: ^newsdev-gcs$
+          cache-control: .+
+      statusCodes:
+        - 200
+  - description: Test notable-deaths GCS redirect metadata
+    request:
+      path: /interactive/projects/notable-deaths/2017
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+          location: ^https://www\.nytimes\.com/interactive/2017/obituaries/notable-deaths$
+      statusCodes:
+        - 301
+  - description: Test fashion runway pages
+    request:
+      path: /fashion/runway/season/spring-2014-rtw
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gcs$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+
+tests:
+  - description: Test gcs 404 cache
+    request:
+      path: /interactive/projects/page-that-does-not-exist
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^gcs_origin$
+          x-nyt-route: ^newsdev-gcs$
+          fastly-restarts: ^1$
+          cache-control: .+
+      statusCodes:
+        - 404
+

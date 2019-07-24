@@ -1,0 +1,49 @@
+tests:
+  - description: Test /audio/ is served from vi
+    request:
+      path: /audio/2017/06/28/arts/artsspecial/28-June-21909.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^audio$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+  - description: Test /audio/ is served from vi
+    request:
+      path: /audio/2018/04/09/podcasts/09DAILY-audio.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^audio$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+  - description: POST method requests are not allowed for audio route
+    request:
+      method: POST
+      path: /audio/2017/06/28/arts/artsspecial/28-June-21909.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+

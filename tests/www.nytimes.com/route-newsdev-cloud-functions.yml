@@ -1,0 +1,93 @@
+tests:
+  - description: Test /svc/int/functions is served from newsdev cloud functions backend
+    request:
+      path: /svc/int/functions/contact-reporter
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-cloud-functions$
+          x-nyt-backend: ^newsdev_cloud_functions_us_central1$
+          access-control-allow-origin: ^\*$
+      statusCodes:
+        - 302
+  - description: Test /svc/int/functions is served from newsdev cloud functions backend
+    request:
+      path: /svc/int/functions/sources-unsubscribe/healthz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-cloud-functions$
+          x-nyt-backend: ^newsdev_cloud_functions_us_central1$
+      statusCodes:
+        - 200
+  - description: Test /svc/int/functions does not expose functions without a www- prefix
+    request:
+      path: /svc/int/functions/healthcheck
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-cloud-functions$
+          x-nyt-backend: ^newsdev_cloud_functions_us_central1$
+      statusCodes:
+        - 404
+  - description: Test response headers from cloud functions are preserved
+    request:
+      path: /svc/int/functions/contact-reporter
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-cloud-functions$
+          x-nyt-backend: ^newsdev_cloud_functions_us_central1$
+          access-control-allow-origin: ^\*$
+  - description: Test /svc/int/functions is served over https
+    request:
+      scheme: http
+      path: /svc/int/functions/sources-unsubscribe/healthz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-cloud-functions$
+      statusCodes:
+        - 301
+  - description: Test /svc/int/functions is not cached
+    request:
+      scheme: http
+      path: /svc/int/functions/sources-unsubscribe/healthz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-cloud-functions$
+          debug-var-nyt-force-pass: ^true$
+      statusCodes:
+        - 301
+

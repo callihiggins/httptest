@@ -1,0 +1,727 @@
+tests:
+  - description: Test HTTPS Everywhere; homepage (phase 1); non-secure
+    request:
+      scheme: http
+      path: /
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; homepage (phase 1); secure
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; 2014 article (phase 1); non-secure
+    request:
+      scheme: http
+      path: /2014/01/01/world/test-suite.html?testqparam=foo
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/2014/01/01/world/test-suite\.html\?testqparam=foo$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; 2014 article (phase 1); secure
+    request:
+      path: /2014/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; 2013 article; non-secure
+    request:
+      path: /2013/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; 2013 article; secure
+    request:
+      path: /2013/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; collection (phase 1); non-secure
+    request:
+      scheme: http
+      path: /section/sports
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/section/sports$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; collection (phase 1); secure
+    request:
+      path: /section/sports
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; video (phase 1); non-secure
+    request:
+      scheme: http
+      path: /video
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/video$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; video (phase 1); secure
+    request:
+      path: /video
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; blog - inactive (phase 1); non-secure
+    request:
+      scheme: http
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        Host: cityroom.blogs.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://cityroom\.blogs\.nytimes\.com/$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; blog - inactive (phase 1); secure
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        Host: cityroom.blogs.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; watching (phase 3); non-secure; opt-out cookie not
+      set
+    request:
+      scheme: http
+      path: /watching
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/watching$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; watching (phase 3); secure; opt-out cookie not set
+    request:
+      path: /watching
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^watching$
+          x-nyt-backend: ^beta_watching$
+  - description: Test HTTPS Everywhere; real estate (phase 2); non-secure; opt-out cookie
+      not set
+    request:
+      scheme: http
+      path: /real-estate/find-a-home
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/real-estate/find-a-home$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; real estate (phase 2); non-secure; opt-out cookie
+      set
+    request:
+      path: /real-estate/find-a-home
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt.np.internal-https-opt-out=1
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; real estate (phase 2); secure; opt-out cookie not
+      set
+    request:
+      path: /real-estate/find-a-home
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; real estate (phase 2); secure; opt-out cookie set
+    request:
+      scheme: http
+      path: /real-estate/find-a-home
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt.np.internal-https-opt-out=1
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/real-estate/find-a-home$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; wire article (phase 3); non-secure; opt-out cookie
+      not set
+    request:
+      scheme: http
+      path: /aponline/2014/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/aponline/2014/01/01/world/test-suite\.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; wire article (phase 3); secure; opt-out cookie not
+      set
+    request:
+      path: /reuters/2014/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; blog - active (phase 2); non-secure; opt-out cookie
+      not set
+    request:
+      scheme: http
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        Host: lens.blogs.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          location: ^https://lens\.blogs\.nytimes\.com/$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; blog - active (phase 2); secure; opt-out cookie not
+      set
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        Host: krugman.blogs.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; well guide (phase 3); non-secure; opt-out cookie
+      not set
+    request:
+      scheme: http
+      path: /guides/culture/guide-to-the-metropolitan-museum-of-art
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/guides/culture/guide-to-the-metropolitan-museum-of-art$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; espanol (phase 3); non-secure; opt-out cookie not
+      set
+    request:
+      scheme: http
+      path: /es/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/es/$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; espanol (phase 3); secure; opt-out cookie not set
+    request:
+      path: /es/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; crosswords; non-secure; opt-out cookie not set
+    request:
+      scheme: http
+      path: /crosswords/index.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/crosswords/index\.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; crosswords; non-secure; opt-out cookie set
+    request:
+      path: /crosswords/index.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}; nyt.np.internal-https-opt-out=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; crosswords; secure; opt-out cookie not set
+    request:
+      path: /crosswords/index.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; crosswords; secure; opt-out cookie set
+    request:
+      scheme: http
+      path: /crosswords/index.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}; nyt.np.internal-https-opt-out=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/crosswords/index\.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; newsgraphics/2017 stg; secure
+    request:
+      path: /newsgraphics/2017/01/11/the-briefing-signup-promo/1283bece6d72cb76497fe837cab6ff80cc930571/build.js
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; newsgraphics/2017 stg; non-secure
+    request:
+      scheme: http
+      path: /newsgraphics/2017/01/11/the-briefing-signup-promo/1283bece6d72cb76497fe837cab6ff80cc930571/build.js
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/newsgraphics/2017/01/11/the-briefing-signup-promo/1283bece6d72cb76497fe837cab6ff80cc930571/build\.js$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; newsgraphics/2017 prd; secure
+    request:
+      path: /newsgraphics/2017/01/11/the-briefing-signup-promo/05ba99bc85e33d92920aa1c4f0be68e59238ef8c/build.js
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; newsgraphics/2017 prd; non-secure
+    request:
+      scheme: http
+      path: /newsgraphics/2017/01/11/the-briefing-signup-promo/05ba99bc85e33d92920aa1c4f0be68e59238ef8c/build.js
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/newsgraphics/2017/01/11/the-briefing-signup-promo/05ba99bc85e33d92920aa1c4f0be68e59238ef8c/build\.js$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; elections; secure
+    request:
+      path: /elections/2016/results/president
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; elections; non-secure
+    request:
+      scheme: http
+      path: /elections/2016/results/president
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/elections/2016/results/president$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; newsletters; secure
+    request:
+      path: /newsletters/realestate
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test HTTPS Everywhere; newsletters; non-secure
+    request:
+      scheme: http
+      path: /newsletters/realestate
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/newsletters/realestate$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; newsletters packages; secure
+    request:
+      path: /packages/images/email/special_offers/ss/Sophisticated_Shopper.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 301
+        - 404
+  - description: Test HTTPS Everywhere; newsletters packages; non-secure
+    request:
+      scheme: http
+      path: /packages/images/email/special_offers/ss/Sophisticated_Shopper.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/packages/images/email/special_offers/ss/Sophisticated_Shopper\.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; newsletters cooking; secure
+    request:
+      path: /pages/cooking/cooking-email/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 301
+        - 404
+  - description: Test HTTPS Everywhere; newsletters cooking; non-secure
+    request:
+      scheme: http
+      path: /pages/cooking/cooking-email/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/pages/cooking/cooking-email/index\.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; todays headlines; secure
+    request:
+      path: /pages/todaysheadlines/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 301
+        - 404
+  - description: Test HTTPS Everywhere; todays headlines cooking; non-secure
+    request:
+      scheme: http
+      path: /pages/todaysheadlines/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/pages/todaysheadlines/index\.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; 9/11 interactive; secure
+    request:
+      path: /interactive/us/faces-of-the-dead.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; 9/11 interactive; non-secure
+    request:
+      scheme: http
+      path: /interactive/us/faces-of-the-dead.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/interactive/us/faces-of-the-dead\.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Auth is working for real-estate
+    request:
+      path: /real-estate/api/personalization/saved-items-status?itemIds=123
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-cache: ^MISS$
+      statusCodes:
+        - 401
+  - description: Test HTTPS Everywhere; spelling-bee; non-secure; opt-out cookie not set
+    request:
+      scheme: http
+      path: /puzzles/spelling-bee
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/puzzles/spelling-bee$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; /robots.txt redirects to https
+    request:
+      scheme: http
+      path: /robots.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/robots\.txt$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; /robots.txt serves over https
+    request:
+      path: /robots.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; /BingSiteAuth.xml redirects to https
+    request:
+      scheme: http
+      path: /BingSiteAuth.xml
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/BingSiteAuth\.xml$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; /BingSiteAuth.xml serves over https
+    request:
+      path: /BingSiteAuth.xml
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+

@@ -1,0 +1,57 @@
+tests:
+  - description: Test response headers
+    request:
+      path: /2016/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          content-security-policy: "^default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src
+            data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data:
+            'unsafe-inline' https:; img-src data: https: blob:; font-src data:
+            https:; connect-src https: wss: blob:; media-src https: blob:;
+            object-src https:; child-src https: data: blob:; form-action https:;
+            block-all-mixed-content;"
+          age: .+
+          cache-control: .+
+          x-api-version: .+
+          x-cache: .+
+          x-nyt-route: .+
+          x-served-by: .+
+          x-gdpr: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test Debug response headers
+    request:
+      path: /2016/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          debug-var-nyt-env: .+
+          debug-var-nyt-force-pass: .+
+      statusCodes:
+        - 200
+        - 404
+

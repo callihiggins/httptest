@@ -1,0 +1,80 @@
+tests:
+  - description: Test well guide
+    request:
+      path: /guides/culture/guide-to-the-metropolitan-museum-of-art
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^guides$
+      statusCodes:
+        - 200
+  - description: Guides strip all query params from request
+    request:
+      path: /guides/culture/guide-to-the-metropolitan-museum-of-art?category=foobar&price=1234-1230
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^guides$
+          x-nyt-backend: ^beta_guides$
+          x-nyt-final-url: ^/guides/culture/guide-to-the-metropolitan-museum-of-art$
+      statusCodes:
+        - 200
+  - description: Gift Guides allows category query parameter
+    request:
+      path: /guides/gifts/holiday-gift-guide?category=Food+%26+Drink&something=bar
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^guides$
+          x-nyt-backend: ^beta_guides$
+          x-nyt-final-url: ^/guides/gifts/holiday-gift-guide\?category=Food\+%26\+Drink$
+      statusCodes:
+        - 200
+  - description: Gift Guides allows price query parameter
+    request:
+      path: /guides/gifts/holiday-gift-guide?price=0-5000&foo=whatever
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^guides$
+          x-nyt-backend: ^beta_guides$
+          x-nyt-final-url: ^/guides/gifts/holiday-gift-guide\?price=0-5000$
+      statusCodes:
+        - 200
+  - description: Guides filter query string for SCOUT_API_HOST only in stg env
+    request:
+      path: /guides/culture/guide-to-the-metropolitan-museum-of-art?SCOUT_API_HOST=api.guides.prd.nyt.net&category=foobar&price=1234-1230
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^guides$
+          x-nyt-backend: ^beta_guides$
+          x-nyt-final-url: ^/guides/culture/guide-to-the-metropolitan-museum-of-art\?SCOUT_API_HOST=api\.guides\.prd\.nyt\.net$
+      statusCodes:
+        - 200
+

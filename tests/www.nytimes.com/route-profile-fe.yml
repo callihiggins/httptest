@@ -1,0 +1,20 @@
+tests:
+  - description: Request to profile-fe is successful
+    request:
+      path: /svc/user/mobile/entitlements/mtd.json
+      headers:
+        x-nyt-miss: "1"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-PFE$
+          x-nyt-route: ^profile-fe$
+          x-nyt-backend: ^profile_fe$
+          cache-control: ^private$
+      statusCodes:
+        - 200
+

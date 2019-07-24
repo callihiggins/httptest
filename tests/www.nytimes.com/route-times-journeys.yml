@@ -1,0 +1,197 @@
+tests:
+  - description: Test Times Journeys; landing page, canonical
+    request:
+      path: /times-journeys/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys$
+  - description: Test Times Journeys; landing page, non-canonical variant 1
+    request:
+      path: /times-journeys
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys$
+  - description: Test Times Journeys; landing page, non-canonical variant 2
+    request:
+      path: /timesjourneys/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^blogs$
+  - description: Test Times Journeys; landing page, non-canonical variant 3
+    request:
+      path: /timesjourneys
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^blogs$
+  - description: Test Times Journeys; landing page; identity cookies are set
+    request:
+      path: /times-journeys/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys$
+  - description: Test Times Journeys; landing page; 16k+ cookie string
+    request:
+      path: /times-journeys/
+      headers:
+        x-nyt-miss: "1"
+        cookie: foo=${TEST_COOKIE_IS_16K}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys$
+  - description: Test Times Journeys; landing page; with query params
+    request:
+      path: /times-journeys?queryparam=123
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys$
+  - description: Test Times Journeys Students; landing page, canonical
+    request:
+      path: /times-journeys/students/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys-students$
+  - description: Test Times Journeys Students; landing page, non-canonical variant 1
+    request:
+      path: /times-journeys/students
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys-students$
+  - description: Test Times Journeys Students; landing page, non-canonical variant 2
+    request:
+      path: /timesjourneys/students/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^blogs$
+  - description: Test Times Journeys Students; landing page, non-canonical variant 3
+    request:
+      path: /timesjourneys/students
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^blogs$
+  - description: Test Times Journeys Students; landing page; identity cookies are set
+    request:
+      path: /times-journeys/students/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys-students$
+  - description: Test Times Journeys Students; landing page; 16k+ cookie string
+    request:
+      path: /times-journeys/students/
+      headers:
+        x-nyt-miss: "1"
+        cookie: foo=${TEST_COOKIE_IS_16K}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys-students$
+  - description: Test Times Journeys Students; landing page; with query params
+    request:
+      path: /times-journeys/students?queryparam=123
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys-students$
+  - description: Test missing x-frame-options from times-journeys
+    request:
+      path: /times-journeys/travel/behind-the-scenes-of-new-york-theater/terms/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-TJ$
+          x-nyt-route: ^times-journeys$
+        notPresent:
+          - x-frame-options
+

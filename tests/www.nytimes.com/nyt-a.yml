@@ -1,0 +1,79 @@
+tests:
+  - description: creates new nyt-a when missing in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};
+  - description: creates new nyt-a when empty in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-a=
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};
+  - description: creates new nyt-a when empty among other cookies in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: foo=bar; nyt-a=; argh=blargh
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};
+  - description: refreshes nyt-a when provided in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-a=12345
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-a=12345;
+  - description: refreshes nyt-a when provided among other cookies in request
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: foo=bar; nyt-a=54321; argh=blargh
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-a=54321;
+  - description: refreshes nyt-a when provided in request to /crosswords
+    request:
+      path: /crosswords
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-a=12345
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-a=12345;
+

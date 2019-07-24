@@ -1,0 +1,170 @@
+tests:
+  - description: Test legacy; vanity redirect; </save75>
+    request:
+      scheme: http
+      path: /save75
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+          x-nyt-backend: ^www_legacy_gke$
+  - description: Test WWW JS served from Legacy GKE Backend
+    request:
+      path: /js/selectWidget.js
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+          content-type: ^application/javascript$
+  - description: Test well-known served from WWW Legacy GKE
+    request:
+      path: /.well-known/apple-app-site-association
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test comscore html served from Legacy GKE backend
+    request:
+      path: /svc/comscore/pvc.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test rss xml redirects served from Legacy GKE backend
+    request:
+      path: /services/xml/rss/nyt/Dealbook.xml
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test legacy; www cluster; favicon file
+    request:
+      scheme: http
+      path: /favicon.ico
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test legacy; www cluster; humans file
+    request:
+      scheme: http
+      path: /humans.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test legacy; www cluster; interactive; default
+    request:
+      scheme: http
+      path: /interactive/2013/12/19/us/politics/19nsa-review.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test legacy; www cluster; packages; HTML
+    request:
+      scheme: http
+      path: /packages/html/magazine/2009-inauguration-gallery/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test /gst/movies/ served from Legacy GKE Backend
+    request:
+      scheme: http
+      path: /gst/movies/msearch.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Legacy route sets gdpr cookie and header
+    request:
+      scheme: http
+      path: /gst/movies/msearch.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+          x-gdpr: ^[0-1]$
+  
+  - description: Test beta620 has been moved to legacy backend
+    request:
+      scheme: http
+      path: /
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+        TEST_HOST: "beta620.nytimes.com"
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$

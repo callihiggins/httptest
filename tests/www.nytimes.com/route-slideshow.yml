@@ -1,0 +1,355 @@
+tests:
+  - description: Test slideshow; 301 page fallback to NYT4
+    request:
+      path: /slideshow/2016/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test slideshow; 301 page fallback to NYT4
+    request:
+      path: /slideshow/2015/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test slideshow; 301 page fallback to NYT4
+    request:
+      path: /slideshow/2014/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test slideshow; 301 page fallback to NYT4
+    request:
+      path: /slideshow/2013/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test slideshow; 301 page fallback to NYT4
+    request:
+      path: /slideshow/2001/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test slideshow; 301 page fallback to NYT4
+    request:
+      path: /slideshow/2005/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: "Test slideshow; HTTPS enabled,
+      /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENE\
+      CITY-slide-IMOK.html "
+    request:
+      path: /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: "Test slideshow; HTTPS enabled,
+      /slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPET\
+      EMMY2.html "
+    request:
+      path: /slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; HTTPS enabled,
+      /slideshow/2016/12/14/travel/our-favorite-travel-photography-of-2016/s/18BEST-OF-2016-IMAGES-slide-8RFM.html
+    request:
+      path: /slideshow/2016/12/14/travel/our-favorite-travel-photography-of-2016/s/18BEST-OF-2016-IMAGES-slide-8RFM.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; HTTPS enabled,
+      /slideshow/2015/12/25/t-magazine/oddball-geniuses-tarantino-fassbender-rampling/s/25tmag-11well_rihanna-t_CA0-copy.html
+    request:
+      path: /slideshow/2015/12/25/t-magazine/oddball-geniuses-tarantino-fassbender-rampling/s/25tmag-11well_rihanna-t_CA0-copy.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; HTTPS enabled,
+      /slideshow/2014/09/21/upshot/23up-un/s/21up-un-slide-ZRTJ.html
+    request:
+      path: /slideshow/2014/09/21/upshot/23up-un/s/21up-un-slide-ZRTJ.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; Serve 2013 slideshow from Vi with HTTPS,
+      /slideshow/2013/12/25/dining/20131225-REST.html
+    request:
+      path: /slideshow/2013/12/25/dining/20131225-REST.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; Serve 2011 slideshow on Vi with HTTPS,
+      /slideshow/2011/07/10/world/africa/10sudan.html
+    request:
+      path: /slideshow/2011/07/10/world/africa/10sudan.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; Serve 2009 slideshow on Vi with HTTPS,
+      /slideshow/2009/04/27/science/042809-Ants_index.html
+    request:
+      path: /slideshow/2009/04/27/science/042809-Ants_index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow2007 slideshow fallback to NYT4 ESX,
+      /slideshow/2007/10/10/nytfrontpage/20071010POD_7.html
+    request:
+      path: /slideshow/2007/10/10/nytfrontpage/20071010POD_7.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test slideshow; HTTPS enabled; realestate,
+      /slideshow/2017/12/29/realestate/new-york-citys-biggest-residential-sales-in-2017/s/31YEAREND-slide-EQPY.html
+    request:
+      path: /slideshow/2017/12/29/realestate/new-york-citys-biggest-residential-sales-in-2017/s/31YEAREND-slide-EQPY.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; HTTPS enabled; realestate,
+      /slideshow/2017/08/22/realestate/slides-headline/s/22METS-1503371668421.html
+    request:
+      path: /slideshow/2017/08/22/realestate/slides-headline/s/22METS-1503371668421.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: "Test slideshow; HTTPS enabled; Internet Explorer,
+      /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENE\
+      CITY-slide-IMOK.html "
+    request:
+      path: /slideshow/2018/01/08/style/partying-after-the-golden-globes/s/08GG-SCENECITY-slide-IMOK.html?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: "Test slideshow; HTTPS enabled; Internet Explorer,
+      /slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPET\
+      EMMY2.html "
+    request:
+      path: /slideshow/2017/09/17/fashion/emmys-2017-red-carpet-dresses/s/17REDCARPETEMMY2.html
+      headers:
+        x-nyt-miss: "1"
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; HTTPS enabled; Internet Explorer,
+      /slideshow/2018/02/15/dining/the-pool/s/15-slideshow-1.html
+    request:
+      path: /slideshow/2018/02/15/dining/the-pool/s/15-slideshow-1.html
+      headers:
+        x-nyt-miss: "1"
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; HTTPS enabled; Internet Explorer,
+      /slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html
+    request:
+      path: /slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html
+      headers:
+        x-nyt-miss: "1"
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test slideshow; Serve 2010 slideshow on Vi with HTTPS (stg),
+      /slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html
+    request:
+      path: /slideshow/2010/01/04/sports/2010-nyt4-slideshow-in-600px.html?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-slideshow$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: POST method requests are not allowed for slideshow route
+    request:
+      method: POST
+      path: /slideshow/2017/08/10/arts/imitate/test-headline/s/20DYING.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+

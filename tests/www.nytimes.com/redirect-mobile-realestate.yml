@@ -1,0 +1,192 @@
+tests:
+  - description: Test mobile redirect; realestate; cookie "nyt-mobile=1"; iPhone; does
+      redirect
+    request:
+      path: /real-estate/find-a-home
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate sales channel redirect; realestate; cookie
+      "nyt-mobile=1";  mobile; does redirect
+    request:
+      path: /real-estate/homes-for-sale
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/\?channel=sales$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate rental channel redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/homes-for-rent
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/\?channel=rentals$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate rental channel redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-sale/333-east-79th-street/185-18332621
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/listing/185-18332621$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate buildings redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/usa/ny/brooklyn/park-slope/building/939-union-street/5304
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate saved listings redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/my-real-estate
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/savedlistings$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate saved listings redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-rent
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=rentals&search=See\+Available\+Homes&location=upper-east-side-new-york-ny-usa$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate saved listings redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/homes-for-sale/?locations%5B%5D=upper-west-side-new-york-ny-usa&redirect=find-a-home
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=sales&search=See\+Available\+Homes&location=upper-west-side-new-york-ny-usa$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate saved listings redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/homes-for-rent/?locations%5B%5D=upper-west-side-new-york-ny-usa&redirect=find-a-home
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=rentals&search=See\+Available\+Homes&location=upper-west-side-new-york-ny-usa$
+      statusCodes:
+        - 301
+  - description: Test mobile realestate saved listings redirect; realestate; mobile; cookie
+      "nyt-mobile=1"; does redirect
+    request:
+      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-sale
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=sales&search=See\+Available\+Homes&location=upper-east-side-new-york-ny-usa$
+      statusCodes:
+        - 301
+

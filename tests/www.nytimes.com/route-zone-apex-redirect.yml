@@ -1,0 +1,18 @@
+tests:
+  - description: "redirect-zone-apex: Test zone apex redirects to www.nytimes.com"
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        Host: nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-0$
+          location: ^https://www\.nytimes\.com/$
+      statusCodes:
+        - 301
+

@@ -1,0 +1,86 @@
+tests:
+  - description: Project Ocean ABRA test from Brazil on the Home route should be allocated
+      and return the debug-vi-abtest header
+    request:
+      path: /?ip-override=187.44.210.58
+      headers:
+        x-nyt-miss: "1"
+        project-ocean-test: "true"
+        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-country: BR
+          debug-vi-abtest: dfp_latamv2=1_gdpr_test
+  - description: Project Ocean test ABRA from Brazil on the Story route should be allocated
+      and return the debug-vi-abtest header
+    request:
+      path: /2019/05/29/us/terrill-thomas-milwaukee-settlement.html?ip-override=187.44.210.58
+      headers:
+        x-nyt-miss: "1"
+        project-ocean-test: "true"
+        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-country: BR
+          debug-vi-abtest: dfp_latamv2=1_gdpr_test
+  - description: Project Ocean test ABRA from Brazil on the Collection route should not be
+      allocated and return the debug-vi-abtest header
+    request:
+      path: /column/36-hours?ip-override=187.44.210.58
+      headers:
+        x-nyt-miss: "1"
+        project-ocean-test: "true"
+        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-country: BR
+          x-nyt-route: vi-collection
+        notPresent:
+          - debug-vi-abtest
+  - description: Project Ocean ABRA test from US on the Home route should not be allocated
+      and return the debug-vi-abtest header
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        project-ocean-test: "true"
+        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-country: US
+        notPresent:
+          - debug-vi-abtest
+  - description: Project Ocean test ABRA from US on the Story route should not be allocated
+      and return the debug-vi-abtest header
+    request:
+      path: /2019/05/29/us/terrill-thomas-milwaukee-settlement.html
+      headers:
+        x-nyt-miss: "1"
+        project-ocean-test: "true"
+        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-country: US
+        notPresent:
+          - debug-vi-abtest
+

@@ -1,0 +1,245 @@
+tests:
+  - description: Programs web app; status server is responding OK
+    request:
+      path: /programs/status.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-PS$
+          x-frame-options: ^DENY$
+          x-nyt-route: ^programs-service$
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - authorization
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+  - description: Programs shaq web app; status server is responding OK
+    request:
+      path: /programs/svc/shaq/v1/healthcheck
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-cache: .+
+          x-nyt-route: ^shaq-service$
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+  - description: Programs asset CDN; GCS is responding OK
+    request:
+      path: /programs/ftu/public/healthcheck.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^programs-gcs$
+          x-nyt-backend: ^gcs_origin$
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - authorization
+          - cookie
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-gcs-bucket
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+  - description: Programs asset CDN; GCS is responding OK
+    request:
+      path: /programs/public/healthcheck.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^programs-gcs$
+          x-nyt-backend: ^gcs_origin$
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - authorization
+          - cookie
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-gcs-bucket
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+  - description: Programs strip all query parameters from final url in prd env
+    request:
+      path: /programs/well-challenge?buildId=5176112502013952&q=8sdjv073mcl0s
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^programs-service$
+          x-nyt-backend: ^programs_svc$
+          x-nyt-final-url: ^/programs/well-challenge$
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - authorization
+          - cookie
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-gcs-bucket
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+  - description: Programs filter query string for SCOUT_API_HOST and buildId only in stg env
+    request:
+      path: /programs/well-challenge?SCOUT_API_HOST=api.guides.stg.nyt.net&buildId=6486574690729984&q=8sdjv073mcl0s
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^programs-service$
+          x-nyt-backend: ^programs_svc$
+          x-nyt-final-url: ^/programs/well-challenge\?SCOUT_API_HOST=api\.guides\.stg\.nyt\.net&buildId=6486574690729984$
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - authorization
+          - cookie
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-gcs-bucket
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+  - description: Programs keep all query strings in dev env
+    request:
+      path: /programs/well-challenge?buildId=6486574690729984&q=8sdjv073mcl0s
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^programs-service$
+          x-nyt-backend: ^programs_svc$
+          x-nyt-final-url: ^/programs/well-challenge\?buildId=6486574690729984&q=8sdjv073mcl0s$
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - authorization
+          - cookie
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-gcs-bucket
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+        - 404
+

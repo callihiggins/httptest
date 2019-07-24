@@ -1,0 +1,30 @@
+tests:
+  - description: Vi Weddings Announcement Page
+    request:
+      path: /style/weddings/announcements
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-weddings$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: POST method requests are not allowed for weddings route
+    request:
+      method: POST
+      path: /style/weddings/announcements
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 405
+

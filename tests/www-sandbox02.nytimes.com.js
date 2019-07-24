@@ -1,1 +1,0 @@
-www.nytimes.com.js

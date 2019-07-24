@@ -1,0 +1,68 @@
+tests:
+  - description: Tips path responds with 200
+    request:
+      path: /tips/healthcheck.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tips-html-gcs$
+          x-nyt-backend: ^gcs_origin$
+          referrer-policy: ^no-referrer$
+      statusCodes:
+        - 200
+  - description: Tips index.html responds with 200
+    request:
+      path: /tips
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tips-html-gcs$
+          x-nyt-backend: ^gcs_origin$
+          referrer-policy: ^no-referrer$
+      statusCodes:
+        - 200
+  - description: Tips email public GPG key responds with 200
+    request:
+      path: /tips/public/tips_pubkey.asc
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tips-html-gcs$
+          x-nyt-backend: ^gcs_origin$
+          referrer-policy: ^no-referrer$
+      statusCodes:
+        - 200
+  - description: Test HTTPS Everywhere; tips; non-secure
+    request:
+      scheme: http
+      path: /tips
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^tips-html-gcs$
+          x-nyt-backend: ^gcs_origin$
+          referrer-policy: ^no-referrer$
+          location: ^https://${TEST_HOST}/tips$
+      statusCodes:
+        - 301
+

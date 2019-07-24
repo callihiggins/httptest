@@ -4,3 +4,4 @@ npm-debug.log
 .idea/
 .terraform
 main.tf
+.DS_Store

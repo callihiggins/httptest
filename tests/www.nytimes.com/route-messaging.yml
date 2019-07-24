@@ -1,0 +1,32 @@
+tests:
+  - description: Test messaging, /svc/pushmobile(.*)
+    request:
+      path: /svc/pushmobile/v2/device/newsandroid/systemtest.json
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^messaging$
+          x-nyt-route: ^messaging$
+      statusCodes:
+        - 200
+  - description: Test messaging, /svc/message/(.*)
+    request:
+      path: /svc/message/v1/list/global.json
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^messaging$
+          x-nyt-route: ^messaging$
+      statusCodes:
+        - 200
+

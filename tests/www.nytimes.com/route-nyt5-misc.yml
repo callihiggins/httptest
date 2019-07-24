@@ -1,0 +1,37 @@
+tests:
+  - description: Test misc  on /reviews/dining/map/
+    request:
+      path: /reviews/dining/map/?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-GM$
+          x-nyt-route: ^collection$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+  - description: Test misc  on /reviews/dining/map/
+    request:
+      path: /reviews/dining/map/
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt.dv.nyt5-on-gke=1
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-api-version: ^F-GM$
+          x-nyt-route: ^collection$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
+

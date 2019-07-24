@@ -1,0 +1,130 @@
+tests:
+  - description: Test geo hash return value for IP 85.90.227.224
+    request:
+      path: /svc/web-products/geoip-test.html?ip-override=85.90.227.224
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-continent: ^EU$
+          x-nyt-country: ^GB$
+          x-nyt-region: ^LND$
+          x-nyt-city: ^london$
+          x-nyt-gmt-offset: (0|100)
+      statusCodes:
+        - 200
+  - description: Test geo hash return value for IP 112.120.130.250
+    request:
+      path: /svc/web-products/geoip-test.html?ip-override=112.120.130.250
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-gmt-offset: ^800$
+          x-nyt-continent: ^AS$
+          x-nyt-country: ^HK$
+          x-nyt-region: ^NO REGION$
+      statusCodes:
+        - 200
+  - description: Test geo hash return value for IP 170.157.174.185
+    request:
+      path: /svc/web-products/geoip-test.html?ip-override=170.157.174.185
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-continent: ^OC$
+          x-nyt-country: ^AU$
+          x-nyt-region: ^ACT$
+          x-nyt-city: ^canberra$
+          x-nyt-gmt-offset: 1[0-1]00
+      statusCodes:
+        - 200
+  - description: Test geo hash return value for IP 137.99.78.82
+    request:
+      path: /svc/web-products/geoip-test.html?ip-override=137.99.78.82
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          x-nyt-region: ^CT$
+          x-nyt-city: ^storrs mansfield$
+          x-nyt-gmt-offset: -[45]00
+      statusCodes:
+        - 200
+  - description: Test geo hash return value for IP 173.63.201.100, NJ should get NY geo-hash
+    request:
+      path: /?ip-override=173.63.201.100
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          x-nyt-region: ^NJ$
+          x-nyt-gmt-offset: -[45]00
+          x-nyt-geo-hash: NAUSNY-[45]00
+      statusCodes:
+        - 200
+  - description: Test geo hash return value for IP 192.206.151.131, CA should get CA
+      geo-hash
+    request:
+      path: /?ip-override=192.206.151.131
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^CA$
+          x-nyt-region: ^ON$
+          x-nyt-city: ^hamilton$
+          x-nyt-gmt-offset: -[45]00
+          x-nyt-geo-hash: NACA-[45]00
+      statusCodes:
+        - 200
+  - description: Test geo hash return value for IP 52.95.131.27, AU should get AU geo-hash
+    request:
+      path: /?ip-override=52.95.131.27
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-continent: ^OC$
+          x-nyt-country: ^AU$
+          x-nyt-region: ^NSW$
+          x-nyt-city: ^sydney$
+          x-nyt-gmt-offset: 1[01]00
+          x-nyt-geo-hash: OCAU1[01]00
+      statusCodes:
+        - 200
+

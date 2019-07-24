@@ -1,0 +1,35 @@
+tests:
+  - description: Test geoip integration
+    request:
+      path: /?ip-override=170.149.100.75
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-continent: ^NA$
+          x-nyt-country: ^US$
+          x-nyt-region: ^NY$
+          age: .+
+          x-api-version: .+
+          x-cache: .+
+          x-nyt-route: .+
+          x-served-by: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+

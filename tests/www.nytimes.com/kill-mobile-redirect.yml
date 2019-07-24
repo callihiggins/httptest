@@ -1,0 +1,100 @@
+tests:
+  - description: amp articles do not redirect
+    request:
+      path: /2017/09/24/theater/slug.amp.html
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25 (go test suite <deliveryengineering@nytimes.com>)
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: amp articles do not redirect
+    request:
+      path: /2017/09/24/theater/slug.amp.html
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25 (go test suite <deliveryengineering@nytimes.com>)
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+        - 503
+  - description: Test mobile redirect; homepage; querystring "nytmobile=1"; cookie
+      "nyt-mobile=1"; iPhone; does not redirect
+    request:
+      path: /?nytmobile=1
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25 (go test suite <deliveryengineering@nytimes.com>)
+        cookie: nyt-mobile=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test mobile redirect; homepage; iPhone; does not redirect
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25 (go test suite <deliveryengineering@nytimes.com>)
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+  - description: Test article does not redirect; 2016; mobile;
+    request:
+      path: /2016/01/01/us/slug.html
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25 (go test suite <deliveryengineering@nytimes.com>)
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      statusCodes:
+        - 200
+        - 404
+  - description: Test mobile redirect; interactive; 2014; iPhone; does not redirect
+    request:
+      path: /interactive/2014/01/10/travel/2014-places-to-go.html
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25 (go test suite <deliveryengineering@nytimes.com>)
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns: {}
+      statusCodes:
+        - 200
+        - 404
+

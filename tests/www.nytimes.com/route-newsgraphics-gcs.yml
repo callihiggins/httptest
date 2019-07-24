@@ -1,0 +1,88 @@
+tests:
+  - description: Newsgraphics GCS bucket responds with 200 over http
+    request:
+      scheme: http
+      path: /newsgraphics/2014/01/05/poverty-map/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsgraphics-gcs$
+          x-nyt-backend: ^gcs_origin$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+  - description: Projects path in newsgraphics GCS bucket responds with 200
+    request:
+      scheme: http
+      path: /projects/healthcheck.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsgraphics-gcs$
+          x-nyt-backend: ^gcs_origin$
+          x-goog-hash: .+
+          x-goog-storage-class: .+
+          x-guploader-uploadid: .+
+      statusCodes:
+        - 200
+  - description: Test newsgraphics; obey redirects configured by
+      x-amz-meta-website-redirect-location header
+    request:
+      scheme: http
+      path: /newsgraphics/2012/1220-snow-fall-preview/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsgraphics-gcs$
+          x-nyt-backend: ^gcs_origin$
+          location: https?:\/\/www(\.dev|\.stg)?\.nytimes\.com\/newsgraphics\/2012\/1220-snow-fall-preview\/index\.html
+      statusCodes:
+        - 301
+  - description: Test newsgraphics; 2018 should work on https
+    request:
+      path: /newsgraphics/2018/healthcheck.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsgraphics-gcs$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+  - description: Test newsgraphics; 2017 should work on https
+    request:
+      path: /newsgraphics/2017/healthcheck.txt
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsgraphics-gcs$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+

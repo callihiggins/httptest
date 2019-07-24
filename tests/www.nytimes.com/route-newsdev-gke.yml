@@ -1,0 +1,122 @@
+tests:
+  - description: Test response from dynamic newsdev-gke app on /svc/int
+    request:
+      path: /svc/int/dialects
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gke$
+          x-nyt-backend: ^newsdev_k8s_gke$
+      statusCodes:
+        - 200
+        - 404
+  - description: Skip caching on certain dynamic public apps on /svc/int
+    request:
+      path: /svc/int/godzown/u/2017-01-26-opinion-sleep-assesment-adventure-production
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gke$
+          x-nyt-backend: ^newsdev_k8s_gke$
+          x-cache: ^MISS$
+      statusCodes:
+        - 404
+  - description: Guantanamo routing
+    request:
+      path: /interactive/projects/guantanamo
+      headers:
+        x-nyt-miss: "1"
+        Host: ${TEST_HOST}
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^newsdev-gke$
+          x-nyt-backend: ^newsdev_k8s_gke$
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Interactive Service Not Cacheable
+    request:
+      path: /svc/int/dialects
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^newsdev-gke$
+          x-nyt-backend: ^newsdev_k8s_gke$
+          x-cache: .+
+          x-served-by: .+
+        notPresent:
+          - age
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+        - 404
+  - description: Test NYTimes Interactive Service Cacheable
+    request:
+      path: /svc/int/godzown/test/65de670cf7510f4402c442fbd21b141e726f7159
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-frame-options: ^DENY$
+          x-nyt-route: ^newsdev-gke$
+          x-nyt-backend: ^newsdev_k8s_gke$
+          age: .+
+          x-cache: .+
+          x-served-by: .+
+          x-timer: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-age
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-origin-server
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+          - x-varnishcacheduration
+      statusCodes:
+        - 200
+        - 404
+
