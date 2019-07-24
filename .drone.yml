@@ -527,7 +527,7 @@ pipeline:
       event: push
       branch: master
 
-  dev-test:
+  stg-test:
     image: nytimes/httptest
     pull: true
     environment:
