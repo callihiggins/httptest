@@ -333,7 +333,7 @@ tests:
         patterns:
           x-nyt-backend: ^projectvi_fe$
           x-nyt-route: ^vi-story$
-          set-cookie: ^((?!vistory).)*$
+          set-cookie: ^(?:(?!vistory).)*$
   - description: Empty vistory cookie
     request:
       path: /2017/10/16/upshot/this-is-a-test-article.html
