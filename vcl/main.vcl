@@ -460,6 +460,7 @@ sub vcl_fetch {
   call fetch_route_interactive;
   call fetch_route_collection;
   call fetch_route_alpha;
+  call fetch_route_mwcm;
 
   # set surrogate key header properly
   call fetch_surrogate_key_handler;
@@ -606,6 +607,7 @@ sub vcl_error {
     if (stale.exists) {
       return(deliver_stale);
     }
+    call handle_error_fallback_route_mwcm;
 
     call render_50x_page;
 

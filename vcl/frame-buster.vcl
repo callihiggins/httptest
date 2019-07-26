@@ -11,6 +11,7 @@ sub deliver_frame_buster {
         && req.url.path !~ "^/video/players/offsite/"
         && req.url.path !~ "^/times-journeys/(.*)terms(.*)"
         && req.url.path !~ "^/subscription/ads/"
+        && req.url.path !~ "^/subscription/resilient/banner-ads\.html"
         ) {
 
     	# not in the whitelist, check the Referer
