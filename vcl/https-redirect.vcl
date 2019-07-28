@@ -37,7 +37,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "real-estate"
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
         || req.http.x-nyt-route == "recommendations"
-    //    || req.http.x-nyt-route == "times-journeys"
+        || req.http.x-nyt-route == "times-journeys"
         || req.http.x-nyt-route == "times-journeys-students"
         || req.http.x-nyt-route == "askwell"
         || req.http.x-nyt-route == "vi-assets"

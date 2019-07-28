@@ -700,10 +700,8 @@ backends:
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    # ssl_cert_hostname: "timesjourneys.nytimes.com"
-    # ssl_sni_hostname: "timesjourneys.nytimes.com"
-    port: "80"
-    use_ssl: "false"
+    ssl_cert_hostname: "timesjourneys.nytimes.com"
+    ssl_sni_hostname: "timesjourneys.nytimes.com"
     healthcheck:
       host: "timesjourneys.nytimes.com"
       path: "/osd.xml"
