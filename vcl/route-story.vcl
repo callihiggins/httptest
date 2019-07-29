@@ -89,7 +89,8 @@ sub recv_route_amp {
   // Route amp articles
   if (
     (req.http.var-nyt-canonical-www-host == "true" &&
-    req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" &&
+    (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" ||
+     req.url ~ "^/interactive") &&
     req.url.path ~ "\.amp\.html$") ||
     req.url ~ "^/apple-news/"
   ) {

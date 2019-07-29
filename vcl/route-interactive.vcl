@@ -2,6 +2,7 @@ sub recv_route_interactive {
   // interactive years 2014-forever are served by Vi
   // including all variants, canonical and .(embedded|mobile|app)\.html
   if (req.http.x-nyt-route != "elections" && 
+      req.url.path !~ "\.amp\.html$" &&
      (req.url ~ "^/interactive/magazine/masthead.html" ||
       req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/")) {
     set req.http.x-nyt-route = "vi-interactive";
