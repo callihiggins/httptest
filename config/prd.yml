@@ -216,14 +216,14 @@ backends:
       window: "4"
 
   - name: "add_svc"
-    address: "ce-search-add-api-prd.dv.nyt.net"
+    address: "search-api-ce.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "30000"
-    ssl_cert_hostname: "ce-search-add-api-prd.dv.nyt.net"
-    ssl_sni_hostname: "ce-search-add-api-prd.dv.nyt.net"
+    ssl_cert_hostname: "search-api-ce.nyt.net"
+    ssl_sni_hostname: "search-api-ce.nyt.net"
     healthcheck:
-      host: "ce-search-add-api-prd.dv.nyt.net"
+      host: "search-api-ce.nyt.net"
       path: "/actuator/health"
       check_interval: "20000"
       expected_response: "200"
