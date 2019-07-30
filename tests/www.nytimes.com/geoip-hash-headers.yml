@@ -103,7 +103,7 @@ tests:
           x-nyt-continent: ^NA$
           x-nyt-country: ^CA$
           x-nyt-region: ^ON$
-          x-nyt-city: ^hamilton$
+          x-nyt-city: ^(hamilton|toronto)$
           x-nyt-gmt-offset: -[45]00
           x-nyt-geo-hash: NACA-[45]00
       statusCodes:

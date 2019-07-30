@@ -20,7 +20,7 @@
 - [ ] yes
 - [ ] no - potential blocker for merge
 
-## Add link to [Documentation Guide](https://github.com/nytm/dv-fastly-guide) PR
+## Add link to [Documentation Guide](https://docs.dv.nyt.net/fastly/) PR
 
 ## Pre-merge To Dos
 

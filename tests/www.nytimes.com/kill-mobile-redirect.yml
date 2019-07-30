@@ -46,9 +46,10 @@ tests:
       env:
         TEST_ENV: dev|stg|prd
     response:
-      headers: {}
-      statusCodes:
-        - 200
+      headers:
+        patterns:
+          x-nyt-route: ^homepage$
+          x-nyt-backend: ^projectvi_fe$
   - description: Test mobile redirect; homepage; iPhone; does not redirect
     request:
       path: /
