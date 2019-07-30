@@ -27,37 +27,7 @@ sub recv_route_switchboard {
         set req.url = querystring.remove(req.url);
         }
     }
-}
-
-sub recv_switchboard_choose_backend {
-  if (req.http.x-nyt-route == "switchboard") {
-    if (req.http.var-nyt-env == "prd") {
-        // this is a double check, any conditional where the variable is unset (so the header is not there)
-        // will be an automatic False, with the outer negation this will also be False if the header is present and set
-        // to the fallback string
-        // https://docs.fastly.com/vcl/operators/#comparison-operators
-        if (!req.http.x-nyt-force-backend == "fallback")  {
-            set req.http.x-nyt-force-backend = "origin";
-        }
-    }
-  }
-}
-
-sub recv_switchboard_set_backend {
-  if (req.http.x-nyt-route == "switchboard") {
-    if (req.http.var-nyt-env == "prd") {
-      if (req.http.x-nyt-force-backend == "origin") {
-        # bypass the cache if the backend is forced to be the origin
-        set req.http.var-nyt-force-pass = "true";
-        set req.backend = F_switchboard_origin;
-      } else {
-        set req.backend = F_switchboard_fallback;
-        set req.http.x-nyt-backend = "switchboard_fallback";
-      }
-    } else if (req.http.var-nyt-env == "stg" || req.http.var-nyt-env == "dev") {
-        set req.backend = F_switchboard_origin;
-    }
-  }
+    set req.backend = F_switchboard_origin;
 }
 
 sub miss_pass_route_switchboard {

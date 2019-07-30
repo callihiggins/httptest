@@ -199,9 +199,6 @@ sub vcl_recv {
   call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
 
-  call recv_switchboard_choose_backend;
-  call recv_switchboard_set_backend;
-
   # adding the zone apex redirect last
   # there is logic in some of the above routes that needs to execute
   # before the zone apex redirect
