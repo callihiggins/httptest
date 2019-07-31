@@ -12,7 +12,5 @@ tests:
         patterns:
           x-nyt-route: ^newsdev-attribute$
           x-nyt-backend: ^newsdev_cloud_functions_us_central1$
-          content-type: ^application/json; charset=utf-8$
-      statusCodes:
-        - 200
+
 

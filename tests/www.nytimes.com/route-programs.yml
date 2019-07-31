@@ -203,8 +203,6 @@ tests:
           - x-servername2
           - x-varnish
           - x-varnishcacheduration
-      statusCodes:
-        - 200
   - description: Programs keep all query strings in dev env
     request:
       path: /programs/well-challenge?buildId=6486574690729984&q=8sdjv073mcl0s
