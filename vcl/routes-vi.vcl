@@ -10,6 +10,7 @@ include "route-homepage";
 include "route-interactive";
 include "route-newsletters";
 include "route-paidpost";
+include "route-refer";
 include "route-search";
 include "route-slideshow";
 include "route-story";

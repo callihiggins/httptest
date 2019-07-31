@@ -946,8 +946,14 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
-  name    = "route-code"
-  main    = false
-  content = "${file("../vcl/route-code.vcl")}"
+    name    = "route-code"
+    main    = false
+    content = "${file("../vcl/route-code.vcl")}"
+  }
+
+  vcl {
+    name    = "route-refer"
+    main    = false
+    content = "${file("../vcl/route-refer.vcl")}"
   }
 }

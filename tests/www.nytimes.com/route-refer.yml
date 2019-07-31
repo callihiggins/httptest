@@ -1,0 +1,54 @@
+tests:
+  - description: Vi Referral Landing Page
+    request:
+      path: /share
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-refer$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Vi Referral - with campaignId
+    request:
+      path: /share?campaignId=123&bad=bad
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-refer$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/share?campaignId=123
+      statusCodes:
+        - 200
+  - description: Vi Referral - with ID and Referral Campaign
+    request:
+      path: /share/123?referralCampaign=SPONSORSHIP&bad=bad
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-refer$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          x-nyt-final-url: ^/share/123?referralCampaign=SPONSORSHIP
+      statusCodes:
+        - 200
+
+
+
+
