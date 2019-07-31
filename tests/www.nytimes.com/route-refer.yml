@@ -28,7 +28,7 @@ tests:
           x-nyt-route: ^vi-refer$
           x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
-          x-nyt-final-url: ^/share?campaignId=123
+          x-nyt-final-url: ^/share\?campaignId=123$
       statusCodes:
         - 200
   - description: Vi Referral - with ID and Referral Campaign
@@ -45,7 +45,7 @@ tests:
           x-nyt-route: ^vi-refer$
           x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
-          x-nyt-final-url: ^/share/123?referralCampaign=SPONSORSHIP
+          x-nyt-final-url: ^/share/123\?referralCampaign=SPONSORSHIP$
       statusCodes:
         - 200
 
