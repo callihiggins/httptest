@@ -64,8 +64,7 @@ tests:
       headers:
         patterns:
           x-nyt-country: US
-        notPresent:
-          - debug-vi-abtest
+          debug-vi-abtest: HOME_chartbeat=0_control
   - description: Project Ocean test ABRA from US on the Story route should not be allocated
       and return the debug-vi-abtest header
     request:
@@ -83,4 +82,45 @@ tests:
           x-nyt-country: US
         notPresent:
           - debug-vi-abtest
-
+  - description: HOME Chartbeat test ABRA on the Home route should be allocated
+      to 0_control and return the debug-vi-abtest header
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-a=U_BHVjUVAkvVObRSkkPagz
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          debug-vi-abtest: HOME_chartbeat=0_control
+  - description: HOME Chartbeat test ABRA on the Home route should be allocated
+      to 1_variant and return the debug-vi-abtest header
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-a=xG724KOYMP3uFSGpPrAzgE
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          debug-vi-abtest: HOME_chartbeat=1_variant
+  - description: HOME Chartbeat test ABRA on the Story route should not be allocated
+      and return the debug-vi-abtest header
+    request:
+      path: /2019/05/29/us/terrill-thomas-milwaukee-settlement.html
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        notPresent:
+          - debug-vi-abtest

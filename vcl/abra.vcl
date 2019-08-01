@@ -78,6 +78,13 @@ sub recv_abra_allocation {
   # only if this execution is not on the shield pop in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {
 
+    # Are we on the home route?
+    declare local var.is_home BOOL;
+    set var.is_home = (req.http.x-nyt-route == "homepage");
+    # Are we on the story route?
+    declare local var.is_story BOOL;
+    set var.is_story = (req.http.x-nyt-route == "vi-story");
+
     #######################################
     # Test Name: dfp_latamv2
     #
@@ -100,7 +107,7 @@ sub recv_abra_allocation {
 
     # Are we on the home and story routes?
     declare local var.is_route BOOL;
-    set var.is_route = (req.http.x-nyt-route == "homepage" || req.http.x-nyt-route == "vi-story");
+    set var.is_route = (var.is_home || var.is_story);
 
     if (var.is_in_latin_am && var.is_route && req.http.var-is-project-ocean-enabled) {
       set var.test_name = "dfp_latamv2";
@@ -125,6 +132,36 @@ sub recv_abra_allocation {
     }
     #
     # End of Test dfp_latamv2
+    #######################################
+
+    # Test Name: HOME_chartbeat
+    #
+    # Description: Chartbeat headline tester on homepage
+    #
+    # Variants:
+    #   - 0_control                        90%
+    #   - 1_variant                        10%
+    #
+    #
+
+    if (var.is_home) {
+      set var.test_name = "HOME_chartbeat";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (var.p < 3865470566) {
+        set var.test_param = var.test_name + "=0_control";
+      } else {
+        set var.test_param = var.test_name + "=1_variant";
+      }
+
+      set var.test_group = var.test_group + "&" + var.test_param;
+      # We need to vary the cache on both the home and story routes:
+      set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
+    }
+    #
+    # End of Test HOME_chartbeat
     #######################################
 
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
