@@ -115,7 +115,7 @@ sub recv_abra_allocation {
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (var.p < 1073741824) {
+      if (var.p < 2576980377) {
         set var.test_param = var.test_name + "=0_control";
       } elseif (var.p < 2147483648) {
         set var.test_param = var.test_name + "=1_gdpr_test";
@@ -133,6 +133,50 @@ sub recv_abra_allocation {
     #
     # End of Test dfp_latamv2
     #######################################
+  
+    #######################################
+    # Test Name: STYLN_recirc_pres
+    #
+    # Description: Storylines recirc pres is testing click response of editors picks
+    #              and associated when they are in the third ad slot on the page
+    #
+    # Variants:
+    #   - 0_control                        60%
+    #   - 1_edpicks_a                      10%
+    #   - 2_edpicks_b                      10%
+    #   - 3_morein_a                       10%
+    #   - 4_morein_b                       10%
+    #
+
+    # Are we on the story route and is the test enabled?
+    #Limit the articles to after 2019/08/01
+    if (req.http.x-nyt-route == "vi-story" && req.http.var-is-storylines-recirc-test-enabled == "true" && req.url ~ "^/?2019/(0[8-9]|1[0-2])/([0-3][1-9])/") {
+      #append an & if there was a previous test
+      if (var.test_group){
+        set var.test_group = var.test_group "&";
+      }
+
+      set var.test_name = "STYLN_recirc_pres";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (var.p < 2576980377) {
+        set var.test_param = var.test_name + "=0_recirc_pres_control";
+      } elseif (var.p < 3006477106) {
+        set var.test_param = var.test_name + "=1_edpicks_a";
+      } elseif (var.p < 3435973835) {
+        set var.test_param = var.test_name + "=2_edpicks_b";
+      } elseif (var.p < 3865470564) {
+        set var.test_param = var.test_name + "=3_morein_a";
+      } else{
+        set var.test_param = var.test_name + "=4_morein_b";
+      }
+
+      set var.test_group = var.test_group + var.test_param;
+      # vary the cache on story routes:
+      set req.http.var-story-abtest-variation = req.http.var-story-abtest-variation + var.test_param;
+    }
 
     # Test Name: HOME_chartbeat
     #
@@ -145,6 +189,10 @@ sub recv_abra_allocation {
     #
 
     if (var.is_home) {
+
+      if (var.test_group){
+        set var.test_group = var.test_group "&";
+      }
       set var.test_name = "HOME_chartbeat";
       set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
@@ -156,7 +204,7 @@ sub recv_abra_allocation {
         set var.test_param = var.test_name + "=1_variant";
       }
 
-      set var.test_group = var.test_group + "&" + var.test_param;
+      set var.test_group = var.test_group + var.test_param;
       # We need to vary the cache on both the home and story routes:
       set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
     }

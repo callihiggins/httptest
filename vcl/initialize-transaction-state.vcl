@@ -112,6 +112,14 @@ sub recv_initialize_transaction_state {
       set req.http.var-is-project-ocean-enabled = "true";
     }
 
+    # Switch to turn on/off the Storylines ABRA test.
+    set req.http.var-is-storylines-recirc-test-enabled = "false";
+    # For debugging purposes, if the request is internal and we
+    # detect a test header, then turn on the switch.
+    if (req.http.x-nyt-nyhq-access == "1" && req.http.storylines-recirc-test == "true") {
+      set req.http.var-is-storylines-recirc-test-enabled = "true";
+    }
+
     # If the request is internal, allow for a client to choose a specific
     # backend for a request (only works in route-switchboard)
     if (req.http.x-nyt-nyhq-access != "1") {
