@@ -126,7 +126,7 @@ tests:
           - debug-vi-abtest
   - description: Storylines test ABRA on the Story route returns the debug-vi-abtest header
     request:
-      path: /2019/08/01/us/warroad-pioneer-news-desert.html
+      path: /2019/08/05/arts/music/woodstock-50-anniversary.html
       headers:
         x-nyt-miss: "1"
         storylines-recirc-test: "true"
@@ -137,24 +137,8 @@ tests:
     response:
       headers:
         patterns:
-          debug-vi-abtest: ^STYLN_recirc_pres=0_recirc_pres_control$
-  - description: Storylines test ABRA on the Story route does not return debug-vi-abtest header when false
-    request:
-      path: /2019/08/01/us/warroad-pioneer-news-desert.html
-      headers:
-        x-nyt-miss: "1"
-        storylines-recirc-test: "false"
-        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-country: US
-        notPresent:
-          - debug-vi-abtest
-  - description: Storylines test ABRA on the a collections route does not return the debug-vi-abtest header
+          debug-vi-abtest: STYLN_recirc_pres=0_recirc_pres_control
+  - description: Storylines test ABRA on the collections route does not return the debug-vi-abtest header
     request:
       path: /column/36-hours
       headers:
@@ -170,7 +154,7 @@ tests:
           x-nyt-route: vi-collection
         notPresent:
           - debug-vi-abtest
-  - description: Storylines test ABRA does not return a header when before 08/01/2019
+  - description: Storylines test ABRA does not return a header when before 08/05/2019
     request:
       path: /2019/05/29/us/terrill-thomas-milwaukee-settlement.html
       headers:
@@ -188,7 +172,7 @@ tests:
           - debug-vi-abtest
   - description: Project Ocean ABRA test and Storylines ABRA test concatenate 
     request:
-      path: /2019/08/01/us/warroad-pioneer-news-desert.html?ip-override=187.44.210.58
+      path: /2019/08/05/arts/music/woodstock-50-anniversary.html?ip-override=187.44.210.58
       headers:
         x-nyt-miss: "1"
         project-ocean-test: "true"
@@ -202,8 +186,7 @@ tests:
         patterns:
           x-nyt-country: BR
           debug-vi-abtest: dfp_latamv2=0_control&STYLN_recirc_pres=0_recirc_pres_control
-  - description: Project Ocean test ABRA from US on the Story route should not be allocated
-      and Storylines test should not be allocated before 8/01
+  - description: Storylines test  on the Story route should not be allocated before 8/05
     request:
       path: /2019/05/29/us/terrill-thomas-milwaukee-settlement.html
       headers:
@@ -219,3 +202,19 @@ tests:
           x-nyt-country: US
         notPresent:
           - debug-vi-abtest
+  - description:  Storylines test on the Story route should be allocated starting on 8/05
+    request:
+      path: /2019/08/05/arts/music/woodstock-50-anniversary.html
+      headers:
+        x-nyt-miss: "1"
+        project-ocean-test: "true"
+        storylines-recirc-test: "true"
+        cookie: nyt-a=eb6222b5c4b843ffd255ca86f7decb8c
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-country: US
+          debug-vi-abtest: STYLN_recirc_pres=0_recirc_pres_control

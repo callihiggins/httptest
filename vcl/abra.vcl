@@ -149,8 +149,8 @@ sub recv_abra_allocation {
     #
 
     # Are we on the story route and is the test enabled?
-    #Limit the articles to after 2019/08/01
-    if (req.http.x-nyt-route == "vi-story" && req.http.var-is-storylines-recirc-test-enabled == "true" && req.url ~ "^/?2019/(0[8-9]|1[0-2])/([0-3][1-9])/") {
+    # Also limit articles cached to 2019/08/05 ~ 2019/08/19
+    if (req.http.x-nyt-route == "vi-story" && req.http.var-is-storylines-recirc-test-enabled == "true" && req.url ~ "^/?2019/08/(0[5-9]|1[0-9])/") {
       #append an & if there was a previous test
       if (var.test_group){
         set var.test_group = var.test_group "&";
