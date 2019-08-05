@@ -117,6 +117,9 @@ sub vcl_recv {
   # initializes the device detection header
   call shared_recv_device_detection_init;
 
+  # block access to alpha-preview from outside of NYT
+  call recv_block_alpha_preview;
+
   # initialize geo ip headers only on the edge
   if (!req.http.x-nyt-shield-auth) {
     call shared_recv_geoip_headers_init;
