@@ -80,7 +80,7 @@ sub recv_route_real_estate {
         }
 
         # Router by page
-        if (req.http.var-nyt-env == "stg" && req.url ~ "^/real-estate/mortgage-calculator") {
+        if (req.http.var-nyt-env != "dev" && req.url ~ "^/real-estate/mortgage-calculator") {
           set req.http.x-nyt-backend = "realestate_fe_vi";
         }
     }

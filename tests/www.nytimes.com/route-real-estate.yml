@@ -194,7 +194,7 @@ tests:
           Safari/8536.25
     conditions:
       env:
-        TEST_ENV: dev|prd
+        TEST_ENV: dev
     response:
       headers:
         patterns:
@@ -212,7 +212,7 @@ tests:
           Safari/8536.25
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
