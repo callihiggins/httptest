@@ -4,7 +4,17 @@ sub recv_route_story {
       // Internationalized URLs https://jira.nyt.net/browse/DV-1731
       declare local var.internationalized_url BOOL;
       if (   req.url ~ "^/(a[fryz]|b[egns]|c[aksy]|d[ae]|e[lnotu]|f[abiory]|g[alnux]|h[eiruy]|i[dst]|j[av]|k[akmnou]|l[aitv]|m[gklnrst]|n[beln]|p[alst]|qu|r[mou]|s[aekloqrvwy]|t[aeghlrt]|u[krz]|vi|xh|yi|zh|zh-(CN|HK|TW|hans|hant)|zu)/"
-          || req.url.path ~ "^/es/.*\.html$") {
+          || req.url.path ~ "^/es/.*\.html$"
+          || (req.http.var-nyt-env != "prd" && 
+                (  req.url.path ~ "^/es/$"
+                  || req.url.path ~ "^/es/section/"
+                  || req.url.path ~ "^/es/series/"
+                  || req.url.path ~ "^/es/spotlight/"
+                  || req.url.path ~ "^/es/news-event/"
+                  || req.url.path ~ "^/es/column/"  
+                )
+              )
+         ) {
         set var.internationalized_url = true;
       } else {
         set var.internationalized_url = false;
@@ -87,12 +97,12 @@ sub recv_route_story {
 
 sub recv_route_amp {
   // Route amp articles
-  if (
-    (req.http.var-nyt-canonical-www-host == "true" &&
-    (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" ||
-     req.url ~ "^/interactive") &&
-    req.url.path ~ "\.amp\.html$") ||
-    req.url ~ "^/apple-news/"
+  if ((req.http.var-nyt-canonical-www-host == "true"
+        &&  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" || req.url ~ "^/interactive")
+        &&   req.url.path ~ "\.amp\.html$"
+        )
+      || req.url ~ "^/apple-news/"
+      || (req.http.var-nyt-canonical-www-host == "true" && req.url ~ "^/es/.*\.amp\.html")
   ) {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";
