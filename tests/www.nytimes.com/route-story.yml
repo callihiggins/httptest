@@ -43,6 +43,34 @@ tests:
           x-nyt-route: ^article$
           x-nyt-backend: ^article_fe$
   - description: Test routing; article; NYT5; ensure Fastly pass;
+      /1888/05/04/archives/the-pope-and-the-tories-an-answer-to-laboucheres-question-no.html
+    request:
+      path: /1888/05/04/archives/the-pope-and-the-tories-an-answer-to-laboucheres-question-no.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
+      /1924/04/05/archives/talk-of-underwood-and-smith-in-deal-washington-hears-senator-and.html
+    request:
+      path: /1924/04/05/archives/talk-of-underwood-and-smith-in-deal-washington-hears-senator-and.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+  - description: Test routing; article; NYT5; ensure Fastly pass;
       /1959/01/11/archives/sports-of-the-times-forecast-for-1959.html
     request:
       path: /1959/01/11/archives/sports-of-the-times-forecast-for-1959.html
@@ -54,8 +82,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /1964/01/01/mexico-tightens-control-of-semipublic-concerns.html
     request:
