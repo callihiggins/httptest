@@ -169,9 +169,10 @@ tests:
         patterns:
           x-nyt-route: ^article$
           x-nyt-backend: ^article_fe$
-  - description: Test routing; article; NYT5; ensure Fastly pass; /1850/01/01/us/slug.html
+  - description: Test routing; article; NYT5; ensure Fastly pass; 
+      /1864/10/04/archives/grants-operations-an-attack-on-ayres-division-repulsed-gen-gregg.html
     request:
-      path: /1850/01/01/us/slug.html
+      path: /1864/10/04/archives/grants-operations-an-attack-on-ayres-division-repulsed-gen-gregg.html
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -180,8 +181,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$      
   - description: Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/us/slug.html
     request:
       path: /1979/01/01/us/slug.html
