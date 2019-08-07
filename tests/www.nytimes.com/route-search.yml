@@ -43,4 +43,60 @@ tests:
           x-nyt-route: ^vi-search$
           x-nyt-backend: ^projectvi_fe$
           x-nyt-final-url: ^/search\?query=kevin%20durant$
-
+  - description: Vi Search with A/B testing flag empty query and sections
+    request:
+      path: /search?dropmab=true&query=&sections=World%7Cnyt%3A%2F%2Fsection%2F70e865b6-cc70-5181-84c9-8368b3a5c34b&sort=best
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-search$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-final-url: ^/search\?dropmab=true&query=&sections=World%7Cnyt%3A%2F%2Fsection%2F70e865b6-cc70-5181-84c9-8368b3a5c34b&sort=best$
+  - description: Vi Search B-version enabled
+    request:
+      path: /search?dropmab=true
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-search$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-final-url: ^/search\?dropmab=true$
+  - description: Vi Search with Sections facet
+    request:
+      path: /search?query=test&sections=World%7Cnyt%3A%2F%2Fsection%2F70e865b6-cc70-5181-84c9-8368b3a5c34b
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-search$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-final-url: ^/search\?query=test&sections=World%7Cnyt%3A%2F%2Fsection%2F70e865b6-cc70-5181-84c9-8368b3a5c34b$
+  - description: Vi Search with Types facet
+    request:
+      path: /search?query=test&types=imageslideshow
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-search$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-final-url: ^/search\?query=test&types=imageslideshow$
+          

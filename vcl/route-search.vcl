@@ -22,5 +22,8 @@ sub recv_route_search_filter_querystring {
     "query" + querystring.filtersep() +
     "startDate" + querystring.filtersep() +
     "endDate" + querystring.filtersep() +
+    "dropmab" + querystring.filtersep() +
+    "sections" + querystring.filtersep() +
+    "types" + querystring.filtersep() +
     "sort");
 }
