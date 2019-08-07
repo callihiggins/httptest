@@ -58,10 +58,10 @@ sub recv_route_story {
         # Vi overrides story route based on date range and allocation.
         ##############################################################
         # The articles that are potentially served by the publishing pipeline
-        # are limited by a date range of between 1850 to 1959 and no earlier than 2013/01/01. This date is going
+        # are limited by a date range of between 1850 to 2005 and no earlier than 2013/01/01. This date is going
         # to be extended in the future to include older articles and the code will
         # be updated accordingly.
-        if ((  req.url ~ "^/(aponline/|reuters/)?18[5-9][0-9]|19[0-5][0-9]|20(1[3-9]|[2-9][0-9])"
+        if ((  req.url ~ "^/(aponline/|reuters/)?18[5-9][0-9]|19[0-9][0-9]|200[0-5]|20(1[3-9]|[2-9][0-9])"
             || var.internationalized_url
           )
           && req.url.path !~ "\.amp\.html$" // exclude amp

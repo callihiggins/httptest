@@ -26,8 +26,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /2005/03/01/business/worldbusiness/chinas-oil-diplomacy-in-latin-america.html
     request:
@@ -40,8 +40,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /1888/05/04/archives/the-pope-and-the-tories-an-answer-to-laboucheres-question-no.html
     request:
@@ -96,8 +96,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /1979/01/01/archives/carolyn-spiro-married-to-gregory-j-cannata.html
     request:
@@ -110,8 +110,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass; redirect;
       /2001/01/20/technology/20ANNIVERSARY.html
     request:
@@ -124,8 +124,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /2004/01/09/us/2004-campaign-fund-raising-financial-firms-are-bush-s-biggest-donors-study.html
     request:
@@ -138,8 +138,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /2006/01/29/fashion/sundaystyles/29LOVE.html
     request:
@@ -195,8 +195,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass; 
       /1864/10/04/archives/grants-operations-an-attack-on-ayres-division-repulsed-gen-gregg.html
     request:
@@ -222,8 +222,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass; /1981/01/01/us/slug.html
     request:
       path: /1981/01/01/us/slug.html
@@ -235,8 +235,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass; /1995/01/01/us/slug.html
     request:
       path: /1995/01/01/us/slug.html
@@ -248,8 +248,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-backend: ^article_fe$
-          x-nyt-route: ^article$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; VI; ensure Fastly pass;
       /2013/11/04/theater/reviews/taymors-midsummer-nights-dream-opens-brooklyn-theater.html
     request:
@@ -320,8 +320,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-backend: ^article_fe$
-          x-nyt-route: ^article$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5 GKE; ensure Fastly pass;
       /1996/01/22/business/the-new-york-times-introduces-a-web-site.html
     request:
@@ -334,7 +334,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
+          x-nyt-backend: ^projectvi_fe$
   - description: Test routing; article; NYT5 GKe; ensure Fastly pass;
       /2006/11/12/fashion/12love.html
     request:
@@ -348,6 +348,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^article$
+          x-nyt-backend: ^article_fe$
   - description: No vistory cookie
     request:
       path: /2017/10/16/upshot/this-is-a-test-article.html
