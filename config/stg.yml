@@ -389,14 +389,14 @@ backends:
       window: "4"
 
   - name: "programs_svc"
-    address: "ftu-dot-nyt-betaprog-dev.appspot.com"
+    address: "programs-fe-origin.stg.nytimes.com"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "ftu-dot-nyt-betaprog-dev.appspot.com"
-    ssl_sni_hostname: "ftu-dot-nyt-betaprog-dev.appspot.com"
+    ssl_cert_hostname: "programs-fe-origin.stg.nytimes.com"
+    ssl_sni_hostname: "programs-fe-origin.stg.nytimes.com"
     healthcheck:
-      host: "ftu-dot-nyt-betaprog-dev.appspot.com"
+      host: "programs-fe-origin.stg.nytimes.com"
       path: "/status.txt"
       check_interval: "5000"
       expected_response: "200"
