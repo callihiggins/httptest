@@ -439,15 +439,14 @@ tests:
       path: /section/realestate/commercial
       headers:
         x-nyt-miss: "1"
-        x-pre-restart-status: Incompatible
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: stg
     response:
       headers:
         patterns:
-          x-nyt-route: ^collection$
-          x-nyt-backend: ^collection_fe$
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^realestate_fe_vi$
   - description: Test /section/realestate/commercial collection point to realestate backend
     request:
       path: /section/realestate/commercial
@@ -456,7 +455,7 @@ tests:
         x-pre-restart-status: Compatible
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: prd
     response:
       headers:
         patterns:
