@@ -58,7 +58,7 @@ sub set_programs_web_host {
     } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "programs-fe-origin.stg.nytimes.com";
     } else {
-        set bereq.http.host = "ftu-dot-nyt-betaprog-prd.appspot.com";
+        set bereq.http.host = "programs-fe-origin.nytimes.com";
     }
 }
 
