@@ -72,8 +72,7 @@ sub recv_route_collection {
     if (req.url ~ "^/section/realestate/commercial") {
       if (req.http.var-nyt-env == "dev") {
         set req.http.x-nyt-backend = "realestate_fe";
-      }
-      if (req.http.var-nyt-env == "stg") {
+      } else {
         set req.http.x-nyt-backend = "realestate_fe_vi";
       }
     }
