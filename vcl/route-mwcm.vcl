@@ -72,6 +72,9 @@ sub recv_route_mwcm {
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
 
+                call shared_recv_cmots_headers_init;
+                call shared_recv_cmots_miss_init;
+
                 # if a querystring `pre_prod=true` present
                 # then change the x-nyt-backend to be `mwcm_preview`
                 # and x-nyt-route to be `mwcm-preview`
@@ -84,9 +87,6 @@ sub recv_route_mwcm {
                     set req.http.x-nyt-backend = "mwcm_preview";
                     set req.http.var-nyt-force-pass = "true";
                 }
-
-                call shared_recv_cmots_miss_init;
-                call shared_recv_cmots_headers_init;
 
                 # this logic allows stripping of optimizely dependency via cookie "mwcm_exclude_optimizely"
                 # checks the presence of the "mwcm_exclude_optimizely" cookie
