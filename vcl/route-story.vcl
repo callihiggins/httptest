@@ -10,7 +10,7 @@ sub recv_route_story {
                   || req.url.path ~ "^/es/series/"
                   || req.url.path ~ "^/es/spotlight/"
                   || req.url.path ~ "^/es/news-event/"
-                  || req.url.path ~ "^/es/column/"  
+                  || req.url.path ~ "^/es/column/"
               )
          ) {
         set var.internationalized_url = true;
@@ -87,6 +87,8 @@ sub recv_route_story {
               call recv_route_vi_static_backup_gcs;
               call recv_abra_allocation;
             }
+
+            call recv_bot_detection;
         }
       }
    }
@@ -145,6 +147,10 @@ sub error_755_amp_redirect {
 
 sub deliver_route_story_restart_indicators {
 
+    if (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "article") {
+        call deliver_bot_detection;
+    }
+
     # if the response was not compatible with VI we
     # restart the request and signal that this happened
     if (resp.http.x-vi-compatibility == "Incompatible") {
@@ -155,6 +161,8 @@ sub deliver_route_story_restart_indicators {
         set req.http.var-nyt-surrogate-key = resp.http.var-nyt-surrogate-key;
         return (restart);
     }
+
+
 }
 
 sub deliver_route_story_us_cookie {
@@ -234,6 +242,7 @@ sub miss_pass_route_story {
   if (!req.backend.is_shield) {
     if (req.http.x-nyt-route == "article" || req.http.x-nyt-route == "vi-story") {
       unset bereq.http.cookie;
+      call miss_pass_bot_detection;
     }
   }
 }

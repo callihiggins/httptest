@@ -78,6 +78,7 @@ include "agent-id";
 include "gdpr";
 include "response-headers";
 include "geo-identifier";
+include "bot-detection";
 
 sub vcl_recv {
 

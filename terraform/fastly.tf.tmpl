@@ -435,6 +435,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "bot-detection"
+    main    = false
+    content = "${file("../vcl/bot-detection.vcl")}"
+  }
+
+  vcl {
     name    = "main"
     main    = true
     content = "${file("../vcl/main.vcl")}"
