@@ -14,6 +14,7 @@ tests:
           x-goog-storage-class: .+
       statusCodes:
         - 200
+
   - description: Fonts .css files served with CORS headers
     request:
       path: /vi-assets/static-assets/story-woff2.fonts-8cda51537d027e0df92bea96a094bfe3.css
@@ -26,6 +27,29 @@ tests:
       headers:
         patterns:
           access-control-allow-origin: ^\*$
+      statusCodes:
+        - 200
+
+  - description: Source Maps are restricted by default
+    request:
+      path: /vi-assets/static-assets/main-dc43617dc39835907e3f.js.map
+      headers:
+        x-nyt-nyhq-access: "0" # Fake that we are outside of the network
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      statusCodes:
+        - 403
+  - description: Source Maps are not resticted internally
+    request:
+      path: /vi-assets/static-assets/main-dc43617dc39835907e3f.js.map
+      headers:
+        x-nyt-nyhq-access: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
       statusCodes:
         - 200
 

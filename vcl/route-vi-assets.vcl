@@ -1,4 +1,9 @@
 sub recv_route_vi_assets {
+  // We want to restrict source maps unless the request is internal or it's from our vendor Sentry
+  if (req.url ~ "\.js\.map$" && !(req.http.x-nyt-nyhq-access == "1" || req.http.X-Sentry-Token == table.lookup(vendor_tokens, "sentry_token"))) {
+    error 403 "Forbidden";
+  }
+
   if (req.url ~ "^/vi-assets/") {
     set req.http.x-nyt-route = "vi-assets";
     set req.http.x-nyt-backend = "gcs_origin";
