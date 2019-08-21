@@ -119,8 +119,8 @@ sub recv_initialize_transaction_state {
     }
 
     # Switch to turn on/off the Storylines ABRA test.
-    # Currently set to always be on for testing phase in prod
-    set req.http.var-is-storylines-recirc-test-enabled = "true";
+    # Currently set to off, testing in prod is on hold
+    set req.http.var-is-storylines-recirc-test-enabled = "false";
     # For debugging purposes, if the request is internal and we
     # detect a test header, then turn on the switch.
     if (req.http.x-nyt-nyhq-access == "1" && req.http.storylines-recirc-test == "true") {
