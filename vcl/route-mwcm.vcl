@@ -261,6 +261,12 @@ sub miss_pass_route_mwcm {
             # allows b2b_cig_opt to MWCM backend
             set bereq.http.cookie = bereq.http.cookie " b2b_cig_opt=" req.http.cookie:b2b_cig_opt ";";
         }
+
+        if (req.http.cookie:jkidd-l) {
+            #checks the presence of the jkidd-l
+            # allows jkidd-l to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " jkidd-l=" req.http.cookie:jkidd-l ";";
+        }
     }
 }
 
