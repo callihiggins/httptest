@@ -15,10 +15,6 @@ tests:
           x-nyt-route: ^blog$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
-      statusCodes:
-        - 200
-        - 301
-        - 404
   - description: Test routing; /news; Blogs;
       /news/affordable-care-act/2014/03/06/more-than-one-way-to-buy-a-plan/
     request:
@@ -35,10 +31,6 @@ tests:
           x-nyt-route: ^blog$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
-      statusCodes:
-        - 200
-        - 301
-        - 404
   - description: Test routing; times-insider; Blogs;
       /times-insider/2014/04/01/dangerous-roads-constant-crises-adam-nossiter-on-central-africa/
     request:
@@ -55,10 +47,6 @@ tests:
           x-nyt-route: ^blog$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
-      statusCodes:
-        - 200
-        - 301
-        - 404
   - description: Test routing; /live; blogs; /live/2016-golden-globes/
     request:
       path: /live/2016-golden-globes/?gdpr=1
@@ -74,10 +62,6 @@ tests:
           x-nyt-route: ^blog$
           x-gdpr: ^1$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
-      statusCodes:
-        - 200
-        - 301
-        - 404
   - description: Test blogs querystring filter
     request:
       path: /live/2016-golden-globes/?apagenum=5&bad1=4&p=2&bad2=5&callback=hello
@@ -92,8 +76,4 @@ tests:
           x-nyt-backend: ^blogs$
           x-nyt-route: ^blog$
           x-nyt-final-url: ^/live/2016-golden-globes/\?apagenum=5&callback=hello&p=2$
-      statusCodes:
-        - 200
-        - 301
-        - 404
 
