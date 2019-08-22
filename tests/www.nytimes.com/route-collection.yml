@@ -406,6 +406,21 @@ tests:
           x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /reviews/movies collection
+    request:
+      path: /reviews/movies
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /reviews/theater collection
     request:
       path: /reviews/theater
