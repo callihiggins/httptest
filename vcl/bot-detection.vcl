@@ -285,6 +285,7 @@ sub datadome_set_origin_header {
         set bereq.http.x-datadome-moduleversion = "1.6";
         set bereq.http.x-datadome-timestamp = time.start.usec;
         set bereq.http.x-datadome-serverhostname = server.identity;
+        set bereq.http.x-datadome-server-region = server.region;
         set bereq.http.x-real-ip = req.http.fastly-client-ip;
         set bereq.http.x-authorizationlen = std.strlen(req.http.authorization);
         unset bereq.http.authorization;
@@ -298,6 +299,7 @@ sub datadome_set_origin_header {
         unset bereq.http.x-datadome-moduleversion;
         unset bereq.http.x-datadome-timestamp;
         unset bereq.http.x-datadome-serverhostname;
+        unset bereq.http.x-datadome-server-region;
         unset bereq.http.x-real-ip;
         unset bereq.http.x-authorizationlen;
         unset bereq.http.x-original-method;
