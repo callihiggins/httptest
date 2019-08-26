@@ -83,6 +83,15 @@ sub recv_route_real_estate {
         if (req.http.var-nyt-env != "dev" && req.url ~ "^/real-estate/mortgage-calculator") {
           set req.http.x-nyt-backend = "realestate_fe_vi";
         }
+
+        if (req.http.var-nyt-env == "stg") {
+          if (
+            req.url ~ "^/real-estate/find-a-home" ||
+            req.url ~ "^/real-estate/the-high-end"
+          ) {
+            set req.http.x-nyt-backend = "realestate_fe_vi";
+          }
+        }
     }
 }
 

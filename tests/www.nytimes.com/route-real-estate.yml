@@ -6,7 +6,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|prd
     response:
       headers:
         patterns:
@@ -16,6 +16,23 @@ tests:
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
         - 200
+  - description: 'Test real estate on stg: "/real-estate/find-a-home" '
+    request:
+      path: /real-estate/find-a-home?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+      - 200
   - description: Test realestate querystring filter
     request:
       path: /real-estate/find-a-home?price=5&bad1=4&region=2&bad2=5&neighborhood=hello
@@ -23,7 +40,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|prd
     response:
       headers:
         patterns:
@@ -32,6 +49,22 @@ tests:
           x-nyt-final-url: ^/real-estate/find-a-home\?neighborhood=hello&price=5&region=2$
       statusCodes:
         - 200
+  - description: Test realestate querystring filter Stg
+    request:
+      path: /real-estate/find-a-home?price=5&bad1=4&region=2&bad2=5&neighborhood=hello
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          x-nyt-final-url: ^/real-estate/find-a-home\?neighborhood=hello&price=5&region=2$
+      statusCodes:
+      - 200
   - description: Test realestate mobile redirect
     request:
       path: /real-estate/homes-for-sale/?locations%5B%5D=new-york-ny-usa&sortBy=dateposted-desc
