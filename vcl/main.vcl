@@ -5,6 +5,7 @@ include "shared-vcl-version";
 include "shared-geoip-headers-init";
 include "shared-device-detection-init";
 include "shared-cmots-headers-init";
+include "shared-purr";
 
 # initialization
 include "error-pages";
@@ -117,6 +118,11 @@ sub vcl_recv {
 
   # initializes the device detection header
   call shared_recv_device_detection_init;
+
+  # evaluate purr rules (but not if on a shield pop)
+  if (!req.http.x-nyt-shield-auth) {
+    call shared_recv_get_purr_directives;
+  }
 
   # block access to alpha-preview from outside of NYT
   call recv_block_alpha_preview;
@@ -562,6 +568,8 @@ sub vcl_deliver {
   if (!req.http.x-nyt-shield-auth) {
     #gdpr
     call deliver_gdpr;
+    # set purr cookie into response (nyt-purr) only on edge
+    call shared_deliver_purr_cookie;
     call deliver_route_story_us_cookie;
     call deliver_route_newsletters_us_cookie;
     call deliver_geo_cookie;

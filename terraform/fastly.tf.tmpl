@@ -467,6 +467,11 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "shared-purr"
+    content = "${module.shared_vcl.purr}"
+  }
+
+  vcl {
     name    = "shared-cmots-headers-init"
     content = "${module.cmots_shared_vcl.cmots_headers_init}"
   }

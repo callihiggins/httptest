@@ -1,0 +1,11 @@
+tests:
+  - description: creates the nyt-purr cookie
+    request:
+      path: /
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: nyt-purr=.*;
