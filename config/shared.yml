@@ -72,13 +72,13 @@ bigquery_log:
     \"socket_tcpi_delta_retrans\":%{client.socket.tcpi_delta_retrans}V,
     \"socket_ploss\":%{client.socket.ploss}V,
     \"backend_name\":\"%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\\\"\\\")}V\",
-    \"pagetype\":\"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
+    \"pagetype\":\"%{if(resp.http.x-PageType,resp.http.x-PageType,\\\"\\\")}V\",
+    \"route\":\"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
     \"apiversion\":\"%{if(resp.http.X-API-Version,resp.http.X-API-Version,\\\"\\\")}V\",
     \"redirect_reason\":\"%{if(req.http.var-nyt-redirect-reason,regsub(req.http.var-nyt-redirect-reason,\\\"redir=\\\\[([^\\\\]]+)\\\\]\\\",\\\"\\\\1\\\"),\\\"\\\")}V\",
     \"trace_id\": \"%{if(req.http.x-b3-trace-id,req.http.x-b3-trace-id,\\\"\\\")}V\",
     \"backend_healthy\": \"%{if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,\\\"\\\")}V\",
     \"restarts\": %{req.restarts}V,
-    \"route\": \"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
     \"is_shield\": %{if(req.http.x-nyt-shield-auth,\\\"true\\\",\\\"false\\\")}V,
     \"restart_reason\":\"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\"
     }
@@ -156,13 +156,13 @@ gcslogging:
     \"socket_tcpi_delta_retrans\":%{client.socket.tcpi_delta_retrans}V,
     \"socket_ploss\":%{client.socket.ploss}V,
     \"backend_name\":\"%{if(req.http.x-nyt-backend,req.http.x-nyt-backend,\\\"\\\")}V\",
-    \"pagetype\":\"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
+    \"pagetype\":\"%{if(resp.http.x-PageType,resp.http.x-PageType,\\\"\\\")}V\",
+    \"route\":\"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
     \"apiversion\":\"%{if(resp.http.X-API-Version,resp.http.X-API-Version,\\\"\\\")}V\",
     \"redirect_reason\":\"%{if(req.http.var-nyt-redirect-reason,regsub(req.http.var-nyt-redirect-reason,\\\"redir=\\\\[([^\\\\]]+)\\\\]\\\",\\\"\\\\1\\\"),\\\"\\\")}V\",
     \"trace_id\": \"%{if(req.http.x-b3-trace-id,req.http.x-b3-trace-id,\\\"\\\")}V\",
     \"backend_healthy\": \"%{if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,\\\"\\\")}V\",
     \"restarts\": %{req.restarts}V,
-    \"route\": \"%{if(req.http.x-nyt-route,req.http.x-nyt-route,\\\"\\\")}V\",
     \"is_shield\": %{if(req.http.x-nyt-shield-auth,\\\"true\\\",\\\"false\\\")}V,
     \"restart_reason\":\"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\"
     }
