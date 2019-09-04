@@ -6,13 +6,41 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg|prd
+        TEST_ENV: prd
     response:
       headers:
         patterns:
           x-nyt-route: ^video-library$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
           x-gdpr: ^[0-1]$
+      statusCodes:
+        - 200
+  - description: Test hitting a video library page on vi
+    request:
+      path: /video/u-s
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-video$
+      statusCodes:
+        - 200
+  - description: Test hitting a video home page on vi
+    request:
+      path: /video
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-video$
       statusCodes:
         - 200
   - description: Test hitting the video library homepage with a query string at the end

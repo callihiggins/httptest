@@ -9,10 +9,20 @@ sub recv_route_video {
     }
 
     if ( req.url.path == "/video" || req.url.path ~ "^/video/") {
-        set req.http.x-nyt-route = "video-library";
-        set req.http.x-nyt-backend = "video_library";
+        if (req.http.var-nyt-env == "prd") {
+            set req.http.x-nyt-route = "video-library";
+            set req.http.x-nyt-backend = "video_library";
+            set req.url = querystring.filter_except(req.url, "playlistId");
+        } else {
+            set req.http.x-nyt-route = "vi-video";
+            set req.http.x-nyt-backend = "projectvi_fe";
+            set req.http.var-nyt-error-retry = "false";
+            set req.http.var-nyt-wf-auth = "true";
+            set req.url = querystring.remove(req.url);
+            unset req.http.Authorization;
+        }   
         set req.http.var-nyt-send-gdpr = "true";
-        set req.url = querystring.filter_except(req.url, "playlistId");
+        call recv_post_method_restricted;
     }
 
     if ( req.url.path ~ "^/video/players/offsite/" ) {
@@ -41,6 +51,10 @@ sub miss_pass_route_video {
 
     # video routes do not need cookies
     if (!req.backend.is_shield && req.http.x-nyt-route ~ "^video-") {
+        unset bereq.http.cookie;
+    }
+
+    if (req.http.x-nyt-route == "vi-video") {
         unset bereq.http.cookie;
     }
 
