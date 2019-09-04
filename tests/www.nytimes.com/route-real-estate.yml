@@ -1,4 +1,38 @@
 tests:
+  - description: 'Test real estate dev gdpr: "/real-estate/the-high-end" '
+    request:
+      path: /real-estate/the-high-end?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+      - 200
+  - description: 'Test real estate on stg|prd gdpr : "/real-estate/the-high-end" '
+    request:
+      path: /real-estate/the-high-end?gdpr=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          x-gdpr: ^1$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+      - 200
   - description: 'Test real estate: "/real-estate/find-a-home" '
     request:
       path: /real-estate/find-a-home?gdpr=1
@@ -6,7 +40,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|prd
+        TEST_ENV: dev
     response:
       headers:
         patterns:
@@ -23,7 +57,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -40,7 +74,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|prd
+        TEST_ENV: dev
     response:
       headers:
         patterns:
@@ -56,7 +90,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
