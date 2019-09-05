@@ -481,9 +481,9 @@ backends:
 
   - name: "alpha_fe"
     address: "alpha-dev.dev.nyt.net"
-    between_bytes_timeout: "2000"
-    connect_timeout: "3000"
-    first_byte_timeout: "5000"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "15000"
     ssl_cert_hostname: "alpha-dev.dev.nyt.net"
     ssl_sni_hostname: "alpha-dev.dev.nyt.net"
     healthcheck:
