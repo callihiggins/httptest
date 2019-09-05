@@ -104,5 +104,8 @@ sub deliver_debug_response_headers {
     set resp.http.debug-var-nyt-env = req.http.var-nyt-env;
     set resp.http.debug-var-nyt-force-pass = if(req.http.var-nyt-force-pass, req.http.var-nyt-force-pass, "false");
     set resp.http.debug-vi-abtest = req.http.x-nyt-vi-abtest;
+    set resp.http.debug-req-http-x-nyt-purr-acceptable-trackers = req.http.x-nyt-purr-acceptable-trackers;
+    set resp.http.debug-req-http-x-nyt-purr-ad-configuration = req.http.x-nyt-purr-ad-configuration;
+    set resp.http.debug-req-http-x-nyt-purr-data-sale-opt-out-ui = req.http.x-nyt-purr-data-sale-opt-out-ui;
   }
 }

@@ -51,6 +51,9 @@ tests:
         patterns:
           debug-var-nyt-env: .+
           debug-var-nyt-force-pass: .+
+          debug-req-http-x-nyt-purr-acceptable-trackers: .+
+          debug-req-http-x-nyt-purr-ad-configuration: .+
+          debug-req-http-x-nyt-purr-data-sale-opt-out-ui: .+
       statusCodes:
         - 200
         - 404
