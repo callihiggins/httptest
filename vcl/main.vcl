@@ -1,5 +1,6 @@
 # acl
 include "acl-googlebot";
+include "acl-botify";
 include "shared-access-control";
 include "shared-vcl-version";
 include "shared-geoip-headers-init";

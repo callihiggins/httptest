@@ -639,6 +639,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "acl-botify"
+    main    = false
+    content = "${file("../vcl/acl-botify.vcl")}"
+  }
+
+  vcl {
     name    = "route-paidpost"
     main    = false
     content = "${file("../vcl/route-paidpost.vcl")}"
