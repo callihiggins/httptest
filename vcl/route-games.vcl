@@ -17,6 +17,8 @@ sub recv_route_games {
               set req.http.var-nyt-force-pass = "true";
               // Send x-gdpr header value to backend server
               set req.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
+              // expose cookie value as custom header for backends
+              set req.http.x-nyt-a = req.http.var-cookie-nyt-a;
         }
 
         if (req.url.path ~ "^/crosswords") {
@@ -29,6 +31,8 @@ sub recv_route_games {
             set req.http.var-nyt-force-pass = "true";
             // Send x-gdpr header value to backend server
             set req.http.x-nyt-gdpr = req.http.var-cookie-nyt-gdpr;
+            // expose cookie value as custom header for backends
+            set req.http.x-nyt-a = req.http.var-cookie-nyt-a;
         }
 
         // We can treat the games assets as everything else and cache those (no cookies needed there)
