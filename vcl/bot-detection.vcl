@@ -29,6 +29,10 @@ sub datadome_vcl_recv {
   # should be checked by DataDome
   if (!req.http.fastly-ff && req.restarts == 0 && req.url !~ "\.(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
     set req.http.destination = "datadome";
+    if (!req.http.x-datadome-timer) {
+          set req.http.x-datadome-timer = "S" time.start.sec "." time.start.usec_frac;
+    }
+    set req.http.x-datadome-timer = req.http.x-datadome-timer ",VS0";
   } else {
     set req.http.destination = "origin";
   }
@@ -90,6 +94,11 @@ sub datadome_vcl_recv {
 }
 
 sub datadome_vcl_deliver {
+  if (req.restarts == 0) {
+      set req.http.x-datadome-timer = req.http.x-datadome-timer ",VE" time.elapsed.msec;
+    }
+  set resp.http.x-datadome-timer = req.http.x-datadome-timer;
+
   if (req.backend == F_datadome
    || req.backend == F_datadome_apac
    || req.backend == F_datadome_asia
