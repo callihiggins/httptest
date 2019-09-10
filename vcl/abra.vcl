@@ -92,10 +92,8 @@ sub recv_abra_allocation {
     #              users on the home and story routes.
     #
     # Variants:
-    #   - 0_control                        25%
-    #   - 1_gdpr_test                      25%
-    #   - 2_change_the_fold_test           25%
-    #   - 3_gdpr_and_change_the_fold_test  25%
+    #   - 0_control                        50%
+    #   - 1_change_the_fold_test           50%
     #
     #
     # Are we in a latin american country?
@@ -115,14 +113,10 @@ sub recv_abra_allocation {
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (var.p < 2576980377) {
+      if (var.p < 2147483648) {
         set var.test_param = var.test_name + "=0_control";
-      } elseif (var.p < 2147483648) {
-        set var.test_param = var.test_name + "=1_gdpr_test";
-      } elseif (var.p < 3221225472) {
-        set var.test_param = var.test_name + "=2_change_the_fold_test";
       } else {
-        set var.test_param = var.test_name + "=3_gdpr_and_change_the_fold_test";
+        set var.test_param = var.test_name + "=1_change_the_fold_test";
       }
 
       set var.test_group = var.test_group + var.test_param;
