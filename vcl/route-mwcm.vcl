@@ -232,6 +232,12 @@ sub miss_pass_route_mwcm {
             set bereq.http.cookie = bereq.http.cookie " nyt-mwcm=" req.http.cookie:nyt-mwcm ";";
         }
 
+        if (req.http.cookie:nyt-cmots) {
+            #checks the presence of the nyt-cmots
+            # allows nyt-cmots to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " nyt-cmots=" req.http.cookie:nyt-cmots ";";
+        }
+
         if (req.http.cookie:ab7 && req.http.x-nyt-nyhq-access == "1") {
             #checks the presence of ab7 and nyhd
             # allows ab7 to MWCM backend
