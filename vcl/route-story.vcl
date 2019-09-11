@@ -18,6 +18,20 @@ sub recv_route_story {
         set var.internationalized_url = false;
       }
 
+      // These articles are explicitly opted IN to being served by Vi even though the date range they are in typically
+      // would route to NYT5 or legacy backend. As the archive migration proceeds URLs can be removed from
+      // the whitelist here.
+      declare local var.vi_explicit_opt_in BOOL;
+      if (
+             req.url.path ~ "^/2006/01/22/fashion/sundaystyles/so-he-looked-like-dad-it-was-just-dinner-right.html$"
+          || req.url.path ~ "^/2006/01/22/style/modern-love-so-he-looked-like-dad-it-was-just-dinner-right.html$"
+          || req.url.path ~ "^/2008/01/13/style/modern-love-take-me-as-i-am-whoever-i-am.html$"
+        ) {
+        set var.vi_explicit_opt_in = true;
+      } else {
+        set var.vi_explicit_opt_in = false;
+      }
+
       # default route for stories is NYT5
       if (  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
           || req.url ~ "^/(aponline|reuters)/" // wire sources
@@ -61,6 +75,7 @@ sub recv_route_story {
         # be updated accordingly.
         if ((  req.url ~ "^/(aponline/|reuters/)?18[5-9][0-9]|19[0-9][0-9]|200[0-5]|20(1[3-9]|[2-9][0-9])"
             || var.internationalized_url
+            || var.vi_explicit_opt_in
           )
           && req.url.path !~ "\.amp\.html$" // exclude amp
           && req.http.x-vi-story-opt != "0" // always out
