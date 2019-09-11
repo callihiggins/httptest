@@ -287,4 +287,49 @@ tests:
           x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
         - 200
+  - description: RealEstate Building page redirect full path to VI platform
+    request:
+      path: /real-estate/usa/ny/new-york/upper-west-side-%2872nd-96th-street%29/building/322-west-88th-street/1220
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+        - 200
+  - description: RealEstate Building page redirect short path to VI platform
+    request:
+      path: /real-estate/building/1220
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+      - 200
+  - description: RealEstat Account page redirect to VI platform
+    request:
+      path: /real-estate/my-real-estate
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+      - 200
 

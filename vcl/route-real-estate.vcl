@@ -90,6 +90,16 @@ sub recv_route_real_estate {
           }
         }
 
+        # Next Pages release
+        if (req.http.var-nyt-env == "stg") {
+          if (
+            req.url ~ "^/real-estate(?:\/.*)?\/building/" ||
+            req.url ~ "^/real-estate/my-real-estate"
+          ) {
+            set req.http.x-nyt-backend = "realestate_fe_vi";
+          }
+        }
+
     }
 }
 
