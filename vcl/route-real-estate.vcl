@@ -84,15 +84,7 @@ sub recv_route_real_estate {
           if (
             req.url ~ "^/real-estate/mortgage-calculator" ||
             req.url ~ "^/real-estate/find-a-home" ||
-            req.url ~ "^/real-estate/the-high-end"
-          ) {
-            set req.http.x-nyt-backend = "realestate_fe_vi";
-          }
-        }
-
-        # Next Pages release
-        if (req.http.var-nyt-env == "stg") {
-          if (
+            req.url ~ "^/real-estate/the-high-end" ||
             req.url ~ "^/real-estate(?:\/.*)?\/building/" ||
             req.url ~ "^/real-estate/my-real-estate"
           ) {

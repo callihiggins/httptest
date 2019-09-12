@@ -294,7 +294,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -309,7 +309,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -324,7 +324,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
