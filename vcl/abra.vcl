@@ -95,6 +95,12 @@ sub recv_abra_allocation {
     #   - 0_control                        50%
     #   - 1_change_the_fold_test           50%
     #
+    # Rollout:
+    #   Initially this will be rolled out to .1% of the population, so each variant
+    #   will be allocated 50% of .1%. Later, we'll roll it out to 100% of the population
+    #   and split the remaining 99.9%. The rollout is behind two flags:
+    #     initial .1%:      req.http.var-is-project-ocean-enabled
+    #     remaining 99.9%:  req.http.var-is-project-ocean-fully-scaled-enabled
     #
     # Are we in a latin american country?
     declare local var.is_in_latin_am BOOL;
@@ -113,16 +119,34 @@ sub recv_abra_allocation {
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (var.p < 2147483648) {
+      # First half of .1% of the population - control group
+      # round(0.5 * .001 * 2^32)
+      if (var.p < 2147484) {
         set var.test_param = var.test_name + "=0_control";
-      } else {
+      # Second half of .1% of the population - test 1 group
+      # round(.001 * 2^32)
+      } elseif (var.p < 4294967) {
         set var.test_param = var.test_name + "=1_change_the_fold_test";
+      # First half of remaining 100% of population - control group
+      # round(.001 * 2^32) + round(0.5 * .999 * 2^32)
+      } elseif (var.p < 2149631132) {
+        if (req.http.var-is-project-ocean-fully-scaled-enabled) {
+          set var.test_param = var.test_name + "=0_control";
+        }
+      # Second half of remaining 100% of population - test 1 group
+      # should be the remaining...
+      } else {
+        if (req.http.var-is-project-ocean-fully-scaled-enabled) {
+          set var.test_param = var.test_name + "=1_change_the_fold_test";
+        }
       }
 
-      set var.test_group = var.test_group + var.test_param;
-      # We need to vary the cache on both the home and story routes:
-      set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
-      set req.http.var-story-abtest-variation = req.http.var-story-abtest-variation + var.test_param;
+      if (var.test_param) {
+        set var.test_group = var.test_group + var.test_param;
+        # We need to vary the cache on both the home and story routes:
+        set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
+        set req.http.var-story-abtest-variation = req.http.var-story-abtest-variation + var.test_param;
+      }
     }
     #
     # End of Test dfp_latamv2

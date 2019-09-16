@@ -111,11 +111,13 @@ sub recv_initialize_transaction_state {
     set req.http.var-is-east-static-backup-enabled = "false";
 
     # Switch to turn on/off the Project Ocean ABRA test.
-    set req.http.var-is-project-ocean-enabled = "false";
+    set req.http.var-is-project-ocean-enabled = "true";
+    set req.http.var-is-project-ocean-fully-scaled-enabled = "false";
     # For debugging purposes, if the request is internal and we
     # detect a test header, then turn on the switch.
     if (req.http.x-nyt-nyhq-access == "1" && req.http.project-ocean-test == "true") {
       set req.http.var-is-project-ocean-enabled = "true";
+      set req.http.var-is-project-ocean-fully-scaled-enabled = "true";
     }
 
     # Switch to turn on/off the Storylines ABRA test.
