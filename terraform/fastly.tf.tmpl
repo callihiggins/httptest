@@ -467,6 +467,11 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "shared-socrates-acl"
+    content = "${module.shared_vcl.socrates_acl}"
+  }
+
+  vcl {
     name    = "shared-purr"
     content = "${module.shared_vcl.purr}"
   }
