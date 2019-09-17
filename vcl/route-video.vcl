@@ -18,7 +18,7 @@ sub recv_route_video {
             set req.http.x-nyt-backend = "projectvi_fe";
             set req.http.var-nyt-error-retry = "false";
             set req.http.var-nyt-wf-auth = "true";
-            set req.url = querystring.remove(req.url);
+            set req.url = querystring.filter_except(req.url, "playlistId");
             unset req.http.Authorization;
         }   
         set req.http.var-nyt-send-gdpr = "true";

@@ -22,7 +22,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg
+        TEST_ENV: stg
     response:
       headers:
         patterns:
@@ -36,7 +36,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg
+        TEST_ENV: stg
     response:
       headers:
         patterns:
@@ -164,4 +164,19 @@ tests:
         - 200
         - 301
         - 404
+  - description: Test hitting a playlistId video page on VI
+    request:
+      path: /video/world/asia/100000005136275/china-health-care-cancer-refugee.html?playlistId=video/times-documentaries&apagenum=5&bad1=4
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-video$
+          x-nyt-final-url: ^/video/world/asia/100000005136275/china-health-care-cancer-refugee.html\?playlistId=video/times-documentaries
+      statusCodes:
+        - 200
 
