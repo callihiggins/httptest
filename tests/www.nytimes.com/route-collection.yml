@@ -114,7 +114,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg|prd
+        TEST_ENV: prd
     response:
       headers:
         patterns:
@@ -129,12 +129,27 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg|prd
+        TEST_ENV: prd
     response:
       headers:
         patterns:
           x-nyt-route: ^collection$
           x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /saved on vi
+    request:
+      path: /saved
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /section collection

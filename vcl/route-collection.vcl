@@ -3,9 +3,6 @@ sub recv_route_collection {
       || req.url ~ "^/reviews/dining/map"
       || req.url ~ "^/reviews?"
       || req.url ~ "^/reviews$"
-      || req.url ~ "^/saved/"
-      || req.url ~ "^/saved\?"
-      || req.url ~ "^/saved$"
       || req.url ~ "^/topic/person/"
       || req.url ~ "^/topic/company/"
       || req.url ~ "^/topic/destination/"
@@ -25,6 +22,24 @@ sub recv_route_collection {
       unset req.http.Authorization;
 
       call recv_post_method_restricted;
+  }
+
+  if (req.url ~ "^/saved/" || req.url ~ "^/saved\?" || req.url ~ "^/saved$") {
+    if (req.http.var-nyt-env == "prd") {
+      set req.http.x-nyt-route = "collection";
+      set req.http.x-nyt-backend = "collection_fe";
+    } else {
+      set req.http.x-nyt-route = "vi-collection";
+      set req.http.x-nyt-backend = "projectvi_fe";
+      set req.http.var-nyt-error-retry = "false";
+    }
+    set req.http.var-nyt-wf-auth = "true";
+    set req.http.var-nyt-send-gdpr = "true";
+    if (req.http.var-nyt-canonical-alpha-host != "true") {
+      set req.url = querystring.filter_except(req.url, "nytapp");
+    }
+    unset req.http.Authorization;
+    call recv_post_method_restricted;
   }
 
   # route selected collections to VI first.
@@ -125,7 +140,7 @@ sub fetch_route_collection {
 }
 
 sub miss_pass_route_collection {
-  if (req.http.x-nyt-route == "collection" || req.http.x-nyt-route == "vi-collection") {
+  if (req.http.x-nyt-route == "collection" || req.http.x-nyt-route == "vi-collection" ) {
     unset bereq.http.cookie;
   }
 }
