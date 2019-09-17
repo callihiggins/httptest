@@ -33,7 +33,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "guides"          // beta - well guides
         || req.http.x-nyt-route == "trending"
         || req.http.x-nyt-route == "bestseller"
-        || req.url ~ "^/pages/(politics|opinion|world|dining)"        // NYT4 sectionfronts
+        || req.url ~ "^/pages/(politics|opinion|world|dining|business|sports|science|automobiles|your-money|technology)"        // NYT4 sectionfronts
         || req.http.x-nyt-route == "real-estate"
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
         || req.http.x-nyt-route == "recommendations"
