@@ -348,4 +348,15 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^switchboard$
-
+  - description: Test /theweeklyinstagram is not served from switchboard
+    request:
+      path: /theweeklyinstagram
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
