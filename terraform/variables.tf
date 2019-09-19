@@ -67,3 +67,7 @@ variable "gcs_secret_key" {
 variable "botify_s3_secret_key" {
   type = "string"
 }
+
+variable "netacea_s3_secret_key" {
+  type = "string"
+}

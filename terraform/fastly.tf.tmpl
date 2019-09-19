@@ -416,6 +416,34 @@ resource "fastly_service_v1" "service" {
 
   ####### End Botify / S3 Logging #######
 
+  ####### Begin Netacea / S3 Logging #######
+
+  {{ $netacea_env_s3_logging := (datasource "env_config").netacea_s3_logging }}
+  condition {
+    name      = "netacealogging"
+    priority  = 10
+    statement = "(req.http.x-nyt-route == \"vi-story\" || req.http.x-nyt-route == \"article\") && ((req.http.var-nyt-env != \"prd\") || randombool(5, 100)) "
+    type      = "RESPONSE"
+  }
+
+  s3logging {
+    name               = "netacea-${var.app}-${var.env}"
+    domain             = "s3-eu-west-1.amazonaws.com"
+    bucket_name        = "{{$netacea_env_s3_logging.bucket_name}}"
+    path               = "/www.nytimes.com/dataSources/fastly/"
+    s3_access_key      = "{{$netacea_env_s3_logging.s3_access_key}}"
+    s3_secret_key      = "${var.netacea_s3_secret_key}"
+    gzip_level         = 0
+    format_version     = 2
+    period             = 60
+    message_type       = "blank"
+    format             = "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""
+    timestamp_format   = "%Y-%m-%dT%H:%M:%S.000"
+    response_condition = "netacealogging"
+  }
+
+  ####### End Netacea / S3 Logging #######
+
   vcl {
     name    = "route-newsdev-attribute"
     main    = false

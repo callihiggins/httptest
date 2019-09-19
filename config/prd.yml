@@ -1373,3 +1373,8 @@ botify_s3_logging:
   # note this is a different bucket format than stg/prd, provided to us by botify
   bucket_name: "com.botify.saas.production.customer-logs"
   s3_access_key: "AKIA2ANC2HZEEJYKJENE"
+
+
+netacea_s3_logging:
+  bucket_name: "td-ingest-storage"
+  s3_access_key: "AKIAYJXVWMRH36X5T275"
