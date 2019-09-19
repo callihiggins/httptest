@@ -230,6 +230,11 @@ sub hash_route_story {
 }
 
 sub fetch_route_story {
+
+  if (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "article") {
+    call fetch_bot_detection;
+  }
+
   # remove x-varnishcacheduriation from non-2xx responses from NYT5
   # 404's were being cached for 900 seconds
   if (req.http.x-nyt-route == "article" && beresp.status > 299) {
