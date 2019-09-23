@@ -113,7 +113,7 @@ sub recv_abra_allocation {
     declare local var.is_route BOOL;
     set var.is_route = (var.is_home || var.is_story);
 
-    if (var.is_in_latin_am && var.is_route && req.http.var-is-project-ocean-enabled) {
+    if (var.is_in_latin_am && var.is_route) {
       set var.test_name = "dfp_latamv2";
       set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
@@ -130,15 +130,11 @@ sub recv_abra_allocation {
       # First half of remaining 100% of population - control group
       # round(.001 * 2^32) + round(0.5 * .999 * 2^32)
       } elseif (var.p < 2149631132) {
-        if (req.http.var-is-project-ocean-fully-scaled-enabled) {
-          set var.test_param = var.test_name + "=0_control";
-        }
+        set var.test_param = var.test_name + "=0_control";
       # Second half of remaining 100% of population - test 1 group
       # should be the remaining...
       } else {
-        if (req.http.var-is-project-ocean-fully-scaled-enabled) {
-          set var.test_param = var.test_name + "=1_change_the_fold_test";
-        }
+        set var.test_param = var.test_name + "=1_change_the_fold_test";
       }
 
       if (var.test_param) {
