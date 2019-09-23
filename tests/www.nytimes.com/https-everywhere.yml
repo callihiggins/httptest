@@ -642,6 +642,20 @@ tests:
           location: ^https://www.nytimes.com/section/business/dealbook$
       statusCodes:
         - 301
+  - description: Test HTTPS Everywhere; /arts; secure
+    request:
+      path: /arts
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/section/arts$
+      statusCodes:
+        - 301
   - description: Test HTTPS Everywhere; 9/11 interactive; secure
     request:
       path: /interactive/us/faces-of-the-dead.html
