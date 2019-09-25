@@ -147,7 +147,7 @@ sub recv_abra_allocation {
     #
     # End of Test dfp_latamv2
     #######################################
-  
+
     #######################################
     # Test Name: STYLN_recirc_pres
     #
@@ -197,8 +197,8 @@ sub recv_abra_allocation {
     # Description: Chartbeat headline tester on homepage
     #
     # Variants:
-    #   - 0_control                        90%
-    #   - 1_variant                        10%
+    #   - 0_control                        80%
+    #   - 1_variant                        20%
     #
     #
 
@@ -212,7 +212,7 @@ sub recv_abra_allocation {
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (var.p < 3865470566) {
+      if (var.p < 3435973836) {
         set var.test_param = var.test_name + "=0_control";
       } else {
         set var.test_param = var.test_name + "=1_variant";
