@@ -197,7 +197,7 @@ tests:
         patterns:
           x-nyt-backend: ^projectvi_fe$
           x-nyt-route: ^vi-story$
-  - description: Test routing; article; NYT5; ensure Fastly pass; 
+  - description: Test routing; article; NYT5; ensure Fastly pass;
       /1864/10/04/archives/grants-operations-an-attack-on-ayres-division-repulsed-gen-gregg.html
     request:
       path: /1864/10/04/archives/grants-operations-an-attack-on-ayres-division-repulsed-gen-gregg.html
@@ -210,7 +210,7 @@ tests:
       headers:
         patterns:
           x-nyt-backend: ^projectvi_fe$
-          x-nyt-route: ^vi-story$      
+          x-nyt-route: ^vi-story$
   - description: Test routing; article; NYT5; ensure Fastly pass; /1979/01/01/us/slug.html
     request:
       path: /1979/01/01/us/slug.html
@@ -791,6 +791,20 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_fe$
+  - description: Test amp query string filter
+    request:
+      path: /2015/01/11/fashion/no-37-big-wedding-or-small.amp.html?bad1=4&bad2=5&0p19G=1
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+          x-nyt-final-url: ^/2015/01/11/fashion/no-37-big-wedding-or-small.amp.html\?0p19G=1
   - description: Route 2019 live blogs to amp
     request:
       method: GET
@@ -821,4 +835,3 @@ tests:
           x-nyt-route: ^amp$
           x-nyt-backend: ^amp$
           x-cache: ^MISS$
-
