@@ -59,9 +59,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
+
     when:
       event: push
       branch:
@@ -99,8 +97,6 @@ pipeline:
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: push
       branch:
@@ -156,8 +152,6 @@ pipeline:
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: push
       branch:
@@ -212,9 +206,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
+
     when:
       event: push
       branch:
@@ -270,8 +262,6 @@ pipeline:
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: push
       branch:
@@ -327,8 +317,6 @@ pipeline:
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: push
       branch:
@@ -384,8 +372,6 @@ pipeline:
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: push
       branch:
@@ -441,8 +427,6 @@ pipeline:
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: push
       branch:
@@ -524,8 +508,6 @@ pipeline:
       - source: botify_s3_secret_key_stg
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: push
       branch: master
@@ -614,8 +596,6 @@ pipeline:
       - source: botify_s3_secret_key_prd
         target: tf_var_botify_s3_secret_key
       
-      - source: netacea_s3_secret_key
-        target: tf_var_netacea_s3_secret_key
     when:
       event: tag
       branch: [ master, hotfix* ]

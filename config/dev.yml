@@ -1343,7 +1343,3 @@ gcslogging:
 botify_s3_logging:
   bucket_name: "storyseo-botify-dev"
   s3_access_key: "AKIARFN3V7IVIML4JVVO"
-
-netacea_s3_logging:
-  bucket_name: "td-ingest-storage"
-  s3_access_key: "AKIAYJXVWMRH36X5T275"
