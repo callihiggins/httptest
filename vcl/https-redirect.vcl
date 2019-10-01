@@ -83,6 +83,7 @@ sub recv_https_redirect {
         || req.url.path == "/cookie-policy"
         || req.url.path == "/robots.txt"
         || req.http.x-nyt-route == "sitemap"
+        || req.http.x-nyt-route == "new_sitemap"
         || req.http.x-nyt-route == "vi-get-started"
         || req.http.x-nyt-route == "vi-code"
         || req.url.path == "/BingSiteAuth.xml"

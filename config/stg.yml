@@ -1257,6 +1257,10 @@ cloud_storage_buckets:
     auth: "false"
     bucket_name: "nyt-betaprog-dev-assets"
     bucket_provider: "gcs"
+  - route: "new_sitemap"
+    auth: "true"
+    bucket_name: "nyt-storyseo-dev-sitemaps"
+    bucket_provider: "gcs"
 
 # big query logger env configuration
 bigquery_log:

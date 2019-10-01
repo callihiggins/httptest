@@ -30,4 +30,18 @@ tests:
           x-nyt-route: ^sitemap$
       statusCodes:
         - 200
-
+  - description: Test new sitemap
+    request:
+      path: /sitemaps/new/news.xml.gz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^gcs_origin$
+          x-nyt-route: ^new_sitemap$
+      statusCodes:
+        - 200

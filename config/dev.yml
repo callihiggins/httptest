@@ -1190,7 +1190,6 @@ backends:
       timeout: "2000"
       window: "5"
 
-
 # defaults for cloud storage bucket configs
 # these are overridable in per bucket configs below
 #   auth_key:     the dictionary key for the bucket access token
@@ -1254,6 +1253,10 @@ cloud_storage_buckets:
   - route: "programs-gcs"
     auth: "false"
     bucket_name: "nyt-betaprog-dev-assets"
+    bucket_provider: "gcs"
+  - route: "new_sitemap"
+    auth: "true"
+    bucket_name: "nyt-storyseo-dev-sitemaps"
     bucket_provider: "gcs"
 
 # big query logger env configuration
@@ -1340,7 +1343,6 @@ gcslogging:
 botify_s3_logging:
   bucket_name: "storyseo-botify-dev"
   s3_access_key: "AKIARFN3V7IVIML4JVVO"
-
 
 netacea_s3_logging:
   bucket_name: "td-ingest-storage"
