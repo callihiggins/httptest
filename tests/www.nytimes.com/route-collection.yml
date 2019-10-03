@@ -195,8 +195,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /topic/destination collection
@@ -210,8 +210,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /topic/organization collection
@@ -225,8 +225,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /topic/person collection
@@ -240,8 +240,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /topic/subject collection
@@ -255,8 +255,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /section/upshot collection
