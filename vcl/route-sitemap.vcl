@@ -1,6 +1,5 @@
 sub recv_route_sitemap {
-  # don't run this in prd yet
-  if (req.http.var-nyt-env != "prd" && req.url.path ~ "^/sitemaps/new/") {
+  if (req.url.path ~ "^/sitemaps/new/") {
     set req.http.x-nyt-route = "new_sitemap";
     set req.http.x-nyt-backend = "gcs_origin";
     set req.url = querystring.remove(req.url);
