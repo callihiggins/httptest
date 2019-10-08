@@ -767,4 +767,65 @@ tests:
       headers: {}
       statusCodes:
         - 200
-
+  - description: Test HTTPS Everywhere; /podcasts serves over http
+    request:
+      scheme: 'http'
+      path: /podcasts/the-daily
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      # note location is a 302 because that is what we expect switchboad to serve when redirecting
+      # to the latest article for the daily
+      # if it were a http->https redirect, it would be a 301
+      statusCodes:
+        - 302
+  - description: Test HTTPS Everywhere; /podcasts serves over https
+    request:
+      scheme: 'https'
+      path: /podcasts/the-daily
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers: {}
+      # note location is a 302 because that is what we expect switchboad to serve when redirecting
+      # to the latest article for the daily
+      # if it were a http->https redirect, it would be a 301
+      statusCodes:
+        - 302
+  - description: Test HTTPS Everywhere; /movies serves over http
+    request:
+      scheme: 'http'
+      path: /movies/showtimes.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: '/reviews/movies$'
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; /movies serves over http
+    request:
+      scheme: 'https'
+      path: /movies/showtimes.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: '/reviews/movies$'
+      statusCodes:
+        - 301
