@@ -3,7 +3,6 @@ sub recv_route_collection {
       || req.url ~ "^/reviews/dining/map"
       || req.url ~ "^/reviews?"
       || req.url ~ "^/reviews$"
-      || req.url ~ "^/topic/destination/"
       || req.url ~ "^/topic/organization/"
       || req.url ~ "^/topic/subject/"
       || req.url ~ "^/upshot"
@@ -43,6 +42,7 @@ sub recv_route_collection {
   # route selected collections to VI first.
   if (   (req.url ~ "^/column/" && req.url !~ "^/column/the-dispatch" && req.url !~ "^/column/the-weekly" && req.url !~ "^/column/theweekly")
       || req.url ~ "^/issue/"
+      || req.url ~ "^/topic/destination/"
       || req.url ~ "^/topic/company"
       || req.url ~ "^/topic/person/"
       || req.url ~ "^/series/"
