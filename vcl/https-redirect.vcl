@@ -33,7 +33,6 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "guides"          // beta - well guides
         || req.http.x-nyt-route == "trending"
         || req.http.x-nyt-route == "bestseller"
-        || req.url ~ "^/pages/(politics|opinion|world|dining|business|sports|science|automobiles|your-money|technology)"        // NYT4 sectionfronts
         || req.url ~ "^/(arts|politics)"
         || req.http.x-nyt-route == "real-estate"
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
@@ -76,9 +75,7 @@ sub recv_https_redirect {
         || req.url ~ "^/live/2019"
         || req.url ~ "^/newsletters"
         || req.url ~ "^/(js|js2|css|bi)/"
-        || req.url ~ "^/pages/cooking/" // newsletters
         || req.url ~ "^/packages/images/email/" // newsletters
-        || req.url ~ "^/pages/todaysheadlines/" // newsletters
         || req.url.path == "/interactive/us/faces-of-the-dead.html" // special 9/11 interactive
         || req.url.path == "/cookie-policy"
         || req.url.path == "/robots.txt"
@@ -121,6 +118,10 @@ sub recv_https_redirect {
             || req.url ~ "^/export_html/common/new_login_iframe.html"
             || req.url ~ "^/glogin"
             || req.url ~ "^/help"
+            || req.url ~ "^/pages/"  // NYT4 sectionfronts
+            || req.url ~ "^/sitemap_news.xml.gz"
+            || req.url ~ "^/nyt/rss/"
+            || req.url ~ "^/timeswire/feeds/"
             || req.url ~ "^/podcasts"
             || req.url ~ "^/movies"
             || req.url.path ~ "^/images/"

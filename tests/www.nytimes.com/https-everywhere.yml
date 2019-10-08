@@ -556,37 +556,9 @@ tests:
           location: ^https://${TEST_HOST}/packages/images/email/special_offers/ss/Sophisticated_Shopper\.html$
       statusCodes:
         - 301
-  - description: Test HTTPS Everywhere; newsletters cooking; secure
-    request:
-      path: /pages/cooking/cooking-email/index.html
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers: {}
-      statusCodes:
-        - 200
-        - 301
-        - 404
-  - description: Test HTTPS Everywhere; newsletters cooking; non-secure
-    request:
-      scheme: http
-      path: /pages/cooking/cooking-email/index.html
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          location: ^https://${TEST_HOST}/pages/cooking/cooking-email/index\.html$
-      statusCodes:
-        - 301
   - description: Test HTTPS Everywhere; todays headlines; secure
     request:
+      scheme: https
       path: /pages/todaysheadlines/index.html
       headers:
         x-nyt-miss: "1"
@@ -594,12 +566,12 @@ tests:
       env:
         TEST_ENV: dev|stg|prd
     response:
-      headers: {}
+      headers:
+        pattern:
+          location: ^https://messaging-custom-newsletters.nytimes.com/template/todaysheadlines$
       statusCodes:
-        - 200
         - 301
-        - 404
-  - description: Test HTTPS Everywhere; todays headlines cooking; non-secure
+  - description: Test HTTPS Everywhere; todays headlines; insecure
     request:
       scheme: http
       path: /pages/todaysheadlines/index.html
@@ -610,8 +582,38 @@ tests:
         TEST_ENV: dev|stg|prd
     response:
       headers:
+        pattern:
+          location: ^https://messaging-custom-newsletters.nytimes.com/template/todaysheadlines$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; pages/business; insecure
+    request:
+      scheme: http
+      path: /pages/business/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
         patterns:
-          location: ^https://${TEST_HOST}/pages/todaysheadlines/index\.html$
+          location: ^https://www.nytimes.com/section/business$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; pages/business; secure
+    request:
+      scheme: https
+      path: /pages/business/index.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://www.nytimes.com/section/business$
       statusCodes:
         - 301
   - description: Test HTTPS Everywhere; pages/business; secure
@@ -827,5 +829,95 @@ tests:
       headers:
         patterns:
           location: '/reviews/movies$'
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; timewsire feeds; insecure
+    request:
+      scheme: http
+      path: /timeswire/feeds/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://content.api.nytimes.com/svc/news/v3/all/recent.rss$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; timeswire feeds; secure
+    request:
+      scheme: https
+      path: /timeswire/feeds/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://content.api.nytimes.com/svc/news/v3/all/recent.rss$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; incorrect news sitemap; insecure
+    request:
+      scheme: http
+      path: /sitemap_news.xml.gz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://www.nytimes.com/sitemaps/sitemap_news/sitemap.xml.gz$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; incorrect news sitemap; secure
+    request:
+      scheme: https
+      path: /sitemap_news.xml.gz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://www.nytimes.com/sitemaps/sitemap_news/sitemap.xml.gz$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; nyt/rss redirect; insecure
+    request:
+      scheme: http
+      path: /nyt/rss/HomePage
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; nyt/rss redirect; secure
+    request:
+      scheme: https
+      path: /nyt/rss/HomePage
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml$
       statusCodes:
         - 301
