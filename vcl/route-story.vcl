@@ -26,6 +26,12 @@ sub recv_route_story {
              req.url.path ~ "^/2006/01/22/fashion/sundaystyles/so-he-looked-like-dad-it-was-just-dinner-right.html$"
           || req.url.path ~ "^/2006/01/22/style/modern-love-so-he-looked-like-dad-it-was-just-dinner-right.html$"
           || req.url.path ~ "^/2008/01/13/style/modern-love-take-me-as-i-am-whoever-i-am.html$"
+          || req.url.path ~ "^/2011/09/25/style/modern-love-sometimes-its-not-you-or-the-math.html$"
+          || req.url.path ~ "^/2006/06/25/style/modern-love-what-shamu-taught-me-about-a-happy-marriage.html$"
+          || req.url.path ~ "^/2011/08/21/style/modern-love-my-husband-is-now-my-wife.html$"
+          || req.url.path ~ "^/2009/08/02/style/modern-love-those-arent-fighting-words-dear.html$"
+          || req.url.path ~ "^/2009/05/17/style/modern-love-somewhere-inside-a-path-to-empathy.html$"
+          || req.url.path ~ "^/2006/02/19/fashion/loved-and-lost-its-ok-especially-if-you-win.html$"
         ) {
         set var.vi_explicit_opt_in = true;
       } else {
