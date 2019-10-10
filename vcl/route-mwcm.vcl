@@ -126,11 +126,17 @@ sub fetch_route_mwcm {
             return(deliver_stale);
         }
 
-        # handles 5XX retry logic
+        # handles 5XX retry logic at magnolia level
         # restarts the request
         # routes the request to s3 backend
-        if (    req.restarts < 1 &&
-                (req.request == "GET" || req.request == "HEAD")
+        if (    req.restarts < 1 && req.url !~ "^/subscription/resilient" && (req.request == "GET" || req.request == "HEAD")
+          ) {
+
+            restart;
+        }
+
+        # handles 5XX retry logic at s3 level
+        if (    req.restarts < 3 && req.url ~ "^/subscription/resilient" && (req.request == "GET" || req.request == "HEAD")
           ) {
 
             restart;
@@ -278,27 +284,30 @@ sub miss_pass_route_mwcm {
 
 sub handle_error_fallback_route_mwcm {
 
-    if (req.http.x-nyt-route ~ "^mwcm" && req.url ~ "^/marketing/mpc/"){
-        # set messaging units error fallback page
-        set obj.http.content-type = "application/json";
-        call set_error_obj_headers;
-        call render_mu_fallback;
+    if (req.http.x-nyt-route ~ "^mwcm") {
 
-        return (deliver);
-    } else if (req.http.x-nyt-route ~ "^mwcm" && req.url !~ "^/subscription/ads") {
-        # set landing page error fallback page
-        set obj.http.content-type = "text/html;charset=UTF-8";
-        call set_error_obj_headers;
-        call render_lp_fallback;
+        if ( req.url ~ "^/marketing/mpc/" || req.url ~ "^/subscription/resilient/mcassets" ) {
+            # set messaging units error fallback page
+            set obj.http.content-type = "application/json";
+            call set_error_obj_headers;
+            call render_mu_fallback;
 
-        return(deliver);
-    } else if (req.http.x-nyt-route ~ "^mwcm" && req.url ~ "^/subscription/ads") {
-        # set banner ads error fallback page
-        set obj.http.content-type = "text/html;charset=UTF-8";
-        call set_error_obj_headers;
-        call render_ads_fallback;
+            return (deliver);
+        } else if ( req.url ~ "^/subscription/ads" || req.url ~ "^/subscription/resilient/banner-ads" ) {
+            # set banner ads error fallback page
+            set obj.http.content-type = "text/html;charset=UTF-8";
+            call set_error_obj_headers;
+            call render_ads_fallback;
 
-        return(deliver);
+            return(deliver);
+        } else {
+            # set landing page error fallback page
+            set obj.http.content-type = "text/html;charset=UTF-8";
+            call set_error_obj_headers;
+            call render_lp_fallback;
+
+            return(deliver);
+        }
     }
 }
 
