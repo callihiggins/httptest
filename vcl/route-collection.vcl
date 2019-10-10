@@ -20,16 +20,12 @@ sub recv_route_collection {
   }
 
   if (req.url ~ "^/saved/" || req.url ~ "^/saved\?" || req.url ~ "^/saved$") {
-    if (req.http.var-nyt-env == "prd") {
-      set req.http.x-nyt-route = "collection";
-      set req.http.x-nyt-backend = "collection_fe";
-    } else {
-      set req.http.x-nyt-route = "vi-collection";
-      set req.http.x-nyt-backend = "projectvi_fe";
-      set req.http.var-nyt-error-retry = "false";
-    }
+    set req.http.x-nyt-route = "vi-collection";
+    set req.http.x-nyt-backend = "projectvi_fe";
+    set req.http.var-nyt-error-retry = "false";
     set req.http.var-nyt-wf-auth = "true";
     set req.http.var-nyt-send-gdpr = "true";
+    
     if (req.http.var-nyt-canonical-alpha-host != "true") {
       set req.url = querystring.filter_except(req.url, "nytapp");
     }
