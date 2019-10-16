@@ -921,3 +921,37 @@ tests:
           location: ^https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml$
       statusCodes:
         - 301
+  - description: Test HTTPS Everywhere; /health/guides serves over https and redirects properly
+    request:
+      scheme: https
+      path: /health/guides
+      method: GET 
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/section/well$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; /health serves over https and redirects properly
+    request:
+      scheme: https
+      method: GET 
+      path: /health
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/section/health$
+      statusCodes:
+        - 301
+
+

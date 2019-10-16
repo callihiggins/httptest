@@ -33,7 +33,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "guides"          // beta - well guides
         || req.http.x-nyt-route == "trending"
         || req.http.x-nyt-route == "bestseller"
-        || req.url ~ "^/(arts|politics)"
+        || req.url ~ "^/(arts|politics|health)"
         || req.http.x-nyt-route == "real-estate"
         || req.url ~ "^/crosswords" // games pages, except for /ref/crosswords
         || req.http.x-nyt-route == "recommendations"
