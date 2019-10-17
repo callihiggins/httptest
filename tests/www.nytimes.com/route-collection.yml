@@ -274,6 +274,21 @@ tests:
           x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
+  - description: Test /section/the-weekly collection
+    request:
+      path: /section/the-weekly
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^collection$
+          x-nyt-backend: ^collection_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /upshot/ redirect
     request:
       path: /upshot/

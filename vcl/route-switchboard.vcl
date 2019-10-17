@@ -13,8 +13,7 @@ sub recv_route_switchboard {
           || req.url.path ~ "^/the-weekly" 
           || req.url.path ~ "^/weekly" 
           || req.url.path ~ "^/column/the-weekly" 
-          || req.url.path ~ "^/column/theweekly" 
-          || req.url.path ~ "^/section/the-weekly")
+          || req.url.path ~ "^/column/theweekly")
         && req.url.path !~ "/theweeklyinstagram")
     || (req.url.path ~ "^/stillprocessing" || req.url.path ~ "^/still-processing")
     || (req.url.path ~ "^/bookreviewpodcast" || req.url.path ~ "^/book-review-podcast")

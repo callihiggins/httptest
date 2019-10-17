@@ -336,18 +336,6 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^switchboard$
-  - description: Test /section/the-weekly (with hyphen) is served from switchboard
-    request:
-      path: /section/the-weekly
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^switchboard$
   - description: Test /theweeklyinstagram is not served from switchboard
     request:
       path: /theweeklyinstagram

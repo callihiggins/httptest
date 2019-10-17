@@ -43,7 +43,7 @@ sub recv_route_collection {
       || req.url ~ "^/topic/person/"
       || req.url ~ "^/series/"
       || req.url ~ "^/news-event/"
-      || (req.url ~ "^/section/" && req.url !~ "^/section/the-weekly")
+      || req.url ~ "^/section/"
       || req.url ~ "^/spotlight/"
       || req.url ~ "^/reviews/theater"
       || req.url ~ "^/reviews/movies"
