@@ -3,7 +3,7 @@
 sub recv_bot_detection {
     if (!req.http.x-nyt-shield-auth &&
         table.lookup(bot_detection, "enabled") == "true" &&
-        (req.http.var-nyt-env != "prd" || (randombool(50,100) && req.restarts == 0) || req.http.destination == "datadome")) {
+        (req.http.var-nyt-env != "prd" || (randombool(5,100) && req.restarts == 0) || req.http.destination == "datadome")) {
         call datadome_vcl_recv;
     }
 }
@@ -45,39 +45,8 @@ sub datadome_vcl_recv {
   }
 
   if (req.http.destination == "datadome") {
-    if (server.region == "APAC") {
-      set req.backend = F_datadome_apac;
-    } else if (server.region == "Asia") {
-      set req.backend = F_datadome_asia;
-    } else if (server.region == "Asia-South") {
-      set req.backend = F_datadome_asia_south;
-    } else if (server.region == "EU-Central") {
-      set req.backend = F_datadome_eu_central;
-    } else if (server.region == "EU-East") {
-      set req.backend = F_datadome_eu_east;
-    } else if (server.region == "EU-West") {
-      set req.backend = F_datadome_eu_west;
-    } else if (server.region == "North-America") {
-      set req.backend = F_datadome_north_america;
-    } else if (server.region == "SA-East") {
-      set req.backend = F_datadome_sa_east;
-    } else if (server.region == "SA-North") {
-      set req.backend = F_datadome_sa_north;
-    } else if (server.region == "SA-South") {
-      set req.backend = F_datadome_sa_south;
-    } else if (server.region == "South-Africa") {
-      set req.backend = F_datadome_south_africa;
-    } else if (server.region == "US-Central") {
-      set req.backend = F_datadome_us_central;
-    } else if (server.region == "US-East") {
-      set req.backend = F_datadome_us_east;
-    } else if (server.region == "US-West") {
-      set req.backend = F_datadome_us_west;
-    } else {
-      set req.backend = F_datadome;
-    }
-
-    # Configure the string below to include your DataDome API key
+    set req.backend = F_datadome;
+    set req.http.x-datadome-behealth = req.backend.healthy;
     set req.http.x-original-method = req.method;
     set req.http.x-content-length = req.http.content-length;
     set req.method = "GET";
@@ -106,22 +75,7 @@ sub datadome_vcl_fetch {
   }
   set beresp.http.x-datadome-timer = req.http.x-datadome-timer;
 
-  if (req.backend == F_datadome
-   || req.backend == F_datadome_apac
-   || req.backend == F_datadome_asia
-   || req.backend == F_datadome_asia_south
-   || req.backend == F_datadome_eu_central
-   || req.backend == F_datadome_eu_east
-   || req.backend == F_datadome_eu_west
-   || req.backend == F_datadome_north_america
-   || req.backend == F_datadome_sa_east
-   || req.backend == F_datadome_sa_north
-   || req.backend == F_datadome_sa_south
-   || req.backend == F_datadome_south_africa
-   || req.backend == F_datadome_us_central
-   || req.backend == F_datadome_us_east
-   || req.backend == F_datadome_us_west
-   ) {
+  if (req.backend == F_datadome) {
     declare local var.status STRING;
     set var.status = beresp.status;
     set req.http.debug-datadome-response = beresp.status;
@@ -231,25 +185,14 @@ sub datadome_vcl_fetch {
 
 sub datadome_vcl_deliver {
 
-  # copy datadome headers if it isn't datadome request
-  if (
-      req.backend != F_datadome
-      && req.backend != F_datadome_apac
-      && req.backend != F_datadome_asia
-      && req.backend != F_datadome_asia_south
-      && req.backend != F_datadome_eu_central
-      && req.backend != F_datadome_eu_east
-      && req.backend != F_datadome_eu_west
-      && req.backend != F_datadome_north_america
-      && req.backend != F_datadome_sa_east
-      && req.backend != F_datadome_sa_north
-      && req.backend != F_datadome_sa_south
-      && req.backend != F_datadome_south_africa
-      && req.backend != F_datadome_us_central
-      && req.backend != F_datadome_us_east
-      && req.backend != F_datadome_us_west
-      ) {
-
+  if (req.backend == F_datadome) {
+    # check for server errors and if so force restart
+    if (req.restarts == 0 && resp.status >= 400) {
+      set req.http.debug-datadome-response = resp.status;
+      restart;
+    }
+  } else {
+    # copy datadome headers if it isn't datadome request
     if (req.http.x-datadome-headers ~ "(?i)(^| )+x-datadome-server( |$)+") {
       set resp.http.x-datadome-server = req.http.x-datadome-server;
     }
@@ -300,27 +243,12 @@ sub datadome_vcl_deliver {
 
 sub datadome_set_origin_header {
     unset bereq.http.destination;
-    if (req.backend == F_datadome
-     || req.backend == F_datadome_apac
-     || req.backend == F_datadome_asia
-     || req.backend == F_datadome_asia_south
-     || req.backend == F_datadome_eu_central
-     || req.backend == F_datadome_eu_east
-     || req.backend == F_datadome_eu_west
-     || req.backend == F_datadome_north_america
-     || req.backend == F_datadome_sa_east
-     || req.backend == F_datadome_sa_north
-     || req.backend == F_datadome_sa_south
-     || req.backend == F_datadome_south_africa
-     || req.backend == F_datadome_us_central
-     || req.backend == F_datadome_us_east
-     || req.backend == F_datadome_us_west
-     ) {
+    if (req.backend == F_datadome) {
         # Retrieve Datadome key from dictionary HERE
         set bereq.http.x-datadome-apikey =
             table.lookup(bot_detection, "datadome_api_key");
-        set bereq.http.x-datadome-modulename = "Fastly@NYT";
-        set bereq.http.x-datadome-moduleversion = "1.7";
+        set bereq.http.x-datadome-modulename = "Fastly";
+        set bereq.http.x-datadome-moduleversion = "1.9";
         set bereq.http.x-datadome-timestamp = time.start.usec;
         set bereq.http.x-datadome-serverhostname = server.identity;
         set bereq.http.x-datadome-server-region = server.region;

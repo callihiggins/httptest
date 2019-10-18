@@ -213,6 +213,7 @@ sumo_log:
     \"is_shield\":\"%{if(req.http.x-nyt-shield-auth,\\\"1\",\\\"0\")}V\",
     \"apiversion\":\"%{if(resp.http.X-API-Version,resp.http.X-API-Version,\\\"\\\")}V\",
     \"behealth\": \"%{if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,\\\"\\\")}V\",
+    \"datadome_health\": \"%{if(req.http.x-datadome-behealth,req.http.x-datadome-behealth,\\\"\\\")}V\",
     \"redirect_reason\":\"%{if(req.http.x-nyt-redirect-reason,req.http.x-nyt-redirect-reason,\\\"\\\")}V\",
     \"restarts\": \"%{req.restarts}V\",
     \"restart_reason\": \"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\",
