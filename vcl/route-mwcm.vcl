@@ -274,10 +274,16 @@ sub miss_pass_route_mwcm {
             set bereq.http.cookie = bereq.http.cookie " b2b_cig_opt=" req.http.cookie:b2b_cig_opt ";";
         }
 
-        if (req.http.cookie:jkidd-l) {
-            #checks the presence of the jkidd-l
-            # allows jkidd-l to MWCM backend
-            set bereq.http.cookie = bereq.http.cookie " jkidd-l=" req.http.cookie:jkidd-l ";";
+        if (req.http.cookie:jkidd-t) {
+            #checks the presence of the jkidd-t
+            # allows jkidd-t to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " jkidd-t=" req.http.cookie:jkidd-t ";";
+        }
+
+        if (req.http.cookie:nyt-jkidd) {
+            #checks the presence of the nyt-jkidd
+            # allows nyt-jkidd to MWCM backend
+            set bereq.http.cookie = bereq.http.cookie " nyt-jkidd=" req.http.cookie:nyt-jkidd ";";
         }
     }
 }

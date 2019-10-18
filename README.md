@@ -12,7 +12,7 @@ Please see: [CONTRIBUTING.md](https://github.com/nytm/fastly-www/blob/master/CON
 
 Please use the following template for PRs: [PULL_REQUEST_TEMPLATE.md](https://github.com/nytm/fastly-www/blob/master/PULL_REQUEST_TEMPLATE.md)
 
-## Sandboxess
+## Sandboxes
 
 The sandbox policy and documentation can be found [here](https://docs.dv.nyt.net/fastly/guides/www_sandboxes/)
 
