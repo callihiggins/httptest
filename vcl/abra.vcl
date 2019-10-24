@@ -226,6 +226,51 @@ sub recv_abra_allocation {
     # End of Test HOME_chartbeat
     #######################################
 
+    # Test Name: HOME_editorsPicks
+    #
+    # Description: Editor's Picks content test on homepage
+    # only for external clients
+    #
+    # The test only affects 25% of total traffic
+    #
+    # Variants:
+    #   - 0_control                                 5%
+    #   - 1_week_userhistory                        5%
+    #   - 2_month_userhistory                       5%
+    #   - 3_week_userhistory_impressions            5%
+    #   - 4_month_userhistory_impressions           5%
+    #
+
+    if (var.is_home && !(req.http.x-nyt-nyhq-access == "1")) {
+
+      if (var.test_group){
+        set var.test_group = var.test_group "&";
+      }
+      set var.test_name = "HOME_editorsPicks";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (var.p < 214748365) {
+        set var.test_param = var.test_name + "=0_control";
+      } else if (var.p < 429496730) {
+        set var.test_param = var.test_name + "=1_week_userhistory";
+      } else if (var.p < 644245094) {
+        set var.test_param = var.test_name + "=2_month_userhistory";
+      } else if (var.p < 858993459) {
+        set var.test_param = var.test_name + "=3_week_userhistory_impressions";
+      } else if (var.p < 1073741824) {
+        set var.test_param = var.test_name + "=4_month_userhistory_impressions";
+      }
+
+      set var.test_group = var.test_group + var.test_param;
+      # We need to vary the cache on both the home and story routes:
+      set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
+    }
+    #
+    # End of Test HOME_editorsPicks
+    #######################################
+
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
     # implements the A/B test branching logic.
     # example value: HOME_test_foo=0_control&STORY_test_bar=1_variant
