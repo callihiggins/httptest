@@ -1,10 +1,11 @@
 tests:
-  - description: "Test userinfo service, version 3: no cookies; GeoIP of USA; JSON format"
+  - description: "Test userinfo service, version 3: no cookies; GeoIP of USA; JSON format; valid referer"
     request:
       scheme: http
       path: /svc/web-products/userinfo-v3.json
       headers:
         x-nyt-miss: "1"
+        referer: "https://www.nytimes.com/interactive/2019/admin/100000006780583.embedded.html?"
         SRCIP: 170.149.161.130
     conditions:
       env:
@@ -15,32 +16,17 @@ tests:
           x-nyt-route: ^service$
       statusCodes:
         - 200
-  - description: "Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON
-      format"
-    request:
-      scheme: http
-      path: /svc/web-products/userinfo-v3.json
-      headers:
-        x-nyt-miss: "1"
-        cookie: NYT-S=${TEST_COOKIE_NYT_S}
-        SRCIP: 170.149.161.130
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
+      body:
         patterns:
-          x-nyt-route: ^service$
-      statusCodes:
-        - 200
-  - description: "Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON
-      format"
+          - '"id":\s?"0",'
+  - description: "Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON format; invalid referrer"
     request:
       scheme: http
       path: /svc/web-products/userinfo-v3.json
       headers:
         x-nyt-miss: "1"
         x-nyt-edge-cdn: fastly
+        referer: "https://jira-nyt.net/browse/STRIK-951"
         cookie: NYT-S=${TEST_COOKIE_NYT_S}
         SRCIP: 170.149.161.130
     conditions:
@@ -52,4 +38,71 @@ tests:
           x-nyt-route: ^service$
       statusCodes:
         - 200
-
+      body:
+        patterns:
+          - '"id":\s?"0",'
+  - description: "Test userinfo service, version 3: valid NYT-S cookie; valid referer nytimes.com; JSON format"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v3.json
+      headers:
+        x-nyt-miss: "1"
+        referer: "https://www.nytimes.com/interactive/2019/10/19/multimedia/ireland-peat-bogs.html?fallback=0"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+        SRCIP: 170.149.161.130
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+      body:
+        patterns:
+          - '"id":\s?"([0-9]{2,}|[1-9]{1,})",'
+  - description: "Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON format; valid http referer"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v3.json
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-edge-cdn: fastly
+        referer: "http://www.nytimes.com/section/learning"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+        SRCIP: 170.149.161.130
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+      body:
+        patterns:
+          - '"id":\s?"([0-9]{2,}|[1-9]{1,})",'
+  - description: "Test userinfo service, version 3: valid NYT-S cookie; GeoIP of USA; JSON format; valid nyt.net referrer"
+    request:
+      scheme: http
+      path: /svc/web-products/userinfo-v3.json
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-edge-cdn: fastly
+        referer: "http://jira.nyt.net/browse/STRIK-951"
+        cookie: NYT-S=${TEST_COOKIE_NYT_S}
+        SRCIP: 170.149.161.130
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^service$
+      statusCodes:
+        - 200
+      body:
+        patterns:
+          - '"id":\s?"([0-9]{2,}|[1-9]{1,})",'

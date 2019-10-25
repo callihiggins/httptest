@@ -1,9 +1,12 @@
 sub recv_route_userinfo {
-  // This deals with useers that are not logged in
-  // if the cookie does not start with "0" we will
-  // fall through this and it will be a backend hit
-  // to the API on the origin
-  if (req.http.var-cookie-nyt-s ~ "^0" || !req.http.var-cookie-nyt-s){
+  // This deals with users that are not logged in if the cookie does not start
+  // with "0" we will fall through this and it will be a backend hit to the API
+  // on the origin
+  //
+  // Additionally, this handles the case of the requests being made from
+  // outside of NYT.com domains
+  if (req.http.var-cookie-nyt-s ~ "^0" || !req.http.var-cookie-nyt-s ||
+        !(req.http.referer ~ "^https?://(.+\.)?(nytimes.com|nyt.com|nyt.net)(/?.+)?$")) {
     if (req.url ~ "^/svc/web-products/userinfo.jsonp") {
       set req.http.x-nyt-route = "service";
       error 901;
@@ -13,7 +16,7 @@ sub recv_route_userinfo {
       error 902;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.jsonp") {
-      set req.http.x-nyt-route = "service";    
+      set req.http.x-nyt-route = "service";
       error 903;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.json") {
