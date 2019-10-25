@@ -25,7 +25,7 @@ sub recv_route_collection {
     set req.http.var-nyt-error-retry = "false";
     set req.http.var-nyt-wf-auth = "true";
     set req.http.var-nyt-send-gdpr = "true";
-    
+
     if (req.http.var-nyt-canonical-alpha-host != "true") {
       set req.url = querystring.filter_except(req.url, "nytapp");
     }
@@ -86,6 +86,10 @@ sub recv_route_collection {
       } else {
         set req.http.x-nyt-backend = "realestate_fe_vi";
       }
+    }
+
+    if (req.http.var-nyt-env == "dev" && req.url ~ "^/section/realestate") {
+      set req.http.x-nyt-backend = "realestate_fe";
     }
   }
 }
