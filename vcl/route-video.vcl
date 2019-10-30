@@ -1,4 +1,7 @@
 sub recv_route_video {
+    declare local var.hash STRING;
+    declare local var.p INTEGER;
+    declare local var.test_name STRING;
 
     if (req.http.host ~ "^(www|paidpost)([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
     	// The order of these two checks is important since the second one is a sub path of the first one
@@ -9,18 +12,35 @@ sub recv_route_video {
     }
 
     if ( req.url.path == "/video" || req.url.path ~ "^/video/") {
-        if (req.http.var-nyt-env == "prd") {
-            set req.http.x-nyt-route = "video-library";
-            set req.http.x-nyt-backend = "video_library";
-            set req.url = querystring.filter_except(req.url, "playlistId");
+        #######################################
+        #
+        # Abra style traffic allocation
+        #
+        # Variants:
+        #   - Legacy Video        75%
+        #   - Project VI Video    25%
+        #
+        set var.test_name = "VIDEO_allocation";
+        set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+        set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+        set var.p = std.strtol(var.hash, 16);
+
+        # 2^32 = 4294967296
+        # 75% = 3221225472
+        if (var.p < 3221225472) {
+          set req.http.x-nyt-route = "video-library";
+          set req.http.x-nyt-backend = "video_library";
+          set req.url = querystring.filter_except(req.url, "playlistId");
         } else {
-            set req.http.x-nyt-route = "vi-video";
-            set req.http.x-nyt-backend = "projectvi_fe";
-            set req.http.var-nyt-error-retry = "false";
-            set req.http.var-nyt-wf-auth = "true";
-            set req.url = querystring.filter_except(req.url, "playlistId");
-            unset req.http.Authorization;
-        }   
+          # 25% = 1073741824
+          set req.http.x-nyt-route = "vi-video";
+          set req.http.x-nyt-backend = "projectvi_fe";
+          set req.http.var-nyt-error-retry = "false";
+          set req.http.var-nyt-wf-auth = "true";
+          set req.url = querystring.filter_except(req.url, "playlistId");
+          unset req.http.Authorization;
+        }
+
         set req.http.var-nyt-send-gdpr = "true";
         call recv_post_method_restricted;
     }
