@@ -251,7 +251,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^switchboard$
+          x-nyt-route: ^legacy-gke$
   - description: Test /theweekly (no hypen) is served from switchboard
     request:
       path: /theweekly
@@ -263,7 +263,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^switchboard$
+          x-nyt-route: ^legacy-gke$
   - description: Test /weekly (no the) is served from switchboard
     request:
       path: /weekly
@@ -275,7 +275,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^switchboard$
+          x-nyt-route: ^legacy-gke$
   - description: Test /the-dispatch (with hyphen) is served from switchboard
     request:
       path: /the-dispatch
@@ -323,7 +323,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^switchboard$
+          x-nyt-route: ^legacy-gke$
   - description: Test /column/theweekly is served from switchboard
     request:
       path: /column/theweekly
@@ -335,7 +335,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^switchboard$
+          x-nyt-route: ^legacy-gke$
   - description: Test /theweeklyinstagram is not served from switchboard
     request:
       path: /theweeklyinstagram

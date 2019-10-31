@@ -9,12 +9,6 @@ sub recv_route_switchboard {
     || req.url.path ~ "^/ambriefing"
     || (req.url.path ~ "^/thedaily" && req.url.path !~ "^/thedaily(offer|listener)")
     || req.url.path ~ "^/the-daily"
-    || ((req.url.path ~ "^/theweekly" 
-          || req.url.path ~ "^/the-weekly" 
-          || req.url.path ~ "^/weekly" 
-          || req.url.path ~ "^/column/the-weekly" 
-          || req.url.path ~ "^/column/theweekly")
-        && req.url.path !~ "/theweeklyinstagram")
     || (req.url.path ~ "^/stillprocessing" || req.url.path ~ "^/still-processing")
     || (req.url.path ~ "^/bookreviewpodcast" || req.url.path ~ "^/book-review-podcast")
     || (req.url.path ~ "^/theargument" || req.url.path ~ "^/the-argument")
