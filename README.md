@@ -38,7 +38,8 @@ Tests can be run locally using the same image from the root of the repo with
 
 This will run all the route-*.yml
 
-```bash
+```
+bash
 docker run --rm \
     -v $(pwd)/tests/www.nytimes.com/:/tests/tests.yaml \
     -e "TEST_HOST=www.dev.nytimes.com" \
