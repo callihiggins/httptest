@@ -26,7 +26,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-video$
+          x-nyt-route: ^video-library$
       statusCodes:
         - 200
   - description: Test hitting a video home page on vi
@@ -40,7 +40,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-video$
+          x-nyt-route: ^video-library$
       statusCodes:
         - 200
   - description: Test hitting the video library homepage with a query string at the end
@@ -175,8 +175,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^vi-video$
+          x-nyt-route: ^video-library$
+          x-nyt-backend: ^video_library$
           x-nyt-final-url: ^/video/world/asia/100000005136275/china-health-care-cancer-refugee.html\?playlistId=video/times-documentaries
-      statusCodes:
-        - 200
 

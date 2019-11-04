@@ -15,6 +15,4 @@ tests:
           x-nyt-route: ^profile-fe$
           x-nyt-backend: ^profile_fe$
           cache-control: ^private$
-      statusCodes:
-        - 200
 

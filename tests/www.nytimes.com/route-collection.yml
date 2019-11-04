@@ -60,8 +60,9 @@ tests:
           x-nyt-route: (vi-collection|collection)
           x-nyt-backend: (projectvi_fe|collection_fe)
           x-gdpr: "0"
-          fastly-restarts: "1"
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
+        notPresent:
+          - 'fastly-restarts'
   - description: Test /reviews collection
     request:
       path: /reviews
@@ -166,8 +167,9 @@ tests:
           x-nyt-route: (vi-collection|collection)
           x-nyt-backend: (projectvi_fe|collection_fe)
           x-gdpr: "1"
-          fastly-restarts: "1"
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
+        notPresent:
+          - 'fastly-restarts'
   - description: Test /spotlight collection
     request:
       path: /spotlight/qqq
@@ -182,8 +184,9 @@ tests:
           x-nyt-route: (vi-collection|collection)
           x-nyt-backend: (projectvi_fe|collection_fe)
           x-gdpr: "0"
-          fastly-restarts: "1"
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
+        notPresent:
+          - 'fastly-restarts'
   - description: Test /topic/company collection
     request:
       path: /topic/company/alphabet-inc
@@ -285,8 +288,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^collection$
-          x-nyt-backend: ^collection_fe$
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /upshot/ redirect
@@ -504,5 +507,5 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^realestate_fe$
+          x-nyt-backend: ^projectvi_fe$
 

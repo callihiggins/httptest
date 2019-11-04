@@ -132,8 +132,6 @@ tests:
         TEST_ENV: dev|stg|prd
     response:
       headers: {}
-      statusCodes:
-        - 200
   - description: Test HTTPS Everywhere; blog - inactive (phase 1); non-secure
     request:
       scheme: http

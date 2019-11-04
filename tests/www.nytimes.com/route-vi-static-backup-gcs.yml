@@ -29,9 +29,6 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_static_backup_gcs$
-          x-guploader-uploadid: .+
-      statusCodes:
-        - 503
   - description: Test static backup enabled but non-story/homepage route
     request:
       path: /trending/

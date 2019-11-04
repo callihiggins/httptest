@@ -54,7 +54,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg|prd
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
