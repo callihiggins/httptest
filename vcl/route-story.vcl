@@ -127,10 +127,10 @@ sub recv_route_amp {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";
     set req.url = querystring.filter_except(req.url, "0p19G" + querystring.filtersep() + "isSwgTest");
-    if (client.ip ~ googlebot || client.ip ~ botify || req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1" || (req.http.User-Agent ~ "DU-apple-news" && req.url ~ "^/apple-news/")) {
+    if (req.http.User-Agent ~ "DU-apple-news" && req.url ~ "^/apple-news/") {
       set req.http.var-nyt-force-pass = "true";
-    } else {
-      // redirect to regular url
+    } else if (client.ip !~ googlebot && client.ip !~ botify && req.http.x-nyt-nyhq-access != "1" && req.http.x-nyt-staging-only-access != "1") {
+      // in supporting google's live-list fix, no longer bypass the fastly cache https://jira.nyt.net/browse/STORY-5114
       declare local var.amp_redirect_target STRING;
       set var.amp_redirect_target = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
       error 755 var.amp_redirect_target;

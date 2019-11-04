@@ -925,7 +925,7 @@ tests:
     request:
       scheme: https
       path: /health/guides
-      method: GET 
+      method: GET
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -940,7 +940,7 @@ tests:
   - description: Test HTTPS Everywhere; /health serves over https and redirects properly
     request:
       scheme: https
-      method: GET 
+      method: GET
       path: /health
       headers:
         x-nyt-miss: "1"
@@ -953,5 +953,19 @@ tests:
           location: ^https://${TEST_HOST}/section/health$
       statusCodes:
         - 301
-
-
+  - description: Test HTTPS Everywhere; amp http redirects to https
+    request:
+      scheme: http
+      method: GET
+      path: /2019/11/01/business/slug.amp.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          location: ^https://${TEST_HOST}/2019/11/01/business/slug.amp.html$
+      statusCodes:
+        - 301

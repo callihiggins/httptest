@@ -17,6 +17,7 @@ sub recv_https_redirect {
         || ( req.http.x-nyt-route == "blog" && req.http.host !~ "^tmagazine\.blogs" ) // all blogs, but not tmag
         || ( req.http.x-nyt-route == "blog-legacy" && req.http.host !~ "(nytco|dealbook|(n(ew)?y(ork)?)?t(imes)?journeys).(com|me)" )
         || req.http.x-nyt-route == "collection"
+        || req.http.x-nyt-route == "amp"
         || req.http.x-nyt-route == "vi-collection"
         || req.http.x-nyt-route == "video-library"
         || req.http.x-nyt-route == "video-offsite-player"

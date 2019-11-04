@@ -282,6 +282,8 @@ tests:
         - 405
   - description: Test NYTimes AMP Interactive served by AMP app backend
     request:
+      headers: 
+        x-nyt-nyhq-access: "1"
       path: /interactive/2019/07/19/arts/fitness-nyc-park.amp.html
     conditions:
       env:
@@ -294,6 +296,7 @@ tests:
           x-cache: .+
           x-served-by: .+
           x-frame-options: .+
+          debug-var-nyt-force-pass: false
         notPresent:
           - nnCoection
           - via
@@ -307,5 +310,4 @@ tests:
           - x-varnish
       statusCodes:
         - 404
-      
 
