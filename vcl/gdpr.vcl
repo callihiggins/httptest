@@ -162,16 +162,20 @@ sub error_919_gdpr {
         set obj.status = 200;
         set obj.http.Content-Type = "application/json; charset=utf-8";
         set obj.http.x-gdpr = req.http.var-cookie-nyt-gdpr;
-        if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com|thewirecutter\.com|wirecutter\.com)$|hellosociety\.com$|thewirecutter\.com$|wirecutter\.com$|brandstand\.co$") {
-            ## only allow nyt.net and nytimes.com domain for hace access control
+
+        # Only allow NYT controlled domains, and their roots, with optional
+        # schema, port, etc. to have access control.
+        #
+        # Additonally, in order to support iOS requests (and others that don't
+        # provide an Origin, such as hitting the endpoint directly or calling
+        # hitting it from the command line), allow requests that have no Origin
+        # set.
+        if (req.http.Origin ~ "^(https?://)?(.+\.)?(((nyt|nytimes|thewirecutter|wirecutter|hellosociety|nytimes\.stats)\.com)|nyt\.net|brandstand\.co)(:\d+)?$"
+            || !req.http.Origin
+            || req.http.Origin == "null") {
             set obj.http.Access-Control-Allow-Origin = "*";
-            set obj.http.Access-Control-Expose-Headers = "Content-Type";
             set obj.http.Access-Control-Allow-Methods = "GET, OPTIONS";
-        } else if (!req.http.Origin || req.http.Origin == "null" ) {
-            ## this is to support IOS requests. They don't send Header Origin
-            set obj.http.Access-Control-Allow-Origin = "*";
             set obj.http.Access-Control-Expose-Headers = "Content-Type";
-            set obj.http.Access-Control-Allow-Methods = "GET, OPTIONS";
         }
         synthetic
             {"{"GDPR":"} + req.http.var-cookie-nyt-gdpr + {"}"};
