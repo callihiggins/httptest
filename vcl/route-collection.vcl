@@ -61,11 +61,6 @@ sub recv_route_collection {
           set req.url = querystring.filter_except(req.url, "nytapp");
         }
 
-        if (req.http.var-nyt-env == "dev" && req.url ~ "^/section/realestate") {
-          set req.http.x-nyt-route = "vi-collection";
-          set req.http.x-nyt-backend = "realestate_fe";
-        }
-
         unset req.http.Authorization;
         call recv_post_method_restricted;
     } else {
@@ -91,6 +86,10 @@ sub recv_route_collection {
       } else {
         set req.http.x-nyt-backend = "realestate_fe_vi";
       }
+    }
+
+    if (req.http.var-nyt-env == "dev" && req.url ~ "^/section/realestate") {
+      set req.http.x-nyt-backend = "realestate_fe";
     }
   }
 }
