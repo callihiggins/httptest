@@ -28,8 +28,9 @@ tests:
           x-nyt-route: (vi-collection|collection)
           x-nyt-backend: (projectvi_fe|collection_fe)
           x-gdpr: "0"
-          fastly-restarts: "1"
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
+        notPresent:
+          - 'fastly-restarts'
   - description: Test /issue collection
     request:
       path: /issue/qqq
@@ -44,8 +45,9 @@ tests:
           x-nyt-route: (vi-collection|collection)
           x-nyt-backend: (projectvi_fe|collection_fe)
           x-gdpr: "0"
-          fastly-restarts: "1"
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
+        notPresent:
+          - 'fastly-restarts'
   - description: Test /news-event collection
     request:
       path: /news-event/qqq
