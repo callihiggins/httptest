@@ -73,8 +73,8 @@ sub recv_gdpr {
     # If the request didn't have an `nyt-gdpr` cookie present, then we do geo detection
     # and match against the country list to determine whether headers should be sent back
     if (req.http.var-nyt-has-gdpr == "false") {
-        # set a GDPR value for folks in the country list
-        if (client.geo.country_code ~ "AT|BE|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|NL|PL|PT|RO|SK|SI|ES|SE|GB|IS|LI|NO|CH") {
+        # set a GDPR value for folks in the country list (note that this list is EEA + Barbados)
+        if (client.geo.country_code ~ "AT|BB|BE|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|NL|PL|PT|RO|SK|SI|ES|SE|GB|IS|LI|NO|CH") {
             set req.http.var-cookie-nyt-gdpr = "1";
         } else {
             set req.http.var-cookie-nyt-gdpr = "0";

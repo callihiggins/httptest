@@ -10208,3 +10208,13 @@ tests:
           - '\{"GDPR":[0|1]\}'
       statusCodes:
         - 200
+  - description: Test that Barbados IPs get nyt-gdpr=1
+    request:
+      path: /index.html?ip-override=64.7.192.64
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          set-cookie: (?:^|,)nyt-gdpr=1;
