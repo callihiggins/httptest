@@ -509,5 +509,5 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^projectvi_fe$
+          x-nyt-backend: ^realestate_fe$
 
