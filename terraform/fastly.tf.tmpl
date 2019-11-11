@@ -978,4 +978,10 @@ resource "fastly_service_v1" "service" {
     main    = false
     content = "${file("../vcl/route-refer.vcl")}"
   }
+
+  vcl {
+    name    = "route-weekender"
+    main    = false
+    content = "${file("../vcl/route-weekender.vcl")}"
+  }
 }

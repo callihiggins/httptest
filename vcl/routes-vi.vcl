@@ -17,6 +17,7 @@ include "route-story";
 include "route-timeswire";
 include "route-trending";
 include "route-watching";
+include "route-weekender";
 
 # routes that's using projectvi_static_backup_gcs backends
 include "route-vi-static-backup-gcs";
