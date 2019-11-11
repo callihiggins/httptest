@@ -156,7 +156,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^collection$
-          x-nyt-backend: ^collection_fe$
+          x-nyt-backend: ^alpha_preview$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Alpha host; test scoop collection preview;/section/opinion
