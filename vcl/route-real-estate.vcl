@@ -86,14 +86,11 @@ sub recv_route_real_estate {
             req.url ~ "^/real-estate/find-a-home" ||
             req.url ~ "^/real-estate/the-high-end" ||
             req.url ~ "^/real-estate(?:\/.*)?\/building/" ||
-            req.url ~ "^/real-estate/my-real-estate"
+            req.url ~ "^/real-estate/my-real-estate"  ||
+            req.url ~ "^/real-estate/guide/\w.+"
           ) {
             set req.http.x-nyt-backend = "realestate_fe_vi";
           }
-        }
-
-         if (req.http.var-nyt-env == "stg" && req.url ~ "^/real-estate/guide/\w+/\w.+") {
-            set req.http.x-nyt-backend = "realestate_fe_vi";
         }
     }
 }

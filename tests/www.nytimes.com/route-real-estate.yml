@@ -339,7 +339,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -347,18 +347,4 @@ tests:
           x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
         - 200
-  - description: RealEstate Neighborhood guide page redirect to NYT5 platform
-    request:
-      path: /real-estate/guide/manhattan/upper%20east%20side
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
-      statusCodes:
-        - 200
+
