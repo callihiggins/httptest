@@ -12,7 +12,6 @@ tests:
         patterns:
           x-nyt-route: ^vi-paidpost$
           x-nyt-backend: ^projectvi_fe$
-          x-frame-options: ^DENY$
           x-gdpr: ^0$
   - description: Test missing x-frame-options with whitelisted referer
     request:
@@ -44,7 +43,6 @@ tests:
         patterns:
           x-nyt-route: ^vi-paidpost$
           x-nyt-backend: ^projectvi_fe$
-          x-frame-options: ^DENY$
           x-gdpr: ^0$
           x-nyt-final-url: ^/paidpost/advertiser/headline\.html$
   - description: Alpha host /paidpost; test query string sort and filter whitelist preview;
