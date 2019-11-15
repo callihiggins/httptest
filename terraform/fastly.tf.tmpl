@@ -415,7 +415,32 @@ resource "fastly_service_v1" "service" {
   }
 
   ####### End Botify / S3 Logging #######
-  
+
+  ########### Beginning of SEO Logging integration #############
+
+  {{ $seo_env_logging := (datasource "env_config").seo_gcs_logging }}
+  condition {
+    name      = "seologging-suppression"
+    priority  = 10
+    statement = "req.http.device_type == \"crawler\""
+    type      = "RESPONSE"
+  }
+
+  gcslogging {
+    name               = "SEO-logging-${var.env}"
+    email              = "{{$seo_env_logging.email}}"
+    bucket_name        = "{{$seo_env_logging.bucket_name}}"
+    secret_key         = "${var.gcs_secret_key}"
+    path               = "/"
+    period             = 60
+    gzip_level         = 9
+    format             = "\"%h\",%l,%u,\"%t\",\"%r\",%>s,%b,\"%{Referer}i\",\"%{User-agent}i\""
+    response_condition = "seologging-suppression"
+    message_type       = "blank"
+  }
+
+  ########### End of SEO Logging integration #############
+
   vcl {
     name    = "route-newsdev-attribute"
     main    = false

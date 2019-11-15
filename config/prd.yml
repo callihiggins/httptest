@@ -1124,3 +1124,8 @@ botify_s3_logging:
   # note this is a different bucket format than stg/prd, provided to us by botify
   bucket_name: "com.botify.saas.production.customer-logs"
   s3_access_key: "AKIA2ANC2HZEEJYKJENE"
+
+# Logging to GCS for SEO team analysis.
+seo_gcs_logging:
+  bucket_name: "nyt-storyseo-prd-search-bot-logs"
+  email: "fastly-log-ingest@nyt-fastlylogs-prd.iam.gserviceaccount.com"

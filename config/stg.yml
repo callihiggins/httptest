@@ -1093,3 +1093,8 @@ gcslogging:
 botify_s3_logging:
   bucket_name: "storyseo-botify-dev"
   s3_access_key: "AKIARFN3V7IVIML4JVVO"
+
+# Logging to GCS for SEO team analysis.
+seo_gcs_logging:
+  bucket_name: "nyt-storyseo-stg-search-bot-logs"
+  email: "fastly-log-ingest@nyt-fastlylogs-dev.iam.gserviceaccount.com"
