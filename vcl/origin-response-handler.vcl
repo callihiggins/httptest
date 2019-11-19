@@ -27,11 +27,11 @@ sub fetch_deliver_stale_on_error {
         Doing this to limit what gets a large error page download
       */
 
-      if ( req.restarts >= 1
+      if ( req.restarts >= 1 
            && (req.url.path ~ ".html$" || req.url.path ~ "/$")
            && (req.url.path !~ "^/svc" && req.url.path !~ "^/adx")
           ) {
-        error 503;
+        error beresp.status;
       }
 
   }
