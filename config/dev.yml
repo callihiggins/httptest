@@ -208,7 +208,7 @@ backends:
     ssl_sni_hostname: "search-api-ce.dev.nyt.net"
     healthcheck:
       host: "search-api-ce.dev.nyt.net"
-      path: "/actuator/health"
+      path: "/dv_esp_status"
       check_interval: "20000"
       expected_response: "200"
       initial: "4"
