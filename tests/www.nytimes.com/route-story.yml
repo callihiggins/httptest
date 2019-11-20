@@ -363,7 +363,8 @@ tests:
         patterns:
           x-nyt-backend: ^projectvi_fe$
           x-nyt-route: ^vi-story$
-          set-cookie: ^(?:(?!vistory).)*$
+        notMatching:
+          set-cookie: ^.*vistory.*$
   - description: Empty vistory cookie
     request:
       path: /2017/10/16/upshot/this-is-a-test-article.html
@@ -476,6 +477,8 @@ tests:
         patterns:
           x-nyt-backend: ^projectvi_fe$
           x-nyt-route: ^vi-story$
+        notMatching:
+          set-cookie: ^.*vistory.*$
       statusCodes:
         - 200
   - description: Empty vistory cookie
