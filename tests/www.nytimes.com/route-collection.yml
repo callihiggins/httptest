@@ -510,4 +510,16 @@ tests:
         patterns:
           x-nyt-route: ^vi-collection$
           x-nyt-backend: ^realestate_fe$
+  - description: Test /section/realestate collection point to realestate backend
+    request:
+      path: /section/realestate
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^realestate_fe_vi$
 

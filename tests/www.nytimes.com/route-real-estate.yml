@@ -347,4 +347,65 @@ tests:
           x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
         - 200
+  - description: RealEstate Search Result Rent page redirect to VI platform on STG
+    request:
+      path: /real-estate/homes-for-rent
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Result Rent page redirect to default backend
+    request:
+      path: /real-estate/homes-for-rent
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Result Sale page redirect to default backend
+    request:
+      path: /real-estate/homes-for-sale
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Result Sale page redirect to VI platform on STG
+    request:
+      path: /real-estate/homes-for-sale
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+      - 200
+
 

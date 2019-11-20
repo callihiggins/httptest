@@ -88,8 +88,13 @@ sub recv_route_collection {
       }
     }
 
-    if (req.http.var-nyt-env == "dev" && req.url ~ "^/section/realestate") {
-      set req.http.x-nyt-backend = "realestate_fe";
+    if (req.url ~ "^/section/realestate") {
+      if (req.http.var-nyt-env == "dev") {
+        set req.http.x-nyt-backend = "realestate_fe";
+      }
+      if (req.http.var-nyt-env == "stg") {
+        set req.http.x-nyt-backend = "realestate_fe_vi";
+      }
     }
   }
 }

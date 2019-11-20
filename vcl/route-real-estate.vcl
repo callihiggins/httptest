@@ -92,6 +92,15 @@ sub recv_route_real_estate {
             set req.http.x-nyt-backend = "realestate_fe_vi";
           }
         }
+
+        if (req.http.var-nyt-env == "stg") {
+          if (
+            req.url ~ "^/real-estate/homes-for-rent" ||
+            req.url ~ "^/real-estate/homes-for-sale"
+          ) {
+            set req.http.x-nyt-backend = "realestate_fe_vi";
+          }
+        }
     }
 }
 
