@@ -86,69 +86,6 @@ sub recv_abra_allocation {
     set var.is_story = (req.http.x-nyt-route == "vi-story");
 
     #######################################
-    # Test Name: dfp_latamv2
-    #
-    # Description: Project Ocean ab test which will add variants to Latin American
-    #              users on the home and story routes.
-    #
-    # Variants:
-    #   - 0_control                        50%
-    #   - 1_change_the_fold_test           50%
-    #
-    # Rollout:
-    #   Initially this will be rolled out to .1% of the population, so each variant
-    #   will be allocated 50% of .1%. Later, we'll roll it out to 100% of the population
-    #   and split the remaining 99.9%. The rollout is behind two flags:
-    #     initial .1%:      req.http.var-is-project-ocean-enabled
-    #     remaining 99.9%:  req.http.var-is-project-ocean-fully-scaled-enabled
-    #
-    # Are we in a latin american country?
-    declare local var.is_in_latin_am BOOL;
-    set var.is_in_latin_am = (req.http.x-nyt-country == "MX"  # Mexico
-        || req.http.x-nyt-country == "BR"                     # Brazil
-        || req.http.x-nyt-country == "AR"                     # Argentina
-        || req.http.x-nyt-country == "CL");                   # Chile
-
-    # Are we on the home and story routes?
-    declare local var.is_route BOOL;
-    set var.is_route = (var.is_home || var.is_story);
-
-    if (var.is_in_latin_am && var.is_route) {
-      set var.test_name = "dfp_latamv2";
-      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
-      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-      set var.p = std.strtol(var.hash, 16);
-
-      # First half of .1% of the population - control group
-      # round(0.5 * .001 * 2^32)
-      if (var.p < 2147484) {
-        set var.test_param = var.test_name + "=0_control";
-      # Second half of .1% of the population - test 1 group
-      # round(.001 * 2^32)
-      } elseif (var.p < 4294967) {
-        set var.test_param = var.test_name + "=1_change_the_fold_test";
-      # First half of remaining 100% of population - control group
-      # round(.001 * 2^32) + round(0.5 * .999 * 2^32)
-      } elseif (var.p < 2149631132) {
-        set var.test_param = var.test_name + "=0_control";
-      # Second half of remaining 100% of population - test 1 group
-      # should be the remaining...
-      } else {
-        set var.test_param = var.test_name + "=1_change_the_fold_test";
-      }
-
-      if (var.test_param) {
-        set var.test_group = var.test_group + var.test_param;
-        # We need to vary the cache on both the home and story routes:
-        set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
-        set req.http.var-story-abtest-variation = req.http.var-story-abtest-variation + var.test_param;
-      }
-    }
-    #
-    # End of Test dfp_latamv2
-    #######################################
-
-    #######################################
     # Test Name: STYLN_recirc_pres
     #
     # Description: Storylines recirc pres is testing click response of editors picks
