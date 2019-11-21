@@ -937,25 +937,52 @@ backends:
       timeout: "2000"
       window: "5"
 
-# defaults for cloud storage bucket configs
-# these are overridable in per bucket configs below
-#   auth_key:     the dictionary key for the bucket access token
-#   auth_secret:  the dictionary key for the bucket access secret
-#   s3_auth_key:     the dictionary key for the s3 bucket access token
-#   s3_auth_secret:  the dictionary key for the s3 bucket access secret
-# if you share your bucket with DV's google accounts you can use these defaults
-# dictionary name for all keys is origin_auth_keys
+  - name: "s3_origin"
+    address: "s3.amazonaws.com"
+    between_bytes_timeout: "5000"
+    connect_timeout: "5000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "s3.amazonaws.com"
+    ssl_sni_hostname: "s3.amazonaws.com"
+    healthcheck:
+      host: "nyt-core-fastly-healthcheck-0000.s3.amazonaws.com"
+      path: "/status.txt"
+      check_interval: "30000"
+      expected_response: "200"
+      initial: "60"
+      threshold: "1"
+      timeout: "5000"
+      window: "60"
+
+# defaults for cloud storage bucket auth configs
+#   the following configs are for DV users for access to cloud storage buckets
+# `gcs_auth_key`:    the dictionary key for GCS bucket access token
+# `gcs_auth_secret`: the dictionary key for GCS bucket access secret
+# `s3_auth_key`:     the dictionary key for the s3 bucket access token
+# `s3_auth_secret`:  the dictionary key for the s3 bucket access secret
+#   these will be used by default by noting `bucket_provider: gcs/s3` in the route config
+#   dictionary name for all keys is `origin_auth_keys`
 cloud_storage_bucket_defaults:
   gcs_auth_key: "gcs_key"
   gcs_auth_secret: "gcs_secret"
   s3_auth_key: "s3_key"
   s3_auth_key: "s3_secret"
 
-# these configurations are to map buckets for the routes that
-# use cloud storage to their respective env specific storage bucket config
-# pay attention to the defaults above in the case you need to override those
-# be mindful that the pagetype you use here must be used in your route for this bucket!
-# bucket_provider is one of: gcs, s3
+# these configurations are to map routes to buckets that use cloud storage
+#
+# `route`:            the same route in use in your `route-<route_name>.vcl` file
+# `bucket_provider`:  one of `gcs` or `s3`
+# `bucket_name`:      the name of the bucket, i.e `<bucket_name>.s3.amazonaws.com`
+# `auth`:             does the bucket require credentails, `true` or `false`
+#   if you are sharing your bucket with DV's accounts:
+#     * auth creds are provided automagically based on `bucket_provider`
+#   if you are not sharing your bucket with DV's accounts you will need to:
+#     * use `auth_key` and `auth_secret` config items to denote the `origin_auth_keys` dictionary keys
+#       that contain your auth key/secret for accessing the bucket
+#     * you will need to enlist DV's help to populate your keys into the `origin_auth_keys` dictionary
+#       for all sandbox/dev, staging and production www service configs, ask in #fastly for this
+#     * typically we use separate dev/stg/prd buckets with their own discrete credentials as a good practice
+#       sandboxes use the `dev` configuration
 cloud_storage_buckets:
   - route: "cms-static-assets"
     auth: "true"
@@ -1005,6 +1032,12 @@ cloud_storage_buckets:
     auth: "true"
     bucket_name: "nyt-storyseo-dev-sitemaps"
     bucket_provider: "gcs"
+  - route: "interactive-s3-failover"
+    auth: "true"
+    bucket_name: "nyt-int-fallback-output-dev"
+    bucket_provider: "s3"
+    auth_key: "int_failover_key"
+    auth_secret: "int_failover_secret"
 
 # big query logger env configuration
 bigquery_log:

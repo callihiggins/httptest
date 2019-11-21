@@ -1,7 +1,8 @@
 # This logic will handle serving stale content if we got an error from the backend
 sub fetch_deliver_stale_on_error {
 
-  if (beresp.status >= 500 && beresp.status < 600) {
+  if ( beresp.status >= 500 && beresp.status < 600 || 
+       (req.http.var-nyt-4xx-serve-stale == "true" && beresp.status >= 400 && beresp.status < 500) ) {
 
       # Deliver stale if the object is available
       if (stale.exists) {

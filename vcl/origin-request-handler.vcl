@@ -52,4 +52,5 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-surrogate-key;
   unset bereq.http.var-nyt-vi-story-compatibility;
   unset bereq.http.var-nyt-wf-auth;
+  unset bereq.http.var-nyt-4xx-serve-stale;
 }

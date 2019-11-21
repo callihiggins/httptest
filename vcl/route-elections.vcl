@@ -1,8 +1,5 @@
 sub recv_route_elections {
-    if ( req.url ~ "^/elections?(?:/|\?|$)"
-      || ( table.lookup(newsdev_elections, "serve_vi", "false") == "true"
-           && req.url ~ "^/interactive/2018/(10/[2-3][0-9]|11/0[1-7])/us/elections/results-" )
-    ) {
+    if (req.url ~ "^/elections?(?:/|\?|$)") {
         set req.http.x-nyt-route = "elections";
         set req.http.var-nyt-send-gdpr = "true";
         set req.url = querystring.remove(req.url);

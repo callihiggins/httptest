@@ -310,4 +310,35 @@ tests:
           - x-varnish
       statusCodes:
         - 404
-
+  - description: Test Interative S3 Failover Override Parameter
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+        cookie: interactive-failover=1
+      path: /interactive/2020/us/elections/amy-klobuchar.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^interactive-s3-failover$
+          x-nyt-backend: ^s3_origin$
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+          debug-var-nyt-force-pass: true
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404

@@ -53,6 +53,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "vi-video"
         || req.http.x-nyt-route == "gdpr-form"
         || req.http.x-nyt-route == "vi-interactive"
+        || req.http.x-nyt-route == "interactive-s3-failover"
         || req.http.x-nyt-route == "ads-static-assets"
         || req.http.x-nyt-route == "elections"
         || ( req.http.x-nyt-route == "newsgraphics-gcs"
