@@ -96,7 +96,9 @@ sub recv_route_real_estate {
         if (req.http.var-nyt-env == "stg") {
           if (
             req.url ~ "^/real-estate/homes-for-rent" ||
-            req.url ~ "^/real-estate/homes-for-sale"
+            req.url ~ "^/real-estate/homes-for-sale" ||
+            req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ||
+            req.url ~ "^/real-estate/home/([^/]+)"
           ) {
             set req.http.x-nyt-backend = "realestate_fe_vi";
           }
