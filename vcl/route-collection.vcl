@@ -79,20 +79,11 @@ sub recv_route_collection {
       call recv_post_method_restricted;
     }
 
-    # RealEstate: Route to the Real Estate backend
-    if (req.url ~ "^/section/realestate/commercial") {
-      if (req.http.var-nyt-env == "dev") {
-        set req.http.x-nyt-backend = "realestate_fe";
-      } else {
-        set req.http.x-nyt-backend = "realestate_fe_vi";
-      }
-    }
-
+    # RealEstate: Route to the Real Estate backend Front Page and Commercial
     if (req.url ~ "^/section/realestate") {
       if (req.http.var-nyt-env == "dev") {
         set req.http.x-nyt-backend = "realestate_fe";
-      }
-      if (req.http.var-nyt-env == "stg") {
+      } else {
         set req.http.x-nyt-backend = "realestate_fe_vi";
       }
     }

@@ -87,14 +87,7 @@ sub recv_route_real_estate {
             req.url ~ "^/real-estate/the-high-end" ||
             req.url ~ "^/real-estate(?:\/.*)?\/building/" ||
             req.url ~ "^/real-estate/my-real-estate"  ||
-            req.url ~ "^/real-estate/guide/\w.+"
-          ) {
-            set req.http.x-nyt-backend = "realestate_fe_vi";
-          }
-        }
-
-        if (req.http.var-nyt-env == "stg") {
-          if (
+            req.url ~ "^/real-estate/guide/\w.+" ||
             req.url ~ "^/real-estate/homes-for-rent" ||
             req.url ~ "^/real-estate/homes-for-sale" ||
             req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ||
