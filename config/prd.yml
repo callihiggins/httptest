@@ -999,7 +999,7 @@ cloud_storage_bucket_defaults:
   gcs_auth_key: "gcs_key"
   gcs_auth_secret: "gcs_secret"
   s3_auth_key: "s3_key"
-  s3_auth_key: "s3_secret"
+  s3_auth_secret: "s3_secret"
 
 # these configurations are to map routes to buckets that use cloud storage
 #
