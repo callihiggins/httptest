@@ -122,7 +122,10 @@ sub recv_route_amp {
         &&   req.url.path ~ "\.amp\.html$"
         )
       || req.url ~ "^/apple-news/"
-      || (req.http.var-nyt-canonical-www-host == "true" && req.url ~ "^/es/.*\.amp\.html")
+      || (req.http.var-nyt-canonical-www-host == "true"
+            && req.url ~ "^/(a[fryz]|b[egns]|c[aksy]|d[ae]|e[lnostu]|f[abiory]|g[alnux]|h[eiruy]|i[dst]|j[av]|k[akmnou]|l[aitv]|m[gklnrst]|n[beln]|p[alst]|qu|r[mou]|s[aekloqrvwy]|t[aeghlrt]|u[krz]|vi|xh|yi|zh|zh-(CN|HK|TW|hans|hant)|zu)/"
+            && req.url.path ~ "\.amp\.html$"
+         )
   ) {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";

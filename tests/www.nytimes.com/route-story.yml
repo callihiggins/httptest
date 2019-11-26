@@ -750,6 +750,22 @@ tests:
           x-nyt-backend: ^projectvi_fe$
       statusCodes:
         - 200
+  - description: Vi internationalized amp URL /es, /ar, /zh-hant
+    request:
+      method: GET
+      path: /ar/2019/02/10/world/middleeast/princess-latifa-sheikha-dubai.amp.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+      statusCodes:
+        - 200
   - description: Vi internationalized URL /zh-hans
     request:
       method: GET
