@@ -15,7 +15,7 @@ tests:
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
-        - 301
+        - 200
   - description: Vi weekender Page; /weekender/
     request:
       path: /weekender/
@@ -32,7 +32,7 @@ tests:
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
-        - 301
+        - 200
   - description: Vi weekender Page; does not redirect to mobile
     request:
       path: /weekender
@@ -51,5 +51,5 @@ tests:
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
-        - 301
+        - 200
 
