@@ -429,12 +429,27 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|prd
+        TEST_ENV: dev
     response:
       headers:
         patterns:
           x-nyt-route: ^real-estate$
           x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
+  - description: RealEstate Listing Details page redirect to NTY5 on DEV and PRD
+    request:
+      path: /real-estate/usa/ny/brooklyn/kensington/homes-for-sale/40-tehama-street/3542-DC40T
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
       - 200
   - description: RealEstate Listing Details page short url with home redirect to VI platform on STG
@@ -459,11 +474,26 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|prd
+        TEST_ENV: dev
     response:
       headers:
         patterns:
           x-nyt-route: ^real-estate$
           x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
+  - description: RealEstate Listing Details page short url with home redirect to NTY5 on DEV and PRD
+    request:
+      path: /real-estate/home/3542-DC40T
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
       - 200
