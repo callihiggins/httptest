@@ -31,6 +31,41 @@ sub fetch_bot_detection {
 
 # Private functions, DO NOT CALL THESE DIRECTLY.  Use the shared functions above
 # /* ------- DATADOME ------ */
+sub datadome_set_origin_header {
+    unset bereq.http.destination;
+    if (req.backend == F_datadome) {
+        # Retrieve Datadome key from dictionary HERE
+        set bereq.http.x-datadome-apikey =
+            table.lookup(bot_detection, "datadome_api_key");
+        set bereq.http.x-datadome-modulename = "Fastly";
+        set bereq.http.x-datadome-moduleversion = "1.9";
+        set bereq.http.x-datadome-timestamp = time.start.usec;
+        set bereq.http.x-datadome-serverhostname = server.identity;
+        set bereq.http.x-datadome-server-region = server.region;
+        set bereq.http.x-real-ip = req.http.fastly-client-ip;
+        set bereq.http.x-authorizationlen = std.strlen(req.http.authorization);
+        unset bereq.http.authorization;
+        set bereq.http.x-datadome-clientid = req.http.cookie:datadome;
+        set bereq.http.x-cookieslen = std.strlen(req.http.cookie);
+        unset bereq.http.cookie;
+    } else {
+        # prevent leak of the key
+        unset bereq.http.x-datadome-apikey;
+        unset bereq.http.x-datadome-modulename;
+        unset bereq.http.x-datadome-moduleversion;
+        unset bereq.http.x-datadome-timestamp;
+        unset bereq.http.x-datadome-serverhostname;
+        unset bereq.http.x-datadome-server-region;
+        unset bereq.http.x-real-ip;
+        unset bereq.http.x-authorizationlen;
+        unset bereq.http.x-original-method;
+        unset bereq.http.x-content-length;
+        unset bereq.http.x-authorizationlen;
+        unset bereq.http.x-cookieslen;
+        unset bereq.http.x-datadome-clientid;
+    }
+}
+
 sub datadome_vcl_recv {
   # Configure the regular expression below to match URLs that
   # should be checked by DataDome
@@ -84,9 +119,7 @@ sub datadome_vcl_fetch {
     if (var.status != beresp.http.x-datadomeresponse) {
       restart;
     }
-
     unset beresp.http.x-datadomeresponse;
-
     # copy datadome headers
     set req.http.x-datadome-headers = beresp.http.x-datadome-headers;
     set req.http.x-datadome-request-headers = beresp.http.x-datadome-request-headers;
@@ -186,8 +219,10 @@ sub datadome_vcl_fetch {
 sub datadome_vcl_deliver {
 
   if (req.backend == F_datadome) {
-    # check for server errors and if so force restart
-    if (req.restarts == 0 && resp.status >= 400) {
+    # check for unexpected server errors and if so force restart
+    if (req.restarts == 0 &&
+        resp.status != 200 &&
+        resp.status != 403) {
       set req.http.debug-datadome-response = resp.status;
       restart;
     }
@@ -239,39 +274,4 @@ sub datadome_vcl_deliver {
       set resp.http.datadome-response = req.http.debug-datadome-response;
     }
   }
-}
-
-sub datadome_set_origin_header {
-    unset bereq.http.destination;
-    if (req.backend == F_datadome) {
-        # Retrieve Datadome key from dictionary HERE
-        set bereq.http.x-datadome-apikey =
-            table.lookup(bot_detection, "datadome_api_key");
-        set bereq.http.x-datadome-modulename = "Fastly";
-        set bereq.http.x-datadome-moduleversion = "1.9";
-        set bereq.http.x-datadome-timestamp = time.start.usec;
-        set bereq.http.x-datadome-serverhostname = server.identity;
-        set bereq.http.x-datadome-server-region = server.region;
-        set bereq.http.x-real-ip = req.http.fastly-client-ip;
-        set bereq.http.x-authorizationlen = std.strlen(req.http.authorization);
-        unset bereq.http.authorization;
-        set bereq.http.x-datadome-clientid = req.http.cookie:datadome;
-        set bereq.http.x-cookieslen = std.strlen(req.http.cookie);
-        unset bereq.http.cookie;
-    } else {
-        # prevent leak of the key
-        unset bereq.http.x-datadome-apikey;
-        unset bereq.http.x-datadome-modulename;
-        unset bereq.http.x-datadome-moduleversion;
-        unset bereq.http.x-datadome-timestamp;
-        unset bereq.http.x-datadome-serverhostname;
-        unset bereq.http.x-datadome-server-region;
-        unset bereq.http.x-real-ip;
-        unset bereq.http.x-authorizationlen;
-        unset bereq.http.x-original-method;
-        unset bereq.http.x-content-length;
-        unset bereq.http.x-authorizationlen;
-        unset bereq.http.x-cookieslen;
-        unset bereq.http.x-datadome-clientid;
-    }
 }
