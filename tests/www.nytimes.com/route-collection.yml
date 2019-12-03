@@ -10,8 +10,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^collection$
-          x-nyt-backend: ^collection_fe$
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /column collection
@@ -522,4 +522,3 @@ tests:
       headers:
         patterns:
           x-nyt-backend: ^realestate_fe_vi$
-

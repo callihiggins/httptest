@@ -1,6 +1,5 @@
 sub recv_route_collection {
-  if (   req.url ~ "^/by/"
-      || req.url ~ "^/reviews/dining/map"
+  if (   req.url ~ "^/reviews/dining/map"
       || req.url ~ "^/reviews?"
       || req.url ~ "^/reviews$"
       || req.url ~ "^/upshot"
@@ -35,6 +34,7 @@ sub recv_route_collection {
 
   # route selected collections to VI first.
   if (   (req.url ~ "^/column/" && req.url !~ "^/column/the-dispatch" && req.url !~ "^/column/the-weekly" && req.url !~ "^/column/theweekly")
+      || req.url ~ "^/by/"
       || req.url ~ "^/issue/"
       || req.url ~ "^/topic/organization/"
       || req.url ~ "^/topic/subject/"
