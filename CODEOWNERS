@@ -25,4 +25,4 @@
 # vcl/route-newsletters*   @nytm/nyt-personalization
 # vcl/route-video*  @nytm/nyt-video
 # vcl/route-vi-*    @nytm/web-frameworks-team
-/vcl/route-userinfo* @nytm/ecomm-myaccount
+/vcl/route-userinfo* @nytm/fastly-www @nytm/ecomm-myaccount
