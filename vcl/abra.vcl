@@ -201,7 +201,42 @@ sub recv_abra_allocation {
       }
 
       set var.test_group = var.test_group + var.test_param;
-      # We need to vary the cache on both the home and story routes:
+      # We need to vary the cache on home route:
+      set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
+    }
+    #
+    # End of Test HOME_editorsPicks
+    #######################################
+
+    # Test Name: HOME_greatReads
+    #
+    # Description: Great reads content test on homepage
+    # only for external clients
+    #
+    #
+    # Variants:
+    #   - 0_control                                 80%
+    #   - 1_variant                                 20%
+    #
+
+    if (var.is_home && !(req.http.x-nyt-nyhq-access == "1")) {
+
+      if (var.test_group){
+        set var.test_group = var.test_group "&";
+      }
+      set var.test_name = "HOME_greatReads";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (var.p < 3435973837) {
+        set var.test_param = var.test_name + "=0_control";
+      } else {
+        set var.test_param = var.test_name + "=1_variant";
+      }
+
+      set var.test_group = var.test_group + var.test_param;
+      # We need to vary the cache on home route:
       set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
     }
     #
