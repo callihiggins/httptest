@@ -1,7 +1,4 @@
 sub recv_route_video {
-    declare local var.hash STRING;
-    declare local var.p INTEGER;
-    declare local var.test_name STRING;
     declare local var.should_serve_from_vi BOOL;
     declare local var.start_time_window BOOL;
     declare local var.end_time_window BOOL;
@@ -16,6 +13,7 @@ sub recv_route_video {
     }
 
     if ( req.url.path == "/video" || req.url.path ~ "^/video/") {
+        set req.url = querystring.filter_except(req.url, "playlistId" + querystring.filtersep() + "force-vi" + querystring.filtersep());        
         set var.start_time_window = time.is_after(now, std.time("Sat, 14 Dec 2019 01:00:00 GMT", now));
         set var.end_time_window = time.is_after(now, std.time("Sun, 15 Dec 2019 10:00:00 GMT", now));
         set var.should_serve_from_vi = (var.start_time_window && !var.end_time_window);
