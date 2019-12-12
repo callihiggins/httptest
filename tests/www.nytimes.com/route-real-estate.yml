@@ -497,3 +497,93 @@ tests:
           x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
       - 200
+  - description: RealEstate Search Results page with optional URI redirect to VI platform
+    request:
+      path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-rent
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Results page with optional URI redirect to VI platform
+    request:
+      path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-rent
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Results page with optional URI redirect to VI platform
+    request:
+      path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-sale
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Results page with optional URI redirect to VI platform
+    request:
+      path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-rent?test=test
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Results page with optional URI redirect to VI platform
+    request:
+      path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-rent?test=test
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Results page  with Building URI redirect to VI platform
+    request:
+      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-rent/205-east-76th-street-building
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
