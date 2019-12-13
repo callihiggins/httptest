@@ -40,6 +40,7 @@ sub recv_route_story {
 
       # default route for stories is NYT5
       if (  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" // Route 1850-future
+          || req.url ~ "^/article/" // dateless urls
           || req.url ~ "^/(aponline|reuters)/" // wire sources
           || req.url ~ "^/blog/" // all blogposts
           || var.internationalized_url
@@ -79,7 +80,9 @@ sub recv_route_story {
         # are limited by a date range of between 1850 to 2005 and no earlier than 2013/01/01. This date is going
         # to be extended in the future to include older articles and the code will
         # be updated accordingly.
+        # Alternatively, send dateless urls (i.e. replacing the date with `/article`) to VI as well
         if ((  req.url ~ "^/(aponline/|reuters/)?18[5-9][0-9]|19[0-9][0-9]|200[0-5]|20(1[3-9]|[2-9][0-9])"
+            || req.url ~ "^/article"
             || var.internationalized_url
             || var.vi_explicit_opt_in
           )
@@ -118,7 +121,7 @@ sub recv_route_story {
 sub recv_route_amp {
   // Route amp articles
   if ((req.http.var-nyt-canonical-www-host == "true"
-        &&  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" || req.url ~ "^/interactive")
+        &&  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" || req.url ~ "^/article" || req.url ~ "^/interactive")
         &&   req.url.path ~ "\.amp\.html$"
         )
       || req.url ~ "^/apple-news/"

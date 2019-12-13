@@ -718,6 +718,7 @@ tests:
           x-nyt-backend: ^projectvi_fe$
       statusCodes:
         - 200
+
   - description: Vi internationalized URL /es with query params
     request:
       method: GET
@@ -869,3 +870,78 @@ tests:
           x-nyt-backend: ^amp$
           x-cache: ^MISS$
           debug-var-nyt-force-pass: true
+  - description: Vi Internationalized dateless URL /es with query params
+    request:
+      method: GET
+      path: /es/article/hinkie-trust-the-process.html?test=value
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Vi Internationalized dateless URL /es
+    request:
+      method: GET
+      path: /es/article/hinkie-trust-the-process.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Test routing for dateless url; article; VI; ensure Fastly pass;
+      /article/hinkie-trust-the-process.html
+    request:
+      path: /article/hinkie-trust-the-process.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 200
+  - description: Dateless AMP story pages should not force-pass cache
+    request:
+      path: /article/hinkie-trust-the-process.amp.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          debug-var-nyt-force-pass: false
+  - description: Test amp query string filter with dateless urls
+    request:
+      path: /article/hinkie-trust-the-process.amp.html?bad1=4&bad2=5&0p19G=1&isSwgTest=true
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+          x-nyt-final-url: ^/article/hinkie-trust-the-process.amp.html\?0p19G=1&isSwgTest=true
+          debug-var-nyt-force-pass: false
