@@ -1,7 +1,8 @@
 sub recv_route_video {
+    declare local var.hash STRING;
+    declare local var.p INTEGER;
+    declare local var.test_name STRING;
     declare local var.should_serve_from_vi BOOL;
-    declare local var.start_time_window BOOL;
-    declare local var.end_time_window BOOL;
 
 
     if (req.http.host ~ "^(www|paidpost)([\-a-z0-9]+)?\.(dev\.|stg\.)?nytimes.com$") {
@@ -13,12 +14,26 @@ sub recv_route_video {
     }
 
     if ( req.url.path == "/video" || req.url.path ~ "^/video/") {
-        set req.url = querystring.filter_except(req.url, "playlistId" + querystring.filtersep() + "force-vi" + querystring.filtersep());        
-        set var.start_time_window = time.is_after(now, std.time("Sat, 14 Dec 2019 01:00:00 GMT", now));
-        set var.end_time_window = time.is_after(now, std.time("Sun, 15 Dec 2019 10:00:00 GMT", now));
-        set var.should_serve_from_vi = (var.start_time_window && !var.end_time_window);
+        #######################################
+        #
+        # Abra style traffic allocation
+        #
+        # Variants:
+        #   - Legacy Video        75%
+        #   - Project VI Video    25%
+        #
 
-        if (var.should_serve_from_vi || req.url ~ "(?i)force-vi=true") {
+        set req.url = querystring.filter_except(req.url, "playlistId" + querystring.filtersep() + "force-vi" + querystring.filtersep());        
+        set var.test_name = "VIDEO_allocation";
+        set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+        set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+        set var.p = std.strtol(var.hash, 16);
+        # 2^32 = 4294967296
+        # 75% = 3221225472
+
+        set var.should_serve_from_vi = (var.p >= 3221225472 || req.url ~ "(?i)force-vi=true");
+
+        if (var.should_serve_from_vi) {
             set req.http.x-nyt-route = "vi-video";
             set req.http.x-nyt-backend = "projectvi_fe";
             set req.http.var-nyt-error-retry = "false";
