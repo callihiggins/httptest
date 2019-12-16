@@ -6,6 +6,7 @@ include "shared-vcl-version";
 include "shared-geoip-headers-init";
 include "shared-device-detection-init";
 include "shared-cmots-headers-init";
+include "shared-cmots-fallbacks";
 include "shared-purr";
 
 # initialization

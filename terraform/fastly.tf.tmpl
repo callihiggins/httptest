@@ -3,7 +3,7 @@ module "shared_vcl" {
 }
 
 module "cmots_shared_vcl" {
-  source = "git::https://github.com/nytm/cmots-fastly-shared.git//vcl?ref=master"
+  source = "git::https://github.com/nytm/fastly-shared-cmots.git//vcl?ref=master"
 }
 
 resource "fastly_service_v1" "service" {
@@ -504,6 +504,11 @@ resource "fastly_service_v1" "service" {
   vcl {
     name    = "shared-cmots-headers-init"
     content = "${module.cmots_shared_vcl.cmots_headers_init}"
+  }
+
+  vcl {
+    name    = "shared-cmots-fallbacks"
+    content = "${module.cmots_shared_vcl.cmots_fallbacks}"
   }
 
   vcl {
