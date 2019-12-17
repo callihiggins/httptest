@@ -105,21 +105,6 @@ tests:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
           surrogate-key: .+
-  - description: WCM subscription "vary" header presence test
-    request:
-      path: /subscription/hd/1041.html
-      headers:
-        x-nyt-miss: "1"
-        Fastly-Debug: 1
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^mwcm$
-          x-nyt-backend: ^mwcm$
-          vary: X-NYT-Currency
   - description: WCM subscription "x-nyt-currency", "x-nyt-country" headers for IP
       91.187.91.187
     request:
