@@ -43,8 +43,6 @@ tests:
         patterns:
           x-nyt-backend: ^projectvi_trending_fe$
           x-nyt-route: ^trending$
-      statusCodes:
-        - 200
   - description: Test static backup enabled and non-200 backend fetch status does not get
       converted to 503
     request:
