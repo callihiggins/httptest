@@ -765,8 +765,6 @@ tests:
         patterns:
           x-nyt-route: ^amp$
           x-nyt-backend: ^amp$
-      statusCodes:
-        - 200
   - description: Vi internationalized URL /zh-hans
     request:
       method: GET
