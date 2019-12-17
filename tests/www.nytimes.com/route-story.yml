@@ -851,6 +851,21 @@ tests:
           x-nyt-route: ^amp$
           x-nyt-backend: ^amp$
           debug-var-nyt-force-pass: false
+  - description: Route 2020 live blogs to amp
+    request:
+      method: GET
+      path: /live/2020/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+          debug-var-nyt-force-pass: false
   - description: Route Apple News articles to amp
     request:
       method: GET

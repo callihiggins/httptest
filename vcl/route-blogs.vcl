@@ -7,8 +7,7 @@ sub recv_route_blogs {
           || req.url ~  "^/times-insider"
           || req.url ~  "^/timesjourneys"
           || req.url ~  "^/live$"
-          || (   req.url  ~ "^/live/"
-              && req.url !~ "^/live/2019/")
+          || (req.url  ~ "^/live/" && req.url !~ "^/live/20(19|[2-9][0-9])/")
       ) {
           set req.http.x-nyt-route = "blog";
           set req.http.x-nyt-backend = "blogs";

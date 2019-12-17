@@ -146,7 +146,7 @@ sub recv_route_amp {
   // Route live blog traffic to amp
   if (  (req.http.var-nyt-canonical-www-host == "true"
       || req.http.var-nyt-canonical-alpha-host == "true")
-      && req.url ~ "^/live/2019/"
+      && (req.url ~ "^/live/20(19|[2-9][0-9])/")
   ) {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";
