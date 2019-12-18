@@ -92,18 +92,11 @@ sub recv_route_real_estate {
             req.url ~ "^/real-estate/homes-for-sale" ||
             # this is to match the listing page only
             req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ||
-            req.url ~ "^/real-estate/home/([^/]+)"
-          ) {
-            set req.http.x-nyt-backend = "realestate_fe_vi";
-          }
-        }
-
-        if (req.http.var-nyt-env == "stg") {
-          if (
             # this is to match the search results page only
             req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)$" ||
             # this is to match the search results page building
-            req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)-building"
+            req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)-building" ||
+            req.url ~ "^/real-estate/home/([^/]+)"
           ) {
             set req.http.x-nyt-backend = "realestate_fe_vi";
           }

@@ -414,7 +414,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -422,7 +422,7 @@ tests:
           x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
       - 200
-  - description: RealEstate Listing Details page redirect to NTY5 on DEV and PRD
+  - description: RealEstate Listing Details page redirect to VI on DEV
     request:
       path: /real-estate/usa/ny/brooklyn/kensington/homes-for-sale/40-tehama-street/3542-DC40T
       headers:
@@ -437,37 +437,7 @@ tests:
           x-nyt-backend: ^realestate_fe$
       statusCodes:
       - 200
-  - description: RealEstate Listing Details page redirect to NTY5 on DEV and PRD
-    request:
-      path: /real-estate/usa/ny/brooklyn/kensington/homes-for-sale/40-tehama-street/3542-DC40T
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe_vi$
-      statusCodes:
-      - 200
-  - description: RealEstate Listing Details page short url with home redirect to VI platform on STG
-    request:
-      path: /real-estate/home/3542-DC40T
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: stg
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe_vi$
-      statusCodes:
-      - 200
-  - description: RealEstate Listing Details page short url with home redirect to NTY5 on DEV and PRD
+  - description: RealEstate Listing Details page short url with home redirect to VI on DEV and PRD
     request:
       path: /real-estate/home/3542-DC40T
       headers:
@@ -482,14 +452,14 @@ tests:
           x-nyt-backend: ^realestate_fe$
       statusCodes:
       - 200
-  - description: RealEstate Listing Details page short url with home redirect to NTY5 on DEV and PRD
+  - description: RealEstate Listing Details page short url with home redirect to VI on DEV and PRD
     request:
       path: /real-estate/home/3542-DC40T
       headers:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: prd
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -504,7 +474,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|prd
+        TEST_ENV: dev
     response:
       headers:
         patterns:
@@ -512,14 +482,14 @@ tests:
           x-nyt-backend: ^realestate_fe$
       statusCodes:
       - 200
-  - description: RealEstate Search Results page with optional URI redirect to VI platform
+  - description: RealEstate Search Results page with optional URI redirect to VI platform STG and PRD
     request:
       path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-rent
       headers:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -527,14 +497,14 @@ tests:
           x-nyt-backend: ^realestate_fe_vi$
       statusCodes:
       - 200
-  - description: RealEstate Search Results page with optional URI redirect to VI platform
+  - description: RealEstate Search Results page with optional URI redirect to VI platform STG and PRD
     request:
       path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-sale
       headers:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -549,7 +519,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
@@ -564,7 +534,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|prd
+        TEST_ENV: dev
     response:
       headers:
         patterns:
@@ -579,7 +549,22 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe$
+      statusCodes:
+      - 200
+  - description: RealEstate Search Results page  with Building URI redirect to VI platform STG and PRD
+    request:
+      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-rent/205-east-76th-street-building
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
