@@ -121,7 +121,7 @@ sub recv_route_story {
 sub recv_route_amp {
   // Route amp articles
   if ((req.http.var-nyt-canonical-www-host == "true"
-        &&  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" || req.url ~ "^/article" || req.url ~ "^/interactive")
+        &&  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" || req.url ~ "^/article" || req.url ~ "^/interactive" )
         &&   req.url.path ~ "\.amp\.html$"
         )
       || req.url ~ "^/apple-news/"
@@ -146,11 +146,12 @@ sub recv_route_amp {
   // Route live blog traffic to amp
   if (  (req.http.var-nyt-canonical-www-host == "true"
       || req.http.var-nyt-canonical-alpha-host == "true")
-      && (req.url ~ "^/live/20(19|[2-9][0-9])/")
+      && (req.url ~ "^/live/20(19|[2-9][0-9])")
   ) {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";
   }
+  
 }
 
 sub miss_pass_route_amp {
@@ -160,6 +161,25 @@ sub miss_pass_route_amp {
       } else {
           set bereq.http.host = "amp-dot-nyt-wfvi-prd.appspot.com";
       }
+  }
+}
+
+sub deliver_route_story_live_error {
+
+  if (req.http.x-nyt-route == "amp") {
+    if (req.url ~ "^/live") {
+
+      # If the gcs object returns a 404, serve a custom 404 error page
+      if (resp.status == 404 && req.restarts < 1) {
+        set req.http.var-nyt-404-url = "/interactive/projects/404.html";
+        call deliver_custom_404_error;
+      }
+      # Since the custom 404 page is successfully found,
+      # restore the original status code
+      if (req.http.var-nyt-404-url && req.restarts > 0) {
+        set resp.status = 404;
+      }
+    }
   }
 }
 

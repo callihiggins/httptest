@@ -75,7 +75,7 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "ask"
         || req.http.x-nyt-route == "tbooks"
         || req.http.x-nyt-route == "tbooks-pass"
-        || req.url ~ "^/live/20(19|[2-9][0-9])/"
+        || req.url ~ "^/live/20(19|[2-9][0-9])" // 2019 - future
         || req.url ~ "^/newsletters"
         || req.url ~ "^/(js|js2|css|bi)/"
         || req.url ~ "^/packages/images/email/" // newsletters
