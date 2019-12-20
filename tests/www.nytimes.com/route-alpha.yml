@@ -371,7 +371,7 @@ tests:
           x-nyt-final-url: ^/2019/04/24/technology/ecuador-surveillance-cameras-police-government\.html\?action=click&module=Top%20Stories&pgtype=Homepage$
   - description: Alpha host alpha-preview.stg.nytimes.com routes to oak live blogs
     request:
-      path: /live/2019/live-blog
+      path: /live/2019/nyc-gay-pride-parade/pride-closing-ceremony
       headers:
         x-nyt-miss: "1"
         Host: alpha-preview.stg.nytimes.com
@@ -385,35 +385,7 @@ tests:
           x-nyt-backend: ^amp$
   - description: Alpha host alpha-preview.nytimes.com routes to oak live blogs
     request:
-      path: /live/2019/live-blog
-      headers:
-        x-nyt-miss: "1"
-        Host: alpha-preview.nytimes.com
-    conditions:
-      env:
-        TEST_ENV: prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
-  - description: Alpha host alpha-preview.stg.nytimes.com routes to oak live blogs
-    request:
-      path: /live/2020/live-blog
-      headers:
-        x-nyt-miss: "1"
-        Host: alpha-preview.stg.nytimes.com
-    conditions:
-      env:
-        TEST_ENV: stg
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
-  - description: Alpha host alpha-preview.nytimes.com routes to oak live blogs
-    request:
-      path: /live/2020/live-blog
+      path: /live/2019/nyc-gay-pride-parade/pride-closing-ceremony
       headers:
         x-nyt-miss: "1"
         Host: alpha-preview.nytimes.com
