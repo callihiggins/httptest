@@ -178,7 +178,9 @@ sub recv_abra_allocation {
     #   - 4_month_userhistory_impressions           5%
     #
 
-    if (var.is_home && !(req.http.x-nyt-nyhq-access == "1")) {
+    #  Temporarily turning off HOME_editorsPicks test
+
+    /* if (var.is_home && !(req.http.x-nyt-nyhq-access == "1")) {
 
       if (var.test_group){
         set var.test_group = var.test_group "&";
@@ -203,7 +205,7 @@ sub recv_abra_allocation {
       set var.test_group = var.test_group + var.test_param;
       # We need to vary the cache on home route:
       set req.http.var-home-abtest-variation = req.http.var-home-abtest-variation + var.test_param;
-    }
+    } */
     #
     # End of Test HOME_editorsPicks
     #######################################
