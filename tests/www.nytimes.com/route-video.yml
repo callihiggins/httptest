@@ -10,7 +10,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^video-library$
+          x-nyt-route: ^vi-video$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
           x-gdpr: ^[0-1]$
       statusCodes:
@@ -26,7 +26,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^video-library$
+          x-nyt-route: ^vi-video$
       statusCodes:
         - 200
   - description: Test hitting a video home page on vi
@@ -40,7 +40,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^video-library$
+          x-nyt-route: ^vi-video$
       statusCodes:
         - 200
   - description: Test hitting the video library homepage with a query string at the end
@@ -54,7 +54,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^video-library$
+          x-nyt-route: ^vi-video$
       statusCodes:
         - 200
   - description: Test hitting a /svc/video endpoint
@@ -157,8 +157,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-backend: ^video_library$
-          x-nyt-route: ^video-library$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-video$
           x-nyt-final-url: ^/video/sciencetake\?playlistId=2$
       statusCodes:
         - 200
@@ -175,7 +175,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^video-library$
-          x-nyt-backend: ^video_library$
+          x-nyt-route: ^vi-video$
+          x-nyt-backend: ^projectvi_fe$
           x-nyt-final-url: ^/video/world/asia/100000005136275/china-health-care-cancer-refugee.html\?playlistId=video/times-documentaries
 
