@@ -6,15 +6,13 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: prd
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^vi-video$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
           x-gdpr: ^[0-1]$
-      statusCodes:
-        - 200
   - description: Test hitting a video library page on vi
     request:
       path: /video/u-s
@@ -22,13 +20,11 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^vi-video$
-      statusCodes:
-        - 200
   - description: Test hitting a video home page on vi
     request:
       path: /video
@@ -36,13 +32,11 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^vi-video$
-      statusCodes:
-        - 200
   - description: Test hitting the video library homepage with a query string at the end
     request:
       path: /video?param=1
@@ -50,13 +44,11 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: prd
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^vi-video$
-      statusCodes:
-        - 200
   - description: Test hitting a /svc/video endpoint
     request:
       path: /svc/video/api/v3/video/100000002883899
@@ -171,7 +163,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg
+        TEST_ENV: stg|prd
     response:
       headers:
         patterns:
