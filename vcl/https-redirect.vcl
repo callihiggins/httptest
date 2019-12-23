@@ -19,7 +19,6 @@ sub recv_https_redirect {
         || req.http.x-nyt-route == "collection"
         || req.http.x-nyt-route == "amp"
         || req.http.x-nyt-route == "vi-collection"
-        || req.http.x-nyt-route == "video-library"
         || req.http.x-nyt-route == "video-offsite-player"
         || req.url ~ "^/projects/2020-report/"
         || req.url ~ "^/content/help"             // help pages
