@@ -213,6 +213,10 @@ sub vcl_recv {
   call recv_route_newsdev_attribute;        # contains sub route of recv_route_newsdev_gke
   # WARNING THIS ORDER MUST BE PRESERVED FOR NEWSDEV ROUTES
 
+  # set load test backend if requested
+  # MUST BE CALLED AFTER ALL POSSIBLE VI BACKEND ROUTES
+  call recv_route_vi_load_test;
+
   # adding the zone apex redirect last
   # there is logic in some of the above routes that needs to execute
   # before the zone apex redirect

@@ -1,0 +1,62 @@
+tests:
+  - description: Regular requests route to the same backend
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^homepage$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
+  - description: Test load test header present on non-VI route
+    request:
+      path: /trending/
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-load-test: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_trending_fe$
+          x-nyt-route: ^trending$
+  - description: Load test requests route to load test backend
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-load-test: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^homepage$
+          x-nyt-backend: ^projectvi_fe_load_test$
+      statusCodes:
+        - 200
+  - description: Load test requests do not change backend in production
+    request:
+      path: /
+      headers:
+        x-nyt-miss: "1"
+        x-nyt-load-test: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^homepage$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200

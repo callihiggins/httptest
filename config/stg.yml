@@ -442,6 +442,26 @@ backends:
     gcslogging:
       period: 60
 
+  - name: "projectvi_fe_load_test"
+    address: "load-test-east.vi.dev.nyt.net"
+    between_bytes_timeout: "2000"
+    connect_timeout: "3000"
+    first_byte_timeout: "5000"
+    ssl_cert_hostname: "alpha-test.stg.nyt.net"
+    ssl_sni_hostname: "alpha-test.stg.nyt.net"
+    shield: "jfk-ny-us"
+    healthcheck:
+      host: "load-test-east.vi.dev.nyt.net"
+      path: "/.healthcheck"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+    gcslogging:
+      period: 60
+
   - name: "projectvi_static_backup_gcs"
     address: "storage.googleapis.com"
     between_bytes_timeout: "5000"

@@ -21,3 +21,6 @@ include "route-weekender";
 
 # routes that's using projectvi_static_backup_gcs backends
 include "route-vi-static-backup-gcs";
+
+# load test header switch
+include "route-vi-load-test";

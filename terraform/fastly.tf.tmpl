@@ -986,6 +986,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "route-vi-load-test"
+    main    = false
+    content = "${file("../vcl/route-vi-load-test.vcl")}"
+  }
+
+  vcl {
     name    = "geo-identifier"
     main    = false
     content = "${file("../vcl/geo-identifier.vcl")}"
