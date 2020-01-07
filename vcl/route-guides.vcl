@@ -1,32 +1,41 @@
 sub recv_route_guides {
-    if (   req.url ~ "^/well/"
-        || req.url ~ "^/guides/"
-        || req.url.path == "/guides"
-    ) {
-        set req.http.x-nyt-route = "guides";
-        set req.http.x-nyt-backend = "beta_guides";
-        set req.http.var-nyt-send-gdpr = "true";
+  if (
+    req.url ~"^/guides/travel/city/"
+    && req.http.var-nyt-env != "prd"
+  ) {
+    set req.http.x-nyt-route = "city-guides";
+    set req.http.x-nyt-backend = "projectvi_fe";
+    set req.http.var-nyt-send-gdpr = "true";
 
-        if (req.url ~"^/guides/gifts/") {
-            # For Gift Guides, pass category and price params to back-end:
-            set req.url = querystring.filter_except(req.url,
-                "category" + querystring.filtersep() +
-                "price");
-        } else {
-          # manipulate query string parameters per environment as follows:
-          # - prd: remove all
-          # - stg: filter all except for the "SCOUT_API_HOST"
-          # - dev: keep all
-          if (req.http.var-nyt-env == "stg") {
-            set req.url = querystring.filter_except(req.url, "SCOUT_API_HOST");
-          } else if (req.http.var-nyt-env == "prd") {
-            # Remove query params for all other routes:
-            set req.url = querystring.remove(req.url);
-          }
+    # In city guides, filter all except for the "recommendation"
+    set req.url = querystring.filter_except(req.url, "recommendation");
+  } else if (
+      req.url ~ "^/well/"
+      || req.url ~ "^/guides/"
+      || req.url.path == "/guides"
+  ) {
+      set req.http.x-nyt-route = "guides";
+      set req.http.x-nyt-backend = "beta_guides";
+      set req.http.var-nyt-send-gdpr = "true";
+
+      if (req.url ~"^/guides/gifts/") {
+          # For Gift Guides, pass category and price params to back-end:
+          set req.url = querystring.filter_except(req.url,
+              "category" + querystring.filtersep() +
+              "price");
+      } else {
+        # manipulate query string parameters per environment as follows:
+        # - prd: remove all
+        # - stg: filter all except for the "SCOUT_API_HOST"
+        # - dev: keep all
+        if (req.http.var-nyt-env == "stg") {
+          set req.url = querystring.filter_except(req.url, "SCOUT_API_HOST");
+        } else if (req.http.var-nyt-env == "prd") {
+          # Remove query params for all other routes:
+          set req.url = querystring.remove(req.url);
         }
-
-
-    }
+      }
+  }
 }
 
 sub miss_pass_route_guides {
