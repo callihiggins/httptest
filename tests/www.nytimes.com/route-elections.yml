@@ -69,8 +69,7 @@ tests:
           - x-goog-hash
       statusCodes:
         - 200
-  - description: "content-elections: Serve select interactives from GCS when
-      newsdev_elections.serve_vi = true"
+  - description: "content-elections: Serve select interactives from VI"
     request:
       path: /interactive/2018/11/06/us/elections/results-kansas-elections.html
       headers:
