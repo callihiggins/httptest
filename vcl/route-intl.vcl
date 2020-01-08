@@ -14,8 +14,8 @@ sub recv_route_intl {
       req.url == "/global" || req.url ~ "^/global/"
   ) {
 
-    set req.http.x-nyt-route = "intl";
-    set req.http.x-nyt-backend = "intl_gcp";
+    set req.http.x-nyt-route = "legacy-gke";
+    set req.http.x-nyt-backend = "www_legacy_gke";
     set req.http.var-nyt-wf-auth = "true";
     set req.http.var-nyt-send-gdpr = "true";
 
