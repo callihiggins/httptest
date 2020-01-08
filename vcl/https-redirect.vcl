@@ -78,6 +78,7 @@ sub recv_https_redirect {
         || req.url ~ "^/newsletters"
         || req.url ~ "^/(js|js2|css|bi)/"
         || req.url ~ "^/packages/images/email/" // newsletters
+        || req.url ~ "^/es/"        //espanol migration
         || req.url.path == "/interactive/us/faces-of-the-dead.html" // special 9/11 interactive
         || req.url.path == "/cookie-policy"
         || req.url.path == "/robots.txt"
