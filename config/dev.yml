@@ -474,8 +474,6 @@ backends:
       threshold: "3"
       timeout: "5000"
       window: "4"
-    gcslogging:
-      period: 60
 
   - name: "projectvi_static_backup_gcs"
     address: "storage.googleapis.com"
