@@ -1215,6 +1215,36 @@ tests:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
           x-nyt-user-status: anon
+  - description: 'WCM subscription: tests "st" qs parameter when "st=abc"'
+    request:
+      path: /subscription/hd/1041.html?st=abc
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: sub
+          x-nyt-final-url: /subscription/hd/1041\.html\?st=abc
+  - description: 'WCM subscription: tests mktgEmbedSrc qs parameter when "mktgEmbedSrc=gateway"'
+    request:
+      path: /subscription/hd/1041.html?mktgEmbedSrc=gateway
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: sub
+          x-nyt-final-url: /subscription/hd/1041\.html\?mktgEmbedSrc=gateway
   - description: "WCM subscription: tests mwcm-resilient route and mwcm_resilient backend"
     request:
       path: /subscription/tests/fastly/test-50x
@@ -1286,4 +1316,3 @@ tests:
         patterns:
           x-nyt-route: ^mwcm-resilient$
           x-nyt-backend: ^mwcm_resilient$
-
