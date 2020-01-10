@@ -6,6 +6,7 @@ sub recv_route_guides {
     set req.http.x-nyt-route = "city-guides";
     set req.http.x-nyt-backend = "projectvi_fe";
     set req.http.var-nyt-send-gdpr = "true";
+    set req.http.var-nyt-wf-auth = "true";
 
     # In city guides, filter all except for the "recommendation"
     set req.url = querystring.filter_except(req.url, "recommendation");
