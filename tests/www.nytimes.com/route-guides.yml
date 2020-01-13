@@ -80,7 +80,7 @@ tests:
         patterns:
           x-nyt-route: ^city-guides$
           x-nyt-backend: ^projectvi_fe$
-          x-nyt-final-url: ^/guides/travel/city/miami?recommendation=12345$
+          x-nyt-final-url: ^/guides/travel/city/miami\?recommendation=12345$
   - description: Test HTTPS redirect
     request:
       scheme: http
@@ -93,6 +93,6 @@ tests:
     response:
       headers:
         patterns:
-          location: ^https://${TEST_HOST}/guides/travel/city/miami$
-      statusCodes:
-        - 301
+          x-nyt-route: ^city-guides$
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-final-url: ^/guides/travel/city/miami$
