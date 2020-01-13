@@ -3,7 +3,7 @@
 sub recv_bot_detection {
     if (!req.http.x-nyt-shield-auth &&
         table.lookup(bot_detection, "enabled") == "true" &&
-        (req.http.var-nyt-env != "prd" || (randombool(25,100) && req.restarts == 0) || req.http.destination == "datadome")) {
+        (req.http.var-nyt-env != "prd" || (randombool(5,100) && req.restarts == 0) || req.http.destination == "datadome")) {
         call datadome_vcl_recv;
     }
 }
@@ -69,6 +69,10 @@ sub datadome_set_origin_header {
 sub datadome_vcl_recv {
   # Configure the regular expression below to match URLs that
   # should be checked by DataDome
+  if (req.restarts == 0) {
+    set req.http.x-datadome-restart-reason = "DD";
+  }
+
   if (!req.http.fastly-ff && req.restarts == 0 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
     set req.http.destination = "datadome";
     if (!req.http.x-datadome-timer) {
@@ -117,6 +121,7 @@ sub datadome_vcl_fetch {
 
     # check that it is real ApiServer response
     if (var.status != beresp.http.x-datadomeresponse) {
+      set req.http.x-datadome-restart-reason = if(req.http.x-datadome-restart-reason, req.http.x-datadome-restart-reason + "_resp_error ", "DD_resp_error ");
       restart;
     }
     unset beresp.http.x-datadomeresponse;
@@ -182,6 +187,7 @@ sub datadome_vcl_fetch {
 
     # is it passed? If so just restart it!
     if (beresp.status == 200) {
+      set req.http.x-datadome-restart-reason = if(req.http.x-datadome-restart-reason, req.http.x-datadome-restart-reason + "_check_passed ", "DD_check_passed ");
       restart;
     }
 
@@ -224,6 +230,7 @@ sub datadome_vcl_deliver {
         resp.status != 200 &&
         resp.status != 403) {
       set req.http.debug-datadome-response = resp.status;
+      set req.http.x-datadome-restart-reason = if(req.http.x-datadome-restart-reason, req.http.x-datadome-restart-reason + "_error_force_failopen ", "DD_error_force_failopen ");
       restart;
     }
   } else {
