@@ -11,28 +11,37 @@ sub recv_route_interactive {
 
     set var.interactive_failover_override = "0";
 
-    # evaluate if interactive failover override is enabled for this request
+    # evaluate if interactive failover cookie override is enabled for this request
     if (req.http.Cookie:interactive-failover == "1" && req.http.x-nyt-nyhq-access == "1") {
       set var.interactive_failover_override = "1";
     }
 
-    # use the elections failover backend if (or):
+    # use the elections failover backend if:
     # 1. `interactive_failover` item in `newsdev_elections` dictionary == `true`
+    #  OR
     # 2. `interactive-failover` cookie value == `1` and user is in NYHQ auth
-    if( ( table.lookup(newsdev_elections, "interactive_failover", "false") == "true" || var.interactive_failover_override == "1") &&
+    if ((table.lookup(newsdev_elections, "interactive_failover", "false") == "true" || var.interactive_failover_override == "1") &&
         req.http.var-nyt-canonical-www-host == "true") {
 
-      # force pass if the cookie override is being used so we do not publically cache the response
-      if (var.interactive_failover_override == "1") {
-        set req.http.var-nyt-force-pass = "true";
-      }
+      # only allow one URL in production, non-prd can fail the entire route to AWS
+      # the cookie override will still allow anything to fail to S3
+      # adding this extra conditional so it's easier to remove when we remove the production restriction
+      if ( (req.http.var-nyt-env != "prd" || req.url ~ "^/interactive/2019/11/15/us/elections/2015-louisiana-general.html") ||
+            var.interactive_failover_override == "1") {
 
-      set req.http.x-nyt-route = "interactive-s3-failover";
-      set req.http.x-nyt-backend = "s3_origin";
-      set req.http.var-nyt-send-gdpr = "true";
-      set req.http.var-nyt-error-retry = "false";
-      set req.http.var-nyt-4xx-serve-stale = "true";
-      set req.url = querystring.remove(req.url);
+        # force pass if the cookie override is being used so we do not publically cache the response
+        if (var.interactive_failover_override == "1") {
+          set req.http.var-nyt-force-pass = "true";
+        }
+
+        set req.http.x-nyt-route = "interactive-s3-failover";
+        set req.http.x-nyt-backend = "s3_origin";
+        set req.http.var-nyt-send-gdpr = "true";
+        set req.http.var-nyt-error-retry = "false";
+        set req.http.var-nyt-4xx-serve-stale = "true";
+        set req.url = querystring.remove(req.url);
+
+      }
     } else {
       set req.http.x-nyt-route = "vi-interactive";
       set req.http.var-nyt-wf-auth = "true";
