@@ -152,8 +152,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /2006/02/26/fashion/sundaystyles/26LOVE.html
     request:
@@ -166,8 +166,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /2006/11/12/fashion/12love.html
     request:
@@ -180,8 +180,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
   - description: Test routing; article; NYT5; ensure Fastly pass; blogpost as article;
       /blog/2000/01/01/us/slug.html
     request:
@@ -305,8 +305,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-backend: ^article_fe$
-          x-nyt-route: ^article$
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
           x-nyt-final-url: ^/2011/06/16/travel/travel-guide-new-york-for-kids\.html$
   - description: Test routing; article; NYT5; ensure Fastly pass;
       /1981/01/03/nyregion/uso-in-times-square.html
@@ -347,8 +347,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^article$
-          x-nyt-backend: ^article_fe$
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
   - description: No vistory cookie
     request:
       path: /2017/10/16/upshot/this-is-a-test-article.html
