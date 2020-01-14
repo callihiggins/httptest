@@ -29,7 +29,7 @@ sub deliver_response_headers {
         unset resp.http.x-nyt-backend-health;
     } else {
         # set these headers for internal requests
-        set resp.http.x-nyt-fastly-info-state = if(fastly_info.state,fastly_info.state,"NULL");
+        set resp.http.x-nyt-fastly-info-state = if(resp.http.x-nyt-fastly-info-state, resp.http.x-nyt-fastly-info-state ", ","") fastly_info.state;
         set resp.http.x-nyt-final-url = req.url;
     }
 
