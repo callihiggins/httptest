@@ -26,7 +26,7 @@ sub recv_route_interactive {
       # only allow one URL in production, non-prd can fail the entire route to AWS
       # the cookie override will still allow anything to fail to S3
       # adding this extra conditional so it's easier to remove when we remove the production restriction
-      if ( (req.http.var-nyt-env != "prd" || req.url ~ "^/interactive/2019/11/15/us/elections/2015-louisiana-general.html") ||
+      if ( (req.http.var-nyt-env == "dev" || req.url ~ "^/interactive/2019/11/15/us/elections/2015-louisiana-general.html") ||
             var.interactive_failover_override == "1") {
 
         # force pass if the cookie override is being used so we do not publically cache the response
@@ -41,6 +41,16 @@ sub recv_route_interactive {
         set req.http.var-nyt-4xx-serve-stale = "true";
         set req.url = querystring.remove(req.url);
 
+      } else {
+        set req.http.x-nyt-route = "vi-interactive";
+        set req.http.var-nyt-wf-auth = "true";
+        set req.http.var-nyt-send-gdpr = "true";
+        set req.http.x-nyt-backend = "projectvi_fe";
+        set req.http.var-nyt-error-retry = "false";
+
+        if (req.http.var-nyt-canonical-alpha-host != "true") {
+          set req.url = querystring.remove(req.url);
+        }
       }
     } else {
       set req.http.x-nyt-route = "vi-interactive";
