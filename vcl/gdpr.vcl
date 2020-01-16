@@ -170,7 +170,7 @@ sub error_919_gdpr {
         # provide an Origin, such as hitting the endpoint directly or calling
         # hitting it from the command line), allow requests that have no Origin
         # set.
-        if (req.http.Origin ~ "^(https?://)?(.+\.)?(((nyt|nytimes|thewirecutter|wirecutter|hellosociety|nytimes\.stats)\.com)|nyt\.net|brandstand\.co)(:\d+)?$"
+        if (req.http.Origin ~ "^(https?://)?(.+\.)?(((nyt|nytimes|thewirecutter|wirecutter|hellosociety|nytimes\.stats|shi-magazine)\.com)|nyt\.net|brandstand\.co)(:\d+)?$"
             || !req.http.Origin
             || req.http.Origin == "null") {
             set obj.http.Access-Control-Allow-Origin = "*";

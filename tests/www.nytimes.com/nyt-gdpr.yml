@@ -347,6 +347,27 @@ tests:
           - '\{"GDPR":[0|1]\}'
       statusCodes:
         - 200
+  - description: GDPR service endpoint (Origin shi-magazine.com)
+    request:
+      path: /svc/gdpr.json
+      headers:
+        origin: shi-magazine.com
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-gdpr: (0|1)
+          access-control-allow-origin: "^[[:^alpha:]]$"
+          access-control-allow-methods: "^GET, OPTIONS$"
+          access-control-expose-headers: "^Content-Type$"
+      body:
+        patterns:
+          - '\{"GDPR":[0|1]\}'
+      statusCodes:
+        - 200
   - description: GDPR service endpoint (Bad Origin foobar.com)
     request:
       path: /svc/gdpr.json
