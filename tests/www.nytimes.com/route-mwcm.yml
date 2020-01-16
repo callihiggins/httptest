@@ -409,7 +409,7 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          location: https://${TEST_HOST}/subscription/promotions/sba\.html\?ptr=sba
+          location: https://${TEST_HOST}/subscription\?ptr=sba
   - description: WCM /subscriptions/promotions redirect scenario for sharethetimes
     request:
       path: /subscriptions/promotions/lp3FURL.html?ptr=sharethetimes
@@ -423,7 +423,7 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          location: https://${TEST_HOST}/subscription/promotions/sharethetimes\.html\?ptr=sharethetimes
+          location: https://${TEST_HOST}/subscription/redeem/share\?ptr=sharethetimes
   - description: WCM /subscriptions/promotions redirect scenario for marathon
     request:
       path: /subscriptions/promotions/lp3FURL.html?ptr=marathon
@@ -437,7 +437,7 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          location: https://${TEST_HOST}/subscription/promotions/marathon\.html\?ptr=marathon
+          location: https://${TEST_HOST}/subscription\?ptr=marathon
   - description: WCM /subscriptions/promotions redirect scenario for newsindia
     request:
       path: /subscriptions/promotions/lp3FURL.html?ptr=newsindia
@@ -451,7 +451,7 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          location: https://${TEST_HOST}/subscription/promotions/newsindia\.html\?ptr=newsindia
+          location: https://${TEST_HOST}/subscription/redeem\?ptr=newsindia
   - description: WCM /marketing/gdpr headers test, query params preserved
     request:
       path: /marketing/gdpr/tests/fastly.html?test1=test1
@@ -1228,7 +1228,7 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          x-nyt-user-status: sub
+          x-nyt-user-status: anon
           x-nyt-final-url: /subscription/hd/1041\.html\?st=abc
   - description: 'WCM subscription: tests mktgEmbedSrc qs parameter when "mktgEmbedSrc=gateway"'
     request:
@@ -1243,7 +1243,7 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          x-nyt-user-status: sub
+          x-nyt-user-status: anon
           x-nyt-final-url: /subscription/hd/1041\.html\?mktgEmbedSrc=gateway
   - description: "WCM subscription: tests mwcm-resilient route and mwcm_resilient backend"
     request:
