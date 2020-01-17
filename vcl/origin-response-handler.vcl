@@ -83,3 +83,24 @@ sub error_init_health_vars {
     set obj.http.x-nyt-backend-health = "1";
   }
 }
+
+sub fetch_fix_cache_control_for_vi_shield {
+  # this logic fixes a fastly bug with conditional repsonses (304) with regard to
+  # how those are processed when only Surrogate-Control exists with a max-age directive
+  # and the backend is configured with a shield
+
+  declare local var.max_age STRING;
+
+  # extract max-age value from Surrogate-Control and apply it to Cache-Control as s-maxage
+  # only do this if s-maxage does not exist in Cache-Control
+  if (req.http.x-nyt-backend ~ "^projectvi_fe" && beresp.http.cache-control !~ "s-maxage=[0-9]+") {
+
+    # try to capture the max-age value, the entire string is returned if capture group does not match
+    set var.max_age = regsub(beresp.http.surrogate-control, ".*max-age=([0-9]+).*", "\1");
+
+    # if the value was captured add it to Cache-Control as s-maxage
+    if (var.max_age != beresp.http.surrogate-control) {
+      set beresp.http.cache-control = "s-maxage=" + var.max_age + "," + beresp.http.cache-control;
+    }
+  }
+}

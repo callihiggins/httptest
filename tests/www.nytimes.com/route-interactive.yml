@@ -355,6 +355,7 @@ tests:
         patterns:
           x-nyt-route: ^vi-interactive$
           x-nyt-backend: ^projectvi_fe$
+          cache-control: .*s-maxage.*
           x-cache: .+
           x-served-by: .+
           x-frame-options: .+

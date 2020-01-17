@@ -487,6 +487,11 @@ sub vcl_fetch {
   # set serve stale content cache object parameters
   call fetch_set_stale_content_controls;
 
+  # fix conditonal request serving for Vi shielded backend
+  # this is due to a FASTLY BUG with how it processes `Surrogate-Control`
+  # doing this specifically for Vi not any shielded backend right now to limit scope
+  call fetch_fix_cache_control_for_vi_shield;
+
   # DO NOT REMOVE THE NEXT LINE - FASTY SPECIFIC MACRO
 #FASTLY fetch
 
