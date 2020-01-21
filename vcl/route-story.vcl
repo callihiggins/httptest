@@ -149,6 +149,7 @@ sub recv_route_amp {
   ) {
     set req.http.x-nyt-route = "amp";
     set req.http.x-nyt-backend = "amp";
+    set req.url = querystring.filter_except(req.url, "nytapp");
   }
   
 }

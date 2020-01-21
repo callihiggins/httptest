@@ -868,6 +868,18 @@ tests:
           x-nyt-route: ^amp$
           x-nyt-backend: ^amp$
           debug-var-nyt-force-pass: false
+  - description: All query strings except nytapp should be striped on live blogs >= 2019.
+    request:
+      path: /live/2019/nyc-gay-pride-parade/pride-closing-ceremony?nytapp=foo&bar=baz&fizz=buzz
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-final-url: ^/live/2019/nyc-gay-pride-parade/pride-closing-ceremony\?nytapp=foo$
   - description: Test gcs 404 cache for live and 2020 routing to amp
     request:
       path: /live/2020/page-that-does-not-exist
