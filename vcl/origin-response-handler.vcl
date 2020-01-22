@@ -1,7 +1,7 @@
 # This logic will handle serving stale content if we got an error from the backend
 sub fetch_deliver_stale_on_error {
 
-  if ( beresp.status >= 500 && beresp.status < 600 || 
+  if ( (beresp.status >= 500 && beresp.status < 600) ||
        (req.http.var-nyt-4xx-serve-stale == "true" && beresp.status >= 400 && beresp.status < 500) ) {
 
       # Deliver stale if the object is available
@@ -11,7 +11,7 @@ sub fetch_deliver_stale_on_error {
 
       # logic to retry the transaction
       # routes can set req.http.var-nyt-error-retry to false to disable this
-      if (   req.restarts < 1
+      if (   req.restarts <= 1
           && req.http.var-nyt-error-retry != "false"
           && (req.request == "GET" || req.request == "HEAD")
           ) {
@@ -28,7 +28,7 @@ sub fetch_deliver_stale_on_error {
         Doing this to limit what gets a large error page download
       */
 
-      if ( req.restarts >= 1 
+      if ( req.restarts >= 2
            && (req.url.path ~ ".html$" || req.url.path ~ "/$")
            && (req.url.path !~ "^/svc" && req.url.path !~ "^/adx")
           ) {

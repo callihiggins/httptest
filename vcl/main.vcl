@@ -249,6 +249,10 @@ sub vcl_recv {
 # DO NOT REMOVE THIS LINE, FASTLY MACRO
 #FASTLY recv
 
+  # Check if datadome was called and if so, re-enable shielding
+  # Needs to run AFTER the recv macro
+  call recv_route_story_bot_detection_reset_shield;
+
   # check to see if the client asked for a cache miss
   # the test suite does this
   call recv_test_suite_force_miss;
@@ -457,6 +461,8 @@ sub vcl_pass {
 
 sub vcl_fetch {
 
+  call fetch_route_story_bot_detection;
+
   # if the static backup is enabled,
   # check that before handling 5xx errors
   call fetch_route_vi_static_backup_gcs;
@@ -552,7 +558,9 @@ sub vcl_deliver {
   # set the agent id (nyt-a cookie):
   call deliver_set_agent_id_cookie;
 
-  if (resp.http.x-nyt-restart-reason) {
+  call deliver_route_story_bot_detection;
+
+  if (resp.http.x-nyt-restart-reason && req.restarts < 2) {
     set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " " + resp.http.x-nyt-restart-reason, resp.http.x-nyt-restart-reason);
     return(restart);
   }

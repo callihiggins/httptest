@@ -8,6 +8,28 @@ sub recv_bot_detection {
     }
 }
 
+# Call this AFTER the fastly recv macro to reset the shield.
+# If JFK is no longer the shield, update the below to match the compiled macro
+sub recv_bot_detection_reset_shield {
+    if (!req.http.x-nyt-shield-auth &&
+        table.lookup(bot_detection, "enabled") == "true" &&
+        req.http.datadome-response) {
+
+        # Update this to match your shielding code as the default shielding
+        # code does not support preflighting
+        # Note: req.restarts <= 1 instead of == 0
+        if (req.backend == F_projectvi_fe && req.restarts <= 1) {
+            if (server.identity !~ "-JFK$" && req.http.Fastly-FF !~ "-JFK") {
+                set req.backend = ssl_shield_jfk_ny_us;
+            }
+            if (!req.backend.healthy) {
+                # the shield datacenter is broken so dont go to it
+                set req.backend = F_projectvi_fe;
+            }
+        }
+    }
+}
+
 sub deliver_bot_detection {
     if (!req.http.x-nyt-shield-auth &&
         table.lookup(bot_detection, "enabled") == "true") {
@@ -63,6 +85,11 @@ sub datadome_set_origin_header {
         unset bereq.http.x-authorizationlen;
         unset bereq.http.x-cookieslen;
         unset bereq.http.x-datadome-clientid;
+
+        # remove NYT debugging vars, will cause problems when going to a shield
+        unset bereq.http.x-datadome-restart-reason;
+        unset bereq.http.x-datadome-timer;
+        unset bereq.http.datadome-response;
     }
 }
 
@@ -117,7 +144,7 @@ sub datadome_vcl_fetch {
   if (req.backend == F_datadome) {
     declare local var.status STRING;
     set var.status = beresp.status;
-    set req.http.debug-datadome-response = beresp.status;
+    set req.http.datadome-response = beresp.status;
 
     # check that it is real ApiServer response
     if (var.status != beresp.http.x-datadomeresponse) {
@@ -229,7 +256,7 @@ sub datadome_vcl_deliver {
     if (req.restarts == 0 &&
         resp.status != 200 &&
         resp.status != 403) {
-      set req.http.debug-datadome-response = resp.status;
+      set req.http.datadome-response = resp.status;
       set req.http.x-datadome-restart-reason = if(req.http.x-datadome-restart-reason, req.http.x-datadome-restart-reason + "_error_force_failopen ", "DD_error_force_failopen ");
       restart;
     }
@@ -278,7 +305,7 @@ sub datadome_vcl_deliver {
 
     # gk - debug
     if (req.http.x-nyt-nyhq-access == "1") {
-      set resp.http.datadome-response = req.http.debug-datadome-response;
+      set resp.http.datadome-response = req.http.datadome-response;
     }
   }
 }

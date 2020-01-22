@@ -218,6 +218,6 @@ sumo_log:
     \"restarts\": \"%{req.restarts}V\",
     \"restart_reason\": \"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\",
     \"dd_restart_reason\": \"%{if(req.http.x-datadome-restart-reason,req.http.x-datadome-restart-reason,\\\"\\\")}V\",
-    \"datadome_response\": \"%{if(req.http.debug-datadome-response,req.http.debug-datadome-response,\\\"\\\")}V\",
+    \"datadome_response\": \"%{if(req.http.datadome-response,req.http.datadome-response,\\\"\\\")}V\",
     \"mwcm_fallback\": \"%{if(req.http.x-nyt-mwcm-fallback,req.http.x-nyt-mwcm-fallback,\\\"\\\")}V\"
     }

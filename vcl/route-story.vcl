@@ -56,6 +56,10 @@ sub recv_route_story {
         set req.http.var-nyt-wf-auth = "true";
         set req.http.var-nyt-send-gdpr = "true";
 
+        if (req.http.var-nyt-canonical-www-host == "true") {
+            call recv_bot_detection;
+        }
+
         if (req.http.var-nyt-canonical-alpha-host != "true") {
           set req.url = querystring.filter_except(req.url, "nytapp");
         }
@@ -108,11 +112,13 @@ sub recv_route_story {
               call recv_route_vi_static_backup_gcs;
               call recv_abra_allocation;
             }
-
-            call recv_bot_detection;
-        }
+         }
       }
    }
+}
+
+sub recv_route_story_bot_detection_reset_shield {
+    call recv_bot_detection_reset_shield;
 }
 
 sub recv_route_amp {
@@ -151,7 +157,7 @@ sub recv_route_amp {
     set req.http.x-nyt-backend = "amp";
     set req.url = querystring.filter_except(req.url, "nytapp");
   }
-  
+
 }
 
 sub miss_pass_route_amp {
@@ -193,11 +199,13 @@ sub error_755_amp_redirect {
   }
 }
 
-sub deliver_route_story_restart_indicators {
-
+sub deliver_route_story_bot_detection {
     if (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "article") {
         call deliver_bot_detection;
     }
+}
+
+sub deliver_route_story_restart_indicators {
 
     # if the response was not compatible with VI we
     # restart the request and signal that this happened
@@ -209,8 +217,6 @@ sub deliver_route_story_restart_indicators {
         set req.http.var-nyt-surrogate-key = resp.http.var-nyt-surrogate-key;
         return (restart);
     }
-
-
 }
 
 sub deliver_route_story_us_cookie {
@@ -262,11 +268,13 @@ sub hash_route_story {
   }
 }
 
-sub fetch_route_story {
-
+sub fetch_route_story_bot_detection {
   if (req.http.x-nyt-route == "vi-story" || req.http.x-nyt-route == "article") {
     call fetch_bot_detection;
   }
+}
+
+sub fetch_route_story {
 
   # remove x-varnishcacheduriation from non-2xx responses from NYT5
   # 404's were being cached for 900 seconds
@@ -292,10 +300,10 @@ sub fetch_route_story {
 }
 
 sub miss_pass_route_story {
-  if (!req.backend.is_shield) {
-    if (req.http.x-nyt-route == "article" || req.http.x-nyt-route == "vi-story") {
-      unset bereq.http.cookie;
-      call miss_pass_bot_detection;
+  if (req.http.x-nyt-route == "article" || req.http.x-nyt-route == "vi-story") {
+    if (!req.backend.is_shield) {
+        unset bereq.http.cookie;
     }
+    call miss_pass_bot_detection;
   }
 }
