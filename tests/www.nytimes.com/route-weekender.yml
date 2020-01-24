@@ -33,6 +33,23 @@ tests:
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
         - 200
+  - description: Vi weekender Page; /weekender/ query param
+    request:
+      path: /weekender?query=param
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-weekender$
+          x-nyt-backend: ^projectvi_fe$
+          x-gdpr: ^0$
+          set-cookie: (?:^|,)nyt-gdpr=(0|1);
+      statusCodes:
+        - 200
   - description: Vi weekender Page; does not redirect to mobile
     request:
       path: /weekender
@@ -52,4 +69,15 @@ tests:
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
         - 200
-
+  - description: Vi weekender Page; 404 for sub routes
+    request:
+      path: /weekender/blah
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        notMatching:
+          x-nyt-route: ^vi-weekender$
