@@ -1,6 +1,6 @@
 sub recv_route_weekender {
   // weekender application
-    if (req.http.var-nyt-env != "prd" && req.url ~ "^/weekender(\/?)$") {
+    if (req.url ~ "^/weekender(\/?)$") {
         set req.http.x-nyt-route = "vi-weekender";
         set req.http.x-nyt-backend = "projectvi_fe";
         set req.http.var-nyt-error-retry = "false";

@@ -6,7 +6,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -23,7 +23,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev|stg
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -42,7 +42,7 @@ tests:
           (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36
     conditions:
       env:
-        TEST_ENV: dev|stg
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
