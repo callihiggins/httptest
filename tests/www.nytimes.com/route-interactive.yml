@@ -282,7 +282,7 @@ tests:
         - 405
   - description: Test NYTimes AMP Interactive served by AMP app backend
     request:
-      headers: 
+      headers:
         x-nyt-nyhq-access: "1"
       path: /interactive/2019/07/19/arts/fitness-nyc-park.amp.html
     conditions:
@@ -347,6 +347,37 @@ tests:
       headers:
         x-nyt-nyhq-access: "1"
       path: /interactive/2020/10/10/us/elections/results-alabama-elections.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          cache-control: .*s-maxage.*
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election page serves from Vi by default with year URL
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+      path: /interactive/2020/us/elections/results-alabama-elections.html
     conditions:
       env:
         TEST_ENV: dev|stg|prd

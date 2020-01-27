@@ -2,7 +2,7 @@ sub recv_route_interactive {
 
   # interactive years 2014-forever are served by Vi
   # including all variants, canonical and .(embedded|mobile|app)\.html
-  if (req.http.x-nyt-route != "elections" && 
+  if (req.http.x-nyt-route != "elections" &&
       req.url.path !~ "\.amp\.html$" &&
      (req.url ~ "^/interactive/magazine/masthead.html" ||
       req.url ~ "^/interactive/20(1[4-9]|[2-9][0-9])/")) {
@@ -48,7 +48,7 @@ sub interactive_2020_election_aws_failover {
 
   # evaluate if the URL is valid for failover to AWS based on dictionary value
   # if new patterns need to be added/changed for failover scope add them to this conditional
-  if (req.url.path ~ "^/interactive/2020/[0-1][0-9]/[0-9]{2}/us/elections/results-.*\.html$") {
+  if (req.url.path ~ "^/interactive/2020/([0-1][0-9]/[0-9]{2}/)?us/elections/results-.*\.html$") {
     set var.url_can_failover_by_dictionary = true;
   }
 
