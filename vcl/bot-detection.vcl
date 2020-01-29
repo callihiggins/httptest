@@ -141,7 +141,7 @@ sub datadome_vcl_fetch {
   }
   set beresp.http.x-datadome-timer = req.http.x-datadome-timer;
 
-  if (req.backend == F_datadome) {
+  if (req.backend == F_datadome && req.restarts == 0) {
     declare local var.status STRING;
     set var.status = beresp.status;
     set req.http.datadome-response = beresp.status;
