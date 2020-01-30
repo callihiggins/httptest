@@ -194,6 +194,7 @@ sumo_log:
     \"status\":\"%s\",
     \"content_type\":\"%{Content-Type}o\",
     \"cachetype\":\"%{fastly_info.state}V\",
+    \"response_message\":\"%{resp.response}V\",
     \"response_age\":\"%{Age}o\",
     \"response_cache_control\":\"%{Cache-Control}o\",
     \"response_expires\":\"%{Expires}o\",
