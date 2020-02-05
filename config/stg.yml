@@ -1059,6 +1059,10 @@ cloud_storage_buckets:
     bucket_provider: "s3"
     auth_key: "int_failover_key"
     auth_secret: "int_failover_secret"
+  - route: "scoop-images"
+    auth: "true"
+    bucket_name: "cms-gke-stg-gcs-fs-data"
+    bucket_provider: "gcs"
 
 # big query logger env configuration
 bigquery_log:

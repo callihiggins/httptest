@@ -425,4 +425,52 @@ tests:
         patterns:
           x-nyt-route: ^homepage$
           x-nyt-backend: ^alpha_preview$
+  - description: "Test Scoop image bucket for alpha-preview (dev)"
+    request:
+      path: /data/cms/files/2020/01/29/100000004546555/blog225.jpg
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^scoop-images$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+  - description: "Test Scoop image bucket for alpha-preview (stg)"
+    request:
+      path: /data/cms/files/2020/01/30/100000006568675/30-SInteractive-1580388555324-videoSmall.jpg
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.stg.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^scoop-images$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
+  - description: "Test Scoop image bucket for alpha-preview (prd)"
+    request:
+      path: /data/cms/files/2017/01/29/100000004901310/the-daily-album-art-square320-v4.png
+      headers:
+        x-nyt-miss: "1"
+        Host: alpha-preview.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^scoop-images$
+          x-nyt-backend: ^gcs_origin$
+      statusCodes:
+        - 200
 

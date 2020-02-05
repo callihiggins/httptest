@@ -96,6 +96,11 @@ sub recv_route_alpha {
       set req.http.var-nyt-force-pass = "true";
     }
 
+    if (req.http.host ~ "^alpha-preview" && req.url.path ~ "^/data/cms/files/") {
+      set req.http.x-nyt-route = "scoop-images";
+      set req.http.x-nyt-backend = "gcs_origin";
+    }
+
     call recv_post_method_restricted;
   }
 }
@@ -198,6 +203,16 @@ sub deliver_route_alpha {
           unset resp.http.x-vi-collection-compatibility;
           return (restart);
       }
+    }
+  }
+}
+
+sub miss_pass_route_alpha {
+  if (req.http.x-nyt-route == "scoop-images") {
+    unset bereq.http.cookie;
+    if (!req.backend.is_shield) {
+      set bereq.url = regsub(bereq.url, "^/data/", "/");
+      call miss_pass_set_bucket_auth_headers;
     }
   }
 }
