@@ -11,7 +11,7 @@ sub recv_route_switchboard {
     || req.url.path ~ "^/the-daily"
     || (req.url.path ~ "^/stillprocessing" || req.url.path ~ "^/still-processing")
     || (req.url.path ~ "^/bookreviewpodcast" || req.url.path ~ "^/book-review-podcast")
-    || (req.url.path ~ "^/theargument" || req.url.path ~ "^/the-argument")
+    || (req.url.path ~ "^/theargument$" || req.url.path ~ "^/the-argument$")
     || req.url.path ~ "^/popcast"
     || req.url.path ~ "^/dearsugars"
     || (req.url.path ~ "^/modernlovepodcast" || req.url.path ~ "^/modern-love")
