@@ -315,6 +315,7 @@ sub vcl_hash {
   call hash_route_collection;
   call hash_route_homepage;
   call hash_route_story;
+  call hash_route_interactive;
   call hash_route_alpha;
 
   return(hash);

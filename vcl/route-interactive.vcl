@@ -32,6 +32,12 @@ sub recv_route_interactive {
   }
 }
 
+sub hash_route_interactive {
+    // need to vary based on crawler so that Vi can serverside render more
+    if (req.http.device_type == "crawler" && req.http.x-nyt-route == "vi-interactive") {
+      set req.hash += "crawler";
+    }
+}
 
 sub interactive_2020_election_aws_failover {
 

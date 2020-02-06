@@ -257,6 +257,11 @@ sub hash_route_story {
       set req.hash += "non-phone";
     }
 
+    // need to vary based on crawler so that Vi can serverside render more
+    if (req.http.device_type == "crawler" && req.http.x-nyt-route == "vi-story") {
+      set req.hash += "crawler";
+    }
+
     # if a request was restarted from VI due to Incompatiblity
     # append to the hash to keep a separate key
     if (req.http.var-nyt-vi-story-compatibility) {
