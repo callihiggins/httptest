@@ -10,7 +10,7 @@ tests:
     response:
       headers:
         patterns:
-          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};
+          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};.*SameSite=none; Secure$
   - description: creates new nyt-a when empty in request
     request:
       path: /
@@ -23,7 +23,7 @@ tests:
     response:
       headers:
         patterns:
-          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};
+          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};.*SameSite=none; Secure$
   - description: creates new nyt-a when empty among other cookies in request
     request:
       path: /
@@ -36,7 +36,7 @@ tests:
     response:
       headers:
         patterns:
-          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};
+          set-cookie: (?:^|,)nyt-a=[a-zA-Z0-9_-]{22,};.*SameSite=none; Secure$
   - description: refreshes nyt-a when provided in request
     request:
       path: /
@@ -49,7 +49,7 @@ tests:
     response:
       headers:
         patterns:
-          set-cookie: (?:^|,)nyt-a=12345;
+          set-cookie: (?:^|,)nyt-a=12345;.*SameSite=none; Secure$
   - description: refreshes nyt-a when provided among other cookies in request
     request:
       path: /
@@ -62,7 +62,7 @@ tests:
     response:
       headers:
         patterns:
-          set-cookie: (?:^|,)nyt-a=54321;
+          set-cookie: (?:^|,)nyt-a=54321;.*SameSite=none; Secure$
   - description: refreshes nyt-a when provided in request to /crosswords
     request:
       path: /crosswords
@@ -75,5 +75,5 @@ tests:
     response:
       headers:
         patterns:
-          set-cookie: (?:^|,)nyt-a=12345;
+          set-cookie: (?:^|,)nyt-a=12345;.*SameSite=none; Secure$
 

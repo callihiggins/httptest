@@ -47,7 +47,9 @@ sub deliver_set_agent_id_cookie {
                 "nyt-a=" + req.http.var-cookie-nyt-a + "; "+
                 "Expires=" + time.add(now, 365d) + "; "+
                 "Path=/; "+
-                "Domain=.nytimes.com";
+                "Domain=.nytimes.com; "+
+                "SameSite=none; "+
+                "Secure";
         }
     }
 }
