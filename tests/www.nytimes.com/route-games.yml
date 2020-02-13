@@ -453,4 +453,25 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^games-phoenix$
-
+  - description: Test feature branch deployments, web
+    request:
+      path: /crosswords
+      headers:
+        Host: games-branchname.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        x-nyt-games-branch: "web-deploy-branchname"
+  - description: Test feature branch deployments, phoenix
+    request:
+      path: /puzzles/spelling-bee
+      headers:
+        Host: games-branchname.dev.nytimes.com
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        x-nyt-games-branch: "phoenix-deploy-branchname"

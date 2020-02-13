@@ -62,6 +62,10 @@ sub deliver_games_api_version {
     } else if (req.http.x-nyt-route == "games-web" ||
                req.http.x-nyt-route == "games-phoenix") {
         set resp.http.X-API-Version = "GW";
+
+        if (req.http.x-nyt-games-branch) {
+            set resp.http.x-nyt-games-branch = req.http.x-nyt-games-branch;
+        }
     }
 }
 
@@ -77,7 +81,13 @@ sub set_games_svc_host {
 
 sub set_games_web_host {
     if (req.http.var-nyt-env == "dev") {
-        set bereq.http.host = "web.games.sbx.nyt.net";
+        if (req.http.host ~ "games-.*\.dev\.nytimes") {
+            set bereq.http.host = "deploy.games.dev.nyt.net";
+            set req.http.x-nyt-games-svc = "web";
+            set req.http.x-nyt-games-branch = regsub(regsub(req.http.host, "\.dev\.nytimes\.com",""), "games-", "web-deploy-");
+        } else {
+            set bereq.http.host = "web.games.sbx.nyt.net";
+        }
     } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else {
@@ -94,7 +104,13 @@ sub set_games_assets_host {
 
 sub set_games_phoenix_host {
     if (req.http.var-nyt-env == "dev") {
-        set bereq.http.host = "phoenix.games.sbx.nyt.net";
+        if (req.http.host ~ "games-.*\.dev\.nytimes") {
+            set bereq.http.host = "deploy.games.dev.nyt.net";
+            set req.http.x-nyt-games-svc = "phoenix";
+            set req.http.x-nyt-games-branch = regsub(regsub(req.http.host, "\.dev\.nytimes\.com",""), "games-", "phoenix-deploy-");
+        } else {
+            set bereq.http.host = "phoenix.games.sbx.nyt.net";
+        }
     } else if (req.http.var-nyt-env == "stg") {
         set bereq.http.host = "phoenix.games.dev.nyt.net";
     } else {
