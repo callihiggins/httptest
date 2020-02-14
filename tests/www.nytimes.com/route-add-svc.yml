@@ -12,6 +12,4 @@ tests:
         patterns:
           x-nyt-route: ^add-svc$
           access-control-allow-origin: ^\*$
-      statusCodes:
-        - 200
 

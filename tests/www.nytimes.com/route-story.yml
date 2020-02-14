@@ -853,10 +853,10 @@ tests:
           cache-control: .+
       statusCodes:
         - 404
-  - description: Route 2019 live blogs to amp
+  - description: Route 2020 live blogs to amp
     request:
       method: GET
-      path: /live/2019/nyc-gay-pride-parade/pride-closing-ceremony
+      path: /live/2020/fact-check-state-of-the-union-02-04
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -870,7 +870,7 @@ tests:
           debug-var-nyt-force-pass: false
   - description: All query strings except nytapp should be striped on live blogs >= 2019.
     request:
-      path: /live/2019/nyc-gay-pride-parade/pride-closing-ceremony?nytapp=foo&bar=baz&fizz=buzz
+      path: /live/2020/fact-check-state-of-the-union-02-04?nytapp=foo&bar=baz&fizz=buzz
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -879,7 +879,7 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-final-url: ^/live/2019/nyc-gay-pride-parade/pride-closing-ceremony\?nytapp=foo$
+          x-nyt-final-url: ^/live/2020/fact-check-state-of-the-union-02-04\?nytapp=foo$
   - description: Test gcs 404 cache for live and 2020 routing to amp
     request:
       path: /live/2020/page-that-does-not-exist

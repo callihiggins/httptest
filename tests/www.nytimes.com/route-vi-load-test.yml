@@ -12,8 +12,6 @@ tests:
         patterns:
           x-nyt-route: ^homepage$
           x-nyt-backend: ^projectvi_fe$
-      statusCodes:
-        - 200
   - description: Test load test header present on non-VI route
     request:
       path: /trending/

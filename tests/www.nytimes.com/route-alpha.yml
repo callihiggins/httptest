@@ -371,7 +371,7 @@ tests:
           x-nyt-final-url: ^/2019/04/24/technology/ecuador-surveillance-cameras-police-government\.html\?action=click&module=Top%20Stories&pgtype=Homepage$
   - description: Alpha host alpha-preview.stg.nytimes.com routes to oak live blogs
     request:
-      path: /live/2019/nyc-gay-pride-parade/pride-closing-ceremony
+      path: /live/2020/fact-check-state-of-the-union-02-04
       headers:
         x-nyt-miss: "1"
         Host: alpha-preview.stg.nytimes.com

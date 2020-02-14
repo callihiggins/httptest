@@ -86,8 +86,6 @@ tests:
           x-nyt-region: ^NJ$
           x-nyt-gmt-offset: -[45]00
           x-nyt-geo-hash: NAUSNY-[45]00
-      statusCodes:
-        - 200
   - description: Test geo hash return value for IP 192.206.151.131, CA should get CA
       geo-hash
     request:
@@ -105,8 +103,6 @@ tests:
           x-nyt-region: ^ON$
           x-nyt-gmt-offset: -[45]00
           x-nyt-geo-hash: NACA-[45]00
-      statusCodes:
-        - 200
   - description: Test geo hash return value for IP 52.95.131.27, AU should get AU geo-hash
     request:
       path: /?ip-override=52.95.131.27
@@ -124,6 +120,4 @@ tests:
           x-nyt-city: ^sydney$
           x-nyt-gmt-offset: 1[01]00
           x-nyt-geo-hash: OCAU1[01]00
-      statusCodes:
-        - 200
 

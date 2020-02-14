@@ -183,9 +183,6 @@ tests:
           - x-servername
           - x-servername2
           - x-varnish
-      statusCodes:
-        - 200
-        - 404
   - description: Test NYTimes Embedded Interactive served by Vi
     request:
       path: /interactive/2017/admin/100000005250034.embedded.html
@@ -245,9 +242,6 @@ tests:
           - x-servername2
           - x-varnish
           - x-frame-options
-      statusCodes:
-        - 200
-        - 404
   - description: Test NYTimes Masthead served by vi-interactive
     request:
       path: /interactive/magazine/masthead.html

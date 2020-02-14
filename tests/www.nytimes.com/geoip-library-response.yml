@@ -30,6 +30,4 @@ tests:
           - x-servername
           - x-servername2
           - x-varnish
-      statusCodes:
-        - 200
 

@@ -31,8 +31,6 @@ tests:
           x-nyt-route: ^newsdev-gke$
           x-nyt-backend: ^newsdev_k8s_gke$
           x-cache: ^MISS$
-      statusCodes:
-        - 404
   - description: Guantanamo routing
     request:
       path: /interactive/projects/guantanamo
@@ -116,7 +114,4 @@ tests:
           - x-servername2
           - x-varnish
           - x-varnishcacheduration
-      statusCodes:
-        - 200
-        - 404
 
