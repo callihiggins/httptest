@@ -11,6 +11,11 @@ sub recv_route_games {
               set req.http.x-nyt-route = "games-phoenix";
               set req.http.x-nyt-backend = "games_phoenix";
               set req.http.var-nyt-send-gdpr = "true";
+              set req.http.x-nyt-games-svc = "phoenix";
+
+              if (req.http.host ~ "games-.*\.dev\.nytimes") {
+                set req.http.x-nyt-games-branch = regsub(regsub(req.http.host, "\.dev\.nytimes\.com",""), "games-", "phoenix-deploy-");
+              }
 
               // Games need cookies and until we sort out our mess with cookies we need to pass requests
               // to the apps
@@ -25,6 +30,11 @@ sub recv_route_games {
             set req.http.x-nyt-route = "games-web";
             set req.http.x-nyt-backend = "games_web";
             set req.http.var-nyt-send-gdpr = "true";
+            set req.http.x-nyt-games-svc = "web";
+
+            if (req.http.host ~ "games-.*\.dev\.nytimes") {
+                set req.http.x-nyt-games-branch = regsub(regsub(req.http.host, "\.dev\.nytimes\.com",""), "games-", "web-deploy-");
+            }
 
             // Games need cookies and until we sort out our mess with cookies we need to pass requests
             // to the apps
@@ -70,9 +80,7 @@ sub deliver_games_api_version {
 }
 
 sub set_games_svc_host {
-    if (req.http.var-nyt-env == "dev") {
-        set bereq.http.host = "nyt-games-dev.appspot.com";
-    } else if (req.http.var-nyt-env == "stg") {
+    if (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") {
         set bereq.http.host = "nyt-games-dev.appspot.com";
     } else {
         set bereq.http.host = "nyt-games-prd.appspot.com";
@@ -80,15 +88,7 @@ sub set_games_svc_host {
 }
 
 sub set_games_web_host {
-    if (req.http.var-nyt-env == "dev") {
-        if (req.http.host ~ "games-.*\.dev\.nytimes") {
-            set bereq.http.host = "deploy.games.dev.nyt.net";
-            set req.http.x-nyt-games-svc = "web";
-            set req.http.x-nyt-games-branch = regsub(regsub(req.http.host, "\.dev\.nytimes\.com",""), "games-", "web-deploy-");
-        } else {
-            set bereq.http.host = "web.games.sbx.nyt.net";
-        }
-    } else if (req.http.var-nyt-env == "stg") {
+    if (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") {
         set bereq.http.host = "puzzles.dev.nyt.net";
     } else {
         set bereq.http.host = "puzzles.prd.nyt.net";
@@ -103,15 +103,7 @@ sub set_games_assets_host {
 }
 
 sub set_games_phoenix_host {
-    if (req.http.var-nyt-env == "dev") {
-        if (req.http.host ~ "games-.*\.dev\.nytimes") {
-            set bereq.http.host = "deploy.games.dev.nyt.net";
-            set req.http.x-nyt-games-svc = "phoenix";
-            set req.http.x-nyt-games-branch = regsub(regsub(req.http.host, "\.dev\.nytimes\.com",""), "games-", "phoenix-deploy-");
-        } else {
-            set bereq.http.host = "phoenix.games.sbx.nyt.net";
-        }
-    } else if (req.http.var-nyt-env == "stg") {
+    if (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") {
         set bereq.http.host = "phoenix.games.dev.nyt.net";
     } else {
         set bereq.http.host = "phoenix.games.prd.nyt.net";
