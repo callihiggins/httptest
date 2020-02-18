@@ -24,3 +24,6 @@ include "route-vi-static-backup-gcs";
 
 # load test header switch
 include "route-vi-load-test";
+
+# shared subs for vi backend routes
+include "route-vi-shared";

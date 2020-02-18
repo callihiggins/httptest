@@ -293,6 +293,10 @@ sub vcl_recv {
       call recv_sumologic_purge_log_line;
   }
 
+  # call sub to check if the force pass override for projectvi_fe is enabled
+  # for this request (cookie + nyhq auth role + projectvi_fe backend)
+  call recv_route_vi_shared_force_pass_override_check;
+
   # if the route did not specifically ask for a pass we will do a lookup
   if (req.http.var-nyt-force-pass == "true") {
     return(pass);

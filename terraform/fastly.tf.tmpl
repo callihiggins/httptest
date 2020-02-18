@@ -992,6 +992,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "route-vi-shared"
+    main    = false
+    content = "${file("../vcl/route-vi-shared.vcl")}"
+  }
+
+  vcl {
     name    = "geo-identifier"
     main    = false
     content = "${file("../vcl/geo-identifier.vcl")}"

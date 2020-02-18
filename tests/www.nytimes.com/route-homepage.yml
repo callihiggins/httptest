@@ -12,4 +12,39 @@ tests:
       headers: {}
       statusCodes:
         - 405
-
+  - description: force pass for vi if cookie projectvi-force-pass=1
+    request:
+      method: GET
+      path: /
+      headers:
+        cookie: "projectvi-force-pass=1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          debug-var-nyt-force-pass: ^true$
+          x-nyt-fastly-info-state: ^PASS$
+      statusCodes:
+        - 200
+        - 500
+        - 503
+  - description: lookup is happening without cookie projectvi-force-pass=1
+    request:
+      method: GET
+      path: /
+      headers:
+        cookie: "projectvi-force-pass=0"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          debug-var-nyt-force-pass: ^false$
+          x-nyt-fastly-info-state: ^.*(HIT|MISS).*$
+      statusCodes:
+        - 200
+        - 500
+        - 503
