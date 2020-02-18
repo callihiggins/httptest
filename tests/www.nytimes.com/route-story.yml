@@ -617,8 +617,6 @@ tests:
       headers:
         patterns:
           set-cookie: (?:^|,)nyt-us=0;
-      statusCodes:
-        - 200
   - description: Set cookie with value of 1 for US users for US-only views on prd.
     request:
       path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=137.99.78.82
@@ -733,8 +731,6 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_fe$
-      statusCodes:
-        - 200
   - description: Vi internationalized interactive URL /es
     request:
       method: GET
@@ -959,8 +955,6 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_fe$
-      statusCodes:
-        - 200
   - description: Test routing for dateless url; article; VI; ensure Fastly pass;
       /article/hinkie-trust-the-process.html
     request:

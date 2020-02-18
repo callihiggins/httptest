@@ -40,8 +40,6 @@ tests:
         patterns:
           x-nyt-route: ^homepage$
           x-nyt-backend: ^projectvi_fe_load_test$
-      statusCodes:
-        - 200
   - description: Load test requests do not change backend in production
     request:
       path: /

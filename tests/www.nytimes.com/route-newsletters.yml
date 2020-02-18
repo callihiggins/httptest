@@ -13,8 +13,6 @@ tests:
           x-nyt-route: ^newsletter$
           x-nyt-backend: ^projectvi_fe$
           set-cookie: (?:^|,)nyt-us=1;
-      statusCodes:
-        - 200
   - description: Set cookie with value of 1 for US users.
     request:
       path: /newsletters/louder?ip-override=137.99.78.82
