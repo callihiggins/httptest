@@ -84,6 +84,9 @@ sub recv_abra_allocation {
     # Are we on the story route?
     declare local var.is_story BOOL;
     set var.is_story = (req.http.x-nyt-route == "vi-story");
+    # Are we on the interactive route?
+    declare local var.is_interactive BOOL;
+    set var.is_interactive = (req.http.x-nyt-route == "vi-interactive");
 
     #######################################
     # Test Name: STYLN_recirc_pres
@@ -244,6 +247,43 @@ sub recv_abra_allocation {
     #
     # End of Test HOME_editorsPicks
     #######################################
+
+    # Test Name: DEFER_INT
+    #
+    # Description: Defer variants in the interactive route
+    #
+    #
+    # Variants:
+    #   - 0_control                                 94%
+    #   - 1_defervi                                  3%
+    #   - 2_defervi_and_gtm                          3%
+    #
+    if (var.is_interactive) {
+
+      if (var.test_group){
+        set var.test_group = var.test_group "&";
+      }
+      set var.test_name = "DEFER_INT";
+      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
+      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
+      set var.p = std.strtol(var.hash, 16);
+
+      if (var.p < 4037269258) {
+        set var.test_param = var.test_name + "=0_control";
+      } elseif (var.p < 4166118276) {
+        set var.test_param = var.test_name + "=1_defervi";
+      } else {
+        set var.test_param = var.test_name + "=2_defervi_and_gtm";
+      }
+
+      set var.test_group = var.test_group + var.test_param;
+      # We need to vary the cache on interactive route:
+      set req.http.var-interactive-abtest-variation = req.http.var-interactive-abtest-variation + var.test_param;
+    }
+    #
+    # End of Test INT_DEFER
+    #######################################
+
 
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
     # implements the A/B test branching logic.

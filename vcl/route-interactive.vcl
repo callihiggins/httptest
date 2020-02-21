@@ -22,6 +22,7 @@ sub recv_route_interactive {
     unset req.http.Authorization;
 
     call recv_post_method_restricted;
+    call recv_abra_allocation;
 
     # sub to determine if a subset of interactives are in an AWS failover state
     # this will override the route/backend if the failover condition exists for this request
@@ -37,6 +38,8 @@ sub hash_route_interactive {
     if (req.http.device_type == "crawler" && req.http.x-nyt-route == "vi-interactive") {
       set req.hash += "crawler";
     }
+
+    set req.hash += req.http.var-interactive-abtest-variation;
 }
 
 sub interactive_2020_election_aws_failover {
