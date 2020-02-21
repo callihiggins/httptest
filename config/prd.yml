@@ -721,7 +721,7 @@ backends:
     ssl_sni_hostname: "timesjourneys.nytimes.com"
     healthcheck:
       host: "timesjourneys.nytimes.com"
-      path: "/osd.xml"
+      path: "/cache-healthcheck?"
       check_interval: "60000"
       expected_response: "200"
       initial: "64"
@@ -738,7 +738,7 @@ backends:
     ssl_sni_hostname: "timesjourneysstudents.nytimes.com"
     healthcheck:
       host: "timesjourneysstudents.nytimes.com"
-      path: "/osd.xml"
+      path: "/cache-healthcheck?"
       check_interval: "60000"
       expected_response: "200"
       initial: "64"
