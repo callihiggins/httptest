@@ -88,7 +88,7 @@ tests:
         notPresent:
           - debug-vi-abtest
   
-  # Defer Interactive Tests (DEFER_INT):
+  # Defer Interactive Tests (INT_DEFER):
   - description: Defer interactive test does not vary on other routes (story)
     request:
       path: /2019/05/29/us/terrill-thomas-milwaukee-settlement.html
@@ -112,5 +112,5 @@ tests:
     response:
       headers:
         patterns:
-          debug-vi-abtest: DEFER_INT=0_control
+          debug-vi-abtest: INT_DEFER=0_control
 

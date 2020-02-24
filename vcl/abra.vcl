@@ -248,29 +248,29 @@ sub recv_abra_allocation {
     # End of Test HOME_editorsPicks
     #######################################
 
-    # Test Name: DEFER_INT
+    # Test Name: INT_DEFER
     #
     # Description: Defer variants in the interactive route
     #
     #
     # Variants:
-    #   - 0_control                                 94%
-    #   - 1_defervi                                  3%
-    #   - 2_defervi_and_gtm                          3%
+    #   - 0_control                                 91%
+    #   - 1_defervi                                4.5%
+    #   - 2_defervi_and_gtm                        4.5%
     #
     if (var.is_interactive) {
 
       if (var.test_group){
         set var.test_group = var.test_group "&";
       }
-      set var.test_name = "DEFER_INT";
+      set var.test_name = "INT_DEFER";
       set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
       set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
       set var.p = std.strtol(var.hash, 16);
 
-      if (var.p < 4037269258) {
+      if (var.p < 3908420239) {
         set var.test_param = var.test_name + "=0_control";
-      } elseif (var.p < 4166118276) {
+      } elseif (var.p < 4101693767) {
         set var.test_param = var.test_name + "=1_defervi";
       } else {
         set var.test_param = var.test_name + "=2_defervi_and_gtm";
