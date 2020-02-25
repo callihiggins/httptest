@@ -199,6 +199,8 @@ sumo_log:
     \"response_cache_control\":\"%{Cache-Control}o\",
     \"response_expires\":\"%{Expires}o\",
     \"response_last_modified\":\"%{Last-Modified}o\",
+    \"response_x_nyt_data_last_modified\":\"%{x-nyt-data-last-modified}o\",
+    \"response_x_scoop_last_modified\":\"%{x-scoop-last-modified}o\",
     \"fastlydc\":\"%{server.datacenter}V\",
     \"geo_city\":\"%{client.geo.city.utf8}V\",
     \"geo_country_code\":\"%{client.geo.country_code}V\",
