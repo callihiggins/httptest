@@ -1,5 +1,5 @@
 tests:
-  - description: Test response code
+  - description: Test final URL
     request:
       path: /%00
       headers:
@@ -8,7 +8,7 @@ tests:
       env:
         TEST_ENV: dev|stg|prd
     response:
-      headers: {}
-      statusCodes:
-        - 200
+      headers:
+        patterns:
+          x-nyt-final-url: /
 

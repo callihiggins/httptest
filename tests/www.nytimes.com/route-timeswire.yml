@@ -50,6 +50,4 @@ tests:
           x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
-      statusCodes:
-        - 200
 
