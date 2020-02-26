@@ -1070,3 +1070,42 @@ tests:
           x-nyt-backend: ^amp$
           x-nyt-final-url: ^/article/hinkie-trust-the-process.amp.html\?0p19G=1&isSwgTest=true
           debug-var-nyt-force-pass: false
+  - description: NYT5 legacy aponline article redirect to Vi
+    request:
+      path: /aponline/2014/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+  - description: NYT5 legacy reuters article redirect to Vi
+    request:
+      path: /reuters/2014/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+  - description: NYT5 legacy blog article redirect to Vi
+    request:
+      path: /blog/2014/01/01/world/test-suite.html
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$

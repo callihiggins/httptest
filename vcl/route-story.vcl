@@ -82,7 +82,8 @@ sub recv_route_story {
         ##############################################################
         # The articles that are potentially served by the publishing pipeline
         # Alternatively, send dateless urls (i.e. replacing the date with `/article`) to VI as well
-        if ((  req.url ~ "^\/(?:aponline\/|reuters\/|blog\/)?(?:18[5-9]\d|19\d{2}|20\d{2})"
+        if ((  req.url ~ "^\/(?:18[5-9]\d|19\d{2}|20\d{2})"
+            || req.url ~ "^\/(?:aponline\/|reuters\/|blog\/)"
             || req.url ~ "^/article"
             || (req.url ~ "^/live/20(19|[2-9][0-9])" && req.http.var-is-live-blog-amp-vi-routing-enabled == "true")
             || var.internationalized_url
