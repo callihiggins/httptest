@@ -43,13 +43,13 @@ sub recv_route_story {
           || req.url ~ "^/article/" // dateless urls
           || req.url ~ "^/(aponline|reuters)/" // wire sources
           || req.url ~ "^/blog/" // all blogposts
+          || (req.url ~ "^/live/20(19|[2-9][0-9])" && req.http.var-is-live-blog-amp-vi-routing-enabled == "true")
           || var.internationalized_url
           ) && req.url.path !~ "\.amp\.html$"
       ) {
 
         # Replace space with ? for malformed url's. https://jira.nyt.net/browse/WF-775
         set req.url = regsub(req.url, "\.html\%2520", "\.html?");
-
 
         set req.http.x-nyt-route = "article";
         set req.http.x-nyt-backend = "article_fe";
@@ -84,6 +84,7 @@ sub recv_route_story {
         # Alternatively, send dateless urls (i.e. replacing the date with `/article`) to VI as well
         if ((  req.url ~ "^\/(?:aponline\/|reuters\/|blog\/)?(?:18[5-9]\d|19\d{2}|20\d{2})"
             || req.url ~ "^/article"
+            || (req.url ~ "^/live/20(19|[2-9][0-9])" && req.http.var-is-live-blog-amp-vi-routing-enabled == "true")
             || var.internationalized_url
             || var.vi_explicit_opt_in
           )
@@ -124,7 +125,7 @@ sub recv_route_story_bot_detection_reset_shield {
 sub recv_route_amp {
   // Route amp articles
   if ((req.http.var-nyt-canonical-www-host == "true"
-        &&  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" || req.url ~ "^/article" || req.url ~ "^/interactive" )
+        &&  (req.url ~ "^/(18[5-9][0-9]|19[0-9][0-9]|20[0-9][0-9])/" || req.url ~ "^/article" || req.url ~ "^/interactive" || req.url ~ "^/live/20(19|[2-9][0-9])")
         &&   req.url.path ~ "\.amp\.html$"
         )
       || req.url ~ "^/apple-news/"
@@ -138,8 +139,8 @@ sub recv_route_amp {
     set req.url = querystring.filter_except(req.url, "0p19G" + querystring.filtersep() + "isSwgTest");
     if (req.http.User-Agent ~ "DU-apple-news" && req.url ~ "^/apple-news/") {
       set req.http.var-nyt-force-pass = "true";
-    } else if (req.http.User-Agent ~ "DU-amp-indexer" && req.url ~ "\.amp\.html$") {
-      // don't redirect AMP HTML requests coming from DU-amp-indexer user agent.
+    } else if ((req.http.User-Agent ~ "DU-amp-indexer" && req.url ~ "\.amp\.html$") || req.url ~ "^/live/20(19|[2-9][0-9])") {
+      // don't redirect AMP HTML requests coming from DU-amp-indexer user agent or for live blog.
     } else if (client.ip !~ googlebot && client.ip !~ botify && req.http.x-nyt-nyhq-access != "1" && req.http.x-nyt-staging-only-access != "1" && req.http.User-Agent != "NYT-AmpValidatorBot (like Gecko)") {
       // in supporting google's live-list fix, no longer bypass the fastly cache https://jira.nyt.net/browse/STORY-5114
       declare local var.amp_redirect_target STRING;
@@ -148,8 +149,9 @@ sub recv_route_amp {
     }
   }
 
-  // Route live blog traffic to amp
-  if (  (req.http.var-nyt-canonical-www-host == "true"
+  // Route live blog traffic to amp when new routing flag is false
+  if ((req.http.var-is-live-blog-amp-vi-routing-enabled == "false")
+      && (req.http.var-nyt-canonical-www-host == "true"
       || req.http.var-nyt-canonical-alpha-host == "true")
       && (req.url ~ "^/live/20(19|[2-9][0-9])")
   ) {
@@ -157,7 +159,6 @@ sub recv_route_amp {
     set req.http.x-nyt-backend = "amp";
     set req.url = querystring.filter_except(req.url, "nytapp");
   }
-
 }
 
 sub miss_pass_route_amp {
@@ -172,9 +173,8 @@ sub miss_pass_route_amp {
 
 sub deliver_route_story_live_error {
 
-  if (req.http.x-nyt-route == "amp") {
-    if (req.url ~ "^/live") {
-
+  if (req.http.var-is-live-blog-amp-vi-routing-enabled == "false") {
+    if (req.url ~ "^/live/20(19|[2-9][0-9])") {
       # If the gcs object returns a 404, serve a custom 404 error page
       if (resp.status == 404 && req.restarts < 1) {
         set req.http.var-nyt-404-url = "/interactive/projects/404.html";
@@ -185,7 +185,7 @@ sub deliver_route_story_live_error {
       if (req.http.var-nyt-404-url && req.restarts > 0) {
         set resp.status = 404;
       }
-    }
+    } 
   }
 }
 
