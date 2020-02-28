@@ -15,5 +15,9 @@ sub miss_pass_route_default_remove_cookie {
   // legacy backend has no use for the cookie
   if( req.http.x-nyt-route == "legacy-gke") {
     unset bereq.http.cookie;
+    // This is needed for DV-4865, to avoid the origin redirect
+    if (req.http.host == "nytimes.com") {
+      set bereq.http.host = "www.nytimes.com";
+    }
   }
 }

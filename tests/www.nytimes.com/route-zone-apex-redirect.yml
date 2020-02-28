@@ -15,4 +15,16 @@ tests:
           location: ^https://www\.nytimes\.com/$
       statusCodes:
         - 301
+  - description: "Test that zone apex does not redirect to www.nytimes.com for Apple verification"
+    request:
+      path: /.well-known/apple-developer-domain-association.txt
+      headers:
+        x-nyt-miss: "1"
+        Host: nytimes.com
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      statusCodes:
+        - 200
 
