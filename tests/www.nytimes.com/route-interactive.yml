@@ -336,11 +336,295 @@ tests:
       statusCodes:
         - 200
         - 404
+  - description: Test 2020 election results interative S3 Failover Override Parameter
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+        cookie: interactive-failover=1
+      path: /interactive/2020/03/03/us/elections/results-super-tuesday-primary.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^interactive-s3-failover$
+          x-nyt-backend: ^s3_origin$
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+          debug-var-nyt-force-pass: true
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election exit-polls interative S3 Failover Override Parameter
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+        cookie: interactive-failover=1
+      path: /interactive/2020/03/03/us/elections/exit-polls-alabama.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^interactive-s3-failover$
+          x-nyt-backend: ^s3_origin$
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+          debug-var-nyt-force-pass: true
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election forecast interative S3 Failover Override Parameter
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+        cookie: interactive-failover=1
+      path: /interactive/2020/03/03/us/elections/forecast-alabama.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^interactive-s3-failover$
+          x-nyt-backend: ^s3_origin$
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+          debug-var-nyt-force-pass: true
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election live-updates interative S3 Failover Override Parameter
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+        cookie: interactive-failover=1
+      path: /interactive/2020/03/03/us/elections/live-updates.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^interactive-s3-failover$
+          x-nyt-backend: ^s3_origin$
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+          debug-var-nyt-force-pass: true
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election precinct map interative S3 Failover Override Parameter
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+        cookie: interactive-failover=1
+      path: /interactive/2020/03/03/us/elections/precinct-map-alabama.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^interactive-s3-failover$
+          x-nyt-backend: ^s3_origin$
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+          debug-var-nyt-force-pass: true
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
   - description: Test 2020 election page serves from Vi by default
     request:
       headers:
         x-nyt-nyhq-access: "1"
       path: /interactive/2020/10/10/us/elections/results-alabama-elections.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          cache-control: .*s-maxage.*
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election exit-polls page serves from Vi by default
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+      path: /interactive/2020/03/03/us/elections/exit-polls-alabama.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          cache-control: .*s-maxage.*
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election forecast page serves from Vi by default
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+      path: /interactive/2020/03/03/us/elections/forecast-alabama.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          cache-control: .*s-maxage.*
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election live-updates page serves from Vi by default
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+      path: /interactive/2020/03/03/us/elections/live-updates.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          x-nyt-backend: ^projectvi_fe$
+          cache-control: .*s-maxage.*
+          x-cache: .+
+          x-served-by: .+
+          x-frame-options: .+
+        notPresent:
+          - nnCoection
+          - via
+          - x-backend
+          - x-detectedruntimeconfigflag
+          - x-esi-status
+          - x-hash
+          - x-powered-by
+          - x-servername
+          - x-servername2
+          - x-varnish
+      statusCodes:
+        - 200
+        - 404
+  - description: Test 2020 election precinct map page serves from Vi by default
+    request:
+      headers:
+        x-nyt-nyhq-access: "1"
+      path: /interactive/2020/03/03/us/elections/precinct-map-alabama.html
     conditions:
       env:
         TEST_ENV: dev|stg|prd

@@ -57,7 +57,7 @@ sub interactive_2020_election_aws_failover {
 
   # evaluate if the URL is valid for failover to AWS based on dictionary value
   # if new patterns need to be added/changed for failover scope add them to this conditional
-  if (req.url.path ~ "^/interactive/2020/([0-1][0-9]/[0-9]{2}/)?us/elections/results-.*\.html$") {
+  if (req.url.path ~ "^/interactive/2020/([0-1][0-9]/[0-9]{2}/)?us/elections/(results|forecast|live|precinct|exit-polls)-.*\.html$") {
     set var.url_can_failover_by_dictionary = true;
   }
 
