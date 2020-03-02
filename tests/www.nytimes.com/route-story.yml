@@ -778,8 +778,6 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_fe$
-      statusCodes:
-        - 200
   - description: Route articles after 2020 to Vi
     request:
       method: GET
@@ -1011,8 +1009,6 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_fe$
-      statusCodes:
-        - 200
   - description: Vi Internationalized dateless URL /es
     request:
       method: GET
