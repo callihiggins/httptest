@@ -248,43 +248,6 @@ sub recv_abra_allocation {
     # End of Test HOME_editorsPicks
     #######################################
 
-    # Test Name: INT_DEFER
-    #
-    # Description: Defer variants in the interactive route
-    #
-    #
-    # Variants:
-    #   - 0_control                                 91%
-    #   - 1_defervi                                4.5%
-    #   - 2_defervi_and_gtm                        4.5%
-    #
-    if (var.is_interactive) {
-
-      if (var.test_group){
-        set var.test_group = var.test_group "&";
-      }
-      set var.test_name = "INT_DEFER";
-      set var.hash = digest.hash_sha256(req.http.var-cookie-nyt-a + " " + var.test_name);
-      set var.hash = regsub(var.hash, "^([a-fA-F0-9]{8}).*$", "\1");
-      set var.p = std.strtol(var.hash, 16);
-
-      if (var.p < 3908420239) {
-        set var.test_param = var.test_name + "=0_control";
-      } elseif (var.p < 4101693767) {
-        set var.test_param = var.test_name + "=1_defervi";
-      } else {
-        set var.test_param = var.test_name + "=2_defervi_and_gtm";
-      }
-
-      set var.test_group = var.test_group + var.test_param;
-      # We need to vary the cache on interactive route:
-      set req.http.var-interactive-abtest-variation = req.http.var-interactive-abtest-variation + var.test_param;
-    }
-    #
-    # End of Test INT_DEFER
-    #######################################
-
-
     # We pass a generically-named header `x-nyt-vi-abtest` to the Vi server, which
     # implements the A/B test branching logic.
     # example value: HOME_test_foo=0_control&STORY_test_bar=1_variant
