@@ -646,7 +646,7 @@ backends:
       timeout: "3000"
       window: "2"
 
-  - name: "realestate_fe"
+  - name: "realestate_fe_vi"
     address: "real-estate-vi.dev.oma1.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"

@@ -471,53 +471,27 @@ tests:
           x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
-  - description: Test /section/realestate/commercial collection point to realestate backend DEV
+  - description: Test /section/realestate/commercial collection point to realestate backend
     request:
       path: /section/realestate/commercial
       headers:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^realestate_fe$
-  - description: Test /section/realestate/commercial collection point to realestate backend STG PRD
-    request:
-      path: /section/realestate/commercial
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^vi-collection$
           x-nyt-backend: ^realestate_fe_vi$
-  - description: Test /section/realestate collection point to realestate backend DEV
+  - description: Test /section/realestate collection point to realestate backend
     request:
       path: /section/realestate
       headers:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^realestate_fe$
-  - description: Test /section/realestate collection point to realestate backend STG PRD
-    request:
-      path: /section/realestate
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:

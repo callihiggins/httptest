@@ -1,29 +1,12 @@
 tests:
-  - description: 'Test real estate dev gdpr: "/real-estate/the-high-end" '
+  - description: 'Test real estate on dev|stg|prd gdpr : "/real-estate/the-high-end" '
     request:
       path: /real-estate/the-high-end?gdpr=1
       headers:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
-          x-gdpr: ^1$
-          set-cookie: (?:^|,)nyt-gdpr=(0|1);
-      statusCodes:
-      - 200
-  - description: 'Test real estate on stg|prd gdpr : "/real-estate/the-high-end" '
-    request:
-      path: /real-estate/the-high-end?gdpr=1
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -33,23 +16,6 @@ tests:
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
       - 200
-  - description: 'Test real estate: "/real-estate/find-a-home" '
-    request:
-      path: /real-estate/find-a-home?gdpr=1
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
-          x-gdpr: ^1$
-          set-cookie: (?:^|,)nyt-gdpr=(0|1);
-      statusCodes:
-        - 200
   - description: 'Test real estate on stg: "/real-estate/find-a-home" '
     request:
       path: /real-estate/find-a-home?gdpr=1
@@ -57,7 +23,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -67,22 +33,6 @@ tests:
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
       statusCodes:
       - 200
-  - description: Test realestate querystring filter
-    request:
-      path: /real-estate/find-a-home?price=5&bad1=4&region=2&bad2=5&neighborhood=hello
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
-          x-nyt-final-url: ^/real-estate/find-a-home\?neighborhood=hello&price=5&region=2$
-      statusCodes:
-        - 200
   - description: Test realestate querystring filter Stg
     request:
       path: /real-estate/find-a-home?price=5&bad1=4&region=2&bad2=5&neighborhood=hello
@@ -90,7 +40,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -99,9 +49,9 @@ tests:
           x-nyt-final-url: ^/real-estate/find-a-home\?neighborhood=hello&price=5&region=2$
       statusCodes:
       - 200
-  - description: Test realestate mortgage-calculator on DEV
+  - description: Test realestate mobile redirect
     request:
-      path: /real-estate/mortgage-calculator
+      path: /real-estate/homes-for-sale/?locations%5B%5D=new-york-ny-usa&sortBy=dateposted-desc
       headers:
         x-nyt-miss: "1"
         User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
@@ -109,14 +59,148 @@ tests:
           Safari/8536.25
     conditions:
       env:
-        TEST_ENV: dev
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=sales&search=See\+Available\+Homes&location=new-york-ny-usa$
       statusCodes:
-        - 200
+        - 301
+  - description: Test realestate mobile redirect
+    request:
+      path: /real-estate/homes-for-rent/?locations%5B%5D=new-york-ny-usa&sortBy=dateposted-desc
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=rentals&search=See\+Available\+Homes&location=new-york-ny-usa$
+      statusCodes:
+        - 301
+  - description: Test realestate mobile redirect
+    request:
+      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-sale
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=sales&search=See\+Available\+Homes&location=upper-east-side-new-york-ny-usa$
+      statusCodes:
+        - 301
+  - description: Test realestate mobile redirect
+    request:
+      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-rent
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/search\?channel=rentals&search=See\+Available\+Homes&location=upper-east-side-new-york-ny-usa$
+      statusCodes:
+        - 301
+  - description: Test realestate mobile redirect
+    request:
+      path: /real-estate/usa/ny/brooklyn/clinton-hill/homes-for-rent/333-washington-avenue/46-3257305
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/listing/46-3257305$
+      statusCodes:
+        - 301
+  - description: Test realestate mobile redirect
+    request:
+      path: /real-estate/usa/ny/brooklyn/clinton-hill/homes-for-sale/333-washington-avenue/46-3257305
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/listing/46-3257305$
+      statusCodes:
+        - 301
+  - description: Test realestate mobile redirect
+    request:
+      path: /real-estate/find-a-home
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/$
+      statusCodes:
+        - 301
+  - description: Test realestate mobile redirect
+    request:
+      path: /real-estate/my-real-estate
+      headers:
+        x-nyt-miss: "1"
+        User-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X)
+          AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e
+          Safari/8536.25
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^real-estate$
+          x-nyt-backend: ^realestate_fe_vi$
+          location: ^https://m\.realestatelistings\.nytimes\.com/savedlistings$
+      statusCodes:
+        - 301
   - description: Test realestate mortgage-calculator redirect to vi on STG
     request:
       path: /real-estate/mortgage-calculator
@@ -127,7 +211,7 @@ tests:
           Safari/8536.25
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -142,7 +226,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -157,7 +241,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -172,7 +256,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -187,7 +271,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -202,42 +286,12 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^real-estate$
           x-nyt-backend: ^realestate_fe_vi$
-      statusCodes:
-      - 200
-  - description: RealEstate Search Result Rent page redirect to default backend
-    request:
-      path: /real-estate/homes-for-rent
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
-      statusCodes:
-      - 200
-  - description: RealEstate Search Result Sale page redirect to default backend
-    request:
-      path: /real-estate/homes-for-sale
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
       statusCodes:
       - 200
   - description: RealEstate Search Result Sale page redirect to VI platform on STG
@@ -247,7 +301,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -262,27 +316,12 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^real-estate$
           x-nyt-backend: ^realestate_fe_vi$
-      statusCodes:
-      - 200
-  - description: RealEstate Listing Details page redirect to VI on DEV
-    request:
-      path: /real-estate/usa/ny/brooklyn/kensington/homes-for-sale/40-tehama-street/3542-DC40T
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
       statusCodes:
       - 200
   - description: RealEstate Listing Details page short url with home redirect to VI on DEV and PRD
@@ -292,42 +331,12 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
-      statusCodes:
-      - 200
-  - description: RealEstate Listing Details page short url with home redirect to VI on DEV and PRD
-    request:
-      path: /real-estate/home/3542-DC40T
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^real-estate$
           x-nyt-backend: ^realestate_fe_vi$
-      statusCodes:
-      - 200
-  - description: RealEstate Search Results page with optional URI redirect to VI platform
-    request:
-      path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-rent
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
       statusCodes:
       - 200
   - description: RealEstate Search Results page with optional URI redirect to VI platform STG and PRD
@@ -337,7 +346,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -352,7 +361,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
@@ -367,42 +376,12 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
           x-nyt-route: ^real-estate$
           x-nyt-backend: ^realestate_fe_vi$
-      statusCodes:
-      - 200
-  - description: RealEstate Search Results page with optional URI redirect to VI platform
-    request:
-      path: /real-estate/usa/ny/brooklyn/brooklyn-heights/homes-for-rent?test=test
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
-      statusCodes:
-      - 200
-  - description: RealEstate Search Results page  with Building URI redirect to VI platform
-    request:
-      path: /real-estate/usa/ny/new-york/upper-east-side/homes-for-rent/205-east-76th-street-building
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^real-estate$
-          x-nyt-backend: ^realestate_fe$
       statusCodes:
       - 200
   - description: RealEstate Search Results page  with Building URI redirect to VI platform STG and PRD
@@ -412,7 +391,7 @@ tests:
         x-nyt-miss: "1"
     conditions:
       env:
-        TEST_ENV: stg|prd
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:

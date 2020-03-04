@@ -81,11 +81,7 @@ sub recv_route_collection {
 
     # RealEstate: Route to the Real Estate backend Front Page and Commercial
     if (req.url ~ "^/section/realestate") {
-      if (req.http.var-nyt-env == "dev") {
-        set req.http.x-nyt-backend = "realestate_fe";
-      } else {
-        set req.http.x-nyt-backend = "realestate_fe_vi";
-      }
+      set req.http.x-nyt-backend = "realestate_fe_vi";
     }
   }
 }

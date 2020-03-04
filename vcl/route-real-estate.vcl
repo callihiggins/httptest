@@ -6,7 +6,7 @@ sub recv_route_real_estate {
     ) {
         // set req.http.X-UA-Device
         set req.http.x-nyt-route = "real-estate";
-        set req.http.x-nyt-backend = "realestate_fe";
+        set req.http.x-nyt-backend = "realestate_fe_vi";
         set req.http.var-nyt-wf-auth = "true";
         set req.http.var-nyt-send-gdpr = "true";
 
@@ -20,29 +20,6 @@ sub recv_route_real_estate {
         } else {
             # this was not a force pass, filter the qparams
             call recv_route_real_estate_filter_querystring;
-        }
-
-        # Re-configute backend by page
-        if (req.http.var-nyt-env != "dev") {
-          if (
-            req.url ~ "^/real-estate/mortgage-calculator" ||
-            req.url ~ "^/real-estate/find-a-home" ||
-            req.url ~ "^/real-estate/the-high-end" ||
-            req.url ~ "^/real-estate(?:\/.*)?\/building/" ||
-            req.url ~ "^/real-estate/my-real-estate"  ||
-            req.url ~ "^/real-estate/guide/\w.+" ||
-            req.url ~ "^/real-estate/homes-for-rent" ||
-            req.url ~ "^/real-estate/homes-for-sale" ||
-            # this is to match the listing page only
-            req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)/([^/]+)" ||
-            # this is to match the search results page only
-            req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)$" ||
-            # this is to match the search results page building
-            req.url ~ "^/real-estate/(.*)/homes-for-(sale|rent)/([^/]+)-building" ||
-            req.url ~ "^/real-estate/home/([^/]+)"
-          ) {
-            set req.http.x-nyt-backend = "realestate_fe_vi";
-          }
         }
     }
 }
