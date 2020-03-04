@@ -74,6 +74,7 @@ sub recv_initialize_transaction_state {
 
     # set the var for using vcl log to sumo in this service
     # TODO: if we change the name of the integration this needs to change
+    # TODO: Move this as a var to recv_sumologic_purge_log_line once we are done with tracing
     set req.http.var-nyt-sumo-purge-log-name = "fastly-www-purge/" + if(req.http.var-nyt-env != "prd", "stg","prd");
 
     # Set a var with the original querystring if it exists, some logic needs to use it in vcl_deliver
@@ -89,21 +90,22 @@ sub recv_initialize_transaction_state {
 
     # (route-vi-static-backup-gcs)
     # Manual switch to turn on/off the vi static backup routing.
-    # In the case that we want to failover,
-    # set the following to "true" and redeploy.
-    set req.http.var-is-vi-static-backup-enabled = "false";
+    # To failover, uncomment this var, set it to "true" and redeploy
+    # set req.http.var-is-vi-static-backup-enabled = "false";
+
     # If the request is internal and we detect our backup
     # unit test header then manually turn on the switch.
     if (req.http.x-nyt-nyhq-access == "1" && req.http.vi-static-backup-test == "true") {
       set req.http.var-is-vi-static-backup-enabled = "true";
     }
     # The default static backup will be read from the Central cluster.
-    # Failover to East by setting the following to "true".
-    set req.http.var-is-east-static-backup-enabled = "false";
+    # To Failover to East, uncomment this var, set it to true and redeploy
+    # set req.http.var-is-east-static-backup-enabled = "false";
 
     # Switch to turn on/off the Storylines ABRA test.
     # Currently set to off, testing in prod is on hold
-    set req.http.var-is-storylines-recirc-test-enabled = "false";
+    # set req.http.var-is-storylines-recirc-test-enabled = "false";
+
     # For debugging purposes, if the request is internal and we
     # detect a test header, then turn on the switch.
     if (req.http.x-nyt-nyhq-access == "1" && req.http.storylines-recirc-test == "true") {
