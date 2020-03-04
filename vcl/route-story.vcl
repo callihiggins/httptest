@@ -142,7 +142,7 @@ sub recv_route_amp {
       set req.http.var-nyt-force-pass = "true";
     } else if ((req.http.User-Agent ~ "DU-amp-indexer" && req.url ~ "\.amp\.html$") || req.url ~ "^/live/20(19|[2-9][0-9])") {
       // don't redirect AMP HTML requests coming from DU-amp-indexer user agent or for live blog.
-    } else if (client.ip !~ googlebot && client.ip !~ botify && req.http.x-nyt-nyhq-access != "1" && req.http.x-nyt-staging-only-access != "1" && req.http.User-Agent != "NYT-AmpValidatorBot (like Gecko)") {
+    } else if (client.ip !~ googlebot && client.ip !~ botify && client.ip !~ bingbot && req.http.x-nyt-nyhq-access != "1" && req.http.x-nyt-staging-only-access != "1" && req.http.User-Agent != "NYT-AmpValidatorBot (like Gecko)") {
       // in supporting google's live-list fix, no longer bypass the fastly cache https://jira.nyt.net/browse/STORY-5114
       declare local var.amp_redirect_target STRING;
       set var.amp_redirect_target = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");

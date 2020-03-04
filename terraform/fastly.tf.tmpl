@@ -674,6 +674,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "acl-bingbot"
+    main    = false
+    content = "${file("../vcl/acl-bingbot.vcl")}"
+  }
+
+  vcl {
     name    = "acl-botify"
     main    = false
     content = "${file("../vcl/acl-botify.vcl")}"
