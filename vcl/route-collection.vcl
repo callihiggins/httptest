@@ -9,7 +9,7 @@ sub recv_route_collection {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
 
-      if (req.http.var-nyt-canonical-alpha-host != "true") {
+      if (req.http.host !~ "^alpha") {
         set req.url = querystring.filter_except(req.url, "nytapp");
       }
 
@@ -25,7 +25,7 @@ sub recv_route_collection {
     set req.http.var-nyt-wf-auth = "true";
     set req.http.var-nyt-send-gdpr = "true";
 
-    if (req.http.var-nyt-canonical-alpha-host != "true") {
+    if (req.http.host !~ "^alpha") {
       set req.url = querystring.filter_except(req.url, "nytapp");
     }
     unset req.http.Authorization;
@@ -57,7 +57,7 @@ sub recv_route_collection {
         set req.http.var-nyt-wf-auth = "true";
         set req.http.var-nyt-send-gdpr = "true";
 
-        if (req.http.var-nyt-canonical-alpha-host != "true") {
+        if (req.http.host !~ "^alpha") {
           set req.url = querystring.filter_except(req.url, "nytapp");
         }
 
@@ -70,7 +70,7 @@ sub recv_route_collection {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
 
-      if (req.http.var-nyt-canonical-alpha-host != "true") {
+      if (req.http.host !~ "^alpha") {
         set req.url = querystring.filter_except(req.url, "nytapp");
       }
 

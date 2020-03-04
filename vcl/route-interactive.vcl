@@ -15,7 +15,7 @@ sub recv_route_interactive {
     set req.http.var-nyt-error-retry = "false";
 
     # do not remove the query string if this is an `alpha` URL (preview type functionality)
-    if (req.http.var-nyt-canonical-alpha-host != "true") {
+    if (req.http.host !~ "^alpha") {
       set req.url = querystring.remove(req.url);
     }
 

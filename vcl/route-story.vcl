@@ -1,6 +1,7 @@
 sub recv_route_story {
     # stories only serve from canonical www host and alpha host
-    if (req.http.var-nyt-canonical-www-host == "true" || req.http.var-nyt-canonical-alpha-host == "true") {
+    if (req.http.var-nyt-canonical-www-host == "true" || req.http.host ~ "^alpha") {
+
       // Internationalized URLs https://jira.nyt.net/browse/DV-1731
       declare local var.internationalized_url BOOL;
       if (   req.url ~ "^/(a[fryz]|b[egns]|c[aksy]|d[ae]|e[lnotu]|f[abiory]|g[alnux]|h[eiruy]|i[dst]|j[av]|k[akmnou]|l[aitv]|m[gklnrst]|n[beln]|p[alst]|qu|r[mou]|s[aekloqrvwy]|t[aeghlrt]|u[krz]|vi|xh|yi|zh|zh-(CN|HK|TW|hans|hant)|zu)/"
@@ -60,7 +61,7 @@ sub recv_route_story {
             call recv_bot_detection;
         }
 
-        if (req.http.var-nyt-canonical-alpha-host != "true") {
+        if (req.http.host !~ "^alpha") {
           set req.url = querystring.filter_except(req.url, "nytapp");
         }
 
@@ -99,7 +100,7 @@ sub recv_route_story {
               set req.http.x-nyt-backend = "article_fe";
               set req.http.var-nyt-wf-auth = "true";
               set req.http.var-nyt-send-gdpr = "true";
-              if (req.http.var-nyt-canonical-alpha-host != "true") {
+              if (req.http.host !~ "^alpha") {
                 set req.url = querystring.filter_except(req.url, "nytapp");
               }
             } else {
@@ -108,7 +109,7 @@ sub recv_route_story {
               set req.http.var-nyt-error-retry = "false";
               set req.http.var-nyt-wf-auth = "true";
               set req.http.var-nyt-send-gdpr = "true";
-              if (req.http.var-nyt-canonical-alpha-host != "true") {
+              if (req.http.host !~ "^alpha") {
                 set req.url = querystring.filter_except(req.url, "nytapp");
               }
               call recv_route_vi_static_backup_gcs;
@@ -153,7 +154,7 @@ sub recv_route_amp {
   // Route live blog traffic to amp when new routing flag is false
   if ((req.http.var-is-live-blog-amp-vi-routing-enabled == "false")
       && (req.http.var-nyt-canonical-www-host == "true"
-      || req.http.var-nyt-canonical-alpha-host == "true")
+      || req.http.host ~ "^alpha")
       && (req.url ~ "^/live/20(19|[2-9][0-9])")
   ) {
     set req.http.x-nyt-route = "amp";

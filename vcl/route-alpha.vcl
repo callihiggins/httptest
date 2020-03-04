@@ -1,6 +1,6 @@
 sub recv_route_alpha {
   if (
-      req.http.var-nyt-canonical-alpha-host == "true"
+      req.http.host ~ "^alpha"
       && req.http.x-nyt-route != "vi-assets"
       && req.http.x-nyt-route != "amp"
       && (req.http.x-nyt-nyhq-access == "1" || req.http.x-nyt-staging-only-access == "1")
@@ -107,7 +107,7 @@ sub recv_route_alpha {
 
 sub hash_route_alpha {
   if (
-      req.http.var-nyt-canonical-alpha-host == "true"
+      req.http.host ~ "^alpha"
       && req.http.x-nyt-route != "vi-assets"
       && req.http.x-nyt-route != "amp"
     ) {
@@ -132,7 +132,7 @@ sub hash_route_alpha {
 
 sub fetch_route_alpha {
   if (
-      req.http.var-nyt-canonical-alpha-host == "true"
+      req.http.host ~ "^alpha"
       && req.http.x-nyt-route != "vi-assets"
       && req.http.x-nyt-route != "amp"
     ) {
@@ -156,7 +156,7 @@ sub fetch_route_alpha {
 
 sub deliver_route_alpha {
   if (
-      req.http.var-nyt-canonical-alpha-host == "true"
+      req.http.host ~ "^alpha"
       && req.http.x-nyt-route != "vi-assets"
       && req.http.x-nyt-route != "amp"
     ) {

@@ -1,7 +1,7 @@
 sub recv_route_homepage {
     # homepage only serves from canonical hosts
     # all others go to legacy
-    if (req.http.var-nyt-canonical-www-host == "true" || req.http.var-nyt-canonical-alpha-host == "true") {
+    if (req.http.var-nyt-canonical-www-host == "true" || req.http.host ~ "^alpha") {
         if (req.url.path == "/") {
           # first check to see if we need to redirect to a different edition
           call recv_route_homepage_edition_redirect;
@@ -12,7 +12,7 @@ sub recv_route_homepage {
           set req.http.var-nyt-wf-auth = "true";
           set req.http.var-nyt-send-gdpr = "true";
 
-          if (req.http.var-nyt-canonical-alpha-host != "true") {
+          if (req.http.host !~ "^alpha") {
             set req.url = querystring.filter_except(req.url, "abra-vi");
           }
 

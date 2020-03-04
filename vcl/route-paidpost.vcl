@@ -1,13 +1,13 @@
 sub recv_route_paidpost {
   // VI/NYT5 routing for paidpost
   // first let's make sure we've got anything to do with paidpost
-  if( ( (req.http.var-nyt-canonical-www-host == "true" || req.http.var-nyt-canonical-alpha-host == "true")
-        && req.url ~ "^/paidpost/" ) && req.url.ext == "html")
-    {
+  if((req.http.var-nyt-canonical-www-host == "true" || req.http.host ~ "^alpha")
+      && req.url ~ "^/paidpost/"
+      && req.url.ext == "html") {
         // now let's set our base values for either route
         set req.http.var-nyt-send-gdpr = "true";
         set req.http.var-nyt-wf-auth = "true";
-        if (req.http.var-nyt-canonical-alpha-host == "true") {
+        if (req.http.host ~ "^alpha") {
           set req.url = querystring.filter_except(req.url,
                                               "contentId" + querystring.filtersep() +
                                               "contentUri" + querystring.filtersep() +

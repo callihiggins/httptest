@@ -1,5 +1,5 @@
 sub recv_route_gdpr_form {
-  if ((req.http.var-nyt-canonical-www-host == "true" || req.http.var-nyt-canonical-alpha-host == "true")
+  if ((req.http.var-nyt-canonical-www-host == "true" || req.http.host ~ "^alpha")
       && req.url.path ~ "^/data-subject-request"
     ) {
     set req.http.x-nyt-route = "gdpr-form";

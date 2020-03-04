@@ -113,7 +113,6 @@ sub vcl_recv {
 
   # set up a few state vars reflecting the request structure
   call recv_set_canonical_www_host_var;
-  call recv_set_canonical_alpha_host_var;
   call recv_capture_cookie_values;
 
   # set misc state vars (no use in creating 15 more subs)

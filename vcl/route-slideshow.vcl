@@ -8,7 +8,7 @@ sub recv_route_slideshow {
       set req.http.var-nyt-wf-auth = "true";
       set req.http.var-nyt-send-gdpr = "true";
 
-      if (req.http.var-nyt-canonical-alpha-host != "true") {
+      if (req.http.host !~ "^alpha") {
         set req.url = querystring.remove(req.url);
       }
 
