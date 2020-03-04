@@ -43,7 +43,6 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-https-phase;
   unset bereq.http.var-nyt-ismagnolia;
   unset bereq.http.var-nyt-is-shielded;
-  unset bereq.http.var-nyt-no-referrer;
   unset bereq.http.var-nyt-redirect-reason;
   unset bereq.http.var-nyt-sumo-purge-log-name;
   unset bereq.http.var-nyt-send-gdpr;

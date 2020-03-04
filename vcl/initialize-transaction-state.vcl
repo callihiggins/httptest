@@ -51,7 +51,6 @@ sub recv_initialize_transaction_state {
     unset req.http.var-nyt-force-pass;
     unset req.http.x-nyt-route;
     unset req.http.x-nyt-backend;
-    unset req.http.var-nyt-no-referrer;
 
     # initialize sending gdpr cookie to false
     set req.http.var-nyt-send-gdpr = "false";
