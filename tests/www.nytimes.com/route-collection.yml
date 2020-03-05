@@ -76,8 +76,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^collection$
-          x-nyt-backend: ^collection_fe$
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^0$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test /reviews/ redirect
@@ -91,8 +91,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^collection$
-          x-nyt-backend: ^collection_fe$
+          x-nyt-route: ^vi-collection$
+          x-nyt-backend: ^projectvi_fe$
           x-gdpr: ^1$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
   - description: Test reviews diningmap
@@ -444,21 +444,6 @@ tests:
   - description:  Test /review (no trailing "s") reaches vi
     request:
       path: /review
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^vi-collection$
-          x-nyt-backend: ^projectvi_fe$
-          x-gdpr: ^0$
-          set-cookie: (?:^|,)nyt-gdpr=(0|1);
-  - description: Test /reviews/ reaches vi
-    request:
-      path: /reviews
       headers:
         x-nyt-miss: "1"
     conditions:
