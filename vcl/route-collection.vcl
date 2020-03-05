@@ -1,7 +1,5 @@
 sub recv_route_collection {
   if (   req.url ~ "^/reviews/dining/map"
-      || req.url ~ "^/reviews?"
-      || req.url ~ "^/reviews$"
       || req.url ~ "^/upshot"
   ) {
       set req.http.x-nyt-route = "collection";
@@ -45,6 +43,7 @@ sub recv_route_collection {
       || req.url ~ "^/news-event/"
       || req.url ~ "^/section/"
       || req.url ~ "^/spotlight/"
+      || req.url ~ "^/reviews?"
       || req.url ~ "^/reviews/theater"
       || req.url ~ "^/reviews/movies"
       || (req.url ~ "^/reviews/dining" && req.url !~ "^/reviews/dining/map")
