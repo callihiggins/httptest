@@ -683,20 +683,6 @@ tests:
           location: ^https://${TEST_HOST}/interactive/us/faces-of-the-dead\.html$
       statusCodes:
         - 301
-  - description: Test HTTPS Auth is working for real-estate
-    request:
-      path: /real-estate/api/personalization/saved-items-status?itemIds=123
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: stg|prd
-    response:
-      headers:
-        patterns:
-          x-cache: ^MISS$
-      statusCodes:
-        - 401
   - description: Test HTTPS Everywhere; spelling-bee; non-secure; opt-out cookie not set
     request:
       scheme: http
