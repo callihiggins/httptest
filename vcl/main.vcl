@@ -131,7 +131,7 @@ sub vcl_recv {
 
   # initialize geo ip headers only on the edge
   if (!req.http.x-nyt-shield-auth) {
-    call shared_recv_geoip_headers_init;
+    call shared_recv_geoip_headers_init_basic;
   }
 
   # calling the GDPR setup prior to routes to capture cookie and
