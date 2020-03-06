@@ -13,7 +13,6 @@ tests:
           x-nyt-continent: ^EU$
           x-nyt-country: ^GB$
           x-nyt-region: ^LND$
-          x-nyt-city: ^london$
           x-nyt-gmt-offset: (0|100)
       statusCodes:
         - 200
@@ -48,7 +47,6 @@ tests:
           x-nyt-continent: ^OC$
           x-nyt-country: ^AU$
           x-nyt-region: ^ACT$
-          x-nyt-city: ^canberra$
           x-nyt-gmt-offset: 1[0-1]00
       statusCodes:
         - 200
@@ -66,7 +64,6 @@ tests:
           x-nyt-continent: ^NA$
           x-nyt-country: ^US$
           x-nyt-region: ^CT$
-          x-nyt-city: ^storrs mansfield$
           x-nyt-gmt-offset: -[45]00
       statusCodes:
         - 200
@@ -117,7 +114,6 @@ tests:
           x-nyt-continent: ^OC$
           x-nyt-country: ^AU$
           x-nyt-region: ^NSW$
-          x-nyt-city: ^sydney$
           x-nyt-gmt-offset: 1[01]00
           x-nyt-geo-hash: OCAU1[01]00
 
