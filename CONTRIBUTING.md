@@ -7,7 +7,7 @@
 1. Clone the repo and create a branch off of master:
     * `git checkout master; git pull; git checkout -b <branch_name>`
     * Using a slightly descriptive name for the branch is beneficial
-1. See [dv-fastly-guide][dv-fastly-guide] for documentation and coding standards; currently this is a WIP
+1. See [NYT Fastly Guide](https://docs.dv.nyt.net/fastly/) for documentation and coding standards
 1. Add as many commits as you like
 1. Be sure to add tests to the suite in `/tests` for your changes
     * Docs are in [drone-fastly-tests][drone-fastly-tests]
@@ -20,7 +20,7 @@
     * Be kind and squash all but the first commit if you have many
     * Rewrite to a nice descriptive commit
     * You can continue to do this after opening the PR if you need to make many changes based on reviews or ongoing work
-1. If it helps, you can test your changes interactively by [deploying your branch to a Fastly sandbox service](https://github.com/nytm/dv-fastly-guide/blob/master/topics/www_sandboxes.md)
+1. If it helps, you can test your changes interactively by [deploying your branch to a Fastly sandbox service](https://docs.dv.nyt.net/fastly/guides/www_sandboxes/)
 
 ### 2. Integrate Changes
 
