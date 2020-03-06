@@ -57,7 +57,7 @@ sub deliver_response_headers {
     # if we got this far it's an edge that is nyhq
     # if NOT shielded, overwrite this header with the route defined one
     # do not let origins override it, this is FASTLY ROUTING ONLY HEADER
-    } else if(!req.http.var-nyt-is-shielded) {
+    } else if(!req.backend.is_shield) {
         set resp.http.x-nyt-backend = req.http.x-nyt-backend;
     }
 
