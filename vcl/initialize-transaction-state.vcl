@@ -33,14 +33,6 @@ sub recv_capture_cookie_values {
     if (req.http.Cookie:NYT-Edition) {
       set req.http.var-cookie-nyt-edition = urldecode(req.http.Cookie:NYT-Edition);
     }
-
-    if (req.http.Cookie:nyt.np.enable-https) {
-        set req.http.var-cookie-np-enable-https = urldecode(req.http.Cookie:nyt.np.enable-https);
-    }
-
-    if (req.http.Cookie:nyt.np.internal-https-opt-out) {
-        set req.http.var-cookie-nyt-np-internal-https-opt-out = urldecode(req.http.Cookie:nyt.np.internal-https-opt-out);
-    }
 }
 
 sub recv_initialize_transaction_state {

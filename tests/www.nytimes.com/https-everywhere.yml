@@ -653,7 +653,7 @@ tests:
     response:
       headers:
         patterns:
-          location: ^https://${TEST_HOST}/section/arts$
+          location: ^https://(${TEST_HOST}|www.dev.nytimes.com)/section/arts$
       statusCodes:
         - 301
   - description: Test HTTPS Everywhere; 9/11 interactive; secure
@@ -918,7 +918,7 @@ tests:
     response:
       headers:
         patterns:
-          location: ^https://${TEST_HOST}/section/well$
+          location: ^https://(${TEST_HOST}|www.dev.nytimes.com)/section/well$
       statusCodes:
         - 301
   - description: Test HTTPS Everywhere; /health serves over https and redirects properly
@@ -934,7 +934,7 @@ tests:
     response:
       headers:
         patterns:
-          location: ^https://${TEST_HOST}/section/health$
+          location: ^https://(${TEST_HOST}|www.dev.nytimes.com)/section/health$
       statusCodes:
         - 301
   - description: Test HTTPS Everywhere; amp http redirects to https
@@ -951,5 +951,72 @@ tests:
       headers:
         patterns:
           location: ^https://${TEST_HOST}/2019/11/01/business/slug.amp.html$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; legacy path; default is http
+    request:
+      scheme: http
+      method: GET
+      path: /foo-bar/foo
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+      statusCodes:
+        - 404
+  - description: Test HTTPS Everywhere; legacy path on http; optin cookie
+    request:
+      scheme: http
+      method: GET
+      path: /foo-bar/foo
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt.np.enable-https=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+          location: ^https://${TEST_HOST}/foo-bar/foo$
+      statusCodes:
+        - 301
+  - description: Test HTTPS Everywhere; legacy path on https; optin cookie
+    request:
+      method: GET
+      path: /foo-bar/foo
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt.np.enable-https=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+      statusCodes:
+        - 404
+  - description: Test HTTPS Everywhere;, legacy path on https; opt out cookie
+    request:
+      method: GET
+      path: /foo-bar/foo
+      headers:
+        x-nyt-miss: "1"
+        cookie: nyt.np.internal-https-opt-out=1
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^legacy-gke$
+          location: ^http://${TEST_HOST}/foo-bar/foo$
       statusCodes:
         - 301

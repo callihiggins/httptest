@@ -1,10 +1,24 @@
 sub recv_https_redirect {
+
+    declare local var.cookie-np-enable-https BOOL;
+    declare local var.cookie-nyt-np-internal-https-opt-out BOOL;
+    declare local var.nyt-https-phase STRING;
+
+    if (req.http.Cookie:nyt.np.enable-https &&
+        urldecode(req.http.Cookie:nyt.np.enable-https) == "1") {
+        set var.cookie-np-enable-https = true;
+    }
+
+    # the previous code only checks the existence of the cookie, not the value.
+    if (req.http.Cookie:nyt.np.internal-https-opt-out) {
+        set var.cookie-nyt-np-internal-https-opt-out = true;
+    }
+
     /*
      * Items that are HTTPS internally only but not assigned to a phase
      */
     if ( req.http.x-nyt-route == "blog" ) {
-
-        set req.http.var-nyt-https-phase = "internal";
+        set var.nyt-https-phase = "internal";
     }
 
     /*
@@ -90,7 +104,7 @@ sub recv_https_redirect {
         || req.url.path == "/BingSiteAuth.xml"
         || req.url ~ "^/(digital|hdleftnav|subscribe|homedelivery|edu|gift|redeem|college|professor|student|campus)" //CMOTS-referrer-issue-fix
     ) {
-        set req.http.var-nyt-https-phase = "live";
+        set var.nyt-https-phase = "live";
     }
 
     // IS a HTTPS connection
@@ -137,20 +151,20 @@ sub recv_https_redirect {
         ) {
 
         // Urls already live over HTTPS
-        } else if (req.http.var-nyt-https-phase == "live") {
+        } else if (var.nyt-https-phase == "live") {
 
         // Urls live over HTTPS internally
         } else if (
                req.http.x-nyt-nyhq-access == "1"
-            && req.http.var-nyt-https-phase == "internal"
-            && !req.http.var-cookie-nyt-np-internal-https-opt-out
+            && var.nyt-https-phase == "internal"
+            && !var.cookie-nyt-np-internal-https-opt-out
         ) {
 
         // internal https cookie-based test
         } else if (
                req.http.x-nyt-nyhq-access == "1"
-            && req.http.var-cookie-np-enable-https == "1"
-            && !req.http.var-cookie-nyt-np-internal-https-opt-out
+            && var.cookie-np-enable-https
+            && !var.cookie-nyt-np-internal-https-opt-out
         ) {
 
         // if not in the above categories, redirect to http
@@ -174,20 +188,20 @@ sub recv_https_redirect {
         } else if (
             req.http.x-nyt-nyhq-access == "1"
             && req.request != "FASTLYPURGE"
-            && req.http.var-nyt-https-phase == "internal"
-            && !req.http.var-cookie-nyt-np-internal-https-opt-out
+            && var.nyt-https-phase == "internal"
+            && !var.cookie-nyt-np-internal-https-opt-out
         ) {
             call redirect_to_https;
 
         // URLs that are launched on HTTPS should redirect to HTTPS
-        } else if ( req.http.var-nyt-https-phase == "live" && req.request != "FASTLYPURGE" ) {
+        } else if ( var.nyt-https-phase == "live" && req.request != "FASTLYPURGE" ) {
             call redirect_to_https;
 
         // internal https cookie-based test
         } else if (
                req.http.x-nyt-nyhq-access == "1"
-            && req.http.var-cookie-np-enable-https == "1"
-            && !req.http.var-cookie-nyt-np-internal-https-opt-out
+            && var.cookie-np-enable-https
+            && !var.cookie-nyt-np-internal-https-opt-out
         ) {
             call redirect_to_https;
 
