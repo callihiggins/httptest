@@ -12,7 +12,7 @@ sub miss_pass_unset_bereq_headers {
   # unset the routing headers if we are sending
   # this request to a fastly shield pop
   # it should route it again itself
-  if (req.backend.is_shield) {
+  if (req.http.var-nyt-is-shielded == "true") {
     unset bereq.http.x-nyt-route;
     unset bereq.http.x-nyt-backend;
   }
@@ -42,6 +42,7 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-has-nyt-t;
   unset bereq.http.var-nyt-https-phase;
   unset bereq.http.var-nyt-ismagnolia;
+  unset bereq.http.var-nyt-is-shielded;
   unset bereq.http.var-nyt-redirect-reason;
   unset bereq.http.var-nyt-sumo-purge-log-name;
   unset bereq.http.var-nyt-send-gdpr;

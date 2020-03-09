@@ -278,6 +278,13 @@ sub vcl_recv {
     set req.max_stale_while_revalidate = 0s;
   }
 
+  # set a tracking var to denote if this req is going to a shield
+  if (req.backend.is_shield) {
+    set req.http.var-nyt-is-shielded = "true";
+  } else {
+    unset req.http.var-nyt-is-shielded;
+  }
+
   # sort the querystring just to be sure we optimize cache
   set req.url = querystring.sort(req.url);
 
