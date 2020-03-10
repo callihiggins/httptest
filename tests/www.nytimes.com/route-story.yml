@@ -892,7 +892,7 @@ tests:
         var-is-live-blog-amp-vi-routing-enabled: true
     conditions:
       env:
-        TEST_ENV: dev|stg|prd
+        TEST_ENV: dev|stg
     response:
       headers:
         patterns:
@@ -939,7 +939,7 @@ tests:
         var-is-live-blog-amp-vi-routing-enabled: true
     conditions:
       env:
-        TEST_ENV: dev|stg|prd
+        TEST_ENV: dev|stg
     response:
       headers:
         patterns:
