@@ -833,12 +833,28 @@ tests:
           x-nyt-backend: ^amp$
           x-nyt-final-url: ^/2015/01/11/fashion/no-37-big-wedding-or-small.amp.html\?0p19G=1&isSwgTest=true
           debug-var-nyt-force-pass: false
-  - description: Test gcs 404 cache for live blog
+  - description: Test 404 for live blog on vi
     request:
-      path: /live/2019/
+      path: /live/2020/
       headers:
         x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: "false"
+        var-is-live-blog-amp-vi-routing-enabled: "true"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 404
+  - description: Test gcs 404 cache for amp live blog
+    request:
+      path: /live/2020/page-that-does-not-exist.amp.html
+      headers:
+        x-nyt-miss: "1"
+        var-is-live-blog-amp-vi-routing-enabled: "true"
     conditions:
       env:
         TEST_ENV: dev|stg|prd
@@ -851,59 +867,57 @@ tests:
           cache-control: .+
       statusCodes:
         - 404
-  - description: Route live blogs to amp when flag is off
+  - description: Check live blog post on Vi
     request:
       method: GET
-      path: /live/2020/fact-check-state-of-the-union-02-04
+      path: /live/2020/fact-check-state-of-the-union-02-04#following-naftas-adoption-our-nation-lost-one-in-four-manufacturing-jobs
       headers:
         x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: "false"
     conditions:
       env:
         TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
-          debug-var-nyt-force-pass: false
-  - description: Check live blog post on AMP
-    request:
-      method: GET
-      path: /live/2020/fact-check-state-of-the-union-02-04/following-naftas-adoption-our-nation-lost-one-in-four-manufacturing-jobs
-      headers:
-        x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: "false"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
-          debug-var-nyt-force-pass: false
-  - description: Route pre-amp-vi split live blogs to Vi (error until Vi merge)
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+  - description: Route live blogs to Vi when amp and vi are enabled
     request:
       method: GET
       path: /live/2020/trump-impeachment-01-16
       headers:
         x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: true
+        var-is-live-blog-amp-vi-routing-enabled: "true"
     conditions:
       env:
         TEST_ENV: dev|stg
     response:
       headers:
         patterns:
-          x-nyt-backend: ^gcs_origin$
-          x-nyt-route: ^newsdev-gcs$
-  - description: Route 2020 live blogs to amp
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+  - description: Route live blogs to amp url when amp and vi are enabled
     request:
       method: GET
       path: /live/2020/fact-check-state-of-the-union-02-04.amp.html
       headers:
         x-nyt-miss: "1"
+        var-is-live-blog-amp-vi-routing-enabled: "true"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp$
+          debug-var-nyt-force-pass: false
+  - description: Check live blogs post on AMP
+    request:
+      method: GET
+      path: /live/2020/fact-check-state-of-the-union-02-04.amp.html#following-naftas-adoption-our-nation-lost-one-in-four-manufacturing-jobs
+      headers:
+        x-nyt-miss: "1"
         var-is-live-blog-amp-vi-routing-enabled: true
     conditions:
       env:
@@ -914,55 +928,6 @@ tests:
           x-nyt-route: ^amp$
           x-nyt-backend: ^amp$
           debug-var-nyt-force-pass: false
-  - description: Check live blogs posts in amp
-    request:
-      method: GET
-      path: /live/2020/fact-check-state-of-the-union-02-04.amp.html/following-naftas-adoption-our-nation-lost-one-in-four-manufacturing-jobs
-      headers:
-        x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: true
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
-          debug-var-nyt-force-pass: false
-  - description: Route live blogs to vi (error until Vi merge)
-    request:
-      method: GET
-      path: /live/2020/impeachment-trial-live-01-25
-      headers:
-        x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: true
-    conditions:
-      env:
-        TEST_ENV: dev|stg
-    response:
-      headers:
-        patterns:
-          x-nyt-backend: ^gcs_origin$
-          x-nyt-route: ^newsdev-gcs$
-  - description: Test gcs 404 cache for live and 2020 routing to amp
-    request:
-      path: /live/2020/page-that-does-not-exist.amp.html
-      headers:
-        x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: true
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-backend: ^gcs_origin$
-          x-nyt-route: ^newsdev-gcs$
-          fastly-restarts: ^1$
-          cache-control: .+
-      statusCodes:
-        - 404
   - description: Don't redirect AMP articles with user-agent DU-amp-indexer
     request:
       method: GET

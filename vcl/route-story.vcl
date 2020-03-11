@@ -175,7 +175,7 @@ sub miss_pass_route_amp {
 
 sub deliver_route_story_live_error {
 
-  if (req.http.var-is-live-blog-amp-vi-routing-enabled == "false") {
+  if (req.http.x-nyt-route == "amp") {
     if (req.url ~ "^/live/20(19|[2-9][0-9])") {
       # If the gcs object returns a 404, serve a custom 404 error page
       if (resp.status == 404 && req.restarts < 1) {

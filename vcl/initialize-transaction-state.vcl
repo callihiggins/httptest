@@ -104,7 +104,7 @@ sub recv_initialize_transaction_state {
     }
     
     #Switch to turn on/off live blog routing 
-    set req.http.var-is-live-blog-amp-vi-routing-enabled = "false";
+    set req.http.var-is-live-blog-amp-vi-routing-enabled = "true";
     # For debugging purposes, if the request is internal and we
     # detect a test header, then turn on the switch.
     if (req.http.x-nyt-nyhq-access == "1" && req.http.live-blog-amp-vi-routing == "true") {
