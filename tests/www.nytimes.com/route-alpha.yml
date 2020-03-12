@@ -369,7 +369,7 @@ tests:
       headers:
         patterns:
           x-nyt-final-url: ^/2019/04/24/technology/ecuador-surveillance-cameras-police-government\.html\?action=click&module=Top%20Stories&pgtype=Homepage$
-  - description: Alpha host alpha-preview.stg.nytimes.com routes to oak live blogs
+  - description: Alpha host alpha-preview.stg.nytimes.com routes to live blogs
     request:
       path: /live/2020/fact-check-state-of-the-union-02-04
       headers:
@@ -381,9 +381,9 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
-  - description: Alpha host alpha-preview.nytimes.com routes to oak live blogs
+          x-nyt-backend: ^alpha_preview$
+          x-nyt-route: ^vi-story$
+  - description: Alpha host alpha-preview.nytimes.com routes to live blogs
     request:
       path: /live/2019/nyc-gay-pride-parade/pride-closing-ceremony
       headers:
@@ -395,8 +395,8 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^alpha_preview$
+          x-nyt-route: ^vi-story$
   - description: Alpha host alpha-preview.dev.nytimes.com should not open to public
     request:
       path: /
