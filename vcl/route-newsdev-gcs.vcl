@@ -1,5 +1,5 @@
 sub recv_route_newsdev_gcs {
-  if (     req.url ~ "^/interactive/projects/"
+  if ((req.url ~ "^/interactive/projects/" && req.url !~ "^/interactive/projects/well/healthy-recipes/recipes/")
         || req.url ~ "^/roomfordebate"
         || req.url ~ "^/fashion/runway"
         || req.url ~ "^/editorial-standards"

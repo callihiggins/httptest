@@ -152,7 +152,6 @@ tests:
           x-nyt-route: ^legacy-gke$
           set-cookie: (?:^|,)nyt-gdpr=(0|1);
           x-gdpr: ^[0-1]$
-  
   - description: Test beta620 has been moved to legacy backend
     request:
       scheme: http
@@ -163,6 +162,19 @@ tests:
       env:
         TEST_ENV: dev|stg|prd
         TEST_HOST: "beta620.nytimes.com"
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^www_legacy_gke$
+          x-nyt-route: ^legacy-gke$
+  - description: Test Well recipe interactive has been moved to legacy backend
+    request:
+      path: /interactive/projects/well/healthy-recipes/recipes/zucchini-pasta
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
     response:
       headers:
         patterns:
