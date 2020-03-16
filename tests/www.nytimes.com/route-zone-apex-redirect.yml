@@ -15,7 +15,7 @@ tests:
           location: ^https://www\.nytimes\.com/$
       statusCodes:
         - 301
-  - description: "Test that zone apex does not redirect to www.nytimes.com for Apple verification"
+  - description: "Test that zone apex redirects to www.nytimes.com even for Apple verification"
     request:
       path: /.well-known/apple-developer-domain-association.txt
       headers:
@@ -25,6 +25,10 @@ tests:
       env:
         TEST_ENV: prd
     response:
+      headers:
+        patterns:
+          x-api-version: ^F-0$
+          location: ^https://www\.nytimes\.com/\.well-known/apple-developer-domain-association\.txt$
       statusCodes:
-        - 200
+        - 301
 
