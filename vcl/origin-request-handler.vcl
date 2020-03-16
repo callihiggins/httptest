@@ -33,11 +33,8 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-elections-bucket;
   unset bereq.http.var-nyt-env;
   unset bereq.http.var-nyt-error-retry;
-  unset bereq.http.var-nyt-force-gdpr;
   unset bereq.http.var-nyt-force-pass;
   unset bereq.http.var-nyt-geoip-ip;
-  unset bereq.http.var-nyt-has-gdpr;
-  unset bereq.http.var-nyt-has-nyt-t;
   unset bereq.http.var-nyt-ismagnolia;
   unset bereq.http.var-nyt-is-shielded;
   unset bereq.http.var-nyt-redirect-reason;

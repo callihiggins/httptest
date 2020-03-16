@@ -39,9 +39,7 @@
 sub recv_gdpr {
 
     # initialize vars
-    set req.http.var-nyt-has-gdpr = "false";
-    set req.http.var-nyt-force-gdpr = "false";
-    set req.http.var-nyt-has-nyt-t = "false";
+    declare local var.nyt-has-gdpr BOOL;
 
     # If the incoming request had an `nyt-t` cookie with a valid value ("ok"|"out")
     # then we capture that value in req.http.var-cookie-nyt-t and mark the request
@@ -50,7 +48,6 @@ sub recv_gdpr {
         && req.http.Cookie:NYT-T
         && (req.http.Cookie:NYT-T == "ok" || req.http.Cookie:NYT-T == "out")
     ) {
-        set req.http.var-nyt-has-nyt-t = "true";
         set req.http.var-cookie-nyt-t = req.http.Cookie:NYT-T;
     }
 
@@ -61,18 +58,20 @@ sub recv_gdpr {
         && req.http.Cookie:nyt-gdpr
         && (req.http.Cookie:nyt-gdpr == "0" || req.http.Cookie:nyt-gdpr == "1")
     ) {
-        set req.http.var-nyt-has-gdpr = "true";
+        set var.nyt-has-gdpr = true;
         set req.http.var-cookie-nyt-gdpr = req.http.Cookie:nyt-gdpr;
     }
 
     # temporarily setting the cookie in every request
     # for routes that have send-gdpr == "true"
     # TODO: remove at some future point
-    set req.http.var-nyt-has-gdpr = "false";
+    # This logic forces the cookie to be set always. Not sure why, but
+    # since we are just renaming vars, going with the flow on this one.
+    set var.nyt-has-gdpr = false;
 
     # If the request didn't have an `nyt-gdpr` cookie present, then we do geo detection
     # and match against the country list to determine whether headers should be sent back
-    if (req.http.var-nyt-has-gdpr == "false") {
+    if (!var.nyt-has-gdpr) {
         # set a GDPR value for folks in the country list (note that this list is EEA + Barbados)
         if (client.geo.country_code ~ "AT|BB|BE|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|NL|PL|PT|RO|SK|SI|ES|SE|GB|IS|LI|NO|CH") {
             set req.http.var-cookie-nyt-gdpr = "1";
@@ -88,7 +87,6 @@ sub recv_gdpr {
     declare local var.gdpr_qparam STRING;
     set var.gdpr_qparam = subfield(req.url.qs, "gdpr", "&");
     if (var.gdpr_qparam == "0" || var.gdpr_qparam == "1") {
-        set req.http.var-nyt-force-gdpr = "true";
         set req.http.var-cookie-nyt-gdpr = var.gdpr_qparam;
     }
 }
@@ -106,9 +104,7 @@ sub deliver_gdpr {
 
     # this will either set a new cookie
     # or extend the existing one to 6 hours
-    if (req.http.var-nyt-force-gdpr == "true"
-        || (req.http.var-nyt-send-gdpr == "true" && req.http.var-nyt-has-gdpr == "false")
-    ) {
+    if (req.http.var-cookie-nyt-gdpr || req.http.var-nyt-send-gdpr == "true") {
         add resp.http.Set-Cookie =
             "nyt-gdpr=" + req.http.var-cookie-nyt-gdpr + "; "+
             "Expires=" + time.add(now, 6h) + "; "+
@@ -224,6 +220,7 @@ sub recv_route_svc_amp_gdpr {
 sub error_918_amp_gdpr {
     # JSON GDPR response
     if (obj.status == 918) {
+        declare local var.amp-gdpr STRING;
         set obj.status = 200;
         set obj.http.Content-Type = "application/json; charset=utf-8";
         if (req.http.origin ~ "\.(nytimes\.com|nyt\.net|nyt\.com|google\.com)$") {
@@ -239,20 +236,18 @@ sub error_918_amp_gdpr {
         }
 
         if (req.http.var-cookie-nyt-gdpr == "1") {
-            if (req.http.var-nyt-has-nyt-t == "false") {
-                set req.http.var-amp-gdpr = "true";
-            } else if (req.http.var-nyt-has-nyt-t == "true" && req.http.var-cookie-nyt-t == "out") {
-                set req.http.var-amp-gdpr = "true";
+            if (!req.http.var-cookie-nyt-t || req.http.var-cookie-nyt-t == "out") {
+                set var.amp-gdpr = "true";
             } else {
-                set req.http.var-amp-gdpr = "false";
+                set var.amp-gdpr = "false";
             }
         } else {
-            set req.http.var-amp-gdpr = "false";
+            set var.amp-gdpr = "false";
         }
-        set obj.http.x-nyt-amp-consent = req.http.var-amp-gdpr;
+        set obj.http.x-nyt-amp-consent = var.amp-gdpr;
 
         synthetic
-            {"{"promptIfUnknown":"} + req.http.var-amp-gdpr + {"}"};
+            {"{"promptIfUnknown":"} + var.amp-gdpr + {"}"};
         return(deliver);
     }
 }
