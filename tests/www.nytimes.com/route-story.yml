@@ -664,7 +664,7 @@ tests:
         - 200
   - description: Set cookie with value of UK for United Kingdom users on prd.
     request:
-      path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=185.112.249.184
+      path: /2018/05/21/opinion/supreme-court-arbitration-forced.html?ip-override=139.59.169.246
       headers:
         x-nyt-miss: "1"
     conditions:
