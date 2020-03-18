@@ -3,6 +3,10 @@ sub recv_route_sitemap {
     set req.http.x-nyt-route = "new_sitemap";
     set req.http.x-nyt-backend = "gcs_origin";
     set req.url = querystring.remove(req.url);
+  } else if (req.url.path ~ "^/sitemaps/sitemap_news/") {
+    set req.http.x-nyt-route = "sitemap";
+    set req.http.x-nyt-backend = "sitemap";
+    error 410;
   } else if (req.url.path ~ "^/sitemaps/") {
     set req.http.x-nyt-route = "sitemap";
     set req.http.x-nyt-backend = "sitemap";

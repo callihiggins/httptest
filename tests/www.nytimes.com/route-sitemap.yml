@@ -14,8 +14,8 @@ tests:
           x-nyt-backend: ^sitemap$
           x-nyt-route: ^sitemap$
       statusCodes:
-        - 301
-  - description: Test sitemap, migrated from netscaler
+        - 410
+  - description: Test /sitemaps/sitemap_news/sitemap.xml.gz, phase out MARS
     request:
       path: /sitemaps/sitemap_news/sitemap.xml.gz
       headers:
@@ -29,7 +29,7 @@ tests:
           x-nyt-backend: ^sitemap$
           x-nyt-route: ^sitemap$
       statusCodes:
-        - 200
+        - 410
   - description: Test new sitemap
     request:
       path: /sitemaps/new/news.xml.gz
