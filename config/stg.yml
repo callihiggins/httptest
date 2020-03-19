@@ -429,7 +429,7 @@ backends:
     first_byte_timeout: "5000"
     ssl_cert_hostname: "alpha-test.stg.nyt.net"
     ssl_sni_hostname: "alpha-test.stg.nyt.net"
-    shield: "jfk-ny-us"
+    shield: "lga-ny-us"
     healthcheck:
       host: "alpha-test.stg.nyt.net"
       path: "/.healthcheck"
@@ -449,7 +449,7 @@ backends:
     first_byte_timeout: "5000"
     ssl_cert_hostname: "alpha-test.stg.nyt.net"
     ssl_sni_hostname: "alpha-test.stg.nyt.net"
-    shield: "jfk-ny-us"
+    shield: "lga-ny-us"
     healthcheck:
       host: "load-test-east.vi.dev.nyt.net"
       path: "/.healthcheck"
@@ -484,7 +484,7 @@ backends:
     first_byte_timeout: "5000"
     ssl_cert_hostname: "alpha-dev.dev.nyt.net"
     ssl_sni_hostname: "alpha-dev.dev.nyt.net"
-    shield: "jfk-ny-us"
+    shield: "lga-ny-us"
     healthcheck:
       host: "alpha-dev.dev.nyt.net"
       path: "/.healthcheck"

@@ -19,8 +19,8 @@ sub recv_bot_detection_reset_shield {
         # code does not support preflighting
         # Note: req.restarts <= 1 instead of == 0
         if (req.backend == F_projectvi_fe && req.restarts <= 1) {
-            if (server.identity !~ "-JFK$" && req.http.Fastly-FF !~ "-JFK") {
-                set req.backend = ssl_shield_jfk_ny_us;
+            if (server.identity !~ "-LGA$" && req.http.Fastly-FF !~ "-LGA") {
+                set req.backend = ssl_shield_lga_ny_us;
             }
             if (!req.backend.healthy) {
                 # the shield datacenter is broken so dont go to it
