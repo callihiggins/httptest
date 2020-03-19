@@ -1,0 +1,19 @@
+/*
+ * These subs should handle error pages
+ */
+
+# Synth static 50x error page to keep this HTML out of the other files
+sub render_50x_page {
+    # Note: Left a space between '":' and '"}' because after transpile the template, terraform linter complicates
+    synthetic {" {{file.Read "static/500s.html" | strings.ReplaceAll "\":" "\" :" | strings.ReplaceAll "\"}" "\" }" }} "};
+}
+
+# custom 404 page for gcs backends
+sub deliver_custom_404_error {
+  # If a GCS backend is private, the 404 page cannot be configured
+  # and is xml, so load a custom 404 by setting a custom 404 page path
+  # and then restarting the request.
+  set req.http.referer = if(req.http.Fastly-SSL,"https","http") + "://" + req.http.host + req.url;
+  set req.url = req.http.var-nyt-404-url;
+  restart;
+}

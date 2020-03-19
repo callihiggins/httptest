@@ -15,12 +15,13 @@ pipeline:
   # dev specific domain templating (dev + sandboxes)
   # someday if .sbx.nytimes.com is not Vi alpha service only we will iterate
   dev-template:
-    image: hairyhenderson/gomplate:v2.3.0
+    image: hairyhenderson/gomplate:v2.5.0-alpine
     environment:
       - env=dev
     commands:
-      - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d env_config=config/dev.yml -d shared_config=config/shared.yml
-      - /gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d env_config=config/dev.yml -d shared_config=config/shared.yml
+      - gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d env_config=config/dev.yml -d shared_config=config/shared.yml
+      - gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d env_config=config/dev.yml -d shared_config=config/shared.yml
+      - gomplate -f vcl/error-pages.vcl.tmpl -o vcl/error-pages.vcl
     when:
       event: push
       branch:
@@ -96,7 +97,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: push
       branch:
@@ -151,7 +152,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: push
       branch:
@@ -261,7 +262,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: push
       branch:
@@ -316,7 +317,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: push
       branch:
@@ -371,7 +372,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: push
       branch:
@@ -426,7 +427,7 @@ pipeline:
 
       - source: botify_s3_secret_key_dev
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: push
       branch:
@@ -465,12 +466,13 @@ pipeline:
         exclude: [ sandbox0*, master ]
 
   stg-template:
-    image: hairyhenderson/gomplate:v2.3.0
+    image: hairyhenderson/gomplate:v2.5.0-alpine
     environment:
       - env=stg
     commands:
-      - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d env_config=config/stg.yml -d shared_config=config/shared.yml
-      - /gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d env_config=config/stg.yml -d shared_config=config/shared.yml
+      - gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d env_config=config/stg.yml -d shared_config=config/shared.yml
+      - gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d env_config=config/stg.yml -d shared_config=config/shared.yml
+      - gomplate -f vcl/error-pages.vcl.tmpl -o vcl/error-pages.vcl
     when:
       event: push
       branch: master
@@ -507,7 +509,7 @@ pipeline:
 
       - source: botify_s3_secret_key_stg
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: push
       branch: master
@@ -554,12 +556,13 @@ pipeline:
 
   # -----
   prd-template:
-    image: hairyhenderson/gomplate:v2.3.0
+    image: hairyhenderson/gomplate:v2.5.0-alpine
     environment:
       - env=prd
     commands:
-      - /gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d env_config=config/prd.yml -d shared_config=config/shared.yml
-      - /gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d env_config=config/prd.yml -d shared_config=config/shared.yml
+      - gomplate -f terraform/fastly.tf.tmpl -o terraform/fastly.tf -d env_config=config/prd.yml -d shared_config=config/shared.yml
+      - gomplate -f vcl/route-backend-health-report.vcl.tmpl -o vcl/route-backend-health-report.vcl -d env_config=config/prd.yml -d shared_config=config/shared.yml
+      - gomplate -f vcl/error-pages.vcl.tmpl -o vcl/error-pages.vcl
     when:
       event: tag
       branch: [ master, hotfix* ]
@@ -595,7 +598,7 @@ pipeline:
 
       - source: botify_s3_secret_key_prd
         target: tf_var_botify_s3_secret_key
-      
+
     when:
       event: tag
       branch: [ master, hotfix* ]
