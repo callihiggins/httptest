@@ -87,7 +87,7 @@ sub datadome_set_origin_header {
         unset bereq.http.x-datadome-clientid;
 
         # remove NYT debugging vars, will cause problems when going to a shield
-        unset bereq.http.x-datadome-restart-reason;
+        unset bereq.http.x-nyt-restart-reason;
         unset bereq.http.x-datadome-timer;
         unset bereq.http.datadome-response;
     }
@@ -96,10 +96,6 @@ sub datadome_set_origin_header {
 sub datadome_vcl_recv {
   # Configure the regular expression below to match URLs that
   # should be checked by DataDome
-  if (req.restarts == 0) {
-    set req.http.x-datadome-restart-reason = "DD";
-  }
-
   if (!req.http.fastly-ff && req.restarts == 0 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
     set req.http.destination = "datadome";
     if (!req.http.x-datadome-timer) {
@@ -107,7 +103,7 @@ sub datadome_vcl_recv {
     }
     set req.http.x-datadome-timer = req.http.x-datadome-timer ",VS0";
   } else {
-    set req.http.destination = "origin";
+    unset req.http.destination;
   }
 
   if (req.http.destination == "datadome") {
@@ -122,6 +118,7 @@ sub datadome_vcl_recv {
       set req.method = req.http.x-original-method;
       # After a restart, clustering is disabled. This re-enables it.
       set req.http.fastly-force-shield = "1";
+      unset req.http.x-original-method;
     }
   }
 
@@ -148,7 +145,7 @@ sub datadome_vcl_fetch {
 
     # check that it is real ApiServer response
     if (var.status != beresp.http.x-datadomeresponse) {
-      set req.http.x-datadome-restart-reason = if(req.http.x-datadome-restart-reason, req.http.x-datadome-restart-reason + "_resp_error ", "DD_resp_error ");
+      set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " DD_resp_error", "DD_resp_error");
       restart;
     }
     unset beresp.http.x-datadomeresponse;
@@ -214,7 +211,7 @@ sub datadome_vcl_fetch {
 
     # is it passed? If so just restart it!
     if (beresp.status == 200) {
-      set req.http.x-datadome-restart-reason = if(req.http.x-datadome-restart-reason, req.http.x-datadome-restart-reason + "_check_passed ", "DD_check_passed ");
+      set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " DD_check_passed", "DD_check_passed");
       restart;
     }
 
@@ -257,7 +254,7 @@ sub datadome_vcl_deliver {
         resp.status != 200 &&
         resp.status != 403) {
       set req.http.datadome-response = resp.status;
-      set req.http.x-datadome-restart-reason = if(req.http.x-datadome-restart-reason, req.http.x-datadome-restart-reason + "_error_force_failopen ", "DD_error_force_failopen ");
+      set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " DD_error_failopen", "DD_error_failopen");
       restart;
     }
   } else {
