@@ -102,14 +102,6 @@ sub recv_initialize_transaction_state {
     if (req.http.x-nyt-nyhq-access == "1" && req.http.storylines-recirc-test == "true") {
       set req.http.var-is-storylines-recirc-test-enabled = "true";
     }
-    
-    #Switch to turn on/off live blog routing 
-    set req.http.var-is-live-blog-amp-vi-routing-enabled = "true";
-    # For debugging purposes, if the request is internal and we
-    # detect a test header, then turn on the switch.
-    if (req.http.x-nyt-nyhq-access == "1" && req.http.live-blog-amp-vi-routing == "true") {
-      set req.http.var-is-live-blog-amp-vi-routing-enabled = "true";
-    }
 
     # If the request is internal, allow for a client to choose a specific
     # backend for a request (only works in route-switchboard)

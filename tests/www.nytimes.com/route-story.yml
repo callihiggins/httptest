@@ -838,7 +838,6 @@ tests:
       path: /live/2020/
       headers:
         x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: "true"
     conditions:
       env:
         TEST_ENV: dev|stg|prd
@@ -849,45 +848,12 @@ tests:
           x-nyt-backend: ^projectvi_fe$
       statusCodes:
         - 404
-  - description: Test gcs 404 cache for amp live blog
-    request:
-      path: /live/2020/page-that-does-not-exist.amp.html
-      headers:
-        x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: "true"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-backend: ^gcs_origin$
-          x-nyt-route: ^newsdev-gcs$
-          fastly-restarts: ^1$
-          cache-control: .+
-      statusCodes:
-        - 404
-  - description: Check live blog post on Vi
-    request:
-      method: GET
-      path: /live/2020/fact-check-state-of-the-union-02-04#following-naftas-adoption-our-nation-lost-one-in-four-manufacturing-jobs
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^vi-story$
-          x-nyt-backend: ^projectvi_fe$
-  - description: Route live blogs to Vi when amp and vi are enabled
+  - description: Route live blogs
     request:
       method: GET
       path: /live/2020/trump-impeachment-01-16
       headers:
         x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: "true"
     conditions:
       env:
         TEST_ENV: dev|stg
@@ -896,29 +862,12 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_fe$
-  - description: Route live blogs to amp url when amp and vi are enabled
+  - description: Route live blogs to amp when they end in .amp.html
     request:
       method: GET
       path: /live/2020/fact-check-state-of-the-union-02-04.amp.html
       headers:
         x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: "true"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
-          debug-var-nyt-force-pass: false
-  - description: Check live blogs post on AMP
-    request:
-      method: GET
-      path: /live/2020/fact-check-state-of-the-union-02-04.amp.html#following-naftas-adoption-our-nation-lost-one-in-four-manufacturing-jobs
-      headers:
-        x-nyt-miss: "1"
-        var-is-live-blog-amp-vi-routing-enabled: true
     conditions:
       env:
         TEST_ENV: dev|stg|prd

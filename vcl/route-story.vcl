@@ -44,7 +44,7 @@ sub recv_route_story {
           || req.url ~ "^/article/" // dateless urls
           || req.url ~ "^/(aponline|reuters)/" // wire sources
           || req.url ~ "^/blog/" // all blogposts
-          || (req.url ~ "^/live/20(19|[2-9][0-9])" && req.http.var-is-live-blog-amp-vi-routing-enabled == "true")
+          || req.url ~ "^/live/20(19|[2-9][0-9])" // oak live blogs
           || var.internationalized_url
           ) && req.url.path !~ "\.amp\.html$"
       ) {
@@ -86,7 +86,7 @@ sub recv_route_story {
         if ((  req.url ~ "^\/(?:18[5-9]\d|19\d{2}|20\d{2})"
             || req.url ~ "^\/(?:aponline\/|reuters\/|blog\/)"
             || req.url ~ "^/article"
-            || (req.url ~ "^/live/20(19|[2-9][0-9])" && req.http.var-is-live-blog-amp-vi-routing-enabled == "true")
+            || req.url ~ "^/live/20(19|[2-9][0-9])"
             || var.internationalized_url
             || var.vi_explicit_opt_in
           )
@@ -141,25 +141,18 @@ sub recv_route_amp {
     set req.url = querystring.filter_except(req.url, "0p19G" + querystring.filtersep() + "isSwgTest");
     if (req.http.User-Agent ~ "DU-apple-news" && req.url ~ "^/apple-news/") {
       set req.http.var-nyt-force-pass = "true";
-    } else if ((req.http.User-Agent ~ "DU-amp-indexer" && req.url ~ "\.amp\.html$") || req.url ~ "^/live/20(19|[2-9][0-9])") {
-      // don't redirect AMP HTML requests coming from DU-amp-indexer user agent or for live blog.
+    } else if (req.http.User-Agent ~ "DU-amp-indexer" && req.url ~ "\.amp\.html$") {
+      // don't redirect AMP HTML requests coming from DU-amp-indexer user agent
     } else if (client.ip !~ googlebot && client.ip !~ botify && client.ip !~ bingbot && req.http.x-nyt-nyhq-access != "1" && req.http.x-nyt-staging-only-access != "1" && req.http.User-Agent != "NYT-AmpValidatorBot (like Gecko)") {
       // in supporting google's live-list fix, no longer bypass the fastly cache https://jira.nyt.net/browse/STORY-5114
       declare local var.amp_redirect_target STRING;
       set var.amp_redirect_target = "https://" + req.http.host + regsub(req.url, "\.amp\.html","\.html");
+      // Live Blog canonicals do not have .html at the end
+      if (req.url ~ "^/live/20(19|[2-9][0-9])") {
+        set var.amp_redirect_target = "https://" + req.http.host + regsub(req.url, "\.amp\.html","");
+      }
       error 755 var.amp_redirect_target;
     }
-  }
-
-  // Route live blog traffic to amp when new routing flag is false
-  if ((req.http.var-is-live-blog-amp-vi-routing-enabled == "false")
-      && (req.http.var-nyt-canonical-www-host == "true"
-      || req.http.host ~ "^alpha")
-      && (req.url ~ "^/live/20(19|[2-9][0-9])")
-  ) {
-    set req.http.x-nyt-route = "amp";
-    set req.http.x-nyt-backend = "amp";
-    set req.url = querystring.filter_except(req.url, "nytapp");
   }
 }
 
@@ -170,24 +163,6 @@ sub miss_pass_route_amp {
       } else {
           set bereq.http.host = "amp-dot-nyt-wfvi-prd.appspot.com";
       }
-  }
-}
-
-sub deliver_route_story_live_error {
-
-  if (req.http.x-nyt-route == "amp") {
-    if (req.url ~ "^/live/20(19|[2-9][0-9])") {
-      # If the gcs object returns a 404, serve a custom 404 error page
-      if (resp.status == 404 && req.restarts < 1) {
-        set req.http.var-nyt-404-url = "/interactive/projects/404.html";
-        call deliver_custom_404_error;
-      }
-      # Since the custom 404 page is successfully found,
-      # restore the original status code
-      if (req.http.var-nyt-404-url && req.restarts > 0) {
-        set resp.status = 404;
-      }
-    } 
   }
 }
 

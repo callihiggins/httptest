@@ -592,7 +592,6 @@ sub vcl_deliver {
   call deliver_route_newsgraphics_gcs_error;
   call deliver_route_vi_assets_access_control;
   call deliver_route_alpha;
-  call deliver_route_story_live_error;
 
   # logic executed only on the edge in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {
