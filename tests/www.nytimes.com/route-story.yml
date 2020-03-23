@@ -1019,3 +1019,43 @@ tests:
         patterns:
           x-nyt-route: ^vi-story$
           x-nyt-backend: ^projectvi_fe$
+  - description: Header limit check, if this 503s remove some req.http.* headers in VCL
+    request:
+      path: /2020/03/20/business/stock-market-today-coronavirus-test.html
+      headers:
+        # NYT max from client is 24 based on what we allocate already in VCL
+        x-nyt-miss: "1"
+        header2: "here"
+        header3: "here"
+        header4: "here"
+        header5: "here"
+        header6: "here"
+        header7: "here"
+        header8: "here"
+        header9: "here"
+        header10: "here"
+        header11: "here"
+        header12: "here"
+        header13: "here"
+        header14: "here"
+        header15: "here"
+        header16: "here"
+        header17: "here"
+        header18: "here"
+        header19: "here"
+        header20: "here"
+        header21: "here"
+        header22: "here"
+        header23: "here"
+        header24: "here"
+        # Fastly max is 28
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^projectvi_fe$
+          x-nyt-route: ^vi-story$
+      statusCodes:
+        - 404
