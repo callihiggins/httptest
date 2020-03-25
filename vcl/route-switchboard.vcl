@@ -26,7 +26,6 @@ sub recv_route_switchboard {
         set req.url = querystring.remove(req.url);
         }
     }
-    set req.backend = F_switchboard_origin;
 }
 
 sub miss_pass_route_switchboard {

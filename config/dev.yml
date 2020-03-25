@@ -885,7 +885,7 @@ backends:
       timeout: "5000"
       window: "5"
 
-  - name: "switchboard_origin"
+  - name: "switchboard"
     address: "switchboard.dev.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"

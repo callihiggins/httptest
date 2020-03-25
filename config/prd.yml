@@ -883,7 +883,7 @@ backends:
       timeout: "10000"
       window: "5"
 
-  - name: "switchboard_origin"
+  - name: "switchboard"
     address: "switchboard.prd.nyt.net"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
