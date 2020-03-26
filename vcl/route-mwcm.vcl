@@ -4,6 +4,7 @@ sub recv_route_mwcm {
 
         if (    req.url ~ "^/subscription"  ||
                 req.url ~ "^/marketing(/)?" ||
+                req.url ~ "^/initiative($|/|\?)" ||
                 req.url == "/services/mobile" ||
                 req.url ~ "^/services/mobile/"
             ) {

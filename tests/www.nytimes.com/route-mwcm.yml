@@ -1316,3 +1316,17 @@ tests:
         patterns:
           x-nyt-route: ^mwcm-resilient$
           x-nyt-backend: ^mwcm_resilient$
+  - description: "WCM /initiative/*: tests mwcm route and
+      mwcm backend"
+    request:
+      path: /initiative/highschoolaccess
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
