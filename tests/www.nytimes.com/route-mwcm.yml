@@ -1330,3 +1330,17 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
+  - description: "WCM /initiative/*: tests mwcm-preview route and
+      mwcm-preview backend"
+    request:
+      path: /initiative/highschoolaccess?pre_prod=true
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-preview$
+          x-nyt-backend: ^mwcm_preview$

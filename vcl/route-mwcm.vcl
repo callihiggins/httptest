@@ -72,7 +72,8 @@ sub recv_route_mwcm {
             if (  req.http.var-nyt-cmots-s3-fallback != "true" &&
                     (   req.url == "/subscription" ||
                         req.url ~ "^/subscription(/|.html|\?)" ||
-                        req.url ~ "^/marketing/(surveys|gdpr|moco|mpc|account)(/)?"
+                        req.url ~ "^/marketing/(surveys|gdpr|moco|mpc|account)(/)?" ||
+                        req.url ~ "^/initiative"
                     )
                 ) {
                 set req.http.var-nyt-ismagnolia = "true";
