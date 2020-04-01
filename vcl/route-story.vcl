@@ -6,7 +6,7 @@ sub recv_route_story {
       declare local var.internationalized_url BOOL;
       if (   req.url ~ "^/(a[fryz]|b[egns]|c[aksy]|d[ae]|e[lnotu]|f[abiory]|g[alnux]|h[eiruy]|i[dst]|j[av]|k[akmnou]|l[aitv]|m[gklnrst]|n[beln]|p[alst]|qu|r[mou]|s[aekloqrvwy]|t[aeghlrt]|u[krz]|vi|xh|yi|zh|zh-(CN|HK|TW|hans|hant)|zu)/"
           || req.url.path ~ "^/es/.*\.html$"
-          || (  req.url.path ~ "^/es/$"
+          || (  req.url.path ~ "^/es/?$"
                   || req.url.path ~ "^/es/section/"
                   || req.url.path ~ "^/es/series/"
                   || req.url.path ~ "^/es/spotlight/"

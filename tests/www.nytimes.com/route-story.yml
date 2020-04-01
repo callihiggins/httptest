@@ -719,6 +719,22 @@ tests:
           x-nyt-backend: ^projectvi_fe$
       statusCodes:
         - 200
+  - description: Vi Internationalized Homepage /es
+    request:
+      method: GET
+      path: /es
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          x-nyt-backend: ^projectvi_fe$
+      statusCodes:
+        - 200
 
   - description: Vi internationalized URL /es with query params
     request:
