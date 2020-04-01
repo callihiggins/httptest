@@ -119,7 +119,7 @@ tests:
         - 200
   - description: Room for debate homepage
     request:
-      path: /roomfordebate
+      path: /roomfordebate/
       headers:
         x-nyt-miss: "1"
         Host: ${TEST_HOST}
