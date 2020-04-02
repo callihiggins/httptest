@@ -17,6 +17,8 @@ sub recv_route_switchboard {
     || (req.url.path ~ "^/modernlovepodcast" || req.url.path ~ "^/modern-love")
     || req.url.path ~ "^/podcasts"
     || (req.url.path ~ "^/thedispatch" || req.url.path ~ "^/the-dispatch" || req.url.path ~ "^/column/the-dispatch" )
+    || (req.url.path ~ "^/sugarcalling" || req.url.path ~ "^/sugar-calling")
+    || (req.url.path ~ "^/rabbithole" || req.url.path ~ "^/rabbit-hole")
     ) {
     set req.http.x-nyt-route = "switchboard";
     set req.http.x-nyt-backend = "switchboard";
