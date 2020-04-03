@@ -52,6 +52,9 @@ sub recv_route_mwcm {
                     set req.url = querystring.regfilter_except(req.url, "(?i)^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override|us|st|mktgEmbedSrc)$");
                 }
             } else {
+                    set req.url = querystring.clean(req.url);
+                    set req.url = querystring.regfilter(req.url, "fbclid");
+                    set req.url = querystring.sort(req.url);
                     set req.http.x-nyt-route = "mwcm-params";
             }
 
