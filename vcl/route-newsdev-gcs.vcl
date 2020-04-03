@@ -34,6 +34,10 @@ sub miss_pass_route_newsdev_gcs {
   if (req.http.x-nyt-route == "newsdev-gcs") {
     unset bereq.http.cookie;
 
+    if (req.url ~"/$") {
+      set req.url = regsub(req.url, "/$", "");
+    }
+
     if(!req.backend.is_shield) {
         set bereq.url = regsub(bereq.url, "^/images/", "/");
         call miss_pass_set_bucket_auth_headers;
