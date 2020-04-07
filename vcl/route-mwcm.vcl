@@ -44,12 +44,13 @@ sub recv_route_mwcm {
                     req.url !~ "^/subscription/exo(/)?"
                 ) {
 
+                # note "subscriptions" (plural) was the old (pre-Magnolia) path
                 if (req.url == "/subscriptions" || req.url ~ "^/subscriptions/") {
                       # excludes query string parameters except "ptr"
                       set req.url = querystring.filter_except(req.url, "ptr");
                 } else {
-                  # excludes "exclude_optimizely", "exclude_jsonkidd", "exclude_abra" qs parameters
-                    set req.url = querystring.regfilter_except(req.url, "(?i)^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override|us|st|mktgEmbedSrc)$");
+                  # this is for new path, excludes "exclude_optimizely", "exclude_jsonkidd" ... qs parameters
+                    set req.url = querystring.regfilter_except(req.url, "(?i)^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override|us|st|mktgEmbedSrc|referralID)$");
                 }
             } else {
                     set req.url = querystring.clean(req.url);

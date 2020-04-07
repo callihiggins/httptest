@@ -1245,6 +1245,21 @@ tests:
           x-nyt-backend: ^mwcm$
           x-nyt-user-status: anon
           x-nyt-final-url: /subscription/hd/1041\.html\?mktgEmbedSrc=gateway
+ - description: 'WCM subscription: tests "referralID" qs parameter when "referralID=31415"'
+    request:
+      path: /subscription/hd/1041.html?referralID=31415
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+          x-nyt-user-status: sub
+          x-nyt-final-url: /subscription/hd/1041\.html\?referralID=31415
   - description: "WCM subscription: tests mwcm-resilient route and mwcm_resilient backend"
     request:
       path: /subscription/tests/fastly/test-50x
