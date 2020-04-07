@@ -1245,7 +1245,7 @@ tests:
           x-nyt-backend: ^mwcm$
           x-nyt-user-status: anon
           x-nyt-final-url: /subscription/hd/1041\.html\?mktgEmbedSrc=gateway
- - description: 'WCM subscription: tests "referralID" qs parameter when "referralID=31415"'
+  - description: 'WCM subscription: tests "referralID" qs parameter when "referralID=31415"'
     request:
       path: /subscription/hd/1041.html?referralID=31415
       headers:
