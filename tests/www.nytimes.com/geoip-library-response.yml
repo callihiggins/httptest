@@ -14,7 +14,6 @@ tests:
           x-nyt-continent: ^NA$
           x-nyt-country: ^US$
           x-nyt-region: ^NY$
-          age: .+
           x-api-version: .+
           x-cache: .+
           x-nyt-route: .+
@@ -30,4 +29,3 @@ tests:
           - x-servername
           - x-servername2
           - x-varnish
-
