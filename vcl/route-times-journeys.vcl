@@ -25,7 +25,11 @@ sub miss_pass_route_times_journeys {
         } else {
             set bereq.url = regsub(req.url, "^/times-journeys", "");
         }
-        set bereq.http.host = "timesjourneys.nytimes.com";
+        if (req.http.var-nyt-env != "prd"){
+            set bereq.http.host = "nytimes-journeys-develop.go-vip.net";
+        } else {
+            set bereq.http.host = "timesjourneys.nytimes.com";
+        }
     }
 
     if (req.http.x-nyt-route == "times-journeys-students") {
@@ -34,7 +38,12 @@ sub miss_pass_route_times_journeys {
         } else {
             set bereq.url = regsub(req.url, "^/times-journeys/students", "");
         }
-        set bereq.http.host = "timesjourneysstudents.nytimes.com";
+        if (req.http.var-nyt-env != "prd"){
+            set bereq.http.host = "nytimes-journeys-develop.go-vip.net";
+        } else {
+            set bereq.http.host = "timesjourneysstudents.nytimes.com";
+        }
+        
     }
 
     // Both of the origins are user agnostic. The wordpress hosting also has the default 8k header size limit
