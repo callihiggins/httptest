@@ -1,0 +1,63 @@
+---
+# .appcatalog.yml project metadata
+#
+# Copy this template into your application repository's root directory as
+# .appcatalog.yml and fill in the fields as described below.
+
+# This is a name of your application that will be used as unique identifier.
+# (required)
+# Example
+# appName: Helix
+appName: Fastly WWW
+
+# PagerDuty email of on-call team for this application
+# (optional)
+# Example
+# oncallEmail: messaging@nytimes.pagerduty.com
+oncallEmail: delivery-sre@nytimes.pagerduty.com
+
+# Where people can discuss this application?
+# (required)
+# Items by property name:
+#  .*:
+#    slack: List of public Slack channels where people can ask questions regarding application
+#           (required)
+#    googleGroup: List of Google groups where people can reach developers with questions about application
+#                 (required)
+# Example
+# contacts:
+#  slack:
+#  - publishing-helix
+#  googleGroup:
+#  - publishing-helix@nytimes.com
+contacts:
+  slack:
+    - fastly
+  googleGroup:
+    - deliveryengineering@nytimes.com
+
+# List of Github repositories that contain parts of application
+# (required)
+# Example
+# githubRepos:
+#  - "https://github.com/nytm/messaging-guide"
+#  - "https://github.com/nytm/messaging-helix-business-api"
+githubRepos:
+  - "https://github.com/nytm/fastly-www"
+  - "https://github.com/nytimes/fastly-shared-code"
+
+# List of links to documentation that can help people to understand how your application works.
+# (required)
+# Example
+# documentationLinks:
+#  - "https://helix.tech.nyt.net/helix/overview/"
+documentationLinks:
+  - "https://docs.dv.nyt.net/fastly/"
+
+# List of links to runbooks for you application
+# (optional)
+# Example
+# runbookLinks:
+#  - "https://helix.tech.nyt.net/helix/overview/"
+runbookLinks:
+  - "https://docs.dv.nyt.net/fastly/guides/runbook/"
