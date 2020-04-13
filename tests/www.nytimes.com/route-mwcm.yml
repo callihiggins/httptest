@@ -1258,7 +1258,7 @@ tests:
         patterns:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          x-nyt-user-status: sub
+          x-nyt-user-status: anon
           x-nyt-final-url: /subscription/hd/1041\.html\?referralID=31415
   - description: "WCM subscription: tests mwcm-resilient route and mwcm_resilient backend"
     request:
