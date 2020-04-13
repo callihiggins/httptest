@@ -9,6 +9,10 @@ sub recv_route_newsdev_gcs {
     set req.http.var-nyt-send-gdpr = "true";
     set req.url = querystring.remove(req.url);
 
+    if (req.url ~ "^/roomfordebate/$") {
+      set req.url = regsub(req.url, "/$", "");
+    }
+
     # Redirect to https before updating req.http.host header
     if ( !req.http.Fastly-SSL ) {
       call redirect_to_https;
@@ -33,10 +37,6 @@ sub miss_pass_route_newsdev_gcs {
 
   if (req.http.x-nyt-route == "newsdev-gcs") {
     unset bereq.http.cookie;
-
-    if (req.url ~"/$") {
-      set req.url = regsub(req.url, "/$", "");
-    }
 
     if(!req.backend.is_shield) {
         set bereq.url = regsub(bereq.url, "^/images/", "/");

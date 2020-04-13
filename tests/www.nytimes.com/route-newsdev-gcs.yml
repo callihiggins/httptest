@@ -231,8 +231,6 @@ tests:
           x-nyt-backend: ^gcs_origin$
       statusCodes:
         - 200
-
-tests:
   - description: Test gcs 404 cache
     request:
       path: /interactive/projects/page-that-does-not-exist
