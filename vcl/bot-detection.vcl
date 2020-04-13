@@ -3,7 +3,9 @@
 sub recv_bot_detection {
     if (!req.http.x-nyt-shield-auth &&
         table.lookup(bot_detection, "enabled") == "true" &&
-        (req.http.var-nyt-env != "prd" || (randombool(5,100) && req.restarts == 0) || req.http.destination == "datadome")) {
+        (req.http.var-nyt-env != "prd" ||
+         (randombool(5,100) && req.restarts == 0) ||
+         req.http.X-DataDome-params)) {
         call datadome_vcl_recv;
     }
 }
@@ -54,37 +56,24 @@ sub fetch_bot_detection {
 # Private functions, DO NOT CALL THESE DIRECTLY.  Use the shared functions above
 # /* ------- DATADOME ------ */
 sub datadome_set_origin_header {
-    unset bereq.http.destination;
     if (req.backend == F_datadome) {
         # Retrieve Datadome key from dictionary HERE
-        set bereq.http.x-datadome-apikey =
+        set bereq.http.X-DataDome-params:Key =
             table.lookup(bot_detection, "datadome_api_key");
-        set bereq.http.x-datadome-modulename = "Fastly";
-        set bereq.http.x-datadome-moduleversion = "1.9";
-        set bereq.http.x-datadome-timestamp = time.start.usec;
-        set bereq.http.x-datadome-serverhostname = server.identity;
-        set bereq.http.x-datadome-server-region = server.region;
-        set bereq.http.x-real-ip = req.http.fastly-client-ip;
-        set bereq.http.x-authorizationlen = std.strlen(req.http.authorization);
+        set bereq.http.X-DataDome-params:RequestModuleName = "Fastly";
+        set bereq.http.X-DataDome-params:ModuleVersion = "2.1";
+        set bereq.http.X-DataDome-params:TimeRequest = time.start.usec;
+        set bereq.http.X-DataDome-params:ServerName = server.identity;
+        set bereq.http.X-DataDome-params:ServerRegion = server.region;
+        set bereq.http.X-DataDome-params:IP = req.http.fastly-client-ip;
+        set bereq.http.X-DataDome-params:AuthorizationLen = std.strlen(req.http.authorization);
         unset bereq.http.authorization;
-        set bereq.http.x-datadome-clientid = req.http.cookie:datadome;
-        set bereq.http.x-cookieslen = std.strlen(req.http.cookie);
+        set bereq.http.X-DataDome-params:ClientID = urlencode(req.http.cookie:datadome);
+        set bereq.http.X-DataDome-params:CookiesLen = std.strlen(req.http.cookie);
         unset bereq.http.cookie;
     } else {
         # prevent leak of the key
-        unset bereq.http.x-datadome-apikey;
-        unset bereq.http.x-datadome-modulename;
-        unset bereq.http.x-datadome-moduleversion;
-        unset bereq.http.x-datadome-timestamp;
-        unset bereq.http.x-datadome-serverhostname;
-        unset bereq.http.x-datadome-server-region;
-        unset bereq.http.x-real-ip;
-        unset bereq.http.x-authorizationlen;
-        unset bereq.http.x-original-method;
-        unset bereq.http.x-content-length;
-        unset bereq.http.x-authorizationlen;
-        unset bereq.http.x-cookieslen;
-        unset bereq.http.x-datadome-clientid;
+        unset bereq.http.X-DataDome-params;
 
         # remove NYT debugging vars, will cause problems when going to a shield
         unset bereq.http.x-nyt-restart-reason;
@@ -97,29 +86,24 @@ sub datadome_vcl_recv {
   # Configure the regular expression below to match URLs that
   # should be checked by DataDome
   if (!req.http.fastly-ff && req.restarts == 0 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
-    set req.http.destination = "datadome";
     if (!req.http.x-datadome-timer) {
-          set req.http.x-datadome-timer = "S" time.start.sec "." time.start.usec_frac;
+        set req.http.x-datadome-timer = "S" time.start.sec "." time.start.usec_frac;
     }
     set req.http.x-datadome-timer = req.http.x-datadome-timer ",VS0";
-  } else {
-    unset req.http.destination;
-  }
 
-  if (req.http.destination == "datadome") {
     set req.backend = F_datadome;
     set req.http.x-datadome-behealth = req.backend.healthy;
-    set req.http.x-original-method = req.method;
-    set req.http.x-content-length = req.http.content-length;
+    set req.http.X-DataDome-params:Method = urlencode(req.method);
+    set req.http.X-DataDome-params:PostParamLen = urlencode(req.http.content-length);
     set req.method = "GET";
     return (pass);
   } else {
-    if (req.http.x-original-method) {
-      set req.method = req.http.x-original-method;
+    if (req.http.X-DataDome-params:Method) {
+      set req.method = urldecode(req.http.X-DataDome-params:Method);
       # After a restart, clustering is disabled. This re-enables it.
       set req.http.fastly-force-shield = "1";
-      unset req.http.x-original-method;
     }
+    unset req.http.X-DataDome-params;
   }
 
   # we're using the first restart for datadome, update a part of fastly code
@@ -149,45 +133,45 @@ sub datadome_vcl_fetch {
       restart;
     }
     unset beresp.http.x-datadomeresponse;
+
     # copy datadome headers
-    set req.http.x-datadome-headers = beresp.http.x-datadome-headers;
-    set req.http.x-datadome-request-headers = beresp.http.x-datadome-request-headers;
+    set req.http.x-datadome-headers-pairs:x-datadome-headers = urlencode(beresp.http.x-datadome-headers);
 
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+x-datadome-server( |$)+") {
-      set req.http.x-datadome-server = beresp.http.x-datadome-server;
+      set req.http.x-datadome-headers-pairs:x-datadome-server = urlencode(beresp.http.x-datadome-server);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+x-datadome( |$)+") {
-      set req.http.x-datadome = beresp.http.x-datadome;
+      set req.http.x-datadome-headers-pairs:x-datadome = urlencode(beresp.http.x-datadome);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+content-type( |$)+") {
-      set req.http.content-type = beresp.http.content-type;
+      set req.http.x-datadome-headers-pairs:content-type = urlencode(beresp.http.content-type);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+charset( |$)+") {
-      set req.http.charset = beresp.http.charset;
+      set req.http.x-datadome-headers-pairs:charset = urlencode(beresp.http.charset);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+cache-control( |$)+") {
-      set req.http.cache-control = beresp.http.cache-control;
+      set req.http.x-datadome-headers-pairs:cache-control = urlencode(beresp.http.cache-control);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+pragma( |$)+") {
-      set req.http.pragma = beresp.http.pragma;
+      set req.http.x-datadome-headers-pairs:pragma = urlencode(beresp.http.pragma);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+access-control-allow-credentials( |$)+") {
-      set req.http.access-control-allow-credentials = beresp.http.access-control-allow-credentials;
+      set req.http.x-datadome-headers-pairs:access-control-allow-credentials = urlencode(beresp.http.access-control-allow-credentials);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+access-control-expose-headers( |$)+") {
-      set req.http.access-control-expose-headers = beresp.http.access-control-expose-headers;
+      set req.http.x-datadome-headers-pairs:access-control-expose-headers = urlencode(beresp.http.access-control-expose-headers);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+access-control-allow-origin( |$)+") {
-      set req.http.access-control-allow-origin = beresp.http.access-control-allow-origin;
+      set req.http.x-datadome-headers-pairs:access-control-allow-origin = urlencode(beresp.http.access-control-allow-origin);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+x-datadome-cid( |$)+") {
-      set req.http.x-datadome-cid = beresp.http.x-datadome-cid;
+      set req.http.x-datadome-headers-pairs:x-datadome-cid = urlencode(beresp.http.x-datadome-cid);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+x-dd-b( |$)+") {
-      set req.http.x-dd-b = beresp.http.x-dd-b;
+      set req.http.x-datadome-headers-pairs:x-dd-b = urlencode(beresp.http.x-dd-b);
     }
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+x-dd-type( |$)+") {
-      set req.http.x-dd-type = beresp.http.x-dd-type;
+      set req.http.x-datadome-headers-pairs:x-dd-type = urlencode(beresp.http.x-dd-type);
     }
     if (beresp.http.x-datadome-request-headers ~ "(?i)(^| )+x-dd-type( |$)+") {
       set req.http.x-dd-type = beresp.http.x-dd-type;
@@ -206,12 +190,17 @@ sub datadome_vcl_fetch {
     }
     # don't forget about ApiServer's cookies
     if (beresp.http.x-datadome-headers ~ "(?i)(^| )+set-cookie( |$)+") {
-      set req.http.set-cookie = beresp.http.set-cookie;
+      set req.http.x-datadome-headers-pairs:set-cookie = urlencode(beresp.http.set-cookie);
     }
 
-    # is it passed? If so just restart it!
-    if (beresp.status == 200) {
+    # Continue only if ApiServer returns expected blocked status
+    if (beresp.status != 403 &&
+        beresp.status != 401 &&
+        beresp.status != 301 &&
+        beresp.status != 302) {
       set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " DD_check_passed", "DD_check_passed");
+      unset beresp.http.x-datadome-headers;
+      unset beresp.http.x-datadome-request-headers;
       restart;
     }
 
@@ -252,52 +241,57 @@ sub datadome_vcl_deliver {
     # check for unexpected server errors and if so force restart
     if (req.restarts == 0 &&
         resp.status != 200 &&
-        resp.status != 403) {
+        resp.status != 403 &&
+        resp.status != 401 &&
+        resp.status != 301 &&
+        resp.status != 302) {
       set req.http.datadome-response = resp.status;
       set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " DD_error_failopen", "DD_error_failopen");
       restart;
     }
-  } else {
+  } else if (req.http.x-datadome-headers-pairs) {
     # copy datadome headers if it isn't datadome request
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+x-datadome-server( |$)+") {
-      set resp.http.x-datadome-server = req.http.x-datadome-server;
+    declare local var.x-datadome-headers STRING;
+    set var.x-datadome-headers = urldecode(req.http.x-datadome-headers-pairs:x-datadome-headers);
+    if (var.x-datadome-headers ~ "(?i)(^| )+x-datadome-server( |$)+") {
+      set resp.http.x-datadome-server = urldecode(req.http.x-datadome-headers-pairs:x-datadome-server);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+x-datadome( |$)+") {
-      set resp.http.x-datadome = req.http.x-datadome;
+    if (var.x-datadome-headers ~ "(?i)(^| )+x-datadome( |$)+") {
+      set resp.http.x-datadome = urldecode(req.http.x-datadome-headers-pairs:x-datadome);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+content-type( |$)+") {
-      set resp.http.content-type = req.http.content-type;
+    if (var.x-datadome-headers ~ "(?i)(^| )+content-type( |$)+") {
+      set resp.http.content-type = urldecode(req.http.x-datadome-headers-pairs:content-type);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+charset( |$)+") {
-      set resp.http.charset = req.http.charset;
+    if (var.x-datadome-headers ~ "(?i)(^| )+charset( |$)+") {
+      set resp.http.charset = urldecode(req.http.x-datadome-headers-pairs:charset);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+cache-control( |$)+") {
-      set resp.http.cache-control = req.http.cache-control;
+    if (var.x-datadome-headers ~ "(?i)(^| )+cache-control( |$)+") {
+      set resp.http.cache-control = urldecode(req.http.x-datadome-headers-pairs:cache-control);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+pragma( |$)+") {
-      set resp.http.pragma = req.http.pragma;
+    if (var.x-datadome-headers ~ "(?i)(^| )+pragma( |$)+") {
+      set resp.http.pragma = urldecode(req.http.x-datadome-headers-pairs:pragma);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+access-control-allow-credentials( |$)+") {
-      set resp.http.access-control-allow-credentials = req.http.access-control-allow-credentials;
+    if (var.x-datadome-headers ~ "(?i)(^| )+access-control-allow-credentials( |$)+") {
+      set resp.http.access-control-allow-credentials = urldecode(req.http.x-datadome-headers-pairs:access-control-allow-credentials);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+access-control-expose-headers( |$)+") {
-      set resp.http.access-control-expose-headers = req.http.access-control-expose-headers;
+    if (var.x-datadome-headers ~ "(?i)(^| )+access-control-expose-headers( |$)+") {
+      set resp.http.access-control-expose-headers = urldecode(req.http.x-datadome-headers-pairs:access-control-expose-headers);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+access-control-allow-origin( |$)+") {
-      set resp.http.access-control-allow-origin = req.http.access-control-allow-origin;
+    if (var.x-datadome-headers ~ "(?i)(^| )+access-control-allow-origin( |$)+") {
+      set resp.http.access-control-allow-origin = urldecode(req.http.x-datadome-headers-pairs:access-control-allow-origin);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+x-datadome-cid( |$)+") {
-      set resp.http.x-datadome-cid = req.http.x-datadome-cid;
+    if (var.x-datadome-headers ~ "(?i)(^| )+x-datadome-cid( |$)+") {
+      set resp.http.x-datadome-cid = urldecode(req.http.x-datadome-headers-pairs:x-datadome-cid);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+x-dd-b( |$)+") {
-      set resp.http.x-dd-b = req.http.x-dd-b;
+    if (var.x-datadome-headers ~ "(?i)(^| )+x-dd-b( |$)+") {
+      set resp.http.x-dd-b = urldecode(req.http.x-datadome-headers-pairs:x-dd-b);
     }
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+x-dd-type( |$)+") {
-      set resp.http.x-dd-type = req.http.x-dd-type;
+    if (var.x-datadome-headers ~ "(?i)(^| )+x-dd-type( |$)+") {
+      set resp.http.x-dd-type = urldecode(req.http.x-datadome-headers-pairs:x-dd-type);
     }
     # don't forget about ApiServer's cookies
-    if (req.http.x-datadome-headers ~ "(?i)(^| )+set-cookie( |$)+") {
-      add resp.http.set-cookie = req.http.set-cookie;
+    if (var.x-datadome-headers ~ "(?i)(^| )+set-cookie( |$)+") {
+      add resp.http.set-cookie = urldecode(req.http.x-datadome-headers-pairs:set-cookie);
     }
 
     # gk - debug
