@@ -360,3 +360,17 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^legacy-gke$
+  - description: Test /togetherapart is served from switchboard
+    request:
+      scheme: http
+      path: /togetherapart
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-backend: ^switchboard$
+          x-nyt-route: ^switchboard$
