@@ -286,7 +286,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^amp_gae$
           x-cache: .+
           x-served-by: .+
           x-frame-options: .+

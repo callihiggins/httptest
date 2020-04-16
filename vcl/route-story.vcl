@@ -141,7 +141,15 @@ sub recv_route_amp {
          )
   ) {
     set req.http.x-nyt-route = "amp";
-    set req.http.x-nyt-backend = "amp";
+
+    // TODO @woodb default to GKE, remove gae option once it has been verified
+    // in production that the GKE version of AMP is good to go
+    if (req.http.var-amp-use-gke-backend == "true") {
+      set req.http.x-nyt-backend = "amp_gke";
+    } else {
+      set req.http.x-nyt-backend = "amp_gae";
+    }
+
     set req.url = querystring.filter_except(req.url, "0p19G" + querystring.filtersep() + "isSwgTest");
     if (req.http.User-Agent ~ "DU-apple-news" && req.url ~ "^/apple-news/") {
       set req.http.var-nyt-force-pass = "true";
@@ -161,7 +169,7 @@ sub recv_route_amp {
 }
 
 sub miss_pass_route_amp {
-  if (req.http.x-nyt-route == "amp") {
+  if (req.http.x-nyt-route == "amp" && req.http.x-nyt-backend == "amp_gae") {
       if (req.http.var-nyt-env != "prd") {
           set bereq.http.host = "amp-dot-nyt-wfvi-dev.appspot.com";
       } else {

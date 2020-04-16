@@ -627,7 +627,7 @@ backends:
       timeout: "3000"
       window: "2"
 
-  - name: "amp"
+  - name: "amp_gae"
     address: "amp-dot-nyt-wfvi-prd.appspot.com"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
@@ -636,6 +636,23 @@ backends:
     ssl_sni_hostname: "amp-dot-nyt-wfvi-prd.appspot.com"
     healthcheck:
       host: "amp-dot-nyt-wfvi-prd.appspot.com"
+      path: "/.info"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
+  - name: "amp_gke"
+    address: "amp.nyt.net"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "amp.nyt.net"
+    ssl_sni_hostname: "amp.nyt.net"
+    healthcheck:
+      host: "amp.nyt.net"
       path: "/.info"
       check_interval: "20000"
       expected_response: "200"

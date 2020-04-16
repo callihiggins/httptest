@@ -780,7 +780,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^amp_gae$
   - description: Vi internationalized URL /zh-hans
     request:
       method: GET
@@ -847,7 +847,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^amp_gae$
           x-nyt-final-url: ^/2015/01/11/fashion/no-37-big-wedding-or-small.amp.html\?0p19G=1&isSwgTest=true
           debug-var-nyt-force-pass: false
   - description: Test 404 for live blog on vi
@@ -892,7 +892,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^amp_gae$
           debug-var-nyt-force-pass: false
   - description: Don't redirect AMP articles with user-agent DU-amp-indexer
     request:
@@ -908,7 +908,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^amp_gae$
   - description: Route Apple News articles to amp
     request:
       method: GET
@@ -923,7 +923,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^amp_gae$
           x-cache: ^MISS$
           debug-var-nyt-force-pass: true
   - description: Vi Internationalized dateless URL /es with query params
@@ -994,7 +994,7 @@ tests:
       headers:
         patterns:
           x-nyt-route: ^amp$
-          x-nyt-backend: ^amp$
+          x-nyt-backend: ^amp_gae$
           x-nyt-final-url: ^/article/hinkie-trust-the-process.amp.html\?0p19G=1&isSwgTest=true
           debug-var-nyt-force-pass: false
   - description: NYT5 legacy aponline article redirect to Vi
@@ -1076,3 +1076,100 @@ tests:
           x-nyt-route: ^vi-story$
       statusCodes:
         - 404
+  - description: Vi internationalized amp URL /es, /ar, /zh-hant (GKE)
+    request:
+      method: GET
+      path: /ar/2019/02/10/world/middleeast/princess-latifa-sheikha-dubai.amp.html
+      headers:
+        x-nyt-miss: "1"
+        var-amp-use-gke-backend: "true"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp_gke$
+  - description: Test amp query string filter (GKE)
+    request:
+      path: /2015/01/11/fashion/no-37-big-wedding-or-small.amp.html?bad1=4&bad2=5&0p19G=1&isSwgTest=true
+      headers:
+        x-nyt-miss: "1"
+        var-amp-use-gke-backend: "true"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp_gke$
+          x-nyt-final-url: ^/2015/01/11/fashion/no-37-big-wedding-or-small.amp.html\?0p19G=1&isSwgTest=true
+          debug-var-nyt-force-pass: false
+  - description: Route live blogs to amp when they end in .amp.html (GKE)
+    request:
+      method: GET
+      path: /live/2020/fact-check-state-of-the-union-02-04.amp.html
+      headers:
+        x-nyt-miss: "1"
+        var-amp-use-gke-backend: "true"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp_gke$
+          debug-var-nyt-force-pass: false
+  - description: Don't redirect AMP articles with user-agent DU-amp-indexer (GKE)
+    request:
+      method: GET
+      path: /2015/01/11/fashion/no-37-big-wedding-or-small.amp.html
+      headers:
+        x-nyt-miss: "1"
+        var-amp-use-gke-backend: "true"
+        User-Agent: DU-amp-indexer AppEngine-Google
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp_gke$
+  - description: Route Apple News articles to amp (GKE)
+    request:
+      method: GET
+      path: /apple-news/2018/11/14/us/politics/conservative-lawyers-trump.html
+      headers:
+        x-nyt-miss: "1"
+        var-amp-use-gke-backend: "true"
+        User-Agent: DU-apple-news AppEngine-Google
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp_gke$
+          x-cache: ^MISS$
+          debug-var-nyt-force-pass: true
+  - description: Test amp query string filter with dateless urls (GKE)
+    request:
+      path: /article/hinkie-trust-the-process.amp.html?bad1=4&bad2=5&0p19G=1&isSwgTest=true
+      headers:
+        x-nyt-miss: "1"
+        var-amp-use-gke-backend: "true"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^amp$
+          x-nyt-backend: ^amp_gke$
+          x-nyt-final-url: ^/article/hinkie-trust-the-process.amp.html\?0p19G=1&isSwgTest=true
+          debug-var-nyt-force-pass: false

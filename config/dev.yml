@@ -569,7 +569,7 @@ backends:
     gcslogging:
       period: 60
 
-  - name: "amp"
+  - name: "amp_gae"
     address: "amp-dot-nyt-wfvi-dev.appspot.com"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
@@ -578,6 +578,23 @@ backends:
     ssl_sni_hostname: "amp-dot-nyt-wfvi-dev.appspot.com"
     healthcheck:
       host: "amp-dot-nyt-wfvi-dev.appspot.com"
+      path: "/.info"
+      check_interval: "20000"
+      expected_response: "200"
+      initial: "4"
+      threshold: "3"
+      timeout: "5000"
+      window: "4"
+
+  - name: "amp_gke"
+    address: "amp.dev.nyt.net"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "30000"
+    ssl_cert_hostname: "amp.dev.nyt.net"
+    ssl_sni_hostname: "amp.dev.nyt.net"
+    healthcheck:
+      host: "amp.dev.nyt.net"
       path: "/.info"
       check_interval: "20000"
       expected_response: "200"
