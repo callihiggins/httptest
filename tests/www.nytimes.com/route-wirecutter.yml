@@ -1,0 +1,76 @@
+tests:
+  - description: Wirecutter /wirecutter/
+    request:
+      path: /wirecutter/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^wirecutter$
+          x-nyt-backend: ^wirecutter$
+      statusCodes:
+        - 200
+  - description: Wirecutter non-canonical
+    request:
+      path: /wirecutter
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^wirecutter$
+          x-nyt-backend: ^wirecutter$
+      statusCodes:
+        - 301
+  - description: Wirecutter search - camping
+    request:
+      path: /wirecutter/search/?s=camping/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^wirecutter$
+          x-nyt-backend: ^wirecutter$
+      statusCodes:
+        - 200
+  - description: Wirecutter - sample review - water bottle
+    request:
+      path: /wirecutter/reviews/best-water-bottle/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^wirecutter$
+          x-nyt-backend: ^wirecutter$
+      statusCodes:
+        - 200
+  - description: Wirecutter everything
+    request:
+      path: /wirecutter/everything/
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^wirecutter$
+          x-nyt-backend: ^wirecutter$
+      statusCodes:
+        - 200

@@ -66,3 +66,4 @@ This will only run the test suite file located in [/tests/www.nytimes.com/](http
 The same image is going to be used to run the tests in the build pipeline.
 
 Read the [build](https://github.com/nytm/drone-fastly-test#build) instructions for creating and running the latest image locally.
+

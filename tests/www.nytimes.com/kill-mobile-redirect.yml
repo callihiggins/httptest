@@ -98,4 +98,3 @@ tests:
       statusCodes:
         - 200
         - 404
-

@@ -1,9 +1,9 @@
+---
 # define the domains this service should respond to requests for
 # one per line using name: in a sequence under the domain scalar
 # use name: as key for each item in sequence
 # DEV use case is different than other services as we manage not
 # only dev here, but sandboxes as well (for now)
-
 domains:
   dev:
     - name: "*.dev.nytimes.com"
@@ -970,6 +970,23 @@ backends:
       threshold: "1"
       timeout: "5000"
       window: "60"
+
+  - name: "wirecutter"
+    address: "dev.thewirecutter.com"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "10000"
+    ssl_cert_hostname: "dev.thewirecutter.com"
+    ssl_sni_hostname: "dev.thewirecutter.com"
+    healthcheck:
+      host: "dev.thewirecutter.com"
+      path: "/wirecutter/healthcheck"
+      check_interval: "60000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "10000"
+      window: "5"
 
 # defaults for cloud storage bucket auth configs
 #   the following configs are for DV users for access to cloud storage buckets

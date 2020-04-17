@@ -969,6 +969,23 @@ backends:
       timeout: "5000"
       window: "60"
 
+  - name: "wirecutter"
+    address: "thewirecutter.com"
+    between_bytes_timeout: "10000"
+    connect_timeout: "10000"
+    first_byte_timeout: "10000"
+    ssl_cert_hostname: "thewirecutter.com"
+    ssl_sni_hostname: "thewirecutter.com"
+    healthcheck:
+      host: "thewirecutter.com"
+      path: "/healthcheck"
+      check_interval: "60000"
+      expected_response: "200"
+      initial: "2"
+      threshold: "3"
+      timeout: "10000"
+      window: "5"
+
 # defaults for cloud storage bucket auth configs
 #   the following configs are for DV users for access to cloud storage buckets
 # `gcs_auth_key`:    the dictionary key for GCS bucket access token

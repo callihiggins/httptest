@@ -68,6 +68,7 @@ include "route-blogs";
 include "route-invalid-requests";
 include "route-device-detection-debug";
 include "route-alpha";
+include "route-wirecutter";
 
 # backend response processing
 include "surrogate-key";
@@ -197,6 +198,7 @@ sub vcl_recv {
   call recv_route_code;
   call recv_route_refer;
   call recv_route_weekender;
+  call recv_route_wirecutter;
 
   # order matters for these routes that are all using ^/year/mo/day
   call recv_route_story;
@@ -394,6 +396,7 @@ sub vcl_miss {
   call miss_pass_route_recommendation;
   call miss_pass_route_weekender;
   call miss_pass_route_alpha;
+  call miss_pass_route_wirecutter;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -460,6 +463,7 @@ sub vcl_pass {
   call miss_pass_route_vi_static_backup_gcs;
   call miss_pass_route_weekender;
   call miss_pass_route_alpha;
+  call miss_pass_route_wirecutter;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -592,6 +596,7 @@ sub vcl_deliver {
   call deliver_route_newsgraphics_gcs_error;
   call deliver_route_vi_assets_access_control;
   call deliver_route_alpha;
+  call deliver_route_wirecutter;
 
   # logic executed only on the edge in a shielding scenario
   if (!req.http.x-nyt-shield-auth) {

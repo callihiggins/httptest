@@ -596,6 +596,12 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "route-wirecutter"
+    main    = false
+    content = "${file("../vcl/route-wirecutter.vcl")}"
+  }
+
+  vcl {
     name    = "subscription-currency-map-table"
     main    = false
     content = "${file("../vcl/subscription-currency-map-table.vcl")}"
