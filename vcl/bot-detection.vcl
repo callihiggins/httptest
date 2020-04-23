@@ -15,7 +15,7 @@ sub recv_bot_detection {
 sub recv_bot_detection_reset_shield {
     if (!req.http.x-nyt-shield-auth &&
         table.lookup(bot_detection, "enabled") == "true" &&
-        req.http.datadome-response) {
+        req.http.var-datadome-response) {
 
         # Update this to match your shielding code as the default shielding
         # code does not support preflighting
@@ -78,7 +78,8 @@ sub datadome_set_origin_header {
         # remove NYT debugging vars, will cause problems when going to a shield
         unset bereq.http.x-nyt-restart-reason;
         unset bereq.http.x-datadome-timer;
-        unset bereq.http.datadome-response;
+        unset bereq.http.var-datadome-response;
+        unset bereq.http.var-datadome-behealth;
     }
 }
 
@@ -92,7 +93,7 @@ sub datadome_vcl_recv {
     set req.http.x-datadome-timer = req.http.x-datadome-timer ",VS0";
 
     set req.backend = F_datadome;
-    set req.http.x-datadome-behealth = req.backend.healthy;
+    set req.http.var-datadome-behealth = req.backend.healthy;
     set req.http.X-DataDome-params:Method = urlencode(req.method);
     set req.http.X-DataDome-params:PostParamLen = urlencode(req.http.content-length);
     set req.method = "GET";
@@ -125,7 +126,7 @@ sub datadome_vcl_fetch {
   if (req.backend == F_datadome && req.restarts == 0) {
     declare local var.status STRING;
     set var.status = beresp.status;
-    set req.http.datadome-response = beresp.status;
+    set req.http.var-datadome-response = beresp.status;
 
     # check that it is real ApiServer response
     if (var.status != beresp.http.x-datadomeresponse) {
@@ -245,7 +246,7 @@ sub datadome_vcl_deliver {
         resp.status != 401 &&
         resp.status != 301 &&
         resp.status != 302) {
-      set req.http.datadome-response = resp.status;
+      set req.http.var-datadome-response = resp.status;
       set req.http.x-nyt-restart-reason = if(req.http.x-nyt-restart-reason, req.http.x-nyt-restart-reason + " DD_error_failopen", "DD_error_failopen");
       restart;
     }
@@ -296,7 +297,7 @@ sub datadome_vcl_deliver {
 
     # gk - debug
     if (req.http.x-nyt-nyhq-access == "1") {
-      set resp.http.datadome-response = req.http.datadome-response;
+      set resp.http.x-datadome-response = req.http.var-datadome-response;
     }
   }
 }

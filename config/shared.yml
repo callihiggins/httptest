@@ -216,10 +216,10 @@ sumo_log:
     \"is_shield\":\"%{if(req.http.x-nyt-shield-auth,\\\"1\",\\\"0\")}V\",
     \"apiversion\":\"%{if(resp.http.X-API-Version,resp.http.X-API-Version,\\\"\\\")}V\",
     \"behealth\": \"%{if(req.http.x-nyt-backend-health,req.http.x-nyt-backend-health,\\\"\\\")}V\",
-    \"datadome_health\": \"%{if(req.http.x-datadome-behealth,req.http.x-datadome-behealth,\\\"\\\")}V\",
+    \"datadome_health\": \"%{if(req.http.var-datadome-behealth,req.http.var-datadome-behealth,\\\"\\\")}V\",
     \"redirect_reason\":\"%{if(req.http.x-nyt-redirect-reason,req.http.x-nyt-redirect-reason,\\\"\\\")}V\",
     \"restarts\": \"%{req.restarts}V\",
     \"restart_reason\": \"%{if(req.http.x-nyt-restart-reason,req.http.x-nyt-restart-reason,\\\"\\\")}V\",
-    \"datadome_response\": \"%{if(req.http.datadome-response,req.http.datadome-response,\\\"\\\")}V\",
+    \"datadome_response\": \"%{if(req.http.var-datadome-response,req.http.var-datadome-response,\\\"\\\")}V\",
     \"mwcm_fallback\": \"%{if(req.http.x-nyt-mwcm-fallback,req.http.x-nyt-mwcm-fallback,\\\"\\\")}V\"
     }
