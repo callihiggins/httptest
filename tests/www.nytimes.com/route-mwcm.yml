@@ -1359,3 +1359,48 @@ tests:
         patterns:
           x-nyt-route: ^mwcm-preview$
           x-nyt-backend: ^mwcm_preview$
+  - description: "WCM /payments/*: tests mwcm route and
+      mwcm backend"
+    request:
+      path: /payments/tests/fastly/testpage
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+  - description: "WCM /payments/*: tests mwcm-preview route and
+      mwcm-preview backend"
+    request:
+      path: /payments/tests/fastly/testpage?pre_prod=true
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm-preview$
+          x-nyt-backend: ^mwcm_preview$
+  - description: "WCM /payments/*: test oc and component parameters"
+    request:
+      path: /payments/tests/fastly/testpage?oc=1&component=2
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^mwcm$
+          x-nyt-backend: ^mwcm$
+      body:
+        patterns:
+          - oc=1
+          - component=2
