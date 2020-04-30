@@ -497,6 +497,11 @@ resource "fastly_service_v1" "service" {
   }
 
   vcl {
+    name    = "shared-cak12-acl"
+    content = "${module.shared_vcl.cak12_acl}"
+  }
+
+  vcl {
     name    = "shared-purr"
     content = "${module.shared_vcl.purr}"
   }
