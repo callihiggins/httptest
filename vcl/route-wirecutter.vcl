@@ -1,5 +1,8 @@
 sub recv_route_wirecutter {
-  if (req.http.var-nyt-env == "dev" || req.http.var-nyt-env == "stg") {
+  if (req.http.var-nyt-env == "dev"
+      || req.http.var-nyt-env == "stg"
+      || (req.http.var-nyt-env == "prd" && req.http.x-nyt-nyhq-access == "1")
+  ) {
     if (req.http.var-nyt-canonical-www-host && req.url.path ~ "^/wirecutter") {
         set req.http.x-nyt-route = "wirecutter";
         set req.http.x-nyt-backend = "wirecutter";
