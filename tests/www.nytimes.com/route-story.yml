@@ -1065,6 +1065,10 @@ tests:
         header22: "here"
         header23: "here"
         header24: "here"
+        header25: "here"
+        header26: "here"
+        header27: "here"
+        header28: "here"
         # Fastly max is 28
     conditions:
       env:

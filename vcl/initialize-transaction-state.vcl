@@ -24,17 +24,6 @@ sub recv_block_alpha_preview {
     }
 }
 
-sub recv_capture_cookie_values {
-    # capture specific cookie values into custom headers
-    if (req.http.Cookie:NYT-S) {
-      set req.http.var-cookie-nyt-s = urldecode(req.http.Cookie:NYT-S);
-    }
-
-    if (req.http.Cookie:NYT-Edition) {
-      set req.http.var-cookie-nyt-edition = urldecode(req.http.Cookie:NYT-Edition);
-    }
-}
-
 sub recv_initialize_transaction_state {
 
     # variables that should always be empty for a new transaction

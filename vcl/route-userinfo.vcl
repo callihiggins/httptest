@@ -3,7 +3,12 @@ sub recv_route_userinfo {
   // if the cookie does not start with "0" we will
   // fall through this and it will be a backend hit
   // to the API on the origin
-  if (req.http.var-cookie-nyt-s ~ "^0" || !req.http.var-cookie-nyt-s){
+  declare local var.cookie-nyt-s STRING;
+  if (req.http.Cookie:NYT-S) {
+      set var.cookie-nyt-s = urldecode(req.http.Cookie:NYT-S);
+  }
+
+  if (var.cookie-nyt-s ~ "^0" || !var.cookie-nyt-s) {
     if (req.url ~ "^/svc/web-products/userinfo.jsonp") {
       set req.http.x-nyt-route = "service";
       error 901;
@@ -13,7 +18,7 @@ sub recv_route_userinfo {
       error 902;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.jsonp") {
-      set req.http.x-nyt-route = "service";    
+      set req.http.x-nyt-route = "service";
       error 903;
     }
     if (req.url ~ "^/svc/web-products/userinfo-v2.json") {

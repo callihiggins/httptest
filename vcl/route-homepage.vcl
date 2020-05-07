@@ -28,7 +28,12 @@ sub recv_route_homepage {
 
 sub recv_route_homepage_edition_redirect {
     # redirect HP based on edition
-    if (req.http.var-cookie-nyt-edition == "edition|SPANISH"
+    declare local var.cookie-nyt-edition STRING;
+    if (req.http.Cookie:NYT-Edition) {
+        set var.cookie-nyt-edition = urldecode(req.http.Cookie:NYT-Edition);
+    }
+
+    if (var.cookie-nyt-edition == "edition|SPANISH"
         && (req.http.x-nyt-route == "homepage" )
     ) {
         declare local var.target_url STRING;

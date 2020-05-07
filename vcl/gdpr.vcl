@@ -41,16 +41,6 @@ sub recv_gdpr {
     # initialize vars
     declare local var.nyt-has-gdpr BOOL;
 
-    # If the incoming request had an `nyt-t` cookie with a valid value ("ok"|"out")
-    # then we capture that value in req.http.var-cookie-nyt-t and mark the request
-    # as having that cookie.
-    if (!req.http.var-cookie-nyt-t
-        && req.http.Cookie:NYT-T
-        && (req.http.Cookie:NYT-T == "ok" || req.http.Cookie:NYT-T == "out")
-    ) {
-        set req.http.var-cookie-nyt-t = req.http.Cookie:NYT-T;
-    }
-
     # If the incoming request had an `nyt-gdpr` cookie with a valid value (0|1)
     # then we capture that value in req.http.var-cookie-nyt-gdpr and mark the request
     # as having that cookie.
@@ -236,7 +226,7 @@ sub error_918_amp_gdpr {
         }
 
         if (req.http.var-cookie-nyt-gdpr == "1") {
-            if (!req.http.var-cookie-nyt-t || req.http.var-cookie-nyt-t == "out") {
+            if (!req.http.Cookie:NYT-T || req.http.Cookie:NYT-T == "out") {
                 set var.amp-gdpr = "true";
             } else {
                 set var.amp-gdpr = "false";

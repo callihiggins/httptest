@@ -5,11 +5,16 @@ sub recv_route_community_svc {
         # set the backend to community_svc for all routes
         set req.http.x-nyt-backend = "community_svc";
 
-        # we only allow caching here if the command is not BasicInfo or 
+        # we only allow caching here if the command is not BasicInfo or
         # the user is not logged in or cacheable=true
+        declare local var.cookie-nyt-s STRING;
+        if (req.http.Cookie:NYT-S) {
+            set var.cookie-nyt-s = urldecode(req.http.Cookie:NYT-S);
+        }
+
         if ( subfield(req.url.qs, "cacheable", "&") == "true" ||
             ( subfield(req.url.qs, "cmd", "&") ~ "Get(?!BasicInfo).+"
-            && (!req.http.var-cookie-nyt-s || req.http.var-cookie-nyt-s ~ "^0"))) {
+            && (!var.cookie-nyt-s || var.cookie-nyt-s ~ "^0"))) {
 
             set req.http.x-nyt-route = "community-svc-cacheable";
 

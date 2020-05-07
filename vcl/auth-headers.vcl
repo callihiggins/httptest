@@ -35,15 +35,14 @@ sub miss_pass_wf_auth_headers {
 # validate the signed header if this request came from a fastly pop
 sub recv_shield_request_authorization {
 
-    set req.http.var-nyt-shield-auth = digest.hmac_sha256(table.lookup(shield_auth_secrets, "secret"), req.service_id);
-    if (req.http.x-nyt-shield-auth != req.http.var-nyt-shield-auth) {
-      unset req.http.x-nyt-shield-auth;
+    if (req.http.x-nyt-shield-auth != digest.hmac_sha256(table.lookup(shield_auth_secrets, "secret"), req.service_id)) {
+        unset req.http.x-nyt-shield-auth;
     }
 }
 
 # create the auth header if the origin is a shield
 sub miss_pass_shield_request_signing {
     if (req.backend.is_shield) {
-        set bereq.http.x-nyt-shield-auth = req.http.var-nyt-shield-auth;
+        set bereq.http.x-nyt-shield-auth = digest.hmac_sha256(table.lookup(shield_auth_secrets, "secret"), req.service_id);
     }
 }

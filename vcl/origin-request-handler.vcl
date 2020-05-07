@@ -21,10 +21,7 @@ sub miss_pass_unset_bereq_headers {
   # there are the headers that have recfactored naming
 
   unset bereq.http.var-cookie-nyt-a;
-  unset bereq.http.var-cookie-nyt-edition;
   unset bereq.http.var-cookie-nyt-gdpr;
-  unset bereq.http.var-cookie-nyt-s;
-  unset bereq.http.var-cookie-nyt-t;
 
   unset bereq.http.var-is-east-static-backup-enabled;
   unset bereq.http.var-is-vi-static-backup-enabled;
@@ -40,7 +37,6 @@ sub miss_pass_unset_bereq_headers {
   unset bereq.http.var-nyt-redirect-reason;
   unset bereq.http.var-nyt-sumo-purge-log-name;
   unset bereq.http.var-nyt-send-gdpr;
-  unset bereq.http.var-nyt-shield-auth;
   unset bereq.http.var-nyt-sumo-purge-log-name;
   unset bereq.http.var-nyt-surrogate-key;
   unset bereq.http.var-nyt-vi-story-compatibility;
