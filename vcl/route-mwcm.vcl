@@ -288,14 +288,16 @@ sub miss_pass_route_mwcm {
 
         if (req.http.cookie:edu_opt) {
             #checks the presence of the edu_opt
+            #temp fix using regsuball for encoding issues with edu_opt jkidd cookies
             # allows edu_opt to MWCM backend
-            set bereq.http.cookie = bereq.http.cookie " edu_opt=" req.http.cookie:edu_opt ";";
+            set bereq.http.cookie = bereq.http.cookie " edu_opt=" regsuball(req.http.cookie:edu_opt, "\:", "%253A") ";";
         }
 
         if (req.http.cookie:b2b_opt) {
             #checks the presence of the b2b_opt
+            #temp fix using regsuball for encoding issues with b2b_opt jkidd cookies
             # allows b2b_opt to MWCM backend
-            set bereq.http.cookie = bereq.http.cookie " b2b_opt=" req.http.cookie:b2b_opt ";";
+            set bereq.http.cookie = bereq.http.cookie " b2b_opt=" regsuball(req.http.cookie:b2b_opt, "\:", "%253A") ";";
         }
 
         if (req.http.cookie:jkidd-t) {
