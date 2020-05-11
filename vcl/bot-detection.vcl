@@ -86,7 +86,10 @@ sub datadome_set_origin_header {
 sub datadome_vcl_recv {
   # Configure the regular expression below to match URLs that
   # should be checked by DataDome
-  if (!req.http.fastly-ff && req.restarts == 0 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
+  # Make sure enough req.headers are available for the dd headers + restart.
+  # 69 appears to be the max before the mysterious restart loop occurs.
+  # Rounding down to 65 for added buffer.
+  if (!req.http.fastly-ff && req.restarts == 0 && std.count(req.headers) < 65 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
     if (!req.http.x-datadome-timer) {
         set req.http.x-datadome-timer = "S" time.start.sec "." time.start.usec_frac;
     }
