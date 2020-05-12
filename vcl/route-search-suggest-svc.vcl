@@ -1,7 +1,15 @@
 sub recv_route_search_suggest_svc {
   if (req.url.path ~ "^/svc/suggest(.*)") {
-    set req.http.x-nyt-route = "search-suggest";
-    set req.http.x-nyt-backend = "search_suggest";
+
+    if (req.url.path ~ "^/svc/suggest/v1/homepage$") {
+      set req.url = "/svc/add/v1/deprecatedsuggest.json?" + req.url.qs;
+      set req.http.x-nyt-route = "add-svc";
+      set req.http.x-nyt-backend = "add_svc";
+    } else {
+      set req.http.x-nyt-route = "search-suggest";
+      set req.http.x-nyt-backend = "search_suggest";
+    }
+
     call recv_route_search_suggest_filter_querystring;
   }
 }

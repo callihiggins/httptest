@@ -15,3 +15,18 @@ tests:
           x-nyt-backend: ^search_suggest$
           x-nyt-final-url: ^/svc/suggest/v1/timestags\?query=foo$
 
+  - description: "route-search-suggest-svc: reroute homepage suggest"
+    request:
+      path: /svc/suggest/v1/homepage?query=foo&hello=1&bad1=2
+      headers:
+        x-nyt-miss: "1"
+    conditions:
+      env:
+        TEST_ENV: dev|stg|prd
+    response:
+      headers:
+        patterns:
+          x-cache: ^MISS$
+          x-nyt-route: ^add-svc$
+          x-nyt-backend: ^add_svc$
+          x-nyt-final-url: ^/svc/add/v1/deprecatedsuggest.json\?query=foo$
