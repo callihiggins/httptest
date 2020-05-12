@@ -1,0 +1,15 @@
+tests:
+  - description: Check for presence of DataDome headers
+    request:
+      path: /2020/03/18/automobiles/congestion-and-chaos-in-europe-as-borders-close-NEW.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg # can't really test in prd until DD is turned on at 100%
+    response:
+      headers:
+        patterns:
+          x-nyt-route: vi-story
+          x-nyt-backend: projectvi_fe
+          x-datadome-timer: '.+'
+          x-datadome: '.+'
+          x-datadome-response: '.+'

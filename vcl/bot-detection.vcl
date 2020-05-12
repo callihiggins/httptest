@@ -58,22 +58,22 @@ sub fetch_bot_detection {
 sub datadome_set_origin_header {
     if (req.backend == F_datadome) {
         # Retrieve Datadome key from dictionary HERE
-        set bereq.http.X-DataDome-params:Key =
+        set bereq.http.x-datadome-params:key =
             table.lookup(bot_detection, "datadome_api_key");
-        set bereq.http.X-DataDome-params:RequestModuleName = "Fastly";
-        set bereq.http.X-DataDome-params:ModuleVersion = "2.1";
-        set bereq.http.X-DataDome-params:TimeRequest = time.start.usec;
-        set bereq.http.X-DataDome-params:ServerName = server.identity;
-        set bereq.http.X-DataDome-params:ServerRegion = server.region;
-        set bereq.http.X-DataDome-params:IP = req.http.fastly-client-ip;
-        set bereq.http.X-DataDome-params:AuthorizationLen = std.strlen(req.http.authorization);
+        set bereq.http.x-datadome-params:requestmodulename = "Fastly";
+        set bereq.http.x-datadome-params:moduleversion = "2.2";
+        set bereq.http.x-datadome-params:timerequest = time.start.usec;
+        set bereq.http.x-datadome-params:servername = server.identity;
+        set bereq.http.x-datadome-params:serverregion = server.region;
+        set bereq.http.x-datadome-params:ip = req.http.fastly-client-ip;
+        set bereq.http.x-datadome-params:authorizationlen = std.strlen(req.http.authorization);
         unset bereq.http.authorization;
-        set bereq.http.X-DataDome-params:ClientID = urlencode(req.http.cookie:datadome);
-        set bereq.http.X-DataDome-params:CookiesLen = std.strlen(req.http.cookie);
+        set bereq.http.x-datadome-params:clientid = urlencode(req.http.cookie:datadome);
+        set bereq.http.x-datadome-params:cookieslen = std.strlen(req.http.cookie);
         unset bereq.http.cookie;
     } else {
         # prevent leak of the key
-        unset bereq.http.X-DataDome-params;
+        unset bereq.http.x-datadome-params;
 
         # remove NYT debugging vars, will cause problems when going to a shield
         unset bereq.http.x-nyt-restart-reason;
@@ -89,7 +89,7 @@ sub datadome_vcl_recv {
   # Make sure enough req.headers are available for the dd headers + restart.
   # 69 appears to be the max before the mysterious restart loop occurs.
   # Rounding down to 65 for added buffer.
-  if (!req.http.fastly-ff && req.restarts == 0 && std.count(req.headers) < 65 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
+  if (fastly.ff.visits_this_service == 0 && req.restarts == 0 && std.count(req.headers) < 65 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
     if (!req.http.x-datadome-timer) {
         set req.http.x-datadome-timer = "S" time.start.sec "." time.start.usec_frac;
     }
@@ -97,17 +97,17 @@ sub datadome_vcl_recv {
 
     set req.backend = F_datadome;
     set req.http.var-datadome-behealth = req.backend.healthy;
-    set req.http.X-DataDome-params:Method = urlencode(req.method);
-    set req.http.X-DataDome-params:PostParamLen = urlencode(req.http.content-length);
+    set req.http.x-datadome-params:method = urlencode(req.method);
+    set req.http.x-datadome-params:postparamlen = urlencode(req.http.content-length);
     set req.method = "GET";
     return (pass);
   } else {
-    if (req.http.X-DataDome-params:Method) {
-      set req.method = urldecode(req.http.X-DataDome-params:Method);
+    if (req.http.x-datadome-params:method) {
+      set req.method = urldecode(req.http.x-datadome-params:method);
       # After a restart, clustering is disabled. This re-enables it.
       set req.http.fastly-force-shield = "1";
     }
-    unset req.http.X-DataDome-params;
+    unset req.http.x-datadome-params;
   }
 
   # we're using the first restart for datadome, update a part of fastly code
