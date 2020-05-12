@@ -4,7 +4,7 @@ sub recv_bot_detection {
     if (!req.http.x-nyt-shield-auth &&
         table.lookup(bot_detection, "enabled") == "true" &&
         (req.http.var-nyt-env != "prd" ||
-         (randombool(5,100) && req.restarts == 0) ||
+         (randombool(25,100) && req.restarts == 0) ||
          req.http.X-DataDome-params)) {
         call datadome_vcl_recv;
     }
