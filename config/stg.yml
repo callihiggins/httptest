@@ -958,14 +958,14 @@ backends:
       window: "60"
 
   - name: "wirecutter"
-    address: "dev.thewirecutter.com"
+    address: "stage.thewirecutter.com"
     between_bytes_timeout: "10000"
     connect_timeout: "10000"
     first_byte_timeout: "10000"
-    ssl_cert_hostname: "dev.thewirecutter.com"
-    ssl_sni_hostname: "dev.thewirecutter.com"
+    ssl_cert_hostname: "stage.thewirecutter.com"
+    ssl_sni_hostname: "stage.thewirecutter.com"
     healthcheck:
-      host: "dev.thewirecutter.com"
+      host: "stage.thewirecutter.com"
       path: "/wirecutter/healthcheck"
       check_interval: "60000"
       expected_response: "200"
