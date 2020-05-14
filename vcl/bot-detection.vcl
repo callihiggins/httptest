@@ -4,7 +4,7 @@ sub recv_bot_detection {
     if (!req.http.x-nyt-shield-auth &&
         table.lookup(bot_detection, "enabled") == "true" &&
         (req.http.var-nyt-env != "prd" ||
-         (randombool(25,100) && req.restarts == 0) ||
+         (randombool(50,100) && req.restarts == 0) ||
          req.http.X-DataDome-params)) {
         call datadome_vcl_recv;
     }
@@ -89,7 +89,7 @@ sub datadome_vcl_recv {
   # Make sure enough req.headers are available for the dd headers + restart.
   # 69 appears to be the max before the mysterious restart loop occurs.
   # Rounding down to 65 for added buffer.
-  if (fastly.ff.visits_this_service == 0 && req.restarts == 0 && std.count(req.headers) < 65 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
+  if (fastly.ff.visits_this_service == 0 && req.restarts == 0 && std.count(req.headers) < 60 && req.url.ext !~ "^(js|css|jpg|jpeg|png|ico|gif|tiff|svg|woff|woff2|ttf|eot|mp4|otf)$") {
     if (!req.http.x-datadome-timer) {
         set req.http.x-datadome-timer = "S" time.start.sec "." time.start.usec_frac;
     }
