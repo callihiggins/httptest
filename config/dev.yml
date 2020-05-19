@@ -980,7 +980,7 @@ backends:
     ssl_sni_hostname: "dev.thewirecutter.com"
     healthcheck:
       host: "dev.thewirecutter.com"
-      path: "/wirecutter/healthcheck"
+      path: "/wirecutter/healthcheck/"
       check_interval: "60000"
       expected_response: "200"
       initial: "2"
