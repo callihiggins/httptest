@@ -454,7 +454,7 @@ tests:
           location: https://${TEST_HOST}/subscription/redeem\?ptr=newsindia
   - description: WCM /marketing/gdpr headers test, query params preserved
     request:
-      path: /marketing/gdpr/tests/fastly.html?test1=test1
+      path: /marketing/gdpr/tests/fastly.html?plat=ios
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -463,12 +463,12 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^mwcm-params$
+          x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          x-nyt-final-url: /marketing/gdpr/tests/fastly\.html\?test1=test1
+          x-nyt-final-url: /marketing/gdpr/tests/fastly\.html\?plat=ios
   - description: WCM /marketing/moco headers test, query params preserved
     request:
-      path: /marketing/moco/tests/fastly.html?test1=test1
+      path: /marketing/moco/tests/fastly.html?us=anon
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -477,9 +477,9 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^mwcm-params$
+          x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          x-nyt-final-url: /marketing/moco/tests/fastly\.html\?test1=test1
+          x-nyt-final-url: /marketing/moco/tests/fastly\.html\?us=anon
   - description: WCM subscription "X-NYT-Device vary" header presence test
     request:
       path: /subscription/tests/nginxfastly/test-request-header.html
@@ -580,20 +580,6 @@ tests:
           x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
           x-nyt-final-url: ^/subscription/hd/1041\.html$
-  - description: WCM /subscription/exo headers test, query params preserved
-    request:
-      path: /subscription/exo/tests/fastly.html?test1=test1
-      headers:
-        x-nyt-miss: "1"
-    conditions:
-      env:
-        TEST_ENV: dev|stg|prd
-    response:
-      headers:
-        patterns:
-          x-nyt-route: ^mwcm-params$
-          x-nyt-backend: ^mwcm$
-          x-nyt-final-url: /subscription/exo/tests/fastly\.html\?test1=test1
   - description: WCM subscription nyt-m cookie:sets X-NYT-Metered-Hits and
       X-NYT-Gateway-Hits
     request:
@@ -664,7 +650,7 @@ tests:
           x-nyt-referer: ^google$
   - description: WCM /marketing/mpc headers test, query params preserved
     request:
-      path: /marketing/mpc/tests/fastly.html?test1=test1
+      path: /marketing/mpc/tests/fastly.html?us=regi
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -673,9 +659,9 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^mwcm-params$
+          x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          x-nyt-final-url: /marketing/mpc/tests/fastly\.html\?test1=test1
+          x-nyt-final-url: /marketing/mpc/tests/fastly\.html\?us=regi
   - description: WCM /subscription.html headers test, x-nyt-route=mwcm
     request:
       path: /subscription.html
@@ -832,7 +818,7 @@ tests:
           x-nyt-backend: mwcm
   - description: WCM /marketing/tests headers test, query params preserved
     request:
-      path: /marketing/account/tests/fastly.html?test1=test1
+      path: /marketing/account/tests/fastly.html?us=anon
       headers:
         x-nyt-miss: "1"
     conditions:
@@ -841,9 +827,9 @@ tests:
     response:
       headers:
         patterns:
-          x-nyt-route: ^mwcm-params$
+          x-nyt-route: ^mwcm$
           x-nyt-backend: ^mwcm$
-          x-nyt-final-url: /marketing/account/tests/fastly\.html\?test1=test1
+          x-nyt-final-url: /marketing/account/tests/fastly\.html\?us=anon
   - description: WCM subscription CORS test
     request:
       path: /subscription/hd/1041.html

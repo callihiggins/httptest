@@ -15,6 +15,10 @@ sub recv_route_mwcm {
             set req.http.var-nyt-send-gdpr = "true";
             set req.http.var-nyt-cmots-s3-fallback = "false";
 
+            # query string whitelist
+            # repo: https://github.com/nytm/fastly-shared-cmots
+            call shared_recv_cmots_qs_params_whitelist;
+
             # routes to mwcm_resilient backend if req.restart greater than "0"
             # sets route as "mwcm-resilient"
             # sets backend as "mwcm_resilient"
@@ -39,25 +43,6 @@ sub recv_route_mwcm {
                 # https://docs.fastly.com/guides/integrations/amazon-s3
                 set req.http.host = "s1-nyt-com.s3.amazonaws.com";
                 set req.http.var-nyt-cmots-s3-fallback = "true";
-            }
-
-            if (    req.url !~ "^/marketing/(gdpr|moco|mpc|account)(/)?"  &&
-                    req.url !~ "^/subscription/exo(/)?"
-                ) {
-
-                # note "subscriptions" (plural) was the old (pre-Magnolia) path
-                if (req.url == "/subscriptions" || req.url ~ "^/subscriptions/") {
-                      # excludes query string parameters except "ptr"
-                      set req.url = querystring.filter_except(req.url, "ptr");
-                } else {
-                  # this is for new path, excludes "exclude_optimizely", "exclude_jsonkidd" ... qs parameters
-                    set req.url = querystring.regfilter_except(req.url, "(?i)^(exclude_optimizely|exclude_jsonkidd|exclude_abra|mwcmff|campaignId|skipFastly|promoStartDate|pre_prod|previewPersona|mgnlPreviewAsVisitor|preferredLocale|date-override|us|st|mktgEmbedSrc|referralID|oc|component)$");
-                }
-            } else {
-                    set req.url = querystring.clean(req.url);
-                    set req.url = querystring.regfilter(req.url, "fbclid");
-                    set req.url = querystring.sort(req.url);
-                    set req.http.x-nyt-route = "mwcm-params";
             }
 
             # Set the backend to be S3 bucket
@@ -169,8 +154,6 @@ sub deliver_route_mwcm {
         }
 
         # querystring appending logic applies to only mwcm route
-        # does not applies to mwcm-params
-        # reason: querystring are allowed to the backend for mwcm-params
         if (    req.http.x-nyt-route == "mwcm" &&
                 (   resp.status == 301 ||
                     resp.status == 302
@@ -179,22 +162,11 @@ sub deliver_route_mwcm {
 
             if (resp.http.Location ~ "\?") {
 
-                if (req.url ~ "^/subscription[^s]") {
+                if (req.http.var-nyt-ismagnolia == "true") {
 
-                    # for "/subscription", we allow "campaignId" to the backend
-                    # we need to strip campaignId and pre_prod from the http.x-nyt-orig-querystring
-                    # as resp.http.Location will have the campaignId and pre_prod
-                    if (    req.http.x-nyt-orig-querystring ~ "campaignId=([^&]*)" &&
-                            resp.http.Location ~ "campaignId=([^&]*)"
-                        ) {
-                        set req.http.x-nyt-orig-querystring = regsub(req.http.x-nyt-orig-querystring, "campaignId=([^&]*)","");
-                    }
-
-                    if (    req.http.x-nyt-orig-querystring ~ "pre_prod=([^&]*)" &&
-                            resp.http.Location ~ "pre_prod=([^&]*)"
-                        ) {
-                        set req.http.x-nyt-orig-querystring = regsub(req.http.x-nyt-orig-querystring, "pre_prod=([^&]*)","");
-                    }
+                    # handles duplicate qs params when redirected.
+                    # repo: https://github.com/nytm/fastly-shared-cmots
+                    call shared_recv_cmots_handle_redirect_regex_pattern;
 
                     # appends x-nyt-orig-querystring to Location header
                     # appends when x-nyt-orig-querystring = "?test=test"
