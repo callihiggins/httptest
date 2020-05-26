@@ -1,15 +1,10 @@
 sub recv_route_wirecutter {
     if (req.url.path ~ "^/wirecutter" && req.http.var-nyt-canonical-www-host) {
-        if (req.http.var-nyt-env == "dev"
-            || req.http.var-nyt-env == "stg"
-            || (req.http.var-nyt-env == "prd" && req.http.x-nyt-nyhq-access == "1")
-        ) {
-            set req.http.x-nyt-route = "wirecutter";
-            set req.http.x-nyt-backend = "wirecutter";
-            set req.http.var-nyt-send-gdpr = "true";
-            unset req.http.Authorization;
-            call recv_post_method_restricted;
-        }
+        set req.http.x-nyt-route = "wirecutter";
+        set req.http.x-nyt-backend = "wirecutter";
+        set req.http.var-nyt-send-gdpr = "true";
+        unset req.http.Authorization;
+        call recv_post_method_restricted;
     }
 }
 
