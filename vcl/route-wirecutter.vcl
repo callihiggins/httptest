@@ -10,6 +10,9 @@ sub recv_route_wirecutter {
 
 sub miss_pass_route_wirecutter {
     if (req.http.x-nyt-route == "wirecutter") {
+        if (req.url.path ~ "^/wirecutter$") {
+           set bereq.url = req.url "/";
+        }
         if (req.http.var-nyt-env == "prd") {
             set bereq.http.host = "thewirecutter.com";
         } else if (req.http.var-nyt-env == "stg") {
