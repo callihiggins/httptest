@@ -28,7 +28,7 @@ tests:
           x-nyt-route: ^wirecutter$
           x-nyt-backend: ^wirecutter$
       statusCodes:
-        - 301
+        - 200
   - description: Wirecutter search - camping
     request:
       path: /wirecutter/search/?s=camping/
