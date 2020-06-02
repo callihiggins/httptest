@@ -1,0 +1,212 @@
+tests:
+# story route
+  - description: Test story redirect, no shared link
+    request:
+      scheme: https
+      path: /2019/08/16/automobiles/mindhunter-release-day.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.stg\.nytimes\.com/2019/08/16/automobiles/mindhunter-release-day-final.html$
+      statusCodes:
+        - 301
+  - description: Test story redirect, with shared link
+    request:
+      scheme: https
+      path: /2019/08/16/automobiles/mindhunter-release-day.html?unlocked_article_code=abc123
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.stg\.nytimes\.com/2019/08/16/automobiles/mindhunter-release-day-final.html\?unlocked_article_code=abc123$
+      statusCodes:
+        - 301
+  - description: Test story redirect, with shared link
+    request:
+      scheme: https
+      path: /2019/08/16/automobiles/mindhunter-release-day.html?unlocked_article_code=def456
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.stg\.nytimes\.com/2019/08/16/automobiles/mindhunter-release-day-final.html\?unlocked_article_code=def456$
+      statusCodes:
+        - 301
+  - description: Test story redirect, other query param
+    request:
+      scheme: https
+      path: /2019/08/16/automobiles/mindhunter-release-day.html?foo=bar
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.stg\.nytimes\.com/2019/08/16/automobiles/mindhunter-release-day-final.html$
+      statusCodes:
+        - 301
+# interactive route ----------
+  - description: Test interactive redirect, no shared link
+    request:
+      scheme: https
+      path: /interactive/2020/03/30/books/16-testint.html
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          location: ^https://www\.stg\.nytimes\.com/interactive/2020/03/30/books/16-testint-redirected.html$
+      statusCodes:
+        - 301
+  - description: Test interactive redirect, with shared link
+    request:
+      scheme: https
+      path: /interactive/2020/03/30/books/16-testint.html?unlocked_article_code=abc123
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-interactive$
+          location: ^https://www\.stg\.nytimes\.com/interactive/2020/03/30/books/16-testint-redirected.html\?unlocked_article_code=abc123$
+      statusCodes:
+        - 301
+  - description: Test interactive redirect, other query param
+    request:
+      scheme: https
+      path: /interactive/2020/03/30/books/16-testint.html?foo=bar1
+    conditions:
+      env:
+        TEST_ENV: dev|stg
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-interactive$
+          location: ^https://www\.stg\.nytimes\.com/interactive/2020/03/30/books/16-testint-redirected.html$
+      statusCodes:
+        - 301
+
+  # PRD Tests
+  - description: Test story redirect, no shared link
+    request:
+      scheme: https
+      path: /2020/03/24/world/coronavirus-updates-maps.html
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.nytimes\.com/2020/03/24/world/coronavirus-news-live-updates.html$
+      statusCodes:
+        - 301
+  - description: Test story redirect, with shared link
+    request:
+      scheme: https
+      path: /2020/03/24/world/coronavirus-updates-maps.html?unlocked_article_code=abc123
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.nytimes\.com/2020/03/24/world/coronavirus-news-live-updates.html\?unlocked_article_code=abc123$
+      statusCodes:
+        - 301
+  - description: Test story redirect, with shared link
+    request:
+      scheme: https
+      path: /2020/03/24/world/coronavirus-updates-maps.html?unlocked_article_code=def456
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.nytimes\.com/2020/03/24/world/coronavirus-news-live-updates.html\?unlocked_article_code=def456$
+      statusCodes:
+        - 301
+  - description: Test story redirect, other query param
+    request:
+      scheme: https
+      path: /2020/03/24/world/coronavirus-updates-maps.html?foo=bar
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-story$
+          location: ^https://www\.nytimes\.com/2020/03/24/world/coronavirus-news-live-updates.html$
+      statusCodes:
+        - 301
+# interactive route ----------
+  - description: Test interactive redirect, no shared link
+    request:
+      scheme: https
+      path: /interactive/2018/theater/broadway-shows-tickets.html
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-nyt-route: ^vi-interactive$
+          location: ^https://www\.nytimes\.com/interactive/2019/theater/broadway-shows-tickets.html$
+      statusCodes:
+        - 301
+  - description: Test interactive redirect, with shared link
+    request:
+      scheme: https
+      path: /interactive/2018/theater/broadway-shows-tickets.html?unlocked_article_code=abc123
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-interactive$
+          location: ^https://www\.nytimes\.com/interactive/2019/theater/broadway-shows-tickets.html\?unlocked_article_code=abc123$
+      statusCodes:
+        - 301
+  - description: Test interactive redirect, other query param
+    request:
+      scheme: https
+      path: /interactive/2018/theater/broadway-shows-tickets.html?foo=bar1
+    conditions:
+      env:
+        TEST_ENV: prd
+    response:
+      headers:
+        patterns:
+          x-cache: HIT
+          x-nyt-route: ^vi-interactive$
+          location: ^https://www\.nytimes\.com/interactive/2019/theater/broadway-shows-tickets.html$
+      statusCodes:
+        - 301

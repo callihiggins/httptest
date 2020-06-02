@@ -620,6 +620,9 @@ sub vcl_deliver {
   # slideshow incompatbility fallback
   call deliver_slideshow_fallback;
 
+  # perserve shared link querystrings on 301s on vi
+  call deliver_route_vi_preserve_unlocked_article_code_querystring;
+
   return(deliver);
 }
 
