@@ -396,6 +396,7 @@ sub vcl_miss {
   call miss_pass_route_weekender;
   call miss_pass_route_alpha;
   call miss_pass_route_wirecutter;
+  call miss_pass_route_messaging;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above
@@ -463,6 +464,7 @@ sub vcl_pass {
   call miss_pass_route_weekender;
   call miss_pass_route_alpha;
   call miss_pass_route_wirecutter;
+  call miss_pass_route_messaging;
 
   # unset headers to the origin that we use for vars
   # definitely need to do this last incase they are used above

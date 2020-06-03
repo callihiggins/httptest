@@ -20,8 +20,10 @@ tests:
       headers:
         x-nyt-miss: "1"
     conditions:
+      # /svc/message/* only exists in hermes and is not present in helix (helix is being tested in lower envs
+      # to facilitate supporting the newsroom in disaster scenarios where hermes is subject to catastrophic failure)
       env:
-        TEST_ENV: dev|stg|prd
+        TEST_ENV: prd
     response:
       headers:
         patterns:
